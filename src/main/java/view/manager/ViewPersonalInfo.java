@@ -1,8 +1,8 @@
-package view.managerAccountView;
+package view.manager;
 
 import view.*;
 
-public class EditTheFiled extends View {
+public class ViewPersonalInfo extends View {
     @Override
     public View run(ViewManager manager) {
         return null;
