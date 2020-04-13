@@ -4,18 +4,23 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>sharif.ap</groupId>
-    <artifactId>group26</artifactId>
+    <groupId>org.example</groupId>
+    <artifactId>projectPhase1</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <properties>
+        <maven.compiler.source>1.11.5</maven.compiler.source>
+        <maven.compiler.target>1.11.5</maven.compiler.target>
+    </properties>
     <dependencies>
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.13</version>
+            <version>4.8.1</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
+
 
 </project>

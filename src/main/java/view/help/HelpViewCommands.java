@@ -11,6 +11,11 @@ public enum HelpViewCommands {
          *
          *
          *
+         *
+         *
+         *
+         *
+         *
          */
         public List<String> getTheResultForMainPageLoginAndRegisterView() {
             ArrayList<String> commands = new ArrayList<>();
