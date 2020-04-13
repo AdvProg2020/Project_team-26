@@ -1,5 +1,6 @@
 package View.ManagerAccountView;
 
+import View.AllProductView.AllProductView;
 import View.View;
 
 public enum ValidCommandsForManagerAccount {
@@ -63,9 +64,10 @@ public enum ValidCommandsForManagerAccount {
         }
     },
     GoToProductsMenu {
-        /* public View getMenu(){
-             retur
-         }*/
+        public View getMenu() {
+            return new AllProductView();
+        }
+
         @Override
         public String toString() {
             return "products";
