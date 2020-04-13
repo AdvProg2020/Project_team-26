@@ -7,6 +7,13 @@ import java.util.List;
 
 public enum HelpViewCommands {
     Help {
+        /**
+         * the uncomplete part
+         *
+         *
+         *
+         * @return
+         */
         public List<String> getTheResultForMainPageLoginAndRegisterView() {
             ArrayList<String> commands = new ArrayList<>();
             commands.add("create account [type] [username]");

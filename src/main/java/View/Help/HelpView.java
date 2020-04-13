@@ -9,7 +9,7 @@ import java.util.EnumSet;
 public class HelpView extends View {
     EnumSet<HelpViewCommands> validCommand;
 
-    HelpView() {
+    public HelpView() {
         validCommand = EnumSet.allOf(HelpViewCommands.class);
     }
 

@@ -16,19 +16,21 @@ public enum AllOffsValidCommands {
             return "show\\s+product\\s+(.*)";
         }
     },
-    Sorting{
+    Sorting {
         public View getView() {
             return new Sort();
         }
+
         @Override
         public String toString() {
             return "sorting";
         }
     },
-    Filtering{
+    Filtering {
         public View getView() {
             return new FilterView();
         }
+
         @Override
         public String toString() {
             return "filtering";
