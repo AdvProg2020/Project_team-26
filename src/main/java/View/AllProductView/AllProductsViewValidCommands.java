@@ -1,6 +1,7 @@
 package View.AllProductView;
 
 import View.*;
+import View.SingleProductView.SingleProductView;
 
 public enum AllProductsViewValidCommands {
     ViewCategoriesOfProducts {
@@ -28,18 +29,12 @@ public enum AllProductsViewValidCommands {
         }
     },
     ShowProductsWithId {
+        public View getView(){
+            return new SingleProductView();
+        }
         @Override
         public String toString() {
             return "show\\s+product\\s+(.*)";
-        }
-    },
-    /**
-     * here is sth unusual
-     */
-    Digest {
-        @Override
-        public String toString() {
-            return "digest";
         }
     },
 }

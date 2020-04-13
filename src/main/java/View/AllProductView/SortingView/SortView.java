@@ -1,6 +1,7 @@
 package View.AllProductView.SortingView;
 
-import View.*;
+import View.View;
+import View.ViewManager;
 
 public class SortView extends View {
     @Override

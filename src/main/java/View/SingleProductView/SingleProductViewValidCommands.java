@@ -48,5 +48,11 @@ public enum SingleProductViewValidCommands {
         public String toString() {
             return "show\\s+product\\s+(.*)";
         }
+    },
+    Digest {
+        @Override
+        public String toString() {
+            return "digest";
+        }
     }
 }
