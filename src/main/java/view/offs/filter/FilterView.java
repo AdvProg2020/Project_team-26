@@ -11,7 +11,7 @@ public class FilterView extends View {
         validCommands = EnumSet.allOf(FilterViewValidCommands.class);
     }
     @Override
-    public View run(ViewManager manager) {
-        return null;
+    public void run(ViewManager manager) {
+        return ;
     }
 }

@@ -1,7 +1,7 @@
-package view.buyer.cart;
+package view.cart;
 
-import view.products.single.SingleProductView;
 import view.View;
+import view.products.single.SingleProductView;
 
 public enum CartViewValidCommand {
     ShowAllProducts {

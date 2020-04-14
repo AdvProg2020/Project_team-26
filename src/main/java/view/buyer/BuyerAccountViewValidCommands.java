@@ -1,8 +1,8 @@
 package view.buyer;
 
-import view.buyer.cart.CartView;
 import view.buyer.orders.OrdersView;
 import view.View;
+import view.cart.CartView;
 
 public enum BuyerAccountViewValidCommands {
     ViewPersonalInfo {

@@ -8,7 +8,7 @@ public class SingleProductView extends View {
     EnumSet<SingleProductViewValidCommands> validCommands;
 
     @Override
-    public View run(ViewManager manager) {
-        return null;
+    public void run(ViewManager manager) {
+        return ;
     }
 }

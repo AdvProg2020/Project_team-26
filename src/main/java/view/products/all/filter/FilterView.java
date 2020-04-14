@@ -7,11 +7,13 @@ import java.util.EnumSet;
 
 public class FilterView extends View {
     EnumSet<FilterViewValidCommands> validCommands;
-    public FilterView(){
+
+    public FilterView() {
         validCommands = EnumSet.allOf(FilterViewValidCommands.class);
     }
+
     @Override
-    public View run(ViewManager manager) {
-        return null;
+    public void run(ViewManager manager) {
+        return;
     }
 }

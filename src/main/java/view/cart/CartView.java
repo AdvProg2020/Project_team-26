@@ -1,6 +1,7 @@
-package view.buyer.cart;
+package view.cart;
 
-import view.*;
+import view.View;
+import view.ViewManager;
 
 import java.util.EnumSet;
 
@@ -12,7 +13,7 @@ public class CartView extends View {
     }
 
     @Override
-    public View run(ViewManager manager) {
-        return null;
+    public void run(ViewManager manager) {
+        return ;
     }
 }

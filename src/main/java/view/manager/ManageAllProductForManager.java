@@ -6,8 +6,8 @@ public class ManageAllProductForManager extends View {
     private RemoveProductInManageProduct remove;
 
     @Override
-    public View run(ViewManager manager) {
-        return null;
+    public void run(ViewManager manager) {
+        return;
     }
 
     enum RemoveProductInManageProduct {

@@ -5,7 +5,7 @@ import view.ViewManager;
 
 public class SortView extends View {
     @Override
-    public View run(ViewManager manager) {
-        return null;
+    public void run(ViewManager manager) {
+        return ;
     }
 }

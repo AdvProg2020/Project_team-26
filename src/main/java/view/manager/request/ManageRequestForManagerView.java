@@ -7,7 +7,7 @@ import java.util.EnumSet;
 public class ManageRequestForManagerView extends View {
     EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
     @Override
-    public View run(ViewManager manager) {
-        return null;
+    public void run(ViewManager manager) {
+        return ;
     }
 }

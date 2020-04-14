@@ -4,8 +4,8 @@ import view.*;
 
 public class DisableSelectedFilter extends View {
     @Override
-    public View run(ViewManager manager) {
+    public void run(ViewManager manager) {
         //do suitable thing and return;
-        return null;
+        return ;
     }
 }
