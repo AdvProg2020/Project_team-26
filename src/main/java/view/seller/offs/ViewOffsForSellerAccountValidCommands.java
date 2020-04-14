@@ -6,7 +6,7 @@ public enum ViewOffsForSellerAccountValidCommands {
     ViewOffWithIdForSeller {
         @Override
         public View getView() {
-            return new ViewOffsForSellerAccount();
+            return new ShowAllOffs();
         }
 
         @Override
@@ -17,7 +17,7 @@ public enum ViewOffsForSellerAccountValidCommands {
     EditOffWithIdForSeller {
         @Override
         public View getView() {
-            return new EditOffWithIdForSeller();
+            return new EditOff();
         }
         @Override
         public String toString() {
@@ -27,7 +27,7 @@ public enum ViewOffsForSellerAccountValidCommands {
     AddOffForSeller {
         @Override
         public View getView() {
-            return new AddOffForSeller();
+            return new AddOff();
         }
         @Override
         public String toString() {

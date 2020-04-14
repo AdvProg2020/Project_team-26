@@ -6,7 +6,7 @@ public enum ManageProductForSellerViewValidCommands {
     ViewProductWithId {
         @Override
         public View getView() {
-            return new ViewProductWithId();
+            return new ShowProduct();
         }
 
         @Override
@@ -18,7 +18,7 @@ public enum ManageProductForSellerViewValidCommands {
     ViewBuyersOfProductWithId {
         @Override
         public View getView() {
-            return new ViewBuyersOfProductWithId();
+            return new ShowProductBuyer();
         }
 
         @Override
@@ -29,7 +29,7 @@ public enum ManageProductForSellerViewValidCommands {
     EditProductWithId {
         @Override
         public View getView() {
-            return new EditProductWithId();
+            return new EditProduct();
         }
 
         @Override

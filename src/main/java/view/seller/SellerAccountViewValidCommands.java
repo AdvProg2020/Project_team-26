@@ -1,8 +1,10 @@
 package view.seller;
 
+import view.seller.products.AddProduct;
 import view.seller.products.ManageProductForSellerView;
-import view.seller.offs.ViewOffsForSellerAccount;
+import view.seller.offs.ShowAllOffs;
 import view.View;
+import view.seller.products.RemoveProduct;
 
 public enum SellerAccountViewValidCommands {
 
@@ -63,7 +65,7 @@ public enum SellerAccountViewValidCommands {
     AddProductForSeller {
         @Override
         public View getView() {
-            return new AddProductForSeller();
+            return new AddProduct();
         }
         @Override
         public String toString() {
@@ -73,7 +75,7 @@ public enum SellerAccountViewValidCommands {
     RemoveProductWithProductId {
         @Override
         public View getView() {
-            return new RemoveProductWithProductId();
+            return new RemoveProduct();
         }
         @Override
         public String toString() {
@@ -83,7 +85,7 @@ public enum SellerAccountViewValidCommands {
     ShowAllCategoriesForSeller {
         @Override
         public View getView() {
-            return new ShowAllCategoriesForSeller();
+            return new ShowAllCategories();
         }
         @Override
         public String toString() {
@@ -93,7 +95,7 @@ public enum SellerAccountViewValidCommands {
     ViewAllOffsForSeller {
         @Override
         public View getView() {
-            return new ViewOffsForSellerAccount();
+            return new ShowAllOffs();
         }
 
         @Override
@@ -104,7 +106,7 @@ public enum SellerAccountViewValidCommands {
     ViewBalanceForSeller {
         @Override
         public View getView() {
-            return new ViewBalanceForSeller();
+            return new ViewBalance();
         }
         @Override
         public String toString() {
