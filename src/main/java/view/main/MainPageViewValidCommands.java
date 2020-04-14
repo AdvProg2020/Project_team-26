@@ -5,88 +5,25 @@ import view.products.all.AllProductView;
 import view.help.HelpView;
 import view.View;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum MainPageViewValidCommands {
-    CreateAccount {
-        @Override
-        public View getView() {
-            return new CreateAccount();
-        }
+    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
+    LoginAccount("login\\s+(.*)"),
+    Back("back"),
+    Exit("Exit"),
+    ShowProducts("products"),
+    ShowOffs("offs"),
+    Help("help");
+    private final Pattern commandPattern;
 
-        @Override
-        public String toString() {
-            return "create\\s+account\\s+(buyer|seller|manager)\\s+(.*)";
-        }
-    },
-    LoginAccount {
-        @Override
-        public View getView() {
-            return new Login();
-        }
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-        @Override
-        public String toString() {
-            return "login\\s+(.*)";
-        }
-    },
-    Back {
-        @Override
-        public View getView() {
-            return null;
-        }
-        @Override
-        public String toString() {
-            return "back";
-        }
-    },
-    Exit {
-        @Override
-        public View getView() {
-            return null;
-        }
+    }
 
-        @Override
-        public String toString() {
-            return "Exit";
-        }
-    },
-    ShowProducts {
-        @Override
-
-        public View getView() {
-            return new AllProductView();
-        }
-
-        @Override
-        public String toString() {
-            return "products";
-        }
-    },
-    ShowOffs {
-        @Override
-
-        public View getView() {
-            return new AllOffsView();
-        }
-
-        @Override
-        public String toString() {
-            return "offs";
-        }
-    },
-    Help {
-        @Override
-
-        public View getView() {
-            return new HelpView();
-        }
-
-        @Override
-        public String toString() {
-            return "help";
-        }
-    },
-    ;
-
-    public abstract View getView();
-    //public abstract String getFormatForHelp();
+    MainPageViewValidCommands(String output) {
+        this.commandPattern = Pattern.compile(output);
+    }
 }

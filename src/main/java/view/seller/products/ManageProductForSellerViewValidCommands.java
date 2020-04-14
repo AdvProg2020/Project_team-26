@@ -2,41 +2,24 @@ package view.seller.products;
 
 import view.View;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum ManageProductForSellerViewValidCommands {
-    ViewProductWithId {
-        @Override
-        public View getView() {
-            return new ShowProduct();
-        }
+    ViewProductWithId("show\\s+product\\s+(.*)"),
+    ViewBuyersOfProductWithId("view\\s+buyers\\s+(.*)"),
+    EditProductWithId("edit\\s+(.*)"),
+    AddProduct(" "),
+    RemoveProduct(" "),
+    ShowAllProduct(" ");
+    private final Pattern commandPattern;
 
-        @Override
-        public String toString() {
-            return "view\\s+(.*)";
-        }
-    },
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
+    }
 
-    ViewBuyersOfProductWithId {
-        @Override
-        public View getView() {
-            return new ShowProductBuyer();
-        }
+    ManageProductForSellerViewValidCommands(String input) {
+        commandPattern = Pattern.compile(input);
+    }
 
-        @Override
-        public String toString() {
-            return "view\\s+buyers\\s+(.*)";
-        }
-    },
-    EditProductWithId {
-        @Override
-        public View getView() {
-            return new EditProduct();
-        }
-
-        @Override
-        public String toString() {
-            return "edit\\s+(.*)";
-        }
-    };
-
-    public abstract View getView();
 }

@@ -1,53 +1,23 @@
 package view.offs.filter;
 
-import view.View;
+import java.lang.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public enum FilterViewValidCommands {
-    ShowAvailableFilter {
-        @Override
-        public View getView() {
-            return new ShowAvailbleFilter();
-        }
+    ShowAvailableFilter("show\\s+available\\s+filters"),
+    FilterWithAvailableFilter("filter\\s+(.*)"),
+    ShowCurrentFilters("disable\\s+filter\\s+(.*)"),
+    DisableASelectedFilters("disable\\s+filter\\s+(.*)");
 
-        @Override
-        public String toString() {
-            return "show\\s+available\\s+filters";
-        }
-    },
-    FilterWithAvailableFilter {
-        @Override
-        public View getView() {
-            return new FilterWithAvailbleFilter();
-        }
+    private final Pattern commandPattern;
 
-        @Override
-        public String toString() {
-            return "filter\\s+(.*)";
-        }
-    },
-    ShowCurrentFilters {
-        @Override
-        public View getView() {
-            return new ShowCurrentFilters();
-        }
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-        @Override
-        public String toString() {
-            return "current\\s+filters";
-        }
-    },
-    DisableASelectedFilters {
-        @Override
-        public View getView() {
-            return new DisableSelectedFilter();
-        }
+    }
 
-        @Override
-        public String toString() {
-            return "disable\\s+filter\\s+(.*)";
-        }
-    },
-    ;
-
-    public abstract View getView();
+    FilterViewValidCommands(String output) {
+        this.commandPattern = Pattern.compile(output);
+    }
 }

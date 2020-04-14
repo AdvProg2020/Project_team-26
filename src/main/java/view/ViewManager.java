@@ -3,12 +3,11 @@ package view;
 import view.main.MainPageView;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.Scanner;
 
 public class ViewManager {
-    private boolean isUserLoggedin;
+    private boolean isUserLoggedIn;
     private List<View> pathOfView;
     private List<String> helpFormatForPrint;
     public Scanner scan;
@@ -16,7 +15,7 @@ public class ViewManager {
     public ViewManager() {
         pathOfView = new ArrayList<>();
         helpFormatForPrint = new ArrayList<>();
-        isUserLoggedin = false;
+        isUserLoggedIn = false;
         scan = new Scanner(System.in);
     }
 
@@ -25,12 +24,12 @@ public class ViewManager {
         startView.run(this);
     }
 
-    public void setUserLoggedin(boolean userLoggedin) {
-        isUserLoggedin = userLoggedin;
+    public void setUserLoggedIn(boolean userLoggedIn) {
+        isUserLoggedIn = userLoggedIn;
     }
 
     public boolean getIsUserLoggedin() {
-        return isUserLoggedin;
+        return isUserLoggedIn;
     }
 
     public List<String> getHelpFormatForPrint() {

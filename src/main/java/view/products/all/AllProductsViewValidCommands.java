@@ -2,72 +2,22 @@ package view.products.all;
 
 import view.*;
 import view.offs.filter.FilterView;
-import view.offs.sort.Sort;
+import view.products.all.sort.SortView;
 import view.products.single.SingleProductView;
 
 public enum AllProductsViewValidCommands {
-    ViewCategoriesOfProducts {
-        @Override
-
-        public View getView() {
-            return new CategoriesOfProductsView();
-        }
-
-        @Override
-        public String toString() {
-            return "view\\s+categories";
-        }
-    },
-    Filtering {
-        @Override
-
-        public View getView() {
-            return new FilterView();
-        }
-
-        @Override
-        public String toString() {
-            return "filtering";
-        }
-    },
-    Sorting {
-        @Override
-
-        public View getView() {
-            return new Sort();
-        }
-
-        @Override
-        public String toString() {
-            return "sorting";
-        }
-    },
-    ShowAllProducts {
-        @Override
-
-        public View getView() {
-            return new ShowAllProductsView();
-        }
-
-        @Override
-        public String toString() {
-            return "show\\s+products";
-        }
-    },
-    ShowProductsWithId {
-        @Override
-
-        public View getView() {
-            return new SingleProductView();
-        }
-
-        @Override
-        public String toString() {
-            return "show\\s+product\\s+(.*)";
-        }
-    },
+    ViewCategoriesOfProducts("view\\s+categories", null),
+    Filtering("filtering", new view.products.all.filter.FilterView()),
+    Sorting("sorting", new SortView()),
+    ShowAllProducts("show\\s+products", null),
+    ShowProductsWithId("show\\s+product\\s+(.*)", null),
     ;
+    private final String input;
+    private final View view;
 
-    public abstract View getView();
+    AllProductsViewValidCommands(String input, View view) {
+        this.input = input;
+        this.view = view;
+    }
 }
 

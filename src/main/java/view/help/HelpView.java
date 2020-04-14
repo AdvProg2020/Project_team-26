@@ -13,7 +13,7 @@ public class HelpView extends View {
     }
 
     @Override
-    public void run(ViewManager manager) {
-        return ;
+    public View run(ViewManager manager) {
+        return null ;
     }
 }

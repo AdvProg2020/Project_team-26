@@ -3,78 +3,26 @@ package view.cart;
 import view.View;
 import view.products.single.SingleProductView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum CartViewValidCommand {
-    ShowAllProducts {
-        @Override
-        public View getView() {
-            return new ShowCart();
-        }
-
-        @Override
-        public String toString() {
-            return "show\\s+products";
-        }
-    },
-
-    ShowProductWithId {
-        @Override
-        public View getView() {
-            return new SingleProductView();
-        }
-
-        @Override
-        public String toString() {
-            return "view\\s+(.*)";
-        }
-    },
-
-
-    IncreaseNumberOfProductForBuyerWithId {
-        @Override
-        public View getView() {
-            return new ChangeQuantity();
-        }
-
-        @Override
-        public String toString() {
-            return "increase\\s+(.*)";
-        }
-    },
-    DecreaseNumberOfProductForBuyerWithId {
-        @Override
-        public View getView() {
-            return new ChangeQuantity();
-        }
-
-        @Override
-        public String toString() {
-            return "decrease\\s+(.*)";
-        }
-    },
-    ShowTotalPriceToBuyer {
-        @Override
-        public View getView() {
-            return new TotalPrice();
-        }
-
-        @Override
-        public String toString() {
-            return "show\\s+total\\s+price";
-        }
-    },
-    Purchase {
-        @Override
-        public View getView() {
-            return new AddToCart();
-        }
-
-        @Override
-        public String toString() {
-            return "purchase";
-        }
-    },
+    ShowAllProducts("show\\s+products"),
+    ShowProductWithId("view\\s+(.*)"),
+    IncreaseNumberOfProductForBuyerWithId("increase\\s+(.*)"),
+    DecreaseNumberOfProductForBuyerWithId("decrease\\s+(.*)"),
+    ShowTotalPriceToBuyer("show\\s+total\\s+price"),
+    Purchase("purchase"),
     ;
+    private final Pattern commandPattern;
 
-    public abstract View getView();
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
+
+    }
+
+    CartViewValidCommand(String output) {
+        this.commandPattern = Pattern.compile(output);
+    }
 
 }

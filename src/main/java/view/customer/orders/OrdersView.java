@@ -3,7 +3,7 @@ package view.customer.orders;
 import view.*;
 
 import java.util.EnumSet;
-import java.util.List;
+import java.util.regex.Matcher;
 
 public class OrdersView extends View {
     EnumSet<OrdersViewValidCommands> validCommands;
@@ -13,8 +13,16 @@ public class OrdersView extends View {
     }
 
     @Override
-    public void run(ViewManager manager) {
+    public View run(ViewManager manager) {
 
-        return ;
+        return null;
+    }
+
+    private void rateTheProductWithItsId(Matcher matcher) {
+
+    }
+
+    private void showOrdersWithIdToBuyer(Matcher matcher) {
+
     }
 }
