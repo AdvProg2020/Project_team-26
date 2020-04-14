@@ -1,4 +1,4 @@
-package controller.product.offs;
+package controller.offs;
 
 import model.Off;
 
