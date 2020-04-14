@@ -8,12 +8,12 @@ import java.util.EnumSet;
 public class MainPageView extends View {
     EnumSet<MainPageViewValidCommands> validCommand;
 
-    MainPageView() {
+    public MainPageView() {
         validCommand = EnumSet.allOf(MainPageViewValidCommands.class);
     }
 
     @Override
     public void run(ViewManager manager) {
-        return ;
+        return;
     }
 }

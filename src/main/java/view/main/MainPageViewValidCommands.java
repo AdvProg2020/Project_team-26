@@ -88,4 +88,5 @@ public enum MainPageViewValidCommands {
     ;
 
     public abstract View getView();
+    //public abstract String getFormatForHelp();
 }
