@@ -7,7 +7,7 @@ public enum SingleProductViewValidCommands {
     AddTOTHEUserCart {
         @Override
         public View getView() {
-            return new AddToTheUserCart();
+            return new AddToCart();
         }
 
         @Override
@@ -18,7 +18,7 @@ public enum SingleProductViewValidCommands {
     SelectAUserForBuyingFrom {
         @Override
         public View getView() {
-            return new SelectAUserForBuyingFrom();
+            return new SelectSeller();
         }
 
         @Override
@@ -40,7 +40,7 @@ public enum SingleProductViewValidCommands {
     CompareToProductWithId {
         @Override
         public View getView() {
-            return new CompareToProductWithId();
+            return new CompareTo();
         }
 
         @Override
@@ -51,7 +51,7 @@ public enum SingleProductViewValidCommands {
     CommentsForThisProduct {
         @Override
         public View getView() {
-            return new CommentsForThisProduct();
+            return new Comments();
         }
 
         @Override
@@ -62,7 +62,7 @@ public enum SingleProductViewValidCommands {
     AddCommentToThisProduct {
         @Override
         public View getView() {
-            return new AddCommentToThisProduct();
+            return new AddComment();
         }
 
         @Override
@@ -84,7 +84,7 @@ public enum SingleProductViewValidCommands {
     ShowProductInOffPage {
         @Override
         public View getView() {
-            return new OffsForThisProduct();
+            return new Offs();
         }
 
         @Override

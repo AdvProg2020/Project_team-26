@@ -20,7 +20,7 @@ public enum MainPageViewValidCommands {
     LoginAccount {
         @Override
         public View getView() {
-            return new LoginView();
+            return new Login();
         }
 
         @Override

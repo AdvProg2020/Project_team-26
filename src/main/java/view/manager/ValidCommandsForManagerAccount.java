@@ -52,7 +52,7 @@ public enum ValidCommandsForManagerAccount {
     CreateDiscountCode {
         @Override
         public View getView() {
-            return new CreateDiscountCode();
+            return new CreatePromoCode();
         }
 
         @Override
@@ -63,7 +63,7 @@ public enum ValidCommandsForManagerAccount {
     ViewAllDiscountCodes {
         @Override
         public View getView() {
-            return new ViewAllDiscountCodes();
+            return new ViewAllPromoCodes();
         }
 
         @Override

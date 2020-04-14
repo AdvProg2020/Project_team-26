@@ -1,80 +1,79 @@
-package view.cart;
+package view.customer;
 
+import view.customer.orders.OrdersView;
 import view.View;
-import view.products.single.SingleProductView;
+import view.cart.CartView;
 
-public enum CartViewValidCommand {
-    ShowAllProducts {
+public enum CustomerInfoView {
+    ViewPersonalInfo {
         @Override
         public View getView() {
-            return new ShowCart();
+            return new PersonalInfo();
         }
 
         @Override
         public String toString() {
-            return "show\\s+products";
+            return "view\\s+personal\\s+info";
         }
     },
-
-    ShowProductWithId {
+    EditTheFiled {
         @Override
         public View getView() {
-            return new SingleProductView();
+            return new EditTheField();
         }
 
         @Override
         public String toString() {
-            return "view\\s+(.*)";
+            return "edit\\s+(.*)";
         }
     },
 
-
-    IncreaseNumberOfProductForBuyerWithId {
+    ViewCart {
         @Override
         public View getView() {
-            return new ChangeQuantity();
+            return new CartView();
         }
 
         @Override
         public String toString() {
-            return "increase\\s+(.*)";
+            return "view\\s+cart";
         }
     },
-    DecreaseNumberOfProductForBuyerWithId {
+
+    ViewOrdersForBuyer {
         @Override
         public View getView() {
-            return new ChangeQuantity();
+            return new OrdersView();
         }
 
         @Override
         public String toString() {
-            return "decrease\\s+(.*)";
+            return "view\\s+orders";
         }
     },
-    ShowTotalPriceToBuyer {
+    ViewBalanceToBuyer {
         @Override
         public View getView() {
-            return new TotalPrice();
+
+            return new PersonalInfo();
         }
 
         @Override
         public String toString() {
-            return "show\\s+total\\s+price";
+            return "view\\s+balance";
         }
     },
-    Purchase {
+    ViewDiscountCodesToBuyer {
         @Override
         public View getView() {
-            return new AddToCart();
+            return new PromoCodes();
         }
 
         @Override
         public String toString() {
-            return "purchase";
+            return "view\\s+discount\\s+codes";
         }
-    },
-    ;
+    };
 
     public abstract View getView();
-
 }
