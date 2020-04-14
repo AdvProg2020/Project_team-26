@@ -11,7 +11,7 @@ public class Customer extends User {
 
     public Customer(int id) {
         super(id);
-        orders = new ArrayList<>();
-        availablePromos = new ArrayList<>();
+        orders = new ArrayList<Order>();
+        availablePromos = new ArrayList<Promo>();
     }
 }

@@ -1,9 +1,8 @@
 package model;
 
-public class OrderItem implements Savable {
+public class OrderItem {
 
     private int id;
-    private boolean isLoaded;
     private Product product;
     private int amount;
     private Seller seller;
@@ -13,18 +12,5 @@ public class OrderItem implements Savable {
 
     public OrderItem(int id) {
         this.id = id;
-    }
-
-    @Override
-    public void load() {
-        if(!isLoaded) {
-
-            isLoaded = true;
-        }
-    }
-
-    @Override
-    public void save() {
-
     }
 }

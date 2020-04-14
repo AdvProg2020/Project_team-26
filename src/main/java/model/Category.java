@@ -3,10 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category implements Savable {
+public class Category {
 
     private int id;
-    private boolean isLoaded;
     private String Name;
     private List<CategoryFeature> features;
     private Category parent;
@@ -15,21 +14,8 @@ public class Category implements Savable {
 
     public Category(int id) {
         this.id = id;
-        features = new ArrayList<>();
-        subCategory = new ArrayList<>();
-        products = new ArrayList<>();
-    }
-
-    @Override
-    public void load() {
-        if (!isLoaded) {
-
-            isLoaded = true;
-        }
-    }
-
-    @Override
-    public void save() {
-
+        features = new ArrayList<CategoryFeature>();
+        subCategory = new ArrayList<Category>();
+        products = new ArrayList<Product>();
     }
 }
