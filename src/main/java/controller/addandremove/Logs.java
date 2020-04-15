@@ -4,19 +4,19 @@ import model.Order;
 
 public class Logs {
 
-    public Order[] getLogs(int firstIndex, int secondIndex) {
+    public Order[] getOrders(int firstIndex, int secondIndex) {
 
     }
 
-    public Order[] getASingleLog() {
+    public Order[] getASingleOrder() {
 
     }
 
-    public void addALog(Order order) {
+    public void addAnOrder(Order order) {
 
     }
 
-    public void deleteALog(Order order) {
+    public void deleteAnOrder(Order order) {
 
     }
 }

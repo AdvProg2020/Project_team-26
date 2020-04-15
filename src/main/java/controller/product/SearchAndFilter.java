@@ -16,7 +16,7 @@ public class SearchAndFilter {
 
     }
 
-    public Product[] addAFilter(String filter) {
+    public Product[] addAFilter(String filter, int firstIndex, int secondIndex) {
 
     }
 
