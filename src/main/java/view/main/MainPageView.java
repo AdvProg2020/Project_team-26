@@ -3,11 +3,13 @@ package view.main;
 import view.*;
 import view.ViewManager;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Set;
 import java.util.regex.Matcher;
 
 public class MainPageView extends View {
-    EnumSet<MainPageViewValidCommands> validCommand;
+    Set<MainPageViewValidCommands> validCommand;
 
     public MainPageView() {
         validCommand = EnumSet.allOf(MainPageViewValidCommands.class);
@@ -18,11 +20,15 @@ public class MainPageView extends View {
         return null;
     }
 
-    private void back(Matcher matcher) {
+    private void authorizing() {
 
     }
 
-    private void help(Matcher matcher) {
+    private void back() {
+
+    }
+
+    private void help(ArrayList<String> CommandsFormat) {
 
     }
 

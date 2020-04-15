@@ -1,21 +1,15 @@
 package view.main;
 
-import view.ViewManager;
-import view.offs.AllOffsView;
-import view.products.all.AllProductView;
-import view.help.HelpView;
-import view.View;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum MainPageViewValidCommands {
+public enum AuthorizingValidCommands {
+    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
+    LoginAccount("login\\s+(.*)"),
     Back("back"),
     Exit("Exit"),
-    ShowProducts("products"),
-    ShowOffs("offs"),
     Help("help");
     private final Pattern commandPattern;
     //private boolean isLoggedIn;
@@ -25,19 +19,18 @@ public enum MainPageViewValidCommands {
 
     }
 
-    MainPageViewValidCommands(String output) {
-        //this.isLoggedIn = isLoggedIn;
+    AuthorizingValidCommands(String output) {
+        //   this.isLoggedIn = isLoggedIn;
         this.commandPattern = Pattern.compile(output);
     }
 
     public static List<String> commands(boolean isLoggedIn) {
         ArrayList<String> list = new ArrayList<>();
-        list.addAll(AuthorizingValidCommands.commands(isLoggedIn));
-        list.add("products");
-        list.add("offs");
-        list.add("back");
-        list.add("Exit");
-        list.add("help");
+        if (!isLoggedIn) {
+            list.add("create account [type] [username]");
+            list.add("login [username]");
+        } else
+            list.add("logout");
         return list;
     }
 }

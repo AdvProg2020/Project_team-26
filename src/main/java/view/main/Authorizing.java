@@ -10,7 +10,11 @@ public class Authorizing extends View {
         return null;
     }
 
-    private void logout() {
+    private void exit() {
+
+    }
+
+    private void back() {
 
     }
 

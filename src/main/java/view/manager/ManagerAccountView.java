@@ -22,39 +22,43 @@ public class ManagerAccountView extends View {
         return null;
     }
 
-    public void createPromoCode(Matcher matcher) {
+    private void createPromoCode(Matcher matcher) {
 
     }
 
-    public void manageAllProductForManager(Matcher matcher) {
+    private void manageAllProductForManager(Matcher matcher) {
 
     }
 
-    public void validCommandsForManagerAccount(Matcher matcher) {
+    private void removeProduct(Matcher matcher) {
 
     }
 
-    public void viewAllPromoCodes(Matcher matcher) {
+    private void validCommandsForManagerAccount(Matcher matcher) {
 
     }
 
-    public void viewPersonalInfo(Matcher matcher) {
+    private void viewAllPromoCodes(Matcher matcher) {
 
     }
 
-    public void goToProductsMenu(Matcher matcher) {
+    private void viewPersonalInfo(Matcher matcher) {
 
     }
 
-    public void manageCategories(Matcher matcher) {
+    private void goToProductsMenu(Matcher matcher) {
 
     }
 
-    public void manageRequestForManager(Matcher matcher) {
+    private void manageCategories(Matcher matcher) {
 
     }
 
-    public void manageUsers(Matcher matcher) {
+    private void manageRequestForManager(Matcher matcher) {
+
+    }
+
+    private void manageUsers(Matcher matcher) {
 
     }
 

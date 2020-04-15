@@ -2,7 +2,9 @@ package view.manager.discount;
 
 import view.*;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class discountForManagerView extends View {
