@@ -13,14 +13,14 @@ public class SearchAndFilter {
     }
 
     public Product[] searchForAProductByName(String name) {
-
+        return null;
     }
 
     public Product[] addAFilter(String filter, int firstIndex, int secondIndex) {
-
+        return null;
     }
 
     public Product[] removeAFilter(String filter) {
-
+        return null;
     }
 }

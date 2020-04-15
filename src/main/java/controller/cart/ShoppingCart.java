@@ -4,19 +4,19 @@ import model.Product;
 
 public class ShoppingCart {
 
-    public void addProduct(Product product) {
+    public void addProduct(int productId) {
 
     }
 
-    public void addProductCount(Product product) {
+    public void addProductCount(int productId, int amount) {
 
     }
 
-    public void decreaseProductCount(Product product) {
+    public void decreaseProductCount(int productId, int amount) {
 
     }
 
-    public void removeProduct(Product product) {
+    public void removeProduct(int productId) {
 
     }
 

@@ -6,7 +6,7 @@ import model.Product;
 public class ProductSetting {
 
     public Product getProductByName(String name) {
-
+        return null;
     }
 
     public void changeProductName(String name, int id) {

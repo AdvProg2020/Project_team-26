@@ -5,7 +5,7 @@ import model.Product;
 
 public class AddAReview {
 
-    public void addAComment(String comment, Customer customer, Product product) {
+    public void addAComment(String comment, int customerId, int productId) {
 
     }
 
@@ -17,7 +17,7 @@ public class AddAReview {
 
     }
 
-    public void addRating(double rate, Customer customer, Product product) {
+    public void addRating(double rate, int customerId, int productId) {
 
     }
 

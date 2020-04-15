@@ -6,6 +6,7 @@ public class RegisterForm {
     private String email;
     private String username;
     private String password;
+    private String role;
     private int phoneNumber;
 
     public String getCompanyName() {
@@ -46,5 +47,13 @@ public class RegisterForm {
 
     public void setPhoneNumber(int phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

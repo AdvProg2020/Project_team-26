@@ -5,20 +5,20 @@ import model.Product;
 
 public class OffOptions {
 
-        public int createANewSale() {
+        public int createANewOff() {
+                return 0;
+        }
+
+        public void addProductToOff(int id, int productId) {
 
         }
 
-        public void addProductToOff(int id, Product product) {
-
-        }
-
-        public void removeProductFromOff(int id, Product product) {
+        public void removeProductFromOff(int id, int productId) {
 
         }
 
 
-        public void removeASale(int id) {
+        public void removeAOff(int id) {
 
         }
 }

@@ -2,20 +2,20 @@ package controller.account;
 
 public class Authentication {
 
-    public toBeNamedObject loginClient(String username,String password) {
-
+    public String loginClient(String username,String password) {
+        return username;
     }
 
-    public RegisterForm registerClient(String username,String password) {
-
+    public RegisterForm getRegisterForm(String username,String password) {
+        return new RegisterForm();
     }
 
-    public void completeRegisterProcess(RegisterForm registerForm) {
+    public void registerClient(RegisterForm registerForm) {
 
     }
 
     public RegisterForm createManager(String username,String password) {
-
+        return new RegisterForm();
     }
 
     public void logout() {

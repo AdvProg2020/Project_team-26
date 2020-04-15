@@ -4,15 +4,19 @@ import model.Promo;
 
 public class PromoCode {
 
-    public void createPromoCode(Promo discount) {
+    public PromoForm getPromoCodeTemplate() {
+        return new PromoForm();
+    }
+
+    public void createPromoCode(PromoForm discount) {
 
     }
 
-    public void editPromoCode(Promo oldCode, Promo newCode) {
+    public void editPromoCode(int oldPromoCodeId, PromoForm newCode) {
 
     }
 
-    public void removePromoCode(Promo discount) {
+    public void removePromoCode(int promoCodeId) {
 
     }
 }
