@@ -10,7 +10,9 @@ public enum MainPageViewValidCommands {
     Exit("Exit"),
     ShowProducts("products"),
     ShowOffs("offs"),
-    Help("help");
+    Help("help"),
+    Logout("logout");
+
     private final Pattern commandPattern;
     //private boolean isLoggedIn;
 
@@ -26,7 +28,6 @@ public enum MainPageViewValidCommands {
 
     public static List<String> commands(boolean isLoggedIn) {
         ArrayList<String> list = new ArrayList<>();
-        list.addAll(AuthenticationValidCommands.commands(isLoggedIn));
         list.add("products");
         list.add("offs");
         list.add("back");

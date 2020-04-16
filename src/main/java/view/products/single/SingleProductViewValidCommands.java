@@ -15,7 +15,8 @@ public enum SingleProductViewValidCommands {
     Digest("digest"),
     Offs("offs"),
     SelectAUserForBuyingFrom("select\\s+seller\\s+(.*)"),
-    ShowProductInOffPage("show\\s+product\\s+(.*)");
+    ShowProductInOffPage("show\\s+product\\s+(.*)"),
+    ChangeInfo("");
     private final Pattern commandPattern;
 
     public Matcher getStringMatcher(String input) {

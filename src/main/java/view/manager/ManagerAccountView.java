@@ -34,9 +34,6 @@ public class ManagerAccountView extends View {
 
     }
 
-    private void validCommandsForManagerAccount(Matcher matcher) {
-
-    }
 
     private void viewAllPromoCodes(Matcher matcher) {
 
