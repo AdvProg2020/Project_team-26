@@ -12,6 +12,9 @@ public class CartController {
 
     }
 
+    public void removeProduct(int productId, String token) {
+
+    }
 
     public void purchase() {
 
