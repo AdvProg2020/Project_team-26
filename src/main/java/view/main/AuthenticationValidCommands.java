@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public enum AuthorizingValidCommands {
+public enum AuthenticationValidCommands {
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
     LoginAccount("login\\s+(.*)"),
     Back("back"),
@@ -19,7 +19,7 @@ public enum AuthorizingValidCommands {
 
     }
 
-    AuthorizingValidCommands(String output) {
+    AuthenticationValidCommands(String output) {
         //   this.isLoggedIn = isLoggedIn;
         this.commandPattern = Pattern.compile(output);
     }

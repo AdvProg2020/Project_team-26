@@ -1,11 +1,5 @@
 package view.main;
 
-import view.ViewManager;
-import view.offs.AllOffsView;
-import view.products.all.AllProductView;
-import view.help.HelpView;
-import view.View;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -32,7 +26,7 @@ public enum MainPageViewValidCommands {
 
     public static List<String> commands(boolean isLoggedIn) {
         ArrayList<String> list = new ArrayList<>();
-        list.addAll(AuthorizingValidCommands.commands(isLoggedIn));
+        list.addAll(AuthenticationValidCommands.commands(isLoggedIn));
         list.add("products");
         list.add("offs");
         list.add("back");

@@ -1,7 +1,5 @@
 package view.manager;
 
-import view.main.AuthorizingValidCommands;
-import view.main.MainPageViewValidCommands;
 import view.manager.category.ManageCategoryForManagerView;
 import view.manager.discount.discountForManagerView;
 import view.manager.request.ManageRequestForManagerView;
