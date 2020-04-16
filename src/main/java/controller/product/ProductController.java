@@ -3,7 +3,11 @@ package controller.product;
 import model.Category;
 import model.Product;
 
-public class ProductSetting {
+public class ProductController {
+
+    public int createProduct(String name, String token) {
+        return 0;
+    }
 
     public Product getProductByName(int id, String token) {
         return null;
@@ -21,7 +25,11 @@ public class ProductSetting {
 
     }
 
-    public void changeProductsNumber(int id, int amount, String token) {
+    public void changeAmountInStock(int id, int amount, String token) {
+
+    }
+
+    public void changeDescription(String description, String token) {
 
     }
 }
