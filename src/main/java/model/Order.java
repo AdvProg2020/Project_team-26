@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Order implements Savable {
+public class Order {
 
     private int id;
     private boolean isLoaded;
@@ -16,19 +16,6 @@ public class Order implements Savable {
 
     public Order(int id) {
         this.id = id;
-        items = new ArrayList<>();
-    }
-
-    @Override
-    public void load() {
-        if (!isLoaded) {
-
-            isLoaded = true;
-        }
-    }
-
-    @Override
-    public void save() {
-
+        items = new ArrayList<OrderItem>();
     }
 }

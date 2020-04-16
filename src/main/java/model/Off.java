@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Off implements Savable {
+public class Off {
 
     private int id;
     private boolean isLoaded;
@@ -14,19 +14,6 @@ public class Off implements Savable {
 
     public Off(int id) {
         this.id = id;
-        items = new ArrayList<>();
-    }
-
-    @Override
-    public void load() {
-        if(!isLoaded) {
-
-            isLoaded = true;
-        }
-    }
-
-    @Override
-    public void save() {
-
+        items = new ArrayList<OffItem>();
     }
 }

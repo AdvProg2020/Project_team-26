@@ -1,9 +1,8 @@
 package model;
 
-public class Rate implements Savable {
+public class Rate {
 
     private int id;
-    private boolean isLoaded;
     private Customer customer;
     private double score;
     private Product product;
@@ -17,20 +16,5 @@ public class Rate implements Savable {
         this.customer = customer;
         this.score = score;
         this.product = product;
-        isLoaded = true;
-    }
-
-
-    @Override
-    public void load() {
-        if(!isLoaded) {
-
-            isLoaded = true;
-        }
-    }
-
-    @Override
-    public void save() {
-
     }
 }
