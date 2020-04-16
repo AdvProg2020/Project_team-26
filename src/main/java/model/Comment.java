@@ -1,9 +1,8 @@
 package model;
 
-public class Comment implements Savable {
+public class Comment {
 
     private int id;
-    private boolean isLoaded;
     private Customer customer;
     private Product product;
     private String text;
@@ -11,18 +10,5 @@ public class Comment implements Savable {
 
     public Comment(int id) {
         this.id = id;
-    }
-
-    @Override
-    public void load() {
-        if(!isLoaded) {
-
-            isLoaded = true;
-        }
-    }
-
-    @Override
-    public void save() {
-
     }
 }
