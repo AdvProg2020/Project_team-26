@@ -9,7 +9,7 @@ public class ProductSetting {
         return null;
     }
 
-    public void changeProductName(int id, String name) {
+    public void changeProductName(int id, String name, String token) {
 
     }
 
@@ -17,11 +17,11 @@ public class ProductSetting {
 
     }
 
-    public void changeProductCategory(int id, int categoryId) {
+    public void changeProductCategory(int id, int categoryId, String token) {
 
     }
 
-    public void changeProductsNumber(int id, int amount) {
+    public void changeProductsNumber(int id, int amount, String token) {
 
     }
 }

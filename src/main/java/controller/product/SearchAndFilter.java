@@ -12,15 +12,19 @@ public class SearchAndFilter {
         filters = new ArrayList<>();
     }
 
-    public Product[] searchForAProductByName(String name) {
+    public Product[] searchForAProductByName(String name,String token) {
         return null;
     }
 
-    public Product[] addAFilter(String filter, int firstIndex, int secondIndex) {
+    public Product[] addAFilter(String filter,String token) {
         return null;
     }
 
-    public Product[] removeAFilter(String filter) {
+    public Product[] getProductsBasedOnFiltersForOnePage(String token) {
+        return null;
+    }
+
+    public Product[] removeAFilter(String filter, String token) {
         return null;
     }
 }

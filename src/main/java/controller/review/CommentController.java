@@ -1,7 +1,4 @@
-package controller.comment;
-
-import model.Customer;
-import model.Product;
+package controller.review;
 
 public class CommentController {
 
@@ -13,7 +10,4 @@ public class CommentController {
 
     }
 
-    public void editComment(int id, String newText, String token) {
-
-    }
 }

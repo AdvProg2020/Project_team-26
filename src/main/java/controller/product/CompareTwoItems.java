@@ -2,7 +2,7 @@ package controller.product;
 
 public class CompareTwoItems {
 
-    public String compareItems(int firstId, int secondId) {
+    public String compareItems(int firstId, int secondId, String token) {
         return null;
     }
 }

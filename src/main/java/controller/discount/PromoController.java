@@ -6,15 +6,15 @@ public class PromoController {
         return new PromoDetailsController();
     }
 
-    public void createPromoCode(String promoCode) {
+    public void createPromoCode(String promoCode, String token) {
 
     }
 
-    public void editPromoCode(int oldPromoCodeId, PromoDetailsController newCode) {
+    public void editPromoCode(int oldPromoCodeId, PromoDetailsController newCode, String token) {
 
     }
 
-    public void removePromoCode(int promoCodeId) {
+    public void removePromoCode(int promoCodeId, String token) {
 
     }
 }
