@@ -39,4 +39,8 @@ public class MainPageView extends View {
     private void showProducts(Matcher matcher) {
 
     }
+
+    private void logout(Matcher matcher) {
+
+    }
 }

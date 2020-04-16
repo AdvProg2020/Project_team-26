@@ -44,4 +44,8 @@ public class SingleProductView extends View {
     private void digest(Matcher matcher) {
 
     }
+
+    private void changeInfo(Matcher matcher, boolean isItManager) {
+
+    }
 }

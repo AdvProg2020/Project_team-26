@@ -10,7 +10,7 @@ public class Rating {
 
     }
 
-    public void editRating(int id, double newRating, String token) {
+    public void editRating(int id, double  newRating, String token) {
 
     }
 }
