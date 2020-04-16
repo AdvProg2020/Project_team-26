@@ -2,30 +2,20 @@ package view.customer.orders;
 
 import view.View;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum OrdersViewValidCommands {
-    ShowOrdersWithIdToBuyer {
-        @Override
-        public View getView() {
-            return new ShowOrdersWithIdToBuyer();
-        }
+    ShowOrdersWithIdToBuyer("show\\s+order\\s+(.*)"),
+    RateTheProductWithItsId("rate\\s+(.*) ([1-5]{1})");
+    private final Pattern commandPattern;
 
-        @Override
-        public String toString() {
-            return "show\\s+order\\s+(.*)";
-        }
-    },
-    RateTheProductWithItsId {
-        @Override
-        public View getView() {
-            return new RateTheProductWithItsId();
-        }
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-        @Override
-        public String toString() {
-            return "rate\\s+(.*) ([1-5]{1})";
-        }
-    },
-    ;
+    }
 
-    public abstract View getView();
+    OrdersViewValidCommands(String output) {
+        this.commandPattern = Pattern.compile(output);
+    }
 }

@@ -4,76 +4,29 @@ import view.customer.orders.OrdersView;
 import view.View;
 import view.cart.CartView;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum CustomerInfoView {
-    ViewPersonalInfo {
-        @Override
-        public View getView() {
-            return new PersonalInfo();
-        }
+    ViewPersonalInfo("view\\s+personal\\s+info", null),
+    EditTheFiled("edit\\s+(.*)", null),
 
-        @Override
-        public String toString() {
-            return "view\\s+personal\\s+info";
-        }
-    },
-    EditTheFiled {
-        @Override
-        public View getView() {
-            return new EditTheField();
-        }
+    ViewCart("view\\s+cart", null),
 
-        @Override
-        public String toString() {
-            return "edit\\s+(.*)";
-        }
-    },
+    ViewOrdersForBuyer("view\\s+orders", new OrdersView()),
+    ViewBalanceToBuyer("view\\s+balance", null),
+    ViewDiscountCodesToBuyer("view\\s+discount\\s+codes", null);
+    private final Pattern commandPattern;
+    private final View view;
 
-    ViewCart {
-        @Override
-        public View getView() {
-            return new CartView();
-        }
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-        @Override
-        public String toString() {
-            return "view\\s+cart";
-        }
-    },
+    }
 
-    ViewOrdersForBuyer {
-        @Override
-        public View getView() {
-            return new OrdersView();
-        }
+    CustomerInfoView(String output, View view) {
+        this.commandPattern = Pattern.compile(output);
+        this.view = view;
+    }
 
-        @Override
-        public String toString() {
-            return "view\\s+orders";
-        }
-    },
-    ViewBalanceToBuyer {
-        @Override
-        public View getView() {
-
-            return new PersonalInfo();
-        }
-
-        @Override
-        public String toString() {
-            return "view\\s+balance";
-        }
-    },
-    ViewDiscountCodesToBuyer {
-        @Override
-        public View getView() {
-            return new PromoCodes();
-        }
-
-        @Override
-        public String toString() {
-            return "view\\s+discount\\s+codes";
-        }
-    };
-
-    public abstract View getView();
 }

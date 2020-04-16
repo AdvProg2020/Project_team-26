@@ -3,17 +3,40 @@ package view.main;
 import view.*;
 import view.ViewManager;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.Set;
+import java.util.regex.Matcher;
 
 public class MainPageView extends View {
-    EnumSet<MainPageViewValidCommands> validCommand;
+    Set<MainPageViewValidCommands> validCommand;
 
-    MainPageView() {
+    public MainPageView() {
         validCommand = EnumSet.allOf(MainPageViewValidCommands.class);
     }
 
     @Override
-    public void run(ViewManager manager) {
-        return ;
+    public View run(ViewManager manager) {
+        return null;
+    }
+
+    private void authorizing() {
+
+    }
+
+    private void back() {
+
+    }
+
+    private void help(ArrayList<String> CommandsFormat) {
+
+    }
+
+    private void showOffs(Matcher matcher) {
+
+    }
+
+    private void showProducts(Matcher matcher) {
+
     }
 }

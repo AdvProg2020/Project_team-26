@@ -1,53 +1,21 @@
 package view.products.all.sort;
 
-import view.View;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public enum SortingViewValidCommands {
-    ShowAvailbleSorts {
-        @Override
-        public View getView() {
-            return new ShowAvailbleSort();
-        }
+    ShowAvailableSorts("show\\s+available\\s+sorts"),
+    Sort("sort\\s+(.*)"),
+    CurrentSort("current\\s+sort"),
+    DisableSort("disable\\s+sort");
+    private final Pattern commandPattern;
 
-        @Override
-        public String toString() {
-            return "show\\s+available\\s+sorts";
-        }
-    },
-    Sort {
-        @Override
-        public View getView() {
-            return new Sort();
-        }
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-        @Override
-        public String toString() {
-            return "sort\\s+(.*)";
-        }
-    },
-    CurrentSort {
-        @Override
-        public View getView() {
-            return new CurrentSort();
-        }
+    }
 
-        @Override
-        public String toString() {
-            return "current\\s+sort";
-        }
-    },
-    DisableSort {
-        @Override
-        public View getView() {
-            return new DisableSort();
-        }
-
-        @Override
-        public String toString() {
-            return "disable\\s+sort";
-        }
-    },
-    ;
-
-    public abstract View getView();
+    SortingViewValidCommands(String output) {
+        this.commandPattern = Pattern.compile(output);
+    }
 }

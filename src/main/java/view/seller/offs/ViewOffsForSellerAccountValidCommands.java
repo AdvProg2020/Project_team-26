@@ -2,38 +2,21 @@ package view.seller.offs;
 
 import view.View;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum ViewOffsForSellerAccountValidCommands {
-    ViewOffWithIdForSeller {
-        @Override
-        public View getView() {
-            return new ShowAllOffs();
-        }
+    ViewOffWithIdForSeller("view\\s+(.*)"),
+    EditOffWithIdForSeller("edit\\s+(.*)"),
+    AddOffForSeller("add\\s+off");
+    private final Pattern commandPattern;
 
-        @Override
-        public String toString() {
-            return "view\\s+(.*)";
-        }
-    },
-    EditOffWithIdForSeller {
-        @Override
-        public View getView() {
-            return new EditOff();
-        }
-        @Override
-        public String toString() {
-            return "edit\\s+(.*)";
-        }
-    },
-    AddOffForSeller {
-        @Override
-        public View getView() {
-            return new AddOff();
-        }
-        @Override
-        public String toString() {
-            return "add\\s+off";
-        }
-    };
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
+    }
 
-    public abstract View getView();
+    ViewOffsForSellerAccountValidCommands(String output) {
+        this.commandPattern = Pattern.compile(output);
+    }
+
 }

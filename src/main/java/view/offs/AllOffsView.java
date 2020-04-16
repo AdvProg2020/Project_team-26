@@ -3,6 +3,7 @@ package view.offs;
 import view.*;
 
 import java.util.EnumSet;
+import java.util.regex.Matcher;
 
 public class AllOffsView extends View {
     EnumSet<AllOffsValidCommands> validCommands;
@@ -12,7 +13,20 @@ public class AllOffsView extends View {
     }
 
     @Override
-    public void run(ViewManager manager) {
-        return ;
+    public View run(ViewManager manager) {
+        return null;
     }
+
+    private void showProductWithId(Matcher matcher) {
+
+    }
+
+    private void sorting(Matcher matcher) {
+
+    }
+
+    private void filtering(Matcher matcher) {
+
+    }
+
 }

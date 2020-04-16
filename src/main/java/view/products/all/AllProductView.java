@@ -1,6 +1,7 @@
 package view.products.all;
 
 import view.*;
+import view.products.all.sort.SortView;
 
 import java.util.EnumSet;
 
@@ -12,7 +13,27 @@ public class AllProductView extends View {
     }
 
     @Override
-    public void run(ViewManager manager) {
-        return ;
+    public View run(ViewManager manager) {
+        return null;
+    }
+
+    private void showAllProducts() {
+
+    }
+
+    private void categoriesOfProducts() {
+
+    }
+
+    private void filtering() {
+
+    }
+
+    private void sorting() {
+
+    }
+
+    private void showProductsWithId() {
+
     }
 }

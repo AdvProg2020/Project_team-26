@@ -1,44 +1,27 @@
 package view.offs;
 
-import view.offs.filter.FilterView;
-import view.offs.sort.Sort;
-import view.products.single.SingleProductView;
 import view.View;
+import view.offs.filter.FilterView;
+import view.offs.sort.SortView;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public enum AllOffsValidCommands {
-    ShowProductWithId {
-        @Override
-        public View getView() {
-            return new SingleProductView();
-        }
+    ShowProductWithId("show\\s+product\\s+(.*)", null),
+    Sorting("sorting", new SortView()),
+    Filtering("filtering", new FilterView());
+    private final Pattern commandPattern;
+    private final View view;
 
-        @Override
-        public String toString() {
-            return "show\\s+product\\s+(.*)";
-        }
-    },
-    Sorting {
-        @Override
-        public View getView() {
-            return new Sort();
-        }
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-        @Override
-        public String toString() {
-            return "sorting";
-        }
-    },
-    Filtering {
-        @Override
-        public View getView() {
-            return new FilterView();
-        }
+    }
 
-        @Override
-        public String toString() {
-            return "filtering";
-        }
-    };
+    AllOffsValidCommands(String output, View view) {
+        this.commandPattern = Pattern.compile(output);
+        this.view = view;
+    }
 
-    public abstract View getView();
 }

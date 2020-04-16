@@ -1,119 +1,36 @@
 package view.seller;
 
-import view.seller.products.AddProduct;
+import view.seller.offs.offView;
 import view.seller.products.ManageProductForSellerView;
-import view.seller.offs.ShowAllOffs;
 import view.View;
-import view.seller.products.RemoveProduct;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public enum SellerAccountViewValidCommands {
 
-    ViewPersonalInfo {
-        @Override
-        public View getView() {
-            return new ViewPersonalInfo();
-        }
-        @Override
-        public String toString() {
-            return "view\\s+personal\\s+info";
-        }
-    },
-    EditTheFiled {
-        @Override
-        public View getView() {
-            return new EditTheFiled();
-        }
-        @Override
-        public String toString() {
-            return "edit\\s+(.*)";
-        }
-    },
+    ViewPersonalInfo("view\\s+personal\\s+info", null),
+    EditTheFiled("edit\\s+(.*)", null),
+    ViewCompanyInfo("view\\s+company\\s+information", null),
+    ViewSalesHistoryForSeller("view\\s+sales\\s+history", null),
 
-    ViewCompanyInfo {
-        @Override
-        public View getView() {
-            return new ViewCompanyInfo();
-        }
-        @Override
-        public String toString() {
-            return "view\\s+company\\s+information";
-        }
-    },
+    ManageProduct("manage\\s+products", new ManageProductForSellerView()),
+    AddProductForSeller("add\\s+product", null),
+    RemoveProductWithProductId("remove\\s+product\\s+productId", null),
+    ShowAllCategoriesForSeller("show\\s+categories", null),
+    ViewAllOffsForSeller("view\\s+offs", new offView()),
+    ViewBalanceForSeller("view\\s+balance", null);
+    private final Pattern commandPattern;
+    private final View view;
 
-    ViewSalesHistoryForSeller {
-        @Override
-        public View getView() {
-            return new ViewSalesHistoryForSeller();
-        }
-        @Override
-        public String toString() {
-            return "view\\s+sales\\s+history";
-        }
-    },
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-    ManageProduct {
-        @Override
-        public View getView() {
-            return new ManageProductForSellerView();
-        }
+    }
 
-        @Override
-        public String toString() {
-            return "manage\\s+products";
-        }
-    },
-    AddProductForSeller {
-        @Override
-        public View getView() {
-            return new AddProduct();
-        }
-        @Override
-        public String toString() {
-            return "add\\s+product";
-        }
-    },
-    RemoveProductWithProductId {
-        @Override
-        public View getView() {
-            return new RemoveProduct();
-        }
-        @Override
-        public String toString() {
-            return "remove\\s+product\\s+productId";
-        }
-    },
-    ShowAllCategoriesForSeller {
-        @Override
-        public View getView() {
-            return new ShowAllCategories();
-        }
-        @Override
-        public String toString() {
-            return "show\\s+categories";
-        }
-    },
-    ViewAllOffsForSeller {
-        @Override
-        public View getView() {
-            return new ShowAllOffs();
-        }
-
-        @Override
-        public String toString() {
-            return "view\\s+offs";
-        }
-    },
-    ViewBalanceForSeller {
-        @Override
-        public View getView() {
-            return new ViewBalance();
-        }
-        @Override
-        public String toString() {
-            return "view\\s+balance";
-        }
-    };
-
-    public abstract View getView();
+    SellerAccountViewValidCommands(String output, View view) {
+        this.commandPattern = Pattern.compile(output);
+        this.view = view;
+    }
 
 }

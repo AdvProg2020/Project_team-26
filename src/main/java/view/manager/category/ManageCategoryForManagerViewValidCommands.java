@@ -2,41 +2,29 @@ package view.manager.category;
 
 import view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public enum ManageCategoryForManagerViewValidCommands {
-    EditCategoryForManager {
-        @Override
-        public View getView() {
-            return new EditCategoryForManager();
-        }
+    EditCategoryForManager("edit\\s+(.*)"),
+    AddCategoryForManager("Add\\s+(.*)"),
+    RemoveCategoryForManager("remove\\s+(.*)");
+    private final Pattern commandPattern;
 
-        @Override
-        public String toString() {
-            return "edit\\s+(.*)";
-        }
-    },
-    AddCategoryForManager {
-        @Override
-        public View getView() {
-            return new AddCategoryForManager();
-        }
+    public Matcher getStringMatcher(String input) {
+        return this.commandPattern.matcher(input);
 
-        @Override
-        public String toString() {
-            return "Add\\s+(.*)";
-        }
-    },
-    RemoveCategoryForManager {
-        @Override
-        public View getView() {
-            return new RemoveCategoryForManager();
-        }
+    }
 
-        @Override
-        public String toString() {
-            return "remove\\s+(.*)";
-        }
-    },
-    ;
-    public abstract View getView();
+    ManageCategoryForManagerViewValidCommands(String output) {
+        this.commandPattern = Pattern.compile(output);
+    }
+
+    public List<String> commands(boolean isLoggedIn) {
+        ArrayList<String> list = new ArrayList<>();
+        return list;
+    }
 
 }

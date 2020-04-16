@@ -2,6 +2,6 @@ package view;
 
 public abstract class View {
 
-    public abstract void run(ViewManager manager);
+    public abstract View run(ViewManager manager);
 
 }
