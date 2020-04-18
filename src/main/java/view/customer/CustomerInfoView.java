@@ -8,7 +8,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum CustomerInfoView {
-    ViewPersonalInfo("view\\s+personal\\s+info", null),
     EditTheFiled("edit\\s+(.*)", null),
 
     ViewCart("view\\s+cart", null),
