@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5b878121-42e9-4608-a174-32c5b3780122" name="Default Changelist" comment="update .gitignore">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/controllers.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/diagram.uml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/models.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/uml_26.zip" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/views.png" afterDir="false" />
+    <list default="true" id="5b878121-42e9-4608-a174-32c5b3780122" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/ViewManager.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/help/HelpViewCommands.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
+    <list id="af8b4b6a-eb7b-4e62-94bf-7f92ab05eea0" name="Revert &quot;update .gitignore&quot;" comment="Revert &quot;update .gitignore&quot;&#10;&#10;This reverts commit 58613f8c" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
