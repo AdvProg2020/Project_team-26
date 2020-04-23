@@ -1,6 +1,6 @@
 package controller.discount;
 
-public class PromoController {
+public class PromoController implements controller.interfaces.discount.PromoController {
 
     public PromoDetailsController getPromoCodeTemplate() {
         return new PromoDetailsController();

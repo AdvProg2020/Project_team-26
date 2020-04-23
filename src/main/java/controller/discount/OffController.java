@@ -2,7 +2,7 @@ package controller.discount;
 
 import java.util.Date;
 
-public class OffController {
+public class OffController implements controller.interfaces.discount.OffController {
 
         public int createNewOff(String token) {
                 return 0;

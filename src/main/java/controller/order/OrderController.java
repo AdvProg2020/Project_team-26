@@ -2,7 +2,7 @@ package controller.order;
 
 import model.Order;
 
-public class OrderController {
+public class OrderController implements controller.interfaces.order.OrderController {
 
     public Order[] getOrders(int startIndex, int endIndex, String token) {
         return null;

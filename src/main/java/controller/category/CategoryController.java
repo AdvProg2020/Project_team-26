@@ -2,7 +2,7 @@ package controller.category;
 
 import model.Category;
 
-public class CategoryController {
+public class CategoryController implements controller.interfaces.category.CategoryController {
 
     public void addCategory(String name, int parentId, String token) {
 
