@@ -1,6 +1,6 @@
 package controller.account;
 
-public class UserInfoController implements controller.interfaces.account.UserInfoController {
+public class UserInfoController {
 
     public String getEmail(String token) {
         return null;

@@ -3,7 +3,7 @@ package controller.product;
 import model.Category;
 import model.Product;
 
-public class ProductController implements controller.interfaces.product.ProductController {
+public class ProductController {
 
     public int createProduct(String name, String token) {
         return 0;

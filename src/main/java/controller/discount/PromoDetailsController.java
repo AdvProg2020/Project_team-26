@@ -1,26 +1,26 @@
 package controller.discount;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
-public class PromoDetailsController implements controller.interfaces.discount.PromoDetailsController {
+public class PromoDetailsController {
 
     public String getPromoCode(String token) {
         return null;
     }
 
-    public LocalDateTime getStartDate(String token) {
+    public Date getStartDate(String token) {
         return null;
     }
 
-    public void setStartDate(LocalDateTime startDate, String token) {
+    public void setStartDate(Date startDate, String token) {
 
     }
 
-    public LocalDateTime getEndDate(String token) {
+    public Date getEndDate(String token) {
         return null;
     }
 
-    public void setEndDate(LocalDateTime endDate, String token) {
+    public void setEndDate(Date endDate, String token) {
 
     }
 

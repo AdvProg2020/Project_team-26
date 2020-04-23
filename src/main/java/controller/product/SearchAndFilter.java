@@ -4,7 +4,7 @@ import model.Product;
 
 import java.util.ArrayList;
 
-public class SearchAndFilter implements controller.interfaces.product.SearchAndFilter {
+public class SearchAndFilter {
 
     private static ArrayList<String> filters;
 
