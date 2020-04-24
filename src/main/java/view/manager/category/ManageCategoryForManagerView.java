@@ -5,7 +5,7 @@ import view.*;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class ManageCategoryForManagerView extends View {
+public class ManageCategoryForManagerView extends View implements view {
     EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
 
     @Override

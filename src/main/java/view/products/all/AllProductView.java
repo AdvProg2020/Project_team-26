@@ -5,7 +5,7 @@ import view.products.all.sort.SortView;
 
 import java.util.EnumSet;
 
-public class AllProductView extends View {
+public class AllProductView extends View  implements view{
     EnumSet<AllProductsViewValidCommands> validCommands;
 
     public AllProductView() {

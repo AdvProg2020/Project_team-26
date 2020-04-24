@@ -1,11 +1,12 @@
 package view.seller.offs;
 
-import javafx.css.Match;
+//import javafx.css.Match;
+
 import view.*;
 
 import java.util.regex.Matcher;
 
-public class offView extends View {
+public class offView extends View implements view {
     @Override
     public View run(ViewManager manager) {
         return null;

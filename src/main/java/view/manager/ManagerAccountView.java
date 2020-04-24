@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
  * i didnt create a package for commands that provides just one command list
  */
 
-public class ManagerAccountView extends View {
+public class ManagerAccountView extends View implements view {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
 
     ManagerAccountView() {

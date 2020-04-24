@@ -8,7 +8,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.regex.Matcher;
 
-public class MainPageView extends View {
+public class MainPageView extends View implements view{
     Set<MainPageViewValidCommands> validCommand;
 
     public MainPageView() {

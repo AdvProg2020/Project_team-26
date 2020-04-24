@@ -1,4 +1,5 @@
 package view.offs.sort;
+import view.*;
 
 import view.View;
 import view.ViewManager;
@@ -6,7 +7,7 @@ import view.ViewManager;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class SortView extends View {
+public class SortView extends View implements view{
     EnumSet<SortingViewValidCommands> validCommands;
 
     public SortView() {

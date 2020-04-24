@@ -6,7 +6,7 @@ import view.manager.request.ManageRequestForManagerViewValidCommands;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class ManageUsersForManager extends View {
+public class ManageUsersForManager extends View implements view {
     EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
 
     @Override

@@ -5,7 +5,7 @@ import view.*;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class SingleProductView extends View {
+public class SingleProductView extends View implements view {
     EnumSet<SingleProductViewValidCommands> validCommands;
 
     @Override

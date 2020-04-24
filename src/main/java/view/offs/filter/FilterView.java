@@ -1,12 +1,14 @@
 package view.offs.filter;
+import view.*;
 
 import view.View;
 import view.ViewManager;
 
+import javax.swing.*;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class FilterView extends View {
+public class FilterView extends View implements view {
     EnumSet<FilterViewValidCommands> validCommands;
     public FilterView(){
         validCommands = EnumSet.allOf(FilterViewValidCommands.class);

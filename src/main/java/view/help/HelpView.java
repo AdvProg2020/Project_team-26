@@ -1,11 +1,13 @@
 package view.help;
 
+import view.*;
+
 import view.ViewManager;
 import view.View;
 
 import java.util.EnumSet;
 
-public class HelpView extends View {
+public class HelpView extends View implements view {
     EnumSet<HelpViewCommands> validCommand;
 
     public HelpView() {
@@ -14,6 +16,6 @@ public class HelpView extends View {
 
     @Override
     public View run(ViewManager manager) {
-        return null ;
+        return null;
     }
 }

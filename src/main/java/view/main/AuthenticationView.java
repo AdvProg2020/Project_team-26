@@ -4,7 +4,7 @@ import view.*;
 
 import java.util.regex.Matcher;
 
-public class AuthenticationView extends View {
+public class AuthenticationView extends View implements view {
     @Override
     public View run(ViewManager manager) {
         return null;

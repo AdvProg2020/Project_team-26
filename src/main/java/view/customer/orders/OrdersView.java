@@ -5,7 +5,7 @@ import view.*;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class OrdersView extends View {
+public class OrdersView extends View implements view {
     EnumSet<OrdersViewValidCommands> validCommands;
 
     public OrdersView() {

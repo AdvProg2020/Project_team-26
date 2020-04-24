@@ -5,7 +5,7 @@ import view.customer.orders.OrdersView;
 
 import java.util.regex.Matcher;
 
-public class CustomerView extends View {
+public class CustomerView extends View implements view {
     private ViewManager manager;
 
     public CustomerView(ViewManager manager) {

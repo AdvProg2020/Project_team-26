@@ -7,7 +7,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class discountForManagerView extends View {
+public class discountForManagerView extends View implements view {
     EnumSet<discountForManagerViewValidCommands> validCommands;
 
     public discountForManagerView() {
