@@ -47,7 +47,7 @@ public class ViewManager {
     }
 
     public void startProgram() {
-        MainPageView startView = new MainPageView();
+        MainPageView startView = new MainPageView(this);
         startView.run(this);
     }
 
