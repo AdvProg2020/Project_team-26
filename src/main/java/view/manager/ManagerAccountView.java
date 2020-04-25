@@ -2,6 +2,7 @@ package view.manager;
 
 import view.*;
 import view.ViewManager;
+import view.main.MainPageViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
@@ -13,49 +14,65 @@ import java.util.regex.Matcher;
 public class ManagerAccountView extends View implements view {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
 
-    ManagerAccountView() {
+    ManagerAccountView(ViewManager manager) {
+        super(manager);
         validCommand = EnumSet.allOf(ValidCommandsForManagerAccount.class);
     }
 
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
+        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+            for (ValidCommandsForManagerAccount command : validCommand) {
+                if ((command.getStringMatcher(super.input).find())) {
+                    if (command.getView() != null) {
+                        command.setManager(this.manager);
+                        command.getView().run();
+                    } else
+                        command.goToFunction(this);
+                }
+            }
+        }
         return null;
     }
 
-    private void createPromoCode(Matcher matcher) {
+    protected void edit(Matcher matcher) {
 
     }
 
-    private void manageAllProductForManager(Matcher matcher) {
+    protected void createPromoCode() {
 
     }
 
-    private void removeProduct(Matcher matcher) {
+    protected void manageAllProductForManager() {
+
+    }
+
+    protected void removeProduct(Matcher matcher) {
 
     }
 
 
-    private void viewAllPromoCodes(Matcher matcher) {
+    protected void viewAllPromoCodes(Matcher matcher) {
 
     }
 
-    private void viewPersonalInfo(Matcher matcher) {
+    protected void viewPersonalInfo(Matcher matcher) {
 
     }
 
-    private void goToProductsMenu(Matcher matcher) {
+    protected void goToProductsMenu(Matcher matcher) {
 
     }
 
-    private void manageCategories(Matcher matcher) {
+    protected void manageCategories(Matcher matcher) {
 
     }
 
-    private void manageRequestForManager(Matcher matcher) {
+    protected void manageRequestForManager(Matcher matcher) {
 
     }
 
-    private void manageUsers(Matcher matcher) {
+    protected void manageUsers(Matcher matcher) {
 
     }
 

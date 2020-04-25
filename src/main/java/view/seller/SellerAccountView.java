@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 
 public class SellerAccountView extends View implements view {
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
         return null;
     }
 

@@ -8,13 +8,40 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ValidCommandsForManageUsersForManagerView {
-    ViewUser("view\\s+(.*)"),
-    DeleteUser("delete\\s+user\\s+(.*)"),
-    CreateManagerProfile("create\\s+manager\\s+profile"),
-    ManageAllProduct("manage\\s+all\\s+products"),
-    Edit("edit\\s+(.*)");
+    ViewUser("view\\s+(.*)") {
+        @Override
+        public void goToFunction(ManageUsersForManager page) {
+            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+        }
+    },
+    DeleteUser("delete\\s+user\\s+(.*)") {
+        @Override
+        public void goToFunction(ManageUsersForManager page) {
+            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+        }
+    },
+    CreateManagerProfile("create\\s+manager\\s+profile") {
+        @Override
+        public void goToFunction(ManageUsersForManager page) {
+            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+        }
+    },
+    ManageAllProduct("manage\\s+all\\s+products") {
+        @Override
+        public void goToFunction(ManageUsersForManager page) {
+            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+        }
+    },
+    Edit("edit\\s+(.*)") {
+        @Override
+        public void goToFunction(ManageUsersForManager page) {
+            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+        }
+    };
 
     private final Pattern commandPattern;
+
+    public abstract void goToFunction(ManageUsersForManager page);
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
@@ -23,10 +50,5 @@ public enum ValidCommandsForManageUsersForManagerView {
 
     ValidCommandsForManageUsersForManagerView(String output) {
         this.commandPattern = Pattern.compile(output);
-    }
-
-    public List<String> commands(boolean isLoggedIn) {
-        ArrayList<String> list = new ArrayList<>();
-        return list;
     }
 }

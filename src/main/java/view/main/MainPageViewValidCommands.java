@@ -18,7 +18,7 @@ public enum MainPageViewValidCommands {
             page.back();
         }
     },
-    Exit("Exit", null) {
+    Exit("exit", null) {
         @Override
         public void goToFunction(MainPageView page) {
 
@@ -70,6 +70,11 @@ public enum MainPageViewValidCommands {
     private Pattern commandPattern;
     private View view = null;
     private MainPageView function = null;
+    public static ViewManager manager;
+
+    public void setManager(ViewManager manager) {
+        MainPageViewValidCommands.manager = manager;
+    }
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);

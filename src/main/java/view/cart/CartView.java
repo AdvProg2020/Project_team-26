@@ -1,52 +1,62 @@
 package view.cart;
+
 import view.*;
 
 import view.View;
 import view.ViewManager;
+import view.main.MainPageViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class CartView extends View implements view{
+public class CartView extends View implements view {
     EnumSet<CartViewValidCommand> validCommands;
 
-    public CartView() {
+    public CartView(ViewManager manager) {
+        super(manager);
         validCommands = EnumSet.allOf(CartViewValidCommand.class);
     }
 
-
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
+        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+            for (CartViewValidCommand command : validCommands) {
+                if ((command.getStringMatcher(super.input).find())) {
+                    command.goToFunction(this);
+                    break;
+                }
+            }
+        }
         return null;
     }
 
-    private void showAllProducts(Matcher matcher) {
+    public void showAllProducts() {
     }
 
 
-    private void showProductWithId(Matcher matcher) {
+    public void showProductWithId(Matcher matcher) {
     }
 
 
-    private void showCart(Matcher matcher) {
-
-    }
-
-
-    private void increaseNumberOfProductForBuyerWithId(Matcher matcher) {
-    }
-
-
-    private void decreaseNumberOfProductForBuyerWithId(Matcher matcher) {
+    public void showCart(Matcher matcher) {
 
     }
 
 
-    private void showTotalPriceToBuyer(Matcher matcher) {
+    public void increaseNumberOfProductForBuyerWithId(Matcher matcher) {
+    }
+
+
+    public void decreaseNumberOfProductForBuyerWithId(Matcher matcher) {
 
     }
 
-    private void purchase(Matcher matcher) {
+
+    public void showTotalPriceToBuyer() {
+
+    }
+
+    public void purchase() {
 
     }
 }

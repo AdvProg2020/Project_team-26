@@ -12,24 +12,23 @@ import java.util.regex.Matcher;
 
 public class MainPageView extends View implements view {
     private EnumSet<MainPageViewValidCommands> commands;
-    private ViewManager manager;
-    private String input;
 
     public MainPageView(ViewManager manager) {
+        super(manager);
         this.manager = manager;
         commands = EnumSet.allOf(MainPageViewValidCommands.class);
-        input = new String();
+        super.input = new String();
     }
 
     @Override
-    public View run(ViewManager thisManager) {
-        this.manager = thisManager;
-        while (!(input = (manager.scan.nextLine()).trim()).matches("exit")) {
+    public View run() {
+        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
             for (MainPageViewValidCommands command : commands) {
-                if ((command.getStringMatcher(input).find())) {
-                    if (command.getView() != null)
-                        command.getView().run(manager);
-                    else
+                if ((command.getStringMatcher(super.input).find())) {
+                    if (command.getView() != null) {
+                        command.setManager(this.manager);
+                        command.getView().run();
+                    } else
                         command.goToFunction(this);
                 }
             }
@@ -37,13 +36,9 @@ public class MainPageView extends View implements view {
         return null;
     }
 
-    public ViewManager getManager() {
-        return this.manager;
-    }
-
     protected void authorizing() {
-        AuthenticationView auth = new AuthenticationView(this.getInput());
-        auth.run(this.manager);
+        AuthenticationView auth = new AuthenticationView(manager,super.input);
+        auth.run();
     }
 
     protected void back() {
@@ -55,11 +50,8 @@ public class MainPageView extends View implements view {
     }
 
     protected void logout() {
+        System.out.println("hxvhhdvhsdhJKhuhvduhsKHVUHUIhvkjKJBuvhuihvnKUUDHuhvkKv");
 
-    }
-
-    public String getInput() {
-        return this.input;
     }
 
     public void printError() {

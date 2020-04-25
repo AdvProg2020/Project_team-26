@@ -6,14 +6,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AuthenticationView extends View implements view {
-    String input;
+    private String input;
 
-    AuthenticationView(String input) {
-        this.input = input;
+    AuthenticationView(ViewManager manager, String command) {
+        super(manager);
+        input = command;
     }
 
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
         if (input.matches(AuthenticationValidCommands.LoginAccount.toString()))
             login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher(input));
         else if (input.matches(AuthenticationValidCommands.CreateAccount.toString()))

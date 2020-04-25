@@ -4,36 +4,29 @@ import view.*;
 import view.products.all.sort.SortView;
 
 import java.util.EnumSet;
+import java.util.regex.Matcher;
 
 public class AllProductView extends View  implements view{
     EnumSet<AllProductsViewValidCommands> validCommands;
 
-    public AllProductView() {
+    public AllProductView(ViewManager manager) {
+        super(manager);
         validCommands = EnumSet.allOf(AllProductsViewValidCommands.class);
     }
 
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
         return null;
     }
 
-    private void showAllProducts() {
+    protected void showAllProducts() {
 
     }
 
-    private void categoriesOfProducts() {
+    protected void categoriesOfProducts() {
 
     }
-
-    private void filtering() {
-
-    }
-
-    private void sorting() {
-
-    }
-
-    private void showProductsWithId() {
+    protected void showProductsWithId(Matcher matcher) {
 
     }
 }

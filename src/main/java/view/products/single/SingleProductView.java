@@ -8,44 +8,49 @@ import java.util.regex.Matcher;
 public class SingleProductView extends View implements view {
     EnumSet<SingleProductViewValidCommands> validCommands;
 
+    public SingleProductView(ViewManager manager) {
+        super(manager);
+        validCommands = EnumSet.allOf(SingleProductViewValidCommands.class);
+    }
+
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
         return null;
     }
 
-    private void addToTheCart(Matcher matcher) {
+    protected void addToTheCart() {
 
     }
 
-    private void selectAUserForBuyingFrom(Matcher matcher) {
+    protected void selectAUserForBuyingFrom(Matcher matcher) {
 
     }
 
-    private void attributeOfProduct(Matcher matcher) {
+    protected void attributeOfProduct() {
 
     }
 
-    private void compareToProductWithId(Matcher matcher) {
+    protected void compareToProductWithId(Matcher matcher) {
 
     }
 
-    private void commentsForThisProduct(Matcher matcher) {
+    protected void commentsForThisProduct() {
 
     }
 
-    private void offs(Matcher matcher) {
+    protected void offs() {
 
     }
 
-    private void showProductInOffPage(Matcher matcher) {
+    protected void showProductInOffPage(Matcher matcher) {
 
     }
 
-    private void digest(Matcher matcher) {
+    protected void digest() {
 
     }
 
-    private void changeInfo(Matcher matcher, boolean isItManager) {
+    protected void changeInfo(Matcher matcher, boolean isItManager) {
 
     }
 }
