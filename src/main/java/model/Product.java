@@ -22,4 +22,8 @@ public class Product {
         categoryFeatures = new ArrayList<CategoryFeature>();
         comments = new ArrayList<Comment>();
     }
+
+    public int getId() {
+        return id;
+    }
 }
