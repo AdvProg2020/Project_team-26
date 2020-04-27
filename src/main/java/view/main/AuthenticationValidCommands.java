@@ -7,10 +7,7 @@ import java.util.regex.Pattern;
 
 public enum AuthenticationValidCommands {
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
-    LoginAccount("login\\s+(.*)"),
-    Back("back"),
-    Exit("Exit"),
-    Help("help");
+    LoginAccount("login\\s+(.*)");
     private final Pattern commandPattern;
     //private boolean isLoggedIn;
 
@@ -23,14 +20,4 @@ public enum AuthenticationValidCommands {
         //   this.isLoggedIn = isLoggedIn;
         this.commandPattern = Pattern.compile(output);
     }
-
-    public static List<String> commands(boolean isLoggedIn) {
-        ArrayList<String> list = new ArrayList<>();
-        if (!isLoggedIn) {
-            list.add("create account [type] [username]");
-            list.add("login [username]");
-        } else
-            list.add("logout");
-        return list;
     }
-}

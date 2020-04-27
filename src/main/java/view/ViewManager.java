@@ -17,7 +17,7 @@ public class ViewManager {
     public ViewManager() {
         pathOfView = new ArrayList<>();
         helpFormatForPrint = new ArrayList<>();
-        isUserLoggedIn = false;
+        isUserLoggedIn = true;
         scan = new Scanner(System.in);
     }
 
@@ -47,7 +47,7 @@ public class ViewManager {
     }
 
     public void startProgram() {
-        MainPageView startView = new MainPageView();
+        MainPageView startView = new MainPageView(this);
         startView.run(this);
     }
 

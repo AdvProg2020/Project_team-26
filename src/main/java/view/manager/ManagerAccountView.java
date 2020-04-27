@@ -1,62 +1,83 @@
 package view.manager;
 
+import controller.Exceptions;
+import controller.account.ShowUserController;
+import controller.account.UserInfoController;
 import view.*;
 import view.ViewManager;
 
-import java.util.EnumSet;
+import java.util.*;
 import java.util.regex.Matcher;
 
 /**
  * i didnt create a package for commands that provides just one command list
  */
 
-public class ManagerAccountView extends View {
+public class ManagerAccountView extends View implements ViewI {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
+    private ShowUserController controller;
+    private UserInfoController infoController;
 
-    ManagerAccountView() {
+    ManagerAccountView(ViewManager manager) {
+        super(manager);
         validCommand = EnumSet.allOf(ValidCommandsForManagerAccount.class);
+        controller = new ShowUserController();
+        infoController = new UserInfoController();
     }
 
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
+        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+            for (ValidCommandsForManagerAccount command : validCommand) {
+                if ((command.getStringMatcher(super.input).find())) {
+                    if (command.getView() != null) {
+                        command.setManager(this.manager);
+                        command.getView().run();
+                    } else
+                        command.goToFunction(this);
+                }
+            }
+        }
         return null;
     }
 
-    private void createPromoCode(Matcher matcher) {
+    protected void edit(Matcher matcher) {
+        matcher.find();
+        System.out.println("please enter the " + matcher.group(1));
+        String fieldForEdit = manager.scan.nextLine();
+        try {
+            infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getTocken());
+        } catch (Exceptions.InvalidFiledException invalid) {
+            invalid.getMessage();
+        }
+    }
+
+    protected void createPromoCode() {
 
     }
 
-    private void manageAllProductForManager(Matcher matcher) {
+    protected void manageAllProductForManager() {
+
 
     }
 
-    private void removeProduct(Matcher matcher) {
+    protected void removeProduct(Matcher matcher) {
 
     }
 
 
-    private void viewAllPromoCodes(Matcher matcher) {
+    protected void viewAllPromoCodes(Matcher matcher) {
 
     }
 
-    private void viewPersonalInfo(Matcher matcher) {
-
+    protected void viewPersonalInfo() {
+        Map<String, String> info = controller.getUserInfo(manager.getTocken());
+        for (Map.Entry<String, String> detail : info.entrySet()) {
+            System.out.print(detail.getKey() + ":" + detail.getValue());
+        }
     }
 
-    private void goToProductsMenu(Matcher matcher) {
+    protected void goToProductsMenu(Matcher matcher) {
 
     }
-
-    private void manageCategories(Matcher matcher) {
-
-    }
-
-    private void manageRequestForManager(Matcher matcher) {
-
-    }
-
-    private void manageUsers(Matcher matcher) {
-
-    }
-
 }

@@ -1,46 +1,63 @@
 package view.main;
 
+import controller.Exceptions;
+import controller.account.AuthenticationController;
 import view.*;
+
 import view.ViewManager;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Set;
-import java.util.regex.Matcher;
 
-public class MainPageView extends View {
-    Set<MainPageViewValidCommands> validCommand;
+public class MainPageView extends View implements ViewI {
+    private EnumSet<MainPageViewValidCommands> commands;
+    private AuthenticationController controller;
 
-    public MainPageView() {
-        validCommand = EnumSet.allOf(MainPageViewValidCommands.class);
+    public MainPageView(ViewManager manager) {
+        super(manager);
+        this.manager = manager;
+        commands = EnumSet.allOf(MainPageViewValidCommands.class);
+        super.input = new String();
+        controller = new AuthenticationController();
     }
 
     @Override
-    public View run(ViewManager manager) {
+    public View run() {
+        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+            for (MainPageViewValidCommands command : commands) {
+                if ((command.getStringMatcher(super.input).find())) {
+                    if (command.getView() != null) {
+                        command.setManager(this.manager);
+                        command.getView().run();
+                    } else
+                        command.goToFunction(this);
+                }
+            }
+        }
         return null;
     }
 
-    private void authorizing() {
+    protected void authorizing() {
+        AuthenticationView auth = new AuthenticationView(manager, super.input);
+        auth.run();
+    }
+
+    protected void back() {
 
     }
 
-    private void back() {
+    protected void help(boolean isLoggedIn) {
 
     }
 
-    private void help(ArrayList<String> CommandsFormat) {
-
+    public void logout(String token) {
+        try {
+            controller.logout(token);
+        } catch (Exceptions.UnSuccessfulLogout unSuccessfulLogout) {
+            unSuccessfulLogout.getMessage();
+        }
     }
 
-    private void showOffs(Matcher matcher) {
-
-    }
-
-    private void showProducts(Matcher matcher) {
-
-    }
-
-    private void logout(Matcher matcher) {
+    public void printError() {
 
     }
 }

@@ -8,9 +8,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ManageCategoryForManagerViewValidCommands {
-    EditCategoryForManager("edit\\s+(.*)"),
-    AddCategoryForManager("Add\\s+(.*)"),
-    RemoveCategoryForManager("remove\\s+(.*)");
+    EditCategoryForManager("edit\\s+(.*)") {
+        @Override
+        public void goToFunction(ManageCategoryForManagerViewI page) {
+            page.EditCategoryForManager(Pattern.compile(EditCategoryForManager.toString()).matcher(page.getInput()));
+        }
+    },
+    AddCategoryForManager("Add\\s+(.*)") {
+        @Override
+        public void goToFunction(ManageCategoryForManagerViewI page) {
+            page.addCategoryForManager(Pattern.compile(AddCategoryForManager.toString()).matcher(page.getInput()));
+        }
+    },
+    RemoveCategoryForManager("remove\\s+(.*)") {
+        @Override
+        public void goToFunction(ManageCategoryForManagerViewI page) {
+            page.RemoveCategoryForManager(Pattern.compile(RemoveCategoryForManager.toString()).matcher(page.getInput()));
+        }
+    };
     private final Pattern commandPattern;
 
     public Matcher getStringMatcher(String input) {
@@ -21,6 +36,8 @@ public enum ManageCategoryForManagerViewValidCommands {
     ManageCategoryForManagerViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
     }
+
+    public abstract void goToFunction(ManageCategoryForManagerViewI page);
 
     public List<String> commands(boolean isLoggedIn) {
         ArrayList<String> list = new ArrayList<>();
