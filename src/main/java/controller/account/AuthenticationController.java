@@ -2,7 +2,7 @@ package controller.account;
 
 import controller.Exceptions;
 
-public class AuthenticationController {
+public class AuthenticationController implements controller.interfaces.account.AuthenticationController {
 
     public void login(String username, String password, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidPasswordException {
 

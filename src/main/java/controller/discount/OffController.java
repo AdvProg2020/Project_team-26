@@ -1,8 +1,10 @@
 package controller.discount;
 
+import model.Off;
+
 import java.util.Date;
 
-public class OffController {
+public class OffController implements controller.interfaces.discount.OffController {
 
         public int createNewOff(String token) {
                 return 0;

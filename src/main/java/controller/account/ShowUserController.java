@@ -5,7 +5,7 @@ import model.User;
 
 import java.util.Map;
 
-public class ShowUserController {
+public class ShowUserController implements controller.interfaces.account.ShowUserController {
 
     public UserInfoController[] getUsers(String token) {
         return null;

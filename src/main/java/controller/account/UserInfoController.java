@@ -2,7 +2,7 @@ package controller.account;
 
 import controller.Exceptions;
 
-public class UserInfoController {
+public class UserInfoController implements controller.interfaces.account.UserInfoController {
 
     public String getEmail(String token) {
         return null;
@@ -18,10 +18,10 @@ public class UserInfoController {
     public void changeUsername(String username, String token) {
     }
     public String getFirstName(String token){
-
+        return null;
     }
     public  String getLastName(String token){
-
+        return null;
     }
 
     public String getPassword(String token) {

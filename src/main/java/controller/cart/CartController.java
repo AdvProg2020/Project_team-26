@@ -3,7 +3,7 @@ package controller.cart;
 import model.Cart;
 import model.Product;
 
-public class CartController {
+public class CartController implements controller.interfaces.cart.CartController {
 
     public void addProduct(int productId, String token) {
 

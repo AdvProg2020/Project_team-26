@@ -2,7 +2,7 @@ package controller.product;
 
 import model.Product;
 
-public class ShowProductController {
+public class ShowProductController implements controller.interfaces.product.ShowProductController {
 
     public Product[] getProducts(int startIndex, int endIndex, String token) {
         return null;
