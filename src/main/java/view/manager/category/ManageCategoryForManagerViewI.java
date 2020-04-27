@@ -1,15 +1,14 @@
 package view.manager.category;
 
 import view.*;
-import view.customer.orders.OrdersViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class ManageCategoryForManagerView extends View implements view {
+public class ManageCategoryForManagerViewI extends View implements ViewI {
     EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
 
-    public ManageCategoryForManagerView(ViewManager managerView) {
+    public ManageCategoryForManagerViewI(ViewManager managerView) {
         super(managerView);
         validCommands = EnumSet.allOf(ManageCategoryForManagerViewValidCommands.class);
     }

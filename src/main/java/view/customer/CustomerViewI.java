@@ -1,16 +1,14 @@
 package view.customer;
 
 import view.*;
-import view.customer.orders.OrdersView;
-import view.main.MainPageViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class CustomerView extends View implements view {
+public class CustomerViewI extends View implements ViewI {
     EnumSet<CustomerValidCommand> validCommands;
 
-    public CustomerView(ViewManager manager) {
+    public CustomerViewI(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CustomerValidCommand.class);
     }

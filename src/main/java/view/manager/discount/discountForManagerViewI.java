@@ -1,17 +1,14 @@
 package view.manager.discount;
 
 import view.*;
-import view.manager.category.ManageCategoryForManagerViewValidCommands;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.regex.Matcher;
 
-public class discountForManagerView extends View implements view {
+public class discountForManagerViewI extends View implements ViewI {
     EnumSet<discountForManagerViewValidCommands> validCommands;
 
-    public discountForManagerView(ViewManager manager) {
+    public discountForManagerViewI(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(discountForManagerViewValidCommands.class);
     }

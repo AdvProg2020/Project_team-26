@@ -4,7 +4,7 @@ import view.*;
 
 import java.util.regex.Matcher;
 
-public class SellerAccountView extends View implements view {
+public class SellerAccountViewI extends View implements ViewI {
     @Override
     public View run() {
         return null;

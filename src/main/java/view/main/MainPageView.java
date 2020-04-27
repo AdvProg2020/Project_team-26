@@ -2,15 +2,11 @@ package view.main;
 
 import view.*;
 
-import view.*;
 import view.ViewManager;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.Set;
-import java.util.regex.Matcher;
 
-public class MainPageView extends View implements view {
+public class MainPageView extends View implements ViewI {
     private EnumSet<MainPageViewValidCommands> commands;
 
     public MainPageView(ViewManager manager) {

@@ -1,15 +1,14 @@
 package view.manager.request;
 
 import view.*;
-import view.manager.category.ManageCategoryForManagerViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class ManageRequestForManagerView extends View implements view {
+public class ManageRequestForManagerViewI extends View implements ViewI {
     EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
 
-    public ManageRequestForManagerView(ViewManager manager) {
+    public ManageRequestForManagerViewI(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(ManageRequestForManagerViewValidCommands.class);
     }

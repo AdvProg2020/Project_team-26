@@ -1,5 +1,6 @@
 package view;
 
-public interface view {
+
+public interface ViewI {
     public abstract View run();
 }

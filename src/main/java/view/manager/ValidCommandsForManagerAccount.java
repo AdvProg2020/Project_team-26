@@ -1,13 +1,11 @@
 package view.manager;
 
 import view.ViewManager;
-import view.main.MainPageView;
-import view.manager.category.ManageCategoryForManagerView;
-import view.manager.discount.discountForManagerView;
-import view.manager.request.ManageRequestForManagerView;
+import view.manager.category.ManageCategoryForManagerViewI;
+import view.manager.discount.discountForManagerViewI;
+import view.manager.request.ManageRequestForManagerViewI;
 import view.manager.users.ManageUsersForManager;
 import view.View;
-import view.manager.users.ValidCommandsForManageUsersForManagerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +16,7 @@ public enum ValidCommandsForManagerAccount {
     ViewPersonalInfo("view\\s+personal\\s+info", null) {
         @Override
         public void goToFunction(ManagerAccountView page) {
-            page.viewPersonalInfo(Pattern.compile(ViewPersonalInfo.toString()).matcher(page.getInput()));
+            page.viewPersonalInfo();
         }
     },
     EditTheFiled("edit\\s+(.*)", null) {
@@ -44,17 +42,17 @@ public enum ValidCommandsForManagerAccount {
             page.createPromoCode();
         }
     },
-    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerView(ValidCommandsForManagerAccount.manager)) {
+    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerViewI(ValidCommandsForManagerAccount.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
     },
-    ManageRequestForManager("manage\\s+requests", new ManageRequestForManagerView(ValidCommandsForManagerAccount.manager)) {
+    ManageRequestForManager("manage\\s+requests", new ManageRequestForManagerViewI(ValidCommandsForManagerAccount.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
     },
-    ManageCategories("manage\\s+categories", new ManageCategoryForManagerView(ValidCommandsForManagerAccount.manager)) {
+    ManageCategories("manage\\s+categories", new ManageCategoryForManagerViewI(ValidCommandsForManagerAccount.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }

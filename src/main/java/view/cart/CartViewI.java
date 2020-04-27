@@ -4,15 +4,14 @@ import view.*;
 
 import view.View;
 import view.ViewManager;
-import view.main.MainPageViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class CartView extends View implements view {
+public class CartViewI extends View implements ViewI {
     EnumSet<CartViewValidCommand> validCommands;
 
-    public CartView(ViewManager manager) {
+    public CartViewI(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CartViewValidCommand.class);
     }

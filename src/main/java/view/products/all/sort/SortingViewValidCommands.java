@@ -1,7 +1,5 @@
 package view.products.all.sort;
 
-import view.offs.sort.SortView;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

@@ -1,22 +1,24 @@
 package view.manager;
 
+import controller.account.ShowUserController;
 import view.*;
 import view.ViewManager;
-import view.main.MainPageViewValidCommands;
 
-import java.util.EnumSet;
+import java.util.*;
 import java.util.regex.Matcher;
 
 /**
  * i didnt create a package for commands that provides just one command list
  */
 
-public class ManagerAccountView extends View implements view {
+public class ManagerAccountView extends View implements ViewI {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
+    private ShowUserController controller;
 
     ManagerAccountView(ViewManager manager) {
         super(manager);
         validCommand = EnumSet.allOf(ValidCommandsForManagerAccount.class);
+        controller = new ShowUserController();
     }
 
     @Override
@@ -56,7 +58,11 @@ public class ManagerAccountView extends View implements view {
 
     }
 
-    protected void viewPersonalInfo(Matcher matcher) {
+    protected void viewPersonalInfo() {
+        Map<String, String> info = controller.getUserInfo(manager.getTocken());
+        for (Map.Entry<String, String> detail : info.entrySet()) {
+            System.out.print(detail.getKey() + ":" + detail.getValue());
+        }
 
     }
 

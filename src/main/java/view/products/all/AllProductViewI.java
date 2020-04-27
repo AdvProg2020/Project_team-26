@@ -1,15 +1,14 @@
 package view.products.all;
 
 import view.*;
-import view.products.all.sort.SortView;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class AllProductView extends View  implements view{
+public class AllProductViewI extends View  implements ViewI {
     EnumSet<AllProductsViewValidCommands> validCommands;
 
-    public AllProductView(ViewManager manager) {
+    public AllProductViewI(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(AllProductsViewValidCommands.class);
     }

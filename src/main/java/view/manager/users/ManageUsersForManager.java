@@ -1,12 +1,11 @@
 package view.manager.users;
 
 import view.*;
-import view.manager.request.ManageRequestForManagerViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class ManageUsersForManager extends View implements view {
+public class ManageUsersForManager extends View implements ViewI {
     EnumSet<ValidCommandsForManageUsersForManagerView> validCommands;
 
     public ManageUsersForManager(ViewManager manager) {

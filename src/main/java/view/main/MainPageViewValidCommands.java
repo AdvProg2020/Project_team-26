@@ -2,11 +2,10 @@ package view.main;
 
 import view.View;
 import view.ViewManager;
-import view.offs.AllOffsView;
-import view.products.all.AllProductView;
+import view.offs.AllOffsViewI;
+import view.products.all.AllProductViewI;
 
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,13 +23,13 @@ public enum MainPageViewValidCommands {
 
         }
     },
-    ShowProducts("products", new AllProductView()) {
+    ShowProducts("products", new AllProductViewI(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(MainPageView page) {
 
         }
     },
-    ShowOffs("offs", new AllOffsView()) {
+    ShowOffs("offs", new AllOffsViewI(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(MainPageView page) {
 

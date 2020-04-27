@@ -6,7 +6,7 @@ import view.*;
 
 import java.util.regex.Matcher;
 
-public class offView extends View implements view {
+public class offViewI extends View implements ViewI {
     @Override
     public View run(ViewManager manager) {
         return null;
