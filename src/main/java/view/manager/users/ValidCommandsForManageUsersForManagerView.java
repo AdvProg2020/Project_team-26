@@ -17,25 +17,23 @@ public enum ValidCommandsForManageUsersForManagerView {
     DeleteUser("delete\\s+user\\s+(.*)") {
         @Override
         public void goToFunction(ManageUsersForManager page) {
-            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+            page.deleteUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
         }
     },
     CreateManagerProfile("create\\s+manager\\s+profile") {
         @Override
         public void goToFunction(ManageUsersForManager page) {
-            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+            page.createManagerProfile();
         }
     },
-    ManageAllProduct("manage\\s+all\\s+products") {
+    Logout("logout") {
         @Override
         public void goToFunction(ManageUsersForManager page) {
-            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
-        }
-    },
-    Edit("edit\\s+(.*)") {
-        @Override
-        public void goToFunction(ManageUsersForManager page) {
-            page.viewUser(Pattern.compile(ViewUser.toString()).matcher(page.getInput()));
+            if (page.getManager().getIsUserLoggedin()) {
+                page.logOut();
+                return;
+            }
+            page.printError();
         }
     };
 

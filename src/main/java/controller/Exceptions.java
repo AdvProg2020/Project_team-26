@@ -19,4 +19,16 @@ public class Exceptions {
         }
     }
 
+    public class InvalidFiledException extends Exception {
+        public InvalidFiledException(String message) {
+            super(message);
+        }
+    }
+
+    public class InvalidDeleteDemand extends Exception {
+        public InvalidDeleteDemand(String message) {
+            super(message);
+        }
+    }
+
 }

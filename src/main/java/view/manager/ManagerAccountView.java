@@ -1,6 +1,8 @@
 package view.manager;
 
+import controller.Exceptions;
 import controller.account.ShowUserController;
+import controller.account.UserInfoController;
 import view.*;
 import view.ViewManager;
 
@@ -14,11 +16,13 @@ import java.util.regex.Matcher;
 public class ManagerAccountView extends View implements ViewI {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
     private ShowUserController controller;
+    private UserInfoController infoController;
 
     ManagerAccountView(ViewManager manager) {
         super(manager);
         validCommand = EnumSet.allOf(ValidCommandsForManagerAccount.class);
         controller = new ShowUserController();
+        infoController = new UserInfoController();
     }
 
     @Override
@@ -38,7 +42,14 @@ public class ManagerAccountView extends View implements ViewI {
     }
 
     protected void edit(Matcher matcher) {
-
+        matcher.find();
+        System.out.println("please enter the " + matcher.group(1));
+        String fieldForEdit = manager.scan.nextLine();
+        try {
+            infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getTocken());
+        } catch (Exceptions.InvalidFiledException invalid) {
+            invalid.getMessage();
+        }
     }
 
     protected void createPromoCode() {
@@ -46,6 +57,7 @@ public class ManagerAccountView extends View implements ViewI {
     }
 
     protected void manageAllProductForManager() {
+
 
     }
 
@@ -63,23 +75,9 @@ public class ManagerAccountView extends View implements ViewI {
         for (Map.Entry<String, String> detail : info.entrySet()) {
             System.out.print(detail.getKey() + ":" + detail.getValue());
         }
-
     }
 
     protected void goToProductsMenu(Matcher matcher) {
 
     }
-
-    protected void manageCategories(Matcher matcher) {
-
-    }
-
-    protected void manageRequestForManager(Matcher matcher) {
-
-    }
-
-    protected void manageUsers(Matcher matcher) {
-
-    }
-
 }

@@ -12,7 +12,7 @@ public class AuthenticationView extends View implements ViewI {
     private String input;
     private AuthenticationController control;
 
-    AuthenticationView(ViewManager manager, String command) {
+    public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         input = command;
         control = new AuthenticationController();
@@ -49,7 +49,7 @@ public class AuthenticationView extends View implements ViewI {
         }
     }
 
-    private void register(Matcher matcher) {
+    public void register(Matcher matcher) {
         Account account = getUserInfo(matcher);
         boolean isComplete = false;
         boolean isBack = false;

@@ -9,12 +9,12 @@ public class AuthenticationController {
 
     }
 
-    public void register(Account account) throws Exceptions.InvalidUserNameException {
+    public void register(Account account , String token) throws Exceptions.InvalidUserNameException {
 
 
     }
 
-    public void logout() throws Exceptions.UnSuccessfulLogout {
+    public void logout(String token) throws Exceptions.UnSuccessfulLogout {
 
     }
 

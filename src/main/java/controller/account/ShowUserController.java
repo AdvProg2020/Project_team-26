@@ -1,18 +1,25 @@
 package controller.account;
 
+import controller.Exceptions;
+import model.User;
+
 import java.util.Map;
 
 public class ShowUserController {
 
-    public ShowUserController[] getUsers(int startIndex, int endIndex, String token) {
+    public UserInfoController[] getUsers(String token) {
         return null;
     }
 
-    public ShowUserController getUserByName(String username, String token) {
+    public UserInfoController getUserByName(String username, String token) {
         return null;
     }
 
     public Map<String, String> getUserInfo(String token){
         return null;
+    }
+
+    public void delete(String username , String token) throws Exceptions.InvalidDeleteDemand {
+
     }
 }

@@ -1,5 +1,7 @@
 package view.main;
 
+import controller.Exceptions;
+import controller.account.AuthenticationController;
 import view.*;
 
 import view.ViewManager;
@@ -8,12 +10,14 @@ import java.util.EnumSet;
 
 public class MainPageView extends View implements ViewI {
     private EnumSet<MainPageViewValidCommands> commands;
+    private AuthenticationController controller;
 
     public MainPageView(ViewManager manager) {
         super(manager);
         this.manager = manager;
         commands = EnumSet.allOf(MainPageViewValidCommands.class);
         super.input = new String();
+        controller = new AuthenticationController();
     }
 
     @Override
@@ -33,7 +37,7 @@ public class MainPageView extends View implements ViewI {
     }
 
     protected void authorizing() {
-        AuthenticationView auth = new AuthenticationView(manager,super.input);
+        AuthenticationView auth = new AuthenticationView(manager, super.input);
         auth.run();
     }
 
@@ -45,9 +49,12 @@ public class MainPageView extends View implements ViewI {
 
     }
 
-    protected void logout() {
-        System.out.println("hxvhhdvhsdhJKhuhvduhsKHVUHUIhvkjKJBuvhuihvnKUUDHuhvkKv");
-
+    public void logout(String token) {
+        try {
+            controller.logout(token);
+        } catch (Exceptions.UnSuccessfulLogout unSuccessfulLogout) {
+            unSuccessfulLogout.getMessage();
+        }
     }
 
     public void printError() {

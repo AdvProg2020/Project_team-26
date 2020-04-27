@@ -1,5 +1,7 @@
 package controller.account;
 
+import controller.Exceptions;
+
 public class UserInfoController {
 
     public String getEmail(String token) {
@@ -15,6 +17,12 @@ public class UserInfoController {
 
     public void changeUsername(String username, String token) {
     }
+    public String getFirstName(String token){
+
+    }
+    public  String getLastName(String token){
+
+    }
 
     public String getPassword(String token) {
         return null;
@@ -27,7 +35,7 @@ public class UserInfoController {
         return 0;
     }
 
-    public void changeInfo(String key, String value, String token) {
+    public void changeInfo(String key, String value, String token) throws Exceptions.InvalidFiledException{
     }
 
     public String getRole(String token) {

@@ -10,6 +10,7 @@ public class Account {
     private String firstName;
     private String lastName;
     private String token;
+    private String id;
 
     public Account() {
         this.username = new String();
@@ -37,6 +38,32 @@ public class Account {
         this.password = password;
         return password;
     }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+
 
     public void setEmail(String email) {
         this.email = email;
