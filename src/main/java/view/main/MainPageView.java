@@ -11,7 +11,6 @@ import java.util.EnumSet;
 public class MainPageView extends View implements ViewI {
     private EnumSet<MainPageViewValidCommands> commands;
     private AuthenticationController controller;
-    private boolean isBack;
 
     public MainPageView(ViewManager manager) {
         super(manager);
@@ -23,7 +22,7 @@ public class MainPageView extends View implements ViewI {
 
     @Override
     public View run() {
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit|back")) {
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("exit|back")) {
             for (MainPageViewValidCommands command : commands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     if (command.getView() != null) {

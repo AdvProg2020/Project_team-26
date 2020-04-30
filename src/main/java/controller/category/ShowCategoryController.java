@@ -1,5 +1,6 @@
 package controller.category;
 
+import controller.Exceptions;
 import controller.interfaces.category.IShowCategoryController;
 import model.Category;
 import model.Product;

@@ -31,7 +31,7 @@ public class AuthenticationView extends View {
     private void login(Matcher matcher) {
         matcher.find();
         System.out.println("enter password or type back if you want to return to previous");
-        String password = manager.scan.nextLine();
+        String password = manager.inputOutput.nextLine();
         String username = matcher.group(1);
         boolean isLoggedIn = false;
         while (!isLoggedIn) {
@@ -42,10 +42,10 @@ public class AuthenticationView extends View {
                 isLoggedIn = true;
             } catch (Exceptions.InvalidPasswordException wrongPassword) {
                 wrongPassword.getMessage();
-                password = manager.scan.nextLine();
-            } catch (Exceptions.InvalidUserNameException wrongUserName) {
+                password = manager.inputOutput.nextLine();
+            } catch (Exceptions.FieldsExistWithSameName wrongUserName) {
                 wrongUserName.getMessage();
-                username = manager.scan.nextLine();
+                username = manager.inputOutput.nextLine();
             }
         }
     }
@@ -60,10 +60,10 @@ public class AuthenticationView extends View {
             try {
                 control.register(account, manager.getTocken());
                 isComplete = true;
-            } catch (Exceptions.InvalidUserNameException wrongUsername) {
+            } catch (Exceptions.FieldsExistWithSameName wrongUsername) {
                 System.out.println(wrongUsername.getMessage());
                 System.out.println("please enter another username");
-                account.setUsername(manager.scan.nextLine());
+                account.setUsername(manager.inputOutput.nextLine());
             } catch (Exceptions.InvalidAccessDemand accessDemand) {
                 accessDemand.getMessage();
                 return;
@@ -79,14 +79,14 @@ public class AuthenticationView extends View {
         account.setUsername(matcher.group(2));
         do {
             System.out.println("enter password and notice it shouldn't be \"back\"");
-            account.setPassword(manager.scan.nextLine());
+            account.setPassword(manager.inputOutput.nextLine());
         } while (account.getPassword().equals("back"));
         System.out.println("enter first name");
-        account.setFirstName(manager.scan.nextLine());
+        account.setFirstName(manager.inputOutput.nextLine());
         System.out.println("enter last name");
-        account.setLastName(manager.scan.nextLine());
+        account.setLastName(manager.inputOutput.nextLine());
         System.out.println("enter email");
-        account.setEmail(manager.scan.nextLine());
+        account.setEmail(manager.inputOutput.nextLine());
         account.setToken(manager.getTocken());
         return account;
     }

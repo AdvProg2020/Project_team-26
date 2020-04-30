@@ -1,12 +1,9 @@
 package view.manager.users;
 
 import controller.Exceptions;
-import controller.account.Account;
 import controller.account.AuthenticationController;
-import controller.account.ShowUserController;
 import controller.account.UserInfoController;
 import controller.interfaces.account.IShowUserController;
-import controller.interfaces.account.IUserInfoController;
 import view.*;
 import view.main.AuthenticationValidCommands;
 import view.main.AuthenticationView;
@@ -29,7 +26,7 @@ public class ManageUsersForManager extends View implements ViewI {
     @Override
     public View run() {
         showAll();
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("back")) {
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (ValidCommandsForManageUsersForManagerView command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     command.goToFunction(this);
@@ -64,7 +61,7 @@ public class ManageUsersForManager extends View implements ViewI {
 
     protected void createManagerProfile() {
         System.out.println("please enter the username");
-        String command = "create account manager " + manager.scan.nextLine();
+        String command = "create account manager " + manager.inputOutput.nextLine();
         new AuthenticationView(manager, command, new AuthenticationController()).register(
                 Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher(command));
     }
@@ -74,7 +71,7 @@ public class ManageUsersForManager extends View implements ViewI {
         try {
             UserInfoController account = controller.getUserByName(matcher.group(1), manager.getTocken());
             show(account);
-        } catch (Exceptions.UserNameDoesntExist userNameDoesntExist) {
+        } catch (Exceptions.TheParameterDoesNOtExist userNameDoesntExist) {
             userNameDoesntExist.getMessage();
         }
     }

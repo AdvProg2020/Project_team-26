@@ -13,6 +13,7 @@ public class ViewManager {
     private List<View> pathOfView;
     private List<String> helpFormatForPrint;
     public Scanner scan;
+    public IO inputOutput;
 
     public ViewManager() {
         pathOfView = new ArrayList<>();

@@ -1,8 +1,8 @@
 package controller;
 
 public class Exceptions {
-    public class InvalidUserNameException extends Exception {
-        public InvalidUserNameException(String message) {
+    public class FieldsExistWithSameName extends Exception {
+        public FieldsExistWithSameName(String message) {
             super(message);
         }
     }
@@ -37,20 +37,9 @@ public class Exceptions {
         }
     }
 
-    public class UserNameDoesntExist extends Exception {
-        public UserNameDoesntExist(String message) {
+    public class TheParameterDoesNOtExist extends Exception {
+        public TheParameterDoesNOtExist(String message) {
             super(message);
         }
     }
-    public class PromoCodeDoesntExist extends Exception {
-        public PromoCodeDoesntExist(String message) {
-            super(message);
-        }
-    }
-    public class FieldsDoesNotExist extends Exception{
-        public FieldsDoesNotExist(String message) {
-            super(message);
-        }
-    }
-
 }

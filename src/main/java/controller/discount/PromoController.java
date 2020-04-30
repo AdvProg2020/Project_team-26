@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class PromoController implements IPromoController {
 
     @Override
-    public PromoDetailsController getPromoCodeTemplate(String codeId, String token) throws Exceptions.PromoCodeDoesntExist {
+    public PromoDetailsController getPromoCodeTemplate(String codeId, String token) throws Exceptions.TheParameterDoesNOtExist {
         return null;
     }
 
@@ -22,12 +22,12 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void editPromoCode(String oldPromoCodeId, ArrayList<String> fieldAndChanges, String token) throws Exceptions.PromoCodeDoesntExist, Exceptions.FieldsDoesNotExist {
+    public void editPromoCode(String oldPromoCodeId, ArrayList<String> fieldAndChanges, String token) throws Exceptions.TheParameterDoesNOtExist, Exceptions.TheParameterDoesNOtExist {
 
     }
 
     @Override
-    public void removePromoCode(String promoCodeId, String token) throws Exceptions.PromoCodeDoesntExist {
+    public void removePromoCode(String promoCodeId, String token) throws Exceptions.TheParameterDoesNOtExist {
 
     }
 }

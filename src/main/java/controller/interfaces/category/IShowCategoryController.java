@@ -5,7 +5,7 @@ import model.Product;
 
 public interface IShowCategoryController {
 
-    Category getCategory(int id, String token);
+    controller.category.Category getCategory(String name, String token);
 
     Category[] getSubCategories(int id, String token);
 

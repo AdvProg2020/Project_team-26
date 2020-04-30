@@ -1,7 +1,6 @@
 package view.manager.discount;
 
 import controller.Exceptions;
-import controller.account.ShowUserController;
 import controller.discount.PromoDetailsController;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
@@ -28,7 +27,7 @@ public class discountForManagerViewI extends View implements ViewI {
     public View run() {
         showAll();
         while (manager.getIsUserLoggedin()) {
-            if ((super.input = (manager.scan.nextLine()).trim()).matches("back"))
+            if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;
             for (discountForManagerViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -53,7 +52,7 @@ public class discountForManagerViewI extends View implements ViewI {
         System.out.println("end date:" + promo.getEndDate(manager.getTocken()).toString());//
         System.out.println("percent of discount:" + promo.getPercent(manager.getTocken()));
         System.out.println("maximum discount:" + promo.getMaxDiscount(manager.getTocken()));
-        System.out.println("customers:");
+        System.out.println("users:");
         int[] customersId = promo.getCustomersIds();
         for (int id : customersId) {
             System.out.println("username:" + userController.getUserById(id,
@@ -67,7 +66,7 @@ public class discountForManagerViewI extends View implements ViewI {
             String id = controller.getPromoCodeTemplate(matcher.group(1), manager.getTocken()).getPromoCode(manager.getTocken());
             ArrayList<String> changes = edit();
             controller.editPromoCode(id, changes, manager.getTocken());
-        } catch (Exceptions.PromoCodeDoesntExist | Exceptions.FieldsDoesNotExist error) {
+        } catch (Exceptions.TheParameterDoesNOtExist error) {
             error.getMessage();
         }
     }
@@ -75,9 +74,14 @@ public class discountForManagerViewI extends View implements ViewI {
     private ArrayList<String> edit() {
         System.out.println("which field you want to change");
         ArrayList<String> inputs = new ArrayList<>();
-        inputs.add(manager.scan.nextLine());
+        inputs.add(manager.inputOutput.nextLine());
+        if (inputs.get(0).matches("users")) {
+            System.out.println("type [remove|add] [username]");
+            inputs.add(manager.inputOutput.nextLine());
+            return inputs;
+        }
         System.out.println("type new one");
-        inputs.add(manager.scan.nextLine());
+        inputs.add(manager.inputOutput.nextLine());
         return inputs;
     }
 
@@ -85,7 +89,7 @@ public class discountForManagerViewI extends View implements ViewI {
         matcher.find();
         try {
             controller.removePromoCode(matcher.group(1), manager.getTocken());
-        } catch (Exceptions.PromoCodeDoesntExist promoCodeDoesntExist) {
+        } catch (Exceptions.TheParameterDoesNOtExist promoCodeDoesntExist) {
             promoCodeDoesntExist.getMessage();
         }
     }
@@ -95,7 +99,7 @@ public class discountForManagerViewI extends View implements ViewI {
         try {
             PromoDetailsController promo = controller.getPromoCodeTemplate(matcher.group(1), manager.getTocken());
             show(promo);
-        } catch (Exceptions.PromoCodeDoesntExist promoCodeDoesntExist) {
+        } catch (Exceptions.TheParameterDoesNOtExist promoCodeDoesntExist) {
             promoCodeDoesntExist.getMessage();
         }
 
