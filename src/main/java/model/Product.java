@@ -26,4 +26,44 @@ public class Product {
     public int getId() {
         return id;
     }
+
+    public State getState() {
+        return state;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public List<ProductSeller> getSellerList() {
+        return sellerList;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public List<CategoryFeature> getCategoryFeatures() {
+        return categoryFeatures;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getAverageRate() {
+        return averageRate;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
