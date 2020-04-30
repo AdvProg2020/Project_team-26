@@ -31,4 +31,26 @@ public class Exceptions {
         }
     }
 
+    public class InvalidAccessDemand extends Exception {
+        public InvalidAccessDemand(String message) {
+            super(message);
+        }
+    }
+
+    public class UserNameDoesntExist extends Exception {
+        public UserNameDoesntExist(String message) {
+            super(message);
+        }
+    }
+    public class PromoCodeDoesntExist extends Exception {
+        public PromoCodeDoesntExist(String message) {
+            super(message);
+        }
+    }
+    public class FieldsDoesNotExist extends Exception{
+        public FieldsDoesNotExist(String message) {
+            super(message);
+        }
+    }
+
 }

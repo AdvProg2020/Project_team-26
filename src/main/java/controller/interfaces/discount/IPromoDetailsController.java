@@ -2,7 +2,7 @@ package controller.interfaces.discount;
 
 import java.util.Date;
 
-public interface PromoDetailsController {
+public interface IPromoDetailsController {
 
     String getPromoCode(String token);
 

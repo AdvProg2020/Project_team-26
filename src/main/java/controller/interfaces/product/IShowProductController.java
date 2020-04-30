@@ -2,7 +2,7 @@ package controller.interfaces.product;
 
 import model.Product;
 
-public interface ShowProductController {
+public interface IShowProductController {
 
     Product[] getProducts(int startIndex, int endIndex, String token);
 

@@ -33,7 +33,13 @@ public enum ValidCommandsForManageUsersForManagerView {
                 page.logOut();
                 return;
             }
-            page.printError();
+            page.getManager().printError();
+        }
+    },
+    Help("help"){
+        @Override
+        public void goToFunction(ManageUsersForManager page) {
+            page.help(page.getManager().getIsUserLoggedin());
         }
     };
 

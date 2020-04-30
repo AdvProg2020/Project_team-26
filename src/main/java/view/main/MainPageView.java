@@ -11,6 +11,7 @@ import java.util.EnumSet;
 public class MainPageView extends View implements ViewI {
     private EnumSet<MainPageViewValidCommands> commands;
     private AuthenticationController controller;
+    private boolean isBack;
 
     public MainPageView(ViewManager manager) {
         super(manager);
@@ -22,7 +23,7 @@ public class MainPageView extends View implements ViewI {
 
     @Override
     public View run() {
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit|back")) {
             for (MainPageViewValidCommands command : commands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     if (command.getView() != null) {
@@ -37,12 +38,8 @@ public class MainPageView extends View implements ViewI {
     }
 
     protected void authorizing() {
-        AuthenticationView auth = new AuthenticationView(manager, super.input);
+        AuthenticationView auth = new AuthenticationView(manager, super.input, new AuthenticationController());
         auth.run();
-    }
-
-    protected void back() {
-
     }
 
     protected void help(boolean isLoggedIn) {
@@ -52,12 +49,13 @@ public class MainPageView extends View implements ViewI {
     public void logout(String token) {
         try {
             controller.logout(token);
+            manager.setUserLoggedIn(false);
         } catch (Exceptions.UnSuccessfulLogout unSuccessfulLogout) {
             unSuccessfulLogout.getMessage();
         }
     }
 
     public void printError() {
-
+        System.out.println("invalid command pattern");
     }
 }

@@ -2,7 +2,7 @@ package controller.interfaces.product;
 
 import model.Product;
 
-public interface SearchAndFilter {
+public interface ISearchAndFilter {
 
     Product[] searchForAProductByName(String name, String token);
 

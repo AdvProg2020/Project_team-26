@@ -1,10 +1,11 @@
 package controller.product;
 
+import controller.interfaces.product.ISearchAndFilter;
 import model.Product;
 
 import java.util.ArrayList;
 
-public class SearchAndFilter implements controller.interfaces.product.SearchAndFilter {
+public class SearchAndFilter implements ISearchAndFilter {
 
     private static ArrayList<String> filters;
 

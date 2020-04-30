@@ -5,10 +5,11 @@ import controller.account.UserInfoController;
 
 import java.util.Map;
 
-public interface ShowUserController {
+public interface IShowUserController {
     UserInfoController[] getUsers(String token);
 
-    UserInfoController getUserByName(String username, String token);
+    UserInfoController getUserByName(String username, String token) throws Exceptions.UserNameDoesntExist;
+    UserInfoController getUserById(int id,String token);
 
     Map<String, String> getUserInfo(String token);
 

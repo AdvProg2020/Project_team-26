@@ -1,6 +1,8 @@
 package controller.review;
 
-public class Rating implements controller.interfaces.review.Rating {
+import controller.interfaces.review.IRating;
+
+public class Rating implements IRating {
 
     public void addARating(double rating, int productId, String token) {
 

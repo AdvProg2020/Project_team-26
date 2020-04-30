@@ -2,7 +2,7 @@ package controller.interfaces.cart;
 
 import model.Cart;
 
-public interface CartController {
+public interface ICartController {
 
     void addProduct(int productId, String token);
 

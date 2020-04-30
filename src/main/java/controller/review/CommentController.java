@@ -1,6 +1,8 @@
 package controller.review;
 
-public class CommentController implements controller.interfaces.review.CommentController {
+import controller.interfaces.review.ICommentController;
+
+public class CommentController implements ICommentController {
 
     public void addAComment(String comment, int productId, String token) {
 

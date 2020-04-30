@@ -2,8 +2,11 @@ package view.manager.users;
 
 import controller.Exceptions;
 import controller.account.Account;
+import controller.account.AuthenticationController;
 import controller.account.ShowUserController;
 import controller.account.UserInfoController;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
 import view.*;
 import view.main.AuthenticationValidCommands;
 import view.main.AuthenticationView;
@@ -15,12 +18,12 @@ import java.util.regex.Pattern;
 
 public class ManageUsersForManager extends View implements ViewI {
     EnumSet<ValidCommandsForManageUsersForManagerView> validCommands;
-    private ShowUserController controller;
+    private IShowUserController controller;
 
-    public ManageUsersForManager(ViewManager manager) {
+    public ManageUsersForManager(ViewManager manager, IShowUserController controller) {
         super(manager);
         validCommands = EnumSet.allOf(ValidCommandsForManageUsersForManagerView.class);
-        controller = new ShowUserController();
+        this.controller = controller;
     }
 
     @Override
@@ -35,6 +38,12 @@ public class ManageUsersForManager extends View implements ViewI {
             }
         }
         return null;
+    }
+
+    protected void help(boolean isLoggedIn) {
+        System.out.println("delete user [username]\ncreate manager profile\nview [username]\nback");
+        if (isLoggedIn)
+            System.out.println("logout");
     }
 
     private void showAll() {
@@ -56,14 +65,18 @@ public class ManageUsersForManager extends View implements ViewI {
     protected void createManagerProfile() {
         System.out.println("please enter the username");
         String command = "create account manager " + manager.scan.nextLine();
-        new AuthenticationView(manager, command).register(
+        new AuthenticationView(manager, command, new AuthenticationController()).register(
                 Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher(command));
     }
 
     protected void viewUser(Matcher matcher) {
         matcher.find();
-        UserInfoController account = controller.getUserByName(matcher.group(1), manager.getTocken());
-        show(account);
+        try {
+            UserInfoController account = controller.getUserByName(matcher.group(1), manager.getTocken());
+            show(account);
+        } catch (Exceptions.UserNameDoesntExist userNameDoesntExist) {
+            userNameDoesntExist.getMessage();
+        }
     }
 
     private void show(UserInfoController account) {
@@ -80,7 +93,4 @@ public class ManageUsersForManager extends View implements ViewI {
         new MainPageView(manager).logout(manager.getTocken());
     }
 
-    protected void printError() {
-
-    }
 }

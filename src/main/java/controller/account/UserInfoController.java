@@ -1,8 +1,9 @@
 package controller.account;
 
 import controller.Exceptions;
+import controller.interfaces.account.IUserInfoController;
 
-public class UserInfoController implements controller.interfaces.account.UserInfoController {
+public class UserInfoController implements IUserInfoController {
 
     public String getEmail(String token) {
         return null;

@@ -3,7 +3,7 @@ package controller.interfaces.category;
 import model.Category;
 import model.Product;
 
-public interface ShowCategoryController {
+public interface IShowCategoryController {
 
     Category getCategory(int id, String token);
 

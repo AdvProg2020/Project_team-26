@@ -1,9 +1,10 @@
 package controller.category;
 
+import controller.interfaces.category.IShowCategoryController;
 import model.Category;
 import model.Product;
 
-public class ShowCategoryController implements controller.interfaces.category.ShowCategoryController {
+public class ShowCategoryController implements IShowCategoryController {
 
     public Category getCategory(int id, String token) {
         return null;

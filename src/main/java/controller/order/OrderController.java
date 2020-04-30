@@ -1,8 +1,9 @@
 package controller.order;
 
+import controller.interfaces.order.IOrderController;
 import model.Order;
 
-public class OrderController implements controller.interfaces.order.OrderController {
+public class OrderController implements IOrderController {
 
     public Order[] getOrders(int startIndex, int endIndex, String token) {
         return null;

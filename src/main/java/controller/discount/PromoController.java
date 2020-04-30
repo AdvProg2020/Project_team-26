@@ -1,20 +1,33 @@
 package controller.discount;
 
-public class PromoController implements controller.interfaces.discount.PromoController {
+import controller.Exceptions;
+import controller.interfaces.discount.IPromoController;
 
-    public PromoDetailsController getPromoCodeTemplate() {
-        return new PromoDetailsController();
+import java.util.ArrayList;
+
+public class PromoController implements IPromoController {
+
+    @Override
+    public PromoDetailsController getPromoCodeTemplate(String codeId, String token) throws Exceptions.PromoCodeDoesntExist {
+        return null;
+    }
+
+    @Override
+    public PromoDetailsController[] getAllPromoCode(String token) {
+        return new PromoDetailsController[0];
     }
 
     public void createPromoCode(String promoCode, String token) {
 
     }
 
-    public void editPromoCode(int oldPromoCodeId, PromoDetailsController newCode, String token) {
+    @Override
+    public void editPromoCode(String oldPromoCodeId, ArrayList<String> fieldAndChanges, String token) throws Exceptions.PromoCodeDoesntExist, Exceptions.FieldsDoesNotExist {
 
     }
 
-    public void removePromoCode(int promoCodeId, String token) {
+    @Override
+    public void removePromoCode(String promoCodeId, String token) throws Exceptions.PromoCodeDoesntExist {
 
     }
 }

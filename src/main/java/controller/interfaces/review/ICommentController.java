@@ -1,6 +1,6 @@
 package controller.interfaces.review;
 
-public interface CommentController {
+public interface ICommentController {
 
     void addAComment(String comment, int productId, String token);
 

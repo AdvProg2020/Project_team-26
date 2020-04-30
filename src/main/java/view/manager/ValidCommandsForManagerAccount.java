@@ -1,5 +1,7 @@
 package view.manager;
 
+import controller.account.ShowUserController;
+import controller.discount.PromoController;
 import view.ViewManager;
 import view.manager.category.ManageCategoryForManagerViewI;
 import view.manager.discount.discountForManagerViewI;
@@ -25,7 +27,7 @@ public enum ValidCommandsForManagerAccount {
             page.edit(Pattern.compile(EditTheFiled.toString()).matcher(page.getInput()));
         }
     },
-    ManageUsers("manage\\s+users", new ManageUsersForManager(ValidCommandsForManagerAccount.manager)) {
+    ManageUsers("manage\\s+users", new ManageUsersForManager(ValidCommandsForManagerAccount.manager, new ShowUserController())) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
@@ -42,7 +44,7 @@ public enum ValidCommandsForManagerAccount {
             page.createPromoCode();
         }
     },
-    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerViewI(ValidCommandsForManagerAccount.manager)) {
+    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerViewI(ValidCommandsForManagerAccount.manager, new PromoController(), new ShowUserController())) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }

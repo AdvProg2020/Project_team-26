@@ -3,6 +3,8 @@ package view.manager;
 import controller.Exceptions;
 import controller.account.ShowUserController;
 import controller.account.UserInfoController;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
 import view.*;
 import view.ViewManager;
 
@@ -15,19 +17,21 @@ import java.util.regex.Matcher;
 
 public class ManagerAccountView extends View implements ViewI {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
-    private ShowUserController controller;
-    private UserInfoController infoController;
+    private IShowUserController controller;
+    private IUserInfoController infoController;
 
-    ManagerAccountView(ViewManager manager) {
+    ManagerAccountView(ViewManager manager, IShowUserController controller, IUserInfoController infoController) {
         super(manager);
         validCommand = EnumSet.allOf(ValidCommandsForManagerAccount.class);
-        controller = new ShowUserController();
-        infoController = new UserInfoController();
+        this.controller = controller;
+        this.infoController = infoController;
     }
 
     @Override
     public View run() {
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+        while (manager.getIsUserLoggedin()) {
+            if ((super.input = (manager.scan.nextLine()).trim()).matches("back"))
+                break;
             for (ValidCommandsForManagerAccount command : validCommand) {
                 if ((command.getStringMatcher(super.input).find())) {
                     if (command.getView() != null) {

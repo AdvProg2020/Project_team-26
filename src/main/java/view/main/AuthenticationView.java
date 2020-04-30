@@ -2,20 +2,21 @@ package view.main;
 
 import controller.Exceptions;
 import controller.account.Account;
-import controller.account.AuthenticationController;
-import view.*;
+import controller.interfaces.account.IAuthenticationController;
+import view.View;
+import view.ViewManager;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class AuthenticationView extends View implements ViewI {
+public class AuthenticationView extends View {
     private String input;
-    private AuthenticationController control;
+    IAuthenticationController control;
 
-    public AuthenticationView(ViewManager manager, String command) {
+    public AuthenticationView(ViewManager manager, String command, IAuthenticationController control) {
         super(manager);
         input = command;
-        control = new AuthenticationController();
+        this.control = control;
     }
 
     @Override
@@ -57,12 +58,15 @@ public class AuthenticationView extends View implements ViewI {
             if (isBack && account.getPassword().equals("back"))
                 return;
             try {
-                control.register(account);
+                control.register(account, manager.getTocken());
                 isComplete = true;
             } catch (Exceptions.InvalidUserNameException wrongUsername) {
                 System.out.println(wrongUsername.getMessage());
                 System.out.println("please enter another username");
                 account.setUsername(manager.scan.nextLine());
+            } catch (Exceptions.InvalidAccessDemand accessDemand) {
+                accessDemand.getMessage();
+                return;
             }
             isBack = true;
         }

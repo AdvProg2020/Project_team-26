@@ -1,6 +1,6 @@
 package controller.interfaces.review;
 
-public interface Rating {
+public interface IRatingController {
 
     void addARating(double rating, int productId, String token);
 

@@ -2,7 +2,7 @@ package controller.interfaces.order;
 
 import model.Order;
 
-public interface OrderController {
+public interface IOrderController {
 
     Order[] getOrders(int startIndex, int endIndex, String token);
 

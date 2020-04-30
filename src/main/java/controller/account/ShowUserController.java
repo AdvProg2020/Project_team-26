@@ -1,11 +1,11 @@
 package controller.account;
 
 import controller.Exceptions;
-import model.User;
+import controller.interfaces.account.IShowUserController;
 
 import java.util.Map;
 
-public class ShowUserController implements controller.interfaces.account.ShowUserController {
+public class ShowUserController implements IShowUserController {
 
     public UserInfoController[] getUsers(String token) {
         return null;

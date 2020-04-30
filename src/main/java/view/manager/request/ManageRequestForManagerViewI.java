@@ -15,7 +15,9 @@ public class ManageRequestForManagerViewI extends View implements ViewI {
 
     @Override
     public View run() {
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+        while (manager.getIsUserLoggedin()) {
+            if ((super.input = (manager.scan.nextLine()).trim()).matches("back"))
+                break;
             for (ManageRequestForManagerViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     command.goToFunction(this);
