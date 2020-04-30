@@ -25,6 +25,11 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
+    public boolean exist(int id) {
+        return false;
+    }
+
+    @Override
     public void save(Product object) {
     }
 
@@ -35,6 +40,26 @@ public class FakeProductRepository implements ProductRepository {
 
     @Override
     public void delete(Product object) {
+
+    }
+
+    @Override
+    public Product getByName(String name) {
+        return null;
+    }
+
+    @Override
+    public void addRequest(Product product) {
+
+    }
+
+    @Override
+    public void editRequest(Product product) {
+
+    }
+
+    @Override
+    public void deleteRequest(int id) {
 
     }
 }

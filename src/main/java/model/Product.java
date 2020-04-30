@@ -66,4 +66,12 @@ public class Product {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void addSeller(ProductSeller productSeller) {
+        this.sellerList.add(productSeller);
+    }
+
+    public boolean hasSeller(User seller) {
+        return sellerList.stream().anyMatch(s -> s.getSeller().equals(seller));
+    }
 }
