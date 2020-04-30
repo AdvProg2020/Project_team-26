@@ -1,5 +1,7 @@
 package view.manager.discount;
 
+import view.manager.users.ManageUsersForManager;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +22,22 @@ public enum discountForManagerViewValidCommands {
         @Override
         public void goToFunction(discountForManagerViewI page) {
             page.removeDiscountCodeWithItsCode(Pattern.compile(RemoveDiscountCodeWithItsCode.toString()).matcher(page.getInput()));
+        }
+    },
+    Logout("logout") {
+        @Override
+        public void goToFunction(discountForManagerViewI page) {
+            if (page.getManager().getIsUserLoggedin()) {
+                page.logOut();
+                return;
+            }
+            page.getManager().printError();
+        }
+    },
+    Help("help"){
+        @Override
+        public void goToFunction(discountForManagerViewI page) {
+            page.help(page.getManager().getIsUserLoggedin());
         }
     };
     private final Pattern commandPattern;

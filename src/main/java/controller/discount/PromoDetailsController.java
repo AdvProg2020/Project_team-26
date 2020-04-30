@@ -1,8 +1,10 @@
 package controller.discount;
 
+import controller.interfaces.discount.IPromoDetailsController;
+
 import java.util.Date;
 
-public class PromoDetailsController implements controller.interfaces.discount.PromoDetailsController {
+public class PromoDetailsController implements IPromoDetailsController {
 
     public String getPromoCode(String token) {
         return null;

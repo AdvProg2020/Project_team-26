@@ -2,7 +2,7 @@ package controller.interfaces.discount;
 
 import java.util.Date;
 
-public interface OffController {
+public interface IOffController {
 
     int createNewOff(String token);
 

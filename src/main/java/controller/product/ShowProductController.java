@@ -1,8 +1,9 @@
 package controller.product;
 
+import controller.interfaces.product.IShowProductController;
 import model.Product;
 
-public class ShowProductController implements controller.interfaces.product.ShowProductController {
+public class ShowProductController implements IShowProductController {
 
     public Product[] getProducts(int startIndex, int endIndex, String token) {
         return null;

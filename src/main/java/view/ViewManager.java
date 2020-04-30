@@ -48,7 +48,7 @@ public class ViewManager {
 
     public void startProgram() {
         MainPageView startView = new MainPageView(this);
-        startView.run(this);
+        startView.run();
     }
 
     public void setUserLoggedIn(boolean userLoggedIn) {
@@ -72,6 +72,10 @@ public class ViewManager {
     }
 
     public void showResult(/*//*/) {
+
+    }
+    public void printError() {
+
 
     }
     //public void setTheCommandsForUserDependentOnSituation()

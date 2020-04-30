@@ -1,9 +1,9 @@
 package controller.cart;
 
+import controller.interfaces.cart.ICartController;
 import model.Cart;
-import model.Product;
 
-public class CartController implements controller.interfaces.cart.CartController {
+public class CartController implements ICartController {
 
     public void addProduct(int productId, String token) {
 

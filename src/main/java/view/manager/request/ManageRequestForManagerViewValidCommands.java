@@ -1,6 +1,7 @@
 package view.manager.request;
 
 import view.View;
+import view.manager.users.ManageUsersForManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,22 @@ public enum ManageRequestForManagerViewValidCommands {
         public void goToFunction(ManageRequestForManagerViewI page) {
             page.declineTheRequest(Pattern.compile(DeclineTheRequest.toString()).matcher(page.getInput()));
         }
+    },
+    Logout("logout") {
+        @Override
+        public void goToFunction(ManageRequestForManagerViewI page) {
+            if (page.getManager().getIsUserLoggedin()) {
+                page.logOut();
+                return;
+            }
+            page.getManager().printError();
+        }
+    },
+    Help("help") {
+        @Override
+        public void goToFunction(ManageRequestForManagerViewI page) {
+            page.help(page.getManager().getIsUserLoggedin());
+        }
     };
     private final Pattern commandPattern;
 
@@ -39,11 +56,6 @@ public enum ManageRequestForManagerViewValidCommands {
 
     ManageRequestForManagerViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
-    }
-
-    public List<String> commands(boolean isLoggedIn) {
-        ArrayList<String> list = new ArrayList<>();
-        return list;
     }
 
 

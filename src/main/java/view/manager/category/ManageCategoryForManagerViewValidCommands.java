@@ -1,6 +1,7 @@
 package view.manager.category;
 
 import view.View;
+import view.manager.users.ManageUsersForManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public enum ManageCategoryForManagerViewValidCommands {
             page.EditCategoryForManager(Pattern.compile(EditCategoryForManager.toString()).matcher(page.getInput()));
         }
     },
-    AddCategoryForManager("Add\\s+(.*)") {
+    AddCategoryForManager("add\\s+(.*)") {
         @Override
         public void goToFunction(ManageCategoryForManagerViewI page) {
             page.addCategoryForManager(Pattern.compile(AddCategoryForManager.toString()).matcher(page.getInput()));
@@ -24,6 +25,21 @@ public enum ManageCategoryForManagerViewValidCommands {
         @Override
         public void goToFunction(ManageCategoryForManagerViewI page) {
             page.RemoveCategoryForManager(Pattern.compile(RemoveCategoryForManager.toString()).matcher(page.getInput()));
+        }
+    }, Logout("logout") {
+        @Override
+        public void goToFunction(ManageCategoryForManagerViewI page) {
+            if (page.getManager().getIsUserLoggedin()) {
+                page.logOut();
+                return;
+            }
+            page.getManager().printError();
+        }
+    },
+    Help("help") {
+        @Override
+        public void goToFunction(ManageCategoryForManagerViewI page) {
+            page.help(page.getManager().getIsUserLoggedin());
         }
     };
     private final Pattern commandPattern;

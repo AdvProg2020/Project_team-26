@@ -1,8 +1,8 @@
 package controller.category;
 
-import model.Category;
+import controller.interfaces.category.ICategoryController;
 
-public class CategoryController implements controller.interfaces.category.CategoryController {
+public class CategoryController implements ICategoryController {
 
     public void addCategory(String name, int parentId, String token) {
 

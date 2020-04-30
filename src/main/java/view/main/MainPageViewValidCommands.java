@@ -45,7 +45,7 @@ public enum MainPageViewValidCommands {
         @Override
         public void goToFunction(MainPageView page) {
             if (page.getManager().getIsUserLoggedin())
-                page.logout();
+                page.logout(manager.getTocken());
             page.printError();
         }
     },

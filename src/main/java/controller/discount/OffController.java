@@ -1,10 +1,10 @@
 package controller.discount;
 
-import model.Off;
+import controller.interfaces.discount.IOffController;
 
 import java.util.Date;
 
-public class OffController implements controller.interfaces.discount.OffController {
+public class OffController implements IOffController {
 
         public int createNewOff(String token) {
                 return 0;

@@ -1,15 +1,16 @@
 package controller.account;
 
 import controller.Exceptions;
+import controller.interfaces.account.IAuthenticationController;
 
-public class AuthenticationController implements controller.interfaces.account.AuthenticationController {
+public class AuthenticationController implements IAuthenticationController {
 
     public void login(String username, String password, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidPasswordException {
 
 
     }
 
-    public void register(Account account , String token) throws Exceptions.InvalidUserNameException {
+    public void register(Account account , String token) throws Exceptions.InvalidUserNameException , Exceptions.InvalidAccessDemand {
 
 
     }
