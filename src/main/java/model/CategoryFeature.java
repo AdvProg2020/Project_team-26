@@ -9,7 +9,7 @@ public class CategoryFeature {
         this.featureName = featureName;
     }
 
-    private CategoryFeature(String featureName, String featureValue) {
+    public CategoryFeature(String featureName, String featureValue) {
         this.featureName = featureName;
         this.featureValue = featureValue;
     }

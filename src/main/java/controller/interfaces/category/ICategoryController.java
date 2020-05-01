@@ -13,11 +13,11 @@ public interface ICategoryController {
 
     int addCategory(int patternId, String newCategoryName, String token) throws exception.NoObjectWithIdException, exception.ObjectAlreadyExistException, NoAccessException;
 
-    void editCategory(int id, ArrayList<String> changes, String token) throws exception.NoObjectWithIdException;
+    void editCategory(int id, ArrayList<String> changes, String token) throws exception.NoObjectWithIdException, NoAccessException;
 
-    void addAttribute(int id, String attribute, String token) throws exception.NoObjectWithIdException;
+    void addAttribute(int id, String attributeName , String attribute, String token) throws NoObjectWithIdException, NoAccessException
 
-    public void removeACategory(int id,int parentId ,  String token) throws NoObjectWithIdException, NoAccessException
+    void removeACategory(int id, int parentId , String token) throws NoObjectWithIdException, NoAccessException
 
     void addProduct(int id, int productName, String token) throws exception.NoObjectWithIdException, NoAccessException;
 
