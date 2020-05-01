@@ -1,6 +1,5 @@
 package model.repository.fake;
 
-import model.Category;
 import model.Product;
 import model.repository.ProductRepository;
 

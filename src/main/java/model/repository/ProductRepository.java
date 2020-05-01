@@ -3,7 +3,6 @@ package model.repository;
 import model.Product;
 import model.ProductSeller;
 import model.State;
-import sun.net.ProgressSource;
 
 public interface ProductRepository extends Repository<Product> {
 

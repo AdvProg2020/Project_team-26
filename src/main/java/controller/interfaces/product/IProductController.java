@@ -1,13 +1,13 @@
 package controller.interfaces.product;
 
-import controller.Exceptions;
 import model.Product;
+import model.ProductSeller;
 
 public interface IProductController {
 
     int createProduct(String name, String token);
 
-    Product getProductByName(String name, String token) throws Exceptions.TheParameterDoesNOtExist;
+    Product getProductByName(int id, String token);
 
     void changeProductName(int id, String name, String token);
 

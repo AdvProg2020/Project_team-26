@@ -13,7 +13,7 @@ import java.util.EnumSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ManageUsersForManager extends View implements ViewI {
+public class ManageUsersForManager extends View implements IView {
     EnumSet<ValidCommandsForManageUsersForManagerView> validCommands;
     private IShowUserController controller;
 

@@ -9,11 +9,11 @@ import view.ViewManager;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class FilterViewI extends View implements ViewI {
+public class FilterIView extends View implements IView {
     EnumSet<FilterViewValidCommands> validCommands;
     ISearchAndFilterAndSort controller;
 
-    public FilterViewI(ViewManager manager) {
+    public FilterIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(FilterViewValidCommands.class);
     }

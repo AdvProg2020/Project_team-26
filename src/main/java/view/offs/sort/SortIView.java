@@ -7,10 +7,10 @@ import view.ViewManager;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class SortViewI extends View implements ViewI {
+public class SortIView extends View implements IView {
     EnumSet<SortingViewValidCommands> validCommands;
 
-    public SortViewI(ViewManager manager) {
+    public SortIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(SortingViewValidCommands.class);
     }

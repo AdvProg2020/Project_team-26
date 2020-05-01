@@ -5,10 +5,10 @@ import view.*;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class ManageRequestForManagerViewI extends View implements ViewI {
+public class ManageRequestForManagerIView extends View implements IView {
     EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
 
-    public ManageRequestForManagerViewI(ViewManager manager) {
+    public ManageRequestForManagerIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(ManageRequestForManagerViewValidCommands.class);
     }

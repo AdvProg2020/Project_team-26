@@ -2,8 +2,8 @@ package view.main;
 
 import view.View;
 import view.ViewManager;
-import view.offs.AllOffsViewI;
-import view.products.all.AllProductViewI;
+import view.offs.AllOffsIView;
+import view.products.all.AllProductIView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,13 +17,13 @@ public enum MainPageViewValidCommands {
 
         }
     },
-    ShowProducts("products", new AllProductViewI(MainPageViewValidCommands.manager)) {
+    ShowProducts("products", new AllProductIView(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(MainPageView page) {
 
         }
     },
-    ShowOffs("offs", new AllOffsViewI(MainPageViewValidCommands.manager)) {
+    ShowOffs("offs", new AllOffsIView(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(MainPageView page) {
 

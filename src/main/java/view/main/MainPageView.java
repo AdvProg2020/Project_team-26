@@ -8,7 +8,7 @@ import view.ViewManager;
 
 import java.util.EnumSet;
 
-public class MainPageView extends View implements ViewI {
+public class MainPageView extends View implements IView {
     private EnumSet<MainPageViewValidCommands> commands;
     private AuthenticationController controller;
 

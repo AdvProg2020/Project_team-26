@@ -1,8 +1,6 @@
 package view.manager;
 
 import controller.Exceptions;
-import controller.account.ShowUserController;
-import controller.account.UserInfoController;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
 import view.*;
@@ -15,7 +13,7 @@ import java.util.regex.Matcher;
  * i didnt create a package for commands that provides just one command list
  */
 
-public class ManagerAccountView extends View implements ViewI {
+public class ManagerAccountView extends View implements IView {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
     private IShowUserController controller;
     private IUserInfoController infoController;
