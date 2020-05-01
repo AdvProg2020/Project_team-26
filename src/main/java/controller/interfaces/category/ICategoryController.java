@@ -1,21 +1,25 @@
 package controller.interfaces.category;
 
 import controller.Exceptions;
-import controller.category.Category;
+import controller.category.CategoryForView;
+
+import java.util.ArrayList;
 
 public interface ICategoryController {
 
-    void addCategory(String name, String token) throws Exceptions.FieldsExistWithSameName;
+    void addCategory(ArrayList<String> parents, String newCategoryName, String token) throws Exceptions.FieldsExistWithSameName;
 
-    void addAttribute(String name, String attribute, String token);
+    void editCategory(ArrayList<String> names, ArrayList<String> changes, String token) throws Exceptions.TheParameterDoesNOtExist, Exceptions.FieldsExistWithSameName;
 
-    void removeACategory(String name, String token) throws Exceptions.TheParameterDoesNOtExist;
+    void addAttribute(ArrayList<String> names, String attribute, String token);
 
-    void addCustomer(String name, String username, String token) throws Exceptions.TheParameterDoesNOtExist;
+    void removeACategory(ArrayList<String> names,String remove, String token) throws Exceptions.TheParameterDoesNOtExist;
 
-    void addProduct(String name, String productName, String token) throws Exceptions.TheParameterDoesNOtExist;
+    void addCustomer(ArrayList<String> names, String username, String token) throws Exceptions.TheParameterDoesNOtExist;
 
-    void addSubCategories(String parentName, Category subCategory, String token) throws Exceptions.FieldsExistWithSameName;
+    void addProduct(ArrayList<String> names, String productName, String token) throws Exceptions.TheParameterDoesNOtExist;
+
+    void addSubCategories(ArrayList<String> names, CategoryForView subCategory, String token) throws Exceptions.FieldsExistWithSameName;
 
 
 }

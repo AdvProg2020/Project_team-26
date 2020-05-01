@@ -1,8 +1,5 @@
 package view.manager.category;
 
-import view.View;
-import view.manager.users.ManageUsersForManager;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -12,7 +9,7 @@ public enum ManageCategoryForManagerViewValidCommands {
     EditCategoryForManager("edit\\s+(.*)") {
         @Override
         public void goToFunction(ManageCategoryForManagerViewI page) {
-            page.EditCategoryForManager(Pattern.compile(EditCategoryForManager.toString()).matcher(page.getInput()));
+            page.editCategoryForManager(Pattern.compile(EditCategoryForManager.toString()).matcher(page.getInput()));
         }
     },
     AddCategoryForManager("add\\s+(.*)") {

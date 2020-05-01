@@ -5,9 +5,17 @@ import controller.interfaces.category.IShowCategoryController;
 import model.Category;
 import model.Product;
 
+import java.util.ArrayList;
+
 public class ShowCategoryController implements IShowCategoryController {
 
-    public Category getCategory(int id, String token) {
+    @Override
+    public CategoryForView[] getAllCategories(ArrayList<String> names, String token) {
+        return new CategoryForView[0];
+    }
+
+    @Override
+    public CategoryForView getCategory(String name, String token) {
         return null;
     }
 

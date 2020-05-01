@@ -1,13 +1,18 @@
 package controller.interfaces.category;
 
-import model.Category;
+import controller.category.CategoryForView;
 import model.Product;
+
+import java.util.ArrayList;
 
 public interface IShowCategoryController {
 
-    controller.category.Category getCategory(String name, String token);
 
-    Category[] getSubCategories(int id, String token);
+    CategoryForView[] getAllCategories(ArrayList<String> names, String token);
 
-    Product[] getProducts(int id, String token);
+    CategoryForView getCategory(String name, String token);
+
+    CategoryForView[] getSubCategories(int id, String token);
+
+    Product[] getProducts(int id, String token);//
 }

@@ -2,11 +2,11 @@ package controller.category;
 
 import java.util.List;
 
-public class Category {
+public class CategoryForView {
     private String name;
     private List<String> products;
     private String attribute;
-    private List<Category> subcategories;
+    private List<String> subcategories;
 
     public String getName() {
         return name;
@@ -20,7 +20,7 @@ public class Category {
         return attribute;
     }
 
-    public List<Category> getSubcategories() {
+    public List<String> getSubcategories() {
         return subcategories;
     }
 
@@ -28,15 +28,11 @@ public class Category {
         this.name = name;
     }
 
-    public void setProducts(List<String> products) {
-        this.products = products;
-    }
-
     public void setAttribute(String attribute) {
         this.attribute = attribute;
     }
 
-    public void setSubcategories(List<Category> subcategories) {
+    public void setSubcategories(List<CategoryForView> subcategories) {
         this.subcategories = subcategories;
     }
 }

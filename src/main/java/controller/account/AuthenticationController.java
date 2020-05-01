@@ -10,7 +10,7 @@ public class AuthenticationController implements IAuthenticationController {
 
     }
 
-    public void register(Account account , String token) throws Exceptions.FieldsExistWithSameName, Exceptions.InvalidAccessDemand {
+    public void register(AccountForView account , String token) throws Exceptions.FieldsExistWithSameName, Exceptions.InvalidAccessDemand {
 
 
     }

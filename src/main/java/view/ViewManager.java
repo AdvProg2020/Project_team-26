@@ -75,8 +75,16 @@ public class ViewManager {
     public void showResult(/*//*/) {
 
     }
+
     public void printError() {
 
+
+    }
+
+    public void showList(List<String> list) {
+        for (String s : list) {
+            inputOutput.println(s);
+        }
 
     }
     //public void setTheCommandsForUserDependentOnSituation()

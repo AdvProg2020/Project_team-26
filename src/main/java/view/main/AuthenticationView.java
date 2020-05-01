@@ -1,7 +1,7 @@
 package view.main;
 
 import controller.Exceptions;
-import controller.account.Account;
+import controller.account.AccountForView;
 import controller.interfaces.account.IAuthenticationController;
 import view.View;
 import view.ViewManager;
@@ -51,7 +51,7 @@ public class AuthenticationView extends View {
     }
 
     public void register(Matcher matcher) {
-        Account account = getUserInfo(matcher);
+        AccountForView account = getUserInfo(matcher);
         boolean isComplete = false;
         boolean isBack = false;
         while (!isComplete && !isBack) {
@@ -72,8 +72,8 @@ public class AuthenticationView extends View {
         }
     }
 
-    private Account getUserInfo(Matcher matcher) {
-        Account account = new Account();
+    private AccountForView getUserInfo(Matcher matcher) {
+        AccountForView account = new AccountForView();
         matcher.find();
         account.setRole(matcher.group(1));
         account.setUsername(matcher.group(2));

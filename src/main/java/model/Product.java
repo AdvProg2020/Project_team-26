@@ -66,4 +66,28 @@ public class Product {
     public void setId(int id) {
         this.id = id;
     }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setAverageRate(double averageRate) {
+        this.averageRate = averageRate;
+    }
 }

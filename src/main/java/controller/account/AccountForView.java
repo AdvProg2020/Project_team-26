@@ -2,7 +2,7 @@ package controller.account;
 
 import view.ViewManager;
 
-public class Account {
+public class AccountForView {
     private String password;
     private String role;
     private String email;
@@ -12,7 +12,7 @@ public class Account {
     private String token;
     private String id;
 
-    public Account() {
+    public AccountForView() {
         this.username = new String();
         password = new String();
         this.role = new String();
