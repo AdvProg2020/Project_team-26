@@ -35,6 +35,14 @@ public class Session {
         return token;
     }
 
+    public void logout() {
+        this.loggedInUser = null;
+    }
+
+    public void login(User user) {
+        this.loggedInUser = user;
+    }
+
     public User getLoggedInUser() {
         return loggedInUser;
     }

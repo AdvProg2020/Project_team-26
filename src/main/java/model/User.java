@@ -1,5 +1,7 @@
 package model;
 
+import controller.account.Account;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +19,14 @@ public class User {
     public User(int id) {
         this.id = id;
         promoCodes = new ArrayList<Promo>();
+    }
+
+    public User (Account account) {
+        this.username = account.getUsername();
+        this.password = account.getPassword();
+        this.password = account.getPassword();
+        this.email = account.getEmail();
+        this.role = getRole();
     }
 
     public int getId() {

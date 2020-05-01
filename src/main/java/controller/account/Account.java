@@ -1,10 +1,11 @@
 package controller.account;
 
+import model.Role;
 import view.ViewManager;
 
 public class Account {
     private String password;
-    private String role;
+    private Role role;
     private String email;
     private String username;
     private String firstName;
@@ -15,7 +16,6 @@ public class Account {
     public Account() {
         this.username = new String();
         password = new String();
-        this.role = new String();
         email = new String();
         firstName = new String();
         lastName = new String();
@@ -59,7 +59,7 @@ public class Account {
         return lastName;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
@@ -77,7 +77,7 @@ public class Account {
         this.lastName = lastName;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
 
