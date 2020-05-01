@@ -25,11 +25,6 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public boolean exist(int id) {
-        return false;
-    }
-
-    @Override
     public void save(Product object) {
     }
 
