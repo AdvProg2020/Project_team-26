@@ -2,10 +2,8 @@ package view.manager;
 
 import controller.account.ShowUserController;
 import controller.category.CategoryController;
-import controller.category.ShowCategoryController;
 import controller.discount.PromoController;
 import view.ViewManager;
-import view.main.MainPageView;
 import view.main.MainPageViewValidCommands;
 import view.manager.category.ManageCategoryForManagerViewI;
 import view.manager.discount.discountForManagerViewI;
@@ -14,8 +12,6 @@ import view.manager.users.ManageUsersForManager;
 import view.View;
 import view.products.all.AllProductViewI;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

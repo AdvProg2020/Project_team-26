@@ -2,9 +2,7 @@ package view.manager.category;
 
 import controller.Exceptions;
 import controller.category.CategoryController;
-import controller.category.ShowCategoryController;
 import controller.interfaces.category.ICategoryController;
-import controller.interfaces.category.IShowCategoryController;
 import model.Category;
 import model.CategoryFeature;
 import model.Product;

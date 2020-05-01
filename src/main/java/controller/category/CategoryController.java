@@ -10,6 +10,7 @@ import model.repository.CategoryRepository;
 import model.repository.RepositoryContainer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CategoryController implements ICategoryController {
     CategoryRepository categoryRepository;
@@ -122,5 +123,31 @@ public class CategoryController implements ICategoryController {
         Product product = productController.getProductById(productId, token);
         category.getProducts().add(product);
         categoryRepository.save(category);
+    }
+
+    @Override
+    public List<Category> getAllCategories(int id, String token) throws NoObjectWithIdException {
+        if (id == 0) {
+            return categoryRepository.getAll();
+        }
+        Category category = getCategoryByIdWithCheck(id);
+        return category.getSubCategory();
+    }
+
+    public List<CategoryFeature> getAttribute(int id, String token) throws NoObjectWithIdException {
+        Category category = getCategoryByIdWithCheck(id);
+        return category.getFeatures();
+    }
+
+    @Override
+    public Category getCategory(int id, String token) throws NoObjectWithIdException {
+        Category category = getCategoryByIdWithCheck(id);
+        return category;
+    }
+
+    @Override
+    public List<Product> getProducts(int id, String token) throws NoObjectWithIdException {
+        Category category = getCategoryByIdWithCheck(id);
+        return category.getProducts();
     }
 }
