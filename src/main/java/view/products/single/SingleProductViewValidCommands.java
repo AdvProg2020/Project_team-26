@@ -54,12 +54,6 @@ public enum SingleProductViewValidCommands {
             page.offs();
         }
     },
-    SelectAUserForBuyingFrom("select\\s+seller\\s+(.*)") {
-        @Override
-        public void goToFunction(SingleProductViewI page) {
-            page.selectAUserForBuyingFrom(Pattern.compile(SelectAUserForBuyingFrom.toString()).matcher(page.getInput()));
-        }
-    },
     ShowProductInOffPage("show\\s+product\\s+(.*)") {
         @Override
         public void goToFunction(SingleProductViewI page) {
