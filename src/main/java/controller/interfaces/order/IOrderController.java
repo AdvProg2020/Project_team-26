@@ -1,10 +1,15 @@
 package controller.interfaces.order;
 
+import exception.NoAccessException;
+import exception.NoObjectWithIdException;
 import model.Order;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 public interface IOrderController {
 
-    Order[] getOrders(int startIndex, int endIndex, String token);
+    ArrayList<Order> getOrders(String token) throws NoAccessException;
 
-    Order getASingleOrder(int id, String token);
+    Order getASingleOrder(int id, String token) throws NoAccessException, NoObjectWithIdException;
 }

@@ -13,4 +13,12 @@ public class OrderItem {
     public OrderItem(int id) {
         this.id = id;
     }
+
+    public Seller getSeller() {
+        return this.seller;
+    }
+
+    public long getPrice() {
+        return this.price;
+    }
 }
