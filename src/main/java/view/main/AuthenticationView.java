@@ -1,7 +1,9 @@
 package view.main;
 
 import controller.Exceptions;
+import controller.account.Account;
 import controller.interfaces.account.IAuthenticationController;
+import exception.NoAccessException;
 import model.User;
 import view.View;
 import view.ViewManager;
@@ -53,7 +55,7 @@ public class AuthenticationView extends View {
     }
 
     public void register(Matcher matcher) {
-        User account = getUserInfo(matcher);
+        Account account = getUserInfo(matcher);
         boolean isComplete = false;
         boolean isBack = false;
         while (!isComplete && !isBack) {
@@ -66,16 +68,15 @@ public class AuthenticationView extends View {
                 manager.inputOutput.println(wrongUsername.getMessage());
                 manager.inputOutput.println("please enter another username");
                 account.setUsername(manager.inputOutput.nextLine());
-            } catch (Exceptions.InvalidAccessDemand accessDemand) {
-                accessDemand.getMessage();
-                return;
+            } catch (Exceptions.InvalidAccessDemand | Exceptions.InvalidUserNameException | Exceptions.IncorrectPasswordFormat | Exceptions.UsernameAlreadyExists | NoAccessException | Exceptions.IncorrectUsernameFormat e) {
+                e.printStackTrace();
             }
             isBack = true;
         }
     }
 
-    private User getUserInfo(Matcher matcher) {
-        User account = new User();
+    private Account getUserInfo(Matcher matcher) {
+        Account account = new Account();
         matcher.find();
         account.setRole(matcher.group(1));
         account.setUsername(matcher.group(2));

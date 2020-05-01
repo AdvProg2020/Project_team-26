@@ -1,6 +1,6 @@
 package model;
 
-import view.products.all.AllProductViewI;
+import view.products.all.AllProductView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +8,14 @@ import java.util.List;
 public class Category {
 
     private int id;
-    private String Name;
+    private String name;
     private List<CategoryFeature> features;
     private Category parent;
     private List<Category> subCategory;
     private List<Product> products;
 
-    public Category(int id) {
-        this.id = id;
+    public Category(String name) {
+        this.name = name;
         features = new ArrayList<CategoryFeature>();
         subCategory = new ArrayList<Category>();
         products = new ArrayList<Product>();
@@ -25,8 +25,9 @@ public class Category {
         return id;
     }
 
+
     public String getName() {
-        return Name;
+        return name;
     }
 
     public Category getParent() {
@@ -50,6 +51,19 @@ public class Category {
         attachParents(branch, this);
         return branch.toString();
     }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+
+    public void addSubCategory(Category category){
+
+    }
+
+    public void removeSubCategory(Category category){
+
+    }
+
 
     private void attachParents(StringBuilder branch, Category category) {
         branch.append(category.getName());

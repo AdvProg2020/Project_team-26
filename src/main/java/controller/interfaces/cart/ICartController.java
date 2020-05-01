@@ -5,7 +5,7 @@ import model.Cart;
 
 public interface ICartController {
 
-    void addProduct(String productId, String sellerId, String token) throws Exceptions.TheParameterDoesNOtExist, Exceptions.InvalidFiledException;
+    void addProduct(String productId, String sellerId, String token) throws ;
 
     void changeProductAmount(int productId, int amount, String token);
 

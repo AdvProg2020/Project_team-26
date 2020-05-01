@@ -1,25 +1,25 @@
 package controller.interfaces.category;
 
 import controller.Exceptions;
+import exception.NoAccessException;
+import exception.NoObjectWithIdException;
 import model.Category;
+import model.repository.CategoryRepository;
 
 import java.util.ArrayList;
 
 public interface ICategoryController {
 
-    void addCategory(ArrayList<String> parents, String newCategoryName, String token) throws Exceptions.FieldsExistWithSameName;
 
-    void editCategory(ArrayList<String> names, ArrayList<String> changes, String token) throws Exceptions.TheParameterDoesNOtExist, Exceptions.FieldsExistWithSameName;
+    int addCategory(int patternId, String newCategoryName, String token) throws exception.NoObjectWithIdException, exception.ObjectAlreadyExistException, NoAccessException;
 
-    void addAttribute(ArrayList<String> names, String attribute, String token);
+    void editCategory(int id, ArrayList<String> changes, String token) throws exception.NoObjectWithIdException;
 
-    void removeACategory(ArrayList<String> names,String remove, String token) throws Exceptions.TheParameterDoesNOtExist;
+    void addAttribute(int id, String attribute, String token) throws exception.NoObjectWithIdException;
 
-    void addCustomer(ArrayList<String> names, String username, String token) throws Exceptions.TheParameterDoesNOtExist;
+    public void removeACategory(int id,int parentId ,  String token) throws NoObjectWithIdException, NoAccessException
 
-    void addProduct(ArrayList<String> names, String productName, String token) throws Exceptions.TheParameterDoesNOtExist;
-
-    void addSubCategories(ArrayList<String> names, Category subCategory, String token) throws Exceptions.FieldsExistWithSameName;
+    void addProduct(int id, int productName, String token) throws exception.NoObjectWithIdException, NoAccessException;
 
 
 }

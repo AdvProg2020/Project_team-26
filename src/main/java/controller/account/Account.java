@@ -64,7 +64,6 @@ public class Account {
     }
 
 
-
     public void setEmail(String email) {
         this.email = email;
     }
@@ -77,8 +76,13 @@ public class Account {
         this.lastName = lastName;
     }
 
-    public void setRole(Role role) {
-        this.role = role;
+    public void setRole(String role) {
+        if (role.equals("manager"))
+            this.role = Role.ADMIN;
+        else if (role.equals("seller"))
+            this.role = Role.SELLER;
+        else
+            this.role = Role.CUSTOMER;
     }
 
     public void setUsername(String username) {

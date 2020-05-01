@@ -10,12 +10,13 @@ import java.util.ArrayList;
 public class ShowCategoryController implements IShowCategoryController {
 
     @Override
-    public CategoryForView[] getAllCategories(ArrayList<String> names, String token) {
-        return new CategoryForView[0];
+    public Category[] getAllCategories(ArrayList<String> names, String token) {
+
+
     }
 
     @Override
-    public CategoryForView getCategory(String name, String token) {
+    public Category getCategory(String name, String token) {
         return null;
     }
 
