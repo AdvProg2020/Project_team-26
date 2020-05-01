@@ -60,7 +60,7 @@ public class OrderController implements IOrderController {
     }
 
     private Order getSingleSellerOrder(Seller seller, Order wantedOrder) {
-        return new Order(wantedOrder,seller);
+        return (Order) orderRepository.getASingleSellerOrder(seller,wantedOrder);
     }
 
 
