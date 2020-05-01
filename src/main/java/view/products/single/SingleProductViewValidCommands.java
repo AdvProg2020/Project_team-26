@@ -36,54 +36,61 @@ public enum SingleProductViewValidCommands {
             page.commentsForThisProduct();
         }
     },//
-    CompareToProductWithId("compare\\s+(.*)"){
+    CompareToProductWithId("compare\\s+(.*)") {
         @Override
         public void goToFunction(SingleProductViewI page) {
-page.compareToProductWithId(Pattern.compile(CompareToProductWithId.toString()).matcher(page.getInput()));
+            page.compareToProductWithId(Pattern.compile(CompareToProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    Digest("digest"){
+    Digest("digest") {
         @Override
         public void goToFunction(SingleProductViewI page) {
             page.digest();
         }
     },
-    Offs("offs"){
+    Offs("offs") {
         @Override
         public void goToFunction(SingleProductViewI page) {
             page.offs();
         }
     },
-    SelectAUserForBuyingFrom("select\\s+seller\\s+(.*)"){
+    SelectAUserForBuyingFrom("select\\s+seller\\s+(.*)") {
         @Override
         public void goToFunction(SingleProductViewI page) {
             page.selectAUserForBuyingFrom(Pattern.compile(SelectAUserForBuyingFrom.toString()).matcher(page.getInput()));
         }
     },
-    ShowProductInOffPage("show\\s+product\\s+(.*)"){
+    ShowProductInOffPage("show\\s+product\\s+(.*)") {
         @Override
         public void goToFunction(SingleProductViewI page) {
             page.showProductInOffPage(Pattern.compile(ShowProductInOffPage.toString()).matcher(page.getInput()));
         }
     },
-    ChangeInfo(""){
+    ChangeInfo("") {
         @Override
         public void goToFunction(SingleProductViewI page) {
-            page.changeInfo(Pattern.compile(ChangeInfo.toString()).matcher(page.getInput()),true);
+            page.changeInfo(Pattern.compile(ChangeInfo.toString()).matcher(page.getInput()), true);
         }
     };
     private final Pattern commandPattern;
+    private final String value;
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
 
     }
 
+
     public abstract void goToFunction(SingleProductViewI page);
 
     SingleProductViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
+        this.value = output;
     }
 
 
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }

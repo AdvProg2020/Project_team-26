@@ -2,8 +2,8 @@ package view.main;
 
 import view.View;
 import view.ViewManager;
-import view.offs.AllOffsViewI;
-import view.products.all.AllProductViewI;
+import view.offs.AllOffsIView;
+import view.products.all.AllProductIView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,25 +11,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainPageViewValidCommands {
-    Back("back", null) {
-        @Override
-        public void goToFunction(MainPageView page) {
-            page.back();
-        }
-    },
     Exit("exit", null) {
         @Override
         public void goToFunction(MainPageView page) {
 
         }
     },
-    ShowProducts("products", new AllProductViewI(MainPageViewValidCommands.manager)) {
+    ShowProducts("products", new AllProductIView(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(MainPageView page) {
 
         }
     },
-    ShowOffs("offs", new AllOffsViewI(MainPageViewValidCommands.manager)) {
+    ShowOffs("offs", new AllOffsIView(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(MainPageView page) {
 

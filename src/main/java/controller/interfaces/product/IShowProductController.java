@@ -1,10 +1,13 @@
 package controller.interfaces.product;
 
+import controller.Exceptions;
 import model.Product;
+
+import java.util.ArrayList;
 
 public interface IShowProductController {
 
-    Product[] getProducts(int startIndex, int endIndex, String token);
+    ArrayList<Product> getProducts(String token);
 
-    Product getAProduct(int id, String token);
+    Product getAProduct(String id, String token) throws Exceptions.TheParameterDoesNOtExist;
 }

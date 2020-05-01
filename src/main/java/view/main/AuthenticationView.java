@@ -1,7 +1,6 @@
 package view.main;
 
 import controller.Exceptions;
-import controller.account.Account;
 import controller.interfaces.account.IAuthenticationController;
 import view.View;
 import view.ViewManager;
@@ -30,8 +29,8 @@ public class AuthenticationView extends View {
 
     private void login(Matcher matcher) {
         matcher.find();
-        System.out.println("enter password or type back if you want to return to previous");
-        String password = manager.scan.nextLine();
+        manager.inputOutput.println("enter password or type back if you want to return to previous");
+        String password = manager.inputOutput.nextLine();
         String username = matcher.group(1);
         boolean isLoggedIn = false;
         while (!isLoggedIn) {
@@ -42,16 +41,16 @@ public class AuthenticationView extends View {
                 isLoggedIn = true;
             } catch (Exceptions.InvalidPasswordException wrongPassword) {
                 wrongPassword.getMessage();
-                password = manager.scan.nextLine();
-            } catch (Exceptions.InvalidUserNameException wrongUserName) {
+                password = manager.inputOutput.nextLine();
+            } catch (Exceptions.FieldsExistWithSameName wrongUserName) {
                 wrongUserName.getMessage();
-                username = manager.scan.nextLine();
+                username = manager.inputOutput.nextLine();
             }
         }
     }
 
     public void register(Matcher matcher) {
-        Account account = getUserInfo(matcher);
+        AccountForView account = getUserInfo(matcher);
         boolean isComplete = false;
         boolean isBack = false;
         while (!isComplete && !isBack) {
@@ -60,10 +59,10 @@ public class AuthenticationView extends View {
             try {
                 control.register(account, manager.getTocken());
                 isComplete = true;
-            } catch (Exceptions.InvalidUserNameException wrongUsername) {
-                System.out.println(wrongUsername.getMessage());
-                System.out.println("please enter another username");
-                account.setUsername(manager.scan.nextLine());
+            } catch (Exceptions.FieldsExistWithSameName wrongUsername) {
+                manager.inputOutput.println(wrongUsername.getMessage());
+                manager.inputOutput.println("please enter another username");
+                account.setUsername(manager.inputOutput.nextLine());
             } catch (Exceptions.InvalidAccessDemand accessDemand) {
                 accessDemand.getMessage();
                 return;
@@ -72,21 +71,21 @@ public class AuthenticationView extends View {
         }
     }
 
-    private Account getUserInfo(Matcher matcher) {
-        Account account = new Account();
+    private AccountForView getUserInfo(Matcher matcher) {
+        AccountForView account = new AccountForView();
         matcher.find();
         account.setRole(matcher.group(1));
         account.setUsername(matcher.group(2));
         do {
-            System.out.println("enter password and notice it shouldn't be \"back\"");
-            account.setPassword(manager.scan.nextLine());
+            manager.inputOutput.println("enter password and notice it shouldn't be \"back\"");
+            account.setPassword(manager.inputOutput.nextLine());
         } while (account.getPassword().equals("back"));
-        System.out.println("enter first name");
-        account.setFirstName(manager.scan.nextLine());
-        System.out.println("enter last name");
-        account.setLastName(manager.scan.nextLine());
-        System.out.println("enter email");
-        account.setEmail(manager.scan.nextLine());
+        manager.inputOutput.println("enter first name");
+        account.setFirstName(manager.inputOutput.nextLine());
+        manager.inputOutput.println("enter last name");
+        account.setLastName(manager.inputOutput.nextLine());
+        manager.inputOutput.println("enter email");
+        account.setEmail(manager.inputOutput.nextLine());
         account.setToken(manager.getTocken());
         return account;
     }

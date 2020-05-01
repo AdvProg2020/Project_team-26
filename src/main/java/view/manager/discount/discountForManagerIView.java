@@ -1,7 +1,6 @@
 package view.manager.discount;
 
 import controller.Exceptions;
-import controller.account.ShowUserController;
 import controller.discount.PromoDetailsController;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
@@ -12,12 +11,12 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class discountForManagerViewI extends View implements ViewI {
+public class discountForManagerIView extends View implements IView {
     EnumSet<discountForManagerViewValidCommands> validCommands;
     private IPromoController controller;
     private IShowUserController userController;
 
-    public discountForManagerViewI(ViewManager manager, IPromoController controller, IShowUserController userController) {
+    public discountForManagerIView(ViewManager manager, IPromoController controller, IShowUserController userController) {
         super(manager);
         validCommands = EnumSet.allOf(discountForManagerViewValidCommands.class);
         this.controller = controller;
@@ -28,7 +27,7 @@ public class discountForManagerViewI extends View implements ViewI {
     public View run() {
         showAll();
         while (manager.getIsUserLoggedin()) {
-            if ((super.input = (manager.scan.nextLine()).trim()).matches("back"))
+            if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;
             for (discountForManagerViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -48,15 +47,15 @@ public class discountForManagerViewI extends View implements ViewI {
     }
 
     private void show(PromoDetailsController promo) {
-        System.out.println("promo code:" + promo.getPromoCode(manager.getTocken()));
-        System.out.println("start date:" + promo.getStartDate(manager.getTocken()).toString());//
-        System.out.println("end date:" + promo.getEndDate(manager.getTocken()).toString());//
-        System.out.println("percent of discount:" + promo.getPercent(manager.getTocken()));
-        System.out.println("maximum discount:" + promo.getMaxDiscount(manager.getTocken()));
-        System.out.println("customers:");
+        manager.inputOutput.println("promo code:" + promo.getPromoCode(manager.getTocken()));
+        manager.inputOutput.println("start date:" + promo.getStartDate(manager.getTocken()).toString());//
+        manager.inputOutput.println("end date:" + promo.getEndDate(manager.getTocken()).toString());//
+        manager.inputOutput.println("percent of discount:" + promo.getPercent(manager.getTocken()));
+        manager.inputOutput.println("maximum discount:" + promo.getMaxDiscount(manager.getTocken()));
+        manager.inputOutput.println("users:");
         int[] customersId = promo.getCustomersIds();
         for (int id : customersId) {
-            System.out.println("username:" + userController.getUserById(id,
+            manager.inputOutput.println("username:" + userController.getUserById(id,
                     manager.getTocken()).getUsername(manager.getTocken()));
         }
     }
@@ -67,17 +66,22 @@ public class discountForManagerViewI extends View implements ViewI {
             String id = controller.getPromoCodeTemplate(matcher.group(1), manager.getTocken()).getPromoCode(manager.getTocken());
             ArrayList<String> changes = edit();
             controller.editPromoCode(id, changes, manager.getTocken());
-        } catch (Exceptions.PromoCodeDoesntExist | Exceptions.FieldsDoesNotExist error) {
+        } catch (Exceptions.TheParameterDoesNOtExist error) {
             error.getMessage();
         }
     }
 
     private ArrayList<String> edit() {
-        System.out.println("which field you want to change");
+        manager.inputOutput.println("which field you want to change");
         ArrayList<String> inputs = new ArrayList<>();
-        inputs.add(manager.scan.nextLine());
-        System.out.println("type new one");
-        inputs.add(manager.scan.nextLine());
+        inputs.add(manager.inputOutput.nextLine());
+        if (inputs.get(0).matches("users")) {
+            manager.inputOutput.println("type [remove|add] [username]");
+            inputs.add(manager.inputOutput.nextLine());
+            return inputs;
+        }
+        manager.inputOutput.println("type new one");
+        inputs.add(manager.inputOutput.nextLine());
         return inputs;
     }
 
@@ -85,7 +89,7 @@ public class discountForManagerViewI extends View implements ViewI {
         matcher.find();
         try {
             controller.removePromoCode(matcher.group(1), manager.getTocken());
-        } catch (Exceptions.PromoCodeDoesntExist promoCodeDoesntExist) {
+        } catch (Exceptions.TheParameterDoesNOtExist promoCodeDoesntExist) {
             promoCodeDoesntExist.getMessage();
         }
     }
@@ -95,7 +99,7 @@ public class discountForManagerViewI extends View implements ViewI {
         try {
             PromoDetailsController promo = controller.getPromoCodeTemplate(matcher.group(1), manager.getTocken());
             show(promo);
-        } catch (Exceptions.PromoCodeDoesntExist promoCodeDoesntExist) {
+        } catch (Exceptions.TheParameterDoesNOtExist promoCodeDoesntExist) {
             promoCodeDoesntExist.getMessage();
         }
 
@@ -106,8 +110,8 @@ public class discountForManagerViewI extends View implements ViewI {
     }
 
     protected void help(boolean isLoggedIn) {
-        System.out.println("view discount code [code]\nedit discount code [code]\nremove discount code [code]\nhelp");
+        manager.inputOutput.println("view discount code [code]\nedit discount code [code]\nremove discount code [code]\nhelp");
         if (isLoggedIn)
-            System.out.println("logout");
+            manager.inputOutput.println("logout");
     }
 }

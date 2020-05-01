@@ -1,8 +1,6 @@
 package view.manager;
 
 import controller.Exceptions;
-import controller.account.ShowUserController;
-import controller.account.UserInfoController;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
 import view.*;
@@ -15,7 +13,7 @@ import java.util.regex.Matcher;
  * i didnt create a package for commands that provides just one command list
  */
 
-public class ManagerAccountView extends View implements ViewI {
+public class ManagerAccountView extends View implements IView {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
     private IShowUserController controller;
     private IUserInfoController infoController;
@@ -30,7 +28,7 @@ public class ManagerAccountView extends View implements ViewI {
     @Override
     public View run() {
         while (manager.getIsUserLoggedin()) {
-            if ((super.input = (manager.scan.nextLine()).trim()).matches("back"))
+            if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;
             for (ValidCommandsForManagerAccount command : validCommand) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -47,8 +45,8 @@ public class ManagerAccountView extends View implements ViewI {
 
     protected void edit(Matcher matcher) {
         matcher.find();
-        System.out.println("please enter the " + matcher.group(1));
-        String fieldForEdit = manager.scan.nextLine();
+        manager.inputOutput.println("please enter the " + matcher.group(1));
+        String fieldForEdit = manager.inputOutput.nextLine();
         try {
             infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getTocken());
         } catch (Exceptions.InvalidFiledException invalid) {

@@ -1,11 +1,11 @@
 package controller.product;
 
-import controller.interfaces.product.ISearchAndFilter;
+import controller.interfaces.product.ISearchAndFilterAndSort;
 import model.Product;
 
 import java.util.ArrayList;
 
-public class SearchAndFilter implements ISearchAndFilter {
+public class SearchAndFilter implements ISearchAndFilterAndSort {
 
     private static ArrayList<String> filters;
 
@@ -21,7 +21,7 @@ public class SearchAndFilter implements ISearchAndFilter {
         return null;
     }
 
-    public Product[] getProductsBasedOnFiltersForOnePage(String token) {
+    public Product[] getProductsBasedOnFiltersAndSoerForOnePage(String token) {
         return null;
     }
 

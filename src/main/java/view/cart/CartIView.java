@@ -8,10 +8,10 @@ import view.ViewManager;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class CartViewI extends View implements ViewI {
+public class CartIView extends View implements IView {
     EnumSet<CartViewValidCommand> validCommands;
 
-    public CartViewI(ViewManager manager) {
+    public CartIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CartViewValidCommand.class);
     }

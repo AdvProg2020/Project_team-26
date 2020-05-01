@@ -6,12 +6,7 @@ import view.*;
 
 import java.util.regex.Matcher;
 
-public class offViewI extends View implements ViewI {
-    @Override
-    public View run(ViewManager manager) {
-        return null;
-    }
-
+public class offViewI extends View {
     private void addOff(Matcher matcher) {
 
     }
@@ -28,4 +23,8 @@ public class offViewI extends View implements ViewI {
 
     }
 
+    @Override
+    public View run() {
+        return null;
+    }
 }

@@ -9,4 +9,5 @@ public interface Repository<T> {
     public void save(T object);
     public void delete(int id);
     public void delete(T object);
+    public boolean exist(int id);
 }

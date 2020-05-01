@@ -1,6 +1,6 @@
 package view;
 
-public abstract class View implements ViewI {
+public abstract class View implements IView {
 
     protected String input;
     protected ViewManager manager;
