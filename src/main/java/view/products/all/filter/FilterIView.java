@@ -1,22 +1,25 @@
-package view.offs.filter;
-import view.*;
+package view.products.all.filter;
 
+import view.*;
 import view.View;
 import view.ViewManager;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class FilterViewI extends View implements ViewI {
+public class FilterIView extends View implements IView {
     EnumSet<FilterViewValidCommands> validCommands;
-    public FilterViewI(ViewManager manager){
+
+    public FilterIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(FilterViewValidCommands.class);
     }
+
     @Override
     public View run() {
         return null;
     }
+
     protected void disableSelectedFilter(Matcher matcher) {
 
     }
@@ -24,9 +27,11 @@ public class FilterViewI extends View implements ViewI {
     protected void filterWithAvailableFilter(Matcher matcher) {
 
     }
-    protected void showAvailableFilter(Matcher matcher) {
+
+    protected void showAvailableFilter() {
 
     }
+
     protected void showCurrentFilters() {
 
     }

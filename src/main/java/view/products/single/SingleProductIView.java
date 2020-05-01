@@ -5,10 +5,10 @@ import view.*;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class SingleProductViewI extends View implements ViewI {
+public class SingleProductIView extends View implements IView {
     EnumSet<SingleProductViewValidCommands> validCommands;
 
-    public SingleProductViewI(ViewManager manager) {
+    public SingleProductIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(SingleProductViewValidCommands.class);
     }

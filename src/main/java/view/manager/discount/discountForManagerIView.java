@@ -11,12 +11,12 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class discountForManagerViewI extends View implements ViewI {
+public class discountForManagerIView extends View implements IView {
     EnumSet<discountForManagerViewValidCommands> validCommands;
     private IPromoController controller;
     private IShowUserController userController;
 
-    public discountForManagerViewI(ViewManager manager, IPromoController controller, IShowUserController userController) {
+    public discountForManagerIView(ViewManager manager, IPromoController controller, IShowUserController userController) {
         super(manager);
         validCommands = EnumSet.allOf(discountForManagerViewValidCommands.class);
         this.controller = controller;

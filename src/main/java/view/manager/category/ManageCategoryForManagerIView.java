@@ -6,7 +6,6 @@ import controller.category.CategoryForView;
 import controller.category.ShowCategoryController;
 import controller.interfaces.category.ICategoryController;
 import controller.interfaces.category.IShowCategoryController;
-import controller.product.ProductForView;
 import view.*;
 import view.main.MainPageView;
 
@@ -16,14 +15,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ManageCategoryForManagerViewI extends View implements ViewI {
+public class ManageCategoryForManagerIView extends View implements IView {
     EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
     private ICategoryController controller;
     private IShowCategoryController detailController;
     private ArrayList<String> parentName;
 
 
-    public ManageCategoryForManagerViewI(ViewManager managerView, ICategoryController controller, IShowCategoryController detailController) {
+    public ManageCategoryForManagerIView(ViewManager managerView, ICategoryController controller, IShowCategoryController detailController) {
         super(managerView);
         validCommands = EnumSet.allOf(ManageCategoryForManagerViewValidCommands.class);
         this.controller = controller;
@@ -166,7 +165,7 @@ public class ManageCategoryForManagerViewI extends View implements ViewI {
             return;
         }
         if (command.matches("edit (.*)")) {
-            ManageCategoryForManagerViewI newPage = new ManageCategoryForManagerViewI(manager, new CategoryController(), new ShowCategoryController());
+            ManageCategoryForManagerIView newPage = new ManageCategoryForManagerIView(manager, new CategoryController(), new ShowCategoryController());
             Matcher matcher = Pattern.compile("edit (.*)").matcher(command);
             matcher.find();
             newPage.parentName.add(matcher.group(1));

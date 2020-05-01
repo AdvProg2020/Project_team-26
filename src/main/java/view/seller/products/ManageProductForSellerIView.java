@@ -4,7 +4,7 @@ import view.*;
 
 import java.util.regex.Matcher;
 
-public class ManageProductForSellerViewI extends View implements ViewI {
+public class ManageProductForSellerIView extends View implements IView {
     @Override
     public View run(ViewManager manager) {
         return null;

@@ -3,9 +3,9 @@ package view.manager;
 import controller.account.ShowUserController;
 import controller.discount.PromoController;
 import view.ViewManager;
-import view.manager.category.ManageCategoryForManagerViewI;
-import view.manager.discount.discountForManagerViewI;
-import view.manager.request.ManageRequestForManagerViewI;
+import view.manager.category.ManageCategoryForManagerIView;
+import view.manager.discount.discountForManagerIView;
+import view.manager.request.ManageRequestForManagerIView;
 import view.manager.users.ManageUsersForManager;
 import view.View;
 
@@ -44,17 +44,17 @@ public enum ValidCommandsForManagerAccount {
             page.createPromoCode();
         }
     },
-    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerViewI(ValidCommandsForManagerAccount.manager, new PromoController(), new ShowUserController())) {
+    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerIView(ValidCommandsForManagerAccount.manager, new PromoController(), new ShowUserController())) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
     },
-    ManageRequestForManager("manage\\s+requests", new ManageRequestForManagerViewI(ValidCommandsForManagerAccount.manager)) {
+    ManageRequestForManager("manage\\s+requests", new ManageRequestForManagerIView(ValidCommandsForManagerAccount.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
     },
-    ManageCategories("manage\\s+categories", new ManageCategoryForManagerViewI(ValidCommandsForManagerAccount.manager)) {
+    ManageCategories("manage\\s+categories", new ManageCategoryForManagerIView(ValidCommandsForManagerAccount.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
