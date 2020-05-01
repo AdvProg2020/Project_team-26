@@ -3,14 +3,12 @@ package controller.account;
 import controller.Exceptions;
 import controller.interfaces.account.IAuthenticationController;
 import exception.NoAccessException;
-import exception.PasswordIsWrong;
+import exception.PasswordIsWrongException;
 import model.Role;
 import model.Session;
 import model.User;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-
-import java.awt.image.PackedColorModel;
 
 public class AuthenticationController implements IAuthenticationController {
 
@@ -20,7 +18,7 @@ public class AuthenticationController implements IAuthenticationController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    public void login(String username, String password, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidPasswordException, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, PasswordIsWrong, Exceptions.UserNameDoesntExist {
+    public void login(String username, String password, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidPasswordException, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, PasswordIsWrongException, Exceptions.UserNameDoesntExist {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(password);
         checkUsernameFormat(username);
@@ -77,12 +75,12 @@ public class AuthenticationController implements IAuthenticationController {
         return new User(account);
     }
 
-    private void checkUsernameAndPassword(String username, String password) throws Exceptions.UserNameDoesntExist, PasswordIsWrong {
+    private void checkUsernameAndPassword(String username, String password) throws Exceptions.UserNameDoesntExist, PasswordIsWrongException {
         if (userRepository.getUserByName(username) == null) {
             throw new Exceptions.UserNameDoesntExist("Username is invalid.");
         }
         if (!userRepository.getUserByName(username).getPassword().equals(password)) {
-            throw new PasswordIsWrong("Password is wrong");
+            throw new PasswordIsWrongException("Password is wrong");
         }
     }
 
