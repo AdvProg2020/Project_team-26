@@ -1,7 +1,7 @@
 package controller.interfaces.category;
 
 import controller.Exceptions;
-import controller.category.CategoryForView;
+import model.Category;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ public interface ICategoryController {
 
     void addProduct(ArrayList<String> names, String productName, String token) throws Exceptions.TheParameterDoesNOtExist;
 
-    void addSubCategories(ArrayList<String> names, CategoryForView subCategory, String token) throws Exceptions.FieldsExistWithSameName;
+    void addSubCategories(ArrayList<String> names, Category subCategory, String token) throws Exceptions.FieldsExistWithSameName;
 
 
 }

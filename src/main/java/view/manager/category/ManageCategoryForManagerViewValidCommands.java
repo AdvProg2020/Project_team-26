@@ -38,6 +38,12 @@ public enum ManageCategoryForManagerViewValidCommands {
         public void goToFunction(ManageCategoryForManagerViewI page) {
             page.help(page.getManager().getIsUserLoggedin());
         }
+    },
+    ViewSubCategories("view\\s+sub\\s+(.*)") {
+        @Override
+        public void goToFunction(ManageCategoryForManagerViewI page) {
+            page.viewSubCategories(Pattern.compile(RemoveCategoryForManager.toString()).matcher(page.getInput()));
+        }
     };
     private final Pattern commandPattern;
 
@@ -52,9 +58,5 @@ public enum ManageCategoryForManagerViewValidCommands {
 
     public abstract void goToFunction(ManageCategoryForManagerViewI page);
 
-    public List<String> commands(boolean isLoggedIn) {
-        ArrayList<String> list = new ArrayList<>();
-        return list;
-    }
 
 }

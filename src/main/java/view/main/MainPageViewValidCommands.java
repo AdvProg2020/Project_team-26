@@ -11,12 +11,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainPageViewValidCommands {
-    Back("back", null) {
-        @Override
-        public void goToFunction(MainPageView page) {
-            page.back();
-        }
-    },
     Exit("exit", null) {
         @Override
         public void goToFunction(MainPageView page) {

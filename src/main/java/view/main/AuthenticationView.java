@@ -1,7 +1,6 @@
 package view.main;
 
 import controller.Exceptions;
-import controller.account.AccountForView;
 import controller.interfaces.account.IAuthenticationController;
 import view.View;
 import view.ViewManager;
@@ -30,7 +29,7 @@ public class AuthenticationView extends View {
 
     private void login(Matcher matcher) {
         matcher.find();
-        System.out.println("enter password or type back if you want to return to previous");
+        manager.inputOutput.println("enter password or type back if you want to return to previous");
         String password = manager.inputOutput.nextLine();
         String username = matcher.group(1);
         boolean isLoggedIn = false;
@@ -61,8 +60,8 @@ public class AuthenticationView extends View {
                 control.register(account, manager.getTocken());
                 isComplete = true;
             } catch (Exceptions.FieldsExistWithSameName wrongUsername) {
-                System.out.println(wrongUsername.getMessage());
-                System.out.println("please enter another username");
+                manager.inputOutput.println(wrongUsername.getMessage());
+                manager.inputOutput.println("please enter another username");
                 account.setUsername(manager.inputOutput.nextLine());
             } catch (Exceptions.InvalidAccessDemand accessDemand) {
                 accessDemand.getMessage();
@@ -78,14 +77,14 @@ public class AuthenticationView extends View {
         account.setRole(matcher.group(1));
         account.setUsername(matcher.group(2));
         do {
-            System.out.println("enter password and notice it shouldn't be \"back\"");
+            manager.inputOutput.println("enter password and notice it shouldn't be \"back\"");
             account.setPassword(manager.inputOutput.nextLine());
         } while (account.getPassword().equals("back"));
-        System.out.println("enter first name");
+        manager.inputOutput.println("enter first name");
         account.setFirstName(manager.inputOutput.nextLine());
-        System.out.println("enter last name");
+        manager.inputOutput.println("enter last name");
         account.setLastName(manager.inputOutput.nextLine());
-        System.out.println("enter email");
+        manager.inputOutput.println("enter email");
         account.setEmail(manager.inputOutput.nextLine());
         account.setToken(manager.getTocken());
         return account;

@@ -29,4 +29,6 @@ public class CategoryFeature {
     public void setFeatureValue(String featureValue) {
         this.featureValue = featureValue;
     }
+
+
 }

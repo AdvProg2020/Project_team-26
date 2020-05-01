@@ -5,7 +5,7 @@ import model.Product;
 
 public class ShowProductController implements IShowProductController {
 
-    public Product[] getProducts(int startIndex, int endIndex, String token) {
+    public Product[] getProducts(String token) {
         return null;
     }
 

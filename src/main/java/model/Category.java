@@ -1,5 +1,7 @@
 package model;
 
+import view.products.all.AllProductViewI;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +45,20 @@ public class Category {
         return products;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getCategoriesAndSub() {
+        StringBuilder branch = new StringBuilder();
+        attachParents(branch, this);
+        return branch.toString();
     }
 
-    public void setName(String name) {
-        Name = name;
+    private void attachParents(StringBuilder branch, Category category) {
+        branch.append(category.getName());
+        if (category.parent == null) {
+            return;
+        }
+        attachParents(branch, category.getParent());
     }
 
-    public void setParent(Category parent) {
-        this.parent = parent;
-    }
 }
+
+

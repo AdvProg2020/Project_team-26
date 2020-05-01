@@ -1,13 +1,18 @@
 package view.manager;
 
 import controller.account.ShowUserController;
+import controller.category.CategoryController;
+import controller.category.ShowCategoryController;
 import controller.discount.PromoController;
 import view.ViewManager;
+import view.main.MainPageView;
+import view.main.MainPageViewValidCommands;
 import view.manager.category.ManageCategoryForManagerViewI;
 import view.manager.discount.discountForManagerViewI;
 import view.manager.request.ManageRequestForManagerViewI;
 import view.manager.users.ManageUsersForManager;
 import view.View;
+import view.products.all.AllProductViewI;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +59,7 @@ public enum ValidCommandsForManagerAccount {
         public void goToFunction(ManagerAccountView page) {
         }
     },
-    ManageCategories("manage\\s+categories", new ManageCategoryForManagerViewI(ValidCommandsForManagerAccount.manager)) {
+    ManageCategories("manage\\s+categories", new ManageCategoryForManagerViewI(ValidCommandsForManagerAccount.manager, new CategoryController(), new ShowCategoryController())) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
@@ -64,11 +69,18 @@ public enum ValidCommandsForManagerAccount {
         public void goToFunction(ManagerAccountView page) {
             page.goToProductsMenu(Pattern.compile(GoToProductsMenu.toString()).matcher(page.getInput()));
         }
+    },
+    ShowProducts("products", new AllProductViewI(MainPageViewValidCommands.manager)) {
+        @Override
+        public void goToFunction(ManagerAccountView page) {
+
+        }
     };
 
     private final Pattern commandPattern;
     private final View view;
     private static ViewManager manager;
+    private final String value;
 
     public void setManager(ViewManager manager) {
         ValidCommandsForManagerAccount.manager = manager;
@@ -85,14 +97,14 @@ public enum ValidCommandsForManagerAccount {
 
     ValidCommandsForManagerAccount(String output, View view) {
         this.commandPattern = Pattern.compile(output);
+        this.value = output;
         this.view = view;
     }
 
-    public List<String> commands(boolean isLoggedIn) {
-        ArrayList<String> list = new ArrayList<>();
-        list.add("view personal info");
-        return list;
-    }
-
     public abstract void goToFunction(ManagerAccountView page);
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }

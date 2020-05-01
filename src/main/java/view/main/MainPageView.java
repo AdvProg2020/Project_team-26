@@ -55,6 +55,6 @@ public class MainPageView extends View implements ViewI {
     }
 
     public void printError() {
-        System.out.println("invalid command pattern");
+        manager.inputOutput.println("invalid command pattern");
     }
 }

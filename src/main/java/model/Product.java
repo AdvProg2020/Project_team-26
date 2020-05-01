@@ -90,4 +90,5 @@ public class Product {
     public void setAverageRate(double averageRate) {
         this.averageRate = averageRate;
     }
+
 }

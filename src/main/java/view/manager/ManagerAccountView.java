@@ -47,7 +47,7 @@ public class ManagerAccountView extends View implements ViewI {
 
     protected void edit(Matcher matcher) {
         matcher.find();
-        System.out.println("please enter the " + matcher.group(1));
+        manager.inputOutput.println("please enter the " + matcher.group(1));
         String fieldForEdit = manager.inputOutput.nextLine();
         try {
             infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getTocken());

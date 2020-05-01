@@ -2,11 +2,12 @@ package view.manager.category;
 
 import controller.Exceptions;
 import controller.category.CategoryController;
-import controller.category.CategoryForView;
 import controller.category.ShowCategoryController;
 import controller.interfaces.category.ICategoryController;
 import controller.interfaces.category.IShowCategoryController;
-import controller.product.ProductForView;
+import model.Category;
+import model.CategoryFeature;
+import model.Product;
 import view.*;
 import view.main.MainPageView;
 
@@ -48,22 +49,42 @@ public class ManageCategoryForManagerViewI extends View implements ViewI {
     }
 
     private void showAll() {
-        CategoryForView[] categories = detailController.getAllCategories(parentName, manager.getTocken());
-        for (CategoryForView category : categories) {
+        Category[] categories = detailController.getAllCategories(parentName, manager.getTocken());
+        for (Category category : categories) {
             show(category);
         }
     }
 
-    private void show(CategoryForView category) {
+    private void show(Category category) {
         manager.inputOutput.println("category name is:" + category.getName());
-        manager.inputOutput.println("attributes of this category is:" + category.getAttribute());
-        List<String> products = category.getProducts();
-        List<String> subcategories = category.getSubcategories();
-        manager.showList(products);
-        manager.showList(subcategories);
+        manager.inputOutput.println("attributes of this category is:");
+        showAttribute(category.getFeatures());
+        showProducts(category.getProducts());
     }
 
-    protected CategoryForView addCategoryForManager(Matcher matcher) {
+    private void showAttribute(List<CategoryFeature> features) {
+        for (CategoryFeature feature : features) {
+            manager.inputOutput.println("name:" + feature.getFeatureName());
+            manager.inputOutput.println("features:" + feature.getFeatureValue());
+        }
+    }
+
+    protected void viewSubCategories(Matcher name) {
+        name.find();
+        List<Category> categories = detailController.getCategory(name.group(1), manager.getTocken()).getSubCategory();
+        for (Category category : categories) {
+            show(category);
+        }
+    }
+
+    private void showProducts(List<Product> products) {
+        for (Product product : products) {
+            manager.inputOutput.println("name:" + product.getName());
+        }
+    }
+
+
+    protected Category addCategoryForManager(Matcher matcher) {
         matcher.find();
         String name = matcher.group(1);
         try {
@@ -87,7 +108,7 @@ public class ManageCategoryForManagerViewI extends View implements ViewI {
         manager.inputOutput.println("enter the subCategories and remember to type end to finish entering subCategories");
         String input = manager.inputOutput.nextLine();
         while (!input.matches("end")) {
-            CategoryForView category = addCategoryForManager(Pattern.compile("create (.*)").matcher("create " + input));
+            Category category = addCategoryForManager(Pattern.compile("create (.*)").matcher("create " + input));
             try {
                 controller.addSubCategories(parentName, category, manager.getTocken());
             } catch (Exceptions.FieldsExistWithSameName fieldsExistWithSameName) {
@@ -189,7 +210,7 @@ public class ManageCategoryForManagerViewI extends View implements ViewI {
 
     protected void help(boolean isLoggedIn) {
         manager.inputOutput.println("add [category]\nremove [category]\nnote that if you want to edit the sub category you have to select category" +
-                " \nedit [category]\nhelp");
+                " \nedit [category]\nview sub [category]\nhelp");
         if (isLoggedIn)
             manager.inputOutput.println("logout");
     }
