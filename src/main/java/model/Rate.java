@@ -11,8 +11,7 @@ public class Rate {
         this.id = id;
     }
 
-    public Rate(int id, Customer customer, double score, Product product) {
-        this.id = id;
+    public Rate(Customer customer, double score, Product product) {
         this.customer = customer;
         this.score = score;
         this.product = product;

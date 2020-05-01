@@ -19,4 +19,10 @@ public class Comment {
     public Comment(int id) {
         this.id = id;
     }
+
+    public Comment(Customer customer, Product product, String text) {
+        this.customer = customer;
+        this.product = product;
+        this.text = text;
+    }
 }
