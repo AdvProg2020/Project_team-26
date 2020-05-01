@@ -1,10 +1,11 @@
 package controller.interfaces.cart;
 
+import controller.Exceptions;
 import model.Cart;
 
 public interface ICartController {
 
-    void addProduct(int productId, String token);
+    void addProduct(String productId, String sellerId, String token) throws Exceptions.TheParameterDoesNOtExist, Exceptions.InvalidFiledException;
 
     void changeProductAmount(int productId, int amount, String token);
 

@@ -2,9 +2,11 @@ package view.main;
 
 import controller.Exceptions;
 import controller.interfaces.account.IAuthenticationController;
+import model.User;
 import view.View;
 import view.ViewManager;
 
+import javax.security.auth.login.AccountException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -27,7 +29,7 @@ public class AuthenticationView extends View {
         return null;
     }
 
-    private void login(Matcher matcher) {
+    public void login(Matcher matcher) {
         matcher.find();
         manager.inputOutput.println("enter password or type back if you want to return to previous");
         String password = manager.inputOutput.nextLine();
@@ -39,6 +41,7 @@ public class AuthenticationView extends View {
             try {
                 control.login(username, password, manager.getTocken());
                 isLoggedIn = true;
+                manager.setUserLoggedIn(true);
             } catch (Exceptions.InvalidPasswordException wrongPassword) {
                 wrongPassword.getMessage();
                 password = manager.inputOutput.nextLine();
@@ -50,7 +53,7 @@ public class AuthenticationView extends View {
     }
 
     public void register(Matcher matcher) {
-        AccountForView account = getUserInfo(matcher);
+        User account = getUserInfo(matcher);
         boolean isComplete = false;
         boolean isBack = false;
         while (!isComplete && !isBack) {
@@ -71,8 +74,8 @@ public class AuthenticationView extends View {
         }
     }
 
-    private AccountForView getUserInfo(Matcher matcher) {
-        AccountForView account = new AccountForView();
+    private User getUserInfo(Matcher matcher) {
+        User account = new User();
         matcher.find();
         account.setRole(matcher.group(1));
         account.setUsername(matcher.group(2));

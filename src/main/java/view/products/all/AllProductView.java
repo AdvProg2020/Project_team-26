@@ -13,13 +13,13 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class AllProductViewI extends View implements ViewI {
+public class AllProductView extends View {
     EnumSet<AllProductsViewValidCommands> validCommands;
     ISearchAndFilterAndSort showOptionsController;
     IShowProductController productController;
 
 
-    public AllProductViewI(ViewManager manager) {
+    public AllProductView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(AllProductsViewValidCommands.class);
     }
