@@ -1,6 +1,5 @@
 package model.repository.fake;
 
-import model.Category;
 import model.Product;
 import model.repository.ProductRepository;
 
@@ -92,25 +91,5 @@ public class FakeProductRepository implements ProductRepository {
         if (object != null) {
             allProducts.remove(object);
         }
-    }
-
-    @Override
-    public Product getByName(String name) {
-        return null;
-    }
-
-    @Override
-    public void addRequest(Product product) {
-
-    }
-
-    @Override
-    public void editRequest(Product product) {
-
-    }
-
-    @Override
-    public void deleteRequest(int id) {
-
     }
 }

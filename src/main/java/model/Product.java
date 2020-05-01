@@ -87,6 +87,10 @@ public class Product {
         this.description = description;
     }
 
+    public void setAverageRate(double averageRate) {
+        this.averageRate = averageRate;
+    }
+
     public void addSeller(ProductSeller productSeller) {
         this.sellerList.add(productSeller);
     }
