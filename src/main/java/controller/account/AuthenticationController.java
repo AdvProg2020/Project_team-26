@@ -10,6 +10,8 @@ import model.User;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 
+import java.awt.image.PackedColorModel;
+
 public class AuthenticationController implements IAuthenticationController {
 
     UserRepository userRepository;
@@ -32,9 +34,15 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameFormat(account.getUsername());
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null) {
-            addAManager(account, userSession);
+            registerAdmin(account,token);
         } else {
-            addANormalUser(account, userSession);
+            switch (account.getRole()) {
+                case CUSTOMER: registerCustomer(account,token);
+                break;
+                case SELLER: registerSeller(account,token);
+                break;
+                case ADMIN: registerAdmin(account,token);
+            }
         }
     }
 
@@ -65,26 +73,6 @@ public class AuthenticationController implements IAuthenticationController {
         }
     }
 
-    private void addAManager(Account account, Session userSession) throws Exceptions.InvalidAccessDemand, NoAccessException {
-        if (userSession.getLoggedInUser().getRole() != Role.ADMIN) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            userRepository.save(createNewUser(account));
-        }
-    }
-
-    private void addANormalUser(Account account, Session userSession) throws Exceptions.InvalidAccessDemand, NoAccessException {
-        if (account.getRole() == Role.ADMIN) {
-            if (userRepository.doWeHaveAManager()) {
-                throw new NoAccessException("You are not allowed to do that.");
-            } else {
-                userRepository.save(createNewUser(account));
-            }
-        } else {
-            userRepository.save(createNewUser(account));
-        }
-    }
-
     private User createNewUser(Account account) {
         return new User(account);
     }
@@ -95,6 +83,31 @@ public class AuthenticationController implements IAuthenticationController {
         }
         if (!userRepository.getUserByName(username).getPassword().equals(password)) {
             throw new PasswordIsWrong("Password is wrong");
+        }
+    }
+
+    private void registerCustomer(Account account,String token) {
+        userRepository.save(createNewUser(account));
+    }
+
+    private void registerSeller(Account account,String token) {
+        userRepository.save(createNewUser(account));
+    }
+
+    private void registerAdmin(Account account,String token) throws NoAccessException {
+        Session userSession = Session.getSession(token);
+        if(userSession.getLoggedInUser() == null) {
+            if(userRepository.doWeHaveAManager()) {
+                throw new NoAccessException("You are not allowed to do that.");
+            } else {
+                userRepository.save(createNewUser(account));
+            }
+        } else {
+            if(userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+                throw new NoAccessException("You are not allowed to do that.");
+            } else {
+                userRepository.save(createNewUser(account));
+            }
         }
     }
 
