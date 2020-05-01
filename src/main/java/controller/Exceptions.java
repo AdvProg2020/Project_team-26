@@ -37,7 +37,7 @@ public class Exceptions {
         }
     }
 
-    public class UserNameDoesntExist extends Exception {
+    public static class UserNameDoesntExist extends Exception {
         public UserNameDoesntExist(String message) {
             super(message);
         }
