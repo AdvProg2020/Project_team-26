@@ -87,7 +87,11 @@ public class Product {
         this.description = description;
     }
 
-    public void setAverageRate(double averageRate) {
-        this.averageRate = averageRate;
+    public void addSeller(ProductSeller productSeller) {
+        this.sellerList.add(productSeller);
+    }
+
+    public boolean hasSeller(User seller) {
+        return sellerList.stream().anyMatch(s -> s.getSeller().equals(seller));
     }
 }
