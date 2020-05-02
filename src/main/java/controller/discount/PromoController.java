@@ -92,6 +92,20 @@ public class PromoController implements IPromoController {
         promoRepository.save(promo);
     }
 
+    @Override
+    public void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException {
+        checkAccessOfUser(Session.getSession(token), "only the manager can add customer");
+        Promo promo = getPromoByIdWithCheck(promoId);
+        Customer customer = (Customer) userRepository.getById(customerId);
+        if (customer == null)
+            throw new NoObjectWithIdException("no customer exist By " + customerId + " id");
+        List<Customer> promos = promo.getCustomers();
+        if (!promos.contains(customer))
+            throw new NoObjectWithIdException("the promo doesnt contain " + customerId + " id");
+        promos.remove(customer);
+        promoRepository.save(promo);
+    }
+
     private Promo getPromoByIdWithCheck(int id) throws NoObjectWithIdException {
         Promo promo = (Promo) promoRepository.getById(id);
         if (promo == null)
@@ -100,7 +114,16 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addTimeStartAndEnd(int promoId, Date startDate, Date endDate, String token) throws NoAccessException, NoObjectWithIdException {
+    public void setTime(int promoId, Date date, String type, String token) throws NoAccessException, NoObjectWithIdException {
+        checkAccessOfUser(Session.getSession(token), "only manager can " + type + " date");
+        Promo promo = getPromoByIdWithCheck(promoId);
+        if (type.equals("start")) {//ToDo
+
+        } else {
+
+        }
 
     }
+
+
 }

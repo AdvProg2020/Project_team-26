@@ -21,7 +21,8 @@ public interface IPromoController {
 
     void addCustomer(int promoId, int CustomerUserId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException;
 
-    void addTimeStartAndEnd(int promoId, Date startDate, Date endDate, String token) throws NoAccessException, NoObjectWithIdException;
+    void setTime(int promoId, Date date, String type, String token) throws NoAccessException, NoObjectWithIdException;
 
+    void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException
 
 }
