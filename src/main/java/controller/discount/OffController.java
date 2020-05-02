@@ -9,6 +9,7 @@ import model.repository.OffRepository;
 import model.repository.ProductRepository;
 
 import java.util.Date;
+import java.util.List;
 
 public class OffController implements IOffController {
     private OffRepository offRepository;
@@ -38,10 +39,9 @@ public class OffController implements IOffController {
         if (product == null)
             throw new NoObjectWithIdException("no product exist with this id");
 
-        OffItem offItem = offRepository.getItemByProductIdFromAllOffa(productId);
-        if (offItem != null)
+        if (product.getOff() != null)
             throw new ObjectAlreadyExistException("the product exist in list", product);
-        offItem = new OffItem(product, priceInOff);
+        OffItem offItem = new OffItem(product, priceInOff);
         off.getItems().add(offItem);
         offRepository.save(off);
         //ToDo
@@ -81,4 +81,17 @@ public class OffController implements IOffController {
         Off off = getOffByIdWithCheck(id);
         offRepository.delete(id);
     }
+
+    @Override
+    public List<Off> getAllOffs(String token) {
+        //ToDO no need to check
+        return offRepository.getAll();
+    }
+
+    @Override
+    public Off getOff(int id, String token) throws NoObjectWithIdException {
+        Off off = getOffByIdWithCheck(id);
+        return off;
+    }
+
 }
