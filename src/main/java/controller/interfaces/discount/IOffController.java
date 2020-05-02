@@ -3,9 +3,10 @@ package controller.interfaces.discount;
 import exception.NoAccessException;
 import exception.NoObjectWithIdException;
 import exception.ObjectAlreadyExistException;
+import model.Off;
 import model.repository.OffRepository;
 
-import java.util.Date;
+import java.util.*;
 
 public interface IOffController {
 
@@ -20,4 +21,8 @@ public interface IOffController {
 
 
     void removeAOff(int id, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException;
+
+    List<Off> getAllOffs(String token);
+
+    Off getOff(int id, String token) throws NoObjectWithIdException;
 }
