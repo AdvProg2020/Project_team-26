@@ -1,6 +1,5 @@
 package controller.account;
 
-import controller.Exceptions;
 import controller.interfaces.account.IShowUserController;
 import exception.NoAccessException;
 import model.Role;
@@ -10,7 +9,6 @@ import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ShowUserController implements IShowUserController {

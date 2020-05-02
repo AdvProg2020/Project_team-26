@@ -1,14 +1,11 @@
 package view.main;
 
-import controller.Exceptions;
 import controller.account.Account;
 import controller.interfaces.account.IAuthenticationController;
 import exception.NoAccessException;
-import model.User;
 import view.View;
 import view.ViewManager;
 
-import javax.security.auth.login.AccountException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

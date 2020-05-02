@@ -1,6 +1,5 @@
 package view.manager.users;
 
-import controller.Exceptions;
 import controller.account.AuthenticationController;
 import controller.account.UserInfoController;
 import controller.interfaces.account.IShowUserController;

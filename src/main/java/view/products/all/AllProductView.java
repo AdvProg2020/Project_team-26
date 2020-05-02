@@ -1,7 +1,5 @@
 package view.products.all;
 
-import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
-import controller.Exceptions;
 import controller.interfaces.product.ISearchAndFilterAndSort;
 import controller.interfaces.product.IShowProductController;
 import model.Product;

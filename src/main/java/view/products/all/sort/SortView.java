@@ -1,6 +1,5 @@
 package view.products.all.sort;
 
-import controller.Exceptions;
 import controller.interfaces.product.ISearchAndFilterAndSort;
 import view.View;
 import view.ViewManager;

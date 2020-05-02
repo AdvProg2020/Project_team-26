@@ -1,6 +1,5 @@
 package view.main;
 
-import controller.Exceptions;
 import controller.account.AuthenticationController;
 import view.*;
 

@@ -1,24 +1,17 @@
 package view.products.single;
 
-import controller.Exceptions;
 import controller.account.AuthenticationController;
-import controller.interfaces.account.IAuthenticationController;
 import controller.interfaces.cart.ICartController;
 import controller.interfaces.product.ICompareTwoItems;
 import controller.interfaces.product.IShowProductController;
 import controller.interfaces.review.ICommentController;
 import controller.product.CompareTwoItems;
 import controller.review.CommentController;
-import model.Comment;
 import model.Product;
-import model.ProductSeller;
-import model.Seller;
 import view.*;
 import view.main.AuthenticationView;
-import view.products.all.AllProductsViewValidCommands;
 
 import java.util.EnumSet;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

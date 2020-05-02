@@ -1,13 +1,11 @@
 package controller.discount;
 
-import controller.Exceptions;
 import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.*;
 import model.repository.PromoRepository;
 import model.repository.UserRepository;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +29,10 @@ public class PromoController implements IPromoController {
             throw new NoObjectWithIdException("there is no promo by" + codeId);
         return promo;
     }
+
+    /**
+     *
+     */
 
     @Override
     public List<Promo> getAllPromoCode(String token) throws NotLoggedINException {
@@ -56,10 +58,9 @@ public class PromoController implements IPromoController {
 
     }
 
-    @Override
-    public void editPromoCode(int oldPromoCodeId, String field, String replacement, String token) throws NoObjectWithIdException, NoSuchField {
-
-    }
+    /**
+     * 2 function below should be check
+     */
 
     @Override
     public void removePromoCode(int promoCodeId, String token) throws NotLoggedINException, NoAccessException, NoObjectWithIdException {
@@ -103,6 +104,24 @@ public class PromoController implements IPromoController {
         if (!promos.contains(customer))
             throw new NoObjectWithIdException("the promo doesnt contain " + customerId + " id");
         promos.remove(customer);
+        promoRepository.save(promo);
+    }
+
+    @Override
+    public void setPercent(int promoId, double percent, String token) throws NoObjectWithIdException, NoAccessException, InvalidFormatException {
+        checkAccessOfUser(Session.getSession(token), "only manager can set percent");
+        Promo promo = getPromoByIdWithCheck(promoId);
+        if (percent > 100.0)
+            throw new InvalidFormatException("the percent cant exceed 100%");
+        promo.setPercent(percent);
+        promoRepository.save(promo);
+    }
+
+    @Override
+    public void setMaxDiscount(int promoId, long maxDiscount, String token) throws NoAccessException, NoObjectWithIdException {
+        checkAccessOfUser(Session.getSession(token), "only manager can set percent");
+        Promo promo = getPromoByIdWithCheck(promoId);
+        promo.setMaxDiscount(maxDiscount);
         promoRepository.save(promo);
     }
 

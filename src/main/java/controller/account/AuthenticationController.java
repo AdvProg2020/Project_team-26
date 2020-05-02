@@ -1,6 +1,5 @@
 package controller.account;
 
-import controller.Exceptions;
 import controller.interfaces.account.IAuthenticationController;
 import exception.NoAccessException;
 import exception.PasswordIsWrongException;

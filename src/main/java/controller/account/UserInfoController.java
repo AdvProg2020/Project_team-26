@@ -1,6 +1,5 @@
 package controller.account;
 
-import controller.Exceptions;
 import controller.interfaces.account.IUserInfoController;
 
 public class UserInfoController implements IUserInfoController {

@@ -51,4 +51,12 @@ public class Promo {
     public List<Customer> getCustomers() {
         return customers;
     }
+
+    public void setPercent(double percent) {
+        this.percent = percent;
+    }
+
+    public void setMaxDiscount(long maxDiscount) {
+        this.maxDiscount = maxDiscount;
+    }
 }

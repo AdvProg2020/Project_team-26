@@ -1,7 +1,5 @@
 package controller.interfaces.account;
 
-import controller.Exceptions;
-
 public interface IUserInfoController {
 
     String getEmail(String token);

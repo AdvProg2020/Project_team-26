@@ -1,6 +1,5 @@
 package controller.interfaces.product;
 
-import controller.Exceptions;
 import model.Product;
 
 import java.util.List;

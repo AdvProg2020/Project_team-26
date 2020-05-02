@@ -1,6 +1,5 @@
 package controller.interfaces.account;
 
-import controller.Exceptions;
 import controller.account.Account;
 import exception.NoAccessException;
 import exception.PasswordIsWrongException;

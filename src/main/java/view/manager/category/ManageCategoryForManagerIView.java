@@ -1,6 +1,5 @@
 package view.manager.category;
 
-import controller.Exceptions;
 import controller.category.CategoryController;
 import controller.interfaces.category.ICategoryController;
 import model.Category;
