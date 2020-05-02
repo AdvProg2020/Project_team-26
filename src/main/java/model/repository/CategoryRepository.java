@@ -4,7 +4,7 @@ import model.Category;
 
 import java.util.List;
 
-public interface CategoryRepository extends Repository {
+public interface CategoryRepository extends Repository<Category> {
     Category getByName(String name);
 
 

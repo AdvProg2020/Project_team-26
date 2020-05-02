@@ -35,7 +35,8 @@ public class PromoController implements IPromoController {
      */
 
     @Override
-    public List<Promo> getAllPromoCode(String token) throws NotLoggedINException {
+    public List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException {
+        checkAccessOfUser(token, "only manager can see promos");
         Session session = Session.getSession(token);
         List<Promo> promos = session.getLoggedInUser().getPromoCodes();
         return promos;
@@ -43,7 +44,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException {
-        checkAccessOfUser(Session.getSession(token), "only the manager can create promo code");
+        checkAccessOfUser(token, "only the manager can create promo code");
         Promo promo = promoRepository.getByStringCode(code);
         if (promo != null)
             throw new ObjectAlreadyExistException("the promo with code " + code + " already exist", promo);
@@ -52,8 +53,9 @@ public class PromoController implements IPromoController {
         return promo.getId();
     }
 
-    private void checkAccessOfUser(Session session, String message) throws NoAccessException {
-        if (session.getLoggedInUser().getRole() == Role.ADMIN)
+    private void checkAccessOfUser(String token, String message) throws NoAccessException {
+        Session session = Session.getSession(token);
+        if (!(session.getLoggedInUser().getRole() == Role.ADMIN))
             throw new NoAccessException(message);
 
     }
@@ -64,9 +66,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public void removePromoCode(int promoCodeId, String token) throws NotLoggedINException, NoAccessException, NoObjectWithIdException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser().getRole() != Role.ADMIN)
-            throw new NoAccessException("only manager can remove the promo");
+        checkAccessOfUser(token, "only manager can remove the promo");
         Promo promo = promoRepository.getById(promoCodeId);
         if (promo == null)
             throw new NoObjectWithIdException("there is no promo by" + promoCodeId);
@@ -84,7 +84,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException {
-        checkAccessOfUser(Session.getSession(token), "only the manager can add customer");
+        checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
         if (customer == null)
@@ -95,7 +95,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException {
-        checkAccessOfUser(Session.getSession(token), "only the manager can add customer");
+        checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
         if (customer == null)
@@ -109,7 +109,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public void setPercent(int promoId, double percent, String token) throws NoObjectWithIdException, NoAccessException, InvalidFormatException {
-        checkAccessOfUser(Session.getSession(token), "only manager can set percent");
+        checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (percent > 100.0)
             throw new InvalidFormatException("the percent cant exceed 100%");
@@ -119,7 +119,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public void setMaxDiscount(int promoId, long maxDiscount, String token) throws NoAccessException, NoObjectWithIdException {
-        checkAccessOfUser(Session.getSession(token), "only manager can set percent");
+        checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         promo.setMaxDiscount(maxDiscount);
         promoRepository.save(promo);
@@ -134,7 +134,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public void setTime(int promoId, Date date, String type, String token) throws NoAccessException, NoObjectWithIdException {
-        checkAccessOfUser(Session.getSession(token), "only manager can " + type + " date");
+        checkAccessOfUser(token, "only manager can " + type + " date");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (type.equals("start")) {//ToDo
 

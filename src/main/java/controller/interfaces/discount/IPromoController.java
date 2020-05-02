@@ -11,7 +11,7 @@ public interface IPromoController {
 
     Promo getPromoCodeTemplateById(int codeId, String token) throws NoObjectWithIdException, NotLoggedINException;
 
-    List<Promo> getAllPromoCode(String token) throws NotLoggedINException;
+    List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException;
 
     int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException;
 
