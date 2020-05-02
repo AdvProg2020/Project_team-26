@@ -22,7 +22,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public int addCategory(int patternId, String newCategoryName, String token) throws NoObjectWithIdException, ObjectAlreadyExistException, NoAccessException {
+    public int addCategory(int patternId, String newCategoryName, String token) throws NoObjectWithIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can add category");
         if (checkCategoryExistByName(newCategoryName))
             throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", null);

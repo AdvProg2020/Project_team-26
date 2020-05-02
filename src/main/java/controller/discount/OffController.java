@@ -1,5 +1,6 @@
 package controller.discount;
 
+import com.sun.tools.javac.comp.Todo;
 import controller.interfaces.discount.IOffController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -9,6 +10,7 @@ import model.*;
 import model.repository.OffRepository;
 import model.repository.ProductRepository;
 
+import javax.naming.NoPermissionException;
 import java.util.Date;
 import java.util.List;
 
@@ -16,36 +18,11 @@ public class OffController implements IOffController {
     private OffRepository offRepository;
     ProductRepository productRepository;
 
-    @Override
-    public int createNewOff(String stringCode, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
-        checkAccessOfUser(token, "Only seller can add Off");
-        if (offRepository.getOffByStringCode(stringCode) != null)
-            throw new ObjectAlreadyExistException("the off with code " + stringCode + " exist", null);
-        Off off = new Off(stringCode);
-        offRepository.save(off);
-        return off.getId();
-    }
 
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
         Session session = Session.getSession(token);
         if (!(session.getLoggedInUser().getRole() == Role.SELLER))
             throw new NoAccessException(message);
-    }
-
-    @Override
-    public void addProductToOff(int id, int productId, long priceInOff, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
-        checkAccessOfUser(token, "only seller can add product to off");
-        Off off = getOffByIdWithCheck(id);
-        Product product = productRepository.getById(productId);
-        if (product == null)
-            throw new NoObjectWithIdException("no product exist with this id");
-
-        if (product.getOff() != null)
-            throw new ObjectAlreadyExistException("the product exist in list", product);
-        OffItem offItem = new OffItem(product, priceInOff);
-        off.getItems().add(offItem);
-        offRepository.save(off);
-        //ToDo
     }
 
     private Off getOffByIdWithCheck(int id) throws NoObjectWithIdException {
@@ -56,43 +33,96 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void removeProductFromOff(int id, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
-        checkAccessOfUser(token, "only seller can remove product to off");
-        Off off = getOffByIdWithCheck(id);
+    public Off createNewOff(Off newOff, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
+        checkAccessOfUser(token, "seller can create a off");
+        /**
+         if(newOff.getEndDate())
+         check date
+         */
+        offRepository.addRequest(newOff);
+        return newOff;
+    }
+
+    @Override
+    public void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
+        checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
-            throw new NoObjectWithIdException("no product exist with this id");
-        OffItem offItem = off.getItemByProductId(productId);
+            throw new NoObjectWithIdException("no product exist");
+        List<OffItem> offItems = off.getItems();
+        OffItem offItem = getOffItem(offItems, productId);
+        if (offItem != null)
+            throw new ObjectAlreadyExistException("the product exist in your off list", product);
+        ProductSeller productSeller = getProductSeller(Session.getSession(token).getLoggedInUser().getId(), product.getSellerList())
+        if (productSeller == null)
+            throw new NoAccessException("the product you have choose you are not its seller");
+        if (priceInOff < 0)
+            offItem = new OffItem(product, productSeller.getPrice() * percent / 100);
+        else
+            offItem = new OffItem(product, priceInOff);
+        offItems.add(offItem);
+        offRepository.addRequest(off);
+    }
+
+    private OffItem getOffItem(List<OffItem> offItems, int productId) {
+        for (OffItem offItem : offItems) {
+            if (offItem.getProduct().getId() == productId)
+                return offItem;
+        }
+        return null;
+    }
+
+    private ProductSeller getProductSeller(int seller, List<ProductSeller> productSellers) {
+        for (ProductSeller productSeller : productSellers) {
+            if (productSeller.getSeller().getId() == seller)
+                return productSeller;
+        }
+        return null;
+    }
+
+    @Override
+    public void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
+        checkAccessOfUser(token, "only seller can add product");
+        Product product = productRepository.getById(productId);
+        if (product == null)
+            throw new NoObjectWithIdException("no product exist");
+        List<OffItem> offItems = off.getItems();
+        OffItem offItem = getOffItem(offItems, productId);
         if (offItem == null)
-            throw new NoObjectWithIdException("no product is in list");
-        off.getItems().remove(offItem);
-        offRepository.save(off);
+            throw new ObjectAlreadyExistException("the product does not exist in list", product);
+        ProductSeller productSeller = getProductSeller(Session.getSession(token).getLoggedInUser().getId(), product.getSellerList())
+        if (productSeller == null)
+            throw new NoAccessException("the product you have choose is not in your list");
+        offRepository.
+
     }
 
     @Override
-    public void setTime(int id, Date date, String type, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
-        checkAccessOfUser(token, "only seller can set date");
-        //ToDO
-    }
-
-
-    @Override
-    public void removeAOff(int id, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
-        checkAccessOfUser(token, "only seller can delete off");
-        Off off = getOffByIdWithCheck(id);
-        offRepository.delete(id);
+    public void removeAOff(int id, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException {
+        checkAccessOfUser(token, "only seller can remove off");
+        getOffByIdWithCheck(id);
+        offRepository.deleteRequest(id);
     }
 
     @Override
     public List<Off> getAllOffs(String token) {
-        //ToDO no need to check
         return offRepository.getAll();
     }
 
     @Override
-    public Off getOff(int id, String token) throws NoObjectWithIdException {
-        Off off = getOffByIdWithCheck(id);
-        return off;
+    public List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token, "only seller");
+        return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs();
     }
 
+    @Override
+    public Off getOff(int id, String token) throws NoObjectWithIdException {
+        return getOffByIdWithCheck(id);
+    }
+
+    @Override
+    public void edit(Off off, int id, String token) {
+
+
+    }
 }

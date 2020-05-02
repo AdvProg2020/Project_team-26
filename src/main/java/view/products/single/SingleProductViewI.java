@@ -2,10 +2,8 @@ package view.products.single;
 
 import controller.account.AuthenticationController;
 import controller.interfaces.cart.ICartController;
-import controller.interfaces.product.ICompareTwoItems;
 import controller.interfaces.product.IShowProductController;
 import controller.interfaces.review.ICommentController;
-import controller.product.CompareTwoItems;
 import controller.review.CommentController;
 import model.Product;
 import view.*;
