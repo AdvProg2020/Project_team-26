@@ -3,10 +3,7 @@ package controller.discount;
 import controller.Exceptions;
 import controller.interfaces.discount.IPromoController;
 import exception.*;
-import model.Customer;
-import model.Promo;
-import model.Role;
-import model.Session;
+import model.*;
 import model.repository.PromoRepository;
 import model.repository.UserRepository;
 
@@ -44,15 +41,19 @@ public class PromoController implements IPromoController {
 
     @Override
     public int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser().getRole() != Role.ADMIN)
-            throw new NoAccessException("only the manager can create promo code");
+        checkAccessOfUser(Session.getSession(token), "only the manager can create promo code");
         Promo promo = promoRepository.getByStringCode(code);
         if (promo != null)
             throw new ObjectAlreadyExistException("the promo with code " + code + " already exist", promo);
         promo = new Promo(code);
         promoRepository.save(promo);
         return promo.getId();
+    }
+
+    private void checkAccessOfUser(Session session, String message) throws NoAccessException {
+        if (session.getLoggedInUser().getRole() == Role.ADMIN)
+            throw new NoAccessException(message);
+
     }
 
     @Override
@@ -81,9 +82,21 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addCustomer(int promoId, String CustomerUsername, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException {
+    public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException {
+        checkAccessOfUser(Session.getSession(token), "only the manager can add customer");
+        Promo promo = getPromoByIdWithCheck(promoId);
+        Customer customer = (Customer) userRepository.getById(customerId);
+        if (customer == null)
+            throw new NoObjectWithIdException("no customer exist By " + customerId + " id");
+        promo.getCustomers().add(customer);
+        promoRepository.save(promo);
+    }
 
-
+    private Promo getPromoByIdWithCheck(int id) throws NoObjectWithIdException {
+        Promo promo = (Promo) promoRepository.getById(id);
+        if (promo == null)
+            throw new NoObjectWithIdException("no promo exist");
+        return promo;
     }
 
     @Override
