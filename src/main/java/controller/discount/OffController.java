@@ -53,7 +53,7 @@ public class OffController implements IOffController {
         OffItem offItem = getOffItem(offItems, productId);
         if (offItem != null)
             throw new ObjectAlreadyExistException("the product exist in your off list", product);
-        ProductSeller productSeller = getProductSeller(Session.getSession(token).getLoggedInUser().getId(), product.getSellerList())
+        ProductSeller productSeller = getProductSeller(Session.getSession(token).getLoggedInUser().getId(), product.getSellerList());
         if (productSeller == null)
             throw new NoAccessException("the product you have choose you are not its seller");
         if (priceInOff < 0)
@@ -90,11 +90,10 @@ public class OffController implements IOffController {
         OffItem offItem = getOffItem(offItems, productId);
         if (offItem == null)
             throw new ObjectAlreadyExistException("the product does not exist in list", product);
-        ProductSeller productSeller = getProductSeller(Session.getSession(token).getLoggedInUser().getId(), product.getSellerList())
+        ProductSeller productSeller = getProductSeller(Session.getSession(token).getLoggedInUser().getId(), product.getSellerList());
         if (productSeller == null)
             throw new NoAccessException("the product you have choose is not in your list");
-        offRepository.
-
+        offRepository.deleteRequest(off.getId());
     }
 
     @Override
@@ -121,8 +120,12 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void edit(Off off, int id, String token) {
-
-
+    public void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, NoObjectWithIdException {
+        checkAccessOfUser(token, "only seller");
+        Off off = getOffByIdWithCheck(id);
+        Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
+        if (!seller.getAllOffs().contains(off))
+            throw new NoAccessException("you can only change your off");
+        offRepository.addRequest(off);
     }
 }

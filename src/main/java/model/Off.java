@@ -37,9 +37,10 @@ public class Off {
     public List<OffItem> getItems() {
         return items;
     }
-    public OffItem getItemByProductId(int id){
+
+    public OffItem getItemByProductId(int id) {
         for (OffItem item : items) {
-            if(item.getProduct().getId() == id )
+            if (item.getProduct().getId() == id)
                 return item;
         }
         return null;
@@ -47,5 +48,16 @@ public class Off {
 
     public void setLoaded(boolean loaded) {
         isLoaded = loaded;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ((obj instanceof Off))
+            return false;
+        Off off = (Off) obj;
+        if (off.getId() == this.getId())
+            return true;
+        return false;
+
     }
 }
