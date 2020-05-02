@@ -16,13 +16,18 @@ public interface ICategoryController {
 
     int addCategory(int patternId, String newCategoryName, String token) throws exception.NoObjectWithIdException, exception.ObjectAlreadyExistException, NoAccessException;
 
-    void editCategory(int id, ArrayList<String> changes, String token) throws exception.NoObjectWithIdException, NoAccessException;
+    void removeACategory(int id, int parentId, String token) throws NoObjectWithIdException, NoAccessException;
 
     void addAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException;
 
-    void removeACategory(int id, int parentId, String token) throws NoObjectWithIdException, NoAccessException;
+    void changeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException;
+
+    void removeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException;
 
     void addProduct(int id, int productName, String token) throws exception.NoObjectWithIdException, NoAccessException;
+
+    void removeProduct(int id, int productName, String token) throws NoObjectWithIdException, NoAccessException;
+
 
     List<Category> getAllCategories(int id, String token) throws NoObjectWithIdException;
 
@@ -31,5 +36,6 @@ public interface ICategoryController {
     Category getCategory(int id, String token) throws NoObjectWithIdException;
 
     List<Product> getProducts(int id, String token) throws NoObjectWithIdException;
+
 
 }

@@ -20,18 +20,22 @@ public class CategoryController implements ICategoryController {
         this.categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
     }
 
-    public int getCategoryIdByName(String name) throws NoObjectWithIdException, ObjectAlreadyExistException {
-        if (!checkCategoryExistByName(name))
-            throw new NoObjectWithIdException("the category with " + name + " name doesn't exist");
-        return categoryRepository.getByName(name).getId();
-    }
-
     @Override
     public int addCategory(int patternId, String newCategoryName, String token) throws NoObjectWithIdException, ObjectAlreadyExistException, NoAccessException {
         checkAccessOfUser(Session.getSession(token), "only manager can add category");
-        CategoryNameWithSameName(newCategoryName);
+        if (checkCategoryExistByName(newCategoryName))
+            throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", null);
         Category parentCategory = checkParentCategory(patternId);
-        return createNewCategory(newCategoryName, parentCategory);
+        Category category = new Category(newCategoryName);
+        if (parentCategory == null) {
+            category.setParent(null);
+        } else {
+            category.setParent(parentCategory);
+            parentCategory.addSubCategory(category);
+            categoryRepository.save(parentCategory);
+        }
+        categoryRepository.save(category);
+        return category.getId();
     }
 
     private Category checkParentCategory(int parentId) throws NoObjectWithIdException {
@@ -42,11 +46,6 @@ public class CategoryController implements ICategoryController {
             throw new NoObjectWithIdException("the father Category doesnt exist");
         return category;
 
-    }
-
-    private void CategoryNameWithSameName(String name) throws ObjectAlreadyExistException {
-        if (checkCategoryExistByName(name))
-            throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", null);
     }
 
     private boolean checkCategoryExistByName(String name) {
@@ -61,33 +60,41 @@ public class CategoryController implements ICategoryController {
 
     }
 
-    private int createNewCategory(String name, Category parentCategory) {
-        Category category = new Category(name);
-        if (parentCategory == null) {
-            category.setParent(null);
-        } else {
-            category.setParent(parentCategory);
-            parentCategory.addSubCategory(category);
-            categoryRepository.save(parentCategory);
-        }
-        categoryRepository.save(category);
-        return category.getId();
-    }
-
-    @Override
-    public void editCategory(int id, ArrayList<String> changes, String token) throws NoObjectWithIdException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can edit the fields");
-        Category category = getCategoryByIdWithCheck(id);
-
-
-    }
-
     @Override
     public void addAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException {
         checkAccessOfUser(Session.getSession(token), "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = new CategoryFeature(attributeName, attribute);
         category.getFeatures().add(categoryFeature);
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public void changeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException {
+        checkAccessOfUser(Session.getSession(token), "only manager can change or add attribute");
+        Category category = getCategoryByIdWithCheck(id);
+        CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
+        categoryFeature.setFeatureValue(attribute);
+        categoryRepository.save(categoryFeature);
+        categoryRepository.save(category);
+    }
+
+    private CategoryFeature getCategoryFeature(Category category, String name) throws NoObjectWithIdException {
+        List<CategoryFeature> categoryFeatures = category.getFeatures();
+        for (CategoryFeature categoryFeature : categoryFeatures) {
+            if (categoryFeature.getFeatureName().equals(name))
+                return categoryFeature;
+        }
+        throw new NoObjectWithIdException("there is no attribute with name" + name);
+    }
+
+    @Override
+    public void removeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException {
+        checkAccessOfUser(Session.getSession(token), "only manager can remove attribute");
+        Category category = getCategoryByIdWithCheck(id);
+        CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
+        category.getFeatures().remove(categoryFeature);
+        categoryRepository.delete(categoryFeature);
         categoryRepository.save(category);
     }
 
@@ -122,6 +129,18 @@ public class CategoryController implements ICategoryController {
         Category category = getCategoryByIdWithCheck(id);
         Product product = productController.getProductById(productId, token);
         category.getProducts().add(product);
+        categoryRepository.save(category);
+    }
+
+    @Override
+    public void removeProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException {
+        checkAccessOfUser(Session.getSession(token), "only manager can remove product");
+        Category category = getCategoryByIdWithCheck(id);
+        Product product = productController.getProductById(productId, token);
+        List<Product> products = category.getProducts();
+        if (!products.contains(product))
+            throw new NoObjectWithIdException("there is no product in this category by " + productId + " id");
+        category.getProducts().remove(product);
         categoryRepository.save(category);
     }
 

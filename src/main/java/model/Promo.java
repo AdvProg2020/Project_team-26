@@ -15,8 +15,40 @@ public class Promo {
     private int maxValidUse;
     private List<Customer> customers;
 
-    public Promo(int id) {
-        this.id = id;
+    public Promo(String code) {
+        this.promoCode = code;
         customers = new ArrayList<Customer>();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getPromoCode() {
+        return promoCode;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public double getPercent() {
+        return percent;
+    }
+
+    public long getMaxDiscount() {
+        return maxDiscount;
+    }
+
+    public int getMaxValidUse() {
+        return maxValidUse;
+    }
+
+    public List<Customer> getCustomers() {
+        return customers;
     }
 }

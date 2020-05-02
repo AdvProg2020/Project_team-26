@@ -1,7 +1,6 @@
 package view.manager.discount;
 
 import controller.Exceptions;
-import controller.discount.PromoDetailsController;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
 import view.*;
