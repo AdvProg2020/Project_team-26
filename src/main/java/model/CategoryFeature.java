@@ -3,32 +3,18 @@ package model;
 public class CategoryFeature {
 
     private String featureName;
-    private String featureValue;
+    private FeatureType featureType;
 
-    public CategoryFeature(String featureName) {
+    public CategoryFeature(String featureName, FeatureType type) {
         this.featureName = featureName;
-    }
-
-    public CategoryFeature(String featureName, String featureValue) {
-        this.featureName = featureName;
-        this.featureValue = featureValue;
-    }
-
-    public CategoryFeature getFeature(String featureValue) {
-        return new CategoryFeature(this.featureName, featureValue);
+        this.featureType = type;
     }
 
     public String getFeatureName() {
         return featureName;
     }
 
-    public String getFeatureValue() {
-        return featureValue;
+    public FeatureType getFeatureType() {
+        return featureType;
     }
-
-    public void setFeatureValue(String featureValue) {
-        this.featureValue = featureValue;
-    }
-
-
 }

@@ -60,10 +60,10 @@ public class ManageCategoryForManagerViewI extends View implements ViewI {
         showProducts(category.getProducts());
     }
 
-    private void showAttribute(List<CategoryFeature> features) {
-        for (CategoryFeature feature : features) {
-            manager.inputOutput.println("name:" + feature.getFeatureName());
-            manager.inputOutput.println("features:" + feature.getFeatureValue());
+    private void showAttribute(List<CategoryFeature> categoryFeatures) {
+        for (CategoryFeature categoryFeature : categoryFeatures) {
+            manager.inputOutput.println("name:" + categoryFeature.getFeatureName());
+            manager.inputOutput.println("features:" + categoryFeature.getFeatureValue());
         }
     }
 

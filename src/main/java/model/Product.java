@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Product {
 
@@ -11,7 +13,7 @@ public class Product {
     private String brand;
     private List<ProductSeller> sellerList;
     private Category category;
-    private List<CategoryFeature> categoryFeatures;
+    private Map<CategoryFeature, Object> categoryFeatures;
     private String description;
     private double averageRate;
     private List<Comment> comments;
@@ -19,7 +21,7 @@ public class Product {
     public Product(int id) {
         this.id = id;
         sellerList = new ArrayList<ProductSeller>();
-        categoryFeatures = new ArrayList<CategoryFeature>();
+        categoryFeatures = new HashMap<>();
         comments = new ArrayList<Comment>();
     }
 
@@ -47,7 +49,7 @@ public class Product {
         return category;
     }
 
-    public List<CategoryFeature> getCategoryFeatures() {
+    public Map<CategoryFeature, Object> getCategoryFeatures() {
         return categoryFeatures;
     }
 

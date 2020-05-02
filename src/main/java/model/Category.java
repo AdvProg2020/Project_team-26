@@ -64,7 +64,6 @@ public class Category {
 
     }
 
-
     private void attachParents(StringBuilder branch, Category category) {
         branch.append(category.getName());
         if (category.parent == null) {

@@ -9,7 +9,6 @@ import model.*;
 import model.repository.CategoryRepository;
 import model.repository.RepositoryContainer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryController implements ICategoryController {

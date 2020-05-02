@@ -1,14 +1,11 @@
 package controller.interfaces.category;
 
-import controller.Exceptions;
 import exception.NoAccessException;
 import exception.NoObjectWithIdException;
 import model.Category;
 import model.CategoryFeature;
 import model.Product;
-import model.repository.CategoryRepository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface ICategoryController {
