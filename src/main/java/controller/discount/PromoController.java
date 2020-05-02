@@ -83,19 +83,22 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException {
+    public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException, ObjectAlreadyExistException {
         checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
         if (customer == null)
             throw new NoObjectWithIdException("no customer exist By " + customerId + " id");
+        List<Customer> customers = promo.getCustomers();
+        if (customers.contains(customer))
+            throw new ObjectAlreadyExistException("the promo contain this customer", customer);
         promo.getCustomers().add(customer);
         promoRepository.save(promo);
     }
 
     @Override
     public void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException {
-        checkAccessOfUser(token, "only the manager can add customer");
+        checkAccessOfUser(token, "only the manager can remove customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
         if (customer == null)

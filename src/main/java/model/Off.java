@@ -15,6 +15,7 @@ public class Off {
 
     public Off(String stringCode) {
         this.stringCode = stringCode;
+        this.isLoaded = false;
         items = new ArrayList<OffItem>();
     }
 
@@ -40,5 +41,12 @@ public class Off {
 
     public List<OffItem> getItems() {
         return items;
+    }
+    public OffItem getItemByProductId(int id){
+        for (OffItem item : items) {
+            if(item.getProduct().getId() == id )
+                return item;
+        }
+        return null;
     }
 }

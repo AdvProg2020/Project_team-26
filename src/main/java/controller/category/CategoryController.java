@@ -7,13 +7,14 @@ import exception.NoObjectWithIdException;
 import exception.ObjectAlreadyExistException;
 import model.*;
 import model.repository.CategoryRepository;
+import model.repository.ProductRepository;
 import model.repository.RepositoryContainer;
 
 import java.util.List;
 
 public class CategoryController implements ICategoryController {
     CategoryRepository categoryRepository;
-    IProductController productController;
+    ProductRepository productRepository;
 
     public CategoryController(RepositoryContainer repositoryContainer) {
         this.categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
@@ -118,16 +119,24 @@ public class CategoryController implements ICategoryController {
 
     private void categoryParentCheckingException(int id, int parentId) throws NoObjectWithIdException {
         Category category = (Category) categoryRepository.getById(id);
-        if (!((Category) categoryRepository.getById(parentId)).getSubCategory().contains(category))
-            throw new NoObjectWithIdException("the parent are not valid they are not this category parent");
+        for (Category sub : categoryRepository.getById(parentId).getSubCategory()) {
+            if (sub.getId() == category.getId())
+                return;
+        }
+        throw new NoObjectWithIdException("the parent are not valid they are not this category parent");
     }
 
     @Override
     public void addProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException {
         checkAccessOfUser(Session.getSession(token), "only manager can add product to category");
         Category category = getCategoryByIdWithCheck(id);
-        Product product = productController.getProductById(productId, token);
-        category.getProducts().add(product);
+        Product product = productRepository.getById(productId);
+        if (product == null)
+            throw new NoObjectWithIdException("no product exist with " + productId + " id");
+        List<Product> products = category.getProducts();
+        if (isProductInlist(products, productId))
+            throw new NoObjectWithIdException("product by " + productId + " id already exist");
+        products.add(product);
         categoryRepository.save(category);
     }
 
@@ -135,12 +144,22 @@ public class CategoryController implements ICategoryController {
     public void removeProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException {
         checkAccessOfUser(Session.getSession(token), "only manager can remove product");
         Category category = getCategoryByIdWithCheck(id);
-        Product product = productController.getProductById(productId, token);
+        Product product = productRepository.getById(productId);
+        if (product == null)
+            throw new NoObjectWithIdException("no product exist with " + productId + " id");
         List<Product> products = category.getProducts();
-        if (!products.contains(product))
+        if (!isProductInlist(products, productId))
             throw new NoObjectWithIdException("there is no product in this category by " + productId + " id");
-        category.getProducts().remove(product);
+        products.remove(product);
         categoryRepository.save(category);
+    }
+
+    private boolean isProductInlist(List<Product> products, int id) {
+        for (Product product : products) {
+            if (product.getId() == id)
+                return true;
+        }
+        return false;
     }
 
     @Override
