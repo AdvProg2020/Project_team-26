@@ -50,4 +50,28 @@ public class Session {
     public Cart getCart() {
         return cart;
     }
+
+    public boolean isUserAdmin() {
+        if (loggedInUser.getRole() == Role.ADMIN)
+            return true;
+        return false;
+    }
+
+    public boolean isUserSeller() {
+        if (loggedInUser.getRole() == Role.SELLER)
+            return true;
+        return false;
+    }
+
+    public boolean isUserCustomer() {
+        if (loggedInUser.getRole() == Role.CUSTOMER)
+            return true;
+        return false;
+    }
+
+    public boolean IsUserLoggedIn() {
+        if (loggedInUser == null)
+            return false;
+        return true;
+    }
 }
