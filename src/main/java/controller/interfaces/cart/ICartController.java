@@ -1,16 +1,17 @@
 package controller.interfaces.cart;
 
+import exception.InvalidIdException;
+import exception.InvalidTokenException;
+import exception.NotEnoughProductsException;
 import model.Cart;
 
 public interface ICartController {
 
-    void addProduct(String productId, String sellerId, String token) throws ;
+    void addOrChangeProduct(int productSellerId, int amount, String token) throws InvalidIdException, NotEnoughProductsException, InvalidTokenException;
 
-    void changeProductAmount(int productId, int amount, String token);
+    Cart showCart(String token) throws InvalidTokenException;
 
-    Cart showCart(String token);
-
-    void setAddress(String address, String token);
+    void setAddress(String address, String token) throws InvalidTokenException;
 
     boolean checkout(String token);
 

@@ -1,5 +1,7 @@
 package model;
 
+import exception.InvalidTokenException;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,12 +9,15 @@ public class Session {
 
     private static Map<String, Session> sessionList = new HashMap<>();
 
-    public static Session getSession(String token) {
+    public static Session getSession(String token) throws InvalidTokenException {
+        if(!sessionList.containsKey(token)) {
+            throw new InvalidTokenException("You're token is invalid. Get a new token.");
+        }
         return sessionList.get(token);
     }
 
     public static String addSession() {
-        String token = "";
+        String token = "a";
 
         sessionList.put(token, new Session());
         return token;

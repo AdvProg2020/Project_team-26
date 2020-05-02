@@ -51,7 +51,7 @@ public class SingleProductViewI extends View {
             String sellerId = selectAUserForBuyingFrom();
             if (sellerId.matches("back"))
                 return;
-            cartController.addProduct(String.valueOf(product), sellerId, manager.getTocken());
+            cartController.addProduct(String.valueOf(product), manager.getTocken());
         } catch (Exceptions.TheParameterDoesNOtExist | Exceptions.InvalidFiledException e) {
             e.getMessage();
         }
