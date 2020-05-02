@@ -11,20 +11,20 @@ public interface IPromoController {
 
     Promo getPromoCodeTemplateById(int codeId, String token) throws NoObjectWithIdException, NotLoggedINException;
 
-    List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException;
+    List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
 
-    int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException;
+    int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException;
 
-    void removePromoCode(int promoCodeId, String token) throws NoAccessException, NotLoggedINException, NoAccessException, NoObjectWithIdException;
+    void removePromoCode(int promoCodeId, String token) throws NoAccessException, NotLoggedINException, NoAccessException, NoObjectWithIdException, InvalidTokenException;
 
-    void addCustomer(int promoId, int CustomerUserId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException, ObjectAlreadyExistException;
+    void addCustomer(int promoId, int CustomerUserId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException, ObjectAlreadyExistException, InvalidTokenException;
 
-    void setTime(int promoId, Date date, String type, String token) throws NoAccessException, NoObjectWithIdException;
+    void setTime(int promoId, Date date, String type, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException;
 
-    void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException;
+    void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException;
 
-    void setPercent(int promoId, double percent, String token) throws NoObjectWithIdException, NoAccessException , InvalidFormatException;
+    void setPercent(int promoId, double percent, String token) throws NoObjectWithIdException, NoAccessException, InvalidFormatException, InvalidTokenException;
 
-    void setMaxDiscount(int promoId, long maxDiscount , String token) throws NoAccessException,NoObjectWithIdException;
+    void setMaxDiscount(int promoId, long maxDiscount , String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException;
 
 }

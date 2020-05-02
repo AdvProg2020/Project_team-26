@@ -1,6 +1,7 @@
 package controller.review;
 
 import controller.interfaces.review.ICommentController;
+import exception.InvalidTokenException;
 import exception.NoAccessException;
 import model.*;
 import model.repository.CommentRepository;
@@ -17,7 +18,7 @@ public class CommentController implements ICommentController {
         this.commentRepository = (CommentRepository) repositoryContainer.getRepository("CommentRepository");
     }
 
-    public void addAComment(String comment, int productId, String token) throws NoAccessException {
+    public void addAComment(String comment, int productId, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -26,7 +27,7 @@ public class CommentController implements ICommentController {
         }
     }
 
-    public void removeComment(int id, String token) throws NoAccessException {
+    public void removeComment(int id, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null || user.getRole() == Role.SELLER) {
             throw new NoAccessException("You are not allowed to do that.");

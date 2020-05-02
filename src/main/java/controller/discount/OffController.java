@@ -1,6 +1,7 @@
 package controller.discount;
 
 import controller.interfaces.discount.IOffController;
+import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectWithIdException;
 import exception.ObjectAlreadyExistException;
@@ -16,7 +17,7 @@ public class OffController implements IOffController {
     ProductRepository productRepository;
 
     @Override
-    public int createNewOff(String stringCode, String token) throws NoAccessException, ObjectAlreadyExistException {
+    public int createNewOff(String stringCode, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
         checkAccessOfUser(token, "Only seller can add Off");
         if (offRepository.getOffByStringCode(stringCode) != null)
             throw new ObjectAlreadyExistException("the off with code " + stringCode + " exist", null);
@@ -25,14 +26,14 @@ public class OffController implements IOffController {
         return off.getId();
     }
 
-    private void checkAccessOfUser(String token, String message) throws NoAccessException {
+    private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
         Session session = Session.getSession(token);
         if (!(session.getLoggedInUser().getRole() == Role.SELLER))
             throw new NoAccessException(message);
     }
 
     @Override
-    public void addProductToOff(int id, int productId, long priceInOff, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException {
+    public void addProductToOff(int id, int productId, long priceInOff, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
         checkAccessOfUser(token, "only seller can add product to off");
         Off off = getOffByIdWithCheck(id);
         Product product = productRepository.getById(productId);
@@ -55,7 +56,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void removeProductFromOff(int id, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException {
+    public void removeProductFromOff(int id, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
         checkAccessOfUser(token, "only seller can remove product to off");
         Off off = getOffByIdWithCheck(id);
         Product product = productRepository.getById(productId);
@@ -69,14 +70,14 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void setTime(int id, Date date, String type, String token) throws NoAccessException, ObjectAlreadyExistException {
+    public void setTime(int id, Date date, String type, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
         checkAccessOfUser(token, "only seller can set date");
         //ToDO
     }
 
 
     @Override
-    public void removeAOff(int id, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException {
+    public void removeAOff(int id, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
         checkAccessOfUser(token, "only seller can delete off");
         Off off = getOffByIdWithCheck(id);
         offRepository.delete(id);
