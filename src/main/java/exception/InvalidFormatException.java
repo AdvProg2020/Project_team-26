@@ -1,7 +1,11 @@
 package exception;
 
 public class InvalidFormatException extends Exception {
-    public InvalidFormatException(String message) {
+
+    private String fieldName;
+
+    public InvalidFormatException(String message,String fieldName) {
         super(message);
+        this.fieldName = fieldName;
     }
 }
