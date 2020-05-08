@@ -24,7 +24,7 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByName(username));
     }
 
-    public void register(Account account, String token) throws InvalidFormatException, Exceptions.InvalidAccessDemand, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, NoAccessException, InvalidTokenException {
+    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, Exceptions.UsernameAlreadyExists, NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
