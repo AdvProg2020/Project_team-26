@@ -8,9 +8,7 @@ import model.Order;
 import model.Seller;
 import model.Session;
 import model.repository.OrderRepository;
-import model.repository.Repository;
 import model.repository.RepositoryContainer;
-import model.repository.UserRepository;
 
 import java.util.ArrayList;
 

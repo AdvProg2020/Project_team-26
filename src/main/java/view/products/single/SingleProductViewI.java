@@ -84,12 +84,12 @@ public class SingleProductViewI extends View {
     protected void digest() {
         manager.inputOutput.println("name is:" + product.getName());
         manager.inputOutput.println("product is:" + product);
-        manager.inputOutput.println("brand is:" + product.getBrand();
-        manager.inputOutput.println("this product:" + product.getDescription();
-        manager.inputOutput.println("Category is:" + product.get();
-        manager.inputOutput.println("rate is:" + controller.getA(product, manager.getTocken()));
-        manager.showList(product.getSellerList(product, manager.getTocken()));
-        manager.showList(controller.getComments(product, manager.getTocken()));
+        manager.inputOutput.println("brand is:" + product.getBrand());
+        manager.inputOutput.println("this product:" + product.getDescription());
+        // TODO: manager.inputOutput.println("Category is:" + product.get());
+        // TODO: manager.inputOutput.println("rate is:" + controller.getA(product, manager.getTocken()));
+        // TODO: manager.showList(product.getSellerList(product, manager.getTocken()));
+        // TODO: manager.showList(controller.getComments(product, manager.getTocken()));
     }
 
     protected void changeInfo(Matcher matcher, boolean isItManager) {

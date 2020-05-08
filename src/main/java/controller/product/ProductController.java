@@ -17,7 +17,9 @@ public class ProductController implements IProductController {
         this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
     }
 
-    public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+    @Override
+    public void createProduct(Product product, String token)
+            throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         if(product == null)
             throw new NullPointerException();
         if(Session.getSession(token).getLoggedInUser().getRole() != Role.SELLER)
@@ -28,7 +30,9 @@ public class ProductController implements IProductController {
         productRepository.addRequest(product);
     }
 
-    public void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException {
+    @Override
+    public void addSeller(int id, ProductSeller productSeller, String token)
+            throws NotSellerException, NoAccessException, InvalidTokenException {
         if(productSeller == null)
             throw new NullPointerException();
         User user = Session.getSession(token).getLoggedInUser();
@@ -39,17 +43,19 @@ public class ProductController implements IProductController {
         productSellerRepository.addRequest(productSeller);
     }
 
-    public Product getProductById(int id, String token) throws NoObjectWithIdException {
+    @Override
+    public Product getProductById(int id, String token) throws InvalidIdException {
         Product product = productRepository.getById(id);
         if(product == null)
-            throw new NoObjectWithIdException("There is no product with this id");
+            throw new InvalidIdException("There is no product with this id");
         return product;
     }
 
-    public void editProduct(int id, Product newProduct, String token) throws NoObjectWithIdException, NotSellerException, NoAccessException, InvalidTokenException {
+    @Override
+    public void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException {
         Product product = productRepository.getById(id);
         if(product != null)
-            throw new NoObjectWithIdException("There is no product with this id to change");
+            throw new InvalidIdException("There is no product with this id to change");
         User user = Session.getSession(token).getLoggedInUser();
         if(user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to edit product");

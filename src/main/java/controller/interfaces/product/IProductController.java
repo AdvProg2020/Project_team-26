@@ -1,24 +1,15 @@
 package controller.interfaces.product;
 
-import exception.NoObjectWithIdException;
+import exception.*;
 import model.Product;
 import model.ProductSeller;
 
 public interface IProductController {
+    void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException;
 
-    int createProduct(String name, String token);
+    void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException;
 
-    Product getProductByName(String name, String token);
-    Product getProductById(int id, String token) throws NoObjectWithIdException;
+    Product getProductById(int id, String token) throws InvalidIdException;
 
-    void changeProductName(int id, String name, String token);
-
-    void changeProductBrand(int id, String brand, String token);
-
-    void changeProductCategory(int id, int categoryId, String token);
-
-    void changeAmountInStock(int id, int amount, String token);
-
-    void changeDescription(String description, String token);
-
+    void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException;
 }

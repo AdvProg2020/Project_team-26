@@ -5,8 +5,6 @@ import exception.NoAccessException;
 import exception.NoObjectWithIdException;
 import exception.ObjectAlreadyExistException;
 import model.*;
-import model.repository.OffRepository;
-import model.repository.ProductRepository;
 
 import java.util.*;
 

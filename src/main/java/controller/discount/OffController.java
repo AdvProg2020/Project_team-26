@@ -1,6 +1,5 @@
 package controller.discount;
 
-import com.sun.tools.javac.comp.Todo;
 import controller.interfaces.discount.IOffController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -10,8 +9,6 @@ import model.*;
 import model.repository.OffRepository;
 import model.repository.ProductRepository;
 
-import javax.naming.NoPermissionException;
-import java.util.Date;
 import java.util.List;
 
 public class OffController implements IOffController {
