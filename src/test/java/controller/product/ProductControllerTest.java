@@ -1,6 +1,5 @@
 package controller.product;
 
-import exception.InvalidIdException;
 import model.Product;
 import model.Session;
 import model.repository.RepositoryContainer;

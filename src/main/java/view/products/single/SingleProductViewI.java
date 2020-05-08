@@ -43,42 +43,28 @@ public class SingleProductViewI extends View {
             String username = manager.inputOutput.nextLine();
             if (username.matches("back"))
                 return;
-            new AuthenticationView(manager, username, new AuthenticationController()).login(Pattern.compile("(.*)").matcher(username));
-        }
-        try {
-            String sellerId = selectAUserForBuyingFrom();
-            if (sellerId.matches("back"))
-                return;
-            cartController.addProduct(String.valueOf(product), manager.getTocken());
-        } catch (Exceptions.TheParameterDoesNOtExist | Exceptions.InvalidFiledException e) {
-            e.getMessage();
+            new AuthenticationView(manager, username).login(Pattern.compile("(.*)").matcher(username));
         }
     }
 
     protected String selectAUserForBuyingFrom() {
         manager.inputOutput.println("which seller you want to buy");
-        manager.showList(controller.getSellers(product, manager.getTocken()));
         return manager.inputOutput.nextLine();
     }
 
     protected void attributeOfProduct() {
-        manager.inputOutput.println(controller.getAttribute(product, manager.getTocken()));
     }
 
     protected void compareToProductWithId(Matcher matcher) {
-        ICompareTwoItems compareController = new CompareTwoItems();
-        String compare = compareController.compareItems(String.valueOf(product.getId()), matcher.group(1), manager.getTocken());
-        manager.inputOutput.println(compare);
+
     }
 
     protected void commentsForThisProduct() {
-        ICommentController commentController = new CommentController();
         manager.inputOutput.println("title");
         String[] comment = new String[2];
         comment[0] = manager.inputOutput.nextLine();
         manager.inputOutput.println("comments");
         comment[1] = manager.inputOutput.nextLine();
-        commentController.addAComment(comment, product.getId(), manager.getTocken());
     }
 
     protected void digest() {

@@ -3,17 +3,20 @@ package view.main;
 import controller.account.Account;
 import controller.interfaces.account.IAuthenticationController;
 import exception.NoAccessException;
+import exception.PasswordIsWrongException;
 import view.View;
 import view.ViewManager;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static org.graalvm.compiler.nodes.java.RegisterFinalizerNode.register;
+
 public class AuthenticationView extends View {
     private String input;
     IAuthenticationController control;
 
-    public AuthenticationView(ViewManager manager, String command, IAuthenticationController control) {
+    public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         input = command;
         this.control = control;
@@ -41,12 +44,8 @@ public class AuthenticationView extends View {
                 control.login(username, password, manager.getTocken());
                 isLoggedIn = true;
                 manager.setUserLoggedIn(true);
-            } catch (Exceptions.InvalidPasswordException wrongPassword) {
-                wrongPassword.getMessage();
-                password = manager.inputOutput.nextLine();
-            } catch (Exceptions.FieldsExistWithSameName wrongUserName) {
-                wrongUserName.getMessage();
-                username = manager.inputOutput.nextLine();
+            } catch (PasswordIsWrongException e) {
+                e.getMessage();
             }
         }
     }
@@ -61,12 +60,8 @@ public class AuthenticationView extends View {
             try {
                 control.register(account, manager.getTocken());
                 isComplete = true;
-            } catch (Exceptions.FieldsExistWithSameName wrongUsername) {
-                manager.inputOutput.println(wrongUsername.getMessage());
-                manager.inputOutput.println("please enter another username");
-                account.setUsername(manager.inputOutput.nextLine());
-            } catch (Exceptions.InvalidAccessDemand | Exceptions.InvalidUserNameException | Exceptions.IncorrectPasswordFormat | Exceptions.UsernameAlreadyExists | NoAccessException | Exceptions.IncorrectUsernameFormat e) {
-                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.getMessage();
             }
             isBack = true;
         }

@@ -62,13 +62,9 @@ public class AllProductView extends View {
 
     protected void singleProductView(Matcher matcher) {
         matcher.find();
-        try {
+        Product product = productController.getAProduct(matcher.group(1), manager.getTocken());
+        SingleProductViewI singleProduct = new SingleProductViewI(manager, product);
 
-            Product product = productController.getAProduct(matcher.group(1), manager.getTocken());
-            SingleProductViewI singleProduct = new SingleProductViewI(manager, product);
-        } catch (Exceptions.TheParameterDoesNOtExist theParameterDoesNOtExist) {
-            theParameterDoesNOtExist.getMessage();
-        }
 
     }
 

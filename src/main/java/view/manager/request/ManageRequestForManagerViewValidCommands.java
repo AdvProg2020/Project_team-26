@@ -6,27 +6,27 @@ import java.util.regex.Pattern;
 public enum ManageRequestForManagerViewValidCommands {
     DetailOfRequest("details\\s+(.*)") {
         @Override
-        public void goToFunction(ManageRequestForManagerIView page) {
+        public void goToFunction(ManageRequestForManagerView page) {
             page.detailOfRequest(Pattern.compile(DetailOfRequest.toString()).matcher(page.getInput()));
         }
     },
 
     AcceptTheRequest("accept\\s+(.*)") {
         @Override
-        public void goToFunction(ManageRequestForManagerIView page) {
+        public void goToFunction(ManageRequestForManagerView page) {
             page.acceptTheRequest(Pattern.compile(AcceptTheRequest.toString()).matcher(page.getInput()));
         }
     },
 
     DeclineTheRequest("decline\\s+(.*)") {
         @Override
-        public void goToFunction(ManageRequestForManagerIView page) {
+        public void goToFunction(ManageRequestForManagerView page) {
             page.declineTheRequest(Pattern.compile(DeclineTheRequest.toString()).matcher(page.getInput()));
         }
     },
     Logout("logout") {
         @Override
-        public void goToFunction(ManageRequestForManagerIView page) {
+        public void goToFunction(ManageRequestForManagerView page) {
             if (page.getManager().getIsUserLoggedin()) {
                 page.logOut();
                 return;
@@ -36,8 +36,8 @@ public enum ManageRequestForManagerViewValidCommands {
     },
     Help("help") {
         @Override
-        public void goToFunction(ManageRequestForManagerIView page) {
-            page.help(page.getManager().getIsUserLoggedin());
+        public void goToFunction(ManageRequestForManagerView page) {
+           // page.help(page.getManager().getIsUserLoggedin());
         }
     };
     private final Pattern commandPattern;
@@ -47,7 +47,7 @@ public enum ManageRequestForManagerViewValidCommands {
 
     }
 
-    public abstract void goToFunction(ManageRequestForManagerIView page);
+    public abstract void goToFunction(ManageRequestForManagerView page);
 
     ManageRequestForManagerViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);

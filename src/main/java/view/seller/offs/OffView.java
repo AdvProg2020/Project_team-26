@@ -1,12 +1,15 @@
 package view.seller.offs;
 
-//import javafx.css.Match;
-
-import view.*;
+import view.View;
+import view.ViewManager;
 
 import java.util.regex.Matcher;
 
-public class offViewI extends View {
+public class OffView extends View {
+    public OffView(ViewManager managerView) {
+        super(managerView);
+    }
+
     private void addOff(Matcher matcher) {
 
     }

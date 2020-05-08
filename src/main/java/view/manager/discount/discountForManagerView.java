@@ -9,12 +9,12 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class discountForManagerIView extends View implements IView {
+public class discountForManagerView extends View implements IView {
     EnumSet<discountForManagerViewValidCommands> validCommands;
     private IPromoController controller;
     private IShowUserController userController;
 
-    public discountForManagerIView(ViewManager manager, IPromoController controller, IShowUserController userController) {
+    public discountForManagerView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(discountForManagerViewValidCommands.class);
         this.controller = controller;
@@ -38,35 +38,15 @@ public class discountForManagerIView extends View implements IView {
     }
 
     protected void showAll() {
-        PromoDetailsController[] promoCodes = controller.getAllPromoCode(manager.getTocken());
-        for (PromoDetailsController promoCode : promoCodes) {
-            show(promoCode);
-        }
+
     }
 
-    private void show(PromoDetailsController promo) {
-        manager.inputOutput.println("promo code:" + promo.getPromoCode(manager.getTocken()));
-        manager.inputOutput.println("start date:" + promo.getStartDate(manager.getTocken()).toString());//
-        manager.inputOutput.println("end date:" + promo.getEndDate(manager.getTocken()).toString());//
-        manager.inputOutput.println("percent of discount:" + promo.getPercent(manager.getTocken()));
-        manager.inputOutput.println("maximum discount:" + promo.getMaxDiscount(manager.getTocken()));
-        manager.inputOutput.println("users:");
-        int[] customersId = promo.getCustomersIds();
-        for (int id : customersId) {
-            manager.inputOutput.println("username:" + userController.getUserById(id,
-                    manager.getTocken()).getUsername(manager.getTocken()));
-        }
+    private void show() {
+
     }
 
     protected void editDiscountCodeWithItsCode(Matcher matcher) {
-        matcher.find();
-        try {
-            String id = controller.getPromoCodeTemplate(matcher.group(1), manager.getTocken()).getPromoCode(manager.getTocken());
-            ArrayList<String> changes = edit();
-            controller.editPromoCode(id, changes, manager.getTocken());
-        } catch (Exceptions.TheParameterDoesNOtExist error) {
-            error.getMessage();
-        }
+
     }
 
     private ArrayList<String> edit() {
@@ -85,21 +65,11 @@ public class discountForManagerIView extends View implements IView {
 
     protected void removeDiscountCodeWithItsCode(Matcher matcher) {
         matcher.find();
-        try {
-            controller.removePromoCode(matcher.group(1), manager.getTocken());
-        } catch (Exceptions.TheParameterDoesNOtExist promoCodeDoesntExist) {
-            promoCodeDoesntExist.getMessage();
-        }
+
     }
 
     protected void viewDiscountCodeWithItsCode(Matcher matcher) {
-        matcher.find();
-        try {
-            PromoDetailsController promo = controller.getPromoCodeTemplate(matcher.group(1), manager.getTocken());
-            show(promo);
-        } catch (Exceptions.TheParameterDoesNOtExist promoCodeDoesntExist) {
-            promoCodeDoesntExist.getMessage();
-        }
+
 
     }
 

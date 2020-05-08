@@ -16,7 +16,6 @@ public class MainPageView extends View implements IView {
         this.manager = manager;
         commands = EnumSet.allOf(MainPageViewValidCommands.class);
         super.input = new String();
-        controller = new AuthenticationController();
     }
 
     @Override
@@ -36,7 +35,7 @@ public class MainPageView extends View implements IView {
     }
 
     protected void authorizing() {
-        AuthenticationView auth = new AuthenticationView(manager, super.input, new AuthenticationController());
+        AuthenticationView auth = new AuthenticationView(manager, super.input);
         auth.run();
     }
 
@@ -45,12 +44,8 @@ public class MainPageView extends View implements IView {
     }
 
     public void logout(String token) {
-        try {
-            controller.logout(token);
-            manager.setUserLoggedIn(false);
-        } catch (Exceptions.UnSuccessfulLogout unSuccessfulLogout) {
-            unSuccessfulLogout.getMessage();
-        }
+        controller.logout(token);
+        manager.setUserLoggedIn(false);
     }
 
     public void printError() {

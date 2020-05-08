@@ -8,11 +8,11 @@ import view.ViewManager;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class FilterIView extends View implements IView {
+public class FilterView extends View implements IView {
     EnumSet<FilterViewValidCommands> validCommands;
     ISearchAndFilterAndSort controller;
 
-    public FilterIView(ViewManager manager) {
+    public FilterView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(FilterViewValidCommands.class);
     }
@@ -34,20 +34,10 @@ public class FilterIView extends View implements IView {
 
     protected void disableSelectedFilter(Matcher matcher) {
         matcher.find();
-        try {
-            controller.removeAFilter(matcher.group(1), manager.getTocken());
-        } catch (Exceptions.InvalidFiledException e) {
-            e.getMessage();
-        }
     }
 
     protected void filterWithAvailableFilter(Matcher matcher) {
         matcher.find();
-        try {
-            controller.addAFilter(matcher.group(1), manager.getTocken());
-        } catch (Exceptions.InvalidFiledException e) {
-            e.getMessage();
-        }
     }
 
     protected void showAvailableFilter() {

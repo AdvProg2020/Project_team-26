@@ -14,19 +14,19 @@ public class PromoController implements IPromoController {
     UserRepository userRepository;
 
     @Override
-    public Promo getPromoCodeTemplateByCode(String codeId, String token) throws NoObjectWithIdException, NotLoggedINException {
-        Promo promo = promoRepository.getByStringCode(codeId);
+    public Promo getPromoCodeTemplateByCode(String codeId, String token) throws InvalidIdException, NotLoggedINException {
+        Promo promo = promoRepository.getByCode(codeId);
         if (promo == null)
-            throw new NoObjectWithIdException("there is no promo by" + codeId);
+            throw new InvalidIdException("there is no promo by" + codeId);
         return promo;
     }
 
 
     @Override
-    public Promo getPromoCodeTemplateById(int codeId, String token) throws NoObjectWithIdException, NotLoggedINException {
+    public Promo getPromoCodeTemplateById(int codeId, String token) throws InvalidIdException, NotLoggedINException {
         Promo promo = promoRepository.getById(codeId);
         if (promo == null)
-            throw new NoObjectWithIdException("there is no promo by" + codeId);
+            throw new InvalidIdException("there is no promo by" + codeId);
         return promo;
     }
 
@@ -45,7 +45,7 @@ public class PromoController implements IPromoController {
     @Override
     public int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can create promo code");
-        Promo promo = promoRepository.getByStringCode(code);
+        Promo promo = promoRepository.getByCode(code);
         if (promo != null)
             throw new ObjectAlreadyExistException("the promo with code " + code + " already exist", promo);
         promo = new Promo(code);
@@ -65,11 +65,11 @@ public class PromoController implements IPromoController {
      */
 
     @Override
-    public void removePromoCode(int promoCodeId, String token) throws NotLoggedINException, NoAccessException, NoObjectWithIdException, InvalidTokenException {
+    public void removePromoCode(int promoCodeId, String token) throws NotLoggedINException, NoAccessException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can remove the promo");
         Promo promo = promoRepository.getById(promoCodeId);
         if (promo == null)
-            throw new NoObjectWithIdException("there is no promo by" + promoCodeId);
+            throw new InvalidIdException("there is no promo by" + promoCodeId);
         removeThePromoFromUsers(promo);
         promoRepository.delete(promoCodeId);
     }
@@ -83,12 +83,12 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException, ObjectAlreadyExistException, InvalidTokenException {
+    public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
         if (customer == null)
-            throw new NoObjectWithIdException("no customer exist By " + customerId + " id");
+            throw new InvalidIdException("no customer exist By " + customerId + " id");
         List<Customer> customers = promo.getCustomers();
         if (customers.contains(customer))
             throw new ObjectAlreadyExistException("the promo contain this customer", customer);
@@ -97,21 +97,21 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException {
+    public void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can remove customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
         if (customer == null)
-            throw new NoObjectWithIdException("no customer exist By " + customerId + " id");
+            throw new InvalidIdException("no customer exist By " + customerId + " id");
         List<Customer> promos = promo.getCustomers();
         if (!promos.contains(customer))
-            throw new NoObjectWithIdException("the promo doesnt contain " + customerId + " id");
+            throw new InvalidIdException("the promo doesnt contain " + customerId + " id");
         promos.remove(customer);
         promoRepository.save(promo);
     }
 
     @Override
-    public void setPercent(int promoId, double percent, String token) throws NoObjectWithIdException, NoAccessException, InvalidFormatException, InvalidTokenException {
+    public void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidFormatException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (percent > 100.0)
@@ -121,22 +121,22 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void setMaxDiscount(int promoId, long maxDiscount, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException {
+    public void setMaxDiscount(int promoId, long maxDiscount, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         promo.setMaxDiscount(maxDiscount);
         promoRepository.save(promo);
     }
 
-    private Promo getPromoByIdWithCheck(int id) throws NoObjectWithIdException {
+    private Promo getPromoByIdWithCheck(int id) throws InvalidIdException {
         Promo promo = (Promo) promoRepository.getById(id);
         if (promo == null)
-            throw new NoObjectWithIdException("no promo exist");
+            throw new InvalidIdException("no promo exist");
         return promo;
     }
 
     @Override
-    public void setTime(int promoId, Date date, String type, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException {
+    public void setTime(int promoId, Date date, String type, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can " + type + " date");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (type.equals("start")) {//ToDo

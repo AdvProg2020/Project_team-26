@@ -1,12 +1,8 @@
 package view.products.all;
 
 import view.*;
-import view.main.MainPageView;
-import view.manager.ManagerAccountView;
-import view.manager.ValidCommandsForManagerAccount;
-import view.products.all.filter.FilterViewI;
+import view.products.all.filter.FilterView;
 import view.products.all.sort.SortView;
-import view.products.single.SingleProductViewI;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +11,7 @@ public enum AllProductsViewValidCommands {
     ViewCategoriesOfProducts("view\\s+categories", null) {////
 
         @Override
-        public void goToFunction(AllProductViewI page) {
+        public void goToFunction(AllProductView page) {
             page.categoriesOfProducts();
 
         }
@@ -23,38 +19,38 @@ public enum AllProductsViewValidCommands {
     ViewSubCategory("view\\s+sub\\s+(.*)", null) {////
 
         @Override
-        public void goToFunction(AllProductViewI page) {
+        public void goToFunction(AllProductView page) {
             page.showSubcategories();
 
         }
     },
-    Filtering("filtering", new FilterViewI(AllProductsViewValidCommands.manager)) {
+    Filtering("filtering", new FilterView(AllProductsViewValidCommands.manager)) {
         @Override
-        public void goToFunction(AllProductViewI page) {
+        public void goToFunction(AllProductView page) {
 
         }
     },
     Sorting("sorting", new SortView(AllProductsViewValidCommands.manager)) {
         @Override
-        public void goToFunction(AllProductViewI page) {
+        public void goToFunction(AllProductView page) {
 
         }
     },
     ShowAllProducts("show\\s+products", null) {
         @Override
-        public void goToFunction(AllProductViewI page) {
+        public void goToFunction(AllProductView page) {
             page.showAllProducts();
         }
     },
     ShowProductsWithId("show\\s+product\\s+(.*)", null) {
         @Override
-        public void goToFunction(AllProductViewI page) {
+        public void goToFunction(AllProductView page) {
             page.singleProductView(Pattern.compile(ShowProductsWithId.toString()).matcher(page.getInput()));
         }
     },
     Logout("logout", null) {
         @Override
-        public void goToFunction(AllProductViewI page) {
+        public void goToFunction(AllProductView page) {
             if (page.getManager().getIsUserLoggedin()) {
                 page.logOut();
                 return;
@@ -86,7 +82,7 @@ public enum AllProductsViewValidCommands {
         this.value = output;
     }
 
-    public abstract void goToFunction(AllProductViewI page);
+    public abstract void goToFunction(AllProductView page);
 
     @Override
     public String toString() {

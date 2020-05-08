@@ -5,12 +5,13 @@ import controller.category.CategoryController;
 import controller.discount.PromoController;
 import view.ViewManager;
 import view.main.MainPageViewValidCommands;
-import view.manager.category.ManageCategoryForManagerViewI;
-import view.manager.discount.discountForManagerViewI;
-import view.manager.request.ManageRequestForManagerViewI;
+import view.manager.category.ManageCategoryForManagerView;
+import view.manager.discount.discountForManagerView;
+
+import view.manager.request.ManageRequestForManagerView;
 import view.manager.users.ManageUsersForManager;
 import view.View;
-import view.products.all.AllProductViewI;
+import view.products.all.AllProductView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,7 +29,7 @@ public enum ValidCommandsForManagerAccount {
             page.edit(Pattern.compile(EditTheFiled.toString()).matcher(page.getInput()));
         }
     },
-    ManageUsers("manage\\s+users", new ManageUsersForManager(ValidCommandsForManagerAccount.manager, new ShowUserController())) {
+    ManageUsers("manage\\s+users", new ManageUsersForManager(ValidCommandsForManagerAccount.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
@@ -45,17 +46,18 @@ public enum ValidCommandsForManagerAccount {
             page.createPromoCode();
         }
     },
-    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerViewI(ValidCommandsForManagerAccount.manager, new PromoController(), new ShowUserController())) {
+    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerView(ValidCommandsForManagerAccount.manager)) {
+        @Override
+        public void goToFunction(ManagerAccountView page) {
+
+        }
+    },
+    ManagingRequestForManager("manage\\s+requests", new ManageRequestForManagerView(ValidCommandsForManagerAccount.manager)){
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
     },
-    ManageRequestForManager("manage\\s+requests", new ManageRequestForManagerViewI(ValidCommandsForManagerAccount.manager)) {
-        @Override
-        public void goToFunction(ManagerAccountView page) {
-        }
-    },
-    ManageCategories("manage\\s+categories", new ManageCategoryForManagerViewI(ValidCommandsForManagerAccount.manager, new CategoryController(), new ShowCategoryController())) {
+    ManageCategories("manage\\s+categories", new ManageCategoryForManagerView(ValidCommandsForManagerAccount.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
@@ -66,7 +68,7 @@ public enum ValidCommandsForManagerAccount {
             page.goToProductsMenu(Pattern.compile(GoToProductsMenu.toString()).matcher(page.getInput()));
         }
     },
-    ShowProducts("products", new AllProductViewI(MainPageViewValidCommands.manager)) {
+    ShowProducts("products", new AllProductView(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(ManagerAccountView page) {
 

@@ -2,7 +2,7 @@ package controller.interfaces.discount;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;
-import exception.NoObjectWithIdException;
+import exception.InvalidIdException;
 import exception.ObjectAlreadyExistException;
 import model.*;
 
@@ -11,17 +11,17 @@ import java.util.*;
 public interface IOffController {
     Off createNewOff(Off newOff, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException;
 
-    void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException;
+    void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException;
 
-    void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException;
+    void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException;
 
-    void removeAOff(int id, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException;
+    void removeAOff(int id, String token) throws NoAccessException, InvalidIdException, InvalidTokenException;
 
     List<Off> getAllOffs(String token);
 
     List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException;
 
-    Off getOff(int id, String token) throws NoObjectWithIdException;
+    Off getOff(int id, String token) throws InvalidIdException;
 
-    void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, NoObjectWithIdException;
+    void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, InvalidIdException;
 }

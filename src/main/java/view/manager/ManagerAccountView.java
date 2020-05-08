@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
  * i didnt create a package for commands that provides just one command list
  */
 
-public class ManagerAccountView extends View implements IView {
+public class ManagerAccountView extends View {
     EnumSet<ValidCommandsForManagerAccount> validCommand;
     private IShowUserController controller;
     private IUserInfoController infoController;
@@ -46,11 +46,7 @@ public class ManagerAccountView extends View implements IView {
         matcher.find();
         manager.inputOutput.println("please enter the " + matcher.group(1));
         String fieldForEdit = manager.inputOutput.nextLine();
-        try {
             infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getTocken());
-        } catch (Exceptions.InvalidFiledException invalid) {
-            invalid.getMessage();
-        }
     }
 
     protected void createPromoCode() {
@@ -72,10 +68,7 @@ public class ManagerAccountView extends View implements IView {
     }
 
     protected void viewPersonalInfo() {
-        Map<String, String> info = controller.getUserInfo(manager.getTocken());
-        for (Map.Entry<String, String> detail : info.entrySet()) {
-            System.out.print(detail.getKey() + ":" + detail.getValue());
-        }
+
     }
 
     protected void goToProductsMenu(Matcher matcher) {

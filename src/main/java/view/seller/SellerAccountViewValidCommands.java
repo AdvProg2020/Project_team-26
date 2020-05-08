@@ -1,7 +1,7 @@
 package view.seller;
 
-import view.seller.offs.offIView;
-import view.seller.products.ManageProductForSellerIView;
+import view.seller.offs.OffView;
+import view.seller.products.ManageProductForSellerView;
 import view.View;
 
 import java.util.regex.Matcher;
@@ -14,11 +14,11 @@ public enum SellerAccountViewValidCommands {
     ViewCompanyInfo("view\\s+company\\s+information", null),
     ViewSalesHistoryForSeller("view\\s+sales\\s+history", null),
 
-    ManageProduct("manage\\s+products", new ManageProductForSellerIView()),
+    //ManageProduct("manage\\s+products", new ManageProductForSellerView()),
     AddProductForSeller("add\\s+product", null),
     RemoveProductWithProductId("remove\\s+product\\s+productId", null),
     ShowAllCategoriesForSeller("show\\s+categories", null),
-    ViewAllOffsForSeller("view\\s+offs", new offIView()),
+    //ViewAllOffsForSeller("view\\s+offs", new OffView(SellerAccountViewValidCommands)),
     ViewBalanceForSeller("view\\s+balance", null);
     private final Pattern commandPattern;
     private final View view;

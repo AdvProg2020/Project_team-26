@@ -14,5 +14,5 @@ public interface IShowUserController {
 
     Map<String, String> getUserInfo(String token) throws NoAccessException;
 
-    void delete(String username , String token) throws Exceptions.InvalidDeleteDemand, NoAccessException;
+    void delete(String username , String token) throws exceptions.InvalidDeleteDemand, NoAccessException;
 }

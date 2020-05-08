@@ -4,10 +4,11 @@ import view.*;
 
 import java.util.regex.Matcher;
 
-public class ManageProductForSellerIView extends View implements IView {
-    @Override
-    public View run(ViewManager manager) {
-        return null;
+public class ManageProductForSellerView extends View {
+
+
+    public ManageProductForSellerView(ViewManager managerView) {
+        super(managerView);
     }
 
     private void addProduct(Matcher matcher) {
@@ -32,5 +33,10 @@ public class ManageProductForSellerIView extends View implements IView {
 
     private void showBuyer(Matcher matcher) {
 
+    }
+
+    @Override
+    public View run() {
+        return null;
     }
 }

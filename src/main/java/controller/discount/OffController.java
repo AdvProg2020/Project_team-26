@@ -3,7 +3,7 @@ package controller.discount;
 import controller.interfaces.discount.IOffController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
-import exception.NoObjectWithIdException;
+import exception.InvalidIdException;
 import exception.ObjectAlreadyExistException;
 import model.*;
 import model.repository.OffRepository;
@@ -22,10 +22,10 @@ public class OffController implements IOffController {
             throw new NoAccessException(message);
     }
 
-    private Off getOffByIdWithCheck(int id) throws NoObjectWithIdException {
+    private Off getOffByIdWithCheck(int id) throws InvalidIdException {
         Off off = offRepository.getById(id);
         if (off == null)
-            throw new NoObjectWithIdException("the off with " + id + " doesn't exist");
+            throw new InvalidIdException("the off with " + id + " doesn't exist");
         return off;
     }
 
@@ -41,11 +41,11 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
+    public void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
-            throw new NoObjectWithIdException("no product exist");
+            throw new InvalidIdException("no product exist");
         List<OffItem> offItems = off.getItems();
         OffItem offItem = getOffItem(offItems, productId);
         if (offItem != null)
@@ -78,11 +78,11 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, NoObjectWithIdException, InvalidTokenException {
+    public void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
-            throw new NoObjectWithIdException("no product exist");
+            throw new InvalidIdException("no product exist");
         List<OffItem> offItems = off.getItems();
         OffItem offItem = getOffItem(offItems, productId);
         if (offItem == null)
@@ -94,7 +94,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void removeAOff(int id, String token) throws NoAccessException, NoObjectWithIdException, InvalidTokenException {
+    public void removeAOff(int id, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only seller can remove off");
         getOffByIdWithCheck(id);
         offRepository.deleteRequest(id);
@@ -112,12 +112,12 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public Off getOff(int id, String token) throws NoObjectWithIdException {
+    public Off getOff(int id, String token) throws InvalidIdException {
         return getOffByIdWithCheck(id);
     }
 
     @Override
-    public void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, NoObjectWithIdException {
+    public void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, InvalidIdException {
         checkAccessOfUser(token, "only seller");
         Off off = getOffByIdWithCheck(id);
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();

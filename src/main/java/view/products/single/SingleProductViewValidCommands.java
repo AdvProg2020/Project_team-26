@@ -51,13 +51,13 @@ public enum SingleProductViewValidCommands {
     Offs("offs") {
         @Override
         public void goToFunction(SingleProductViewI page) {
-            page.offs();
+          //  page.offs();
         }
     },
     ShowProductInOffPage("show\\s+product\\s+(.*)") {
         @Override
         public void goToFunction(SingleProductViewI page) {
-            page.showProductInOffPage(Pattern.compile(ShowProductInOffPage.toString()).matcher(page.getInput()));
+         //   page.showProductInOffPage(Pattern.compile(ShowProductInOffPage.toString()).matcher(page.getInput()));
         }
     },
     ChangeInfo("") {

@@ -3,7 +3,7 @@ package controller.category;
 import controller.interfaces.category.ICategoryController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
-import exception.NoObjectWithIdException;
+import exception.*;
 import exception.ObjectAlreadyExistException;
 import model.*;
 import model.repository.CategoryRepository;
@@ -21,7 +21,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public int addCategory(int patternId, String newCategoryName, String token) throws NoObjectWithIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
+    public int addCategory(int patternId, String newCategoryName, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can add category");
         if (checkCategoryExistByName(newCategoryName))
             throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", null);
@@ -38,12 +38,12 @@ public class CategoryController implements ICategoryController {
         return category.getId();
     }
 
-    private Category checkParentCategory(int parentId) throws NoObjectWithIdException {
+    private Category checkParentCategory(int parentId) throws InvalidIdException {
         if (parentId == 0)
             return null;
         Category category = (Category) categoryRepository.getById(parentId);
         if (category == null)
-            throw new NoObjectWithIdException("the father Category doesnt exist");
+            throw new InvalidIdException("the father Category doesnt exist");
         return category;
 
     }
@@ -62,46 +62,45 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public void addAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+    public void addAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
-        CategoryFeature categoryFeature = new CategoryFeature(attributeName, attribute);
+        CategoryFeature categoryFeature = new CategoryFeature(attributeName, FeatureType.DOUBLE);
+        //TODO
         category.getFeatures().add(categoryFeature);
         categoryRepository.save(category);
     }
 
     @Override
-    public void changeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+    public void changeAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
-        categoryFeature.setFeatureValue(attribute);
-        categoryRepository.save(categoryFeature);
+        categoryFeature.setFeatureName(attribute);
         categoryRepository.save(category);
     }
 
-    private CategoryFeature getCategoryFeature(Category category, String name) throws NoObjectWithIdException {
+    private CategoryFeature getCategoryFeature(Category category, String name) throws InvalidIdException {
         List<CategoryFeature> categoryFeatures = category.getFeatures();
         for (CategoryFeature categoryFeature : categoryFeatures) {
             if (categoryFeature.getFeatureName().equals(name))
                 return categoryFeature;
         }
-        throw new NoObjectWithIdException("there is no attribute with name" + name);
+        throw new InvalidIdException("there is no attribute with name" + name);
     }
 
     @Override
-    public void removeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+    public void removeAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can remove attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
         category.getFeatures().remove(categoryFeature);
-        categoryRepository.delete(categoryFeature);
         categoryRepository.save(category);
     }
 
 
     @Override
-    public void removeACategory(int id, int parentId, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+    public void removeACategory(int id, int parentId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can remove the Category");
         Category parentCategory = checkParentCategory(parentId);
         Category category = getCategoryByIdWithCheck(id);
@@ -111,46 +110,46 @@ public class CategoryController implements ICategoryController {
         categoryRepository.delete(id);
     }
 
-    private Category getCategoryByIdWithCheck(int id) throws NoObjectWithIdException {
+    private Category getCategoryByIdWithCheck(int id) throws InvalidIdException {
         Category category = (Category) categoryRepository.getById(id);
         if (category == null)
-            throw new NoObjectWithIdException("no category exist");
+            throw new InvalidIdException("no category exist");
         return category;
     }
 
-    private void categoryParentCheckingException(int id, int parentId) throws NoObjectWithIdException {
+    private void categoryParentCheckingException(int id, int parentId) throws InvalidIdException {
         Category category = (Category) categoryRepository.getById(id);
         for (Category sub : categoryRepository.getById(parentId).getSubCategory()) {
             if (sub.getId() == category.getId())
                 return;
         }
-        throw new NoObjectWithIdException("the parent are not valid they are not this category parent");
+        throw new InvalidIdException("the parent are not valid they are not this category parent");
     }
 
     @Override
-    public void addProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException {
+    public void addProduct(int id, int productId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can add product to category");
         Category category = getCategoryByIdWithCheck(id);
         Product product = productRepository.getById(productId);
         if (product == null)
-            throw new NoObjectWithIdException("no product exist with " + productId + " id");
+            throw new InvalidIdException("no product exist with " + productId + " id");
         List<Product> products = category.getProducts();
         if (isProductInlist(products, productId))
-            throw new NoObjectWithIdException("product by " + productId + " id already exist");
+            throw new InvalidIdException("product by " + productId + " id already exist");
         products.add(product);
         categoryRepository.save(category);
     }
 
     @Override
-    public void removeProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+    public void removeProduct(int id, int productId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can remove product");
         Category category = getCategoryByIdWithCheck(id);
         Product product = productRepository.getById(productId);
         if (product == null)
-            throw new NoObjectWithIdException("no product exist with " + productId + " id");
+            throw new InvalidIdException("no product exist with " + productId + " id");
         List<Product> products = category.getProducts();
         if (!isProductInlist(products, productId))
-            throw new NoObjectWithIdException("there is no product in this category by " + productId + " id");
+            throw new InvalidIdException("there is no product in this category by " + productId + " id");
         products.remove(product);
         categoryRepository.save(category);
     }
@@ -164,7 +163,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public List<Category> getAllCategories(int id, String token) throws NoObjectWithIdException {
+    public List<Category> getAllCategories(int id, String token) throws InvalidIdException {
         if (id == 0) {
             return categoryRepository.getAll();
         }
@@ -172,19 +171,19 @@ public class CategoryController implements ICategoryController {
         return category.getSubCategory();
     }
 
-    public List<CategoryFeature> getAttribute(int id, String token) throws NoObjectWithIdException {
+    public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category.getFeatures();
     }
 
     @Override
-    public Category getCategory(int id, String token) throws NoObjectWithIdException {
+    public Category getCategory(int id, String token) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category;
     }
 
     @Override
-    public List<Product> getProducts(int id, String token) throws NoObjectWithIdException {
+    public List<Product> getProducts(int id, String token) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category.getProducts();
     }

@@ -29,11 +29,6 @@ public class SortView extends View {
 
     protected void Sort(Matcher matcher) {
         matcher.find();
-        try {
-            controller.addASort(matcher.group(1), manager.getTocken());
-        } catch (Exceptions.InvalidFiledException e) {
-            e.getMessage();
-        }
 
     }
 
@@ -44,11 +39,6 @@ public class SortView extends View {
 
     protected void disableSort(Matcher matcher) {
         matcher.find();
-        try {
-            controller.removeASort(matcher.group(1), manager.getTocken());
-        } catch (Exceptions.InvalidFiledException e) {
-            e.printStackTrace();
-        }
 
     }
 }
