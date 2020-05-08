@@ -12,5 +12,5 @@ public interface IOrderController {
 
     ArrayList<Order> getOrders(String token) throws NoAccessException, InvalidTokenException;
 
-    Order getASingleOrder(int id, String token) throws NoAccessException, InvalidIdException, NoObjectWithIdException, NoObjectIdException, InvalidTokenException;
+    Order getASingleOrder(int id, String token) throws NoAccessException, InvalidIdException, NoObjectIdException, InvalidTokenException;
 }

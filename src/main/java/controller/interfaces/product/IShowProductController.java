@@ -1,5 +1,6 @@
 package controller.interfaces.product;
 
+import exception.NoObjectIdException;
 import model.Product;
 
 import java.util.ArrayList;
@@ -8,7 +9,7 @@ public interface IShowProductController {
 
     ArrayList<Product> getProducts(String token);
 
-    Product getAProduct(String id, String token) throws Exceptions.TheParameterDoesNOtExist;
+    Product getAProduct(String id, String token) throws NoObjectIdException;
 
    /* String getName(Product product, String token);
 
