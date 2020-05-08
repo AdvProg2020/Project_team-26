@@ -1,8 +1,9 @@
 package controller.order;
 
 import controller.interfaces.order.IOrderController;
+import exception.InvalidTokenException;
 import exception.NoAccessException;
-import exception.NoObjectWithIdException;
+import exception.NoObjectIdException;
 import model.Customer;
 import model.Order;
 import model.Seller;
@@ -17,7 +18,7 @@ public class OrderController implements IOrderController {
     public OrderController(RepositoryContainer repositoryContainer) {
         this.orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
     }
-    public ArrayList<Order> getOrders(String token) throws NoAccessException {
+    public ArrayList<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if(userSession.getLoggedInUser() == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -31,14 +32,14 @@ public class OrderController implements IOrderController {
     }
 
 
-    public Order getASingleOrder(int id, String token) throws NoAccessException, NoObjectWithIdException {
+    public Order getASingleOrder(int id, String token) throws NoAccessException, NoObjectIdException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if(userSession.getLoggedInUser() == null) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             Order wantedOrder = orderRepository.getById(id);
             if(wantedOrder == null) {
-                throw new NoObjectWithIdException("Object does not exist.");
+                throw new NoObjectIdException("Object does not exist.");
             } else {
                 switch (userSession.getLoggedInUser().getRole()) {
                     case CUSTOMER: return getSingleCustomerOrder((Customer) userSession.getLoggedInUser(),wantedOrder);

@@ -10,11 +10,11 @@ public interface ISearchAndFilterAndSort {
 
     List<Product> getProductsBasedOnFiltersAndSortsForOnePage(String token);
 
-    void addAFilter(String filter, String token) throws Exceptions.InvalidFiledException;
+    List<Product> addAFilter(String filter, String token) throws Exceptions.InvalidFiledException;
 
     List<String> getAvailableFilter(String token);
 
-    void removeAFilter(String filter, String token) throws Exceptions.InvalidFiledException;
+    List<Product> removeAFilter(String filter, String token) throws Exceptions.InvalidFiledException;
 
     List<String> getCurrentActiveFilters(String token);
 
