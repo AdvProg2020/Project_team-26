@@ -3,7 +3,7 @@ package view.main;
 import view.View;
 import view.ViewManager;
 import view.offs.AllOffsIView;
-import view.products.all.AllProductIView;
+import view.products.all.AllProductView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public enum MainPageViewValidCommands {
 
         }
     },
-    ShowProducts("products", new AllProductIView(MainPageViewValidCommands.manager)) {
+    ShowProducts("products", new AllProductView(MainPageViewValidCommands.manager)) {
         @Override
         public void goToFunction(MainPageView page) {
 
