@@ -1,8 +1,7 @@
 package controller.account;
 
 import controller.interfaces.account.IAuthenticationController;
-import exception.NoAccessException;
-import exception.PasswordIsWrongException;
+import exception.*;
 import model.Role;
 import model.Session;
 import model.User;
@@ -17,7 +16,7 @@ public class AuthenticationController implements IAuthenticationController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    public void login(String username, String password, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidPasswordException, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, PasswordIsWrongException, Exceptions.UserNameDoesntExist {
+    public void login(String username, String password, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidPasswordException, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, PasswordIsWrongException, Exceptions.UserNameDoesntExist, InvalidTokenException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(password);
         checkUsernameFormat(username);
@@ -25,7 +24,7 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByName(username));
     }
 
-    public void register(Account account, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidAccessDemand, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, NoAccessException {
+    public void register(Account account, String token) throws InvalidFormatException, Exceptions.InvalidAccessDemand, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
@@ -43,7 +42,7 @@ public class AuthenticationController implements IAuthenticationController {
         }
     }
 
-    public void logout(String token) throws Exceptions.UnSuccessfulLogout {
+    public void logout(String token) throws NotLoggedINException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if (userSession.getLoggedInUser() == null) {
             throw new Exceptions.UnSuccessfulLogout("You are not logged in.");
