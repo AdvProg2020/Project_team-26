@@ -2,6 +2,7 @@ package controller.category;
 
 import controller.interfaces.category.ICategoryController;
 import controller.interfaces.product.IProductController;
+import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectWithIdException;
 import exception.ObjectAlreadyExistException;
@@ -21,8 +22,8 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public int addCategory(int patternId, String newCategoryName, String token) throws NoObjectWithIdException, ObjectAlreadyExistException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can add category");
+    public int addCategory(int patternId, String newCategoryName, String token) throws NoObjectWithIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token, "only manager can add category");
         if (checkCategoryExistByName(newCategoryName))
             throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", null);
         Category parentCategory = checkParentCategory(patternId);
@@ -54,15 +55,16 @@ public class CategoryController implements ICategoryController {
         return true;
     }
 
-    private void checkAccessOfUser(Session session, String message) throws NoAccessException {
+    private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
+        Session session = Session.getSession(token);
         if (session.getLoggedInUser().getRole() == Role.ADMIN)
             throw new NoAccessException(message);
 
     }
 
     @Override
-    public void addAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can change or add attribute");
+    public void addAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = new CategoryFeature(attributeName, attribute);
         category.getFeatures().add(categoryFeature);
@@ -70,8 +72,8 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public void changeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can change or add attribute");
+    public void changeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
         categoryFeature.setFeatureValue(attribute);
@@ -89,8 +91,8 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public void removeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can remove attribute");
+    public void removeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token, "only manager can remove attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
         category.getFeatures().remove(categoryFeature);
@@ -100,8 +102,8 @@ public class CategoryController implements ICategoryController {
 
 
     @Override
-    public void removeACategory(int id, int parentId, String token) throws NoObjectWithIdException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can remove the Category");
+    public void removeACategory(int id, int parentId, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token, "only manager can remove the Category");
         Category parentCategory = checkParentCategory(parentId);
         Category category = getCategoryByIdWithCheck(id);
         categoryParentCheckingException(id, parentId);
@@ -128,7 +130,7 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public void addProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can add product to category");
+        checkAccessOfUser(token, "only manager can add product to category");
         Category category = getCategoryByIdWithCheck(id);
         Product product = productRepository.getById(productId);
         if (product == null)
@@ -141,8 +143,8 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public void removeProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException {
-        checkAccessOfUser(Session.getSession(token), "only manager can remove product");
+    public void removeProduct(int id, int productId, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token, "only manager can remove product");
         Category category = getCategoryByIdWithCheck(id);
         Product product = productRepository.getById(productId);
         if (product == null)

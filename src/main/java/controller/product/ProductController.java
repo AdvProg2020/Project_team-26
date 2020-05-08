@@ -1,10 +1,7 @@
 package controller.product;
 
 import controller.interfaces.product.IProductController;
-import exception.NoAccessException;
-import exception.NoObjectWithIdException;
-import exception.NotSellerException;
-import exception.ObjectAlreadyExistException;
+import exception.*;
 import model.*;
 import model.repository.ProductRepository;
 import model.repository.ProductSellerRepository;
@@ -20,7 +17,7 @@ public class ProductController implements IProductController {
         this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
     }
 
-    public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException {
+    public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         if(product == null)
             throw new NullPointerException();
         if(Session.getSession(token).getLoggedInUser().getRole() != Role.SELLER)
@@ -31,7 +28,7 @@ public class ProductController implements IProductController {
         productRepository.addRequest(product);
     }
 
-    public void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException {
+    public void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException {
         if(productSeller == null)
             throw new NullPointerException();
         User user = Session.getSession(token).getLoggedInUser();
@@ -49,7 +46,7 @@ public class ProductController implements IProductController {
         return product;
     }
 
-    public void editProduct(int id, Product newProduct, String token) throws NoObjectWithIdException, NotSellerException, NoAccessException {
+    public void editProduct(int id, Product newProduct, String token) throws NoObjectWithIdException, NotSellerException, NoAccessException, InvalidTokenException {
         Product product = productRepository.getById(id);
         if(product != null)
             throw new NoObjectWithIdException("There is no product with this id to change");

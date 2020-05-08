@@ -1,5 +1,6 @@
 package controller.interfaces.category;
 
+import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectWithIdException;
 import model.Category;
@@ -11,19 +12,19 @@ import java.util.List;
 public interface ICategoryController {
 
 
-    int addCategory(int patternId, String newCategoryName, String token) throws exception.NoObjectWithIdException, exception.ObjectAlreadyExistException, NoAccessException;
+    int addCategory(int patternId, String newCategoryName, String token) throws exception.NoObjectWithIdException, exception.ObjectAlreadyExistException, NoAccessException, InvalidTokenException;
 
-    void removeACategory(int id, int parentId, String token) throws NoObjectWithIdException, NoAccessException;
+    void removeACategory(int id, int parentId, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException;
 
-    void addAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException;
+    void addAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException;
 
-    void changeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException;
+    void changeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException;
 
-    void removeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException;
+    void removeAttribute(int id, String attributeName, String attribute, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException;
 
     void addProduct(int id, int productName, String token) throws exception.NoObjectWithIdException, NoAccessException;
 
-    void removeProduct(int id, int productName, String token) throws NoObjectWithIdException, NoAccessException;
+    void removeProduct(int id, int productName, String token) throws NoObjectWithIdException, NoAccessException, InvalidTokenException;
 
 
     List<Category> getAllCategories(int id, String token) throws NoObjectWithIdException;

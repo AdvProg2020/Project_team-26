@@ -2,6 +2,7 @@ package controller.review;
 
 import com.sun.java.accessibility.util.SwingEventMonitor;
 import controller.interfaces.review.IRatingController;
+import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotBoughtTheProductException;
 import model.*;
@@ -22,7 +23,7 @@ public class RatingController implements IRatingController {
         this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
     }
 
-    public void addARating(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException {
+    public void addARating(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if(user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -33,7 +34,7 @@ public class RatingController implements IRatingController {
         }
     }
 
-    public void removeRating(int id, String token) throws NoAccessException {
+    public void removeRating(int id, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if(user.getRole() == Role.ADMIN) {
             ratingRepository.delete(id);
@@ -48,7 +49,7 @@ public class RatingController implements IRatingController {
         }
     }
 
-    public void editRating(int id, double  newRating, String token) throws NoAccessException {
+    public void editRating(int id, double  newRating, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if(user.getRole() == Role.ADMIN) {
             ratingRepository.delete(id);
