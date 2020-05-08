@@ -14,11 +14,24 @@ public class OrderItem {
         this.id = id;
     }
 
+    public OrderItem(Product product, int amount, Seller seller, long price, long paidPrice, ShipmentState state) {
+        this.product = product;
+        this.amount = amount;
+        this.seller = seller;
+        this.price = price;
+        this.paidPrice = paidPrice;
+        this.state = state;
+    }
+
     public Seller getSeller() {
         return this.seller;
     }
 
     public long getPrice() {
         return this.price;
+    }
+
+    public long getPaidPrice() {
+        return paidPrice;
     }
 }

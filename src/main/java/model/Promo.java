@@ -59,4 +59,9 @@ public class Promo {
     public void setMaxDiscount(long maxDiscount) {
         this.maxDiscount = maxDiscount;
     }
+
+    public boolean isAvailable() {
+        // TODO: This function must tell if promo is available now
+        return false;
+    }
 }

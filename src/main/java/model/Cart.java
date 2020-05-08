@@ -31,6 +31,18 @@ public class Cart {
         return false;
     }
 
+    public Promo getUsedPromo() {
+        return usedPromo;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public Map<ProductSeller, Integer> getProducts() {
+        return products;
+    }
+
     public void setUsedPromo(Promo usedPromo) {
         this.usedPromo = usedPromo;
     }

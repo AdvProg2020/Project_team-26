@@ -1,8 +1,6 @@
 package controller.interfaces.cart;
 
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NotEnoughProductsException;
+import exception.*;
 import model.Cart;
 
 public interface ICartController {
@@ -13,7 +11,7 @@ public interface ICartController {
 
     void setAddress(String address, String token) throws InvalidTokenException;
 
-    boolean checkout(String token);
+    void checkout(String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughProductsException, NotEnoughCreditException;
 
-    long usePromoCode(String promoCode, String token);
+    void usePromoCode(String promoCode, String token) throws InvalidTokenException, InvalidPromoCodeException, PromoNotAvailableException, NotLoggedINException, NoAccessException;
 }

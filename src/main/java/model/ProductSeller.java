@@ -1,5 +1,7 @@
 package model;
 
+import exception.NotEnoughProductsException;
+
 public class ProductSeller {
 
     private int id;
@@ -31,5 +33,12 @@ public class ProductSeller {
 
     public int getRemainingItems() {
         return remainingItems;
+    }
+
+    public void sell(int amount) throws NotEnoughProductsException {
+        if(remainingItems < amount) {
+            throw new NotEnoughProductsException("Not enough products", this);
+        }
+        remainingItems -= amount;
     }
 }
