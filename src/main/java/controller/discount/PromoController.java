@@ -111,11 +111,11 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidFormatException, InvalidTokenException {
+    public void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidTokenException, InvalidDiscountPercentException {
         checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (percent > 100.0)
-            throw new InvalidFormatException("the percent can't exceed 100%");
+            throw new InvalidDiscountPercentException("the percent can't exceed 100%");
         promo.setPercent(percent);
         promoRepository.save(promo);
     }

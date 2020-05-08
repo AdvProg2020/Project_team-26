@@ -23,7 +23,7 @@ public interface IPromoController {
 
     void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, InvalidTokenException;
 
-    void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidFormatException, InvalidTokenException;
+    void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidFormatException, InvalidTokenException, InvalidDiscountPercentException;
 
     void setMaxDiscount(int promoId, long maxDiscount , String token) throws NoAccessException, InvalidIdException, InvalidTokenException;
 
