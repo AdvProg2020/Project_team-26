@@ -1,13 +1,12 @@
 package controller.product;
 
+import exception.InvalidIdException;
 import model.Product;
 import model.Session;
 import model.repository.RepositoryContainer;
 import org.junit.Assert;
-import org.junit.Before;
+import org.junit.*;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ProductControllerTest {
 
@@ -17,9 +16,7 @@ class ProductControllerTest {
 
     @Before
     void setup() {
-        repositoryContainer = new RepositoryContainer();
-        token = Session.addSession();
-        productController = new ProductController(repositoryContainer);
+
     }
 
     @Test
@@ -32,6 +29,9 @@ class ProductControllerTest {
 
     @Test
     void getProductById() {
+        repositoryContainer = new RepositoryContainer();
+        token = Session.addSession();
+        productController = new ProductController(repositoryContainer);
         try {
             Product product = productController.getProductById(1, token);
             Assert.assertEquals(product, repositoryContainer.getRepository("ProductRepository").getById(1));

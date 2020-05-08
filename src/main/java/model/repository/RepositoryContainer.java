@@ -14,12 +14,13 @@ public class RepositoryContainer {
 
     public RepositoryContainer() {
         map = new HashMap<>();
+        initialize();
     }
 
     public void initialize() {
         map.put("ProductRepository", new FakeProductRepository());
 //        map.put("ProductSellerRepository", new )
-        map.put("CategoryRepository", new FakeCategoryRepository());
+//        map.put("CategoryRepository", new FakeCategoryRepository());
     }
 
     public Repository<?> getRepository(String repositoryName) {
