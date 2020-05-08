@@ -8,6 +8,8 @@ import model.User;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 
+import javax.naming.AuthenticationException;
+
 public class AuthenticationController implements IAuthenticationController {
 
     UserRepository userRepository;
@@ -16,7 +18,7 @@ public class AuthenticationController implements IAuthenticationController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    public void login(String username, String password, String token) throws Exceptions.InvalidUserNameException, Exceptions.InvalidPasswordException, Exceptions.IncorrectPasswordFormat, Exceptions.IncorrectUsernameFormat, Exceptions.UsernameAlreadyExists, PasswordIsWrongException, Exceptions.UserNameDoesntExist, InvalidTokenException {
+    public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, AuthenticationException, InvalidTokenException, InvalidAuthenticationException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(password);
         checkUsernameFormat(username);
@@ -24,7 +26,7 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByName(username));
     }
 
-    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, Exceptions.UsernameAlreadyExists, NoAccessException, InvalidTokenException {
+    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
@@ -45,27 +47,27 @@ public class AuthenticationController implements IAuthenticationController {
     public void logout(String token) throws NotLoggedINException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if (userSession.getLoggedInUser() == null) {
-            throw new Exceptions.UnSuccessfulLogout("You are not logged in.");
+            throw new NotLoggedINException("You are not logged in.");
         } else {
             userSession.logout();
         }
     }
 
-    private void checkPasswordFormat(String password) throws Exceptions.IncorrectPasswordFormat {
+    private void checkPasswordFormat(String password) throws InvalidFormatException {
         if (!password.matches("^[^\\s]+$")) {
-            throw new Exceptions.IncorrectPasswordFormat("Password format is incorrect.");
+            throw new InvalidFormatException("Password format is incorrect.","Password");
         }
     }
 
-    private void checkUsernameFormat(String username) throws Exceptions.IncorrectUsernameFormat {
+    private void checkUsernameFormat(String username) throws InvalidFormatException {
         if (!username.matches("^[^\\s]+$")) {
-            throw new Exceptions.IncorrectUsernameFormat("Username format is incorrect.");
+            throw new InvalidFormatException("Username format is incorrect.","Username");
         }
     }
 
-    private void checkUsernameAvailability(String username) throws Exceptions.UsernameAlreadyExists {
+    private void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
         if (userRepository.getUserByName(username) != null) {
-            throw new Exceptions.UsernameAlreadyExists("Username is already taken.");
+            throw new InvalidAuthenticationException("Username is already taken.");
         }
     }
 
@@ -73,9 +75,9 @@ public class AuthenticationController implements IAuthenticationController {
         return new User(account);
     }
 
-    private void checkUsernameAndPassword(String username, String password) throws Exceptions.UserNameDoesntExist, PasswordIsWrongException {
+    private void checkUsernameAndPassword(String username, String password) throws InvalidAuthenticationException, PasswordIsWrongException {
         if (userRepository.getUserByName(username) == null) {
-            throw new Exceptions.UserNameDoesntExist("Username is invalid.");
+            throw new InvalidAuthenticationException("Username is invalid.");
         }
         if (!userRepository.getUserByName(username).getPassword().equals(password)) {
             throw new PasswordIsWrongException("Password is wrong");
@@ -90,7 +92,7 @@ public class AuthenticationController implements IAuthenticationController {
         userRepository.save(createNewUser(account));
     }
 
-    private void registerAdmin(Account account,String token) throws NoAccessException {
+    private void registerAdmin(Account account,String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if(userSession.getLoggedInUser() == null) {
             if(userRepository.doWeHaveAManager()) {

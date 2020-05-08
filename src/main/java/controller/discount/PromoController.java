@@ -115,7 +115,7 @@ public class PromoController implements IPromoController {
         checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (percent > 100.0)
-            throw new InvalidFormatException("the percent cant exceed 100%");
+            throw new InvalidFormatException("the percent can't exceed 100%");
         promo.setPercent(percent);
         promoRepository.save(promo);
     }
