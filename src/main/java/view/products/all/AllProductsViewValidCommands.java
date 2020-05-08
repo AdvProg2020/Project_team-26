@@ -24,13 +24,13 @@ public enum AllProductsViewValidCommands {
 
         }
     },
-    Filtering("filtering", new FilterView(AllProductsViewValidCommands.manager)) {
+    Filtering("filtering", new FilterView(AllProductsViewValidCommands.getManager())) {
         @Override
         public void goToFunction(AllProductView page) {
 
         }
     },
-    Sorting("sorting", new SortView(AllProductsViewValidCommands.manager)) {
+    Sorting("sorting", new SortView(AllProductsViewValidCommands.getManager())) {
         @Override
         public void goToFunction(AllProductView page) {
 
@@ -80,6 +80,10 @@ public enum AllProductsViewValidCommands {
         this.commandPattern = Pattern.compile(output);
         this.view = view;
         this.value = output;
+    }
+
+    public static ViewManager getManager() {
+        return manager;
     }
 
     public abstract void goToFunction(AllProductView page);

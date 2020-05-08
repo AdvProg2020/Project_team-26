@@ -17,13 +17,13 @@ public enum MainPageViewValidCommands {
 
         }
     },
-    ShowProducts("products", new AllProductView(MainPageViewValidCommands.manager)) {
+    ShowProducts("products", new AllProductView(MainPageViewValidCommands.getManager())) {
         @Override
         public void goToFunction(MainPageView page) {
 
         }
     },
-    ShowOffs("offs", new AllOffsIView(MainPageViewValidCommands.manager)) {
+    ShowOffs("offs", new AllOffsIView(MainPageViewValidCommands.getManager())) {
         @Override
         public void goToFunction(MainPageView page) {
 
@@ -83,6 +83,10 @@ public enum MainPageViewValidCommands {
     MainPageViewValidCommands(String output, View view) {
         this.commandPattern = Pattern.compile(output);
         this.view = view;
+    }
+
+    public static ViewManager getManager() {
+        return manager;
     }
 
     List<String> getvalidCommands() {

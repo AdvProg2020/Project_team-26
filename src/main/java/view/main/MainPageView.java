@@ -1,6 +1,8 @@
 package view.main;
 
 import controller.account.AuthenticationController;
+import exception.InvalidTokenException;
+import exception.NotLoggedINException;
 import view.*;
 
 import view.ViewManager;
@@ -44,7 +46,13 @@ public class MainPageView extends View implements IView {
     }
 
     public void logout(String token) {
-        controller.logout(token);
+        try {
+            controller.logout(token);
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        }
         manager.setUserLoggedIn(false);
     }
 

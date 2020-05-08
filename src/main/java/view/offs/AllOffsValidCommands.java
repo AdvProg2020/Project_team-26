@@ -15,13 +15,13 @@ public enum AllOffsValidCommands {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    Sorting("sorting", new SortIView(AllOffsValidCommands.manager)){
+    Sorting("sorting", new SortIView(AllOffsValidCommands.getManager())){
         @Override
         public void goToFunction(AllOffsIView page) {
 
         }
     },
-    Filtering("filtering", new FilterIView(AllOffsValidCommands.manager)){
+    Filtering("filtering", new FilterIView(AllOffsValidCommands.getManager())){
         @Override
         public void goToFunction(AllOffsIView page) {
 
@@ -31,7 +31,7 @@ public enum AllOffsValidCommands {
     private final View view;
     private static ViewManager manager;
 
-    public void setManager(ViewManager manager) {
+    public static void setManager(ViewManager manager) {
         AllOffsValidCommands.manager = manager;
     }
     public Matcher getStringMatcher(String input) {
@@ -46,4 +46,7 @@ public enum AllOffsValidCommands {
         this.view = view;
     }
 
+    public static ViewManager getManager() {
+        return manager;
+    }
 }

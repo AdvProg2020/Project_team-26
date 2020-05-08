@@ -29,7 +29,7 @@ public enum ValidCommandsForManagerAccount {
             page.edit(Pattern.compile(EditTheFiled.toString()).matcher(page.getInput()));
         }
     },
-    ManageUsers("manage\\s+users", new ManageUsersForManager(ValidCommandsForManagerAccount.manager)) {
+    ManageUsers("manage\\s+users", new ManageUsersForManager(ValidCommandsForManagerAccount.getManager())) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
@@ -46,18 +46,18 @@ public enum ValidCommandsForManagerAccount {
             page.createPromoCode();
         }
     },
-    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerView(ValidCommandsForManagerAccount.manager)) {
+    ViewAllDiscountCodes("view\\s+discount\\s+codes", new discountForManagerView(ValidCommandsForManagerAccount.getManager())) {
         @Override
         public void goToFunction(ManagerAccountView page) {
 
         }
     },
-    ManagingRequestForManager("manage\\s+requests", new ManageRequestForManagerView(ValidCommandsForManagerAccount.manager)){
+    ManagingRequestForManager("manage\\s+requests", new ManageRequestForManagerView(ValidCommandsForManagerAccount.getManager())){
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
     },
-    ManageCategories("manage\\s+categories", new ManageCategoryForManagerView(ValidCommandsForManagerAccount.manager)) {
+    ManageCategories("manage\\s+categories", new ManageCategoryForManagerView(ValidCommandsForManagerAccount.getManager())) {
         @Override
         public void goToFunction(ManagerAccountView page) {
         }
@@ -77,7 +77,7 @@ public enum ValidCommandsForManagerAccount {
 
     private final Pattern commandPattern;
     private final View view;
-    private static ViewManager manager;
+    
     private final String value;
 
     public void setManager(ViewManager manager) {
@@ -99,6 +99,13 @@ public enum ValidCommandsForManagerAccount {
         this.view = view;
     }
 
+    private static ViewManager manager;
+    static {
+        manager = null;
+    }
+    private static ViewManager getManager(){
+        return manager;
+    }
     public abstract void goToFunction(ManagerAccountView page);
 
     @Override

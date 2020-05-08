@@ -35,7 +35,7 @@ public enum CustomerValidCommand {
 
         }
     },
-    ViewOrdersForBuyer("view\\s+orders", new OrdersIView(CustomerValidCommand.manager)) {
+    ViewOrdersForBuyer("view\\s+orders", new OrdersIView(CustomerValidCommand.getManager())) {
         @Override
         public void goToFunction(CustomerIView page) {
         }
@@ -43,7 +43,6 @@ public enum CustomerValidCommand {
     private Pattern commandPattern;
     private View view;
     private CustomerIView function = null;
-    public static ViewManager manager;
 
     CustomerValidCommand(String output, View view) {
         this.commandPattern = Pattern.compile(output);
@@ -55,6 +54,18 @@ public enum CustomerValidCommand {
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
 
+    }
+
+    /**
+     *
+     */
+    public static ViewManager manager = null;
+    static {
+        manager = null;
+    }
+
+    public static ViewManager getManager() {
+        return manager;
     }
 
     public void setManager(ViewManager manager) {
