@@ -20,7 +20,7 @@ public interface IUserInfoController {
 
     int getInfo(String key, String token);
 
-    void changeInfo(String key, String value, String token) throws Exceptions.InvalidFiledException;
+    void changeInfo(String key, String value, String token);
 
     String getRole(String token);
 }

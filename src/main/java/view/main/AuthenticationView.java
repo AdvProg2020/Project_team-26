@@ -2,15 +2,14 @@ package view.main;
 
 import controller.account.Account;
 import controller.interfaces.account.IAuthenticationController;
-import exception.NoAccessException;
-import exception.PasswordIsWrongException;
+import exception.*;
 import view.View;
 import view.ViewManager;
 
+import javax.naming.AuthenticationException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.graalvm.compiler.nodes.java.RegisterFinalizerNode.register;
 
 public class AuthenticationView extends View {
     private String input;
@@ -19,7 +18,6 @@ public class AuthenticationView extends View {
     public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         input = command;
-        this.control = control;
     }
 
     @Override
@@ -46,6 +44,14 @@ public class AuthenticationView extends View {
                 manager.setUserLoggedIn(true);
             } catch (PasswordIsWrongException e) {
                 e.getMessage();
+            } catch (AuthenticationException e) {
+                e.printStackTrace();
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (InvalidFormatException e) {
+                e.printStackTrace();
+            } catch (InvalidAuthenticationException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -62,6 +68,12 @@ public class AuthenticationView extends View {
                 isComplete = true;
             } catch (NoAccessException e) {
                 e.getMessage();
+            } catch (InvalidAuthenticationException e) {
+                e.printStackTrace();
+            } catch (InvalidFormatException e) {
+                e.printStackTrace();
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
             }
             isBack = true;
         }

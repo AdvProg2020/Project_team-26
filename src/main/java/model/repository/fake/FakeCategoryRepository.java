@@ -15,23 +15,17 @@ public class FakeCategoryRepository implements CategoryRepository {
     public FakeCategoryRepository() {
         this.allCategory = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
-            allCategory.add(new Category(i + 1));
+         //   allCategory.add(new Category(i + 1));
             Category category = allCategory.get(i);
-            category.setName("" + i);
+           // category.setName("" + i);//todo
             category.setParent(getByName("" + i % 3));
         }
 
 
     }
 
-
     @Override
     public Category getByName(String name) {
-        for (Category category : allCategory) {
-            if (category.getName().equals(name))
-                return category;
-        }
-
         return null;
     }
 
@@ -41,22 +35,17 @@ public class FakeCategoryRepository implements CategoryRepository {
     }
 
     @Override
-    public List getAll() {
+    public List<Category> getAll() {
         return null;
     }
 
     @Override
-    public Object getById(int id) {
+    public Category getById(int id) {
         return null;
     }
 
     @Override
-    public boolean exist(int id) {
-        return false;
-    }
-
-    @Override
-    public void save(Object object) {
+    public void save(Category object) {
 
     }
 
@@ -66,7 +55,12 @@ public class FakeCategoryRepository implements CategoryRepository {
     }
 
     @Override
-    public void delete(Object object) {
+    public void delete(Category object) {
 
+    }
+
+    @Override
+    public boolean exist(int id) {
+        return false;
     }
 }

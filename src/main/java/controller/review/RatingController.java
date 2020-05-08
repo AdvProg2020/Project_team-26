@@ -1,6 +1,5 @@
 package controller.review;
 
-import com.sun.java.accessibility.util.SwingEventMonitor;
 import controller.interfaces.review.IRatingController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;

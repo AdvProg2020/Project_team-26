@@ -35,7 +35,7 @@ public class UserInfoController implements IUserInfoController {
         return 0;
     }
 
-    public void changeInfo(String key, String value, String token) throws Exceptions.InvalidFiledException{
+    public void changeInfo(String key, String value, String token) {
     }
 
     public String getRole(String token) {

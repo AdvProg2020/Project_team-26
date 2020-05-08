@@ -1,6 +1,7 @@
 package controller.product;
 
 import controller.interfaces.product.ISearchAndFilterAndSort;
+import exception.WrongFieldException;
 import model.Product;
 
 import java.util.ArrayList;
@@ -41,7 +42,7 @@ public class SearchAndFilter implements ISearchAndFilterAndSort {
     }
 
     @Override
-    public void addASort(String sort, String token) throws Exceptions.InvalidFiledException {
+    public void addASort(String sort, String token) throws WrongFieldException {
 
     }
 
@@ -51,7 +52,7 @@ public class SearchAndFilter implements ISearchAndFilterAndSort {
     }
 
     @Override
-    public void removeASort(String sort, String token) throws Exceptions.InvalidFiledException {
+    public void removeASort(String sort, String token) throws WrongFieldException {
 
     }
 

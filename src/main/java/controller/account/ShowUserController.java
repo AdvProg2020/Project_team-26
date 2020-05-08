@@ -1,6 +1,7 @@
 package controller.account;
 
 import controller.interfaces.account.IShowUserController;
+import exception.InvalidTokenException;
 import exception.NoAccessException;
 import model.Role;
 import model.Session;
@@ -19,7 +20,7 @@ public class ShowUserController implements IShowUserController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    public ArrayList<User> getUsers(String token) throws NoAccessException {
+    public ArrayList<User> getUsers(String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if(userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -28,7 +29,7 @@ public class ShowUserController implements IShowUserController {
         }
     }
 
-    public User getUserByName(String username, String token) throws NoAccessException {
+    public User getUserByName(String username, String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if(userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -38,7 +39,7 @@ public class ShowUserController implements IShowUserController {
     }
 
     @Override
-    public User getUserById(int id, String token) throws NoAccessException {
+    public User getUserById(int id, String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if(userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that");
@@ -47,7 +48,7 @@ public class ShowUserController implements IShowUserController {
         }
     }
 
-    public Map<String, String> getUserInfo(String token) throws NoAccessException {
+    public Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -56,7 +57,7 @@ public class ShowUserController implements IShowUserController {
         }
 }
 
-    public void delete(String username , String token) throws Exceptions.InvalidDeleteDemand, NoAccessException {
+    public void delete(String username , String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if(user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");

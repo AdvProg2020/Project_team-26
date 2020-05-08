@@ -9,7 +9,7 @@ public interface IShowProductController {
 
     ArrayList<Product> getProducts(String token);
 
-    Product getAProduct(String id, String token) throws NoObjectIdException;
+    Product getAProduct(int id, String token) throws NoObjectIdException;
 
    /* String getName(Product product, String token);
 
