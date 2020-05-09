@@ -3,6 +3,7 @@ package view.main;
 import controller.account.Account;
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
+import model.Role;
 import view.View;
 import view.ViewManager;
 
@@ -82,7 +83,8 @@ public class AuthenticationView extends View {
     private Account getUserInfo(Matcher matcher) {
         Account account = new Account();
         matcher.find();
-        account.setRole(matcher.group(1));
+
+        account.setRole(setRole(matcher.group(1)));
         account.setUsername(matcher.group(2));
         do {
             manager.inputOutput.println("enter password and notice it shouldn't be \"back\"");
@@ -97,5 +99,13 @@ public class AuthenticationView extends View {
         account.setToken(manager.getTocken());
         return account;
     }
+    private Role setRole(String type){
+        if(type.equals("manager"))
+            return Role.ADMIN;
+        if(type.equals("seller"))
+            return Role.SELLER;
+        return Role.CUSTOMER;
+    }
+
 
 }

@@ -9,6 +9,7 @@ import model.Category;
 import model.Product;
 import model.Session;
 import model.repository.RepositoryContainer;
+import model.repository.UserRepository;
 import model.repository.fake.FakeProductRepository;
 import org.junit.Assert;
 import org.junit.*;
@@ -59,10 +60,11 @@ public class CategoryControllerTest {
     @Test
     void getAllCategories() {
         repositoryContainer = new RepositoryContainer();
+        Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
         token = Session.addSession();
         categoryController = new CategoryController(repositoryContainer);
         try {
-            List<Category> categoryControllerList = categoryController.getAllCategories(0, token);
+            List<Category> categoryControllerList = categoryController.getAllCategories(0, "admin");
             Assert.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
 
         } catch (InvalidTokenException | NoAccessException | InvalidIdException e) {

@@ -165,7 +165,7 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public List<Category> getAllCategories(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-       // checkAccessOfUser(token,"you are not manager.");
+        checkAccessOfUser(token,"you are not manager.");
         if (id == 0) {
             return categoryRepository.getAll();
         }

@@ -22,11 +22,11 @@ public class FakeUserRepository implements UserRepository {
             account.setUsername("test" + (n));
             account.setPassword("password" + n);
             if (n < 4)
-                account.setRole("manager");
+                account.setRole(Role.ADMIN);
             else if (n < 7)
-                account.setRole("seller");
+                account.setRole(Role.SELLER);
             else
-                account.setRole("customer");
+                account.setRole(Role.CUSTOMER);
             allFakeAccounts.add(account);
         }
         for (Account account : allFakeAccounts) {
