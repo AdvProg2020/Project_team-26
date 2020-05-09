@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AuthenticationControllerTest {
@@ -30,26 +31,29 @@ public class AuthenticationControllerTest {
 
     @Test
     public void registerTest() {
-        List<Account> testAccounts;
+        ArrayList<Account> testAccounts = new ArrayList<>();
         setAccount(testAccounts);
-        try {
-            authenticationController.register(account, token);
-            Assert.assertEquals("Arya", userRepository.getUserByName("Arya").getUsername());
-        } catch (InvalidAuthenticationException e) {
-            Assert.assertEquals(e.getMessage(),"Username is already taken.");
-        } catch (InvalidFormatException e) {
-            Assert.assertEquals(e.getMessage(),e.);
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (InvalidTokenException e) {
-            e.printStackTrace();
+        for (Account account : testAccounts) {
+            try {
+                authenticationController.register(account, token);
+                Assert.assertEquals(account.getUsername(), userRepository.getUserByName(account.getUsername()).getUsername());
+            } catch (InvalidAuthenticationException e) {
+                Assert.assertEquals(e.getMessage(), "Username is already taken.");
+            } catch (InvalidFormatException e) {
+                Assert.assertEquals(e.getMessage(), e.getFieldName() + " format is wrong");
+            } catch (NoAccessException e) {
+                Assert.assertEquals(e.getMessage(), "You are not allowed to do that.");
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            }
         }
     }
 
 
-    private void setAccount(List<Account> testAccounts) {
+    private void setAccount(ArrayList<Account> testAccounts) {
         testAccounts.add(new Account("test1","password", Role.CUSTOMER));
-        testAccounts.add(new Account());
+        testAccounts.add(new Account("Master","password",Role.ADMIN));
+        testAccounts.add(new Account("Master2","Password",Role.ADMIN));
     }
 
 }
