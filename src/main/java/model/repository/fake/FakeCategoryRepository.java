@@ -5,7 +5,10 @@ import model.Product;
 import model.repository.CategoryRepository;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static model.State.CHECKING_FOR_ADD;
 
@@ -24,7 +27,10 @@ public class FakeCategoryRepository implements CategoryRepository {
 
     @Override
     public Category getByName(String name) {
-        return allCategory.stream().filter(category -> category.getName().equals(name)).findAny().get();
+        List<Category> categories = allCategory.stream().filter(category -> category.getName().equals(name)).collect(Collectors.toList());
+        if (categories.size() == 0)
+            return null;
+        return categories.get(0);
     }
 
     @Override
@@ -40,8 +46,10 @@ public class FakeCategoryRepository implements CategoryRepository {
 
     @Override
     public Category getById(int id) {
-        allCategory.stream().filter(category -> category.getId() == id).findAny().get();
-        return null;
+        List<Category> categories = allCategory.stream().filter(category -> category.getId() == id).collect(Collectors.toList());
+        if (categories.size() == 0)
+            return null;
+        return categories.get(0);
     }
 
     @Override
