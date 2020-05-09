@@ -82,13 +82,8 @@ public class Account {
         this.lastName = lastName;
     }
 
-    public void setRole(String role) {
-        if (role.equals("manager"))
-            this.role = Role.ADMIN;
-        else if (role.equals("seller"))
-            this.role = Role.SELLER;
-        else
-            this.role = Role.CUSTOMER;
+    public void setRole(Role role) {
+        this.role = role;
     }
     public User makeUser() {
         if ( this.getRole() == Role.ADMIN)
