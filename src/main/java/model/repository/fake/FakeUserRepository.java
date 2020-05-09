@@ -45,8 +45,8 @@ public class FakeUserRepository implements UserRepository {
     @Override
     public boolean doWeHaveAManager() {
         if (allUsers.stream().filter(user -> user.getRole() == Role.ADMIN).collect(Collectors.toList()).size() == 0)
-            return true;
-        return false;
+            return false;
+        return true;
     }
 
     @Override
@@ -75,7 +75,6 @@ public class FakeUserRepository implements UserRepository {
         if (object.getId() == 0) {
             lastId++;
             object.setId(lastId);
-            System.out.println(object.getUsername() + " " + object.getRole());
             allUsers.add(object);
             return;
         }
