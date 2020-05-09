@@ -1,6 +1,7 @@
 package model;
 
 import exception.InvalidTokenException;
+import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.Map;
 public class Session {
 
     private static Map<String, Session> sessionList = new HashMap<>();
+    private static int lastToken = 0;
 
     public static Session getSession(String token) throws InvalidTokenException {
         if(!sessionList.containsKey(token)) {
@@ -18,17 +20,30 @@ public class Session {
     }
 
     public static String addSession() {
-        String token = "a";
+        lastToken++;
+        String token = "a" + lastToken;
 
         sessionList.put(token, new Session());
         return token;
     }
 
-//    public static void initializeFake() {
-//        UserRepository
-//        Session session1 = new Session();
-//        session1.loggedInUser =
-//    }
+    public static void initializeFake(UserRepository userRepository) {
+        Session session1 = new Session();
+        session1.loggedInUser = userRepository.getById(1);
+
+        Session session2 = new Session();
+        session1.loggedInUser = userRepository.getById(5);
+
+        Session session3 = new Session();
+        session1.loggedInUser = userRepository.getById(8);
+
+        Session session4 = new Session();
+
+        sessionList.put("admin", session1);
+        sessionList.put("seller", session2);
+        sessionList.put("customer", session3);
+        sessionList.put("notloggedin", session4);
+    }
 
     private int id;
     private String token;
