@@ -1,4 +1,4 @@
-package controller.product;
+package controller;
 
 import controller.interfaces.product.ISearchAndFilterAndSort;
 import exception.WrongFieldException;

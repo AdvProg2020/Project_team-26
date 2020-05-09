@@ -4,10 +4,11 @@ import exception.NoObjectIdException;
 import model.Product;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface IShowProductController {
 
-    ArrayList<Product> getProducts(String token);
+    List<Product> getProducts(String token);
 
     Product getAProduct(int id, String token) throws NoObjectIdException;
 

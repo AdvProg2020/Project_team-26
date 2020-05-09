@@ -1,5 +1,6 @@
 package controller.product;
 
+import controller.ProductController;
 import exception.InvalidIdException;
 import model.Product;
 import model.Session;
