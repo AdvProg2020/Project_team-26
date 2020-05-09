@@ -11,6 +11,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 public class AuthenticationControllerTest {
     private RepositoryContainer repositoryContainer;
     private UserRepository userRepository;
@@ -27,15 +29,15 @@ public class AuthenticationControllerTest {
 
     @Test
     public void registerTest() {
-        Account account = new Account();
-        setAccount(account);
+        List<Account> testAccounts;
+        setAccount(testAccounts);
         try {
             authenticationController.register(account, token);
-            Assert.assertEquals(account.makeUser(), userRepository.getUserByName("Arya"));
+            Assert.assertEquals("Arya", userRepository.getUserByName("Arya").getUsername());
         } catch (InvalidAuthenticationException e) {
             e.printStackTrace();
         } catch (InvalidFormatException e) {
-            e.printStackTrace();
+            Assert.assertEquals(e.getMessage(),e.);
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
@@ -44,13 +46,9 @@ public class AuthenticationControllerTest {
     }
 
 
-    private void setAccount(Account account) {
-        account.setRole("manager");
-        account.setPassword("Password");
-        account.setUsername("Arya");
-        account.setFirstName("ARYA");
-        account.setLastName("Jalali");
-        account.setEmail("ASDASDKASDA");
+    private void setAccount(List<Account> testAccounts) {
+        testAccounts.add(new Account());
+        testAccounts.add(new Account());
     }
 
 }
