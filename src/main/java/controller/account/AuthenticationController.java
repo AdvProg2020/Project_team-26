@@ -101,13 +101,13 @@ public class AuthenticationController implements IAuthenticationController {
             if (userRepository.doWeHaveAManager()) {
                 throw new NoAccessException("You are not allowed to do that.");
             } else {
-                userRepository.save(createNewUser(account));
+                userRepository.save(account.makeUser());
             }
         } else {
             if (userSession.getLoggedInUser().getRole() != Role.ADMIN) {
                 throw new NoAccessException("You are not allowed to do that.");
             } else {
-                userRepository.save(createNewUser(account));
+                userRepository.save(account.makeUser());
             }
         }
     }
