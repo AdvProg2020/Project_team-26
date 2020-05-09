@@ -1,6 +1,6 @@
 package controller.account;
 
-import model.Role;
+import model.*;
 import view.ViewManager;
 
 public class Account {
@@ -83,6 +83,14 @@ public class Account {
             this.role = Role.SELLER;
         else
             this.role = Role.CUSTOMER;
+    }
+    public User makeUser() {
+        if ( this.getRole() == Role.ADMIN)
+            return new Admin( this.getUsername(),  this.getPassword(),  this.getEmail(),  this.getRole());
+        if ( this.getRole() == Role.SELLER)
+            return new Seller( this.getUsername(),  this.getPassword(),  this.getEmail(),  this.getRole());
+        return new Customer( this.getUsername(),  this.getPassword(),  this.getEmail(),  this.getRole());
+
     }
 
     public void setUsername(String username) {

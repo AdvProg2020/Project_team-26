@@ -1,13 +1,13 @@
 package model.repository.fake;
 
 import controller.account.Account;
-import model.Category;
-import model.Role;
-import model.User;
+import model.*;
 import model.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class FakeUserRepository implements UserRepository {
     List<User> allUsers;
@@ -17,7 +17,7 @@ public class FakeUserRepository implements UserRepository {
     public FakeUserRepository() {
         allUsers = new ArrayList<>();
         allFakeAccounts = new ArrayList<>();
-        for (int n = 1 ; n < 11 ; n++) {
+        for (int n = 1; n < 11; n++) {
             Account account = new Account();
             account.setUsername("test" + (n));
             account.setPassword("password" + n);
@@ -29,26 +29,29 @@ public class FakeUserRepository implements UserRepository {
                 account.setRole("customer");
             allFakeAccounts.add(account);
         }
-        for (int i = 0; i < 10; i++) {
-            save(new User(allFakeAccounts.get(i)));
+        for (Account account : allFakeAccounts) {
+            save(account.makeUser());
         }
     }
 
     @Override
     public User getUserByName(String userName) {
-        return allUsers.stream().filter(user -> user.getUsername().equals(userName)).findAny().get();
+        List<User> users = allUsers.stream().filter(user -> user.getUsername().equals(userName)).collect(Collectors.toList());
+        if (users.size() == 0)
+            return null;
+        return users.get(0);
     }
 
     @Override
     public boolean doWeHaveAManager() {
-        if (allUsers.stream().filter(user -> user.getRole() == Role.ADMIN).findAny().get() != null)
+        if (allUsers.stream().filter(user -> user.getRole() == Role.ADMIN).collect(Collectors.toList()).size() == 0)
             return true;
         return false;
     }
 
     @Override
     public boolean hasBoughtProduct(int customerId, int productId) {
-       // FakeProductRepository
+        // FakeProductRepository
 
 
         return false;
@@ -61,13 +64,22 @@ public class FakeUserRepository implements UserRepository {
 
     @Override
     public User getById(int id) {
-        return allUsers.stream().filter(user -> user.getId() == id).findAny().get();
+        List<User> users = allUsers.stream().filter(user -> user.getId() == id).collect(Collectors.toList());
+        if (users.size() == 0)
+            return null;
+        return users.get(0);
     }
 
     @Override
     public void save(User object) {
-        lastId++;
-        object.setId(lastId);
+        if (object.getId() == 0) {
+            lastId++;
+            object.setId(lastId);
+            allUsers.add(object);
+            return;
+        }
+        User user = getById(object.getId());
+        allUsers.remove(user);
         allUsers.add(object);
     }
 

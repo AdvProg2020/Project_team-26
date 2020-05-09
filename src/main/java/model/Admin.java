@@ -2,7 +2,8 @@ package model;
 
 public class Admin extends User {
 
-    public Admin(int id) {
-        super(id);
+
+    public Admin(String username, String password, String email, Role role) {
+        super(username, password, email, role);
     }
 }

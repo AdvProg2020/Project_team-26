@@ -5,6 +5,7 @@ import controller.account.Account;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
 
 public class User {
 
@@ -18,16 +19,11 @@ public class User {
     private Map<String, String> details;
     private List<Promo> promoCodes;
 
-    public User(int id) {
-        this.id = id;
-        promoCodes = new ArrayList<Promo>();
-    }
-
-    public User (Account account) {
-        this.username = account.getUsername();
-        this.password = account.getPassword();
-        this.email = account.getEmail();
-        this.role = account.getRole();
+    public User(String username, String password, String email, Role role) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
     }
 
     public int getId() {
@@ -66,8 +62,8 @@ public class User {
         return promoCodes;
     }
 
-    public String getFullName(){
-        return firstName+" "+lastName;
+    public String getFullName() {
+        return firstName + " " + lastName;
     }
 
     public void setId(int id) {

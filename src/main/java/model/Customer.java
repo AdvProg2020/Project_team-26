@@ -11,11 +11,12 @@ public class Customer extends User {
     private List<Promo> availablePromos;
     private long credit;
 
-    public Customer(int id) {
-        super(id);
-        orders = new ArrayList<Order>();
-        availablePromos = new ArrayList<Promo>();
+    public Customer(String username, String password, String email, Role role) {
+        super(username, password, email, role);
+        orders = new ArrayList<>();
+        availablePromos = new ArrayList<>();
     }
+
 
     public List<Order> getOrders() {
         return orders;

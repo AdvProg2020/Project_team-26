@@ -32,14 +32,17 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameFormat(account.getUsername());
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null) {
-            registerAdmin(account,token);
+            registerAdmin(account, token);
         } else {
             switch (account.getRole()) {
-                case CUSTOMER: registerCustomer(account,token);
-                break;
-                case SELLER: registerSeller(account,token);
-                break;
-                case ADMIN: registerAdmin(account,token);
+                case CUSTOMER:
+                    registerCustomer(account, token);
+                    break;
+                case SELLER:
+                    registerSeller(account, token);
+                    break;
+                case ADMIN:
+                    registerAdmin(account, token);
             }
         }
     }
@@ -55,13 +58,13 @@ public class AuthenticationController implements IAuthenticationController {
 
     private void checkPasswordFormat(String password) throws InvalidFormatException {
         if (!password.matches("^[^\\s]+$")) {
-            throw new InvalidFormatException("Password format is incorrect.","Password");
+            throw new InvalidFormatException("Password format is incorrect.", "Password");
         }
     }
 
     private void checkUsernameFormat(String username) throws InvalidFormatException {
         if (!username.matches("^[^\\s]+$")) {
-            throw new InvalidFormatException("Username format is incorrect.","Username");
+            throw new InvalidFormatException("Username format is incorrect.", "Username");
         }
     }
 
@@ -72,7 +75,7 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     private User createNewUser(Account account) {
-        return new User(account);
+        return account.makeUser();
     }
 
     private void checkUsernameAndPassword(String username, String password) throws InvalidAuthenticationException, PasswordIsWrongException {
@@ -84,24 +87,24 @@ public class AuthenticationController implements IAuthenticationController {
         }
     }
 
-    private void registerCustomer(Account account,String token) {
+    private void registerCustomer(Account account, String token) {
         userRepository.save(createNewUser(account));
     }
 
-    private void registerSeller(Account account,String token) {
+    private void registerSeller(Account account, String token) {
         userRepository.save(createNewUser(account));
     }
 
-    private void registerAdmin(Account account,String token) throws NoAccessException, InvalidTokenException {
+    private void registerAdmin(Account account, String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
-        if(userSession.getLoggedInUser() == null) {
-            if(userRepository.doWeHaveAManager()) {
+        if (userSession.getLoggedInUser() == null) {
+            if (userRepository.doWeHaveAManager()) {
                 throw new NoAccessException("You are not allowed to do that.");
             } else {
                 userRepository.save(createNewUser(account));
             }
         } else {
-            if(userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+            if (userSession.getLoggedInUser().getRole() != Role.ADMIN) {
                 throw new NoAccessException("You are not allowed to do that.");
             } else {
                 userRepository.save(createNewUser(account));
