@@ -1,34 +1,37 @@
 package controller.account;
 
-import controller.interfaces.account.IAuthenticationController;
 import exception.InvalidAuthenticationException;
 import exception.InvalidFormatException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
-import model.Role;
 import model.Session;
-import model.User;
 import model.repository.RepositoryContainer;
-import model.repository.fake.FakeUserRepository;
+import model.repository.UserRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 
 public class AuthenticationControllerTest {
-    RepositoryContainer repositoryContainer;
-    FakeUserRepository fakeUserRepository;
-    String token;
+    private RepositoryContainer repositoryContainer;
+    private UserRepository userRepository;
+    private String token;
     private AuthenticationController authenticationController;
 
-    @Test
-    public void registerTest() {
+    @Before
+    public void setup() {
         repositoryContainer = new RepositoryContainer();
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
+        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+    }
+
+    @Test
+    public void registerTest() {
         Account account = new Account();
         setAccount(account);
         try {
             authenticationController.register(account, token);
-            Assert.assertEquals(account.makeUser(),fakeUserRepository.getUserByName("Arya"));
+            Assert.assertEquals(account.makeUser(), userRepository.getUserByName("Arya"));
         } catch (InvalidAuthenticationException e) {
             e.printStackTrace();
         } catch (InvalidFormatException e) {

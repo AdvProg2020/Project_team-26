@@ -1,6 +1,7 @@
 package model;
 
 import exception.InvalidTokenException;
+import model.repository.UserRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -22,6 +23,12 @@ public class Session {
         sessionList.put(token, new Session());
         return token;
     }
+
+//    public static void initializeFake() {
+//        UserRepository
+//        Session session1 = new Session();
+//        session1.loggedInUser =
+//    }
 
     private int id;
     private String token;
