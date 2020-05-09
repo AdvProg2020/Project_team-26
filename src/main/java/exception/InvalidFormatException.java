@@ -8,4 +8,8 @@ public class InvalidFormatException extends Exception {
         super(message);
         this.fieldName = fieldName;
     }
+
+    public String getFieldName() {
+        return this.fieldName;
+    }
 }

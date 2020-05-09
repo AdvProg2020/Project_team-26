@@ -4,6 +4,7 @@ import exception.InvalidAuthenticationException;
 import exception.InvalidFormatException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
+import model.Role;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
@@ -35,7 +36,7 @@ public class AuthenticationControllerTest {
             authenticationController.register(account, token);
             Assert.assertEquals("Arya", userRepository.getUserByName("Arya").getUsername());
         } catch (InvalidAuthenticationException e) {
-            e.printStackTrace();
+            Assert.assertEquals(e.getMessage(),"Username is already taken.");
         } catch (InvalidFormatException e) {
             Assert.assertEquals(e.getMessage(),e.);
         } catch (NoAccessException e) {
@@ -47,7 +48,7 @@ public class AuthenticationControllerTest {
 
 
     private void setAccount(List<Account> testAccounts) {
-        testAccounts.add(new Account());
+        testAccounts.add(new Account("test1","password", Role.CUSTOMER));
         testAccounts.add(new Account());
     }
 
