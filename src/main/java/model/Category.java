@@ -72,6 +72,20 @@ public class Category {
         attachParents(branch, category.getParent());
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    protected Object clone()  {
+        Category category = new Category(this.name);
+        category.setId(this.id);
+        return category;
+    }
 }
 
 

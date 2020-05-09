@@ -26,9 +26,8 @@ public class User {
     public User (Account account) {
         this.username = account.getUsername();
         this.password = account.getPassword();
-        this.password = account.getPassword();
         this.email = account.getEmail();
-        this.role = getRole();
+        this.role = account.getRole();
     }
 
     public int getId() {
@@ -69,5 +68,9 @@ public class User {
 
     public String getFullName(){
         return firstName+" "+lastName;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

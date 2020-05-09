@@ -28,13 +28,13 @@ public interface ICategoryController {
     void removeProduct(int id, int productName, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
 
-    List<Category> getAllCategories(int id, String token) throws InvalidIdException;
+    List<Category> getAllCategories(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
-    List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException;
+    List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
-    Category getCategory(int id, String token) throws InvalidIdException;
+    Category getCategory(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
-    List<Product> getProducts(int id, String token) throws InvalidIdException;
+    List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
 
 }

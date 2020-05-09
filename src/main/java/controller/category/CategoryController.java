@@ -18,6 +18,7 @@ public class CategoryController implements ICategoryController {
 
     public CategoryController(RepositoryContainer repositoryContainer) {
         this.categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
+        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
     }
 
     @Override
@@ -56,7 +57,7 @@ public class CategoryController implements ICategoryController {
 
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
         Session session = Session.getSession(token);
-        if (session.getLoggedInUser().getRole() == Role.ADMIN)
+        if (session.getLoggedInUser().getRole() != Role.ADMIN)
             throw new NoAccessException(message);
 
     }
@@ -163,7 +164,8 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public List<Category> getAllCategories(int id, String token) throws InvalidIdException {
+    public List<Category> getAllCategories(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+       // checkAccessOfUser(token,"you are not manager.");
         if (id == 0) {
             return categoryRepository.getAll();
         }
@@ -171,19 +173,22 @@ public class CategoryController implements ICategoryController {
         return category.getSubCategory();
     }
 
-    public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException {
+    public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token,"you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
         return category.getFeatures();
     }
 
     @Override
-    public Category getCategory(int id, String token) throws InvalidIdException {
+    public Category getCategory(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token,"you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
         return category;
     }
 
     @Override
-    public List<Product> getProducts(int id, String token) throws InvalidIdException {
+    public List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        checkAccessOfUser(token,"you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
         return category.getProducts();
     }
