@@ -1,6 +1,5 @@
 package controller.product;
 
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import controller.account.Account;
 import controller.category.CategoryController;
 import exception.InvalidIdException;
@@ -14,10 +13,9 @@ import model.Session;
 import model.repository.CategoryRepository;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-import model.repository.fake.FakeProductRepository;
-import org.junit.Assert;
-import org.junit.*;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -39,21 +37,21 @@ public class CategoryControllerTest {
     void removeACategory() throws InvalidIdException, InvalidTokenException, NoAccessException {
         setup();
         List<Category> categories = new ArrayList<>();
-        Category category = categoryController.getCategory(11, "admin");
+        Category category = categoryController.getCategory(19, "admin");
         categoryController.getAllCategories(0, "admin").forEach(i -> categories.add(i.clone()));
-        categoryController.removeACategory(11, 0, "admin");
-        Assert.assertEquals(categoryController.getAllCategories(0, "admin"), categories.remove(category));
+        categoryController.removeACategory(19, 0, "admin");
+        Assertions.assertEquals(categoryController.getAllCategories(0, "admin"), categories.remove(category));
         /** test exception */
-        Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.removeACategory(67, 0, "admin"));
-        Assert.assertEquals(ex.getMessage(), "no category exist.");
-        ex = Assert.assertThrows(NoAccessException.class, () -> categoryController.getAllCategories(98, token));
-        Assert.assertEquals(ex.getMessage(), "only manager can remove the Category.");
-        ex = Assert.assertThrows(InvalidTokenException.class, () -> categoryController.getAllCategories(98, token));
-        Assert.assertEquals(ex.getMessage(), "only manager can remove the Category.");
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.removeACategory(67, 0, "admin"));
+        Assertions.assertEquals(ex.getMessage(), "no category exist.");
+        ex = Assertions.assertThrows(NoAccessException.class, () -> categoryController.getAllCategories(18, token));
+        Assertions.assertEquals(ex.getMessage(), "only manager can remove the Category.");
+        ex = Assertions.assertThrows(InvalidTokenException.class, () -> categoryController.getAllCategories(98, token));
+        Assertions.assertEquals(ex.getMessage(), "only manager can remove the Category.");
         /** end test*/
     }
 
-    @Before
+    @BeforeEach
     void setup() {
         repositoryContainer = new RepositoryContainer();
         Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
@@ -65,10 +63,10 @@ public class CategoryControllerTest {
     void getAllCategoriesWith() throws InvalidIdException {
         setup();
         List<Category> categoryControllerList = categoryController.getAllCategories(0, token);
-        Assert.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
+        Assertions.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
         /** check exception*/
-       Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
-       Assert.assertEquals(ex.getMessage(),"no category exist.");
+       Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+       Assertions.assertEquals(ex.getMessage(),"no category exist.");
         /** end exception test*/
     }
 
@@ -77,10 +75,10 @@ public class CategoryControllerTest {
         setup();
         Category category1 = (Category) repositoryContainer.getRepository("CategoryRepository").getById(6);
         Category category = categoryController.getCategory(6, token);
-        Assert.assertEquals(category1, category);
+        Assertions.assertEquals(category1, category);
         /** check exception*/
-        Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
-        Assert.assertEquals(ex.getMessage(),"no category exist.");
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+        Assertions.assertEquals(ex.getMessage(),"no category exist.");
         /** end exception test*/
     }
 
@@ -94,7 +92,7 @@ public class CategoryControllerTest {
             List<Product> productList = new ArrayList<>();//TOdo
             category.getProducts().forEach(product -> productList.add(product));
             categoryController.removeProduct(6, 3, token);
-            // Assert.assertEquals(productList.);
+            // Assertions.assertEquals(productList.);
         } catch (InvalidIdException e) {
             e.printStackTrace();
         } catch (NoAccessException e) {

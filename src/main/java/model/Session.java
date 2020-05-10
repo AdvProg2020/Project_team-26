@@ -32,10 +32,10 @@ public class Session {
         session1.loggedInUser = userRepository.getById(1);
 
         Session session2 = new Session();
-        session1.loggedInUser = userRepository.getById(5);
+        session2.loggedInUser = userRepository.getById(5);
 
         Session session3 = new Session();
-        session1.loggedInUser = userRepository.getById(8);
+        session3.loggedInUser = userRepository.getById(8);
 
         Session session4 = new Session();
 

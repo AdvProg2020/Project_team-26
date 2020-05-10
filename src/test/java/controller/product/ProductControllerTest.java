@@ -5,8 +5,8 @@ import exception.InvalidIdException;
 import model.Product;
 import model.Session;
 import model.repository.RepositoryContainer;
-import org.junit.Assert;
-import org.junit.*;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ProductControllerTest {
@@ -15,7 +15,7 @@ class ProductControllerTest {
     ProductController productController;
     RepositoryContainer repositoryContainer;
 
-    @Before
+    @BeforeAll
     void setup() {
 
     }
@@ -35,17 +35,17 @@ class ProductControllerTest {
         productController = new ProductController(repositoryContainer);
         try {
             Product product = productController.getProductById(1, token);
-            Assert.assertEquals(product, repositoryContainer.getRepository("ProductRepository").getById(1));
+            Assertions.assertEquals(product, repositoryContainer.getRepository("ProductRepository").getById(1));
         }
         catch (InvalidIdException invalidIdException) {
-            Assert.assertEquals(invalidIdException, null);
+            Assertions.assertEquals(invalidIdException, null);
         }
 
         try {
             Product product = productController.getProductById(1, token);
         }
         catch (InvalidIdException invalidIdException) {
-            Assert.assertEquals(invalidIdException.getMessage(), "There is no product with this id");
+            Assertions.assertEquals(invalidIdException.getMessage(), "There is no product with this id");
         }
     }
 
