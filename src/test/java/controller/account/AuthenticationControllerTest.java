@@ -5,11 +5,10 @@ import model.Role;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import javax.naming.AuthenticationException;
 
@@ -21,7 +20,7 @@ public class AuthenticationControllerTest {
     private String token;
     private AuthenticationController authenticationController;
 
-    @Before
+    @BeforeAll
     public void setup() {
         repositoryContainer = new RepositoryContainer();
         token = Session.addSession();
@@ -34,34 +33,34 @@ public class AuthenticationControllerTest {
         /**Exception Tests**/
         Exception ex = assertThrows(NoAccessException.class, () -> authenticationController.register(
                 new Account("AryaRezaei","1234",Role.ADMIN),token));
-        Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
+        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
         ex = assertThrows(InvalidFormatException.class, () -> authenticationController.register(
                 new Account("Nigga"," ",Role.CUSTOMER),token));
-        Assert.assertEquals(ex.getMessage(),"Password format is incorrect.");
+        Assertions.assertEquals(ex.getMessage(),"Password format is incorrect.");
 
         ex = assertThrows(InvalidFormatException.class, () -> authenticationController.register(
                 new Account("","1234",Role.CUSTOMER),token));
-        Assert.assertEquals(ex.getMessage(),"Username format is incorrect.");
+        Assertions.assertEquals(ex.getMessage(),"Username format is incorrect.");
 
         ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.register(
                 new Account("test1","1234",Role.CUSTOMER),token));
-        Assert.assertEquals(ex.getMessage(),"Username is already taken.");
+        Assertions.assertEquals(ex.getMessage(),"Username is already taken.");
 
         ex = assertThrows(NotLoggedINException.class, () -> authenticationController.logout(token));
-        Assert.assertEquals(ex.getMessage(),"You are not logged in.");
+        Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
         /**End of Exception Tests**/
 
         authenticationController.register(new Account("Arya","1234",Role.SELLER),token);
-        Assert.assertEquals("Arya",userRepository.getUserByName("Arya").getUsername());
+        Assertions.assertEquals("Arya",userRepository.getUserByName("Arya").getUsername());
         authenticationController.register(new Account("Tataloo","124",Role.CUSTOMER),token);
-        Assert.assertEquals("Tataloo",userRepository.getUserByName("Tataloo").getUsername());
+        Assertions.assertEquals("Tataloo",userRepository.getUserByName("Tataloo").getUsername());
 
         /** Logging in and then doing stuff**/
 
         authenticationController.login("test1","password1",token);
         authenticationController.register(new Account("Admin","admin",Role.ADMIN),token);
-        Assert.assertEquals("Admin",userRepository.getUserByName("Admin").getUsername());
+        Assertions.assertEquals("Admin",userRepository.getUserByName("Admin").getUsername());
 
     }
 
@@ -70,10 +69,10 @@ public class AuthenticationControllerTest {
         /** Exception Tests**/
         Exception ex = assertThrows(PasswordIsWrongException.class, () -> authenticationController.login(
                 "test1","password2",token));
-        Assert.assertEquals(ex.getMessage(),"Password is wrong");
+        Assertions.assertEquals(ex.getMessage(),"Password is wrong");
         ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.login(
                 "mamad","password",token));
-        Assert.assertEquals(ex.getMessage(),"Username is invalid.");
+        Assertions.assertEquals(ex.getMessage(),"Username is invalid.");
         /** End of Exception Tests**/
 
     }

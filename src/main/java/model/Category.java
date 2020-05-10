@@ -56,11 +56,11 @@ public class Category {
         this.parent = parent;
     }
 
-    public void addSubCategory(Category category){
+    public void addSubCategory(Category category) {
 
     }
 
-    public void removeSubCategory(Category category){
+    public void removeSubCategory(Category category) {
 
     }
 
@@ -81,9 +81,22 @@ public class Category {
     }
 
     @Override
-    protected Object clone()  {
+    public boolean equals(Object obj) {
+        if((obj instanceof Category))
+            return false;
+        Category category = (Category) obj;
+        if(category.getId() == this.getId())
+            return true;
+        return false;
+    }
+
+    @Override
+    public Category clone() {
         Category category = new Category(this.name);
         category.setId(this.id);
+        this.subCategory.forEach(i -> category.subCategory.add(i));
+        this.products.forEach(i -> category.products.add(i));
+        this.features.forEach(i -> category.features.add(i));
         return category;
     }
 }
