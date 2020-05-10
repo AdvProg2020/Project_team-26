@@ -1,5 +1,7 @@
 package controller.product;
 
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
+import controller.account.Account;
 import controller.category.CategoryController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -7,6 +9,7 @@ import exception.NoAccessException;
 import exception.ObjectAlreadyExistException;
 import model.Category;
 import model.Product;
+import model.Role;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
@@ -42,34 +45,41 @@ public class CategoryControllerTest {
     }
 
     @Test
-    void removeACategory() {
-        repositoryContainer = new RepositoryContainer();
-        token = Session.addSession();
-        categoryController = new CategoryController(repositoryContainer);
-        try {
-            categoryController.removeACategory(5, 0, token);
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        }
-    }
+    void removeACategory() throws InvalidIdException, InvalidTokenException, NoAccessException {
+        setup();
+        List<Category> categories = new ArrayList<>();
 
-    @Test
-    void getAllCategories() {
+        categoryController.removeACategory(5, 0, token);
+    }
+    @Before
+    void setup(){
         repositoryContainer = new RepositoryContainer();
         Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
         token = Session.addSession();
         categoryController = new CategoryController(repositoryContainer);
-        try {
-            List<Category> categoryControllerList = categoryController.getAllCategories(0, "admin");
-            Assert.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
+    }
 
-        } catch (InvalidTokenException | NoAccessException | InvalidIdException e) {
-            Assert.assertEquals(e.getMessage(), "you are not manager.");
-        }
+    @Test
+    void getAllCategoriesWith() throws InvalidIdException {
+        setup();
+        List<Category> categoryControllerList = categoryController.getAllCategories(0, token);
+        Assert.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
+        /** check exception*/
+       Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+       Assert.assertEquals(ex.getMessage(),"no category exist.");
+        /** end exception test*/
+    }
+
+    @Test
+    void getCategory() throws InvalidIdException {
+        setup();
+        Category category1 = (Category) repositoryContainer.getRepository("CategoryRepository").getById(6);
+        Category category = categoryController.getCategory(6, token);
+        Assert.assertEquals(category1, category);
+        /** check exception*/
+        Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+        Assert.assertEquals(ex.getMessage(),"no category exist.");
+        /** end exception test*/
     }
 
     @Test
