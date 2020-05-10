@@ -1,6 +1,5 @@
 package controller.product;
 
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import controller.account.Account;
 import controller.category.CategoryController;
 import exception.InvalidIdException;

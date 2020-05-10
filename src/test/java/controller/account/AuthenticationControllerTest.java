@@ -8,6 +8,8 @@ import model.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 
 import javax.naming.AuthenticationException;
 
