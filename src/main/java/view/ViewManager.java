@@ -20,6 +20,8 @@ public class ViewManager {
         helpFormatForPrint = new ArrayList<>();
         isUserLoggedIn = true;
         scan = new Scanner(System.in);
+        isUserLoggedIn = false;
+        inputOutput = new InputOutput();
     }
 
     public String getSession() {

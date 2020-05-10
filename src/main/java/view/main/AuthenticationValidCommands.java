@@ -9,7 +9,7 @@ public enum AuthenticationValidCommands {
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
     LoginAccount("login\\s+(.*)");
     private final Pattern commandPattern;
-    //private boolean isLoggedIn;
+    private final String output;
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
@@ -17,7 +17,12 @@ public enum AuthenticationValidCommands {
     }
 
     AuthenticationValidCommands(String output) {
-        //   this.isLoggedIn = isLoggedIn;
         this.commandPattern = Pattern.compile(output);
+        this.output = output;
     }
+
+    @Override
+    public String toString() {
+        return this.output;
     }
+}
