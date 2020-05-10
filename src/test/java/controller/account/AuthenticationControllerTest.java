@@ -15,6 +15,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class AuthenticationControllerTest {
     private RepositoryContainer repositoryContainer;
     private UserRepository userRepository;
@@ -30,30 +32,15 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void registerTest() {
-        ArrayList<Account> testAccounts = new ArrayList<>();
-        setAccount(testAccounts);
-        for (Account account : testAccounts) {
-            try {
-                authenticationController.register(account, token);
-                Assert.assertEquals(account.getUsername(), userRepository.getUserByName(account.getUsername()).getUsername());
-            } catch (InvalidAuthenticationException e) {
-                Assert.assertEquals(e.getMessage(), "Username is already taken.");
-            } catch (InvalidFormatException e) {
-                Assert.assertEquals(e.getMessage(), e.getFieldName() + " format is wrong");
-            } catch (NoAccessException e) {
-                Assert.assertEquals(e.getMessage(), "You are not allowed to do that.");
-            } catch (InvalidTokenException e) {
-                e.printStackTrace();
-            }
-        }
+    public void registerTest() throws InvalidTokenException, InvalidFormatException, NoAccessException, InvalidAuthenticationException {
+        Exception ex = Assert.assertThrows(NoAccessException.class, () -> authenticationController.register(new Account("AryaRezaei","1234",Role.ADMIN),token));
+        Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
     }
 
+    @Test
+    public void loginTest() {
 
-    private void setAccount(ArrayList<Account> testAccounts) {
-        testAccounts.add(new Account("test1","password", Role.CUSTOMER));
-        testAccounts.add(new Account("Master","password",Role.ADMIN));
-        testAccounts.add(new Account("Master2","Password",Role.ADMIN));
     }
+
 
 }
