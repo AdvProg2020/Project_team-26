@@ -20,6 +20,18 @@ public class Comment {
         this.id = id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return this.id;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Comment(Customer customer, Product product, String text) {
         this.customer = customer;
         this.product = product;
