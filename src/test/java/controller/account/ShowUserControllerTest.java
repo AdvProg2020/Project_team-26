@@ -5,10 +5,9 @@ import exception.*;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-import org.junit.jupiter.api.Assertions;
+import org.junit.Before;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 
 import javax.naming.AuthenticationException;
 
@@ -22,7 +21,7 @@ public class ShowUserControllerTest {
     private AuthenticationController authenticationController;
     private ShowUserController showUserController;
 
-    @BeforeAll
+    @BeforeEach
     public void setup() {
         repositoryContainer = new RepositoryContainer();
         token = Session.addSession();

@@ -20,7 +20,7 @@ public class CommentController implements ICommentController {
 
     public void addAComment(String comment, int productId, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
-        if (user.getRole() != Role.CUSTOMER) {
+        if (user == null || user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             commentRepository.save(new Comment((Customer) user, productRepository.getById(productId), comment));
