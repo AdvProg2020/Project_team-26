@@ -6,6 +6,7 @@ import model.repository.CommentRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FakeCommentRepository implements CommentRepository {
 
@@ -17,18 +18,21 @@ public class FakeCommentRepository implements CommentRepository {
         for (int i = 0; i < 4; i++) {
             save(new Comment(i + 1));
             Comment comment = allComments.get(i);
-            comment.
+            comment.setText("This product was " + i + "% good.");
         }
     }
 
     @Override
     public List<Comment> getAll() {
-        return null;
+        return allComments;
     }
 
     @Override
     public Comment getById(int id) {
-        return null;
+        List<Comment> comments = allComments.stream().filter(Comment -> Comment.getId() == id).collect(Collectors.toList());
+        if (comments.size() == 0)
+            return null;
+        return comments.get(0);
     }
 
     @Override
@@ -40,12 +44,12 @@ public class FakeCommentRepository implements CommentRepository {
 
     @Override
     public void delete(int id) {
-
+        allComments.remove(getById(id));
     }
 
     @Override
     public void delete(Comment object) {
-
+        allComments.remove(object);
     }
 
     @Override

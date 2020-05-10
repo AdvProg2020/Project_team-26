@@ -24,6 +24,10 @@ public class Comment {
         this.id = id;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public void setText(String text) {
         this.text = text;
     }
