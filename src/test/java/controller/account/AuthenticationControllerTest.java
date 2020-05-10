@@ -10,8 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import javax.naming.AuthenticationException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -32,23 +30,23 @@ public class AuthenticationControllerTest {
     @Test
     public void registerTest() throws InvalidTokenException, InvalidFormatException, NoAccessException, InvalidAuthenticationException, PasswordIsWrongException, AuthenticationException {
         /**Exception Tests**/
-        Exception ex = Assert.assertThrows(NoAccessException.class, () -> authenticationController.register(
+        Exception ex = assertThrows(NoAccessException.class, () -> authenticationController.register(
                 new Account("AryaRezaei","1234",Role.ADMIN),token));
         Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
-        ex = Assert.assertThrows(InvalidFormatException.class, () -> authenticationController.register(
+        ex = assertThrows(InvalidFormatException.class, () -> authenticationController.register(
                 new Account("Nigga"," ",Role.CUSTOMER),token));
         Assert.assertEquals(ex.getMessage(),"Password format is incorrect.");
 
-        ex = Assert.assertThrows(InvalidFormatException.class, () -> authenticationController.register(
+        ex = assertThrows(InvalidFormatException.class, () -> authenticationController.register(
                 new Account("","1234",Role.CUSTOMER),token));
         Assert.assertEquals(ex.getMessage(),"Username format is incorrect.");
 
-        ex = Assert.assertThrows(InvalidAuthenticationException.class, () -> authenticationController.register(
+        ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.register(
                 new Account("test1","1234",Role.CUSTOMER),token));
         Assert.assertEquals(ex.getMessage(),"Username is already taken.");
 
-        ex = Assert.assertThrows(NotLoggedINException.class, () -> authenticationController.logout(token));
+        ex = assertThrows(NotLoggedINException.class, () -> authenticationController.logout(token));
         Assert.assertEquals(ex.getMessage(),"You are not logged in.");
         /**End of Exception Tests**/
 
@@ -68,10 +66,10 @@ public class AuthenticationControllerTest {
     @Test
     public void loginTest() {
         /** Exception Tests**/
-        Exception ex = Assert.assertThrows(PasswordIsWrongException.class, () -> authenticationController.login(
+        Exception ex = assertThrows(PasswordIsWrongException.class, () -> authenticationController.login(
                 "test1","password2",token));
         Assert.assertEquals(ex.getMessage(),"Password is wrong");
-        ex = Assert.assertThrows(InvalidAuthenticationException.class, () -> authenticationController.login(
+        ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.login(
                 "mamad","password",token));
         Assert.assertEquals(ex.getMessage(),"Username is invalid.");
         /** End of Exception Tests**/

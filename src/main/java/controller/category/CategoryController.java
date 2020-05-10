@@ -113,7 +113,7 @@ public class CategoryController implements ICategoryController {
     private Category getCategoryByIdWithCheck(int id) throws InvalidIdException {
         Category category = (Category) categoryRepository.getById(id);
         if (category == null)
-            throw new InvalidIdException("no category exist");
+            throw new InvalidIdException("no category exist.");
         return category;
     }
 
@@ -163,8 +163,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public List<Category> getAllCategories(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token,"you are not manager.");
+    public List<Category> getAllCategories(int id, String token) throws InvalidIdException {
         if (id == 0) {
             return categoryRepository.getAll();
         }
@@ -179,8 +178,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public Category getCategory(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token,"you are not manager.");
+    public Category getCategory(int id, String token) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category;
     }

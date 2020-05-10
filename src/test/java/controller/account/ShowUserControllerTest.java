@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import javax.naming.AuthenticationException;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 public class ShowUserControllerTest {
 
     private RepositoryContainer repositoryContainer;
@@ -32,31 +34,31 @@ public class ShowUserControllerTest {
     public void deleteTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, AuthenticationException, PasswordIsWrongException, NotLoggedINException, NoAccessException {
 
         /** Exception Tests Without Login**/
-        Exception ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.getUserInfo(token));
+        Exception ex = assertThrows(NoAccessException.class, () -> showUserController.getUserInfo(token));
         Assert.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
-        ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.getUsers(token));
+        ex = assertThrows(NoAccessException.class, () -> showUserController.getUsers(token));
         Assert.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
-        ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.getUserById(12,token));
+        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserById(12,token));
         Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
-        ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.getUserByName("Test",token));
+        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserByName("Test",token));
         Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
         /**Exception Tests After Login**/
 
         authenticationController.login("test7","password7",token);
-        ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.delete("test1",token));
+        ex = assertThrows(NoAccessException.class, () -> showUserController.delete("test1",token));
         Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
-        ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.getUsers(token));
+        ex = assertThrows(NoAccessException.class, () -> showUserController.getUsers(token));
         Assert.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
-        ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.getUserByName("Test",token));
+        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserByName("Test",token));
         Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
-        ex = Assert.assertThrows(NoAccessException.class, () -> showUserController.getUserById(12,token));
+        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserById(12,token));
         Assert.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
         authenticationController.logout(token);
@@ -64,6 +66,7 @@ public class ShowUserControllerTest {
 
         authenticationController.login("test1","password1",token);
         showUserController.delete("test2",token);
+        Assert.assertEquals(userRepository.getUserByName("test2"),null);
         Assert.assertEquals(userRepository.getUserByName("test2"),null);
 
         Assert.assertEquals(showUserController.getUsers(token),userRepository.getAll());
