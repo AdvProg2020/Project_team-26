@@ -1,7 +1,6 @@
 package controller.product;
 
-//import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
-
+import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
 import controller.account.Account;
 import controller.category.CategoryController;
 import exception.InvalidIdException;
@@ -18,6 +17,7 @@ import model.repository.UserRepository;
 import model.repository.fake.FakeProductRepository;
 import org.junit.Assert;
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -67,8 +67,8 @@ public class CategoryControllerTest {
         List<Category> categoryControllerList = categoryController.getAllCategories(0, token);
         Assert.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
         /** check exception*/
-        Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98, token));
-        Assert.assertEquals(ex.getMessage(), "no category exist.");
+       Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+       Assert.assertEquals(ex.getMessage(),"no category exist.");
         /** end exception test*/
     }
 
@@ -79,8 +79,8 @@ public class CategoryControllerTest {
         Category category = categoryController.getCategory(6, token);
         Assert.assertEquals(category1, category);
         /** check exception*/
-        Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98, token));
-        Assert.assertEquals(ex.getMessage(), "no category exist.");
+        Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+        Assert.assertEquals(ex.getMessage(),"no category exist.");
         /** end exception test*/
     }
 
