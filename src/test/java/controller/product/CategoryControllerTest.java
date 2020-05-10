@@ -1,7 +1,5 @@
 package controller.product;
 
-import com.sun.org.apache.bcel.internal.generic.ANEWARRAY;
-import controller.account.Account;
 import controller.category.CategoryController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -9,28 +7,36 @@ import exception.NoAccessException;
 import exception.ObjectAlreadyExistException;
 import model.Category;
 import model.Product;
-import model.Role;
 import model.Session;
+import model.repository.CategoryRepository;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-import model.repository.fake.FakeProductRepository;
 import org.junit.Assert;
 import org.junit.*;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryControllerTest {
+
     RepositoryContainer repositoryContainer;
-    String token;
     CategoryController categoryController;
+    CategoryRepository categoryRepository;
+    String token;
+
+    @Before
+    void setup(){
+        repositoryContainer = new RepositoryContainer();
+        Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
+        categoryController = new CategoryController(repositoryContainer);
+        categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
+        token = Session.addSession();
+    }
 
     @Test
     void addCategory() {
-        repositoryContainer = new RepositoryContainer();
-        token = Session.addSession();
-        categoryController = new CategoryController(repositoryContainer);
         try {
             categoryController.addCategory(0, "new", token);
         } catch (InvalidIdException e) {
@@ -46,38 +52,28 @@ public class CategoryControllerTest {
 
     @Test
     void removeACategory() throws InvalidIdException, InvalidTokenException, NoAccessException {
-        setup();
         List<Category> categories = new ArrayList<>();
 
         categoryController.removeACategory(5, 0, token);
     }
-    @Before
-    void setup(){
-        repositoryContainer = new RepositoryContainer();
-        Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
-        token = Session.addSession();
-        categoryController = new CategoryController(repositoryContainer);
-    }
 
     @Test
     void getAllCategoriesWith() throws InvalidIdException {
-        setup();
         List<Category> categoryControllerList = categoryController.getAllCategories(0, token);
         Assert.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
         /** check exception*/
-       Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+       Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
        Assert.assertEquals(ex.getMessage(),"no category exist.");
         /** end exception test*/
     }
 
     @Test
     void getCategory() throws InvalidIdException {
-        setup();
-        Category category1 = (Category) repositoryContainer.getRepository("CategoryRepository").getById(6);
+        Category category1 = categoryRepository.getById(6);
         Category category = categoryController.getCategory(6, token);
         Assert.assertEquals(category1, category);
         /** check exception*/
-        Exception ex = Assert.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllCategories(98,token));
         Assert.assertEquals(ex.getMessage(),"no category exist.");
         /** end exception test*/
     }
