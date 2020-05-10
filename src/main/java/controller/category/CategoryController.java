@@ -102,12 +102,14 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public void removeACategory(int id, int parentId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token, "only manager can remove the Category");
+        checkAccessOfUser(token, "only manager can remove the Category.");
         Category parentCategory = checkParentCategory(parentId);
         Category category = getCategoryByIdWithCheck(id);
         categoryParentCheckingException(id, parentId);
-        parentCategory.getSubCategory().remove(category);
-        categoryRepository.save(parentCategory);
+        if (parentCategory != null) {
+            parentCategory.getSubCategory().remove(category);
+            categoryRepository.save(parentCategory);
+        }
         categoryRepository.delete(id);
     }
 
@@ -119,8 +121,10 @@ public class CategoryController implements ICategoryController {
     }
 
     private void categoryParentCheckingException(int id, int parentId) throws InvalidIdException {
-        Category category = (Category) categoryRepository.getById(id);
-        for (Category sub : categoryRepository.getById(parentId).getSubCategory()) {
+        if (parentId == 0)
+            return;
+        Category category = getCategoryByIdWithCheck(id);
+        for (Category sub : getCategoryByIdWithCheck(parentId).getSubCategory()) {
             if (sub.getId() == category.getId())
                 return;
         }
@@ -173,7 +177,7 @@ public class CategoryController implements ICategoryController {
     }
 
     public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token,"you are not manager.");
+        checkAccessOfUser(token, "you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
         return category.getFeatures();
     }
@@ -186,8 +190,14 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token,"you are not manager.");
+        checkAccessOfUser(token, "you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
         return category.getProducts();
+    }
+    public Category getByName(String name) throws InvalidIdException {
+        Category category = categoryRepository.getByName(name);
+        if(category == null)
+            throw new InvalidIdException("no such name exist.");
+        return category;
     }
 }

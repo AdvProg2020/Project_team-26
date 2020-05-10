@@ -54,14 +54,18 @@ public class FakeCategoryRepository implements CategoryRepository {
 
     @Override
     public void save(Category object) {
-        lastId++;
-        object.setId(lastId);
+        if (object.getId() == 0) {
+            lastId++;
+            object.setId(lastId);
+            allCategory.add(object);
+        }
+        allCategory.remove(getById(object.getId()));
         allCategory.add(object);
     }
 
     @Override
     public void delete(int id) {
-        allCategory.remove(getById(id));
+        this.allCategory.remove(getById(id));
     }
 
     @Override
