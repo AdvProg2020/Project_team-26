@@ -1,9 +1,12 @@
 package view.main;
 
 import controller.account.Account;
+import controller.account.AuthenticationController;
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
 import model.Role;
+import model.repository.RepositoryContainer;
+import view.InputOutput;
 import view.View;
 import view.ViewManager;
 
@@ -19,6 +22,7 @@ public class AuthenticationView extends View {
     public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         input = command;
+        control = new AuthenticationController(new RepositoryContainer());
     }
 
     @Override
@@ -32,27 +36,30 @@ public class AuthenticationView extends View {
 
     public void login(Matcher matcher) {
         matcher.find();
+        Account account = new Account();
         manager.inputOutput.println("enter password or type back if you want to return to previous");
-        String password = manager.inputOutput.nextLine();
-        String username = matcher.group(1);
+        account.setPassword(manager.inputOutput.nextLine());
+        account.setUsername(matcher.group(1));
         boolean isLoggedIn = false;
         while (!isLoggedIn) {
-            if (password.equals("back") || username.equals("back"))
+            if (account.getUsername().equals("back") || account.getPassword().equals("back"))
                 return;
             try {
-                control.login(username, password, manager.getTocken());
+                control.login(account.getUsername(), account.getPassword(), manager.getTocken());
                 isLoggedIn = true;
                 manager.setUserLoggedIn(true);
-            } catch (PasswordIsWrongException e) {
-                e.getMessage();
-            } catch (AuthenticationException e) {
-                e.printStackTrace();
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                manager.inputOutput.println(e.getMessage());
+                return;
             } catch (InvalidFormatException e) {
-                e.printStackTrace();
+                manager.inputOutput.println(e.getMessage());
+                correctField(e.getFieldName(), account);
             } catch (InvalidAuthenticationException e) {
-                e.printStackTrace();
+                manager.inputOutput.println(e.getMessage());
+                correctField(e.getFieldName(), account);
+            } catch (PasswordIsWrongException e) {
+                manager.inputOutput.println(e.getMessage() + "\nplease correct password.");
+                account.setPassword(manager.inputOutput.nextLine());
             }
         }
     }
@@ -60,32 +67,45 @@ public class AuthenticationView extends View {
     public void register(Matcher matcher) {
         Account account = getUserInfo(matcher);
         boolean isComplete = false;
-        boolean isBack = false;
-        while (!isComplete && !isBack) {
-            if (isBack && account.getPassword().equals("back"))
+        while (!isComplete) {
+            if (isComplete || account.getPassword().equals("back") || account.getUsername().equals("back"))
                 return;
             try {
                 control.register(account, manager.getTocken());
                 isComplete = true;
-            } catch (NoAccessException e) {
-                e.getMessage();
-            } catch (InvalidAuthenticationException e) {
-                e.printStackTrace();
+            } catch (NoAccessException | InvalidTokenException e) {
+                manager.inputOutput.println(e.getMessage());
+                return;
             } catch (InvalidFormatException e) {
-                e.printStackTrace();
-            } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                manager.inputOutput.println(e.getMessage());
+                correctField(e.getFieldName(), account);
+            } catch (InvalidAuthenticationException e) {
+                manager.inputOutput.println(e.getMessage());
+                correctField(e.getFieldName(), account);
             }
-            isBack = true;
+        }
+    }
+    private void correctField(String field, Account account) {
+        manager.inputOutput.println("correct the field " + field + ".");
+        switch (field) {
+            case "Password":
+                account.setPassword(manager.inputOutput.nextLine());
+                break;
+            case "Username":
+                account.setUsername(manager.inputOutput.nextLine());
+                break;
         }
     }
 
     private Account getUserInfo(Matcher matcher) {
         Account account = new Account();
         matcher.find();
-
         account.setRole(setRole(matcher.group(1)));
         account.setUsername(matcher.group(2));
+        while (account.getUsername().equals("back")) {
+            manager.inputOutput.println("enter username and notice it shouldn't be \"back\"");
+            account.setUsername(manager.inputOutput.nextLine());
+        }
         do {
             manager.inputOutput.println("enter password and notice it shouldn't be \"back\"");
             account.setPassword(manager.inputOutput.nextLine());
@@ -99,13 +119,12 @@ public class AuthenticationView extends View {
         account.setToken(manager.getTocken());
         return account;
     }
-    private Role setRole(String type){
-        if(type.equals("manager"))
+
+    private Role setRole(String type) {
+        if (type.equals("manager"))
             return Role.ADMIN;
-        if(type.equals("seller"))
+        if (type.equals("seller"))
             return Role.SELLER;
         return Role.CUSTOMER;
     }
-
-
 }
