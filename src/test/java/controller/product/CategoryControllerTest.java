@@ -64,7 +64,7 @@ public class CategoryControllerTest {
         token = Session.addSession();
         categoryController = new CategoryController(repositoryContainer);
         try {
-            List<Category> categoryControllerList = categoryController.getAllCategories(0, "admin");
+            List<Category> categoryControllerList = categoryController.getAllCategories(0, "customer");
             Assert.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
 
         } catch (InvalidTokenException | NoAccessException | InvalidIdException e) {
