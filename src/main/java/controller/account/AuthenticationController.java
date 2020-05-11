@@ -32,7 +32,7 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameFormat(account.getUsername());
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null) {
-            registerAdmin(account, token);
+            throw new Alread
         } else {
             switch (account.getRole()) {
                 case CUSTOMER:
