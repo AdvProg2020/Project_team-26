@@ -24,4 +24,8 @@ public class Rate {
     public void setScore(double score) {
         this.score = score;
     }
+
+    public int getId() {
+        return this.id;
+    }
 }

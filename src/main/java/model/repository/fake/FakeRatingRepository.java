@@ -1,10 +1,12 @@
 package model.repository.fake;
 
+import model.Comment;
 import model.Rate;
 import model.repository.RatingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FakeRatingRepository implements RatingRepository {
 
@@ -24,17 +26,20 @@ public class FakeRatingRepository implements RatingRepository {
 
     @Override
     public void editRate(int RateId, double newRating) {
-        getById(RateId).setRate(newRating);
+        getById(RateId).setScore(newRating);
     }
 
     @Override
     public List<Rate> getAll() {
-        return null;
+        return allRatings;
     }
 
     @Override
     public Rate getById(int id) {
-        return null;
+        List<Rate> ratings  = allRatings.stream().filter(Rate -> Rate.getId() == id).collect(Collectors.toList());
+        if (ratings.size() == 0)
+            return null;
+        return ratings.get(0);
     }
 
     @Override
