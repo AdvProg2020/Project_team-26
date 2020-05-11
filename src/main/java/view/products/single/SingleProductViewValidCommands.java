@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 public enum SingleProductViewValidCommands {
     AddCommentToThisProduct("add\\s+comment") {
+
         /**
          *
          *
@@ -13,7 +14,7 @@ public enum SingleProductViewValidCommands {
          */
         @Override
         public void goToFunction(SingleProductView page) {
-            page.commentsForThisProduct();
+            page.addComment();
         }
     },
     AddTOTHEUserCart("add\\s+to\\s+cart") {

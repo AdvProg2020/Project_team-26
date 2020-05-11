@@ -6,6 +6,7 @@ import exception.InvalidIdException;
 import model.Product;
 import view.*;
 import view.filterAndSort.FilterAndSort;
+import view.filterAndSort.ProductFilterAndSort;
 import view.main.MainPageView;
 import view.products.single.SingleProductView;
 
@@ -17,7 +18,7 @@ public class AllProductView extends View {
     IProductController productController;
     ICategoryController categoryController;
     int currentCategory;
-    FilterAndSort filterAndSort;
+    ProductFilterAndSort filterAndSort;
 
 
     public AllProductView(ViewManager manager) {
