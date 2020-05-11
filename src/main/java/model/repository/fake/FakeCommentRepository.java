@@ -2,7 +2,9 @@ package model.repository.fake;
 
 import model.Category;
 import model.Comment;
+import model.Customer;
 import model.repository.CommentRepository;
+import model.repository.RepositoryContainer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +14,18 @@ public class FakeCommentRepository implements CommentRepository {
 
     List<Comment> allComments;
     public static int lastId = 5;
+    private RepositoryContainer repositoryContainer;
+    private FakeUserRepository fakeUserRepository;
+    private FakeProductRepository fakeProductRepository;
 
     public FakeCommentRepository() {
+        repositoryContainer = new RepositoryContainer();
+        fakeUserRepository = new FakeUserRepository();
+        fakeProductRepository = new FakeProductRepository();
         this.allComments = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            save(new Comment(i + 1));
+            save(new Comment((Customer)fakeUserRepository.getById(i + 8),fakeProductRepository.getById(i),"Garbage"));
             Comment comment = allComments.get(i);
-            comment.setText("This product was " + i + "% good.");
         }
     }
 

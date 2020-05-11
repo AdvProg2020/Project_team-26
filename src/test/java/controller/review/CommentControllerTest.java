@@ -54,6 +54,7 @@ public class CommentControllerTest {
         
         authenticationController.login("test8","password8",token);
         commentController.addAComment("Good",0,token);
+        commentController.removeComment(1,);
 
     }
 
