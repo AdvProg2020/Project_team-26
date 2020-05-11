@@ -33,7 +33,7 @@ public class CommentControllerTest {
 
 
     @Test
-    public void addACommentTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, AuthenticationException, PasswordIsWrongException, NoAccessException {
+    public void addACommentTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, AuthenticationException, PasswordIsWrongException, NoAccessException, AlreadyLoggedInException {
 
         /** Exception Tests **/
 
