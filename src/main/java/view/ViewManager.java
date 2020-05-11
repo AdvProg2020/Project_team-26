@@ -1,5 +1,6 @@
 package view;
 
+import exception.AlreadyLoggedInException;
 import view.main.MainPageView;
 
 import java.util.ArrayList;
@@ -48,7 +49,7 @@ public class ViewManager {
         this.token = token;
     }
 
-    public void startProgram() {
+    public void startProgram() throws AlreadyLoggedInException {
         MainPageView startView = new MainPageView(this);
         startView.run();
     }
@@ -57,7 +58,7 @@ public class ViewManager {
         isUserLoggedIn = userLoggedIn;
     }
 
-    public boolean getIsUserLoggedin() {
+    public boolean getIsUserLoggedIn() {
         return isUserLoggedIn;
     }
 

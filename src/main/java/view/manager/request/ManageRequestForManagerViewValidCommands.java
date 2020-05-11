@@ -27,7 +27,7 @@ public enum ManageRequestForManagerViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
-            if (page.getManager().getIsUserLoggedin()) {
+            if (page.getManager().getIsUserLoggedIn()) {
                 page.logOut();
                 return;
             }

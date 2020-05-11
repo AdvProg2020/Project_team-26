@@ -51,7 +51,7 @@ public enum AllProductsViewValidCommands {
     Logout("logout", null) {
         @Override
         public void goToFunction(AllProductView page) {
-            if (page.getManager().getIsUserLoggedin()) {
+            if (page.getManager().getIsUserLoggedIn()) {
                 page.logOut();
                 return;
             }

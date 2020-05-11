@@ -25,7 +25,7 @@ public enum discountForManagerViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(discountForManagerView page) {
-            if (page.getManager().getIsUserLoggedin()) {
+            if (page.getManager().getIsUserLoggedIn()) {
                 page.logOut();
                 return;
             }
@@ -35,7 +35,7 @@ public enum discountForManagerViewValidCommands {
     Help("help"){
         @Override
         public void goToFunction(discountForManagerView page) {
-            page.help(page.getManager().getIsUserLoggedin());
+            page.help(page.getManager().getIsUserLoggedIn());
         }
     };
     private final Pattern commandPattern;

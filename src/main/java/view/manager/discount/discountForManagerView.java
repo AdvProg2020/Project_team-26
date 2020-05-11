@@ -24,7 +24,7 @@ public class discountForManagerView extends View implements IView {
     @Override
     public View run() {
         showAll();
-        while (manager.getIsUserLoggedin()) {
+        while (manager.getIsUserLoggedIn()) {
             if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;
             for (discountForManagerViewValidCommands command : validCommands) {

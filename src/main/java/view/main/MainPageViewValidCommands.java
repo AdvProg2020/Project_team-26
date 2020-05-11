@@ -29,13 +29,13 @@ public enum MainPageViewValidCommands {
     Help("help", null) {
         @Override
         public void goToFunction(MainPageView page) {
-            page.help(page.getManager().getIsUserLoggedin());
+            page.help(page.getManager().getIsUserLoggedIn());
         }
     },
     Logout("logout", null) {
         @Override
         public void goToFunction(MainPageView page) {
-            if (page.getManager().getIsUserLoggedin()){
+            if (page.getManager().getIsUserLoggedIn()){
                 page.logout(manager.getToken());
                 return;
         }
@@ -45,7 +45,7 @@ public enum MainPageViewValidCommands {
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)", null) {
         @Override
         public void goToFunction(MainPageView page) {
-            if (!page.getManager().getIsUserLoggedin()) {
+            if (!page.getManager().getIsUserLoggedIn()) {
                 page.authorizing();
                 return;
             }
@@ -55,7 +55,7 @@ public enum MainPageViewValidCommands {
     LoginAccount("login\\s+(.*)", null) {
         @Override
         public void goToFunction(MainPageView page) {
-            if (!page.getManager().getIsUserLoggedin()) {
+            if (!page.getManager().getIsUserLoggedIn()) {
                 page.authorizing();
                 return;
             }

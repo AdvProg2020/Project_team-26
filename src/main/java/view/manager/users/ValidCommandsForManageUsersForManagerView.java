@@ -1,9 +1,5 @@
 package view.manager.users;
 
-import view.View;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,7 +25,7 @@ public enum ValidCommandsForManageUsersForManagerView {
     Logout("logout") {
         @Override
         public void goToFunction(ManageUsersForManager page) {
-            if (page.getManager().getIsUserLoggedin()) {
+            if (page.getManager().getIsUserLoggedIn()) {
                 page.logOut();
                 return;
             }
