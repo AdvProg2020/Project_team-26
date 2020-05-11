@@ -3,7 +3,6 @@ package view.offs;
 import view.View;
 import view.ViewManager;
 import view.filterAndSort.FilterAndSort;
-import view.sort.SortView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,7 +14,7 @@ public enum AllOffsValidCommands {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    Sorting("sorting", new SortView(AllOffsValidCommands.getManager())){
+    Sorting("sorting", new FilterAndSort(AllOffsValidCommands.getManager())){
         @Override
         public void goToFunction(AllOffsIView page) {
 
