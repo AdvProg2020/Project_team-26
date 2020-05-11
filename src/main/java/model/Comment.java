@@ -6,6 +6,7 @@ public class Comment {
     private Customer customer;
     private Product product;
     private String text;
+    private String title;
     private CommentState state;
 
     public String getText() {
@@ -32,9 +33,10 @@ public class Comment {
         this.text = text;
     }
 
-    public Comment(Customer customer, Product product, String text) {
+    public Comment(Customer customer, Product product, String text, String title) {
         this.customer = customer;
         this.product = product;
         this.text = text;
+        this.title = title;
     }
 }
