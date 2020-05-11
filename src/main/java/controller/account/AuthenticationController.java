@@ -18,21 +18,24 @@ public class AuthenticationController implements IAuthenticationController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
+    public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);
+        if(userSession.getLoggedInUser() != null) {
+            throw new AlreadyLoggedInException("You are logged in.");
+        }
         checkPasswordFormat(password);
         checkUsernameFormat(username);
         checkUsernameAndPassword(username, password);
         userSession.login(userRepository.getUserByName(username));
     }
 
-    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException {
+    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
         checkUsernameAvailability(account.getUsername());
-        if (userSession.getLoggedInUser() != null) {
-            throw new Alread
+        if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+            throw new AlreadyLoggedInException("You are logged in.");
         } else {
             switch (account.getRole()) {
                 case CUSTOMER:

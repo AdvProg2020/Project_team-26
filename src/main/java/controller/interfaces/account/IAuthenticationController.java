@@ -7,9 +7,9 @@ import javax.naming.AuthenticationException;
 
 public interface IAuthenticationController {
 
-    void login(String username, String password, String token) throws PasswordIsWrongException,InvalidTokenException, InvalidFormatException, InvalidAuthenticationException;
+    void login(String username, String password, String token) throws PasswordIsWrongException, InvalidTokenException, InvalidFormatException, InvalidAuthenticationException, AlreadyLoggedInException;
 
-    void register(Account account, String token) throws  NoAccessException, InvalidFormatException, InvalidTokenException, InvalidAuthenticationException;
+    void register(Account account, String token) throws NoAccessException, InvalidFormatException, InvalidTokenException, InvalidAuthenticationException, AlreadyLoggedInException;
 
     void logout(String token) throws  InvalidTokenException, NotLoggedINException;
 }
