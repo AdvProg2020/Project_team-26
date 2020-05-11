@@ -1,5 +1,7 @@
 package view;
 
+import exception.AlreadyLoggedInException;
+
 public abstract class View implements IView {
 
     protected String input;
@@ -22,6 +24,6 @@ public abstract class View implements IView {
         return input;
     }
 
-    public abstract View run();
+    public abstract View run() throws AlreadyLoggedInException;
 
 }

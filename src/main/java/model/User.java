@@ -42,10 +42,6 @@ public class User {
         return username;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -68,5 +64,12 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean checkPassword(String password) {
+        if(this.password.equals(password)) {
+            return true;
+        }
+        return false;
     }
 }

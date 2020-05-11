@@ -2,6 +2,7 @@ package view.manager;
 
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
+import exception.AlreadyLoggedInException;
 import view.*;
 import view.ViewManager;
 
@@ -25,7 +26,7 @@ public class ManagerAccountView extends View {
     }
 
     @Override
-    public View run() {
+    public View run() throws AlreadyLoggedInException {
         while (manager.getIsUserLoggedin()) {
             if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;

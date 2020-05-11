@@ -1,5 +1,6 @@
 package view.main;
 
+import exception.AlreadyLoggedInException;
 import view.View;
 import view.ViewManager;
 import view.offs.AllOffsIView;
@@ -44,7 +45,7 @@ public enum MainPageViewValidCommands {
     },
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)", null) {
         @Override
-        public void goToFunction(MainPageView page) {
+        public void goToFunction(MainPageView page) throws AlreadyLoggedInException {
             if (!page.getManager().getIsUserLoggedin()) {
                 page.authorizing();
                 return;
@@ -54,7 +55,7 @@ public enum MainPageViewValidCommands {
     },
     LoginAccount("login\\s+(.*)", null) {
         @Override
-        public void goToFunction(MainPageView page) {
+        public void goToFunction(MainPageView page) throws AlreadyLoggedInException {
             if (!page.getManager().getIsUserLoggedin()) {
                 page.authorizing();
                 return;
@@ -81,7 +82,7 @@ public enum MainPageViewValidCommands {
         return this.view;
     }
 
-    public abstract void goToFunction(MainPageView page);
+    public abstract void goToFunction(MainPageView page) throws AlreadyLoggedInException;
 
     MainPageViewValidCommands(String output, View view) {
         this.commandPattern = Pattern.compile(output);

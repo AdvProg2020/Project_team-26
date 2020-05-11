@@ -33,6 +33,7 @@ public class AuthenticationController implements IAuthenticationController {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
+        checkEmailFormat(account.getEmail());
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new AlreadyLoggedInException("You are logged in.");
@@ -71,6 +72,12 @@ public class AuthenticationController implements IAuthenticationController {
         }
     }
 
+    private void checkEmailFormat(String Email) throws InvalidFormatException {
+        if(!Email.matches("^\\S+@\\S+.(?i)com(?-i)")) {
+            throw new InvalidFormatException("Email format is incorrect.","Email");
+        }
+    }
+
     private void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
         if (userRepository.getUserByName(username) != null) {
             throw new InvalidAuthenticationException("Username is already taken.","Username");
@@ -85,8 +92,8 @@ public class AuthenticationController implements IAuthenticationController {
         if (userRepository.getUserByName(username) == null) {
             throw new InvalidAuthenticationException("Username is invalid.","Username");
         }
-        if (!userRepository.getUserByName(username).getPassword().equals(password)) {
-            throw new PasswordIsWrongException("Password is wrong");
+        if (!userRepository.getUserByName(username).checkPassword(password)) {
+            throw new InvalidAuthenticationException("Password is wrong","Password");
         }
     }
 

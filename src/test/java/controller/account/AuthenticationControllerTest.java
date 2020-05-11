@@ -27,7 +27,7 @@ public class AuthenticationControllerTest {
     }
 
     @Test
-    public void registerTest() throws InvalidTokenException, InvalidFormatException, NoAccessException, InvalidAuthenticationException, PasswordIsWrongException, AuthenticationException {
+    public void registerTest() throws InvalidTokenException, InvalidFormatException, NoAccessException, InvalidAuthenticationException, PasswordIsWrongException, AuthenticationException, AlreadyLoggedInException {
         /**Exception Tests**/
         Exception ex = assertThrows(NoAccessException.class, () -> authenticationController.register(
                 new Account("AryaRezaei","1234",Role.ADMIN),token));

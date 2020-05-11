@@ -1,5 +1,6 @@
 package view;
 
+import exception.AlreadyLoggedInException;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
@@ -21,7 +22,7 @@ public class AuthenticationViewTest {
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }
     @Test
-    void login(){
+    void login() throws AlreadyLoggedInException {
         setUp();
         InputOutput.input.add("password6");
         manager.setToken("admin");
@@ -39,7 +40,7 @@ public class AuthenticationViewTest {
         //todo
     }
     @Test
-    void register(){
+    void register() throws AlreadyLoggedInException {
         setUp();
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");

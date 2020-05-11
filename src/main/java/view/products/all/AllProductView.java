@@ -2,6 +2,7 @@ package view.products.all;
 
 import controller.interfaces.product.ISearchAndFilterAndSort;
 import controller.interfaces.product.IShowProductController;
+import exception.AlreadyLoggedInException;
 import model.Product;
 import view.*;
 import view.main.MainPageView;
@@ -22,7 +23,7 @@ public class AllProductView extends View {
     }
 
     @Override
-    public View run() {
+    public View run() throws AlreadyLoggedInException {
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (AllProductsViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {

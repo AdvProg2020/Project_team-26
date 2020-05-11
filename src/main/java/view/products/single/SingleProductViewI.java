@@ -5,6 +5,7 @@ import controller.interfaces.cart.ICartController;
 import controller.interfaces.product.IShowProductController;
 import controller.interfaces.review.ICommentController;
 import controller.review.CommentController;
+import exception.AlreadyLoggedInException;
 import model.Product;
 import view.*;
 import view.main.AuthenticationView;
@@ -26,7 +27,7 @@ public class SingleProductViewI extends View {
     }
 
     @Override
-    public View run() {
+    public View run() throws AlreadyLoggedInException {
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (SingleProductViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -37,7 +38,7 @@ public class SingleProductViewI extends View {
         return null;
     }
 
-    protected void addToTheCart() {
+    protected void addToTheCart() throws AlreadyLoggedInException {
         if (!manager.getIsUserLoggedin()) {
             manager.inputOutput.println("you are not logged in please enter your username");
             String username = manager.inputOutput.nextLine();

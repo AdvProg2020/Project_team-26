@@ -1,5 +1,6 @@
 package view.customer;
 
+import exception.AlreadyLoggedInException;
 import view.*;
 
 import java.util.EnumSet;
@@ -14,7 +15,7 @@ public class CustomerIView extends View implements IView {
     }
 
     @Override
-    public View run() {
+    public View run() throws AlreadyLoggedInException {
         while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
             for (CustomerValidCommand command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
