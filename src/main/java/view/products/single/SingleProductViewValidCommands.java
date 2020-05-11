@@ -1,5 +1,6 @@
 package view.products.single;
 
+import exception.AlreadyLoggedInException;
 import view.View;
 
 import java.util.regex.Matcher;
@@ -20,7 +21,7 @@ public enum SingleProductViewValidCommands {
     },
     AddTOTHEUserCart("add\\s+to\\s+cart") {
         @Override
-        public void goToFunction(SingleProductViewI page) {
+        public void goToFunction(SingleProductViewI page) throws AlreadyLoggedInException {
             page.addToTheCart();
         }
     },
@@ -75,7 +76,7 @@ public enum SingleProductViewValidCommands {
     }
 
 
-    public abstract void goToFunction(SingleProductViewI page);
+    public abstract void goToFunction(SingleProductViewI page) throws AlreadyLoggedInException;
 
     SingleProductViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);

@@ -1,6 +1,7 @@
 package view.main;
 
 import controller.account.AuthenticationController;
+import exception.AlreadyLoggedInException;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
 import view.*;
@@ -24,7 +25,7 @@ public class MainPageView extends View {
     }
 
     @Override
-    public View run() {
+    public View run() throws AlreadyLoggedInException {
         boolean isFound;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("exit|back")) {
             isFound = false;
@@ -49,7 +50,7 @@ public class MainPageView extends View {
         return null;
     }
 
-    protected void authorizing() {
+    protected void authorizing() throws AlreadyLoggedInException {
         AuthenticationView auth = new AuthenticationView(manager, super.input);
         auth.run();
     }

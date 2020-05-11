@@ -18,21 +18,25 @@ public class AuthenticationController implements IAuthenticationController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
+    public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);
+        if(userSession.getLoggedInUser() != null) {
+            throw new AlreadyLoggedInException("You are logged in.");
+        }
         checkPasswordFormat(password);
         checkUsernameFormat(username);
         checkUsernameAndPassword(username, password);
         userSession.login(userRepository.getUserByName(username));
     }
 
-    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException {
+    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
+        checkEmailFormat(account.getEmail());
         checkUsernameAvailability(account.getUsername());
-        if (userSession.getLoggedInUser() != null) {
-            registerAdmin(account, token);
+        if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+            throw new AlreadyLoggedInException("You are logged in.");
         } else {
             switch (account.getRole()) {
                 case CUSTOMER:
@@ -68,6 +72,12 @@ public class AuthenticationController implements IAuthenticationController {
         }
     }
 
+    private void checkEmailFormat(String Email) throws InvalidFormatException {
+        if(!Email.matches("^\\S+@\\S+.(?i)com(?-i)")) {
+            throw new InvalidFormatException("Email format is incorrect.","Email");
+        }
+    }
+
     private void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
         if (userRepository.getUserByName(username) != null) {
             throw new InvalidAuthenticationException("Username is already taken.","Username");
@@ -82,8 +92,8 @@ public class AuthenticationController implements IAuthenticationController {
         if (userRepository.getUserByName(username) == null) {
             throw new InvalidAuthenticationException("Username is invalid.","Username");
         }
-        if (!userRepository.getUserByName(username).getPassword().equals(password)) {
-            throw new PasswordIsWrongException("Password is wrong");
+        if (!userRepository.getUserByName(username).checkPassword(password)) {
+            throw new InvalidAuthenticationException("Password is wrong","Password");
         }
     }
 

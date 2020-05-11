@@ -1,5 +1,6 @@
 package view.products.single;
 
+import controller.account.AuthenticationController;
 import controller.interfaces.cart.ICartController;
 import controller.interfaces.product.IShowProductController;
 import model.Product;
@@ -23,7 +24,7 @@ public class SingleProductViewI extends View {
     }
 
     @Override
-    public View run() {
+    public View run() throws AlreadyLoggedInException {
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (SingleProductViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
