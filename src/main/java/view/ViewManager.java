@@ -57,7 +57,7 @@ public class ViewManager {
         isUserLoggedIn = userLoggedIn;
     }
 
-    public boolean getIsUserLoggedin() {
+    public boolean getIsUserLoggedIn() {
         return isUserLoggedIn;
     }
 

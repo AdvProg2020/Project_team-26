@@ -26,7 +26,7 @@ public class ManagerAccountView extends View {
 
     @Override
     public View run() {
-        while (manager.getIsUserLoggedin()) {
+        while (manager.getIsUserLoggedIn()) {
             if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;
             for (ValidCommandsForManagerAccount command : validCommand) {

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainPageView {
+public class MainPageViewTest {
     ViewManager manager;
     view.main.MainPageView mainPageView;
 
@@ -47,7 +47,7 @@ public class MainPageView {
         InputOutput.input.add("password6");
         InputOutput.input.add("back");
         mainPageView.run();
-        Assertions.assertEquals(true,manager.getIsUserLoggedin());
+        Assertions.assertEquals(true,manager.getIsUserLoggedIn());
         manager.setUserLoggedIn(false);
         InputOutput.input.add("create account seller hi");
         InputOutput.input.add("hello");
@@ -56,14 +56,14 @@ public class MainPageView {
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
         manager.setToken("notloggedin");
-        mainPageView.run();/**problem here*/
+        mainPageView.run();
         InputOutput.input.add("login hi");
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
         InputOutput.input.add("back");
         manager.setToken("admin");
         mainPageView.run();
-        Assertions.assertEquals(true,manager.getIsUserLoggedin());
+        Assertions.assertEquals(true, manager.getIsUserLoggedIn());
     }
 
     @Test
@@ -96,7 +96,7 @@ public class MainPageView {
         Assertions.assertEquals("You are not logged in.",InputOutput.getOutput().get(0));
         manager.setUserLoggedIn(true);
         mainPageView.logout("admin");
-        Assertions.assertEquals(false,manager.getIsUserLoggedin());
+        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
         InputOutput.input.add("jhihs");
         InputOutput.input.add("back");
         mainPageView.run();
@@ -106,6 +106,6 @@ public class MainPageView {
         InputOutput.input.add("back");
         manager.setToken("admin");
         mainPageView.run();
-        Assertions.assertEquals(false,manager.getIsUserLoggedin());
+        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
     }
 }

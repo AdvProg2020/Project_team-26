@@ -1,10 +1,7 @@
 package view.products.single;
 
-import controller.account.AuthenticationController;
 import controller.interfaces.cart.ICartController;
 import controller.interfaces.product.IShowProductController;
-import controller.interfaces.review.ICommentController;
-import controller.review.CommentController;
 import model.Product;
 import view.*;
 import view.main.AuthenticationView;
@@ -38,7 +35,7 @@ public class SingleProductViewI extends View {
     }
 
     protected void addToTheCart() {
-        if (!manager.getIsUserLoggedin()) {
+        if (!manager.getIsUserLoggedIn()) {
             manager.inputOutput.println("you are not logged in please enter your username");
             String username = manager.inputOutput.nextLine();
             if (username.matches("back"))

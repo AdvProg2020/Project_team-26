@@ -29,13 +29,13 @@ public class Session {
 
     public static void initializeFake(UserRepository userRepository) {
         Session session1 = new Session();
-        session1.loggedInUser = userRepository.getById(7);
+        session1.loggedInUser = userRepository.getById(1);
 
         Session session2 = new Session();
-        session2.loggedInUser = userRepository.getById(6);
+        session2.loggedInUser = userRepository.getById(3);
 
         Session session3 = new Session();
-        session3.loggedInUser = userRepository.getById(9);
+        session3.loggedInUser = userRepository.getById(6);
 
         Session session4 = new Session();
 

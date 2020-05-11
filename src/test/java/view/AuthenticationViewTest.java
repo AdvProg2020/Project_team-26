@@ -26,16 +26,16 @@ public class AuthenticationViewTest {
         InputOutput.input.add("password6");
         manager.setToken("admin");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
-        Assertions.assertEquals(true,manager.getIsUserLoggedin());
+        Assertions.assertEquals(true,manager.getIsUserLoggedIn());
         manager.setUserLoggedIn(false);
         InputOutput.input.add("chert");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login back"));
-        Assertions.assertEquals(false,manager.getIsUserLoggedin());
+        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
         manager.setUserLoggedIn(false);
         InputOutput.input.add("password6");
         InputOutput.input.add("back");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
-        Assertions.assertEquals(true,manager.getIsUserLoggedin());
+        Assertions.assertEquals(true,manager.getIsUserLoggedIn());
         //todo
     }
     @Test
