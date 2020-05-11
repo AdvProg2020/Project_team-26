@@ -18,7 +18,7 @@ public class FakeRatingRepository implements RatingRepository {
 
     @Override
     public boolean doesItMatch(int rateId, int customerId) {
-        if(getById(rateId).getCustomerId() == customerId)) {
+        if(getById(rateId).getCustomerId() == customerId) {
             return true;
         }
         return false;
@@ -44,17 +44,17 @@ public class FakeRatingRepository implements RatingRepository {
 
     @Override
     public void save(Rate object) {
-
+        allRatings.add(object);
     }
 
     @Override
     public void delete(int id) {
-
+        allRatings.remove(getById(id));
     }
 
     @Override
     public void delete(Rate object) {
-
+        allRatings.remove(object);
     }
 
     @Override
