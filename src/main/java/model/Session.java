@@ -50,6 +50,10 @@ public class Session {
     private User loggedInUser;
     private Cart cart;
 
+    private Session() {
+        cart = new Cart();
+    }
+
     public static Map<String, Session> getSessionList() {
         return sessionList;
     }

@@ -5,7 +5,6 @@ import controller.interfaces.product.IShowProductController;
 import model.Product;
 import view.*;
 import view.main.MainPageView;
-import view.products.single.SingleProductViewI;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -39,7 +38,7 @@ public class AllProductView extends View {
     }
 
     protected void showAllProducts() {
-        List<Product> products = showOptionsController.getProductsBasedOnFiltersAndSortsForOnePage(manager.getTocken());
+        List<Product> products = showOptionsController.getProductsBasedOnFiltersAndSortsForOnePage(manager.getToken());
         for (Product product : products) {
             manager.inputOutput.println("name is" + product.getName() + "id is:" + product.getId());
         }
@@ -68,7 +67,7 @@ public class AllProductView extends View {
 
 
     protected void logOut() {
-        new MainPageView(manager).logout(manager.getTocken());
+        new MainPageView(manager).logout(manager.getToken());
     }
 
     protected void printError() {

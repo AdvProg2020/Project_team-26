@@ -3,7 +3,6 @@ package view.main;
 import controller.account.AuthenticationController;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
-import model.repository.RepositoryContainer;
 import view.*;
 
 import view.ViewManager;
@@ -21,7 +20,7 @@ public class MainPageView extends View {
         this.manager = manager;
         commands = EnumSet.allOf(MainPageViewValidCommands.class);
         super.input = new String();
-        controller = (AuthenticationController)manager.getControllerContainer().getControllerByName("AuthenticationController");
+        controller = (AuthenticationController)manager.getControllerContainer().getController("AuthenticationController");
     }
 
     @Override

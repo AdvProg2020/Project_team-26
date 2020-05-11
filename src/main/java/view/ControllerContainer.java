@@ -22,7 +22,7 @@ public class ControllerContainer {
         map.put("AuthenticationController", new AuthenticationController(repository));
     }
 
-    public Object getControllerByName(String controllerName) {
+    public Object getController(String controllerName) {
         return map.get(controllerName);
     }
 }

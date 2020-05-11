@@ -9,9 +9,6 @@ import org.junit.jupiter.api.Test;
 import view.main.AuthenticationValidCommands;
 import view.main.AuthenticationView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class AuthenticationViewTest {
@@ -27,7 +24,7 @@ public class AuthenticationViewTest {
     void login(){
         setUp();
         InputOutput.input.add("password6");
-        manager.setTocken("admin");
+        manager.setToken("admin");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
         Assertions.assertEquals(true,manager.getIsUserLoggedin());
         manager.setUserLoggedIn(false);
@@ -48,7 +45,7 @@ public class AuthenticationViewTest {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
-        manager.setTocken("admin");
+        manager.setToken("admin");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account seller hi"));
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
@@ -59,7 +56,7 @@ public class AuthenticationViewTest {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
-        manager.setTocken("seller");
+        manager.setToken("seller");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account buyer 89"));
 
 

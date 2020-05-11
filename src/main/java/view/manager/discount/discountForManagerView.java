@@ -74,7 +74,7 @@ public class discountForManagerView extends View implements IView {
     }
 
     protected void logOut() {
-        new MainPageView(manager).logout(manager.getTocken());
+        new MainPageView(manager).logout(manager.getToken());
     }
 
     protected void help(boolean isLoggedIn) {

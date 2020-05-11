@@ -1,16 +1,10 @@
 package view.manager.users;
 
-import controller.account.AuthenticationController;
-import controller.account.UserInfoController;
 import controller.interfaces.account.IShowUserController;
 import view.*;
-import view.main.AuthenticationValidCommands;
-import view.main.AuthenticationView;
 import view.main.MainPageView;
 
 import java.util.EnumSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ManageUsersForManager extends View implements IView {
     EnumSet<ValidCommandsForManageUsersForManagerView> validCommands;
@@ -37,7 +31,7 @@ public class ManageUsersForManager extends View implements IView {
 
 
     protected void logOut() {
-        new MainPageView(manager).logout(manager.getTocken());
+        new MainPageView(manager).logout(manager.getToken());
     }
 
 }

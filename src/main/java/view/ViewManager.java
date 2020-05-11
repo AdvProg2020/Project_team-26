@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class ViewManager {
     private boolean isUserLoggedIn;
     private String session;
-    private String tocken;
+    private String token;
     private List<View> pathOfView;
     private List<String> helpFormatForPrint;
     public Scanner scan;
@@ -34,8 +34,8 @@ public class ViewManager {
         return session;
     }
 
-    public String getTocken() {
-        return tocken;
+    public String getToken() {
+        return token;
     }
 
     public void setSession(String session) {
@@ -44,8 +44,8 @@ public class ViewManager {
 
 
 
-    public void setTocken(String tocken) {
-        this.tocken = tocken;
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public void startProgram() {

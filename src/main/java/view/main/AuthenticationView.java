@@ -5,12 +5,9 @@ import controller.account.AuthenticationController;
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
 import model.Role;
-import model.repository.RepositoryContainer;
-import view.InputOutput;
 import view.View;
 import view.ViewManager;
 
-import javax.naming.AuthenticationException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,7 +19,7 @@ public class AuthenticationView extends View {
     public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         input = command;
-        control = (AuthenticationController) manager.getControllerContainer().getControllerByName("AuthenticationController");
+        control = (AuthenticationController) manager.getControllerContainer().getController("AuthenticationController");
     }
 
     @Override
@@ -45,7 +42,7 @@ public class AuthenticationView extends View {
             if (account.getUsername().equals("back") || account.getPassword().equals("back"))
                 return;
             try {
-                control.login(account.getUsername(), account.getPassword(), manager.getTocken());
+                control.login(account.getUsername(), account.getPassword(), manager.getToken());
                 isLoggedIn = true;
                 manager.setUserLoggedIn(true);
             } catch (InvalidTokenException e) {
@@ -71,7 +68,7 @@ public class AuthenticationView extends View {
             if (isComplete || account.getPassword().equals("back") || account.getUsername().equals("back"))
                 return;
             try {
-                control.register(account, manager.getTocken());
+                control.register(account, manager.getToken());
                 isComplete = true;
             } catch (NoAccessException | InvalidTokenException e) {
                 manager.inputOutput.println(e.getMessage());
@@ -117,7 +114,7 @@ public class AuthenticationView extends View {
         account.setLastName(manager.inputOutput.nextLine());
         manager.inputOutput.println("enter email");
         account.setEmail(manager.inputOutput.nextLine());
-        account.setToken(manager.getTocken());
+        account.setToken(manager.getToken());
         return account;
     }
 

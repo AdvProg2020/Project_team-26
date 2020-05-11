@@ -42,7 +42,7 @@ public class MainPageView {
     @Test
     void authorizing(){
         setUp();
-        manager.setTocken("notloggedin");//
+        manager.setToken("notloggedin");//
         InputOutput.input.add("login test6");
         InputOutput.input.add("password6");
         InputOutput.input.add("back");
@@ -55,13 +55,13 @@ public class MainPageView {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
-        manager.setTocken("notloggedin");
+        manager.setToken("notloggedin");
         mainPageView.run();/**problem here*/
         InputOutput.input.add("login hi");
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
         InputOutput.input.add("back");
-        manager.setTocken("admin");
+        manager.setToken("admin");
         mainPageView.run();
         Assertions.assertEquals(true,manager.getIsUserLoggedin());
     }
@@ -104,7 +104,7 @@ public class MainPageView {
         manager.setUserLoggedIn(true);
         InputOutput.input.add("logout");
         InputOutput.input.add("back");
-        manager.setTocken("admin");
+        manager.setToken("admin");
         mainPageView.run();
         Assertions.assertEquals(false,manager.getIsUserLoggedin());
     }

@@ -11,12 +11,11 @@ import java.util.stream.Stream;
 
 public class FakeUserRepository implements UserRepository {
     List<User> allUsers;
-    List<Account> allFakeAccounts;
-    int lastId = 5;
+    int lastId = 0;
 
     public FakeUserRepository() {
         allUsers = new ArrayList<>();
-        allFakeAccounts = new ArrayList<>();
+        List<Account> allFakeAccounts = new ArrayList<>();
         for (int n = 1; n < 11; n++) {
             Account account = new Account();
             account.setUsername("test" + (n));

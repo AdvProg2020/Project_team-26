@@ -85,6 +85,7 @@ public class Account {
     public void setRole(Role role) {
         this.role = role;
     }
+
     public User makeUser() {
         if ( this.getRole() == Role.ADMIN)
             return new Admin( this.getUsername(),  this.getPassword(),  this.getEmail(),  this.getRole());

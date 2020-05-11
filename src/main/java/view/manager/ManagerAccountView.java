@@ -46,7 +46,7 @@ public class ManagerAccountView extends View {
         matcher.find();
         manager.inputOutput.println("please enter the " + matcher.group(1));
         String fieldForEdit = manager.inputOutput.nextLine();
-            infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getTocken());
+            infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getToken());
     }
 
     protected void createPromoCode() {

@@ -5,8 +5,6 @@ import view.ViewManager;
 import view.offs.AllOffsIView;
 import view.products.all.AllProductView;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,7 +36,7 @@ public enum MainPageViewValidCommands {
         @Override
         public void goToFunction(MainPageView page) {
             if (page.getManager().getIsUserLoggedin()){
-                page.logout(manager.getTocken());
+                page.logout(manager.getToken());
                 return;
         }
             page.printError();
