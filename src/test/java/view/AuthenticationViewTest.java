@@ -25,37 +25,37 @@ public class AuthenticationViewTest {
     }
     @Test
     void login(){
-        InputOutput.output.add("password6");
+        InputOutput.input.add("password6");
         manager.setTocken("admin");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
         Assertions.assertEquals(true,manager.getIsUserLoggedin());
         manager.setUserLoggedIn(false);
-        InputOutput.output.add("chert");
+        InputOutput.input.add("chert");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login back"));
         Assertions.assertEquals(false,manager.getIsUserLoggedin());
         manager.setUserLoggedIn(false);
-        InputOutput.output.add("back");
+        InputOutput.input.add("back");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
         Assertions.assertEquals(false,manager.getIsUserLoggedin());
         //todo
     }
     @Test
     void register(){
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
         manager.setTocken("admin");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account seller hi"));
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account manager 45"));
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
-        InputOutput.output.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account buyer 89"));
     }
 

@@ -23,8 +23,7 @@ public class SortView extends View {
     }
 
     protected void ShowAvailableSorts() {
-        manager.showList(controller.getAvailableSort(manager.getTocken()));
-
+        controller.getAvailableSort(manager.getTocken()).forEach(i -> manager.inputOutput.println(i));
     }
 
     protected void Sort(Matcher matcher) {

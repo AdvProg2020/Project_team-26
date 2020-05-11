@@ -4,7 +4,7 @@ import controller.account.AuthenticationController;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-import org.junit.Before;
+import org.junit.jupiter.api.BeforeEach;
 
 public class CartControllerTest {
 
@@ -14,7 +14,7 @@ public class CartControllerTest {
     private AuthenticationController authenticationController;
     private CartController cartController;
 
-    @Before
+    @BeforeEach
     public void setup() {
         repositoryContainer = new RepositoryContainer();
         token = Session.addSession();

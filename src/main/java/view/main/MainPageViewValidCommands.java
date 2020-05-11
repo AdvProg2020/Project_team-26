@@ -20,7 +20,6 @@ public enum MainPageViewValidCommands {
     ShowProducts("products", new AllProductView(MainPageViewValidCommands.getManager())) {
         @Override
         public void goToFunction(MainPageView page) {
-
         }
     },
     ShowOffs("offs", new AllOffsIView(MainPageViewValidCommands.getManager())) {
@@ -38,31 +37,37 @@ public enum MainPageViewValidCommands {
     Logout("logout", null) {
         @Override
         public void goToFunction(MainPageView page) {
-            if (page.getManager().getIsUserLoggedin())
+            if (page.getManager().getIsUserLoggedin()){
                 page.logout(manager.getTocken());
+                return;
+        }
             page.printError();
         }
     },
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)", null) {
         @Override
         public void goToFunction(MainPageView page) {
-            if (!page.getManager().getIsUserLoggedin())
+            if (!page.getManager().getIsUserLoggedin()) {
                 page.authorizing();
+                return;
+            }
             page.printError();
         }
     },
     LoginAccount("login\\s+(.*)", null) {
         @Override
         public void goToFunction(MainPageView page) {
-            if (!page.getManager().getIsUserLoggedin())
+            if (!page.getManager().getIsUserLoggedin()) {
                 page.authorizing();
+                return;
+            }
             page.printError();
         }
     };
 
     private Pattern commandPattern;
+    private String output;
     private View view = null;
-    private MainPageView function = null;
     public static ViewManager manager;
 
     public void setManager(ViewManager manager) {
@@ -83,19 +88,15 @@ public enum MainPageViewValidCommands {
     MainPageViewValidCommands(String output, View view) {
         this.commandPattern = Pattern.compile(output);
         this.view = view;
+        this.output = output;
     }
 
     public static ViewManager getManager() {
         return manager;
     }
 
-    List<String> getvalidCommands() {
-        List<String> commandList = new ArrayList<>();
-        /**
-         *
-         *
-         *
-         */
-        return commandList;
+    @Override
+    public String toString() {
+        return this.output;
     }
 }

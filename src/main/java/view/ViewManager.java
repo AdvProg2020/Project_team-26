@@ -36,13 +36,6 @@ public class ViewManager {
         this.session = session;
     }
 
-    public void setPathOfView(View view) {
-        this.pathOfView.add(view);
-    }
-
-    public void revomeFromPath(View view) {
-
-    }
 
 
     public void setTocken(String tocken) {
@@ -60,22 +53,6 @@ public class ViewManager {
 
     public boolean getIsUserLoggedin() {
         return isUserLoggedIn;
-    }
-
-    public List<String> getHelpFormatForPrint() {
-        return helpFormatForPrint;
-    }
-
-    public List<View> getPathOfView() {
-        return pathOfView;
-    }
-
-    public void setHelpFormatForPrint(List<String> helpFormatForPrint) {
-        this.helpFormatForPrint = helpFormatForPrint;
-    }
-
-    public void showResult(/*//*/) {
-
     }
 
     public void printError() {
