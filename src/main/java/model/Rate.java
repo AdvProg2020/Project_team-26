@@ -16,4 +16,12 @@ public class Rate {
         this.score = score;
         this.product = product;
     }
+
+    public int getCustomerId() {
+        return this.customer.getId();
+    }
+
+    public void setScore(double score) {
+        this.score = score;
+    }
 }

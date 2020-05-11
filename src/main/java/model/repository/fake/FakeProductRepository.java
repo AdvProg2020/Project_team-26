@@ -10,7 +10,7 @@ import static model.State.CHECKING_FOR_ADD;
 
 public class FakeProductRepository implements ProductRepository {
 
-    private List<Product> allProducts;
+    List<Product> allProducts;
 
     public FakeProductRepository() {
         this.allProducts = new ArrayList<>();
