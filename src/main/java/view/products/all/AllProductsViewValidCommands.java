@@ -1,8 +1,8 @@
 package view.products.all;
-import view.filter.*;
+
+import view.filterAndSort.*;
 
 import view.*;
-import view.sort.SortView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,21 +16,20 @@ public enum AllProductsViewValidCommands {
 
         }
     },
-    ViewSubCategory("view\\s+sub\\s+(.*)", null) {////
+    ViewSubCategory("sub\\s+(.*)", null) {////
 
         @Override
         public void goToFunction(AllProductView page) {
-            page.showSubcategories();
-
+            page.subcategory(Pattern.compile(ViewSubCategory.toString()).matcher(page.getInput()));
         }
     },
-    Filtering("filtering", new FilterView(AllProductsViewValidCommands.getManager())) {
+    Filtering("filtering", AllProductsViewValidCommands.getFilterAndSort()) {
         @Override
         public void goToFunction(AllProductView page) {
 
         }
     },
-    Sorting("sorting", new SortView(AllProductsViewValidCommands.getManager())) {
+    Sorting("sorting", AllProductsViewValidCommands.getFilterAndSort()) {
         @Override
         public void goToFunction(AllProductView page) {
 
@@ -62,6 +61,7 @@ public enum AllProductsViewValidCommands {
     private final View view;
     private final String value;
     private static ViewManager manager;
+    private static FilterAndSort filterAndSort;
 
     public void setManager(ViewManager manager) {
         AllProductsViewValidCommands.manager = manager;
@@ -80,6 +80,14 @@ public enum AllProductsViewValidCommands {
         this.commandPattern = Pattern.compile(output);
         this.view = view;
         this.value = output;
+    }
+
+    public void setFiltering(FilterAndSort filtering) {
+        AllProductsViewValidCommands.filterAndSort = filtering;
+    }
+
+    public static FilterAndSort getFilterAndSort() {
+        return filterAndSort;
     }
 
     public static ViewManager getManager() {

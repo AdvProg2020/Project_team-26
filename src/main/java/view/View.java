@@ -20,10 +20,13 @@ public abstract class View implements IView {
         this.input = input;
     }
 
+
+
+
     public String getInput() {
         return input;
     }
 
-    public abstract View run() throws AlreadyLoggedInException;
+    public abstract View run();
 
 }

@@ -2,7 +2,7 @@ package view.offs;
 
 import view.View;
 import view.ViewManager;
-import view.filter.FilterView;
+import view.filterAndSort.FilterAndSort;
 import view.sort.SortView;
 
 import java.util.regex.Matcher;
@@ -21,7 +21,7 @@ public enum AllOffsValidCommands {
 
         }
     },
-    Filtering("filtering", new FilterView(AllOffsValidCommands.getManager())){
+    Filtering("filtering", new FilterAndSort(AllOffsValidCommands.getManager())){
         @Override
         public void goToFunction(AllOffsIView page) {
 

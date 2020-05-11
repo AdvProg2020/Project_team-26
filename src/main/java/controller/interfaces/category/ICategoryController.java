@@ -9,6 +9,7 @@ import model.CategoryFeature;
 import model.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ICategoryController {
 
@@ -28,11 +29,17 @@ public interface ICategoryController {
     void removeProduct(int id, int productName, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
 
-    List<Category> getAllCategories(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
+    List<Category> getAllCategories(int id, String token) throws InvalidIdException;
+
+    void getExceptionOfIfCategoryExist(int id, String token) throws InvalidIdException;
+
+    List<Category> getAllCategoriesWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException;
 
     List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
-    Category getCategory(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
+    Category getCategory(int id, String token) throws InvalidIdException;
+
+    List<Category> getAllProductWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException;
 
     List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 

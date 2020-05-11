@@ -25,7 +25,7 @@ public class MainPageView extends View {
     }
 
     @Override
-    public View run() throws AlreadyLoggedInException {
+    public View run() {
         boolean isFound;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("exit|back")) {
             isFound = false;
@@ -50,7 +50,7 @@ public class MainPageView extends View {
         return null;
     }
 
-    protected void authorizing() throws AlreadyLoggedInException {
+    protected void authorizing() {
         AuthenticationView auth = new AuthenticationView(manager, super.input);
         auth.run();
     }

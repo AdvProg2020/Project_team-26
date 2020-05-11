@@ -11,6 +11,7 @@ import model.repository.ProductRepository;
 import model.repository.RepositoryContainer;
 
 import java.util.List;
+import java.util.Map;
 
 public class CategoryController implements ICategoryController {
     CategoryRepository categoryRepository;
@@ -175,6 +176,20 @@ public class CategoryController implements ICategoryController {
         return category.getSubCategory();
     }
 
+    @Override
+    public void getExceptionOfIfCategoryExist(int id, String token) throws InvalidIdException {
+
+    }
+
+    @Override
+    public List<Category> getAllCategoriesWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException {
+        if (id == 0) {//todo
+            return categoryRepository.getAll();
+        }
+        Category category = getCategoryByIdWithCheck(id);
+        return category.getSubCategory();
+    }
+
     public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
@@ -185,6 +200,11 @@ public class CategoryController implements ICategoryController {
     public Category getCategory(int id, String token) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category;
+    }
+
+    @Override
+    public List<Category> getAllProductWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException {
+        return null;
     }
 
     @Override
