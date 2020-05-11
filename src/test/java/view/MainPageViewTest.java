@@ -22,7 +22,7 @@ public class MainPageViewTest {
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }
     @Test
-    void run() throws AlreadyLoggedInException {
+    void run() {
         setUp();
         InputOutput.input.add("offs");
         InputOutput.input.add("back");
@@ -41,7 +41,7 @@ public class MainPageViewTest {
         Assertions.assertEquals("invalid command pattern",InputOutput.getOutput().get(0));
     }
     @Test
-    void authorizing() throws AlreadyLoggedInException {
+    void authorizing() {
         setUp();
         manager.setToken("notloggedin");//
         InputOutput.input.add("login test6");
@@ -68,7 +68,7 @@ public class MainPageViewTest {
     }
 
     @Test
-    void helpTest() throws AlreadyLoggedInException {
+    void helpTest() {
         InputOutput.input.add("help");
         InputOutput.input.add("back");
         InputOutput.input.add("help");
@@ -90,7 +90,7 @@ public class MainPageViewTest {
         Assertions.assertEquals(commandList,InputOutput.getOutput());
     }
     @Test
-    void logout() throws AlreadyLoggedInException {
+    void logout() {
         setUp();
         manager.setUserLoggedIn(true);
         mainPageView.logout("notloggedin");

@@ -15,7 +15,7 @@ public class CustomerIView extends View implements IView {
     }
 
     @Override
-    public View run() throws AlreadyLoggedInException {
+    public View run(){
         while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
             for (CustomerValidCommand command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {

@@ -22,7 +22,7 @@ public class AuthenticationViewTest {
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }
     @Test
-    void login() throws AlreadyLoggedInException {
+    void login() {
         setUp();
         InputOutput.input.add("password6");
         manager.setToken("admin");
@@ -40,7 +40,7 @@ public class AuthenticationViewTest {
         //todo
     }
     @Test
-    void register() throws AlreadyLoggedInException {
+    void register() {
         setUp();
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");

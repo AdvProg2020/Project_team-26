@@ -23,7 +23,7 @@ public class AuthenticationView extends View {
     }
 
     @Override
-    public View run() throws AlreadyLoggedInException {
+    public View run() {
         if (input.matches(AuthenticationValidCommands.LoginAccount.toString()))
             login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher(input));
         else if (input.matches(AuthenticationValidCommands.CreateAccount.toString()))
@@ -31,7 +31,7 @@ public class AuthenticationView extends View {
         return null;
     }
 
-    public void login(Matcher matcher) throws AlreadyLoggedInException {
+    public void login(Matcher matcher) {
         matcher.find();
         Account account = new Account();
         manager.inputOutput.println("enter password or type back if you want to return to previous");
@@ -61,7 +61,7 @@ public class AuthenticationView extends View {
         }
     }
 
-    public void register(Matcher matcher) throws AlreadyLoggedInException {
+    public void register(Matcher matcher) {
         Account account = getUserInfo(matcher);
         boolean isComplete = false;
         while (!isComplete) {

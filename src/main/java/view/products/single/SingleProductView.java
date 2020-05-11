@@ -1,8 +1,6 @@
 package view.products.single;
 
-import controller.account.AuthenticationController;
 import controller.interfaces.cart.ICartController;
-import controller.interfaces.product.IShowProductController;
 import model.Product;
 import view.*;
 import view.main.AuthenticationView;
@@ -11,20 +9,19 @@ import java.util.EnumSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class SingleProductViewI extends View {
+public class SingleProductView extends View {
     EnumSet<SingleProductViewValidCommands> validCommands;
     private Product product;
     private ICartController cartController;
-    IShowProductController controller;
 
-    public SingleProductViewI(ViewManager manager, Product product) {
+    public SingleProductView(ViewManager manager, Product product) {
         super(manager);
         validCommands = EnumSet.allOf(SingleProductViewValidCommands.class);
         this.product = product;
     }
 
     @Override
-    public View run() throws AlreadyLoggedInException {
+    public View run() {
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (SingleProductViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -36,13 +33,7 @@ public class SingleProductViewI extends View {
     }
 
     protected void addToTheCart() {
-        if (!manager.getIsUserLoggedIn()) {
-            manager.inputOutput.println("you are not logged in please enter your username");
-            String username = manager.inputOutput.nextLine();
-            if (username.matches("back"))
-                return;
-            new AuthenticationView(manager, username).login(Pattern.compile("(.*)").matcher(username));
-        }
+
     }
 
     protected String selectAUserForBuyingFrom() {

@@ -6,6 +6,8 @@ import view.main.MainPageView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ViewManager {
     private boolean isUserLoggedIn;
@@ -49,7 +51,7 @@ public class ViewManager {
         this.token = token;
     }
 
-    public void startProgram() throws AlreadyLoggedInException {
+    public void startProgram() {
         MainPageView startView = new MainPageView(this);
         startView.run();
     }
@@ -72,6 +74,12 @@ public class ViewManager {
             inputOutput.println(s);
         }
 
+    }
+    public boolean checkTheInputIsInteger(String input) {
+        Matcher matcher = Pattern.compile("^[0-9]*$").matcher(input);
+        if (matcher.find())
+            return true;
+        return false;
     }
     //public void setTheCommandsForUserDependentOnSituation()
 }
