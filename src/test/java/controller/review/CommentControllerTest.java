@@ -5,9 +5,12 @@ import controller.account.ShowUserController;
 import exception.*;
 import model.Comment;
 import model.Session;
+import model.repository.CommentRepository;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 
+import model.repository.fake.FakeCommentRepository;
+import model.repository.fake.FakeUserRepository;
 import org.junit.jupiter.api.*;
 
 import javax.naming.AuthenticationException;
@@ -18,6 +21,7 @@ public class CommentControllerTest {
 
     private RepositoryContainer repositoryContainer;
     private UserRepository userRepository;
+    private CommentRepository commentRepository;
     private String token;
     private AuthenticationController authenticationController;
     private CommentController commentController;
@@ -29,6 +33,7 @@ public class CommentControllerTest {
         authenticationController = new AuthenticationController(repositoryContainer);
         commentController = new CommentController(repositoryContainer);
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        commentRepository = (CommentRepository) repositoryContainer.getRepository("CommentRepository");
     }
 
 
@@ -54,7 +59,9 @@ public class CommentControllerTest {
         
         authenticationController.login("test8","password8",token);
         commentController.addAComment("Good",0,token);
-        commentController.removeComment(1,);
+        Assertions.assertEquals("Garbage",commentRepository.getById(6).getText());
+        commentController.removeComment(6,token);
+        Assertions.assertEquals(commentRepository.getById(6),null);
 
     }
 

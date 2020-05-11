@@ -32,8 +32,8 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameFormat(account.getUsername());
         checkEmailFormat(account.getEmail());
         checkUsernameAvailability(account.getUsername());
-        if (userSession.getLoggedInUser() != null) {
-            // throw new Alreadr
+        if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+            throw new AlreadyLoggedInException("You are logged in");
         } else {
             switch (account.getRole()) {
                 case CUSTOMER:

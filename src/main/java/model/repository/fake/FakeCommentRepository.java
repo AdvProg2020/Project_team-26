@@ -19,7 +19,6 @@ public class FakeCommentRepository implements CommentRepository {
     private FakeProductRepository fakeProductRepository;
 
     public FakeCommentRepository() {
-        repositoryContainer = new RepositoryContainer();
         fakeUserRepository = new FakeUserRepository();
         fakeProductRepository = new FakeProductRepository();
         this.allComments = new ArrayList<>();
