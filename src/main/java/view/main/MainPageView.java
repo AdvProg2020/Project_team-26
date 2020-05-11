@@ -21,7 +21,7 @@ public class MainPageView extends View {
         this.manager = manager;
         commands = EnumSet.allOf(MainPageViewValidCommands.class);
         super.input = new String();
-        controller = new AuthenticationController(new RepositoryContainer());
+        controller = (AuthenticationController)manager.getControllerContainer().getControllerByName("AuthenticationController");
     }
 
     @Override
@@ -36,8 +36,10 @@ public class MainPageView extends View {
                         command.getView().run();
                         isFound = true;
                         break;
-                    } else
+                    } else {
+                        command.setManager(this.manager);
                         command.goToFunction(this);
+                    }
                     isFound = true;
                     break;
                 }

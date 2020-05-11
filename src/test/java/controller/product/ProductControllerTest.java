@@ -15,7 +15,7 @@ class ProductControllerTest {
     ProductController productController;
     RepositoryContainer repositoryContainer;
 
-    @BeforeAll
+   // @BeforeAll
     void setup() {
 
     }

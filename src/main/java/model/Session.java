@@ -29,20 +29,20 @@ public class Session {
 
     public static void initializeFake(UserRepository userRepository) {
         Session session1 = new Session();
-        session1.loggedInUser = userRepository.getById(1);
+        session1.loggedInUser = userRepository.getById(7);
 
         Session session2 = new Session();
-        session2.loggedInUser = userRepository.getById(5);
+        session2.loggedInUser = userRepository.getById(6);
 
         Session session3 = new Session();
-        session3.loggedInUser = userRepository.getById(8);
+        session3.loggedInUser = userRepository.getById(9);
 
         Session session4 = new Session();
 
-        sessionList.put("admin", session1);
-        sessionList.put("seller", session2);
-        sessionList.put("customer", session3);
-        sessionList.put("notloggedin", session4);
+        Session.sessionList.put("admin", session1);
+        Session.sessionList.put("seller", session2);
+        Session.sessionList.put("customer", session3);
+        Session.sessionList.put("notloggedin", session4);
     }
 
     private int id;

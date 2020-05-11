@@ -1,8 +1,8 @@
 package view.products.all;
+import view.filter.*;
 
 import view.*;
-import view.products.all.filter.FilterView;
-import view.products.all.sort.SortView;
+import view.sort.SortView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

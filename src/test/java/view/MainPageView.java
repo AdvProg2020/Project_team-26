@@ -22,6 +22,7 @@ public class MainPageView {
     }
     @Test
     void run(){
+        setUp();
         InputOutput.input.add("offs");
         InputOutput.input.add("back");
         InputOutput.input.add("back");
@@ -40,10 +41,11 @@ public class MainPageView {
     }
     @Test
     void authorizing(){
+        setUp();
+        manager.setTocken("notloggedin");//
         InputOutput.input.add("login test6");
         InputOutput.input.add("password6");
         InputOutput.input.add("back");
-        manager.setTocken("admin");
         mainPageView.run();
         Assertions.assertEquals(true,manager.getIsUserLoggedin());
         manager.setUserLoggedIn(false);
@@ -59,7 +61,7 @@ public class MainPageView {
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
         InputOutput.input.add("back");
-        manager.setTocken("notloggedin");
+        manager.setTocken("admin");
         mainPageView.run();
         Assertions.assertEquals(true,manager.getIsUserLoggedin());
     }
@@ -87,13 +89,23 @@ public class MainPageView {
         Assertions.assertEquals(commandList,InputOutput.getOutput());
     }
     @Test
-    void logout(){//todo
+    void logout(){
+        setUp();
         manager.setUserLoggedIn(true);
         mainPageView.logout("notloggedin");
         Assertions.assertEquals("You are not logged in.",InputOutput.getOutput().get(0));
+        manager.setUserLoggedIn(true);
+        mainPageView.logout("admin");
+        Assertions.assertEquals(false,manager.getIsUserLoggedin());
         InputOutput.input.add("jhihs");
         InputOutput.input.add("back");
         mainPageView.run();
         Assertions.assertEquals("invalid command pattern",InputOutput.getOutput().get(1));
+        manager.setUserLoggedIn(true);
+        InputOutput.input.add("logout");
+        InputOutput.input.add("back");
+        manager.setTocken("admin");
+        mainPageView.run();
+        Assertions.assertEquals(false,manager.getIsUserLoggedin());
     }
 }

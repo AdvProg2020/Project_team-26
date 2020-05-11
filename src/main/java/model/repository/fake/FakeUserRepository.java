@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 public class FakeUserRepository implements UserRepository {
     List<User> allUsers;
     List<Account> allFakeAccounts;
-    static int lastId = 5;
+    int lastId = 5;
 
     public FakeUserRepository() {
         allUsers = new ArrayList<>();

@@ -14,6 +14,7 @@ public class ViewManager {
     private List<String> helpFormatForPrint;
     public Scanner scan;
     public IO inputOutput;
+    private ControllerContainer controllerContainer;
 
     public ViewManager() {
         pathOfView = new ArrayList<>();
@@ -22,6 +23,11 @@ public class ViewManager {
         scan = new Scanner(System.in);
         isUserLoggedIn = false;
         inputOutput = new InputOutput();
+        controllerContainer = new ControllerContainer();
+    }
+
+    public ControllerContainer getControllerContainer() {
+        return controllerContainer;
     }
 
     public String getSession() {

@@ -2,8 +2,8 @@ package view.offs;
 
 import view.View;
 import view.ViewManager;
-import view.offs.filter.FilterIView;
-import view.offs.sort.SortIView;
+import view.filter.FilterView;
+import view.sort.SortView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,13 +15,13 @@ public enum AllOffsValidCommands {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    Sorting("sorting", new SortIView(AllOffsValidCommands.getManager())){
+    Sorting("sorting", new SortView(AllOffsValidCommands.getManager())){
         @Override
         public void goToFunction(AllOffsIView page) {
 
         }
     },
-    Filtering("filtering", new FilterIView(AllOffsValidCommands.getManager())){
+    Filtering("filtering", new FilterView(AllOffsValidCommands.getManager())){
         @Override
         public void goToFunction(AllOffsIView page) {
 

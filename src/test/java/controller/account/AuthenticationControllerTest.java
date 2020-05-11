@@ -5,7 +5,6 @@ import model.Role;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-import org.junit.Before;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.BeforeAll;
 

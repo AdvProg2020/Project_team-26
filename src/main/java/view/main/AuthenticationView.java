@@ -22,7 +22,7 @@ public class AuthenticationView extends View {
     public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         input = command;
-        control = new AuthenticationController(new RepositoryContainer());
+        control = (AuthenticationController) manager.getControllerContainer().getControllerByName("AuthenticationController");
     }
 
     @Override
@@ -85,6 +85,7 @@ public class AuthenticationView extends View {
             }
         }
     }
+
     private void correctField(String field, Account account) {
         manager.inputOutput.println("correct the field " + field + ".");
         switch (field) {

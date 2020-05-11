@@ -1,4 +1,4 @@
-package view.offs.filter;
+package view.filter;
 import view.*;
 
 import view.View;
@@ -7,9 +7,9 @@ import view.ViewManager;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class FilterIView extends View implements IView {
+public class FilterView extends View {
     EnumSet<FilterViewValidCommands> validCommands;
-    public FilterIView(ViewManager manager){
+    public FilterView(ViewManager manager){
         super(manager);
         validCommands = EnumSet.allOf(FilterViewValidCommands.class);
     }

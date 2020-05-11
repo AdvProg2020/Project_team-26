@@ -25,6 +25,7 @@ public class AuthenticationViewTest {
     }
     @Test
     void login(){
+        setUp();
         InputOutput.input.add("password6");
         manager.setTocken("admin");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
@@ -34,13 +35,15 @@ public class AuthenticationViewTest {
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login back"));
         Assertions.assertEquals(false,manager.getIsUserLoggedin());
         manager.setUserLoggedIn(false);
+        InputOutput.input.add("password6");
         InputOutput.input.add("back");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
-        Assertions.assertEquals(false,manager.getIsUserLoggedin());
+        Assertions.assertEquals(true,manager.getIsUserLoggedin());
         //todo
     }
     @Test
     void register(){
+        setUp();
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
@@ -56,7 +59,15 @@ public class AuthenticationViewTest {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
+        manager.setTocken("seller");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account buyer 89"));
+
+
+
+
+
+
+
     }
 
 

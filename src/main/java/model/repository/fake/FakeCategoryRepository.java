@@ -14,7 +14,7 @@ import static model.State.CHECKING_FOR_ADD;
 
 public class FakeCategoryRepository implements CategoryRepository {
     List<Category> allCategory;
-    public static int lastId = 5;
+    public int lastId = 5;
 
     public FakeCategoryRepository() {
         this.allCategory = new ArrayList<>();
