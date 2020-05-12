@@ -3,12 +3,8 @@ package view.products.all;
 import controller.interfaces.category.ICategoryController;
 import controller.interfaces.product.IProductController;
 import exception.InvalidIdException;
-import model.Product;
 import view.*;
-import view.filterAndSort.FilterAndSort;
 import view.filterAndSort.ProductFilterAndSort;
-import view.main.MainPageView;
-import view.products.single.SingleProductView;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
@@ -46,7 +42,7 @@ public class AllProductView extends View {
 
     protected void categoriesOfProducts() {
         try {
-            categoryController.getAllCategoriesWithFilter(filterAndSort.getSortAndFilter(), currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println("name is " +
+            categoryController.getAllCategoriesWithFilter(filterAndSort.getFilter(), filterAndSort.getFieldNameForSort(), filterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println("name is " +
                     category.getName() + " with id " + category.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
@@ -55,7 +51,7 @@ public class AllProductView extends View {
 
     protected void showAllProducts() {
         try {
-            categoryController.getAllProductWithFilter(filterAndSort.getSortAndFilter(), currentCategory, manager.getToken()).forEach(product -> manager.inputOutput.println(
+            categoryController.getAllProductWithFilter(filterAndSort.getFilter(), filterAndSort.getFieldNameForSort(), filterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(product -> manager.inputOutput.println(
                     "name is" + product.getName() + "id is:" + product.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
@@ -86,7 +82,15 @@ public class AllProductView extends View {
 
 
     protected void logOut() {
-        new MainPageView(manager).logout(manager.getToken());
+        manager.logoutInAllPages();
+    }
+
+    protected void login() {
+        manager.loginInAllPagesOptional(super.input);
+    }
+
+    protected void register() {
+        manager.registerInAllPagesOptional(super.input);
     }
 
     protected void printError() {

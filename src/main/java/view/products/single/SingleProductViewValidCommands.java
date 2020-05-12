@@ -1,11 +1,12 @@
 package view.products.single;
 
+import view.products.all.AllProductView;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum SingleProductViewValidCommands {
     AddCommentToThisProduct("add\\s+comment") {
-
         /**
          *
          *
@@ -59,10 +60,27 @@ public enum SingleProductViewValidCommands {
             //   page.showProductInOffPage(Pattern.compile(ShowProductInOffPage.toString()).matcher(page.getInput()));
         }
     },
-    ChangeInfo("") {
+    ChangeInfo("edit (.*)") {//todo
+
         @Override
         public void goToFunction(SingleProductView page) {
             page.changeInfo(Pattern.compile(ChangeInfo.toString()).matcher(page.getInput()), true);
+        }
+    }, Logout("logout") {
+        @Override
+        public void goToFunction(SingleProductView page) {
+            page.logOut();
+        }
+    }, CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+        @Override
+        public void goToFunction(SingleProductView page) {
+            page.register();
+        }
+    },
+    LoginAccount("login\\s+(.*)") {
+        @Override
+        public void goToFunction(SingleProductView page) {
+            page.login();
         }
     };
     private final Pattern commandPattern;

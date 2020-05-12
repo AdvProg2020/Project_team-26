@@ -4,7 +4,7 @@ import view.*;
 
 import java.util.regex.Matcher;
 
-public class SellerAccountIView extends View{
+public class SellerAccountIView extends View {
     public SellerAccountIView(ViewManager managerView) {
         super(managerView);
     }
@@ -14,27 +14,42 @@ public class SellerAccountIView extends View{
         return;
     }
 
-    private void balance(Matcher matcher) {
+    protected void balance(Matcher matcher) {
 
     }
 
-    private void allCategories(Matcher matcher) {
+    protected void allCategories(Matcher matcher) {
 
     }
 
-    private void companyInfo(Matcher matcher) {
+    protected void companyInfo() {
 
     }
 
-    private void history(Matcher matcher) {
+    protected void history() {
 
     }
 
-    private void offs(Matcher matcher) {
+    protected void manageProducts() {
 
     }
 
-    private void products(Matcher matcher) {
+    protected void offs(Matcher matcher) {
+
+    }
+
+    protected void viewPersonalInfo() {
+
+    }
+
+    protected void edit(Matcher matcher) {
+
+    }
+
+    protected void addProduct() {
+
+    }
+    protected void removeProduct(Matcher matcher){
 
     }
 

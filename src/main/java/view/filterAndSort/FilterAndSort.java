@@ -9,17 +9,29 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 public abstract class FilterAndSort extends View {
-    Map<String, String> sortAndFilter;
-    EnumSet<FilterAndSortValidCommands> validCommands;
+    private Map<String, String> filter;
+    private EnumSet<FilterAndSortValidCommands> validCommands;
+    private String fieldNameForSort;
+    private boolean isAscending;
+    protected boolean isDefault;
 
     public FilterAndSort(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(FilterAndSortValidCommands.class);
-        sortAndFilter = new HashMap<>();
+        filter = new HashMap<>();
+        this.fieldNameForSort = new String();
     }
 
     @Override
     public void run() {
+    }
+
+    public String getFieldNameForSort() {
+        return fieldNameForSort;
+    }
+
+    public boolean isAscending() {
+        return isAscending;
     }
 
     abstract protected void disableSelectedFilter(Matcher matcher);
@@ -30,5 +42,8 @@ public abstract class FilterAndSort extends View {
 
     abstract protected void showCurrentFilters();
 
-    abstract public Map<String, String> getSortAndFilter();
+    public Map<String, String> getFilter(){
+        return filter;
+
+    }
 }

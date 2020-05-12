@@ -109,18 +109,6 @@ public class SingleProductView extends View {
         }
     }
 
-   /* private boolean loginForAddToCart() {
-        while (!manager.getIsUserLoggedIn()) {
-            manager.inputOutput.println("first login.\nenter your username or back.");
-            String username = manager.inputOutput.nextLine();
-            if (username.equalsIgnoreCase("back"))
-                return false;
-            AuthenticationView authenticationView = new AuthenticationView(manager, "login " + username);
-            authenticationView.login(Pattern.compile("login (.*)").matcher("login " + username));
-        }
-        return true;
-    }*/
-
     protected void attributeOfProduct() {
         digest();
         //todo
@@ -160,7 +148,7 @@ public class SingleProductView extends View {
         manager.inputOutput.println("enter text");
         String text = manager.inputOutput.nextLine();
         try {
-            commentController.addAComment(text, product.getId(), manager.getToken());
+            commentController.addAComment(text, title, product.getId(), manager.getToken());
         } catch (NoAccessException | InvalidTokenException e) {
             manager.inputOutput.println(e.getMessage());
         }
@@ -195,8 +183,16 @@ public class SingleProductView extends View {
     private void printError() {
 
     }
-
     protected void logOut() {
-        new MainPageView(manager).logout(manager.getToken());
+        manager.logoutInAllPages();
     }
+
+    protected void login() {
+        manager.loginInAllPagesOptional(super.input);
+    }
+
+    protected void register() {
+        manager.registerInAllPagesOptional(super.input);
+    }
+
 }

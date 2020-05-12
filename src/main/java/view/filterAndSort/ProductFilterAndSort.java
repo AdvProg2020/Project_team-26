@@ -31,7 +31,7 @@ public class ProductFilterAndSort extends FilterAndSort {
     }
 
     @Override
-    public Map<String, String> getSortAndFilter() {
+    public Map<String, String> getFilter() {
         return null;
     }
 }

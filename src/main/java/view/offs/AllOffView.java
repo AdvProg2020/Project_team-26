@@ -1,13 +1,9 @@
 package view.offs;
 
 import controller.interfaces.discount.IOffController;
-import controller.interfaces.product.IProductController;
-import exception.InvalidIdException;
 import model.Product;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
-import view.products.all.AllProductsViewValidCommands;
-import view.products.single.SingleProductView;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -42,11 +38,11 @@ public class AllOffView extends View implements IView {
     }
 
     private void showAll() {
-        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getSortAndFilter(), toString());
+        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilter(),productFilterAndSort.getFieldNameForSort(),productFilterAndSort.isAscending(), manager.getToken());
         for (Product product : productList) {
             manager.inputOutput.println("name " + product.getName() + " with id:" + product.getId());
             product.getSellerList().forEach(i -> manager.inputOutput.println("seller :" + i.getSeller().getFullName() +
-                    "with price " + i.getPrice()));
+                    "with price " + i.getPrice() + " and price in off "+ i.getPriceInOff()));
         }
     }
 
@@ -64,6 +60,18 @@ public class AllOffView extends View implements IView {
 
     protected void printError() {
 
+    }
+
+    protected void logOut() {
+        manager.logoutInAllPages();
+    }
+
+    protected void login() {
+        manager.loginInAllPagesOptional(super.input);
+    }
+
+    protected void register() {
+        manager.registerInAllPagesOptional(super.input);
     }
 
 

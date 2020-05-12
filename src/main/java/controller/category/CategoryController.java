@@ -58,7 +58,7 @@ public class CategoryController implements ICategoryController {
 
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
         Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null ||session.getLoggedInUser().getRole() != Role.ADMIN)
+        if (session.getLoggedInUser() == null || session.getLoggedInUser().getRole() != Role.ADMIN)
             throw new NoAccessException(message);
     }
 
@@ -182,7 +182,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public List<Category> getAllCategoriesWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException {
+    public List<Category> getAllCategoriesWithFilter(Map<String, String> filter, String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException {
         if (id == 0) {//todo
             return categoryRepository.getAll();
         }
@@ -203,7 +203,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public List<Category> getAllProductWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException {
+    public List<Category> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int id, String token) throws InvalidIdException {
         return null;
     }
 
@@ -213,9 +213,10 @@ public class CategoryController implements ICategoryController {
         Category category = getCategoryByIdWithCheck(id);
         return category.getProducts();
     }
+
     public Category getByName(String name) throws InvalidIdException {
         Category category = categoryRepository.getByName(name);
-        if(category == null)
+        if (category == null)
             throw new InvalidIdException("no such name exist.");
         return category;
     }
