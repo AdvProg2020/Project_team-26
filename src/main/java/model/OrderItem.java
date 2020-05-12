@@ -38,4 +38,8 @@ public class OrderItem {
     public long getPaidPrice() {
         return paidPrice;
     }
+
+    public int getProductId() {
+        return product.getId();
+    }
 }

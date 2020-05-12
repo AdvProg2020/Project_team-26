@@ -67,7 +67,7 @@ public class FakeUserRepository implements UserRepository {
         if(getById(customerId) instanceof Customer) {
             for (Order order : ((Customer) getById(customerId)).getOrders()) {
                 for (OrderItem item : order.getItems()) {
-                    if(item.getId() == productId) {
+                    if(item.getProductId() == productId) {
                         return true;
                     }
                 }

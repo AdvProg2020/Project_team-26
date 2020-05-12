@@ -37,7 +37,7 @@ public class RatingControllerTest {
     }
 
     @Test
-    public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException {
+    public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException {
         /** Exception Tests **/
         Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addARating(5.0,
                 2,token));
@@ -46,8 +46,12 @@ public class RatingControllerTest {
         ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.addARating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You have not bought this product");
+        authenticationController.logout(token);
+        /** Exception Tests **/
+        authenticationController.login("test8","password8",token);
+
         ratingController.addARating(5.0,1,token);
-        Assertions.assertEquals(ratingRepository.getById(6).getCustomerId(),);
+        Assertions.assertEquals(ratingRepository.getById(6).getScore(),5.0);
     }
 
 }
