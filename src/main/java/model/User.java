@@ -3,10 +3,7 @@ package model;
 import controller.account.Account;
 import exception.NotEnoughCreditException;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -35,9 +32,11 @@ public class User {
     @Column(name = "credit", nullable = false)
     private long credit;
 
-    //TODO: define relations
-    //private Map<String, String> details;
-
+    @ElementCollection
+    @JoinTable(name = "user_details",
+            joinColumns = @JoinColumn(name = "user_details_id", referencedColumnName = "user_id"))
+    @MapKeyColumn(name = "key")
+    private Map<String, String> details;
 
     public User() {
     }
@@ -50,7 +49,7 @@ public class User {
     }
 
     public String getFullName() {
-        return "";//TODO: details.get("firstname") + details.get("lastname");
+        return details.get("firstname") + details.get("lastname");
     }
 
     public int getId() {
@@ -69,11 +68,10 @@ public class User {
         return role;
     }
 
-    //TODO: redefine functions
-//    public Map<String, String> getDetails() {
-//        return details;
-//    }
-//
+    public Map<String, String> getDetails() {
+        return details;
+    }
+
 
     public void setId(int id) {
         this.id = id;
