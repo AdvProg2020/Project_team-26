@@ -1,22 +1,37 @@
 package model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Entity
+@Table(name = "product")
 public class Product {
 
+    @Id
+    @Column(name = "product_id", unique = true)
     private int id;
-    private State state;
+
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
+
+    @Column(name = "brand", nullable = false)
     private String brand;
-    private List<ProductSeller> sellerList;
-    private Category category;
-    private Map<CategoryFeature, Object> categoryFeatures;
+
+    @Column(name = "description", nullable = false)
     private String description;
+
     private double averageRate;
+
+    private Category category;
+    private List<ProductSeller> sellerList;
     private List<Comment> comments;
+    private Map<CategoryFeature, Object> categoryFeatures;
 
     public Product(int id) {
         this.id = id;
@@ -27,10 +42,6 @@ public class Product {
 
     public int getId() {
         return id;
-    }
-
-    public State getState() {
-        return state;
     }
 
     public String getName() {
@@ -67,10 +78,6 @@ public class Product {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setState(State state) {
-        this.state = state;
     }
 
     public void setName(String name) {
