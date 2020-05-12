@@ -56,6 +56,8 @@ public class FakeRatingRepository implements RatingRepository {
 
     @Override
     public void save(Rate object) {
+        lastId++;
+        object.setId(lastId);
         allRatings.add(object);
     }
 

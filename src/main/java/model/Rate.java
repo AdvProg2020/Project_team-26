@@ -32,4 +32,8 @@ public class Rate {
     public int getId() {
         return this.id;
     }
+
+    public double getScore() {
+        return this.score;
+    }
 }
