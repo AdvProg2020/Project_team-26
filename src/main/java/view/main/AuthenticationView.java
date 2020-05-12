@@ -78,6 +78,8 @@ public class AuthenticationView extends View {
             } catch (InvalidAuthenticationException e) {
                 manager.inputOutput.println(e.getMessage());
                 correctField(e.getFieldName(), account);
+            } catch (AlreadyLoggedInException e) {
+                //TODO
             }
         }
     }

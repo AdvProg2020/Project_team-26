@@ -65,7 +65,7 @@ public class AuthenticationControllerTest {
     @Test
     public void loginTest() {
         /** Exception Tests**/
-        Exception ex = assertThrows(PasswordIsWrongException.class, () -> authenticationController.login(
+        Exception ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.login(
                 "test1","password2",token));
         Assertions.assertEquals(ex.getMessage(),"Password is wrong");
         ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.login(

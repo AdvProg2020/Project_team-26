@@ -26,14 +26,14 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByName(username));
     }
 
-    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException {
+    public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
         checkEmailFormat(account.getEmail());
         checkUsernameAvailability(account.getUsername());
-        if (userSession.getLoggedInUser() != null) {
-            // throw new Alreadr
+        if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+            throw new AlreadyLoggedInException("You are logged in");
         } else {
             switch (account.getRole()) {
                 case CUSTOMER:
@@ -70,6 +70,9 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     private void checkEmailFormat(String Email) throws InvalidFormatException {
+        if(Email == null) {
+            return; //Todo
+        }
         if (!Email.matches("^\\S+@\\S+.(?i)com(?-i)")) {
             throw new InvalidFormatException("Email format is incorrect.", "Email");
         }
