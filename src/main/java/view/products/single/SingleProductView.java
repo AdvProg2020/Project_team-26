@@ -11,6 +11,7 @@ import model.Product;
 import model.ProductSeller;
 import view.*;
 import view.main.AuthenticationView;
+import view.main.MainPageView;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -30,15 +31,19 @@ public class SingleProductView extends View {
     }
 
     @Override
-    public View run() {
+    public void run() {
+        boolean isDone = false;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (SingleProductViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     command.goToFunction(this);
+                    isDone = true;
+                    break;
                 }
             }
+            if (!isDone)
+                printError();
         }
-        return null;
     }
 
     protected void addToTheCart() {
@@ -185,5 +190,13 @@ public class SingleProductView extends View {
          */
 
 
+    }
+
+    private void printError() {
+
+    }
+
+    protected void logOut() {
+        new MainPageView(manager).logout(manager.getToken());
     }
 }

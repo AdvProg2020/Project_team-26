@@ -21,12 +21,10 @@ public abstract class View implements IView {
     }
 
 
-
-
     public String getInput() {
         return input;
     }
 
-    public abstract View run();
+    public abstract void run();
 
 }

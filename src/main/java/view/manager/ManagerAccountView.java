@@ -25,7 +25,7 @@ public class ManagerAccountView extends View {
     }
 
     @Override
-    public View run() {
+    public void run() {
         while (manager.getIsUserLoggedIn()) {
             if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;
@@ -39,7 +39,6 @@ public class ManagerAccountView extends View {
                 }
             }
         }
-        return null;
     }
 
     protected void edit(Matcher matcher) {

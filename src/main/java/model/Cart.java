@@ -42,6 +42,10 @@ public class Cart {
     public Map<ProductSeller, Integer> getProducts() {
         return products;
     }
+    public Map<ProductSeller, Integer> getProductsWithSort() {
+        //todo
+        return products;
+    }
 
     public void setUsedPromo(Promo usedPromo) {
         this.usedPromo = usedPromo;
@@ -50,4 +54,5 @@ public class Cart {
     public void setAddress(String address) {
         this.address = address;
     }
+
 }

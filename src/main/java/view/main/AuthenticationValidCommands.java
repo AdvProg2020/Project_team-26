@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 public enum AuthenticationValidCommands {
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
     LoginAccount("login\\s+(.*)");
+
+
     private final Pattern commandPattern;
     private final String output;
 

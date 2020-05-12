@@ -9,7 +9,7 @@ public class ManageCategoryForManagerView extends View {
     }
 
     @Override
-    public View run() {
-        return null;
+    public void run() {
+
     }
 }

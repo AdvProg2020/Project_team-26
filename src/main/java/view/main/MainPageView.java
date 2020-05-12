@@ -1,12 +1,13 @@
 package view.main;
 
 import controller.account.AuthenticationController;
-import exception.AlreadyLoggedInException;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
 import view.*;
 
 import view.ViewManager;
+import view.offs.AllOffView;
+import view.products.all.AllProductView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -21,25 +22,17 @@ public class MainPageView extends View {
         this.manager = manager;
         commands = EnumSet.allOf(MainPageViewValidCommands.class);
         super.input = new String();
-        controller = (AuthenticationController)manager.getControllerContainer().getController("AuthenticationController");
+        controller = (AuthenticationController) manager.getControllerContainer().getController("AuthenticationController");
     }
 
     @Override
-    public View run() {
+    public void run() {
         boolean isFound;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("exit|back")) {
             isFound = false;
             for (MainPageViewValidCommands command : commands) {
                 if ((command.getStringMatcher(super.input).find())) {
-                    if (command.getView() != null) {
-                        command.setManager(this.manager);
-                        command.getView().run();
-                        isFound = true;
-                        break;
-                    } else {
-                        command.setManager(this.manager);
-                        command.goToFunction(this);
-                    }
+                    command.goToFunction(this);
                     isFound = true;
                     break;
                 }
@@ -47,7 +40,6 @@ public class MainPageView extends View {
             if (!isFound)
                 printError();
         }
-        return null;
     }
 
     protected void authorizing() {
@@ -76,6 +68,16 @@ public class MainPageView extends View {
         } catch (NotLoggedINException | InvalidTokenException e) {
             manager.inputOutput.println(e.getMessage());
         }
+    }
+
+    protected void product() {
+        AllProductView allProductView = new AllProductView(manager);
+        allProductView.run();
+    }
+
+    protected void off() {
+        AllOffView allOffView = new AllOffView(manager);
+        allOffView.run();
     }
 
     public void printError() {

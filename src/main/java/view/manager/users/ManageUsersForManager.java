@@ -17,7 +17,7 @@ public class ManageUsersForManager extends View implements IView {
     }
 
     @Override
-    public View run() {
+    public void run() {
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (ValidCommandsForManageUsersForManagerView command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -26,7 +26,6 @@ public class ManageUsersForManager extends View implements IView {
                 }
             }
         }
-        return null;
     }
 
 

@@ -22,7 +22,7 @@ public class discountForManagerView extends View implements IView {
     }
 
     @Override
-    public View run() {
+    public void run() {
         showAll();
         while (manager.getIsUserLoggedIn()) {
             if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
@@ -34,7 +34,6 @@ public class discountForManagerView extends View implements IView {
                 }
             }
         }
-        return null;
     }
 
     protected void showAll() {

@@ -10,8 +10,8 @@ public class SellerAccountIView extends View{
     }
 
     @Override
-    public View run() {
-        return null;
+    public void run() {
+        return;
     }
 
     private void balance(Matcher matcher) {

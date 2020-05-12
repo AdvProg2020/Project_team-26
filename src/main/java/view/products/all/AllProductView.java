@@ -28,17 +28,13 @@ public class AllProductView extends View {
     }
 
     @Override
-    public View run() {
-        boolean isDone = false;
+    public void run() {
+        boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
+            isDone = false;
             for (AllProductsViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
-                    command.setManager(this.manager);
-                    command.setFiltering(this.filterAndSort);
-                    if (command.getView() != null)
-                        command.getView().run();
-                    else
-                        command.goToFunction(this);
+                    command.goToFunction(this);
                     isDone = true;
                     break;
                 }
@@ -46,7 +42,6 @@ public class AllProductView extends View {
             if (isDone)
                 printError();
         }
-        return null;
     }
 
     protected void categoriesOfProducts() {
@@ -86,20 +81,7 @@ public class AllProductView extends View {
     }
 
     protected void singleProductView(Matcher matcher) {
-        matcher.find();
-        String id = matcher.group(1);
-        if (manager.checkTheInputIsInteger(id)) {
-            int productId = Integer.parseInt(id);
-            try {
-                Product product = productController.getProductById(productId, manager.getToken());
-                SingleProductView singleProductView = new SingleProductView(manager, product);
-                singleProductView.run();
-            } catch (InvalidIdException e) {
-                manager.inputOutput.println(e.getMessage());
-            }
-            return;
-        }
-        manager.inputOutput.println("the id is invalid format.");
+        manager.singleProductView(matcher);
     }
 
 
@@ -109,6 +91,14 @@ public class AllProductView extends View {
 
     protected void printError() {
 
+    }
+
+    protected void filter() {
+        filterAndSort.run();
+    }
+
+    protected void sort() {
+        filterAndSort.run();
     }
 
     public void setCurrentCategory(int currentCategory) {

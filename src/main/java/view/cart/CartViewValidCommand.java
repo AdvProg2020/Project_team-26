@@ -16,16 +16,22 @@ public enum CartViewValidCommand {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
+    Sort("sorting") {
+        @Override
+        public void goToFunction(CartIView page) {
+            page.sort();
+        }
+    },
     IncreaseNumberOfProductForBuyerWithId("increase\\s+(.*)") {
         @Override
         public void goToFunction(CartIView page) {
-            page.increaseNumberOfProductForBuyerWithId(Pattern.compile(IncreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()));
+            page.chanageInNumber(Pattern.compile(IncreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), +1);
         }
     },
     DecreaseNumberOfProductForBuyerWithId("decrease\\s+(.*)") {
         @Override
         public void goToFunction(CartIView page) {
-            page.decreaseNumberOfProductForBuyerWithId(Pattern.compile(DecreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()));
+            page.chanageInNumber(Pattern.compile(DecreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), -1);
         }
     },
     ShowTotalPriceToBuyer("show\\s+total\\s+price") {
@@ -45,7 +51,7 @@ public enum CartViewValidCommand {
     },
     ;
     private final Pattern commandPattern;
-    private CartIView function = null;
+    private String value;
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
@@ -56,6 +62,12 @@ public enum CartViewValidCommand {
 
     CartViewValidCommand(String output) {
         this.commandPattern = Pattern.compile(output);
+        value = output;
     }
 
+
+    @Override
+    public String toString() {
+        return this.value;
+    }
 }

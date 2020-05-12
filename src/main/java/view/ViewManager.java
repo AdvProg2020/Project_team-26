@@ -1,7 +1,11 @@
 package view;
 
+import controller.interfaces.product.IProductController;
 import exception.AlreadyLoggedInException;
+import exception.InvalidIdException;
+import model.Product;
 import view.main.MainPageView;
+import view.products.single.SingleProductView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +50,6 @@ public class ViewManager {
     }
 
 
-
     public void setToken(String token) {
         this.token = token;
     }
@@ -75,11 +78,30 @@ public class ViewManager {
         }
 
     }
+
     public boolean checkTheInputIsInteger(String input) {
         Matcher matcher = Pattern.compile("^[0-9]*$").matcher(input);
         if (matcher.find())
             return true;
         return false;
+    }
+
+    public void singleProductView(Matcher matcher) {
+        IProductController productController = (IProductController) controllerContainer.getController("ProductController");
+        matcher.find();
+        String id = matcher.group(1);
+        if (this.checkTheInputIsInteger(id)) {
+            int productId = Integer.parseInt(id);
+            try {
+                Product product = productController.getProductById(productId, this.getToken());
+                SingleProductView singleProductView = new SingleProductView(this, product);
+                singleProductView.run();
+            } catch (InvalidIdException e) {
+                this.inputOutput.println(e.getMessage());
+            }
+            return;
+        }
+        this.inputOutput.println("the id is invalid format.");
     }
     //public void setTheCommandsForUserDependentOnSituation()
 }

@@ -1,48 +1,46 @@
 package view.main;
 
-import view.View;
 import view.ViewManager;
-import view.offs.AllOffsIView;
-import view.products.all.AllProductView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainPageViewValidCommands {
-    Exit("exit", null) {
+    Exit("exit") {
         @Override
         public void goToFunction(MainPageView page) {
 
         }
     },
-    ShowProducts("products", new AllProductView(MainPageViewValidCommands.getManager())) {
+    ShowProducts("products") {
         @Override
         public void goToFunction(MainPageView page) {
+            page.product();
         }
     },
-    ShowOffs("offs", new AllOffsIView(MainPageViewValidCommands.getManager())) {
+    ShowOffs("offs") {
         @Override
         public void goToFunction(MainPageView page) {
-
+            page.off();
         }
     },
-    Help("help", null) {
+    Help("help") {
         @Override
         public void goToFunction(MainPageView page) {
             page.help(page.getManager().getIsUserLoggedIn());
         }
     },
-    Logout("logout", null) {
+    Logout("logout") {
         @Override
         public void goToFunction(MainPageView page) {
-            if (page.getManager().getIsUserLoggedIn()){
+            if (page.getManager().getIsUserLoggedIn()) {
                 page.logout(manager.getToken());
                 return;
-        }
+            }
             page.printError();
         }
     },
-    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)", null) {
+    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
         @Override
         public void goToFunction(MainPageView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -52,7 +50,7 @@ public enum MainPageViewValidCommands {
             page.printError();
         }
     },
-    LoginAccount("login\\s+(.*)", null) {
+    LoginAccount("login\\s+(.*)") {
         @Override
         public void goToFunction(MainPageView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -65,33 +63,21 @@ public enum MainPageViewValidCommands {
 
     private Pattern commandPattern;
     private String output;
-    private View view = null;
     public static ViewManager manager;
 
-    public void setManager(ViewManager manager) {
-        MainPageViewValidCommands.manager = manager;
-    }
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
 
     }
 
-    public View getView() {
-        return this.view;
-    }
-
     public abstract void goToFunction(MainPageView page);
 
-    MainPageViewValidCommands(String output, View view) {
+    MainPageViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
-        this.view = view;
         this.output = output;
     }
 
-    public static ViewManager getManager() {
-        return manager;
-    }
 
     @Override
     public String toString() {

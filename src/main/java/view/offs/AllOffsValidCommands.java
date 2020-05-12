@@ -1,51 +1,45 @@
 package view.offs;
 
-import view.View;
-import view.ViewManager;
-import view.filterAndSort.FilterAndSort;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum AllOffsValidCommands {
-    ShowProductWithId("show\\s+product\\s+(.*)", null){
+    ShowProductWithId("show\\s+product\\s+(.*)") {
         @Override
-        public void goToFunction(AllOffsIView page) {
+        public void goToFunction(AllOffView page) {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    Sorting("sorting", new FilterAndSort(AllOffsValidCommands.getManager())){
+    Sorting("sorting") {
         @Override
-        public void goToFunction(AllOffsIView page) {
-
+        public void goToFunction(AllOffView page) {
+            page.sort();
         }
     },
-    Filtering("filtering", new FilterAndSort(AllOffsValidCommands.getManager())){
+    Filtering("filtering") {
         @Override
-        public void goToFunction(AllOffsIView page) {
-
+        public void goToFunction(AllOffView page) {
+            page.filter();
         }
     };
     private final Pattern commandPattern;
-    private final View view;
-    private static ViewManager manager;
+    private String value;
 
-    public static void setManager(ViewManager manager) {
-        AllOffsValidCommands.manager = manager;
-    }
+
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
-
     }
 
-    public abstract void goToFunction(AllOffsIView page);
+    public abstract void goToFunction(AllOffView page);
 
-    AllOffsValidCommands(String output, View view) {
+    AllOffsValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
-        this.view = view;
+        this.value = output;
     }
 
-    public static ViewManager getManager() {
-        return manager;
+
+    @Override
+    public String toString() {
+        return value;
     }
 }

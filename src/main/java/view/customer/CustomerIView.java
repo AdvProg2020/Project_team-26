@@ -15,7 +15,7 @@ public class CustomerIView extends View implements IView {
     }
 
     @Override
-    public View run(){
+    public void run(){
         while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
             for (CustomerValidCommand command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -27,7 +27,6 @@ public class CustomerIView extends View implements IView {
                 }
             }
         }
-        return null;
     }
 
     protected void editTheField(Matcher matcher) {

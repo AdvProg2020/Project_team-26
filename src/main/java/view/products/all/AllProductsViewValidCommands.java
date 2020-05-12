@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum AllProductsViewValidCommands {
-    ViewCategoriesOfProducts("view\\s+categories", null) {////
+    ViewCategoriesOfProducts("view\\s+categories") {////
 
         @Override
         public void goToFunction(AllProductView page) {
@@ -16,38 +16,39 @@ public enum AllProductsViewValidCommands {
 
         }
     },
-    ViewSubCategory("sub\\s+(.*)", null) {////
+    ViewSubCategory("sub\\s+(.*)") {////
 
         @Override
         public void goToFunction(AllProductView page) {
             page.subcategory(Pattern.compile(ViewSubCategory.toString()).matcher(page.getInput()));
         }
     },
-    Filtering("filtering", AllProductsViewValidCommands.getFilterAndSort()) {
+    Filtering("filtering") {
         @Override
         public void goToFunction(AllProductView page) {
+            page.filter();
+        }
+    },
+    Sorting("sorting") {
+        @Override
+        public void goToFunction(AllProductView page) {
+            page.sort();
 
         }
     },
-    Sorting("sorting", AllProductsViewValidCommands.getFilterAndSort()) {
-        @Override
-        public void goToFunction(AllProductView page) {
-
-        }
-    },
-    ShowAllProducts("show\\s+products", null) {
+    ShowAllProducts("show\\s+products") {
         @Override
         public void goToFunction(AllProductView page) {
             page.showAllProducts();
         }
     },
-    ShowProductsWithId("show\\s+product\\s+(.*)", null) {
+    ShowProductsWithId("show\\s+product\\s+(.*)") {
         @Override
         public void goToFunction(AllProductView page) {
             page.singleProductView(Pattern.compile(ShowProductsWithId.toString()).matcher(page.getInput()));
         }
     },
-    Logout("logout", null) {
+    Logout("logout") {
         @Override
         public void goToFunction(AllProductView page) {
             if (page.getManager().getIsUserLoggedIn()) {
@@ -58,40 +59,15 @@ public enum AllProductsViewValidCommands {
         }
     };
     private final Pattern commandPattern;
-    private final View view;
     private final String value;
-    private static ViewManager manager;
-    private static FilterAndSort filterAndSort;
-
-    public void setManager(ViewManager manager) {
-        AllProductsViewValidCommands.manager = manager;
-    }
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
     }
 
-    public View getView() {
-        return this.view;
-    }
-
-
-    AllProductsViewValidCommands(String output, View view) {
+    AllProductsViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
-        this.view = view;
         this.value = output;
-    }
-
-    public void setFiltering(FilterAndSort filtering) {
-        AllProductsViewValidCommands.filterAndSort = filtering;
-    }
-
-    public static FilterAndSort getFilterAndSort() {
-        return filterAndSort;
-    }
-
-    public static ViewManager getManager() {
-        return manager;
     }
 
     public abstract void goToFunction(AllProductView page);

@@ -4,5 +4,5 @@ package view;
 import exception.AlreadyLoggedInException;
 
 public interface IView {
-    public abstract View run();
+    public abstract void run();
 }

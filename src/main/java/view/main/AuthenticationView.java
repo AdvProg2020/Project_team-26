@@ -23,12 +23,11 @@ public class AuthenticationView extends View {
     }
 
     @Override
-    public View run() {
+    public void run() {
         if (input.matches(AuthenticationValidCommands.LoginAccount.toString()))
             login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher(input));
         else if (input.matches(AuthenticationValidCommands.CreateAccount.toString()))
             register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher(input));
-        return null;
     }
 
     public void login(Matcher matcher) {

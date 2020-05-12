@@ -103,7 +103,7 @@ public class CartController implements ICartController {
         Order order = new Order(customer, cart.getUsedPromo(), cart.getAddress());
 
         for (ProductSeller productSeller : cart.getProducts().keySet()) {
-            if(productSeller.getRemainingItems() < cart.getProducts().get(productSeller)) {
+            if (productSeller.getRemainingItems() < cart.getProducts().get(productSeller)) {
                 throw new NotEnoughProductsException("There is not enough products anymore.", productSeller);
             }
 
@@ -122,8 +122,13 @@ public class CartController implements ICartController {
     }
 
     private void processOrder(Map<ProductSeller, Integer> orderItems) throws NotEnoughProductsException {
-        for(ProductSeller productSeller : orderItems.keySet()) {
+        for (ProductSeller productSeller : orderItems.keySet()) {
             productSeller.sell(orderItems.get(productSeller));
         }
+    }
+
+    public long getToTalPrice(Cart cart, String token) {
+        //fill
+        return 0;
     }
 }

@@ -19,8 +19,7 @@ public abstract class FilterAndSort extends View {
     }
 
     @Override
-    public View run() {
-        return null;
+    public void run() {
     }
 
     abstract protected void disableSelectedFilter(Matcher matcher);

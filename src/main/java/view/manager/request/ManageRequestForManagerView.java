@@ -14,7 +14,7 @@ public class ManageRequestForManagerView extends View implements IView {
     }
 
     @Override
-    public View run() {
+    public void run() {
         while (manager.getIsUserLoggedIn()) {
             if ((super.input = (manager.scan.nextLine()).trim()).matches("back"))
                 break;
@@ -25,7 +25,6 @@ public class ManageRequestForManagerView extends View implements IView {
                 }
             }
         }
-        return null;
     }
 
     protected void detailOfRequest(Matcher matcher) {

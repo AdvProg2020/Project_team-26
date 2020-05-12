@@ -10,6 +10,7 @@ import model.repository.OffRepository;
 import model.repository.ProductRepository;
 
 import java.util.List;
+import java.util.Map;
 
 public class OffController implements IOffController {
     private OffRepository offRepository;
@@ -103,6 +104,11 @@ public class OffController implements IOffController {
     @Override
     public List<Off> getAllOffs(String token) {
         return offRepository.getAll();
+    }
+
+    @Override
+    public List<Product> getAllProductWithOff(Map<String, String> filter, String token) {
+        return null;
     }
 
     @Override

@@ -14,7 +14,7 @@ public class OrdersIView extends View implements IView {
     }
 
     @Override
-    public View run() {
+    public void run() {
         while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
             for (OrdersViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -23,7 +23,6 @@ public class OrdersIView extends View implements IView {
                 }
             }
         }
-        return null;
     }
 
     protected void rateTheProductWithItsId(Matcher matcher) {

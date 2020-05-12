@@ -19,6 +19,8 @@ public interface IOffController {
 
     List<Off> getAllOffs(String token);
 
+    List<Product> getAllProductWithOff(Map<String, String> filter, String token);
+
     List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException;
 
     Off getOff(int id, String token) throws InvalidIdException;

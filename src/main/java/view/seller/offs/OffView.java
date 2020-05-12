@@ -27,7 +27,7 @@ public class OffView extends View {
     }
 
     @Override
-    public View run() {
-        return null;
+    public void run() {
+        return;
     }
 }
