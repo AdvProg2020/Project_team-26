@@ -24,6 +24,7 @@ public class Order {
         this.customer = customer;
         this.usedPromo = usedPromo;
         this.address = address;
+        this.items = new ArrayList<>();
         // TODO: set date for order
     }
 

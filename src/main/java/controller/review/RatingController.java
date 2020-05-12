@@ -24,7 +24,7 @@ public class RatingController implements IRatingController {
 
     public void addARating(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user.getRole() != Role.CUSTOMER) {
+        if(user == null || user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
         } else if(!userRepository.hasBoughtProduct(user.getId(),productId)) {
             throw new NotBoughtTheProductException("You have not bought this product");
