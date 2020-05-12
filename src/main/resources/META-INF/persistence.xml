@@ -20,8 +20,9 @@
                       value="jdbc:mysql://localhost/store"/>
 
             <property name="javax.persistence.jdbc.user"
-                      value="root"/>
+                      value="dbadmin@localhost"/>
             <property name="javax.persistence.jdbc.password"
-                      value="Pouya#0024392561"/>
+                      value="1234578"/>
         </properties>
     </persistence-unit>
+</persistence>

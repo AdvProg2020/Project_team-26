@@ -4,12 +4,11 @@ import org.hibernate.annotations.GeneratorType;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Entity
-@Table(name = "product")
+@Table(name = "product_rate")
 public class Product {
 
     @Id
@@ -30,7 +29,7 @@ public class Product {
     private double averageRate;
 
     @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @Column(name = "category_id", nullable = false)
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

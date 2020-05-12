@@ -1,8 +1,5 @@
 package model;
 
-import net.bytebuddy.matcher.InheritedAnnotationMatcher;
-import view.products.all.AllProductView;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;

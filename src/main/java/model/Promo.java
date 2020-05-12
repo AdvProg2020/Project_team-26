@@ -1,19 +1,42 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "promo")
 public class Promo {
 
+    @Id
+    @Column(name = "promo_id", unique = true)
     private int id;
+
+    @Column(name = "promo_code", unique = true)
     private String promoCode;
+
+    @Column(name = "start_date", nullable = false)
     private Date startDate;
+
+    @Column(name = "end_date", nullable = false)
     private Date endDate;
+
+    @Column(name = "discount_percent", nullable = false)
     private double percent;
+
+    @Column(name = "max_discount", nullable = false)
     private long maxDiscount;
+
+    @Column(name = "max_valid_use", nullable = false)
     private int maxValidUse;
+
+    // TODO: define many to many correctly
+    @ManyToMany
     private List<Customer> customers;
+
+    public Promo() {
+    }
 
     public Promo(String code) {
         this.promoCode = code;

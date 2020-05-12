@@ -20,8 +20,13 @@ public class ProductSeller {
     @JoinColumn(name = "seller_id")
     private Seller seller;
 
+    @Column(name = "price", nullable = false)
     private long price;
+
+    @JoinColumn(name = "price_in_off", table = "product_seller_off")
     private long priceInOff;
+
+    @Column(name = "remaining_items")
     private int remainingItems;
 
     public ProductSeller() {

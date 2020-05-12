@@ -27,6 +27,10 @@ public class Comment {
     @Column(name = "state", nullable = false)
     private CommentState state;
 
+    public Comment() {
+
+    }
+
     public String getText() {
         return text;
     }
