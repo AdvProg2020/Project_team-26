@@ -1,12 +1,30 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "comment")
 public class Comment {
 
+    @Id
+    @Column(name="comment_id", unique = true)
     private int id;
+
+    @Column(name = "title", nullable = false)
     private String title;
-    private Customer customer;
-    private Product product;
+
+    @Column(name = "text", nullable = false)
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false)
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
+    private Product product;
+
+    @Column(name = "state", nullable = false)
     private CommentState state;
 
     public String getText() {

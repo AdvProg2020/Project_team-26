@@ -3,21 +3,44 @@ package model;
 import controller.account.Account;
 import exception.NotEnoughCreditException;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @Column(name = "user_id", unique = true)
     private int id;
+
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "role", nullable = false)
     private Role role;
+
+    @Column(name = "credit", nullable = false)
     private long credit;
-    private Map<String, String> details;
-    private List<Promo> promoCodes;
+
+    //TODO: define relations
+    //private Map<String, String> details;
+
+
+    public User() {
+    }
 
     public User(String username, String password, String email, Role role) {
         this.username = username;
@@ -27,7 +50,7 @@ public class User {
     }
 
     public String getFullName() {
-        return details.get("firstname") + details.get("lastname");
+        return "";//TODO: details.get("firstname") + details.get("lastname");
     }
 
     public int getId() {
@@ -46,13 +69,11 @@ public class User {
         return role;
     }
 
-    public Map<String, String> getDetails() {
-        return details;
-    }
-
-    public List<Promo> getPromoCodes() {
-        return promoCodes;
-    }
+    //TODO: redefine functions
+//    public Map<String, String> getDetails() {
+//        return details;
+//    }
+//
 
     public void setId(int id) {
         this.id = id;

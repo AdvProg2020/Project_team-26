@@ -9,6 +9,9 @@
 
         <class>model.Category</class>
         <class>model.Product</class>
+        <class>model.ProductSeller</class>
+        <class>model.Comment</class>
+        <class>model.Rate</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"
@@ -17,8 +20,8 @@
                       value="jdbc:mysql://localhost/store"/>
 
             <property name="javax.persistence.jdbc.user"
-                      value="<!--TODO-->"/>
+                      value="root"/>
             <property name="javax.persistence.jdbc.password"
-                      value="<!--TODO-->"/>
+                      value="Pouya#0024392561"/>
         </properties>
     </persistence-unit>

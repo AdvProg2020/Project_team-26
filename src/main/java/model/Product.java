@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.GeneratorType;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +13,7 @@ import java.util.Map;
 public class Product {
 
     @Id
+//    @GeneratorType()
     @Column(name = "product_id", unique = true)
     private int id;
 
@@ -30,20 +33,16 @@ public class Product {
     @JoinColumn(name = "category_id", nullable = false)
     private Category category;
 
-    @OneToMany(mappedBy = "product_seller", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSeller> sellerList;
 
-    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
 
-    private Map<CategoryFeature, Object> categoryFeatures;
+    //private Map<CategoryFeature, Object> categoryFeatures;
 
-    public Product(int id) {
-        this.id = id;
-        sellerList = new ArrayList<ProductSeller>();
-        categoryFeatures = new HashMap<>();
-        comments = new ArrayList<Comment>();
+    public Product() {
     }
 
     public int getId() {
@@ -75,9 +74,9 @@ public class Product {
         return category;
     }
 
-    public Map<CategoryFeature, Object> getCategoryFeatures() {
-        return categoryFeatures;
-    }
+//    public Map<CategoryFeature, Object> getCategoryFeatures() {
+//        return categoryFeatures;
+//    }
 
     public String getDescription() {
         return description;

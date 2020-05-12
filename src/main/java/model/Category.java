@@ -1,22 +1,40 @@
 package model;
 
+import net.bytebuddy.matcher.InheritedAnnotationMatcher;
 import view.products.all.AllProductView;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
+@Table(name = "category")
 public class Category {
 
+    @Id
+    @Column(name = "category_id")
     private int id;
+
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
-    private List<CategoryFeature> features;
+
+    @ManyToOne
+    @JoinColumn(name = "parent_id")
     private Category parent;
+
+    @OneToMany(mappedBy = "parent")
     private List<Category> subCategory;
+
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
+//    private List<CategoryFeature> features;
+
+    public Category() {
+    }
 
     public Category(String name) {
         this.name = name;
-        features = new ArrayList<CategoryFeature>();
+//        features = new ArrayList<CategoryFeature>();
         subCategory = new ArrayList<Category>();
         products = new ArrayList<Product>();
     }
@@ -34,9 +52,9 @@ public class Category {
         return parent;
     }
 
-    public List<CategoryFeature> getFeatures() {
-        return features;
-    }
+//    public List<CategoryFeature> getFeatures() {
+//        return features;
+//    }
 
     public List<Category> getSubCategory() {
         return subCategory;
@@ -82,10 +100,10 @@ public class Category {
 
     @Override
     public boolean equals(Object obj) {
-        if((obj instanceof Category))
+        if ((obj instanceof Category))
             return false;
         Category category = (Category) obj;
-        if(category.getId() == this.getId())
+        if (category.getId() == this.getId())
             return true;
         return false;
     }
@@ -96,7 +114,7 @@ public class Category {
         category.setId(this.id);
         this.subCategory.forEach(i -> category.subCategory.add(i));
         this.products.forEach(i -> category.products.add(i));
-        this.features.forEach(i -> category.features.add(i));
+//        this.features.forEach(i -> category.features.add(i));
         return category;
     }
 }

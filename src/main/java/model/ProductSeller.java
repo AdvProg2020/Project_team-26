@@ -2,14 +2,31 @@ package model;
 
 import exception.NotEnoughProductsException;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "product_seller")
 public class ProductSeller {
 
+    @Id
+    @Column(name="product_seller_id")
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
     private Seller seller;
+
     private long price;
     private long priceInOff;
     private int remainingItems;
+
+    public ProductSeller() {
+
+    }
 
     public ProductSeller(int id, Product product) {
         this.id = id;
@@ -37,7 +54,7 @@ public class ProductSeller {
     }
 
     public void sell(int amount) throws NotEnoughProductsException {
-        if(remainingItems < amount) {
+        if (remainingItems < amount) {
             throw new NotEnoughProductsException("Not enough products", this);
         }
         remainingItems -= amount;
