@@ -1,6 +1,7 @@
 package model;
 
 import controller.account.Account;
+import exception.NotEnoughCreditException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +13,9 @@ public class User {
     private int id;
     private String username;
     private String password;
-    private String firstName;
-    private String lastName;
     private String email;
     private Role role;
+    private long credit;
     private Map<String, String> details;
     private List<Promo> promoCodes;
 
@@ -28,14 +28,6 @@ public class User {
 
     public int getId() {
         return id;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public String getUsername() {
@@ -58,18 +50,23 @@ public class User {
         return promoCodes;
     }
 
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
-
     public void setId(int id) {
         this.id = id;
     }
 
     public boolean checkPassword(String password) {
-        if(this.password.equals(password)) {
-            return true;
+        return this.password.equals(password);
+    }
+
+    public long getCredit() {
+        return credit;
+    }
+
+    public void pay(long amount) throws NotEnoughCreditException {
+        if(amount > credit) {
+            throw new NotEnoughCreditException("You don't have enough creadit to pay " + amount, credit);
         }
-        return false;
+
+        credit -= amount;
     }
 }
