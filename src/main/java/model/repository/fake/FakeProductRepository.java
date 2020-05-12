@@ -22,7 +22,7 @@ public class FakeProductRepository implements ProductRepository {
             obj.setAverageRate(i * 5.5 / 7.1);
             obj.setDescription("this is product:" + i);
             obj.setName("" + i);
-            obj.setState(CHECKING_FOR_ADD);
+            //obj.setState(CHECKING_FOR_ADD);
         }
     }
 
