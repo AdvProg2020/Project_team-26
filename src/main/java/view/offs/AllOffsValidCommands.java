@@ -1,5 +1,7 @@
 package view.offs;
 
+import view.products.single.SingleProductView;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,6 +22,22 @@ public enum AllOffsValidCommands {
         @Override
         public void goToFunction(AllOffView page) {
             page.filter();
+        }
+    }, Logout("logout") {
+        @Override
+        public void goToFunction(AllOffView page) {
+            page.logOut();
+        }
+    }, CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+        @Override
+        public void goToFunction(AllOffView page) {
+            page.register();
+        }
+    },
+    LoginAccount("login\\s+(.*)") {
+        @Override
+        public void goToFunction(AllOffView page) {
+            page.login();
         }
     };
     private final Pattern commandPattern;

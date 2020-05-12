@@ -8,6 +8,7 @@ public class ProductSeller {
     private Product product;
     private Seller seller;
     private long price;
+    private long priceInOff;
     private int remainingItems;
 
     public ProductSeller(int id, Product product) {
@@ -40,5 +41,9 @@ public class ProductSeller {
             throw new NotEnoughProductsException("Not enough products", this);
         }
         remainingItems -= amount;
+    }
+
+    public long getPriceInOff() {
+        return priceInOff;
     }
 }

@@ -25,13 +25,13 @@ public enum CartViewValidCommand {
     IncreaseNumberOfProductForBuyerWithId("increase\\s+(.*)") {
         @Override
         public void goToFunction(CartIView page) {
-            page.chanageInNumber(Pattern.compile(IncreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), +1);
+            page.changeInNumber(Pattern.compile(IncreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), +1);
         }
     },
     DecreaseNumberOfProductForBuyerWithId("decrease\\s+(.*)") {
         @Override
         public void goToFunction(CartIView page) {
-            page.chanageInNumber(Pattern.compile(DecreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), -1);
+            page.changeInNumber(Pattern.compile(DecreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), -1);
         }
     },
     ShowTotalPriceToBuyer("show\\s+total\\s+price") {
@@ -48,8 +48,23 @@ public enum CartViewValidCommand {
         public void goToFunction(CartIView page) {
             page.purchase();
         }
+    }, Logout("logout") {
+        @Override
+        public void goToFunction(CartIView page) {
+            page.logOut();
+        }
+    }, CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+        @Override
+        public void goToFunction(CartIView page) {
+            page.register();
+        }
     },
-    ;
+    LoginAccount("login\\s+(.*)") {
+        @Override
+        public void goToFunction(CartIView page) {
+            page.login();
+        }
+    };
     private final Pattern commandPattern;
     private String value;
 

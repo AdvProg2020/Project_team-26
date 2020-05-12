@@ -33,13 +33,13 @@ public interface ICategoryController {
 
     void getExceptionOfIfCategoryExist(int id, String token) throws InvalidIdException;
 
-    List<Category> getAllCategoriesWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException;
+    List<Category> getAllCategoriesWithFilter(Map<String, String> filter, String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException;
 
     List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
     Category getCategory(int id, String token) throws InvalidIdException;
 
-    List<Category> getAllProductWithFilter(Map<String, String> filter, int id, String token) throws InvalidIdException;
+    List<Category> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int id, String token) throws InvalidIdException;
 
     List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 

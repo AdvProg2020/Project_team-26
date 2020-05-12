@@ -4,6 +4,7 @@ import controller.interfaces.product.IProductController;
 import exception.AlreadyLoggedInException;
 import exception.InvalidIdException;
 import model.Product;
+import view.main.AuthenticationView;
 import view.main.MainPageView;
 import view.products.single.SingleProductView;
 
@@ -15,17 +16,12 @@ import java.util.regex.Pattern;
 
 public class ViewManager {
     private boolean isUserLoggedIn;
-    private String session;
     private String token;
-    private List<View> pathOfView;
-    private List<String> helpFormatForPrint;
     public Scanner scan;
     public IO inputOutput;
     private ControllerContainer controllerContainer;
 
     public ViewManager() {
-        pathOfView = new ArrayList<>();
-        helpFormatForPrint = new ArrayList<>();
         isUserLoggedIn = true;
         scan = new Scanner(System.in);
         isUserLoggedIn = false;
@@ -37,20 +33,14 @@ public class ViewManager {
         return controllerContainer;
     }
 
-    public String getSession() {
-        return session;
-    }
 
     public String getToken() {
         return token;
     }
 
-    public void setSession(String session) {
-        this.session = session;
-    }
 
 
-    public void setToken(String token) {
+    public void setTokenFromController() {
         this.token = token;
     }
 
@@ -102,6 +92,46 @@ public class ViewManager {
             return;
         }
         this.inputOutput.println("the id is invalid format.");
+    }
+
+    public boolean loginInAllPagesEssential() {
+        while (!this.getIsUserLoggedIn()) {
+            this.inputOutput.println("first login.\nenter your username or back.");
+            String username = this.inputOutput.nextLine();
+            if (username.equalsIgnoreCase("back"))
+                return false;
+            AuthenticationView authenticationView = new AuthenticationView(this, "login " + username);
+            authenticationView.login(Pattern.compile("login (.*)").matcher("login " + username));
+        }
+        return true;
+    }
+
+    public void loginInAllPagesOptional(String command) {
+        if (this.getIsUserLoggedIn()) {
+            this.inputOutput.println("you are already logged in");
+            return;
+        }
+        AuthenticationView authenticationView = new AuthenticationView(this, command);
+        authenticationView.login(Pattern.compile("login (.*)").matcher(command));
+        return;
+    }
+
+    public void registerInAllPagesOptional(String command) {
+        if (this.getIsUserLoggedIn()) {
+            this.inputOutput.println("you are already logged in first logout");
+            return;
+        }
+        AuthenticationView authenticationView = new AuthenticationView(this, command);
+        authenticationView.register(Pattern.compile("register (.*)").matcher(command));
+        return;
+    }
+
+    public void logoutInAllPages() {
+        if (!this.getIsUserLoggedIn()) {
+            this.inputOutput.println("you should first login");
+            return;
+        }
+        new MainPageView(this).logout(this.getToken());
     }
     //public void setTheCommandsForUserDependentOnSituation()
 }

@@ -19,7 +19,7 @@ public interface IOffController {
 
     List<Off> getAllOffs(String token);
 
-    List<Product> getAllProductWithOff(Map<String, String> filter, String token);
+    List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, String token);
 
     List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException;
 

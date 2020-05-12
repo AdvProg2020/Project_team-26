@@ -1,6 +1,5 @@
 package view;
 
-import exception.AlreadyLoggedInException;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
@@ -43,7 +42,7 @@ public class MainPageViewTest {
     @Test
     void authorizing() {
         setUp();
-        manager.setToken("notloggedin");//
+        manager.setTokenFromController("notloggedin");//
         InputOutput.input.add("login test6");
         InputOutput.input.add("password6");
         InputOutput.input.add("back");
@@ -56,13 +55,13 @@ public class MainPageViewTest {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
-        manager.setToken("notloggedin");
+        manager.setTokenFromController("notloggedin");
         mainPageView.run();
         InputOutput.input.add("login hi");
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
         InputOutput.input.add("back");
-        manager.setToken("admin");
+        manager.setTokenFromController("admin");
         mainPageView.run();
         Assertions.assertEquals(true, manager.getIsUserLoggedIn());
     }
@@ -105,7 +104,7 @@ public class MainPageViewTest {
         manager.setUserLoggedIn(true);
         InputOutput.input.add("logout");
         InputOutput.input.add("back");
-        manager.setToken("admin");
+        manager.setTokenFromController("admin");
         mainPageView.run();
         Assertions.assertEquals(false,manager.getIsUserLoggedIn());
     }

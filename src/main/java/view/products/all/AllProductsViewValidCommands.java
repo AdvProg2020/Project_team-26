@@ -51,11 +51,18 @@ public enum AllProductsViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(AllProductView page) {
-            if (page.getManager().getIsUserLoggedIn()) {
-                page.logOut();
-                return;
-            }
-            page.printError();
+            page.logOut();
+        }
+    }, CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+        @Override
+        public void goToFunction(AllProductView page) {
+            page.register();
+        }
+    },
+    LoginAccount("login\\s+(.*)") {
+        @Override
+        public void goToFunction(AllProductView page) {
+            page.login();
         }
     };
     private final Pattern commandPattern;
