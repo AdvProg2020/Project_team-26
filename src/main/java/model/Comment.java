@@ -3,10 +3,10 @@ package model;
 public class Comment {
 
     private int id;
+    private String title;
     private Customer customer;
     private Product product;
     private String text;
-    private String title;
     private CommentState state;
 
     public String getText() {

@@ -15,7 +15,6 @@ public class Product {
     private Category category;
     private Map<CategoryFeature, Object> categoryFeatures;
     private String description;
-    private Off off;
     private double averageRate;
     private List<Comment> comments;
 
@@ -44,10 +43,6 @@ public class Product {
 
     public List<ProductSeller> getSellerList() {
         return sellerList;
-    }
-
-    public Off getOff() {
-        return off;
     }
 
     public Category getCategory() {
