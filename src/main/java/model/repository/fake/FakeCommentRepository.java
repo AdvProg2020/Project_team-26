@@ -25,7 +25,6 @@ public class FakeCommentRepository implements CommentRepository {
         this.allComments = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
             save(new Comment((Customer)fakeUserRepository.getById(i + 8),fakeProductRepository.getById(i),"Garbage","New Comment"));
-            Comment comment = allComments.get(i);
         }
     }
 

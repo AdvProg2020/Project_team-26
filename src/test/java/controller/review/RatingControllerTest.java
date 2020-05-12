@@ -9,11 +9,21 @@ import org.junit.jupiter.api.BeforeEach;
 
 public class RatingControllerTest {
 
-    RepositoryContainer repositoryContainer;
+    private RepositoryContainer repositoryContainer;
+    private UserRepository userRepository;
+    private CommentRepository commentRepository;
+    private String token;
+    private AuthenticationController authenticationController;
+    private CommentController commentController;
 
 
     @BeforeEach
     public void setup() {
-
+        repositoryContainer = new RepositoryContainer();
+        token = Session.addSession();
+        authenticationController = new AuthenticationController(repositoryContainer);
+        commentController = new CommentController(repositoryContainer);
+        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        commentRepository = (CommentRepository) repositoryContainer.getRepository("CommentRepository");
     }
 }
