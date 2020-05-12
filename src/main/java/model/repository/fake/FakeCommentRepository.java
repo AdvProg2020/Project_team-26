@@ -8,6 +8,7 @@ import model.repository.RepositoryContainer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FakeCommentRepository implements CommentRepository {
@@ -61,5 +62,10 @@ public class FakeCommentRepository implements CommentRepository {
     @Override
     public boolean exist(int id) {
         return false;
+    }
+
+    @Override
+    public List<Comment> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
     }
 }

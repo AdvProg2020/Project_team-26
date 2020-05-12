@@ -37,6 +37,15 @@ public class Product {
         return name;
     }
 
+    public long getMinimumPrice() {
+        long min = Integer.MAX_VALUE;
+        for (ProductSeller productSeller : sellerList) {
+            if (min > productSeller.getPriceInOff())
+                min = productSeller.getPriceInOff();
+        }
+        return min;
+    }
+
     public String getBrand() {
         return brand;
     }

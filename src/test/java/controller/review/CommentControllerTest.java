@@ -6,7 +6,6 @@ import model.Session;
 import model.repository.CommentRepository;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

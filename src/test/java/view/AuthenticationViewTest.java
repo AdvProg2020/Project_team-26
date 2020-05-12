@@ -24,7 +24,7 @@ public class AuthenticationViewTest {
     void login() {
         setUp();
         InputOutput.input.add("password6");
-        manager.setTokenFromController("admin");
+        manager.setToken("admin");
         authenticationView.login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher("login test6"));
         Assertions.assertEquals(true,manager.getIsUserLoggedIn());
         manager.setUserLoggedIn(false);
@@ -45,7 +45,7 @@ public class AuthenticationViewTest {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
-        manager.setTokenFromController("admin");
+        manager.setToken("admin");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account seller hi"));
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
@@ -56,7 +56,7 @@ public class AuthenticationViewTest {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
-        manager.setTokenFromController("seller");
+        manager.setToken("seller");
         authenticationView.register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher("create account buyer 89"));
 
 

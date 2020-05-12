@@ -5,6 +5,7 @@ import model.repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static model.State.CHECKING_FOR_ADD;
 
@@ -72,6 +73,11 @@ public class FakeProductRepository implements ProductRepository {
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Product> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
     }
 
     @Override

@@ -107,7 +107,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public List<Product> getAllProductWithOff(Map<String, String> filter, String token) {
+    public List<Product> getAllProductWithOff(Map<String, String> filter,String sortFiled,boolean isAscending, String token) {
         return null;
     }
 

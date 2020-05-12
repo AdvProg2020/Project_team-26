@@ -132,7 +132,7 @@ public class SingleProductView extends View {
     private void showCompare(Product compare) {
         manager.inputOutput.println("name :" + product.getName() + " <-> " + compare.getName());
         manager.inputOutput.println("brand :" + product.getBrand() + " <-> " + compare.getBrand());
-        manager.inputOutput.println("off :" + product.getOff().getId() + " <-> " + compare.getOff().getId());
+        manager.inputOutput.println("off :" + product.getMinimumPrice() + " <-> " + compare.getMinimumPrice());
         manager.inputOutput.println("rate :" + product.getAverageRate() + " <-> " + compare.getAverageRate());
         manager.inputOutput.println("category :" + product.getCategory().getName() + " <-> " + compare.getCategory().getName());
     }
@@ -158,7 +158,7 @@ public class SingleProductView extends View {
         manager.inputOutput.println("name is:" + product.getName());
         manager.inputOutput.println("brand is:" + product.getBrand());
         manager.inputOutput.println("this product:" + product.getDescription());
-        manager.inputOutput.println("this off :" + product.getOff().getId());
+        manager.inputOutput.println("minimum price :" + product.getMinimumPrice());
         manager.inputOutput.println("the average rate is :" + product.getAverageRate());
         manager.inputOutput.println("Category is: with name: " + product.getCategory().getName()
                 + " with id : " + product.getCategory().getId());
@@ -169,7 +169,7 @@ public class SingleProductView extends View {
 
     private void showSellers(List<ProductSeller> productSellerList) {
         productSellerList.forEach(productSeller -> manager.inputOutput.println("seller name :" + productSeller.getSeller().getFullName()
-                + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems() + " with price " + productSeller.getPrice()));
+                + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems() + " with price by existing off " + productSeller.getPriceInOff()));
     }
 
     protected void changeInfo(Matcher matcher, boolean isItManager) {
@@ -183,6 +183,7 @@ public class SingleProductView extends View {
     private void printError() {
 
     }
+
     protected void logOut() {
         manager.logoutInAllPages();
     }

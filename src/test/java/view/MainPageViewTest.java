@@ -42,7 +42,7 @@ public class MainPageViewTest {
     @Test
     void authorizing() {
         setUp();
-        manager.setTokenFromController("notloggedin");//
+        manager.setToken("notloggedin");//
         InputOutput.input.add("login test6");
         InputOutput.input.add("password6");
         InputOutput.input.add("back");
@@ -55,13 +55,13 @@ public class MainPageViewTest {
         InputOutput.input.add("hello");
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
-        manager.setTokenFromController("notloggedin");
+        manager.setToken("notloggedin");
         mainPageView.run();
         InputOutput.input.add("login hi");
         InputOutput.input.add("hello");
         InputOutput.input.add("back");
         InputOutput.input.add("back");
-        manager.setTokenFromController("admin");
+        manager.setToken("admin");
         mainPageView.run();
         Assertions.assertEquals(true, manager.getIsUserLoggedIn());
     }
@@ -104,7 +104,7 @@ public class MainPageViewTest {
         manager.setUserLoggedIn(true);
         InputOutput.input.add("logout");
         InputOutput.input.add("back");
-        manager.setTokenFromController("admin");
+        manager.setToken("admin");
         mainPageView.run();
         Assertions.assertEquals(false,manager.getIsUserLoggedIn());
     }

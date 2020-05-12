@@ -44,6 +44,10 @@ public class ViewManager {
         this.token = token;
     }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public void startProgram() {
         MainPageView startView = new MainPageView(this);
         startView.run();

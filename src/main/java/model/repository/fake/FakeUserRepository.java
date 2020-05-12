@@ -6,6 +6,7 @@ import model.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -98,5 +99,10 @@ public class FakeUserRepository implements UserRepository {
     @Override
     public boolean exist(int id) {
         return false;
+    }
+
+    @Override
+    public List<User> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
     }
 }

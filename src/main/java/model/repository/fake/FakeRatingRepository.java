@@ -6,6 +6,7 @@ import model.repository.RatingRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FakeRatingRepository implements RatingRepository {
@@ -60,5 +61,10 @@ public class FakeRatingRepository implements RatingRepository {
     @Override
     public boolean exist(int id) {
         return false;
+    }
+
+    @Override
+    public List<Rate> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
     }
 }

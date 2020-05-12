@@ -26,6 +26,10 @@ public class User {
         this.role = role;
     }
 
+    public String getFullName() {
+        return details.get("firstname") + details.get("lastname");
+    }
+
     public int getId() {
         return id;
     }
@@ -63,7 +67,7 @@ public class User {
     }
 
     public void pay(long amount) throws NotEnoughCreditException {
-        if(amount > credit) {
+        if (amount > credit) {
             throw new NotEnoughCreditException("You don't have enough creadit to pay " + amount, credit);
         }
 
