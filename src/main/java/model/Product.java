@@ -1,9 +1,6 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,11 +23,20 @@ public class Product {
     @Column(name = "description", nullable = false)
     private String description;
 
+    @Column(name = "average_rate", nullable = false)
     private double averageRate;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
     private Category category;
+
+    @OneToMany(mappedBy = "product_seller", cascade = CascadeType.ALL)
     private List<ProductSeller> sellerList;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+
     private Map<CategoryFeature, Object> categoryFeatures;
 
     public Product(int id) {
