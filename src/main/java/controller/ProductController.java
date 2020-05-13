@@ -54,6 +54,16 @@ public class ProductController implements IProductController {
         return product;
     }
 
+    @Override
+    public void removeProduct(int id, String token) throws InvalidIdException {
+
+    }
+
+    @Override
+    public List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, String token) {
+        return null;
+    }
+
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String token){
         //todo
         return null;

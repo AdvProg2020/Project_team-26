@@ -39,9 +39,13 @@ public class ViewManager {
     }
 
 
-
-    public void setTokenFromController() {
+    public void setTokenFromController(String error) {
+        this.inputOutput.println(error);
         this.token = token;
+    }
+
+    public void setLoggedINByController() {
+        //  this.isUserLoggedIn
     }
 
     public void setToken(String token) {
@@ -63,13 +67,6 @@ public class ViewManager {
 
     public void printError() {
 
-
-    }
-
-    public void showList(List<String> list) {
-        for (String s : list) {
-            inputOutput.println(s);
-        }
 
     }
 

@@ -203,6 +203,11 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
+    public Category getCategoryByName(String name, String token) throws InvalidIdException, InvalidIdException {
+        return null;
+    }
+
+    @Override
     public List<Category> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int id, String token) throws InvalidIdException {
         return null;
     }

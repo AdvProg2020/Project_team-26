@@ -12,6 +12,7 @@ public abstract class FilterAndSort extends View {
     private Map<String, String> filter;
     private EnumSet<FilterAndSortValidCommands> validCommands;
     private String fieldNameForSort;
+    private boolean isFilter;
     private boolean isAscending;
     protected boolean isDefault;
 
@@ -42,7 +43,7 @@ public abstract class FilterAndSort extends View {
 
     abstract protected void showCurrentFilters();
 
-    public Map<String, String> getFilter(){
+    public Map<String, String> getFilter() {
         return filter;
 
     }

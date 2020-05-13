@@ -33,8 +33,7 @@ public class Product {
     private List<Comment> comments;
     private Map<CategoryFeature, Object> categoryFeatures;
 
-    public Product(int id) {
-        this.id = id;
+    public Product() {
         sellerList = new ArrayList<ProductSeller>();
         categoryFeatures = new HashMap<>();
         comments = new ArrayList<Comment>();

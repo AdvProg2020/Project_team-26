@@ -32,17 +32,17 @@ public class AllOffView extends View implements IView {
                     break;
                 }
             }
-            if (isDone)
-                printError();
+            if (!isDone)
+                manager.inputOutput.println("invalid command pattern");
         }
     }
 
     private void showAll() {
-        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilter(),productFilterAndSort.getFieldNameForSort(),productFilterAndSort.isAscending(), manager.getToken());
+        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilter(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), manager.getToken());
         for (Product product : productList) {
             manager.inputOutput.println("name " + product.getName() + " with id:" + product.getId());
             product.getSellerList().forEach(i -> manager.inputOutput.println("seller :" + i.getSeller().getFullName() +
-                    "with price " + i.getPrice() + " and price in off "+ i.getPriceInOff()));
+                    "with price " + i.getPrice() + " and price in off " + i.getPriceInOff()));
         }
     }
 

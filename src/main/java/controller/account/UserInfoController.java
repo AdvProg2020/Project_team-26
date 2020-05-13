@@ -17,10 +17,12 @@ public class UserInfoController implements IUserInfoController {
 
     public void changeUsername(String username, String token) {
     }
-    public String getFirstName(String token){
+
+    public String getFirstName(String token) {
         return null;
     }
-    public  String getLastName(String token){
+
+    public String getLastName(String token) {
         return null;
     }
 
@@ -31,11 +33,24 @@ public class UserInfoController implements IUserInfoController {
     public void setPassword(String oldPassword, String newPassword, String token) {
     }
 
+    public void changePassword(String oldPassword, String newPassword, String token) {
+    }
+
     public int getInfo(String key, String token) {
         return 0;
     }
 
     public void changeInfo(String key, String value, String token) {
+    }
+
+    @Override
+    public String getCompanyName(String token) {
+        return null;
+    }
+
+    @Override
+    public String getBalance(String token) {
+        return null;
     }
 
     public String getRole(String token) {

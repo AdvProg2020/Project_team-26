@@ -11,15 +11,8 @@ public class ManageProductForSellerView extends View {
         super(managerView);
     }
 
-    private void addProduct(Matcher matcher) {
-
-    }
 
     private void edit(Matcher matcher) {
-
-    }
-
-    private void remove(Matcher matcher) {
 
     }
 

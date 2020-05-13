@@ -26,7 +26,7 @@ public class CartIView extends View implements IView {
         try {
             cart = cartController.showCart(manager.getToken());
         } catch (InvalidTokenException e) {
-            manager.inputOutput.println(e.getMessage());
+            manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
             return;
         }
         while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
@@ -46,7 +46,7 @@ public class CartIView extends View implements IView {
                         "product id :" + productSeller.getProduct().getId()
                         + " seller id : " + productSeller.getId() +
                         " with price" + productSeller.getPrice()
-                        + " with amount" + integer));
+                        + " with amount" + integer.longValue()));
     }
 
 
@@ -58,11 +58,19 @@ public class CartIView extends View implements IView {
         matcher.find();
         if (manager.checkTheInputIsInteger(matcher.group(1))) {
             int id = Integer.parseInt(matcher.group(1));
-            int amount = 0;//todo
+            int amount;
+            try {
+                amount = cartController.getAmountInCartBySellerId(this.cart, id, manager.getToken());
+            } catch (InvalidTokenException e) {
+                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                return;
+            }
             try {
                 cartController.addOrChangeProduct(id, amount + increaseOrDecrease, manager.getToken());
-            } catch (InvalidIdException | InvalidTokenException | NotEnoughProductsException e) {
+            } catch (InvalidIdException | NotEnoughProductsException e) {
                 manager.inputOutput.println(e.getMessage());
+            } catch (InvalidTokenException e) {
+                manager.setTokenFromController(e.getMessage() + "\nnew token will be set  and then try again");
             }
         }
 
@@ -70,8 +78,13 @@ public class CartIView extends View implements IView {
 
 
     public void showTotalPriceToBuyer() {
-        long price = cartController.getToTalPrice(this.cart, manager.getToken());
-        manager.inputOutput.println("total price is: " + price);
+        long price = 0;
+        try {
+            price = cartController.getToTalPrice(this.cart, manager.getToken());
+            manager.inputOutput.println("total price is: " + price);
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+        }
     }
 
     public void purchase() {
@@ -82,7 +95,7 @@ public class CartIView extends View implements IView {
                     try {
                         cartController.checkout(manager.getToken());
                         return;
-                    } catch (InvalidTokenException | NoAccessException | NotEnoughCreditException | NotEnoughProductsException e) {
+                    } catch (NoAccessException | NotEnoughCreditException | NotEnoughProductsException e) {
                         manager.inputOutput.println(e.getMessage());
                         return;
                     } catch (NotLoggedINException e) {
@@ -90,6 +103,8 @@ public class CartIView extends View implements IView {
                         if (manager.inputOutput.nextLine().equals("back"))
                             return;
                         manager.loginInAllPagesEssential();
+                    } catch (InvalidTokenException e) {
+                        manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
                     }
             }
         }
@@ -105,14 +120,15 @@ public class CartIView extends View implements IView {
                 cartController.usePromoCode(discountCode, manager.getToken());
                 return;
             } catch (InvalidTokenException e) {
-                manager.inputOutput.println(e.getMessage());
+                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
                 return;
-            } catch (InvalidPromoCodeException | PromoNotAvailableException e) {
+            } catch (InvalidPromoCodeException | PromoNotAvailableException | NoAccessException e) {
                 manager.inputOutput.println(e.getMessage());
             } catch (NotLoggedINException e) {//to be deleted
-                e.printStackTrace();
-            } catch (NoAccessException e) {//to be deleted
-                e.printStackTrace();
+                manager.inputOutput.println(e.getMessage() + "\nenter back or enter continue");
+                if (manager.inputOutput.nextLine().equals("back"))
+                    return;
+                manager.loginInAllPagesEssential();
             }
         }
     }
@@ -131,7 +147,7 @@ public class CartIView extends View implements IView {
                 cartController.setAddress(address, manager.getToken());
                 return true;
             } catch (InvalidTokenException e) {
-                manager.inputOutput.println(e.getMessage());
+                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
             }
         }
     }

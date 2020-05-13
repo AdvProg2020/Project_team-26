@@ -127,8 +127,13 @@ public class CartController implements ICartController {
         }
     }
 
-    public long getToTalPrice(Cart cart, String token) {
-        //fill
+    public long getToTalPrice(Cart cart, String token) throws InvalidTokenException {
+        //todo
+        return 0;
+    }
+
+    @Override
+    public int getAmountInCartBySellerId(Cart cart, int sellerId, String token) throws InvalidTokenException {
         return 0;
     }
 }

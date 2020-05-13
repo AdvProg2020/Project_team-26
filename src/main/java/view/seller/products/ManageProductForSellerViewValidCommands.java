@@ -8,10 +8,10 @@ import java.util.regex.Pattern;
 public enum ManageProductForSellerViewValidCommands {
     ViewProductWithId("show\\s+product\\s+(.*)"),
     ViewBuyersOfProductWithId("view\\s+buyers\\s+(.*)"),
-    EditProductWithId("edit\\s+(.*)"),
-    AddProduct(" "),
-    RemoveProduct(" "),
-    ShowAllProduct(" ");
+    EditProductWithId("edit"),
+    AddProduct("add\\s+product"),
+    RemoveProduct("remove product (.*)"),
+    ShowAllProduct("show all");
     private final Pattern commandPattern;
 
     public Matcher getStringMatcher(String input) {

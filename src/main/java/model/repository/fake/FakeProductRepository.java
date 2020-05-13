@@ -16,13 +16,13 @@ public class FakeProductRepository implements ProductRepository {
     public FakeProductRepository() {
         this.allProducts = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            allProducts.add(new Product(i + 1));
+            allProducts.add(new Product());
             Product obj = allProducts.get(i);
             obj.setBrand("brand" + i);
             obj.setAverageRate(i * 5.5 / 7.1);
             obj.setDescription("this is product:" + i);
             obj.setName("" + i);
-            obj.setState(CHECKING_FOR_ADD);
+            //obj.setState(CHECKING_FOR_ADD);
         }
     }
 

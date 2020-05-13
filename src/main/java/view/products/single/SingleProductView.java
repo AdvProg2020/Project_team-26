@@ -132,7 +132,7 @@ public class SingleProductView extends View {
     private void showCompare(Product compare) {
         manager.inputOutput.println("name :" + product.getName() + " <-> " + compare.getName());
         manager.inputOutput.println("brand :" + product.getBrand() + " <-> " + compare.getBrand());
-        manager.inputOutput.println("off :" + product.getMinimumPrice() + " <-> " + compare.getMinimumPrice());
+        manager.inputOutput.println("price :" + product.getMinimumPrice() + " <-> " + compare.getMinimumPrice());
         manager.inputOutput.println("rate :" + product.getAverageRate() + " <-> " + compare.getAverageRate());
         manager.inputOutput.println("category :" + product.getCategory().getName() + " <-> " + compare.getCategory().getName());
     }

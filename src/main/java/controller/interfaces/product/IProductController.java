@@ -13,7 +13,10 @@ public interface IProductController {
     void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException;
 
     Product getProductById(int id, String token) throws InvalidIdException;
-    List<Product> getAllProductWithFilter(Map<String, String> filter, String token);
+
+    void removeProduct(int id,String token) throws  InvalidIdException;
+
+    List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, String token);
 
     void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException;
 }

@@ -18,9 +18,15 @@ public interface IUserInfoController {
 
     void setPassword(String oldPassword, String newPassword, String token);
 
+    void changePassword(String oldPassword, String newPassword, String token);
+
     int getInfo(String key, String token);
 
     void changeInfo(String key, String value, String token);
+
+    String getCompanyName(String token);
+
+    String getBalance(String token);
 
     String getRole(String token);
 }

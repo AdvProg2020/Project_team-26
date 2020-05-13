@@ -38,7 +38,7 @@ public class MainPageView extends View {
                 }
             }
             if (!isFound)
-                printError();
+                manager.inputOutput.println("invalid command pattern");
         }
     }
 
@@ -65,8 +65,11 @@ public class MainPageView extends View {
         try {
             controller.logout(token);
             manager.setUserLoggedIn(false);
-        } catch (NotLoggedINException | InvalidTokenException e) {
+        } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+            return;
         }
     }
 
@@ -78,9 +81,5 @@ public class MainPageView extends View {
     protected void off() {
         AllOffView allOffView = new AllOffView(manager);
         allOffView.run();
-    }
-
-    public void printError() {
-        manager.inputOutput.println("invalid command pattern");
     }
 }

@@ -1,10 +1,5 @@
 package view.seller;
 
-import view.offs.AllOffView;
-import view.seller.offs.OffView;
-import view.seller.products.ManageProductForSellerView;
-import view.View;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -16,20 +11,20 @@ public enum SellerAccountViewValidCommands {
             page.viewPersonalInfo();
         }
     },
-    EditTheFiled("edit\\s+(.*)") {
+    EditTheFiled("edit") {
         @Override
         public void goToFunction(SellerAccountIView page) {
-            page.edit(Pattern.compile(EditTheFiled.toString()).matcher(page.getInput()));
+            page.edit();
         }
 
     },
-    ViewCompanyInfo("view\\s+company\\s+information") {
+    /*ViewCompanyInfo("view\\s+company\\s+information") {
         @Override
         public void goToFunction(SellerAccountIView page) {
             page.companyInfo();
         }
 
-    },
+    },*/
     ViewSalesHistoryForSeller("view\\s+sales\\s+history") {
         @Override
         public void goToFunction(SellerAccountIView page) {
@@ -59,10 +54,16 @@ public enum SellerAccountViewValidCommands {
         }
 
     },
-    ShowAllCategoriesForSeller("show\\s+categories") {
+    ShowAllCategoriesForSeller("show\\s+categories$") {
         @Override
         public void goToFunction(SellerAccountIView page) {
-            page.viewPersonalInfo();
+            page.allCategories();
+        }
+
+    }, ShowSubCategoriesForSeller("show\\s+sub\\s+category (.*)") {
+        @Override
+        public void goToFunction(SellerAccountIView page) {
+            page.subCategory(Pattern.compile(ShowSubCategoriesForSeller.toString()).matcher(page.getInput()));
         }
 
     },
@@ -76,7 +77,7 @@ public enum SellerAccountViewValidCommands {
     ViewBalanceForSeller("view\\s+balance") {
         @Override
         public void goToFunction(SellerAccountIView page) {
-            page.viewPersonalInfo();
+            page.balance();
         }
 
     };

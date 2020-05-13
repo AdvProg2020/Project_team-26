@@ -5,8 +5,8 @@ import view.ViewManager;
 
 import java.util.regex.Matcher;
 
-public class OffView extends View {
-    public OffView(ViewManager managerView) {
+public class ManageOffForSeller extends View {
+    public ManageOffForSeller(ViewManager managerView) {
         super(managerView);
     }
 

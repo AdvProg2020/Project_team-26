@@ -12,6 +12,7 @@ public interface IShowUserController {
 
     User getUserByName(String username, String token) throws NoAccessException, InvalidTokenException;
     User getUserById(int id,String token) throws NoAccessException, InvalidTokenException;
+    User getUserByToken(String token) throws InvalidTokenException;
 
     Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException;
 
