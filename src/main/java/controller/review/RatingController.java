@@ -4,6 +4,7 @@ import controller.interfaces.review.IRatingController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotBoughtTheProductException;
+import exception.NotLoggedINException;
 import model.*;
 import model.repository.ProductRepository;
 import model.repository.RatingRepository;
@@ -24,23 +25,25 @@ public class RatingController implements IRatingController {
 
     public void addARating(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user == null || user.getRole() != Role.CUSTOMER) {
+        if (user == null || user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
-        } else if(!userRepository.hasBoughtProduct(user.getId(),productId)) {
+        } else if (!userRepository.hasBoughtProduct(user.getId(), productId)) {
             throw new NotBoughtTheProductException("You have not bought this product");
         } else {
             ratingRepository.save(new Rate((Customer) user, rating, productRepository.getById(productId)));
         }
     }
 
-    public void removeRating(int id, String token) throws NoAccessException, InvalidTokenException {
+    public void removeRating(int id, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user.getRole() == Role.ADMIN) {
+        if (user == null) {
+            throw new NotLoggedINException("You are not Logged in.");
+        } else if (user.getRole() == Role.ADMIN) {
             ratingRepository.delete(id);
-        }else if (user.getRole() == Role.SELLER) {
+        } else if (user.getRole() == Role.SELLER) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            if(!ratingRepository.doesItMatch(id,user.getId())) {
+            if (!ratingRepository.doesItMatch(id, user.getId())) {
                 throw new NoAccessException("You are not allowed to do that.");
             } else {
                 ratingRepository.delete(id);
@@ -48,17 +51,17 @@ public class RatingController implements IRatingController {
         }
     }
 
-    public void editRating(int id, double  newRating, String token) throws NoAccessException, InvalidTokenException {
+    public void editRating(int id, double newRating, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user.getRole() == Role.ADMIN) {
+        if (user.getRole() == Role.ADMIN) {
             ratingRepository.delete(id);
-        }else if (user.getRole() == Role.SELLER) {
+        } else if (user.getRole() == Role.SELLER) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            if(!ratingRepository.doesItMatch(id,user.getId())) {
+            if (!ratingRepository.doesItMatch(id, user.getId())) {
                 throw new NoAccessException("You are not allowed to do that.");
             } else {
-                ratingRepository.editRate(id,newRating);
+                ratingRepository.editRate(id, newRating);
             }
         }
     }

@@ -39,19 +39,42 @@ public class RatingControllerTest {
     @Test
     public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException {
         /** Exception Tests **/
+
         Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addARating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
+
+        ex = Assertions.assertThrows(NotLoggedINException.class, () -> ratingController.removeRating(6,token));
+        Assertions.assertEquals(ex.getMessage(),"You are not Logged in.");
+
         authenticationController.login("test8","password8",token);
         ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.addARating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You have not bought this product");
         authenticationController.logout(token);
-        /** Exception Tests **/
-        authenticationController.login("test8","password8",token);
 
+        authenticationController.login("test6","password6",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addARating(5.0,
+                2,token));
+        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
+        authenticationController.logout(token);
+
+        authenticationController.login("test8","password8",token);
+        ratingController.addARating(5.0,1,token);
+        authenticationController.logout(token);
+        authenticationController.login("test9","password9",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.removeRating(6,token));
+        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
+        authenticationController.logout(token);
+
+        /** Exception Tests **/
+
+        authenticationController.login("test8","password8",token);
         ratingController.addARating(5.0,1,token);
         Assertions.assertEquals(ratingRepository.getById(6).getScore(),5.0);
+        ratingController.removeRating(6,token);
+        Assertions.assertEquals(null,ratingRepository.getById(6));
+
     }
 
 }
