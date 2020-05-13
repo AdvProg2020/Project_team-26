@@ -133,7 +133,7 @@ public class SellerAccountIView extends View {
         try {
             productController.createProduct(product, manager.getToken());
         } catch (ObjectAlreadyExistException e) {
-            e.printStackTrace();
+            manager.inputOutput.println(e.getMessage()+"\nif you want to add yourself to it seller type yes or no");
         } catch (NotSellerException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
