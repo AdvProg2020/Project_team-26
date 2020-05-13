@@ -11,5 +11,5 @@ public interface IRatingController {
 
     void removeRating(int id, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 
-    void editRating(int id, double  newRating, String token) throws NoAccessException, InvalidTokenException;
+    void editRating(int id, double  newRating, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 }

@@ -44,6 +44,9 @@ public class RatingControllerTest {
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
+        ex = Assertions.assertThrows(NotLoggedINException.class, () -> ratingController.editRating(2,0.0,token));
+        Assertions.assertEquals(ex.getMessage(),"You are not Logged in.");
+
         ex = Assertions.assertThrows(NotLoggedINException.class, () -> ratingController.removeRating(6,token));
         Assertions.assertEquals(ex.getMessage(),"You are not Logged in.");
 
@@ -72,6 +75,9 @@ public class RatingControllerTest {
         authenticationController.login("test8","password8",token);
         ratingController.addARating(5.0,1,token);
         Assertions.assertEquals(ratingRepository.getById(6).getScore(),5.0);
+
+        ratingController.editRating(6,2.0,token);
+        Assertions.assertEquals(ratingRepository.getById(6).getScore(),2.0);
         ratingController.removeRating(6,token);
         Assertions.assertEquals(null,ratingRepository.getById(6));
 

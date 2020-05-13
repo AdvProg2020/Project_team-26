@@ -51,11 +51,11 @@ public class RatingController implements IRatingController {
         }
     }
 
-    public void editRating(int id, double newRating, String token) throws NoAccessException, InvalidTokenException {
+    public void editRating(int id, double newRating, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         User user = Session.getSession(token).getLoggedInUser();
-        if (user.getRole() == Role.ADMIN) {
-            ratingRepository.delete(id);
-        } else if (user.getRole() == Role.SELLER) {
+        if (user == null) {
+            throw new NotLoggedINException("You are not Logged in.");
+        } else if (user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             if (!ratingRepository.doesItMatch(id, user.getId())) {
