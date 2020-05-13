@@ -37,9 +37,7 @@ public class PromoController implements IPromoController {
     @Override
     public List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can see promos");
-        Session session = Session.getSession(token);
-        List<Promo> promos = session.getLoggedInUser().getPromoCodes();
-        return promos;
+        return promoRepository.getAll();
     }
 
     @Override
@@ -55,9 +53,9 @@ public class PromoController implements IPromoController {
 
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
         Session session = Session.getSession(token);
-        if (!(session.getLoggedInUser().getRole() == Role.ADMIN))
+        if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException(message);
-
+        }
     }
 
     /**
@@ -77,7 +75,7 @@ public class PromoController implements IPromoController {
     private void removeThePromoFromUsers(Promo promo) {
         List<Customer> customers = promo.getCustomers();
         for (Customer customer : customers) {
-            customer.getPromoCodes().remove(promo);
+            customer.getAvailablePromos().remove(promo);
             userRepository.save(customer);
         }
     }

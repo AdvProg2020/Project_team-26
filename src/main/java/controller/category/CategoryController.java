@@ -10,6 +10,7 @@ import model.repository.CategoryRepository;
 import model.repository.ProductRepository;
 import model.repository.RepositoryContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -68,7 +69,7 @@ public class CategoryController implements ICategoryController {
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = new CategoryFeature(attributeName, FeatureType.DOUBLE);
         //TODO
-        category.getFeatures().add(categoryFeature);
+//        category.getFeatures().add(categoryFeature);
         categoryRepository.save(category);
     }
 
@@ -82,11 +83,12 @@ public class CategoryController implements ICategoryController {
     }
 
     private CategoryFeature getCategoryFeature(Category category, String name) throws InvalidIdException {
-        List<CategoryFeature> categoryFeatures = category.getFeatures();
-        for (CategoryFeature categoryFeature : categoryFeatures) {
-            if (categoryFeature.getFeatureName().equals(name))
-                return categoryFeature;
-        }
+        // TODO
+//        List<CategoryFeature> categoryFeatures = category.getFeatures();
+//        for (CategoryFeature categoryFeature : categoryFeatures) {
+//            if (categoryFeature.getFeatureName().equals(name))
+//                return categoryFeature;
+//        }
         throw new InvalidIdException("there is no attribute with name" + name);
     }
 
@@ -95,7 +97,8 @@ public class CategoryController implements ICategoryController {
         checkAccessOfUser(token, "only manager can remove attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
-        category.getFeatures().remove(categoryFeature);
+        // TODO
+//        category.getFeatures().remove(categoryFeature);
         categoryRepository.save(category);
     }
 
@@ -191,9 +194,11 @@ public class CategoryController implements ICategoryController {
     }
 
     public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token, "you are not manager.");
-        Category category = getCategoryByIdWithCheck(id);
-        return category.getFeatures();
+        // TODO
+//        checkAccessOfUser(token, "you are not manager.");
+//        Category category = getCategoryByIdWithCheck(id);
+//        return category.getFeatures();
+        return new ArrayList<>();
     }
 
     @Override

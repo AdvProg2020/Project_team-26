@@ -21,14 +21,14 @@ public class Order {
 //    private long paidAmount;
 
     @ManyToOne
-    @Column(name = "customer_id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "user_id")
     private Customer customer;
 
     @Column(name = "address")
     private String address;
 
-    @OneToOne
-    @Column(name = "promo_id")
+    @ManyToOne
+    @JoinColumn(name = "promo_id")
     private Promo usedPromo;
 
     @OneToMany

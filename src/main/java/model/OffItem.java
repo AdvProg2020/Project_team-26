@@ -11,11 +11,11 @@ public class OffItem {
     private int id;
 
     @ManyToOne
-    @Column(name = "off_id")
+    @JoinColumn(name = "off_id")
     private Off off;
 
     @ManyToOne
-    @Column(name = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(name = "price_in_off")

@@ -11,18 +11,19 @@ import static model.State.CHECKING_FOR_ADD;
 
 public class FakeProductRepository implements ProductRepository {
 
-    List<Product> allProducts;
+    private List<Product> allProducts;
+    private int lastId = 0;
 
     public FakeProductRepository() {
         this.allProducts = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            allProducts.add(new Product(i + 1));
+            allProducts.add(new Product());
             Product obj = allProducts.get(i);
             obj.setBrand("brand" + i);
             obj.setAverageRate(i * 5.5 / 7.1);
             obj.setDescription("this is product:" + i);
             obj.setName("" + i);
-            obj.setState(CHECKING_FOR_ADD);
+            save(obj);
         }
     }
 
@@ -82,8 +83,14 @@ public class FakeProductRepository implements ProductRepository {
 
     @Override
     public void save(Product object) {
-        if (object != null)
-            allProducts.add(object);
+        if (object == null)
+            return;
+
+        if(object.getId() == 0) {
+            lastId++;
+            object.setId(lastId);
+        }
+        allProducts.add(object);
     }
 
     @Override

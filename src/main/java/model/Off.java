@@ -14,7 +14,7 @@ public class Off {
     private int id;
 
     @ManyToOne
-    @Column(name = "seller_id", nullable = false)
+    @JoinColumn(name = "seller_id", referencedColumnName = "user_id")
     private Seller seller;
 
     @Column(name = "start_date", nullable = false)

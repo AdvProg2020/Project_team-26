@@ -12,8 +12,11 @@ public class Customer extends User {
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
-    // TODO: define many to many correctly
     @ManyToMany
+    @JoinTable(
+            name = "user_promo",
+            joinColumns = @JoinColumn(name = "customer_id"),
+            inverseJoinColumns = @JoinColumn(name = "promo_id"))
     private List<Promo> availablePromos;
 
     public Customer() {

@@ -1,11 +1,28 @@
 package model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "rate")
 public class Rate {
 
+    @Id
+    @Column(name = "rate_id", unique = true)
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "user_id")
     private Customer customer;
+
+    @Column(name = "score", nullable = false)
     private double score;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    public Rate() {
+    }
 
     public Rate(int id) {
         this.id = id;

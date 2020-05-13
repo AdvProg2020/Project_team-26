@@ -31,8 +31,11 @@ public class Promo {
     @Column(name = "max_valid_use", nullable = false)
     private int maxValidUse;
 
-    // TODO: define many to many correctly
     @ManyToMany
+    @JoinTable(
+            name = "user_promo",
+            joinColumns = @JoinColumn(name = "promo_id"),
+            inverseJoinColumns = @JoinColumn(name = "customer_id"))
     private List<Customer> customers;
 
     public Promo() {

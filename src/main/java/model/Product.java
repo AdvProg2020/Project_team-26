@@ -8,11 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 @Entity
-@Table(name = "product_rate")
+@Table(name = "product")
 public class Product {
 
     @Id
-//    @GeneratorType()
     @Column(name = "product_id", unique = true)
     private int id;
 
@@ -25,11 +24,11 @@ public class Product {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "average_rate", nullable = false)
+    @JoinColumn(name = "average_rate", table = "product_rate", nullable = false)
     private double averageRate;
 
     @ManyToOne
-    @Column(name = "category_id", nullable = false)
+    @JoinColumn(name = "category_id")
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

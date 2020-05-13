@@ -24,6 +24,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;
+
 //    private List<CategoryFeature> features;
 
     public Category() {
@@ -33,7 +34,7 @@ public class Category {
         this.name = name;
 //        features = new ArrayList<CategoryFeature>();
         subCategory = new ArrayList<Category>();
-        products = new ArrayList<Product>();
+//        products = new ArrayList<Product>();
     }
 
     public int getId() {
@@ -58,7 +59,8 @@ public class Category {
     }
 
     public List<Product> getProducts() {
-        return products;
+//        return products;
+        return null;
     }
 
     public String getCategoriesAndSub() {
@@ -110,7 +112,7 @@ public class Category {
         Category category = new Category(this.name);
         category.setId(this.id);
         this.subCategory.forEach(i -> category.subCategory.add(i));
-        this.products.forEach(i -> category.products.add(i));
+//        this.products.forEach(i -> category.products.add(i));
 //        this.features.forEach(i -> category.features.add(i));
         return category;
     }

@@ -33,9 +33,9 @@ public class User {
     private long credit;
 
     @ElementCollection
-    @JoinTable(name = "user_details",
-            joinColumns = @JoinColumn(name = "user_details_id", referencedColumnName = "user_id"))
-    @MapKeyColumn(name = "key")
+    @MapKeyColumn(name="key")
+    @Column(name="value")
+    @CollectionTable(name="user_details", joinColumns=@JoinColumn(name="user_id"))
     private Map<String, String> details;
 
     public User() {

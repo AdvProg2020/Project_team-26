@@ -1,9 +1,9 @@
-package model.mysql;
+package model.repository.mysql;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-public class MySQLRepository {
+public class MySQLRepository<T> {
 
     protected EntityManagerFactory entityManagerFactory;
 

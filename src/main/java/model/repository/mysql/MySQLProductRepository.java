@@ -1,4 +1,4 @@
-package model.mysql;
+package model.repository.mysql;
 
 import model.Product;
 import model.repository.ProductRepository;
