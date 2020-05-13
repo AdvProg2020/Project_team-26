@@ -2,6 +2,7 @@ package model.repository.fake;
 
 import controller.account.Account;
 import model.*;
+import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -14,7 +15,10 @@ public class FakeUserRepository implements UserRepository {
     List<User> allUsers;
     int lastId = 0;
 
+    FakeProductRepository fakeProductRepository;
+
     public FakeUserRepository() {
+        fakeProductRepository = new FakeProductRepository();
         allUsers = new ArrayList<>();
         List<Account> allFakeAccounts = new ArrayList<>();
         for (int n = 1; n < 11; n++) {
@@ -31,6 +35,15 @@ public class FakeUserRepository implements UserRepository {
         }
         for (Account account : allFakeAccounts) {
             save(account.makeUser());
+        }
+        for (User user : allUsers) {
+            if(user instanceof Customer) {
+                Order order = new Order((Customer) user, new Promo("BigRetard")," ");
+                OrderItem orderItem = new OrderItem(fakeProductRepository.getById(1),2,(Seller) getById(6),200,
+                        190,ShipmentState.WAITING_TO_SEND);
+                order.addItem(orderItem);
+                ((Customer) user).addOrder(order);
+            }
         }
     }
 
@@ -51,9 +64,15 @@ public class FakeUserRepository implements UserRepository {
 
     @Override
     public boolean hasBoughtProduct(int customerId, int productId) {
-        // FakeProductRepository
-
-
+        if(getById(customerId) instanceof Customer) {
+            for (Order order : ((Customer) getById(customerId)).getOrders()) {
+                for (OrderItem item : order.getItems()) {
+                    if(item.getProductId() == productId) {
+                        return true;
+                    }
+                }
+            }
+        }
         return false;
     }
 

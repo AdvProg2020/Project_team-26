@@ -17,6 +17,10 @@ public class Rate {
         this.product = product;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getCustomerId() {
         return this.customer.getId();
     }
@@ -27,5 +31,9 @@ public class Rate {
 
     public int getId() {
         return this.id;
+    }
+
+    public double getScore() {
+        return this.score;
     }
 }

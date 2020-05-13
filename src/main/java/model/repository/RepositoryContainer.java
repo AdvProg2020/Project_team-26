@@ -1,9 +1,6 @@
 package model.repository;
 
-import model.repository.fake.FakeCategoryRepository;
-import model.repository.fake.FakeCommentRepository;
-import model.repository.fake.FakeProductRepository;
-import model.repository.fake.FakeUserRepository;
+import model.repository.fake.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +20,7 @@ public class RepositoryContainer {
         map.put("CategoryRepository", new FakeCategoryRepository());
         map.put("UserRepository", new FakeUserRepository());
         map.put("CommentRepository", new FakeCommentRepository());
+        map.put("RatingRepository", new FakeRatingRepository());
     }
 
     public Repository<?> getRepository(String repositoryName) {
