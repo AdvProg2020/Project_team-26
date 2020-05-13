@@ -1,6 +1,7 @@
 package model;
 
 import controller.account.Account;
+import exception.NoAccessException;
 import exception.NotEnoughCreditException;
 
 import java.util.ArrayList;
@@ -42,6 +43,10 @@ public class User {
         return email;
     }
 
+    public void setEmail(String Email) {
+        this.email = Email;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -60,6 +65,14 @@ public class User {
 
     public boolean checkPassword(String password) {
         return this.password.equals(password);
+    }
+
+    public void changePassword(String oldPassword, String newPassword) throws NoAccessException {
+        if(oldPassword.equals(this.password)) {
+            this.password = newPassword;
+        } else {
+            throw new NoAccessException("You are not allowed to do that.");
+        }
     }
 
     public long getCredit() {

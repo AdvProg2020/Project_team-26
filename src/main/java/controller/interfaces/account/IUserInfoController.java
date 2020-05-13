@@ -1,32 +1,19 @@
 package controller.interfaces.account;
 
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NoSuchField;
+import exception.NotLoggedINException;
+
 public interface IUserInfoController {
 
-    String getEmail(String token);
-
-    void changeEmail(String email, String token);
-
-    String getUsername(String token);
-
-    void changeUsername(String username, String token);
-
-    String getFirstName(String token);
-
-    String getLastName(String token);
-
-    String getPassword(String token);
-
-    void setPassword(String oldPassword, String newPassword, String token);
-
-    void changePassword(String oldPassword, String newPassword, String token);
-
-    int getInfo(String key, String token);
+    void changePassword(String oldPassword, String newPassword, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException;
 
     void changeInfo(String key, String value, String token);
 
-    String getCompanyName(String token);
+    String getBalance(String token) throws NotLoggedINException, InvalidTokenException;
 
-    String getBalance(String token);
+    String getRole(String token) throws NotLoggedINException, InvalidTokenException;
 
-    String getRole(String token);
+    String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField;
 }

@@ -1,59 +1,57 @@
 package controller.account;
 
 import controller.interfaces.account.IUserInfoController;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NoSuchField;
+import exception.NotLoggedINException;
+import model.Role;
+import model.Seller;
+import model.Session;
 
 public class UserInfoController implements IUserInfoController {
 
-    public String getEmail(String token) {
-        return null;
-    }
 
-    public void changeEmail(String email, String token) {
-    }
-
-    public String getUsername(String token) {
-        return null;
-    }
-
-    public void changeUsername(String username, String token) {
-    }
-
-    public String getFirstName(String token) {
-        return null;
-    }
-
-    public String getLastName(String token) {
-        return null;
-    }
-
-    public String getPassword(String token) {
-        return null;
-    }
-
-    public void setPassword(String oldPassword, String newPassword, String token) {
-    }
-
-    public void changePassword(String oldPassword, String newPassword, String token) {
-    }
-
-    public int getInfo(String key, String token) {
-        return 0;
+    public void changePassword(String oldPassword, String newPassword, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in.");
+        } else {
+            session.getLoggedInUser().changePassword(oldPassword,newPassword);
+        }
     }
 
     public void changeInfo(String key, String value, String token) {
     }
 
     @Override
-    public String getCompanyName(String token) {
-        return null;
+    public String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not Logged in.");
+        } else if (session.getLoggedInUser().getRole() != Role.SELLER) {
+            throw new NoSuchField("This field does not exist.");
+        } else {
+            return ((Seller)session.getLoggedInUser()).getCompanyName();
+        }
     }
 
     @Override
-    public String getBalance(String token) {
-        return null;
+    public String getBalance(String token) throws NotLoggedINException, InvalidTokenException {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in");
+        } else {
+            return String.valueOf(session.getLoggedInUser().getCredit());
+        }
     }
 
-    public String getRole(String token) {
-        return null;
+    public String getRole(String token) throws NotLoggedINException, InvalidTokenException {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in");
+        } else {
+            return session.getLoggedInUser().getRole().toString();
+        }
     }
 }
