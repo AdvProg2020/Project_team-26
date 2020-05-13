@@ -28,4 +28,8 @@ public class Seller extends User {
     public List<Off> getAllOffs() {
         return allOffs;
     }
+
+    public void changeCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 }

@@ -31,6 +31,18 @@ public class User {
         return details.get("firstname") + details.get("lastname");
     }
 
+    public void changeFirstName(String name) {
+        details.put("firstname",name);
+    }
+
+    public void changeLastName(String name) {
+        details.put("lastname",name);
+    }
+
+    public void changeEmail(String Email) {
+        this.email = Email;
+    }
+
     public int getId() {
         return id;
     }
@@ -61,6 +73,10 @@ public class User {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void changeUsername(String username) {
+        this.username = username;
     }
 
     public boolean checkPassword(String password) {
