@@ -1,5 +1,7 @@
 package view.seller;
 
+import view.products.all.AllProductView;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -73,6 +75,11 @@ public enum SellerAccountViewValidCommands {
             page.viewPersonalInfo();
         }
 
+    }, Logout("logout") {
+        @Override
+        public void goToFunction(SellerAccountIView page) {
+            page.logOut();
+        }
     },
     ViewBalanceForSeller("view\\s+balance") {
         @Override

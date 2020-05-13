@@ -6,19 +6,14 @@ import controller.interfaces.category.ICategoryController;
 import controller.interfaces.order.IOrderController;
 import controller.interfaces.product.IProductController;
 import exception.*;
-import model.Category;
-import model.Order;
-import model.Product;
-import model.User;
+import model.*;
 import view.*;
 import view.seller.offs.ManageOffForSeller;
 import view.seller.products.ManageProductForSellerView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.regex.Matcher;
-import java.util.stream.Collectors;
 
 public class SellerAccountIView extends View {
     EnumSet<SellerAccountViewValidCommands> validCommands;
@@ -41,7 +36,7 @@ public class SellerAccountIView extends View {
     @Override
     public void run() {
         boolean isDone;
-        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
             isDone = false;
             for (SellerAccountViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -60,9 +55,9 @@ public class SellerAccountIView extends View {
         try {
             userController.getUserInfo(manager.getToken()).forEach((key, info) -> editableFields.add(key));
         } catch (NoAccessException e) {
-            e.printStackTrace();
+            manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            e.printStackTrace();//
         }
     }
 
@@ -101,7 +96,7 @@ public class SellerAccountIView extends View {
     }
 
     protected void manageProducts() {
-        ManageProductForSellerView manageProductForSellerView = new ManageProductForSellerView(manager);
+        ManageProductForSellerView manageProductForSellerView = new ManageProductForSellerView(manager,thisUser);
         manageProductForSellerView.run();
     }
 
@@ -121,6 +116,37 @@ public class SellerAccountIView extends View {
 
 
     protected void addProduct() {
+        try {
+            this.thisUser = userController.getUserByToken(manager.getToken());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+        Product product = makeProduct();
+        ProductSeller productSeller = makeProductSeller();
+        try {
+            productController.createProduct(product, manager.getToken());
+        } catch (ObjectAlreadyExistException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to add yourself to it seller type yes or no");
+            if (manager.inputOutput.nextLine().matches("yes"))
+                addSeller(productSeller, (Product) e.getObject());
+        } catch (NotSellerException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+    }
+
+    private void addSeller(ProductSeller productSeller, Product product) {
+        try {
+            productController.addSeller(product.getId(), productSeller, manager.getToken());
+        } catch (NotSellerException | NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+    }
+
+    private Product makeProduct() {
         Product product = new Product();
         manager.inputOutput.println("enter the name");
         product.setName(manager.inputOutput.nextLine());
@@ -130,22 +156,49 @@ public class SellerAccountIView extends View {
         product.setCategory(setCategory(manager.inputOutput.nextLine()));
         manager.inputOutput.println("enter the attribute");
         product.setDescription(manager.inputOutput.nextLine());
+        return product;
+    }
+
+    private ProductSeller makeProductSeller() {
         try {
-            productController.createProduct(product, manager.getToken());
-        } catch (ObjectAlreadyExistException e) {
-            manager.inputOutput.println(e.getMessage()+"\nif you want to add yourself to it seller type yes or no");
-        } catch (NotSellerException e) {
-            e.printStackTrace();
+            thisUser = userController.getUserByToken(manager.getToken());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            manager.setTokenFromController(e.getMessage());
         }
+        manager.inputOutput.println("enter the price");
+        String price = manager.inputOutput.nextLine();
+        manager.inputOutput.println("enter the number");
+        String numbers = manager.inputOutput.nextLine();
+        while (true) {
+            if (manager.checkTheInputIsInteger(price)) {
+                if (manager.checkTheInputIsInteger(numbers))
+                    break;
+                else {
+                    manager.inputOutput.println("please enter integer for number");
+                    numbers = manager.inputOutput.nextLine();
+                }
+            } else {
+                manager.inputOutput.println("please enter integer for price");
+                price = manager.inputOutput.nextLine();
+            }
+        }
+        ProductSeller productSeller = new ProductSeller((Seller) thisUser, Long.parseLong(price), Integer.parseInt(numbers));
+        return productSeller;
     }
 
     private Category setCategory(String name) {
-        //  categoryController.
+        if (name.matches(""))
+            return null;
+        do {
+            try {
+                return categoryController.getCategoryByName(name, manager.getToken());
+            } catch (InvalidIdException e) {
+                manager.inputOutput.println(e.getMessage() + "\n enter another name or back for empty");
+                name = manager.inputOutput.nextLine();
+            }
+        }
+        while (!name.matches("back"));
         return null;
-
-
     }
 
     protected void removeProduct(Matcher matcher) {
@@ -165,6 +218,11 @@ public class SellerAccountIView extends View {
     protected void balance() {
         userView.balance(manager, infoController);
     }
+
+    protected void logOut() {
+        manager.logoutInAllPages();
+    }
+
 
     protected void sorting() {
 

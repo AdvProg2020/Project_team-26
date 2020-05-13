@@ -2,8 +2,7 @@ package view;
 
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
+import exception.*;
 import model.User;
 
 import java.util.ArrayList;
@@ -46,7 +45,19 @@ public class UserView {
                 changePassword(manager, infoController);
             } else if (editableFields.stream().filter(i -> field.matches(field)).collect(Collectors.toList()).size() > 0) {
                 manager.inputOutput.println("enter new one");
-                infoController.changeInfo(field, manager.inputOutput.nextLine(), manager.getToken());
+                try {
+                    infoController.changeInfo(field, manager.inputOutput.nextLine(), manager.getToken());
+                } catch (NotLoggedINException e) {
+                    e.printStackTrace();
+                } catch (InvalidTokenException e) {
+                    e.printStackTrace();
+                } catch (InvalidAuthenticationException e) {
+                    e.printStackTrace();
+                } catch (InvalidFormatException e) {
+                    e.printStackTrace();
+                } catch (NoSuchField noSuchField) {
+                    noSuchField.printStackTrace();
+                }
             } else
                 manager.inputOutput.println("enter");
         }
@@ -61,11 +72,31 @@ public class UserView {
         String newPassword = manager.inputOutput.nextLine();
         if (newPassword.matches("back"))
             return;
-        infoController.changePassword(oldPassword, newPassword, manager.getToken());
+        try {
+            infoController.changePassword(oldPassword, newPassword, manager.getToken());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "if you dont want to log in type back ");
+            if (manager.inputOutput.nextLine().matches("back"))
+                return;
+            manager.loginInAllPagesEssential();
+        }
     }
 
     public void balance(ViewManager manager, IUserInfoController userInfoController) {
-        manager.inputOutput.println("balance is : " + userInfoController.getBalance(manager.getToken()));
+        try {
+            manager.inputOutput.println("balance is : " + userInfoController.getBalance(manager.getToken()));
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "if you dont want to log in type back ");
+            if (manager.inputOutput.nextLine().matches("back"))
+                return;
+            manager.loginInAllPagesEssential();
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
 }

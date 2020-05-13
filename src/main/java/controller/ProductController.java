@@ -64,6 +64,11 @@ public class ProductController implements IProductController {
         return null;
     }
 
+    @Override
+    public List<Product> getAllProductWithFilterForSellerId(int ProductSellerId, Map<String, String> filter, String fieldName, boolean isAscending, String token) {
+        return null;
+    }
+
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String token){
         //todo
         return null;

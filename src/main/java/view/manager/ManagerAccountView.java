@@ -2,6 +2,7 @@ package view.manager;
 
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
+import exception.*;
 import view.*;
 import view.ViewManager;
 
@@ -45,7 +46,19 @@ public class ManagerAccountView extends View {
         matcher.find();
         manager.inputOutput.println("please enter the " + matcher.group(1));
         String fieldForEdit = manager.inputOutput.nextLine();
+        try {
             infoController.changeInfo(matcher.group(1), fieldForEdit, manager.getToken());
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (InvalidAuthenticationException e) {
+            e.printStackTrace();
+        } catch (InvalidFormatException e) {
+            e.printStackTrace();
+        } catch (NoSuchField noSuchField) {
+            noSuchField.printStackTrace();
+        }
     }
 
     protected void createPromoCode() {

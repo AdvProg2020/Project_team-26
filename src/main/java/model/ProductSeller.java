@@ -11,9 +11,8 @@ public class ProductSeller {
     private long priceInOff;
     private int remainingItems;
 
-    public ProductSeller(int id, Product product) {
-        this.id = id;
-        this.product = product;
+    public ProductSeller(Seller seller,long price , int remainingItems) {
+
     }
 
     public int getId() {
@@ -37,7 +36,7 @@ public class ProductSeller {
     }
 
     public void sell(int amount) throws NotEnoughProductsException {
-        if(remainingItems < amount) {
+        if (remainingItems < amount) {
             throw new NotEnoughProductsException("Not enough products", this);
         }
         remainingItems -= amount;
