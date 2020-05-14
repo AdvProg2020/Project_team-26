@@ -10,6 +10,7 @@ import model.repository.RepositoryContainer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FakeProductSellerRepository implements ProductSellerRepository {
     List<ProductSeller> allProductSellers ;
@@ -33,31 +34,38 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
 
     @Override
     public List<ProductSeller> getAll() {
-        return null;
+        return allProductSellers;
     }
 
     @Override
     public ProductSeller getById(int id) {
-        return null;
+        List<ProductSeller> productSellers = allProductSellers.stream().filter(ProductSeller -> ProductSeller.getId() == id).collect(Collectors.toList());
+        if (productSellers.size() == 0)
+            return null;
+        return productSellers.get(0);
     }
 
     @Override
     public void save(ProductSeller object) {
-
+        allProductSellers.add(object);
     }
 
     @Override
     public void delete(int id) {
-
+        allProductSellers.remove(productRepository.getById(id));
     }
 
     @Override
     public void delete(ProductSeller object) {
-
+        allProductSellers.remove(object);
     }
 
     @Override
     public boolean exist(int id) {
+        for (ProductSeller productSeller : allProductSellers) {
+            if (productSeller.getId() == id)
+                return true;
+        }
         return false;
     }
 
