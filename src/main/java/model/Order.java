@@ -31,7 +31,7 @@ public class Order {
     @JoinColumn(name = "promo_id")
     private Promo usedPromo;
 
-    @OneToMany
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
 
     public Order() {

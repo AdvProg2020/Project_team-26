@@ -1,11 +1,13 @@
 package model;
 
 import exception.NotEnoughProductsException;
+import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 
 @Entity
 @Table(name = "product_seller")
+@SecondaryTable(name = "product_seller_off", pkJoinColumns=@PrimaryKeyJoinColumn(name="product_seller_id"))
 public class ProductSeller {
 
     @Id
@@ -23,8 +25,8 @@ public class ProductSeller {
     @Column(name = "price", nullable = false)
     private long price;
 
-    @JoinColumn(name = "price_in_off", table = "product_seller_off")
-    private long priceInOff;
+    @Column(name = "price_in_off", table = "product_seller_off", insertable = false, updatable = false)
+    private Long priceInOff;
 
     @Column(name = "remaining_items")
     private int remainingItems;

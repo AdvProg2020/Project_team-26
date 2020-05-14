@@ -2,7 +2,6 @@ package model.repository;
 
 import model.Off;
 import model.OffItem;
-import model.Product;
 
 public interface OffRepository extends Repository<Off> {
     public Off getOffByStringCode(String stringCode);

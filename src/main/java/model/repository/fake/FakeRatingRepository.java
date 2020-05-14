@@ -1,6 +1,5 @@
 package model.repository.fake;
 
-import model.Comment;
 import model.Rate;
 import model.repository.RatingRepository;
 

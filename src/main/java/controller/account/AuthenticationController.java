@@ -8,8 +8,6 @@ import model.User;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 
-import javax.naming.AuthenticationException;
-
 public class AuthenticationController implements IAuthenticationController {
 
     UserRepository userRepository;

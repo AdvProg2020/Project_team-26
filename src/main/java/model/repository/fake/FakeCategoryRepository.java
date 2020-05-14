@@ -1,17 +1,12 @@
 package model.repository.fake;
 
 import model.Category;
-import model.Product;
 import model.repository.CategoryRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
-
-import static model.State.CHECKING_FOR_ADD;
 
 public class FakeCategoryRepository implements CategoryRepository {
     List<Category> allCategory;

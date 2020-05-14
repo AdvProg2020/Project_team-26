@@ -1,6 +1,5 @@
 package model.repository.fake;
 
-import model.Category;
 import model.Comment;
 import model.Customer;
 import model.repository.CommentRepository;

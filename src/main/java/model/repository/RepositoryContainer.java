@@ -1,9 +1,9 @@
 package model.repository;
 
 import model.repository.fake.FakeCategoryRepository;
-import model.repository.fake.FakeCommentRepository;
 import model.repository.fake.FakeProductRepository;
 import model.repository.fake.FakeUserRepository;
+import model.repository.fake.FakeCommentRepository;
 
 import java.util.HashMap;
 import java.util.Map;

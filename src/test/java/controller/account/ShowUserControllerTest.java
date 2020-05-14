@@ -1,12 +1,10 @@
 package controller.account;
 
-import controller.interfaces.account.IShowUserController;
 import exception.*;
 import model.Session;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.BeforeAll;
 
 import javax.naming.AuthenticationException;
 
