@@ -73,4 +73,8 @@ public class Order {
                 reduce((price, paidAmount) -> price + paidAmount).
                 orElse((long) 0);
     }
+
+    public Date getDate() {
+        return date;
+    }
 }

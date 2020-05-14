@@ -42,4 +42,12 @@ public class OrderItem {
     public int getProductId() {
         return product.getId();
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getAmount() {
+        return amount;
+    }
 }

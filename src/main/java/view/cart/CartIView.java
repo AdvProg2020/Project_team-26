@@ -40,7 +40,6 @@ public class CartIView extends View implements IView {
     }
 
     public void showAllProducts() {
-        manager.inputOutput.println("note for buying you have to choose seller id");
         cart.getProductsWithSort().forEach((productSeller, integer) -> manager.inputOutput.println(
                 "product name " + productSeller.getProduct().getName() +
                         "product id :" + productSeller.getProduct().getId()
@@ -148,6 +147,7 @@ public class CartIView extends View implements IView {
                 return true;
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+             //   return false;
             }
         }
     }

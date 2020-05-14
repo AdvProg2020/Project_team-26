@@ -6,21 +6,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum OrdersViewValidCommands {
-    ShowOrdersWithIdToBuyer("show\\s+order\\s+(.*)") {
+    ShowOrdersWithIdToBuyer("show\\s+order\\s+(\\d+)") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.showOrdersWithIdToBuyer(Pattern.compile(ShowOrdersWithIdToBuyer.toString()).matcher(page.getInput()));
         }
     },
-    RateTheProductWithItsId("rate\\s+(.*) ([1-5]{1})") {
+    RateTheProductWithItsId("rate\\s+(\\d+) ([1-5]{1})") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.rateTheProductWithItsId(Pattern.compile(RateTheProductWithItsId.toString()).matcher(page.getInput()));
         }
     };
     private final Pattern commandPattern;
-    private CartIView function = null;
-
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
 

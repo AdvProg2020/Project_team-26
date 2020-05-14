@@ -8,25 +8,25 @@ public enum FilterAndSortValidCommands {
     ShowAvailableFilter("show\\s+available\\s+filters") {
         @Override
         public void goToFunction(FilterAndSort page) {
-            page.showAvailableFilter(Pattern.compile(ShowAvailableFilter.toString()).matcher(page.getInput()));
+            page.showAvailableFilter();
 
         }
     },
-    FilterWithAvailableFilter("filter\\s+(.*)") {
+    FilterWithAvailableFilter("filter\\s+(\\d+)") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.filterWithAvailableFilter(Pattern.compile(FilterWithAvailableFilter.toString()).matcher(page.getInput()));
 
         }
     },
-    ShowCurrentFilters("disable\\s+filter\\s+(.*)") {
+    ShowCurrentFilters("current\\s+filters") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.showCurrentFilters();
 
         }
     },
-    DisableASelectedFilters("disable\\s+filter\\s+(.*)") {
+    DisableASelectedFilters("disable\\s+filter\\s+(\\d+)") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.disableSelectedFilter(Pattern.compile(DisableASelectedFilters.toString()).matcher(page.getInput()));
@@ -35,30 +35,31 @@ public enum FilterAndSortValidCommands {
     ShowAvailableSorts("show\\s+available\\s+sorts") {
         @Override
         public void goToFunction(FilterAndSort page) {
-        //    page.ShowAvailableSorts();
+            page.showAvailableSort();
 
         }
     },
-    Sort("sort\\s+(.*)") {
+    Sort("sort\\s+(\\d+)") {
         @Override
         public void goToFunction(FilterAndSort page) {
-           // page.Sort(Pattern.compile(Sort.toString()).matcher(page.getInput()));
+            page.sortWithAvailableSort(Pattern.compile(Sort.toString()).matcher(page.getInput()));
         }
     },
     CurrentSort("current\\s+sort") {
         @Override
         public void goToFunction(FilterAndSort page) {
-            //page.currentSort();
+            page.showCurrentSort();
         }
     },
     DisableSort("disable\\s+sort") {
         @Override
         public void goToFunction(FilterAndSort page) {
-         //   page.disableSort(Pattern.compile(DisableSort.toString()).matcher(page.getInput()));
+            page.disableSelectedSort();
         }
     };
 
     private final Pattern commandPattern;
+    private final String value;
 
     public abstract void goToFunction(FilterAndSort page);
 
@@ -70,5 +71,11 @@ public enum FilterAndSortValidCommands {
 
     FilterAndSortValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
+        value = output;
+    }
+
+    @Override
+    public String toString() {
+        return value;
     }
 }

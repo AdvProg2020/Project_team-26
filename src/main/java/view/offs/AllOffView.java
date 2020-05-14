@@ -38,7 +38,7 @@ public class AllOffView extends View implements IView {
     }
 
     private void showAll() {
-        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilter(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), manager.getToken());
+        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), manager.getToken());
         for (Product product : productList) {
             manager.inputOutput.println("name " + product.getName() + " with id:" + product.getId());
             product.getSellerList().forEach(i -> manager.inputOutput.println("seller :" + i.getSeller().getFullName() +

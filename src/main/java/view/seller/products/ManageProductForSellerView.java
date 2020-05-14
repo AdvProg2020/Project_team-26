@@ -2,12 +2,9 @@ package view.seller.products;
 
 import controller.interfaces.order.IOrderController;
 import controller.interfaces.product.IProductController;
-import exception.InvalidIdException;
-import model.Product;
 import model.User;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
-import view.seller.SellerAccountViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -52,7 +49,7 @@ public class ManageProductForSellerView extends View {
     }
 
     protected void showAll() {
-        productController.getAllProductWithFilterForSellerId(thisUser.getId(), productFilterAndSort.getFilter(),
+        productController.getAllProductWithFilterForSellerId(thisUser.getId(), productFilterAndSort.getFilterForController(),
                 productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending()
                 , manager.getToken()).forEach(product -> manager.inputOutput.println(
                 product.getName() + "with id: " + product.getId() + "in category :" + product.getCategory().getName()));

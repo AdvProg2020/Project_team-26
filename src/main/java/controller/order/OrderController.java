@@ -9,6 +9,7 @@ import model.repository.OrderRepository;
 import model.repository.RepositoryContainer;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class OrderController implements IOrderController {
     OrderRepository orderRepository;
@@ -26,6 +27,11 @@ public class OrderController implements IOrderController {
             }
             return null;
         }
+    }
+
+    @Override
+    public ArrayList<Order> getOrdersWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
+        return null;
     }
 
     @Override

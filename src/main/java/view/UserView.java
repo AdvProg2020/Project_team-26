@@ -99,4 +99,15 @@ public class UserView {
         }
     }
 
+    public void initialEditFields(ArrayList<String> editableFields, ViewManager manager, IShowUserController userController) {
+        try {
+            editableFields.clear();
+            userController.getUserInfo(manager.getToken()).forEach((key, info) -> editableFields.add(key));
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+    }
+
 }

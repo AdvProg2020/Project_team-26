@@ -31,6 +31,7 @@ public class SellerAccountIView extends View {
         super(managerView);
         validCommands = EnumSet.allOf(SellerAccountViewValidCommands.class);
         userView = UserView.getInstance();
+        editableFields = new ArrayList<>();
     }
 
     @Override
@@ -51,14 +52,14 @@ public class SellerAccountIView extends View {
     }
 
     private void initialEditFields() {
-        editableFields = new ArrayList<>();
-        try {
+        userView.initialEditFields(editableFields, manager, userController);
+       /* try {
             userController.getUserInfo(manager.getToken()).forEach((key, info) -> editableFields.add(key));
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();//
-        }
+            manager.setTokenFromController(e.getMessage());
+        }*/
     }
 
     protected void allCategories() {
@@ -81,8 +82,8 @@ public class SellerAccountIView extends View {
     protected void history() {//todo
         try {
             for (Order order : orderController.getOrders(manager.getToken())) {
-                // manager.inputOutput.println("the user " + order.getCustomer().getFullName() + "with id :" +
-                //   order.getCustomer().getId() + " with date " + order.get);
+                manager.inputOutput.println("the user " + order.getCustomer().getFullName() + "with id :" +
+                        "at : " + order.getDate().toString());
 
             }
 
@@ -96,7 +97,7 @@ public class SellerAccountIView extends View {
     }
 
     protected void manageProducts() {
-        ManageProductForSellerView manageProductForSellerView = new ManageProductForSellerView(manager,thisUser);
+        ManageProductForSellerView manageProductForSellerView = new ManageProductForSellerView(manager, thisUser);
         manageProductForSellerView.run();
     }
 
