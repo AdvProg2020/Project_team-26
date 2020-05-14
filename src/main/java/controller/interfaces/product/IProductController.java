@@ -14,7 +14,7 @@ public interface IProductController {
 
     Product getProductById(int id, String token) throws InvalidIdException;
 
-    void removeProduct(int id, String token) throws InvalidIdException;
+    void removeProduct(int id, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException;
 
     List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, String token);
 

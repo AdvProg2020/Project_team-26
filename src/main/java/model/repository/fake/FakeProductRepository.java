@@ -1,5 +1,6 @@
 package model.repository.fake;
 
+import exception.NoObjectIdException;
 import model.Product;
 import model.repository.ProductRepository;
 
@@ -49,7 +50,11 @@ public class FakeProductRepository implements ProductRepository {
     @Override
     public void deleteRequest(int id) {
 
+    }
 
+    @Override
+    public Object getAllRequests() {
+        //TODO
     }
 
     @Override
@@ -86,16 +91,19 @@ public class FakeProductRepository implements ProductRepository {
             allProducts.add(object);
     }
 
+
     @Override
-    public void delete(int id) {
+    public void delete(int id) throws NoObjectIdException {
         Product product = getById(id);
         delete(product);
     }
 
     @Override
-    public void delete(Product object) {
+    public void delete(Product object) throws NoObjectIdException {
         if (object != null) {
             allProducts.remove(object);
+        } else {
+            throw new NoObjectIdException("Specified object does not exist.");
         }
     }
 }

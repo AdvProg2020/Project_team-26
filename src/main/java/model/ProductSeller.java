@@ -11,7 +11,7 @@ public class ProductSeller {
     private long priceInOff;
     private int remainingItems;
 
-    public ProductSeller(Seller seller,long price , int remainingItems) {
+    public ProductSeller(Seller seller,,Product product, long price , int remainingItems) {
 
     }
 
