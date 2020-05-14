@@ -9,7 +9,7 @@ import model.*;
 import java.util.*;
 
 public interface IOffController {
-    Off createNewOff(Off newOff, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException;
+    void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException;
 
     void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException;
 
@@ -22,6 +22,8 @@ public interface IOffController {
     List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, String token);
 
     List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException;
+
+    List<Off> getAllOfForSellerWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException;
 
     Off getOff(int id, String token) throws InvalidIdException;
 

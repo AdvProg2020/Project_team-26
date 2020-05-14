@@ -12,7 +12,7 @@ public class Off {
     private Date endDate;
     private List<OffItem> items;
 
-    public Off(String stringCode) {
+    public Off() {
         this.isLoaded = false;
         items = new ArrayList<OffItem>();
     }
