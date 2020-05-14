@@ -7,8 +7,7 @@ import model.repository.ProductSellerRepository;
 import model.repository.PromoRepository;
 import model.repository.RepositoryContainer;
 
-import java.util.HashMap;
-import java.util.Iterator;
+import java.rmi.NoSuchObjectException;
 import java.util.Map;
 
 public class CartController implements ICartController {
@@ -138,7 +137,13 @@ public class CartController implements ICartController {
     }
 
     @Override
-    public int getAmountInCartBySellerId(Cart cart, int sellerId, String token) throws InvalidTokenException {
-        return 0;
+    public int getAmountInCartBySellerId(int productSelleId, String token) throws InvalidTokenException, NoSuchObjectException {
+        Session session = Session.getSession(token);
+        for (ProductSeller productSeller : session.getCart().getProducts().keySet()) {
+            if(productSeller.getId() == productSelleId) {
+                return session.getCart().getProducts().get(productSeller);
+            }
+        }
+        throw new NoSuchObjectException("No Object with specified details exist");
     }
 }
