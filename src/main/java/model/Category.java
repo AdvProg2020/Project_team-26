@@ -55,9 +55,9 @@ public class Category {
         return parent;
     }
 
-//    public List<CategoryFeature> getFeatures() {
-//        return features;
-//    }
+    public List<CategoryFeature> getFeatures() {
+        return features;
+    }
 
     public List<Category> getSubCategory() {
         return subCategory;
@@ -117,7 +117,7 @@ public class Category {
         category.setId(this.id);
         this.subCategory.forEach(i -> category.subCategory.add(i));
         this.products.forEach(i -> category.products.add(i));
-//        this.features.forEach(i -> category.features.add(i));
+        this.features.forEach(i -> category.features.add(i));
         return category;
     }
 }

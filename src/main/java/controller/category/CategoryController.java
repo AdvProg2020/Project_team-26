@@ -68,8 +68,7 @@ public class CategoryController implements ICategoryController {
         checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = new CategoryFeature(attributeName, FeatureType.DOUBLE);
-        //TODO
-//        category.getFeatures().add(categoryFeature);
+        category.getFeatures().add(categoryFeature);
         categoryRepository.save(category);
     }
 
@@ -83,12 +82,11 @@ public class CategoryController implements ICategoryController {
     }
 
     private CategoryFeature getCategoryFeature(Category category, String name) throws InvalidIdException {
-        // TODO
-//        List<CategoryFeature> categoryFeatures = category.getFeatures();
-//        for (CategoryFeature categoryFeature : categoryFeatures) {
-//            if (categoryFeature.getFeatureName().equals(name))
-//                return categoryFeature;
-//        }
+        List<CategoryFeature> categoryFeatures = category.getFeatures();
+        for (CategoryFeature categoryFeature : categoryFeatures) {
+            if (categoryFeature.getFeatureName().equals(name))
+                return categoryFeature;
+        }
         throw new InvalidIdException("there is no attribute with name" + name);
     }
 
@@ -97,8 +95,7 @@ public class CategoryController implements ICategoryController {
         checkAccessOfUser(token, "only manager can remove attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
-        // TODO
-//        category.getFeatures().remove(categoryFeature);
+        category.getFeatures().remove(categoryFeature);
         categoryRepository.save(category);
     }
 
@@ -194,11 +191,9 @@ public class CategoryController implements ICategoryController {
     }
 
     public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        // TODO
-//        checkAccessOfUser(token, "you are not manager.");
-//        Category category = getCategoryByIdWithCheck(id);
-//        return category.getFeatures();
-        return new ArrayList<>();
+        checkAccessOfUser(token, "you are not manager.");
+        Category category = getCategoryByIdWithCheck(id);
+        return category.getFeatures();
     }
 
     @Override
