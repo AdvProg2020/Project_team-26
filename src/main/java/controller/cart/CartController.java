@@ -7,6 +7,7 @@ import model.repository.ProductSellerRepository;
 import model.repository.PromoRepository;
 import model.repository.RepositoryContainer;
 
+import java.rmi.NoSuchObjectException;
 import java.util.Map;
 
 public class CartController implements ICartController {
@@ -107,11 +108,11 @@ public class CartController implements ICartController {
                 throw new NotEnoughProductsException("There is not enough products anymore.", productSeller);
             }
 
-            // TODO: process offs for paid price
+            // TODO: process offs for paid price (Done)
             OrderItem orderItem = new OrderItem(productSeller.getProduct(),
                     cart.getProducts().get(productSeller),
                     productSeller.getSeller(),
-                    productSeller.getPrice(), productSeller.getPrice(),
+                    productSeller.getPrice(), productSeller.getPriceInOff(),
                     ShipmentState.WAITING_TO_SEND);
 
             order.addItem(orderItem);
@@ -128,12 +129,21 @@ public class CartController implements ICartController {
     }
 
     public long getToTalPrice(Cart cart, String token) throws InvalidTokenException {
-        //todo
-        return 0;
+        long totalPrice = 0;
+        for (Integer value : cart.getProducts().values()) {
+            totalPrice += value;
+        }
+        return totalPrice;
     }
 
     @Override
-    public int getAmountInCartBySellerId(Cart cart, int sellerId, String token) throws InvalidTokenException {
-        return 0;
+    public int getAmountInCartBySellerId(int productSelleId, String token) throws InvalidTokenException, NoSuchObjectException {
+        Session session = Session.getSession(token);
+        for (ProductSeller productSeller : session.getCart().getProducts().keySet()) {
+            if(productSeller.getId() == productSelleId) {
+                return session.getCart().getProducts().get(productSeller);
+            }
+        }
+        throw new NoSuchObjectException("No Object with specified details exist");
     }
 }
