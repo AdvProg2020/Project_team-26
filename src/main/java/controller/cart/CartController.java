@@ -3,9 +3,9 @@ package controller.cart;
 import controller.interfaces.cart.ICartController;
 import exception.*;
 import model.*;
-import model.repository.ProductSellerRepository;
-import model.repository.PromoRepository;
-import model.repository.RepositoryContainer;
+import repository.ProductSellerRepository;
+import repository.PromoRepository;
+import repository.RepositoryContainer;
 
 import java.rmi.NoSuchObjectException;
 import java.util.Map;

@@ -1,7 +1,7 @@
 package view;
 
 import controller.account.AuthenticationController;
-import model.repository.RepositoryContainer;
+import repository.RepositoryContainer;
 
 import java.util.HashMap;
 import java.util.Map;

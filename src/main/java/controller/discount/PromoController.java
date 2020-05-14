@@ -3,8 +3,8 @@ package controller.discount;
 import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.*;
-import model.repository.PromoRepository;
-import model.repository.UserRepository;
+import repository.PromoRepository;
+import repository.UserRepository;
 
 import java.util.Date;
 import java.util.List;

@@ -5,8 +5,8 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
 import model.*;
-import model.repository.OrderRepository;
-import model.repository.RepositoryContainer;
+import repository.OrderRepository;
+import repository.RepositoryContainer;
 
 import java.util.ArrayList;
 import java.util.Map;

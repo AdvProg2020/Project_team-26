@@ -1,7 +1,7 @@
-package model.repository.mysql;
+package repository.mysql;
 
 import model.Product;
-import model.repository.ProductRepository;
+import repository.ProductRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -31,6 +31,11 @@ public class MySQLProductRepository
     @Override
     public void deleteRequest(int id) {
 
+    }
+
+    @Override
+    public Object getAllRequests() {
+        return null;
     }
 
     @Override

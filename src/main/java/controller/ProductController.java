@@ -3,9 +3,9 @@ package controller;
 import controller.interfaces.product.IProductController;
 import exception.*;
 import model.*;
-import model.repository.ProductRepository;
-import model.repository.ProductSellerRepository;
-import model.repository.RepositoryContainer;
+import repository.ProductRepository;
+import repository.ProductSellerRepository;
+import repository.RepositoryContainer;
 
 import java.util.List;
 import java.util.Map;

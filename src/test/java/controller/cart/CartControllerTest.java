@@ -2,8 +2,8 @@ package controller.cart;
 
 import controller.account.AuthenticationController;
 import model.Session;
-import model.repository.RepositoryContainer;
-import model.repository.UserRepository;
+import repository.RepositoryContainer;
+import repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 
 public class CartControllerTest {

@@ -4,9 +4,9 @@ import controller.interfaces.review.ICommentController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import model.*;
-import model.repository.CommentRepository;
-import model.repository.ProductRepository;
-import model.repository.RepositoryContainer;
+import repository.CommentRepository;
+import repository.ProductRepository;
+import repository.RepositoryContainer;
 
 public class CommentController implements ICommentController {
 

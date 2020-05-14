@@ -5,8 +5,8 @@ import exception.*;
 import model.Role;
 import model.Session;
 import model.User;
-import model.repository.RepositoryContainer;
-import model.repository.UserRepository;
+import repository.RepositoryContainer;
+import repository.UserRepository;
 
 public class AuthenticationController implements IAuthenticationController {
 

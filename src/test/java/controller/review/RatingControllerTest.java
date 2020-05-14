@@ -1,17 +1,15 @@
 package controller.review;
 
-import model.repository.RepositoryContainer;
+import repository.ProductRepository;
+import repository.RatingRepository;
+import repository.RepositoryContainer;
 import controller.account.AuthenticationController;
-import controller.interfaces.review.IRatingController;
 import exception.*;
-import model.Customer;
-import model.Product;
-import model.Rate;
 import model.Session;
-import model.repository.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repository.UserRepository;
 
 public class RatingControllerTest {
 

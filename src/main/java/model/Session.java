@@ -1,7 +1,7 @@
 package model;
 
 import exception.InvalidTokenException;
-import model.repository.UserRepository;
+import repository.UserRepository;
 
 import java.util.HashMap;
 import java.util.Map;

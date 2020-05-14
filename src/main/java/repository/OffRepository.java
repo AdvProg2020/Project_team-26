@@ -1,4 +1,4 @@
-package model.repository;
+package repository;
 
 import model.Off;
 import model.OffItem;

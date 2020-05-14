@@ -2,10 +2,11 @@ package model.repository.mysql;
 
 import model.Category;
 import model.Product;
-import model.repository.CategoryRepository;
+import repository.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repository.mysql.MySQLCategoryRepository;
 
 import java.util.List;
 

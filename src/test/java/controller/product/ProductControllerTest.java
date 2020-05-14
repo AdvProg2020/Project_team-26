@@ -4,7 +4,7 @@ import controller.ProductController;
 import exception.InvalidIdException;
 import model.Product;
 import model.Session;
-import model.repository.RepositoryContainer;
+import repository.RepositoryContainer;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

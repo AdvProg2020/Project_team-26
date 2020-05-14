@@ -1,7 +1,7 @@
-package model.repository.mysql;
+package repository.mysql;
 
 import model.Category;
-import model.repository.CategoryRepository;
+import repository.CategoryRepository;
 
 import java.util.List;
 import java.util.Map;

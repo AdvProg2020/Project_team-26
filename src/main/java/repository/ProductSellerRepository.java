@@ -1,4 +1,4 @@
-package model.repository;
+package repository;
 
 import model.ProductSeller;
 

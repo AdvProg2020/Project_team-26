@@ -6,10 +6,10 @@ import exception.NoAccessException;
 import exception.NotBoughtTheProductException;
 import exception.NotLoggedINException;
 import model.*;
-import model.repository.ProductRepository;
-import model.repository.RatingRepository;
-import model.repository.RepositoryContainer;
-import model.repository.UserRepository;
+import repository.ProductRepository;
+import repository.RatingRepository;
+import repository.RepositoryContainer;
+import repository.UserRepository;
 
 public class RatingController implements IRatingController {
 

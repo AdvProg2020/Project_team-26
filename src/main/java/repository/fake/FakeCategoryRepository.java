@@ -1,7 +1,7 @@
-package model.repository.fake;
+package repository.fake;
 
 import model.Category;
-import model.repository.CategoryRepository;
+import repository.CategoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;

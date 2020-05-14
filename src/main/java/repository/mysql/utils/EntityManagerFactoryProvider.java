@@ -1,4 +1,4 @@
-package model.repository.mysql.utils;
+package repository.mysql.utils;
 
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;

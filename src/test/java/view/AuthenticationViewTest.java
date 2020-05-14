@@ -1,8 +1,8 @@
 package view;
 
 import model.Session;
-import model.repository.RepositoryContainer;
-import model.repository.UserRepository;
+import repository.RepositoryContainer;
+import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

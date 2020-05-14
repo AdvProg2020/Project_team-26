@@ -1,9 +1,8 @@
-package model.repository.fake;
+package repository.fake;
 
 import controller.account.Account;
 import model.*;
-import model.repository.RepositoryContainer;
-import model.repository.UserRepository;
+import repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;

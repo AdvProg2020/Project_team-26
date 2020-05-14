@@ -3,8 +3,8 @@ package controller.account;
 import exception.*;
 import model.Role;
 import model.Session;
-import model.repository.RepositoryContainer;
-import model.repository.UserRepository;
+import repository.RepositoryContainer;
+import repository.UserRepository;
 import org.junit.jupiter.api.*;
 
 import javax.naming.AuthenticationException;

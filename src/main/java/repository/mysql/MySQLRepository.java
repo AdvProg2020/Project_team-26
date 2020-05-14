@@ -1,8 +1,8 @@
-package model.repository.mysql;
+package repository.mysql;
 
-import model.repository.Repository;
-import model.repository.mysql.utils.EntityManagerFactoryProvider;
-import model.repository.mysql.utils.EntityManagerProvider;
+import repository.Repository;
+import repository.mysql.utils.EntityManagerFactoryProvider;
+import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;

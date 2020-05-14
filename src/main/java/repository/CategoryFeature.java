@@ -1,4 +1,4 @@
-package model.repository;
+package repository;
 
 public interface CategoryFeature extends Repository {
 

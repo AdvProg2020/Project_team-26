@@ -1,11 +1,9 @@
-package model.repository.fake;
+package repository.fake;
 
-import model.Comment;
-import model.Product;
 import model.ProductSeller;
-import model.repository.ProductRepository;
-import model.repository.ProductSellerRepository;
-import model.repository.RepositoryContainer;
+import repository.ProductRepository;
+import repository.ProductSellerRepository;
+import repository.RepositoryContainer;
 
 import java.util.ArrayList;
 import java.util.List;

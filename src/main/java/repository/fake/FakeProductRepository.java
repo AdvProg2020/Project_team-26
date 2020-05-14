@@ -1,8 +1,8 @@
-package model.repository.fake;
+package repository.fake;
 
 import exception.NoObjectIdException;
 import model.Product;
-import model.repository.ProductRepository;
+import repository.ProductRepository;
 
 import java.util.ArrayList;
 import java.util.List;

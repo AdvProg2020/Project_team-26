@@ -6,8 +6,8 @@ import exception.NoAccessException;
 import exception.InvalidIdException;
 import exception.ObjectAlreadyExistException;
 import model.*;
-import model.repository.OffRepository;
-import model.repository.ProductRepository;
+import repository.OffRepository;
+import repository.ProductRepository;
 
 import java.util.List;
 import java.util.Map;
