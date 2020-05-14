@@ -8,6 +8,7 @@ import model.repository.UserRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class PromoController implements IPromoController {
     PromoRepository promoRepository;
@@ -30,14 +31,15 @@ public class PromoController implements IPromoController {
         return promo;
     }
 
-    /**
-     *
-     */
-
     @Override
-    public List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token, "only manager can see promos");
-        return promoRepository.getAll();
+    public List<Promo> getAllPromoCodeForCustomer(Map<String, String> filter, String sortField, boolean isAcending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null)
+            throw new NotLoggedINException("you are not logged in");
+        if (user.getRole() != Role.CUSTOMER)
+            throw new NoAccessException("only customer");
+        List<Promo> promos = user.getPromoCodes();//todo
+        return promos;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class ShowUserController implements IShowUserController {
 
     public ArrayList<User> getUsers(String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
-        if(userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+        if (userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             return (ArrayList<User>) userRepository.getAll();
@@ -31,7 +31,7 @@ public class ShowUserController implements IShowUserController {
 
     public User getUserByName(String username, String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
-        if(userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+        if (userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             return userRepository.getUserByName(username);
@@ -41,7 +41,7 @@ public class ShowUserController implements IShowUserController {
     @Override
     public User getUserById(int id, String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
-        if(userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
+        if (userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             return userRepository.getById(id);
@@ -55,14 +55,18 @@ public class ShowUserController implements IShowUserController {
         } else {
             return user.getDetails();
         }
-}
+    }
 
-    public void delete(String username , String token) throws NoAccessException, InvalidTokenException {
+    public void delete(String username, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user.getRole() != Role.ADMIN) {
+        if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            userRepository.delete(getUserByName(username,token));
+            userRepository.delete(getUserByName(username, token));
         }
+    }
+
+    public User getUserByToken(String token) throws InvalidTokenException {
+        return Session.getSession(token).getLoggedInUser();
     }
 }

@@ -2,27 +2,18 @@ package view.filterAndSort;
 
 import view.ViewManager;
 
-import java.util.Map;
 import java.util.regex.Matcher;
 
-public class ProductFilterAndSort extends FilterAndSort {
-    public ProductFilterAndSort(ViewManager manager) {
+public class OffFilterAndSort extends FilterAndSort {
+    public OffFilterAndSort(ViewManager manager) {
         super(manager);
     }
 
     @Override
     protected void init() {
-        filterFields.put(1, "product name");
-        filterFields.put(3, "price");
-        filterFields.put(4, "rate");
-        filterFields.put(5, "seller name");
-        filterFields.put(6, "visit");
-        filterFields.put(7, "brand");
-        filterFields.put(8, "off");
-        filterFields.put(9, "category feature");
-        sortField.put(1, "price");
-        sortField.put(2, "rate");
-        sortField.put(3, "visit");
+        filterFields.put(1, "date");
+        filterFields.put(2, "product name");
+        sortField.put(1, "date");
     }
 
     protected void filterWithAvailableFilter(Matcher matcher) {
@@ -32,11 +23,10 @@ public class ProductFilterAndSort extends FilterAndSort {
             manager.inputOutput.println("enter the number exist in list");
             return;
         }
-        manager.inputOutput.println("enter the filtering you want depending on the filed(for date MM/DD/YY) ");
+        manager.inputOutput.println("enter the filtering you want depending on the filed(for date MM/DD/YY)");
         manager.inputOutput.println("if you want to have more filter or it is a BAZE seperate them by - like" +
                 "3900-6700");
-        String value;
-        value = manager.inputOutput.nextLine();
+        String value = manager.inputOutput.nextLine();
         filterForController.put(filterFields.get(chose), value);
     }
 

@@ -38,7 +38,6 @@ public class ProductSeller {
     public ProductSeller(int id, Product product) {
         this.id = id;
         this.product = product;
-    }
 
     public int getId() {
         return id;

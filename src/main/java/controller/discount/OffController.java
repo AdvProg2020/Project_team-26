@@ -31,14 +31,13 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public Off createNewOff(Off newOff, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
+    public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "seller can create a off");
         /**
          if(newOff.getEndDate())
          check date
          */
-        offRepository.addRequest(newOff);
-        return newOff;
+        offRepository.addRequest(newOff);//
     }
 
     @Override
@@ -55,7 +54,7 @@ public class OffController implements IOffController {
         if (productSeller == null)
             throw new NoAccessException("the product you have choose you are not its seller");
         if (priceInOff < 0)
-            offItem = new OffItem(product, productSeller.getPrice() * percent / 100);
+            offItem = new OffItem(product, (long) productSeller.getPrice() * (100 - percent) / 100);
         else
             offItem = new OffItem(product, priceInOff);
         offItems.add(offItem);
@@ -107,7 +106,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public List<Product> getAllProductWithOff(Map<String, String> filter,String sortFiled,boolean isAscending, String token) {
+    public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
         return null;
     }
 
@@ -115,6 +114,11 @@ public class OffController implements IOffController {
     public List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only seller");
         return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs();
+    }
+
+    @Override
+    public List<Off> getAllOfForSellerWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
+        return null;
     }
 
     @Override

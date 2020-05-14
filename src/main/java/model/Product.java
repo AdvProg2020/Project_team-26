@@ -48,7 +48,6 @@ public class Product {
         this.name = name;
         this.brand = brand;
         this.description = description;
-    }
 
     public int getId() {
         return id;

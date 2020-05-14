@@ -1,54 +1,112 @@
 package view.customer;
 
-import exception.AlreadyLoggedInException;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
+import controller.interfaces.discount.IPromoController;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NotLoggedINException;
 import view.*;
+import view.cart.CartIView;
+import view.customer.orders.OrdersIView;
+import view.filterAndSort.PromoFilterAndSort;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.regex.Matcher;
 
 public class CustomerIView extends View implements IView {
     EnumSet<CustomerValidCommand> validCommands;
+    UserView userView;
+    ArrayList<String> editableFields;
+    IUserInfoController infoController;
+    IShowUserController userController;
+    IPromoController promoController;
+    PromoFilterAndSort customerFilterAndSort;
+
 
     public CustomerIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CustomerValidCommand.class);
+        userView = UserView.getInstance();
+        editableFields = new ArrayList<>();
+        customerFilterAndSort = new PromoFilterAndSort(manager);
+    }
+
+    private void initialEditFields() {
+        userView.initialEditFields(editableFields, manager, userController);
     }
 
     @Override
-    public void run(){
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+    public void run() {
+        boolean isDone;
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
+            isDone = false;
             for (CustomerValidCommand command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
-                    if (command.getView() != null) {
-                        command.setManager(this.manager);
-                        command.getView().run();
-                    } else
-                        command.goToFunction(this);
+                    command.goToFunction(this);
+                    isDone = true;
+                    break;
                 }
             }
+            if (isDone)
+                manager.inputOutput.println("invalid input");
         }
     }
 
-    protected void editTheField(Matcher matcher) {
-
-    }
-
-    protected void personalInfo(Matcher matcher) {
-
+    protected void editTheField() {
+        initialEditFields();
+        userView.edit(editableFields, manager, infoController);
     }
 
     protected void promoCodes() {
-
+        try {
+            promoController.getAllPromoCodeForCustomer(customerFilterAndSort.getFilterForController(),
+                    customerFilterAndSort.getFieldNameForSort(), customerFilterAndSort.isAscending(),
+                    manager.getToken()).forEach(
+                    promo -> manager.inputOutput.println("promo with code : " + promo.getPromoCode()
+                            + " with max : " + promo.getMaxDiscount() + " and percent " + promo.getPercent() +
+                            " started at " + promo.getStartDate().toString() + " end : " + promo.getEndDate().toString())
+            );
+        } catch (NotLoggedINException e) {
+            manager.loginInAllPagesEssential();
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
-    protected void customerInfo(Matcher matcher) {
-
+    protected void viewPersonalInfo() {
+        userView.viewPersonalInfo(manager, userController);
     }
 
     protected void balance() {
+        userView.balance(manager, infoController);
     }
 
     protected void cart() {
+        CartIView cartIView = new CartIView(manager);
+        cartIView.run();
+    }
 
+    protected void orders() {
+        OrdersIView orderView = new OrdersIView(manager);
+        orderView.run();
+    }
+
+    protected void sorting() {
+        customerFilterAndSort.run();
+    }
+
+    protected void filtering() {
+        customerFilterAndSort.run();
+    }
+
+    protected void logOut() {
+        manager.logoutInAllPages();
+    }
+
+    protected void help() {
+        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
     }
 }

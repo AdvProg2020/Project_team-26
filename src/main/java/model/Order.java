@@ -46,6 +46,7 @@ public class Order {
         this.customer = customer;
         this.usedPromo = usedPromo;
         this.address = address;
+        this.items = new ArrayList<>();
         // TODO: set date for order
     }
 
@@ -93,5 +94,9 @@ public class Order {
                 map(item -> item.getPaidPrice()).
                 reduce((price, paidAmount) -> price + paidAmount).
                 orElse((long) 0);
+    }
+
+    public Date getDate() {
+        return date;
     }
 }

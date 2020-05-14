@@ -17,13 +17,10 @@ import java.util.regex.Pattern;
 public class ViewManager {
     private boolean isUserLoggedIn;
     private String token;
-    public Scanner scan;
     public IO inputOutput;
     private ControllerContainer controllerContainer;
 
     public ViewManager() {
-        isUserLoggedIn = true;
-        scan = new Scanner(System.in);
         isUserLoggedIn = false;
         inputOutput = new InputOutput();
         controllerContainer = new ControllerContainer();
@@ -39,9 +36,13 @@ public class ViewManager {
     }
 
 
-
-    public void setTokenFromController() {
+    public void setTokenFromController(String error) {
+        this.inputOutput.println(error);
         this.token = token;
+    }
+
+    public void setLoggedINByController() {
+        //  this.isUserLoggedIn
     }
 
     public void setToken(String token) {
@@ -63,13 +64,6 @@ public class ViewManager {
 
     public void printError() {
 
-
-    }
-
-    public void showList(List<String> list) {
-        for (String s : list) {
-            inputOutput.println(s);
-        }
 
     }
 

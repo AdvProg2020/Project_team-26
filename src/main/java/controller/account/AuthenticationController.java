@@ -76,7 +76,7 @@ public class AuthenticationController implements IAuthenticationController {
         }
     }
 
-    private void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
+    public void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
         if (userRepository.getUserByName(username) != null) {
             throw new InvalidAuthenticationException("Username is already taken.", "Username");
         }

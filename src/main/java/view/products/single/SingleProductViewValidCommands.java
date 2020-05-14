@@ -82,6 +82,11 @@ public enum SingleProductViewValidCommands {
         public void goToFunction(SingleProductView page) {
             page.login();
         }
+    }, Help("help") {
+        @Override
+        public void goToFunction(SingleProductView page) {
+            page.help();
+        }
     };
     private final Pattern commandPattern;
     private final String value;

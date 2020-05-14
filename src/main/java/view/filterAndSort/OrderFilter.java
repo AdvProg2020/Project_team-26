@@ -2,30 +2,26 @@ package view.filterAndSort;
 
 import view.ViewManager;
 
-import java.util.Map;
 import java.util.regex.Matcher;
 
-public class ProductFilterAndSort extends FilterAndSort {
-    public ProductFilterAndSort(ViewManager manager) {
+public class OrderFilter extends FilterAndSort {
+
+    public OrderFilter(ViewManager manager) {
         super(manager);
+        init();
     }
 
-    @Override
     protected void init() {
-        filterFields.put(1, "product name");
-        filterFields.put(3, "price");
-        filterFields.put(4, "rate");
-        filterFields.put(5, "seller name");
-        filterFields.put(6, "visit");
-        filterFields.put(7, "brand");
-        filterFields.put(8, "off");
-        filterFields.put(9, "category feature");
-        sortField.put(1, "price");
-        sortField.put(2, "rate");
-        sortField.put(3, "visit");
+        filterFields.put(1, "date");
+        filterFields.put(2, "total-price");
+        filterFields.put(3, "product-name");
+        filterFields.put(4, "username");
+        filterFields.put(5, "category-name");
+        filterFields.put(6,"category-feature");
+        sortField.put(1, "date");
+        sortField.put(2, "total-price");
     }
-
-    protected void filterWithAvailableFilter(Matcher matcher) {
+    protected void filterWithAvailableFilter (Matcher matcher) {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
         if (chose >= filterFields.size()) {

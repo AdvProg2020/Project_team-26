@@ -58,7 +58,23 @@ public class OrderItem {
         return this.price;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public long getPaidPrice() {
         return paidPrice;
+    }
+
+    public int getProductId() {
+        return product.getId();
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

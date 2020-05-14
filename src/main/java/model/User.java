@@ -1,6 +1,7 @@
 package model;
 
 import controller.account.Account;
+import exception.NoAccessException;
 import exception.NotEnoughCreditException;
 
 import javax.persistence.*;
@@ -52,6 +53,18 @@ public class User {
         return details.get("firstname") + details.get("lastname");
     }
 
+    public void changeFirstName(String name) {
+        details.put("firstname",name);
+    }
+
+    public void changeLastName(String name) {
+        details.put("lastname",name);
+    }
+
+    public void changeEmail(String Email) {
+        this.email = Email;
+    }
+
     public int getId() {
         return id;
     }
@@ -62,6 +75,10 @@ public class User {
 
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String Email) {
+        this.email = Email;
     }
 
     public Role getRole() {
@@ -77,8 +94,20 @@ public class User {
         this.id = id;
     }
 
+    public void changeUsername(String username) {
+        this.username = username;
+    }
+
     public boolean checkPassword(String password) {
         return this.password.equals(password);
+    }
+
+    public void changePassword(String oldPassword, String newPassword) throws NoAccessException {
+        if(oldPassword.equals(this.password)) {
+            this.password = newPassword;
+        } else {
+            throw new NoAccessException("You are not allowed to do that.");
+        }
     }
 
     public long getCredit() {

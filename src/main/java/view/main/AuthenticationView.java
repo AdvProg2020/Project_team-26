@@ -37,15 +37,15 @@ public class AuthenticationView extends View {
         account.setPassword(manager.inputOutput.nextLine());
         account.setUsername(matcher.group(1));
         boolean isLoggedIn = false;
-        while (!isLoggedIn) {
+        while (true) {
             if (account.getUsername().equals("back") || account.getPassword().equals("back"))
                 return;
             try {
                 control.login(account.getUsername(), account.getPassword(), manager.getToken());
-                isLoggedIn = true;
                 manager.setUserLoggedIn(true);
+                return;
             } catch (InvalidTokenException e) {
-                manager.inputOutput.println(e.getMessage());
+                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
                 return;
             } catch (InvalidFormatException e) {
                 manager.inputOutput.println(e.getMessage());
@@ -62,14 +62,13 @@ public class AuthenticationView extends View {
 
     public void register(Matcher matcher) {
         Account account = getUserInfo(matcher);
-        boolean isComplete = false;
-        while (!isComplete) {
-            if (isComplete || account.getPassword().equals("back") || account.getUsername().equals("back"))
+        while (true) {
+            if (account.getPassword().equals("back") || account.getUsername().equals("back"))
                 return;
             try {
                 control.register(account, manager.getToken());
-                isComplete = true;
-            } catch (NoAccessException | InvalidTokenException e) {
+                return;
+            } catch (NoAccessException e) {
                 manager.inputOutput.println(e.getMessage());
                 return;
             } catch (InvalidFormatException e) {
@@ -79,7 +78,11 @@ public class AuthenticationView extends View {
                 manager.inputOutput.println(e.getMessage());
                 correctField(e.getFieldName(), account);
             } catch (AlreadyLoggedInException e) {
-                //TODO
+                manager.inputOutput.println(e.getMessage() + "first logout then register");
+                return;
+            } catch (InvalidTokenException e) {
+                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                return;
             }
         }
     }
@@ -93,6 +96,9 @@ public class AuthenticationView extends View {
             case "Username":
                 account.setUsername(manager.inputOutput.nextLine());
                 break;
+            case "Email":
+                account.setEmail(manager.inputOutput.nextLine());
+                break;
         }
     }
 
@@ -101,6 +107,10 @@ public class AuthenticationView extends View {
         matcher.find();
         account.setRole(setRole(matcher.group(1)));
         account.setUsername(matcher.group(2));
+        /**
+         * you can not type back here to go to privoius
+         * if it goes to controller it is better
+         */
         while (account.getUsername().equals("back")) {
             manager.inputOutput.println("enter username and notice it shouldn't be \"back\"");
             account.setUsername(manager.inputOutput.nextLine());

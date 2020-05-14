@@ -4,14 +4,12 @@ import controller.interfaces.order.IOrderController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
-import model.Customer;
-import model.Order;
-import model.Seller;
-import model.Session;
+import model.*;
 import model.repository.OrderRepository;
 import model.repository.RepositoryContainer;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class OrderController implements IOrderController {
     OrderRepository orderRepository;
@@ -29,6 +27,16 @@ public class OrderController implements IOrderController {
             }
             return null;
         }
+    }
+
+    @Override
+    public ArrayList<Order> getOrdersWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
+        return null;
+    }
+
+    @Override
+    public ArrayList<User> getProductBuyerByProductId(int productId, String token) {
+        return null;
     }
 
 

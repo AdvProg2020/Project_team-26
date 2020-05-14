@@ -26,6 +26,9 @@ public class Off {
     @OneToMany(mappedBy = "off", cascade = CascadeType.ALL)
     private List<OffItem> items;
 
+    public Off() {
+    }
+
     public Off(String stringCode) {
         items = new ArrayList<OffItem>();
     }

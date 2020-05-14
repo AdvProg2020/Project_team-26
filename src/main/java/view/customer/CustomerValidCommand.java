@@ -3,76 +3,92 @@ package view.customer;
 import view.ViewManager;
 import view.customer.orders.OrdersIView;
 import view.View;
+import view.seller.SellerAccountIView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum CustomerValidCommand {
-    EditTheFiled("edit\\s+(.*)", null) {
+    EditTheFiled("edit") {
         @Override
         public void goToFunction(CustomerIView page) {
-            page.editTheField(Pattern.compile(EditTheFiled.toString()).matcher(page.getInput()));
+            page.editTheField();
         }
     },
 
-    ViewBalanceToBuyer("view\\s+balance", null) {
+    ViewBalanceToBuyer("view\\s+balance") {
         @Override
         public void goToFunction(CustomerIView page) {
             page.balance();
         }
     },
 
-    ViewCart("view\\s+cart", null) {
+    ViewCart("view\\s+cart") {
         @Override
         public void goToFunction(CustomerIView page) {
             page.cart();
         }
     },
-    ViewDiscountCodesToBuyer("view\\s+discount\\s+codes", null) {
+    ViewDiscountCodesToBuyer("view\\s+discount\\s+codes") {
         @Override
         public void goToFunction(CustomerIView page) {
             page.promoCodes();
 
         }
     },
-    ViewOrdersForBuyer("view\\s+orders", new OrdersIView(CustomerValidCommand.getManager())) {
+    ViewOrdersForBuyer("view\\s+orders") {
         @Override
         public void goToFunction(CustomerIView page) {
+            page.orders();
+        }
+    },
+    ViewPersonalInfo("view\\s+personal\\s+info") {
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.viewPersonalInfo();
+        }
+    },
+    Sorting("sorting") {
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.sorting();
+        }
+    },
+    Filtering("filtering") {
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.filtering();
+        }
+    },
+    Help("help") {
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.help();
+        }
+    },
+    Logout("logout"){
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.logOut();
         }
     };
-    private Pattern commandPattern;
-    private View view;
-    private CustomerIView function = null;
+    private final Pattern commandPattern;
+    private final String value;
 
-    CustomerValidCommand(String output, View view) {
+    CustomerValidCommand(String output) {
         this.commandPattern = Pattern.compile(output);
-        this.view = view;
+        this.value = output;
     }
 
     public abstract void goToFunction(CustomerIView page);
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
-
     }
 
-    /**
-     *
-     */
-    public static ViewManager manager = null;
-    static {
-        manager = null;
-    }
 
-    public static ViewManager getManager() {
-        return manager;
-    }
-
-    public void setManager(ViewManager manager) {
-        CustomerValidCommand.manager = manager;
-    }
-
-    public View getView() {
-        return view;
+    @Override
+    public String toString() {
+        return this.value;
     }
 }

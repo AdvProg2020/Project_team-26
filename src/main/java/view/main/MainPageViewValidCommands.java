@@ -37,7 +37,7 @@ public enum MainPageViewValidCommands {
                 page.logout(manager.getToken());
                 return;
             }
-            page.printError();
+            //page.printError();
         }
     },
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
@@ -47,7 +47,6 @@ public enum MainPageViewValidCommands {
                 page.authorizing();
                 return;
             }
-            page.printError();
         }
     },
     LoginAccount("login\\s+(.*)") {
@@ -57,7 +56,6 @@ public enum MainPageViewValidCommands {
                 page.authorizing();
                 return;
             }
-            page.printError();
         }
     };
 

@@ -8,6 +8,7 @@ public interface ProductRepository extends Repository<Product> {
     public void addRequest(Product product);
     public void editRequest(Product product);
     public void deleteRequest(int id);
+    public Object getAllRequests(); //Todo
    /* void editName(Product product , String replacement);
     void editState(Product product , State state);
     void editBrand(Product product , String name);
