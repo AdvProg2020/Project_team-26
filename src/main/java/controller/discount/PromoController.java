@@ -31,10 +31,6 @@ public class PromoController implements IPromoController {
         return promo;
     }
 
-    /**
-     *
-     */
-
     @Override
     public List<Promo> getAllPromoCodeForCustomer(Map<String, String> filter, String sortField, boolean isAcending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
@@ -59,9 +55,9 @@ public class PromoController implements IPromoController {
 
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
         Session session = Session.getSession(token);
-        if (!(session.getLoggedInUser().getRole() == Role.ADMIN))
+        if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException(message);
-
+        }
     }
 
     /**
@@ -81,7 +77,7 @@ public class PromoController implements IPromoController {
     private void removeThePromoFromUsers(Promo promo) {
         List<Customer> customers = promo.getCustomers();
         for (Customer customer : customers) {
-            customer.getPromoCodes().remove(promo);
+            customer.getAvailablePromos().remove(promo);
             userRepository.save(customer);
         }
     }

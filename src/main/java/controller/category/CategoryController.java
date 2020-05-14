@@ -10,6 +10,7 @@ import model.repository.CategoryRepository;
 import model.repository.ProductRepository;
 import model.repository.RepositoryContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +68,6 @@ public class CategoryController implements ICategoryController {
         checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = new CategoryFeature(attributeName, FeatureType.DOUBLE);
-        //TODO
         category.getFeatures().add(categoryFeature);
         categoryRepository.save(category);
     }

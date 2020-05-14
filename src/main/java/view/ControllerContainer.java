@@ -1,9 +1,7 @@
 package view;
 
 import controller.account.AuthenticationController;
-import model.repository.Repository;
 import model.repository.RepositoryContainer;
-import model.repository.fake.FakeUserRepository;
 
 import java.util.HashMap;
 import java.util.Map;

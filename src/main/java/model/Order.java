@@ -1,19 +1,41 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "order")
 public class Order {
 
+    @Id
+    @Column(name = "order_id", unique = true)
     private int id;
+
+    @Column(name = "date")
     private Date date;
-    private long totalPrice;
-    private long paidAmount;
+
+// TODO: define price for order
+//    private long totalPrice;
+//    private long paidAmount;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "user_id")
     private Customer customer;
+
+    @Column(name = "address")
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "promo_id")
     private Promo usedPromo;
+
+    @OneToMany(mappedBy = "order")
     private List<OrderItem> items;
+
+    public Order() {
+    }
 
     public Order(int id) {
         this.id = id;
@@ -38,12 +60,12 @@ public class Order {
 
     public Order(Order order, Seller seller) {
         this.date = order.date;
-        this.paidAmount = 0;
+//        this.paidAmount = 0;
         this.usedPromo = null;
         for (OrderItem item : order.items) {
             if(item.getSeller().getUsername().equals(seller.getUsername())) {
                 items.add(item);
-                totalPrice += item.getPrice();
+//                totalPrice += item.getPrice();
             }
         }
     }

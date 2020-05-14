@@ -4,21 +4,43 @@ import controller.account.Account;
 import exception.NoAccessException;
 import exception.NotEnoughCreditException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
 
+@Entity
+@Table(name = "user")
 public class User {
 
+    @Id
+    @Column(name = "user_id", unique = true)
     private int id;
+
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
+
+    @Column(name = "email", nullable = false)
     private String email;
+
+    @Column(name = "role", nullable = false)
     private Role role;
+
+    @Column(name = "credit", nullable = false)
     private long credit;
+
+    @ElementCollection
+    @MapKeyColumn(name="key")
+    @Column(name="value")
+    @CollectionTable(name="user_details", joinColumns=@JoinColumn(name="user_id"))
     private Map<String, String> details;
-    private List<Promo> promoCodes;
+
+    public User() {
+    }
 
     public User(String username, String password, String email, Role role) {
         this.username = username;
@@ -67,9 +89,6 @@ public class User {
         return details;
     }
 
-    public List<Promo> getPromoCodes() {
-        return promoCodes;
-    }
 
     public void setId(int id) {
         this.id = id;

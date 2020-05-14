@@ -6,7 +6,6 @@ import model.Product;
 import model.Session;
 import model.repository.RepositoryContainer;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class ProductControllerTest {

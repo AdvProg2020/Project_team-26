@@ -1,16 +1,12 @@
 package model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Map;
 
 @Entity
 @Table(name = "product")
+@SecondaryTable(name = "product_rate", pkJoinColumns=@PrimaryKeyJoinColumn(name="product_id"))
 public class Product {
 
     @Id
@@ -26,18 +22,32 @@ public class Product {
     @Column(name = "description", nullable = false)
     private String description;
 
-    private double averageRate;
+    @Column(name = "average_rate", table = "product_rate", insertable = false, updatable = false)
+    private Double averageRate;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
     private Category category;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSeller> sellerList;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> comments;
-    private Map<CategoryFeature, Object> categoryFeatures;
+
+    @ElementCollection
+    @MapKeyColumn(name="category_feature_id")
+    @Column(name="value")
+    @CollectionTable(name="product_category_feature", joinColumns=@JoinColumn(name="product_id"))
+    private Map<CategoryFeature, String> categoryFeatures;
 
     public Product() {
-        sellerList = new ArrayList<ProductSeller>();
-        categoryFeatures = new HashMap<>();
-        comments = new ArrayList<Comment>();
     }
+
+    public Product(String name, String brand, String description) {
+        this.name = name;
+        this.brand = brand;
+        this.description = description;
 
     public int getId() {
         return id;
@@ -68,9 +78,9 @@ public class Product {
         return category;
     }
 
-    public Map<CategoryFeature, Object> getCategoryFeatures() {
-        return categoryFeatures;
-    }
+//    public Map<CategoryFeature, Object> getCategoryFeatures() {
+//        return categoryFeatures;
+//    }
 
     public String getDescription() {
         return description;

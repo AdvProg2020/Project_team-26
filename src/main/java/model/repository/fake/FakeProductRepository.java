@@ -8,11 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static model.State.CHECKING_FOR_ADD;
-
 public class FakeProductRepository implements ProductRepository {
 
-    List<Product> allProducts;
+    private List<Product> allProducts;
+    private int lastId = 0;
 
     public FakeProductRepository() {
         this.allProducts = new ArrayList<>();
@@ -23,7 +22,7 @@ public class FakeProductRepository implements ProductRepository {
             obj.setAverageRate(i * 5.5 / 7.1);
             obj.setDescription("this is product:" + i);
             obj.setName("" + i);
-            //obj.setState(CHECKING_FOR_ADD);
+            save(obj);
         }
     }
 
@@ -87,8 +86,14 @@ public class FakeProductRepository implements ProductRepository {
 
     @Override
     public void save(Product object) {
-        if (object != null)
-            allProducts.add(object);
+        if (object == null)
+            return;
+
+        if(object.getId() == 0) {
+            lastId++;
+            object.setId(lastId);
+        }
+        allProducts.add(object);
     }
 
 

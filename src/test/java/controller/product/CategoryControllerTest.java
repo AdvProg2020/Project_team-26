@@ -1,6 +1,5 @@
 package controller.product;
 
-import controller.account.Account;
 import controller.category.CategoryController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -8,13 +7,10 @@ import exception.NoAccessException;
 import exception.ObjectAlreadyExistException;
 import model.Category;
 import model.Product;
-import model.Role;
 import model.Session;
-import model.repository.CategoryRepository;
 import model.repository.RepositoryContainer;
 import model.repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

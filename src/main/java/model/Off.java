@@ -1,29 +1,40 @@
 package model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
+@Table(name = "off")
 public class Off {
 
+    @Id
+    @Column(name = "off_id")
     private int id;
-    private boolean isLoaded;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id", referencedColumnName = "user_id")
+    private Seller seller;
+
+    @Column(name = "start_date", nullable = false)
     private Date startDate;
+
+    @Column(name = "end_date", nullable = false)
     private Date endDate;
+
+    @OneToMany(mappedBy = "off", cascade = CascadeType.ALL)
     private List<OffItem> items;
 
     public Off() {
-        this.isLoaded = false;
+    }
+
+    public Off(String stringCode) {
         items = new ArrayList<OffItem>();
     }
 
     public int getId() {
         return id;
-    }
-
-
-    public boolean isLoaded() {
-        return isLoaded;
     }
 
     public Date getStartDate() {
@@ -44,10 +55,6 @@ public class Off {
                 return item;
         }
         return null;
-    }
-
-    public void setLoaded(boolean loaded) {
-        isLoaded = loaded;
     }
 
     @Override

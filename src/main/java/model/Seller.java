@@ -1,12 +1,19 @@
 package model;
 
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Seller extends User {
 
+    @OneToMany(mappedBy = "seller")
     private List<Off> allOffs;
     private String companyName;
+
+    public Seller() {
+    }
 
     public Seller(String username, String password, String email, Role role) {
         super(username, password, email, role);

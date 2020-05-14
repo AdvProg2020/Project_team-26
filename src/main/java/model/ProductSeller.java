@@ -1,19 +1,43 @@
 package model;
 
 import exception.NotEnoughProductsException;
+import org.hibernate.annotations.Immutable;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "product_seller")
+@SecondaryTable(name = "product_seller_off", pkJoinColumns=@PrimaryKeyJoinColumn(name="product_seller_id"))
 public class ProductSeller {
 
+    @Id
+    @Column(name="product_seller_id")
     private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "seller_id")
     private Seller seller;
+
+    @Column(name = "price", nullable = false)
     private long price;
-    private long priceInOff;
+
+    @Column(name = "price_in_off", table = "product_seller_off", insertable = false, updatable = false)
+    private Long priceInOff;
+
+    @Column(name = "remaining_items")
     private int remainingItems;
 
-    public ProductSeller(Seller seller,,Product product, long price , int remainingItems) {
+    public ProductSeller() {
 
     }
+
+    public ProductSeller(int id, Product product) {
+        this.id = id;
+        this.product = product;
 
     public int getId() {
         return id;
