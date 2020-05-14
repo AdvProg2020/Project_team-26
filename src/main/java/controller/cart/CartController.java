@@ -7,6 +7,8 @@ import model.repository.ProductSellerRepository;
 import model.repository.PromoRepository;
 import model.repository.RepositoryContainer;
 
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 public class CartController implements ICartController {
@@ -128,8 +130,11 @@ public class CartController implements ICartController {
     }
 
     public long getToTalPrice(Cart cart, String token) throws InvalidTokenException {
-        //todo
-        return 0;
+        long totalPrice = 0;
+        for (Integer value : cart.getProducts().values()) {
+            totalPrice += value;
+        }
+        return totalPrice;
     }
 
     @Override
