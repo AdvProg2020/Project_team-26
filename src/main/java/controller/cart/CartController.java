@@ -108,11 +108,11 @@ public class CartController implements ICartController {
                 throw new NotEnoughProductsException("There is not enough products anymore.", productSeller);
             }
 
-            // TODO: process offs for paid price
+            // TODO: process offs for paid price (Done)
             OrderItem orderItem = new OrderItem(productSeller.getProduct(),
                     cart.getProducts().get(productSeller),
                     productSeller.getSeller(),
-                    productSeller.getPrice(), productSeller.getPrice(),
+                    productSeller.getPrice(), productSeller.getPriceInOff(),
                     ShipmentState.WAITING_TO_SEND);
 
             order.addItem(orderItem);
