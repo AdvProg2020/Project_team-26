@@ -5,6 +5,7 @@ import controller.interfaces.review.IRatingController;
 import exception.*;
 import model.Order;
 import view.*;
+import view.customer.CustomerValidCommand;
 import view.filterAndSort.OrderFilter;
 
 import java.util.EnumSet;
@@ -26,13 +27,18 @@ public class OrdersIView extends View implements IView {
     @Override
     public void run() {
         showAll();
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+        boolean isDone;
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
+            isDone = false;
             for (OrdersViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     command.goToFunction(this);
+                    isDone = true;
                     break;
                 }
             }
+            if (isDone)
+                manager.inputOutput.println("invalid input");
         }
     }
 
@@ -85,5 +91,17 @@ public class OrdersIView extends View implements IView {
             }
         }
         manager.inputOutput.println("enter the number plz.");
+    }
+
+    protected void sorting() {
+        orderFilter.run();
+    }
+
+    protected void filtering() {
+        orderFilter.run();
+    }
+
+    protected void help() {
+        validCommands.forEach(command -> manager.inputOutput.println(command.toString()));
     }
 }

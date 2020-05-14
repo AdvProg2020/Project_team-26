@@ -164,7 +164,6 @@ public class SingleProductView extends View {
                 + " with id : " + product.getCategory().getId());
         manager.inputOutput.println("the sellers are :");
         showSellers(product.getSellerList());
-
     }
 
     private void showSellers(List<ProductSeller> productSellerList) {
@@ -172,7 +171,7 @@ public class SingleProductView extends View {
                 + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems() + " with price by existing off " + productSeller.getPriceInOff()));
     }
 
-    protected void changeInfo(Matcher matcher, boolean isItManager) {
+    protected void changeInfo(Matcher matcher, boolean isSeller) {
         /**
          * will be completed when manager is completed
          */
@@ -196,4 +195,7 @@ public class SingleProductView extends View {
         manager.registerInAllPagesOptional(super.input);
     }
 
+    protected void help() {
+        validCommands.forEach(i -> manager.inputOutput.println(i.toString()));
+    }
 }

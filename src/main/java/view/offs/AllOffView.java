@@ -58,9 +58,6 @@ public class AllOffView extends View implements IView {
         productFilterAndSort.run();
     }
 
-    protected void printError() {
-
-    }
 
     protected void logOut() {
         manager.logoutInAllPages();

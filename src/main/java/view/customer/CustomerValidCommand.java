@@ -41,10 +41,35 @@ public enum CustomerValidCommand {
         public void goToFunction(CustomerIView page) {
             page.orders();
         }
-    }, ViewPersonalInfo("view\\s+personal\\s+info") {
+    },
+    ViewPersonalInfo("view\\s+personal\\s+info") {
         @Override
         public void goToFunction(CustomerIView page) {
             page.viewPersonalInfo();
+        }
+    },
+    Sorting("sorting") {
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.sorting();
+        }
+    },
+    Filtering("filtering") {
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.filtering();
+        }
+    },
+    Help("help") {
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.help();
+        }
+    },
+    Logout("logout"){
+        @Override
+        public void goToFunction(CustomerIView page) {
+            page.logOut();
         }
     };
     private final Pattern commandPattern;

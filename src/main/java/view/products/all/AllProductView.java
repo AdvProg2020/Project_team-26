@@ -14,7 +14,7 @@ public class AllProductView extends View {
     IProductController productController;
     ICategoryController categoryController;
     int currentCategory;
-    ProductFilterAndSort filterAndSort;
+    ProductFilterAndSort productFilterAndSort;
 
 
     public AllProductView(ViewManager manager) {
@@ -42,7 +42,7 @@ public class AllProductView extends View {
 
     protected void categoriesOfProducts() {
         try {
-            categoryController.getAllCategoriesWithFilter(filterAndSort.getFilterForController(), filterAndSort.getFieldNameForSort(), filterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println("name is " +
+            categoryController.getAllCategoriesWithFilter(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println("name is " +
                     category.getName() + " with id " + category.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
@@ -51,7 +51,7 @@ public class AllProductView extends View {
 
     protected void showAllProducts() {
         try {
-            categoryController.getAllProductWithFilter(filterAndSort.getFilterForController(), filterAndSort.getFieldNameForSort(), filterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(product -> manager.inputOutput.println(
+            categoryController.getAllProductWithFilter(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(product -> manager.inputOutput.println(
                     "name is" + product.getName() + "id is:" + product.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
@@ -98,11 +98,11 @@ public class AllProductView extends View {
     }
 
     protected void filter() {
-        filterAndSort.run();
+        productFilterAndSort.run();
     }
 
     protected void sort() {
-        filterAndSort.run();
+        productFilterAndSort.run();
     }
 
     public void setCurrentCategory(int currentCategory) {

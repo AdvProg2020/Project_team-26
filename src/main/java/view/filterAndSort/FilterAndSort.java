@@ -2,6 +2,7 @@ package view.filterAndSort;
 
 import view.View;
 import view.ViewManager;
+import view.seller.SellerAccountViewValidCommands;
 
 import java.util.EnumSet;
 import java.util.HashMap;
@@ -27,19 +28,31 @@ public abstract class FilterAndSort extends View {
 
     @Override
     public void run() {
+        boolean isDone;
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
+            isDone = false;
+            for (FilterAndSortValidCommands command : validCommands) {
+                if ((command.getStringMatcher(super.input).find())) {
+                    command.goToFunction(this);
+                    isDone = true;
+                    break;
+                }
+            }
+            if (isDone)
+                manager.inputOutput.println("invalid input");
+        }
     }
 
     protected abstract void init();
-
-    public String getFieldNameForSort() {
+    public String getFieldNameForSort(){
         return fieldNameForSort;
     }
 
-    public boolean isAscending() {
+    public boolean isAscending(){
         return isAscending;
     }
 
-    protected void disableSelectedFilter(Matcher matcher) {
+   abstract protected void disableSelectedFilter(Matcher matcher);/* {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
         if (chose >= filterFields.size()) {
@@ -52,9 +65,9 @@ public abstract class FilterAndSort extends View {
         String value;
         value = manager.inputOutput.nextLine();
         filterForController.put(filterForController.get(chose), value);
-    }
+    }*/
 
-    protected void filterWithAvailableFilter(Matcher matcher) {
+    abstract protected void filterWithAvailableFilter(Matcher matcher);/* {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
         if (chose >= filterFields.size()) {
@@ -63,30 +76,32 @@ public abstract class FilterAndSort extends View {
         }
         if (filterForController.containsKey(filterFields.get(chose)))
             filterForController.remove(filterFields.get(chose));
-    }
+    }*/
 
-    protected void showAvailableFilter() {
+    abstract protected void showAvailableFilter() ;/*{
         filterFields.forEach((number, filed) -> manager.inputOutput.println("" + number + ". " + filed));
-    }
+    }*/
 
-    protected void showCurrentFilters() {
+    abstract protected void showCurrentFilters() ;/*{
         filterForController.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
-    }
+    }*/
 
-    protected void showAvailableSort() {
+    abstract protected void showAvailableSort();/*{
         sortField.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
-    }
+    }*/
 
-    protected void showCurrentSort() {
+    abstract protected void showCurrentSort();/* {
         manager.inputOutput.println(fieldNameForSort);
     }
+*/
 
-    protected void disableSelectedSort() {
+
+    abstract protected void disableSelectedSort(); /*{
         fieldNameForSort = new String();
-    }
+    }*/
 
 
-    protected void sortWithAvailableSort(Matcher matcher) {
+    abstract protected void sortWithAvailableSort(Matcher matcher);/* {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
         if (chose >= sortField.size()) {
@@ -101,7 +116,7 @@ public abstract class FilterAndSort extends View {
             return;
         }
         isAscending = false;
-    }
+    }*/
 
     public Map<String, String> getFilterForController() {
         return filterForController;

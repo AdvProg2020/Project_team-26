@@ -1,5 +1,6 @@
 package view.seller;
 
+import view.customer.CustomerIView;
 import view.products.all.AllProductView;
 
 import java.util.regex.Matcher;
@@ -20,13 +21,12 @@ public enum SellerAccountViewValidCommands {
         }
 
     },
-    /*ViewCompanyInfo("view\\s+company\\s+information") {
+    ViewCompanyInfo("view\\s+company\\s+information") {
         @Override
         public void goToFunction(SellerAccountIView page) {
             page.companyInfo();
         }
-
-    },*/
+    },
     ViewSalesHistoryForSeller("view\\s+sales\\s+history") {
         @Override
         public void goToFunction(SellerAccountIView page) {
@@ -62,7 +62,7 @@ public enum SellerAccountViewValidCommands {
             page.allCategories();
         }
 
-    }, ShowSubCategoriesForSeller("show\\s+sub\\s+category (.*)") {
+    }, ShowSubCategoriesForSeller("show\\s+sub\\s+category (\\d+)") {
         @Override
         public void goToFunction(SellerAccountIView page) {
             page.subCategory(Pattern.compile(ShowSubCategoriesForSeller.toString()).matcher(page.getInput()));
@@ -87,6 +87,23 @@ public enum SellerAccountViewValidCommands {
             page.balance();
         }
 
+    }, Sorting("sorting") {
+        @Override
+        public void goToFunction(SellerAccountIView page) {
+            page.sorting();
+        }
+    },
+    Filtering("filtering") {
+        @Override
+        public void goToFunction(SellerAccountIView page) {
+            page.filtering();
+        }
+    },
+    Help("help") {
+        @Override
+        public void goToFunction(SellerAccountIView page) {
+            page.help();
+        }
     };
     private final Pattern commandPattern;
     private final String value;

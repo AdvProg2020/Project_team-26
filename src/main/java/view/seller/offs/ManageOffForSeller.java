@@ -8,6 +8,7 @@ import exception.ObjectAlreadyExistException;
 import model.Off;
 import view.View;
 import view.ViewManager;
+import view.filterAndSort.OffFilterAndSort;
 import view.seller.products.ManageProductForSellerViewValidCommands;
 
 import java.util.EnumSet;
@@ -18,6 +19,7 @@ public class ManageOffForSeller extends View {
     EnumSet<ViewOffsForSellerAccountValidCommands> validCommands;
     IOffController offController;
     boolean isPercent;
+    OffFilterAndSort offFilterAndSort;
 
     public ManageOffForSeller(ViewManager managerView) {
         super(managerView);
@@ -43,13 +45,21 @@ public class ManageOffForSeller extends View {
     }
 
     protected void showAll() {
-      /*  for (Off off : offController.getAllOfForSellerWithFilter()) {
-            manager.inputOutput.println("off id :" + off.getId());
-            manager.inputOutput.println("start :" + off.getStartDate().toString());
-            /*off.getItems().forEach(item -> manager.inputOutput.println(item.getProduct().getName() + " with id" +
-                    item.getProduct().getId() + "with price" + item.getPriceInOff()));
-            manager.inputOutput.println("end :" + off.getEndDate().toString());
-        }*/
+        try {
+            for (Off off : offController.getAllOfForSellerWithFilter(offFilterAndSort.getFilterForController(),
+                    offFilterAndSort.getFieldNameForSort()
+                    , offFilterAndSort.isAscending(), manager.getToken())) {
+                manager.inputOutput.println("off id :" + off.getId());
+                manager.inputOutput.println("start :" + off.getStartDate().toString());
+                off.getItems().forEach(item -> manager.inputOutput.println(item.getProduct().getName() + " with id" +
+                        item.getProduct().getId() + "with price" + item.getPriceInOff()));
+                manager.inputOutput.println("end :" + off.getEndDate().toString());
+            }
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void addOff() {
@@ -132,6 +142,23 @@ public class ManageOffForSeller extends View {
                 manager.inputOutput.println(e.getMessage());
             }
         }
+    }
+
+    protected void logOut() {
+        manager.logoutInAllPages();
+    }
+
+
+    protected void sorting() {
+        offFilterAndSort.run();
+    }
+
+    protected void filtering() {
+        offFilterAndSort.run();
+    }
+
+    protected void help() {
+        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
     }
 
 }

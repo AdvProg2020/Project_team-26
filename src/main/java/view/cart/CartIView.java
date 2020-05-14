@@ -29,7 +29,7 @@ public class CartIView extends View implements IView {
             manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
             return;
         }
-        while (!(super.input = (manager.scan.nextLine()).trim()).matches("exit")) {
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("exit")) {
             for (CartViewValidCommand command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     command.goToFunction(this);
@@ -42,8 +42,8 @@ public class CartIView extends View implements IView {
     public void showAllProducts() {
         cart.getProductsWithSort().forEach((productSeller, integer) -> manager.inputOutput.println(
                 "product name " + productSeller.getProduct().getName() +
-                        "product id :" + productSeller.getProduct().getId()
-                        + " seller id : " + productSeller.getId() +
+                        "product id :" + productSeller.getId()
+                        +
                         " with price" + productSeller.getPrice()
                         + " with amount" + integer.longValue()));
     }
@@ -164,7 +164,4 @@ public class CartIView extends View implements IView {
         manager.registerInAllPagesOptional(super.input);
     }
 
-    public void sort() {
-
-    }
 }

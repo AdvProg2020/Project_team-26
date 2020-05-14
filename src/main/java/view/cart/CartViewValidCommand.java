@@ -16,12 +16,6 @@ public enum CartViewValidCommand {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    Sort("sorting") {
-        @Override
-        public void goToFunction(CartIView page) {
-            page.sort();
-        }
-    },
     IncreaseNumberOfProductForBuyerWithId("increase\\s+(.*)") {
         @Override
         public void goToFunction(CartIView page) {
@@ -41,9 +35,6 @@ public enum CartViewValidCommand {
         }
     },
     Purchase("purchase") {
-        /**
-
-         */
         @Override
         public void goToFunction(CartIView page) {
             page.purchase();

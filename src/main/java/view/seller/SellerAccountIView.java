@@ -8,6 +8,7 @@ import controller.interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.*;
+import view.filterAndSort.SellerFilterAndSort;
 import view.seller.offs.ManageOffForSeller;
 import view.seller.products.ManageProductForSellerView;
 
@@ -25,6 +26,7 @@ public class SellerAccountIView extends View {
     UserView userView;
     IOrderController orderController;
     User thisUser;
+    SellerFilterAndSort sellerFilterAndSort;
 
 
     public SellerAccountIView(ViewManager managerView) {
@@ -32,6 +34,7 @@ public class SellerAccountIView extends View {
         validCommands = EnumSet.allOf(SellerAccountViewValidCommands.class);
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
+        sellerFilterAndSort = new SellerFilterAndSort(manager);
     }
 
     @Override
@@ -53,43 +56,52 @@ public class SellerAccountIView extends View {
 
     private void initialEditFields() {
         userView.initialEditFields(editableFields, manager, userController);
-       /* try {
-            userController.getUserInfo(manager.getToken()).forEach((key, info) -> editableFields.add(key));
-        } catch (NoAccessException e) {
-            manager.inputOutput.println(e.getMessage());
-        } catch (InvalidTokenException e) {
-            manager.setTokenFromController(e.getMessage());
-        }*/
     }
 
     protected void allCategories() {
-        //categoryController.getAllCategoriesWithFilter(, , , 0, manager.getToken()).forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
+        try {
+            categoryController.getAllCategoriesWithFilter(sellerFilterAndSort.getFilterCategoryForController(),
+                    sellerFilterAndSort.getFieldNameForSort(), sellerFilterAndSort.isAscending(), 0, manager.getToken()).forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
+        } catch (InvalidIdException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void subCategory(Matcher matcher) {
         matcher.find();
         if (manager.checkTheInputIsInteger(matcher.group(1))) {
-            //categoryController.getAllCategoriesWithFilter(, , , Integer.parseInt(matcher.group(1)), manager.getToken()).forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
-
+            try {
+                categoryController.getAllCategoriesWithFilter(sellerFilterAndSort.getFilterCategoryForController(),
+                        sellerFilterAndSort.getFieldNameForSort(), sellerFilterAndSort.isAscending(),
+                        Integer.parseInt(matcher.group(1)), manager.getToken()).
+                        forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
+            } catch (InvalidIdException e) {
+                manager.setTokenFromController(e.getMessage());
+            }
         }
-
     }
 
-   /* protected void companyInfo() {//todo
-        manager.inputOutput.println(infoController.getCompanyName(manager.getToken()));
-    }*/
+    protected void companyInfo() {
+        try {
+            manager.inputOutput.println(infoController.getCompanyName(manager.getToken()));
+        } catch (InvalidTokenException | NoSuchField e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
+        }
+    }
 
     protected void history() {//todo
         try {
-            for (Order order : orderController.getOrders(manager.getToken())) {
+            for (Order order : orderController.getOrdersWithFilter(sellerFilterAndSort.getFilterOrderForController(),
+                    sellerFilterAndSort.getFieldNameForSort(), sellerFilterAndSort.isAscending(), manager.getToken())) {
                 manager.inputOutput.println("the user " + order.getCustomer().getFullName() + "with id :" +
                         "at : " + order.getDate().toString());
 
             }
-
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
-            return;
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
         }
@@ -226,11 +238,15 @@ public class SellerAccountIView extends View {
 
 
     protected void sorting() {
-
+        sellerFilterAndSort.run();
     }
 
     protected void filtering() {
+        sellerFilterAndSort.run();
+    }
 
+    protected void help() {
+        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
     }
 
 

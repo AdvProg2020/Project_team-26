@@ -4,23 +4,19 @@ import view.ViewManager;
 
 import java.util.regex.Matcher;
 
-public class OrderFilter extends FilterAndSort {
-
-    public OrderFilter(ViewManager manager) {
+public class PromoFilterAndSort extends FilterAndSort {
+    public PromoFilterAndSort(ViewManager manager) {
         super(manager);
-        init();
     }
 
+    @Override
     protected void init() {
-        filterFields.put(1, "date");
-        filterFields.put(2, "total-price");
-        filterFields.put(3, "product-name");
-        filterFields.put(4, "username");
-        filterFields.put(5, "category-name");
-        filterFields.put(6,"category-feature");
-        sortField.put(1, "date");
-        sortField.put(2, "total-price");
+        filterFields.put(1,"date");
+        filterFields.put(2,"");
+
+
     }
+
     protected void filterWithAvailableFilter (Matcher matcher) {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
@@ -84,4 +80,6 @@ public class OrderFilter extends FilterAndSort {
         }
         isAscending = false;
     }
+
+
 }

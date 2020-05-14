@@ -3,19 +3,16 @@ package view.customer;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
 import controller.interfaces.discount.IPromoController;
-import exception.AlreadyLoggedInException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
 import view.*;
 import view.cart.CartIView;
 import view.customer.orders.OrdersIView;
-import view.filterAndSort.CustomerFilterAndSort;
-import view.seller.products.ManageProductForSellerViewValidCommands;
+import view.filterAndSort.PromoFilterAndSort;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.regex.Matcher;
 
 public class CustomerIView extends View implements IView {
     EnumSet<CustomerValidCommand> validCommands;
@@ -24,7 +21,7 @@ public class CustomerIView extends View implements IView {
     IUserInfoController infoController;
     IShowUserController userController;
     IPromoController promoController;
-    CustomerFilterAndSort customerFilterAndSort;
+    PromoFilterAndSort customerFilterAndSort;
 
 
     public CustomerIView(ViewManager manager) {
@@ -32,7 +29,7 @@ public class CustomerIView extends View implements IView {
         validCommands = EnumSet.allOf(CustomerValidCommand.class);
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
-        customerFilterAndSort = new CustomerFilterAndSort(manager);
+        customerFilterAndSort = new PromoFilterAndSort(manager);
     }
 
     private void initialEditFields() {
@@ -95,5 +92,21 @@ public class CustomerIView extends View implements IView {
     protected void orders() {
         OrdersIView orderView = new OrdersIView(manager);
         orderView.run();
+    }
+
+    protected void sorting() {
+        customerFilterAndSort.run();
+    }
+
+    protected void filtering() {
+        customerFilterAndSort.run();
+    }
+
+    protected void logOut() {
+        manager.logoutInAllPages();
+    }
+
+    protected void help() {
+        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
     }
 }

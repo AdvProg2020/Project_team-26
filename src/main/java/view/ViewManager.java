@@ -17,13 +17,10 @@ import java.util.regex.Pattern;
 public class ViewManager {
     private boolean isUserLoggedIn;
     private String token;
-    public Scanner scan;
     public IO inputOutput;
     private ControllerContainer controllerContainer;
 
     public ViewManager() {
-        isUserLoggedIn = true;
-        scan = new Scanner(System.in);
         isUserLoggedIn = false;
         inputOutput = new InputOutput();
         controllerContainer = new ControllerContainer();

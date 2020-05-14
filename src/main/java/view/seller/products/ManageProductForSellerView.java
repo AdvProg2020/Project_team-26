@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 public class ManageProductForSellerView extends View {
-    EnumSet<ManageProductForSellerViewValidCommands> validCommands;
-    IProductController productController;
-    ProductFilterAndSort productFilterAndSort;
-    IOrderController orderController;
-    User thisUser;
+    private EnumSet<ManageProductForSellerViewValidCommands> validCommands;
+    private IProductController productController;
+    private ProductFilterAndSort productFilterAndSort;
+    private IOrderController orderController;
+    private User thisUser;
 
 
     public ManageProductForSellerView(ViewManager managerView, User thisUser) {
@@ -59,17 +59,30 @@ public class ManageProductForSellerView extends View {
         manager.singleProductView(matcher);
     }
 
-    protected void showBuyer(Matcher matcher) {//todo
+    protected void showBuyer(Matcher matcher) {
         matcher.find();
         if (manager.checkTheInputIsInteger(matcher.group(1))) {
             List<User> userList = orderController.getProductBuyerByProductId(Integer.parseInt(matcher.group(1)), manager.getToken());
             userList.forEach(i -> manager.inputOutput.println(i.getFullName()));
+            return;
         }
-
-
     }
 
     protected void logOut() {
         manager.logoutInAllPages();
     }
+
+
+    protected void sorting() {
+        productFilterAndSort.run();
+    }
+
+    protected void filtering() {
+        productFilterAndSort.run();
+    }
+
+    protected void help() {
+        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
+    }
+
 }
