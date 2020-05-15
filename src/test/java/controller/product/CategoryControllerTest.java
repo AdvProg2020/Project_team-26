@@ -1,10 +1,7 @@
 package controller.product;
 
 import controller.category.CategoryController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.ObjectAlreadyExistException;
+import exception.*;
 import model.Category;
 import model.Product;
 import model.Session;
@@ -31,7 +28,7 @@ public class CategoryControllerTest {
     }
 
     @Test
-    void removeACategory() throws InvalidIdException, InvalidTokenException, NoAccessException {
+    void removeACategory() throws InvalidIdException, InvalidTokenException, NoAccessException, NoObjectIdException {
         setup();
         List<Category> categories = new ArrayList<>();
         Category category = categoryController.getCategory(19, "admin");
