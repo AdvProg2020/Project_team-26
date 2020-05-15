@@ -21,7 +21,7 @@ public class AuthenticationController implements IAuthenticationController {
         checkPasswordFormat(password);
         checkUsernameFormat(username);
         checkUsernameAndPassword(username, password);
-        userSession.login(userRepository.getUserByName(username));
+        userSession.login(userRepository.getUserByUsername(username));
     }
 
     public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
@@ -77,7 +77,7 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     public void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
-        if (userRepository.getUserByName(username) != null) {
+        if (userRepository.getUserByUsername(username) != null) {
             throw new InvalidAuthenticationException("Username is already taken.", "Username");
         }
     }
@@ -87,10 +87,10 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     private void checkUsernameAndPassword(String username, String password) throws InvalidAuthenticationException, PasswordIsWrongException {
-        if (userRepository.getUserByName(username) == null) {
+        if (userRepository.getUserByUsername(username) == null) {
             throw new InvalidAuthenticationException("Username is invalid.", "Username");
         }
-        if (!userRepository.getUserByName(username).checkPassword(password)) {
+        if (!userRepository.getUserByUsername(username).checkPassword(password)) {
             throw new InvalidAuthenticationException("Password is wrong", "Password");
         }
     }

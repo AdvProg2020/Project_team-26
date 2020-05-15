@@ -35,7 +35,7 @@ public class ShowUserController implements IShowUserController {
         if (userSession.getLoggedInUser() == null || userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            return userRepository.getUserByName(username);
+            return userRepository.getUserByUsername(username);
         }
     }
 

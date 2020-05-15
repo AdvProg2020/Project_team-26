@@ -65,6 +65,5 @@ public class Off {
         if (off.getId() == this.getId())
             return true;
         return false;
-
     }
 }

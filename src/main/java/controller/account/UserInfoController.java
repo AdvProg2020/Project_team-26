@@ -57,7 +57,7 @@ public class UserInfoController implements IUserInfoController {
         Session session = Session.getSession(token);
         if (session.getLoggedInUser() == null) {
             throw new NotLoggedINException("You are not logged in.");
-        } else if (userRepository.getUserByName(value) != null) {
+        } else if (userRepository.getUserByUsername(value) != null) {
             throw new InvalidAuthenticationException("Username is already taken.", "Username");
         } else {
             session.getLoggedInUser().changeUsername(value);

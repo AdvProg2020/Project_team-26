@@ -63,8 +63,8 @@ public class ShowUserControllerTest {
 
         authenticationController.login("test1","password1",token);
         //showUserController.delete("test2",token);
-        Assertions.assertEquals(userRepository.getUserByName("test2"),null);
-        Assertions.assertEquals(userRepository.getUserByName("test2"),null);
+        Assertions.assertEquals(userRepository.getUserByUsername("test2"),null);
+        Assertions.assertEquals(userRepository.getUserByUsername("test2"),null);
 
         Assertions.assertEquals(showUserController.getUsers(token),userRepository.getAll());
     }

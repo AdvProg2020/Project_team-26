@@ -15,7 +15,7 @@ import java.util.Map;
 public abstract class MySQLRepository<T> implements Repository<T> {
 
     protected EntityManagerFactory entityManagerFactory;
-    private Class<T> tClass;
+    protected Class<T> tClass;
 
     public MySQLRepository(Class<T> tClass) {
         entityManagerFactory = EntityManagerFactoryProvider.getEntityManagerFactory();

@@ -49,15 +49,15 @@ public class AuthenticationControllerTest {
         /**End of Exception Tests**/
 
         authenticationController.register(new Account("Arya","1234",Role.SELLER),token);
-        Assertions.assertEquals("Arya",userRepository.getUserByName("Arya").getUsername());
+        Assertions.assertEquals("Arya",userRepository.getUserByUsername("Arya").getUsername());
         authenticationController.register(new Account("Tataloo","124",Role.CUSTOMER),token);
-        Assertions.assertEquals("Tataloo",userRepository.getUserByName("Tataloo").getUsername());
+        Assertions.assertEquals("Tataloo",userRepository.getUserByUsername("Tataloo").getUsername());
 
         /** Logging in and then doing stuff**/
 
         authenticationController.login("test1","password1",token);
         authenticationController.register(new Account("Admin","admin",Role.ADMIN),token);
-        Assertions.assertEquals("Admin",userRepository.getUserByName("Admin").getUsername());
+        Assertions.assertEquals("Admin",userRepository.getUserByUsername("Admin").getUsername());
 
     }
 
