@@ -82,4 +82,8 @@ public class ProductSeller {
     public void setRemainingItems(int remainingItems) {
         this.remainingItems = remainingItems;
     }
+
+    public ProductSellerRequest createProductSellerRequest(RequestTpe requestTpe) {
+        return new ProductSellerRequest(product, seller, price, remainingItems, requestTpe);
+    }
 }

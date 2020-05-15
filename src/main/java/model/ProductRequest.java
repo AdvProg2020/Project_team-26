@@ -11,6 +11,10 @@ public class ProductRequest {
     @Column(name = "product_request_id", unique = true)
     private int id;
 
+    @ManyToOne
+    @Column(name = "main_product_id")
+    private Product mainProduct;
+
     @Column(name = "name", unique = true, nullable = false)
     private String name;
 
@@ -25,16 +29,26 @@ public class ProductRequest {
     private Category category;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<ProductSeller> sellerList;
+    private List<ProductSellerRequest> sellerList;
 
     @Column(name = "request_type")
     private RequestTpe requestTpe;
 
-    public int getId() {
-        return id;
+    private RequestStatus requestStatus;
+
+    public ProductRequest() {
     }
 
-    public RequestTpe getRequestTpe() {
-        return requestTpe;
+    public ProductRequest(String name, String brand, String description, Category category, RequestTpe requestTpe) {
+        this.name = name;
+        this.brand = brand;
+        this.description = description;
+        this.category = category;
+        this.requestTpe = requestTpe;
+        requestStatus = RequestStatus.PENDING;
+    }
+
+    public void addSeller(ProductSellerRequest productSellerRequest) {
+        sellerList.add(productSellerRequest);
     }
 }

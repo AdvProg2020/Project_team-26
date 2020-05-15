@@ -36,7 +36,7 @@ public class FakeUserRepository implements UserRepository {
         }
         for (User user : allUsers) {
             if(user instanceof Customer) {
-                Order order = new Order((Customer) user, new Promo("BigRetard")," ");
+                Order order = new Order((Customer) user, new Promo("BigRetard",(Customer)user)," ");
                 OrderItem orderItem = new OrderItem(fakeProductRepository.getById(1),2,(Seller) getById(6),200,
                         190,ShipmentState.WAITING_TO_SEND);
                 order.addItem(orderItem);
@@ -46,8 +46,8 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public User getUserByName(String userName) {
-        List<User> users = allUsers.stream().filter(user -> user.getUsername().equals(userName)).collect(Collectors.toList());
+    public User getUserByUsername(String username) {
+        List<User> users = allUsers.stream().filter(user -> user.getUsername().equals(username)).collect(Collectors.toList());
         if (users.size() == 0)
             return null;
         return users.get(0);

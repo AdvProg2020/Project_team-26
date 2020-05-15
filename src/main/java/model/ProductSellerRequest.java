@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ProductSellerRequest {
 
     @Id
-    @Column(name = "product_seller_request_id")
+    @Column(name="product_seller_request_id")
     private int id;
 
     @ManyToOne
@@ -27,15 +27,21 @@ public class ProductSellerRequest {
     @Column(name = "request_type")
     private RequestTpe requestTpe;
 
+    private RequestStatus requestStatus;
+
     public ProductSellerRequest() {
     }
 
-    public int getId() {
-        return id;
+    public ProductSellerRequest(Product product, Seller seller, long price, int remainingItems, RequestTpe requestType) {
+        this.product = product;
+        this.seller = seller;
+        this.price = price;
+        this.remainingItems = remainingItems;
+        this.requestTpe = requestType;
+        requestStatus = RequestStatus.PENDING;
     }
 
-    public RequestTpe getRequestTpe() {
-        return requestTpe;
+    public void setRequestTpe(RequestTpe requestTpe) {
+        this.requestTpe = requestTpe;
     }
-
 }

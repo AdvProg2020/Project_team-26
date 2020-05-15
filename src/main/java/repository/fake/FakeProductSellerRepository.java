@@ -13,13 +13,11 @@ import java.util.stream.Collectors;
 public class FakeProductSellerRepository implements ProductSellerRepository {
     List<ProductSeller> allProductSellers ;
     public static int lastId = 5;
-    private ProductRepository productRepository;
-    private RepositoryContainer repositoryContainer;
+    private FakeProductRepository productRepository;
 
     public FakeProductSellerRepository() {
-        repositoryContainer = new RepositoryContainer();
         allProductSellers = new ArrayList<>();
-        productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
+        productRepository = new FakeProductRepository();
         for(int i = 0; i < 5; i++) {
             allProductSellers.add(new ProductSeller());
         }
