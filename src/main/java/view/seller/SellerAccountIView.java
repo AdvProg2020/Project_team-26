@@ -8,7 +8,7 @@ import controller.interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.*;
-import view.filterAndSort.SellerFilterAndSort;
+import view.filterAndSort.SellerSort;
 import view.seller.offs.ManageOffForSeller;
 import view.seller.products.ManageProductForSellerView;
 
@@ -26,7 +26,7 @@ public class SellerAccountIView extends View {
     UserView userView;
     IOrderController orderController;
     User thisUser;
-    SellerFilterAndSort sellerFilterAndSort;
+    SellerSort sellerSort;
 
 
     public SellerAccountIView(ViewManager managerView) {
@@ -34,7 +34,7 @@ public class SellerAccountIView extends View {
         validCommands = EnumSet.allOf(SellerAccountViewValidCommands.class);
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
-        sellerFilterAndSort = new SellerFilterAndSort(manager);
+        sellerSort = new SellerSort(manager);
     }
 
     @Override
@@ -60,8 +60,7 @@ public class SellerAccountIView extends View {
 
     protected void allCategories() {
         try {
-            categoryController.getAllCategoriesWithFilter(sellerFilterAndSort.getFilterCategoryForController(),
-                    sellerFilterAndSort.getFieldNameForSort(), sellerFilterAndSort.isAscending(), 0, manager.getToken()).forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
+            categoryController.getAllCategoriesWithFilter(sellerSort.getFieldNameForSort(), sellerSort.isAscending(), 0, manager.getToken()).forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
         } catch (InvalidIdException e) {
             manager.setTokenFromController(e.getMessage());
         }
@@ -71,8 +70,7 @@ public class SellerAccountIView extends View {
         matcher.find();
         if (manager.checkTheInputIsInteger(matcher.group(1))) {
             try {
-                categoryController.getAllCategoriesWithFilter(sellerFilterAndSort.getFilterCategoryForController(),
-                        sellerFilterAndSort.getFieldNameForSort(), sellerFilterAndSort.isAscending(),
+                categoryController.getAllCategoriesWithFilter(sellerSort.getFieldNameForSort(), sellerSort.isAscending(),
                         Integer.parseInt(matcher.group(1)), manager.getToken()).
                         forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
             } catch (InvalidIdException e) {
@@ -94,8 +92,7 @@ public class SellerAccountIView extends View {
 
     protected void history() {//todo
         try {
-            for (Order order : orderController.getOrdersWithFilter(sellerFilterAndSort.getFilterOrderForController(),
-                    sellerFilterAndSort.getFieldNameForSort(), sellerFilterAndSort.isAscending(), manager.getToken())) {
+            for (Order order : orderController.getOrdersWithFilter(sellerSort.getFieldNameForSort(), sellerSort.isAscending(), manager.getToken())) {
                 manager.inputOutput.println("the user " + order.getCustomer().getFullName() + "with id :" +
                         "at : " + order.getDate().toString());
 
@@ -245,11 +242,11 @@ public class SellerAccountIView extends View {
 
 
     protected void sorting() {
-        sellerFilterAndSort.run();
+        sellerSort.run();
     }
 
     protected void filtering() {
-        sellerFilterAndSort.run();
+        sellerSort.run();
     }
 
     protected void help() {

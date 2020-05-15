@@ -4,19 +4,19 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum DiscountForManagerViewValidCommands {
-    ViewDiscountCodeWithItsCode("view\\s+discount\\+code\\+(.*)") {
+    ViewDiscountCodeWithItsCode("view\\s+discount\\+code\\+(\\d+)") {
         @Override
         public void goToFunction(DiscountForManagerView page) {
             page.viewDiscountCodeWithItsCode(Pattern.compile(ViewDiscountCodeWithItsCode.toString()).matcher(page.getInput()));
         }
     },
-    EditDiscountCodeWithItsCode("edit\\s+discount\\+code\\+(.*)") {
+    EditDiscountCodeWithItsCode("edit\\s+discount\\+code\\+(\\d+)") {
         @Override
         public void goToFunction(DiscountForManagerView page) {
             page.editDiscountCodeWithItsCode(Pattern.compile(EditDiscountCodeWithItsCode.toString()).matcher(page.getInput()));
         }
     },
-    RemoveDiscountCodeWithItsCode("remove\\s+discount\\s+code\\s+(.*)") {
+    RemoveDiscountCodeWithItsCode("remove\\s+discount\\s+code\\s+(\\d+)") {
         @Override
         public void goToFunction(DiscountForManagerView page) {
             page.removeDiscountCodeWithItsCode(Pattern.compile(RemoveDiscountCodeWithItsCode.toString()).matcher(page.getInput()));

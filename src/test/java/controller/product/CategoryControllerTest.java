@@ -25,7 +25,8 @@ public class CategoryControllerTest {
     @Test
     void addCategory() throws InvalidIdException, NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
         setup();
-        categoryController.addCategory(0, "new", "admin");
+        Category newcategory = new Category("new");
+        categoryController.addCategory(0, newcategory, "admin");
         Category category = categoryController.getByName("new");
     }
 

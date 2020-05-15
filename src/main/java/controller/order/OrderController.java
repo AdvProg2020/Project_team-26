@@ -30,7 +30,7 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public ArrayList<Order> getOrdersWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
+    public ArrayList<Order> getOrdersWithFilter( String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
         return null;
     }
 

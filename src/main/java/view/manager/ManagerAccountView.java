@@ -2,26 +2,20 @@ package view.manager;
 
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
-import controller.interfaces.category.ICategoryController;
 import controller.interfaces.discount.IPromoController;
-import controller.interfaces.order.IOrderController;
 import controller.interfaces.product.IProductController;
 import exception.*;
 import model.Promo;
-import model.User;
 import view.*;
 import view.ViewManager;
-import view.filterAndSort.ManagerFilterAndSort;
 import view.manager.category.ManageCategoryForManagerView;
 import view.manager.discount.DiscountForManagerView;
 import view.manager.request.ManageRequestForManagerView;
 import view.manager.users.ManageUsersForManager;
 import view.offs.AllOffView;
 import view.products.all.AllProductView;
-import view.seller.SellerAccountViewValidCommands;
 
 import java.util.*;
-import java.util.regex.Matcher;
 
 /**
  * i didnt create a package for commands that provides just one command list

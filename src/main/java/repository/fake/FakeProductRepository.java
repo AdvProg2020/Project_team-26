@@ -54,6 +54,7 @@ public class FakeProductRepository implements ProductRepository {
     @Override
     public Object getAllRequests() {
         //TODO
+return null;
     }
 
     @Override

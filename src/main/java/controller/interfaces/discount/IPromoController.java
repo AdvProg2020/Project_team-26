@@ -11,7 +11,7 @@ public interface IPromoController {
 
     Promo getPromoCodeTemplateById(int codeId, String token) throws InvalidIdException, NotLoggedINException;
 
-    List<Promo> getAllPromoCodeForCustomer(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
+    List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAcsending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
 
     //List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
 

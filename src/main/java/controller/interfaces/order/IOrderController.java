@@ -15,7 +15,7 @@ public interface IOrderController {
 
     ArrayList<Order> getOrders(String token) throws NoAccessException, InvalidTokenException;
 
-    ArrayList<Order> getOrdersWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException;
+    ArrayList<Order> getOrdersWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException;
 
     ArrayList<User> getProductBuyerByProductId(int productId, String token);//TODO
 
