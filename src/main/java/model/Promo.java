@@ -41,9 +41,10 @@ public class Promo {
     public Promo() {
     }
 
-    public Promo(String code) {
+    public Promo(String code,Customer customer) {
         this.promoCode = code;
         customers = new ArrayList<Customer>();
+        customers.add(customer);
     }
 
     public int getId() {
@@ -88,7 +89,7 @@ public class Promo {
 
     public boolean isAvailable() {
         // TODO: This function must tell if promo is available now
-        return false;
+        return true;
     }
 
     public void setPromoCode(String promoCode) {

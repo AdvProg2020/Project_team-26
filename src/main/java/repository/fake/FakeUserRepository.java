@@ -36,7 +36,7 @@ public class FakeUserRepository implements UserRepository {
         }
         for (User user : allUsers) {
             if(user instanceof Customer) {
-                Order order = new Order((Customer) user, new Promo("BigRetard")," ");
+                Order order = new Order((Customer) user, new Promo("BigRetard",(Customer)user)," ");
                 OrderItem orderItem = new OrderItem(fakeProductRepository.getById(1),2,(Seller) getById(6),200,
                         190,ShipmentState.WAITING_TO_SEND);
                 order.addItem(orderItem);
