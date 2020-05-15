@@ -88,10 +88,10 @@ public class MySQLProductRepository
         try {
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<ProductRequest> cq = cb.createQuery(ProductRequest.class);
-            Root<ProductRequest> from = cq.from(ProductRequest.class);
+            Root<ProductRequest> root = cq.from(ProductRequest.class);
 
-            CriteriaQuery<ProductRequest> select = cq.select(from);
-            TypedQuery<ProductRequest> typedQuery = em.createQuery(select);
+            cq.select(root);
+            TypedQuery<ProductRequest> typedQuery = em.createQuery(cq);
 
             return typedQuery.getResultList();
         } catch (NoResultException e) {
@@ -100,8 +100,22 @@ public class MySQLProductRepository
     }
 
     @Override
-    public List<ProductSeller> getAllSellerRequests() {
-        return null;
+    public List<ProductRequest> getAllSellerRequests(int sellerId) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<ProductRequest> cq = cb.createQuery(ProductRequest.class);
+            Root<ProductRequest> root = cq.from(ProductRequest.class);
+
+            cq.select(root);
+            cq.where(cb.equal(root.get("created_by_id"), sellerId));
+            TypedQuery<ProductRequest> typedQuery = em.createQuery(cq);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override

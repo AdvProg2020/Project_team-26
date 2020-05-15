@@ -19,8 +19,8 @@ public interface ProductRepository extends Repository<Product> {
 
     List<Product> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending);
 
-    List<ProductRequest> getAllRequests(); // TODO
+    List<ProductRequest> getAllRequests();
 
-    List<ProductSeller> getAllSellerRequests(); // TODO
+    List<ProductRequest> getAllSellerRequests(int sellerId);
 }
 
