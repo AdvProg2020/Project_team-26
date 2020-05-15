@@ -36,7 +36,7 @@ public class RatingControllerTest {
     }
 
     @Test
-    public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException {
+    public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException, NoObjectIdException {
         /** Exception Tests **/
 
         Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addARating(5.0,

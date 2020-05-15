@@ -45,9 +45,10 @@ public class DiscountForManagerView extends View implements IView {
 
     protected void showAll() {
         try {
-            promoController.getAllPromoCodeForCustomer(promoSort.getFieldNameForSort(),promoSort.isAscending()
-                    ,manager.getToken()).forEach(promo -> manager.inputOutput.println());
-        } catch (NotLoggedINException |NoAccessException e) {
+            promoController.getAllPromoCodeForCustomer(promoSort.getFieldNameForSort(), promoSort.isAscending()
+                    , manager.getToken()).forEach(promo -> manager.inputOutput.println(promo.getPromoCode() +
+                    " with id : " + promo.getId()));
+        } catch (NotLoggedINException | NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());

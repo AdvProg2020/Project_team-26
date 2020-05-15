@@ -59,7 +59,7 @@ public class CommentControllerTest {
     }
 
     @Test
-    public void removeACommentTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotLoggedINException {
+    public void removeACommentTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotLoggedINException, NoObjectIdException {
 
         /** Exceptions **/
 
