@@ -27,6 +27,21 @@ public class ProductSellerRequest {
     @Column(name = "request_type")
     private RequestTpe requestTpe;
 
+    private RequestStatus requestStatus;
+
     public ProductSellerRequest() {
+    }
+
+    public ProductSellerRequest(Product product, Seller seller, long price, int remainingItems, RequestTpe requestType) {
+        this.product = product;
+        this.seller = seller;
+        this.price = price;
+        this.remainingItems = remainingItems;
+        this.requestTpe = requestType;
+        requestStatus = RequestStatus.PENDING;
+    }
+
+    public void setRequestTpe(RequestTpe requestTpe) {
+        this.requestTpe = requestTpe;
     }
 }

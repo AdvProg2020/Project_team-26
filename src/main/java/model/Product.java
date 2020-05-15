@@ -6,7 +6,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "product")
-@SecondaryTable(name = "product_rate", pkJoinColumns=@PrimaryKeyJoinColumn(name="product_id"))
+@SecondaryTable(name = "product_rate", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_id"))
 public class Product {
 
     @Id
@@ -36,9 +36,9 @@ public class Product {
     private List<Comment> comments;
 
     @ElementCollection
-    @MapKeyColumn(name="category_feature_id")
-    @Column(name="value")
-    @CollectionTable(name="product_category_feature", joinColumns=@JoinColumn(name="product_id"))
+    @MapKeyColumn(name = "category_feature_id")
+    @Column(name = "value")
+    @CollectionTable(name = "product_category_feature", joinColumns = @JoinColumn(name = "product_id"))
     private Map<CategoryFeature, String> categoryFeatures;
 
     public Product() {
@@ -125,5 +125,13 @@ public class Product {
 
     public boolean hasSeller(User seller) {
         return sellerList.stream().anyMatch(s -> s.getSeller().equals(seller));
+    }
+
+    public ProductRequest createRequest(RequestTpe requestTpe) {
+        ProductRequest productRequest = new ProductRequest(name, brand, description, category, requestTpe);
+        for(ProductSeller seller : sellerList) {
+            productRequest.addSeller(seller.createProductSellerRequest(requestTpe));
+        }
+        return productRequest;
     }
 }
