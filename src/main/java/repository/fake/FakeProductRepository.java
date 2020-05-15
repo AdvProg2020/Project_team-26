@@ -3,6 +3,7 @@ package repository.fake;
 import exception.NoObjectIdException;
 import model.Product;
 import model.ProductRequest;
+import model.ProductSeller;
 import repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -87,6 +88,11 @@ public class FakeProductRepository implements ProductRepository {
 
     @Override
     public List<ProductRequest> getAllRequests() {
+        return null;
+    }
+
+    @Override
+    public List<ProductSeller> getAllSellerRequests() {
         return null;
     }
 

@@ -28,7 +28,7 @@ public class ShowUserControllerTest {
     }
 
     @Test
-    public void deleteTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, AuthenticationException, PasswordIsWrongException, NotLoggedINException, NoAccessException, AlreadyLoggedInException {
+    public void deleteTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, AuthenticationException, PasswordIsWrongException, NotLoggedINException, NoAccessException, AlreadyLoggedInException, NoObjectIdException {
 
         /** Exception Tests Without Login**/
         Exception ex = assertThrows(NoAccessException.class, () -> showUserController.getUserInfo(token));

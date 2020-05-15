@@ -2,6 +2,7 @@ package repository.mysql;
 
 import model.Product;
 import model.ProductRequest;
+import model.ProductSeller;
 import repository.ProductRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
@@ -57,6 +58,11 @@ public class MySQLProductRepository
 
     @Override
     public List<ProductRequest> getAllRequests() {
+        return null;
+    }
+
+    @Override
+    public List<ProductSeller> getAllSellerRequests() {
         return null;
     }
 
