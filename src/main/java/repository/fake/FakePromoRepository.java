@@ -20,11 +20,10 @@ public class FakePromoRepository implements PromoRepository {
     private RepositoryContainer repositoryContainer;
 
     public FakePromoRepository() {
-        repositoryContainer = new RepositoryContainer();
-        userRepository = (FakeUserRepository) repositoryContainer.getRepository("UserRepository");
+        userRepository = new FakeUserRepository();
         allPromos = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
-            allPromos.add(new Promo("Promo" + i,(Customer)userRepository.getUserByName("test8")));
+            save(new Promo("Promo" + i,(Customer)userRepository.getUserByName("test8")));
         }
     }
 
@@ -52,6 +51,9 @@ public class FakePromoRepository implements PromoRepository {
     @Override
     public void save(Promo object) {
         allPromos.add(object);
+        for (Customer customer : object.getCustomers()) {
+            customer.addPromo(object);
+        }
     }
 
     @Override

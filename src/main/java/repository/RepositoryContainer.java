@@ -22,8 +22,8 @@ public class RepositoryContainer {
         map.put("UserRepository", new FakeUserRepository());
         map.put("CommentRepository", new FakeCommentRepository());
         map.put("RatingRepository", new FakeRatingRepository());
-        map.put("ProductSellerRepository",new FakeProductSellerRepository());
         map.put("PromoRepository",new FakePromoRepository());
+        map.put("ProductSellerRepository",new FakeProductSellerRepository());
     }
 
     public Repository<?> getRepository(String repositoryName) {

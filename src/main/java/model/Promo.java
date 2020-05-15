@@ -89,7 +89,7 @@ public class Promo {
 
     public boolean isAvailable() {
         // TODO: This function must tell if promo is available now
-        return false;
+        return true;
     }
 
     public void setPromoCode(String promoCode) {
