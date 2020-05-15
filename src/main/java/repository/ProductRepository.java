@@ -2,6 +2,7 @@ package repository;
 
 import model.Product;
 import model.ProductRequest;
+import model.ProductSeller;
 
 import java.util.List;
 import java.util.Map;
@@ -18,13 +19,8 @@ public interface ProductRepository extends Repository<Product> {
 
     List<Product> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending);
 
-    List<ProductRequest> getAllRequests(); //Todo
-   /* void editName(Product product , String replacement);
-    void editState(Product product , State state);
-    void editBrand(Product product , String name);
-    void addSeller(Product product, ProductSeller productSeller);
-    void removeSeller(Product product , ProductSeller productSeller);
-    ProductSeller getAllSeller(Product product);
-    void editCategory(Product product , )*/
+    List<ProductRequest> getAllRequests(); // TODO
+
+    List<ProductSeller> getAllSellerRequests(); // TODO
 }
 
