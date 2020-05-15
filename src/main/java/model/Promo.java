@@ -41,9 +41,10 @@ public class Promo {
     public Promo() {
     }
 
-    public Promo(String code) {
+    public Promo(String code,Customer customer) {
         this.promoCode = code;
         customers = new ArrayList<Customer>();
+        customers.add(customer);
     }
 
     public int getId() {
