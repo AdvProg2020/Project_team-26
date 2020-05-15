@@ -1,7 +1,7 @@
 package repository.mysql;
 
-import model.Category;
 import model.Product;
+import model.ProductRequest;
 import repository.ProductRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
@@ -56,7 +56,7 @@ public class MySQLProductRepository
     }
 
     @Override
-    public List<ProductRepository> getAllRequests() {
+    public List<ProductRequest> getAllRequests() {
         return null;
     }
 

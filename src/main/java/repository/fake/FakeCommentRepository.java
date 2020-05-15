@@ -63,7 +63,9 @@ public class FakeCommentRepository implements CommentRepository {
     }
 
     @Override
-    public List<Comment> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+    public List<Comment> getAllSorted(String sortField, boolean isAscending) {
         return null;
     }
+
+
 }
