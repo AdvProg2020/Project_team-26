@@ -24,6 +24,9 @@ public class ProductSellerRequest {
     @Column(name = "remaining_items")
     private int remainingItems;
 
+    @Column(name = "request_type")
+    private RequestTpe requestTpe;
+
     public ProductSellerRequest() {
     }
 }

@@ -26,4 +26,7 @@ public class ProductRequest {
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSeller> sellerList;
+
+    @Column(name = "request_type")
+    private RequestTpe requestTpe;
 }

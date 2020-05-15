@@ -25,6 +25,9 @@ public class OffRequest {
     @OneToMany(mappedBy = "offRequest", cascade = CascadeType.ALL)
     private List<OffItemRequest> items;
 
+    @Column(name = "request_type")
+    private RequestTpe requestTpe;
+
     public OffRequest() {
     }
 }
