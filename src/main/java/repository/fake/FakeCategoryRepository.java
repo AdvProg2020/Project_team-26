@@ -30,11 +30,6 @@ public class FakeCategoryRepository implements CategoryRepository {
     }
 
     @Override
-    public void edit(Category category, String Filed, String replacement) {
-
-    }
-
-    @Override
     public List<Category> getAll() {
         return allCategory;
     }
@@ -75,7 +70,8 @@ public class FakeCategoryRepository implements CategoryRepository {
     }
 
     @Override
-    public List<Category> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+    public List<Category> getAllSorted(String sortField, boolean isAscending) {
         return null;
     }
+
 }

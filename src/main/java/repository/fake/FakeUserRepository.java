@@ -119,7 +119,8 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+    public List<User> getAllSorted(String sortField, boolean isAscending) {
         return null;
     }
+
 }

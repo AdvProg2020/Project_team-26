@@ -2,6 +2,7 @@ package repository.fake;
 
 import exception.NoObjectIdException;
 import model.Product;
+import model.ProductRequest;
 import repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -52,12 +53,6 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public Object getAllRequests() {
-        //TODO
-return null;
-    }
-
-    @Override
     public List<Product> getAll() {
         return allProducts;
     }
@@ -81,7 +76,17 @@ return null;
     }
 
     @Override
+    public List<Product> getAllSorted(String sortField, boolean isAscending) {
+        return null;
+    }
+
+    @Override
     public List<Product> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
+    }
+
+    @Override
+    public List<ProductRequest> getAllRequests() {
         return null;
     }
 
