@@ -41,6 +41,34 @@ public class ProductSellerRequest {
         requestStatus = RequestStatus.PENDING;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public long getPrice() {
+        return price;
+    }
+
+    public int getRemainingItems() {
+        return remainingItems;
+    }
+
+    public RequestTpe getRequestTpe() {
+        return requestTpe;
+    }
+
+    public RequestStatus getRequestStatus() {
+        return requestStatus;
+    }
+
     public void setRequestTpe(RequestTpe requestTpe) {
         this.requestTpe = requestTpe;
     }

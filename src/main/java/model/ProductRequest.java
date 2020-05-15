@@ -48,6 +48,42 @@ public class ProductRequest {
         requestStatus = RequestStatus.PENDING;
     }
 
+    public RequestTpe getRequestTpe() {
+        return requestTpe;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Product getMainProduct() {
+        return mainProduct;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public List<ProductSellerRequest> getSellerList() {
+        return sellerList;
+    }
+
+    public RequestStatus getRequestStatus() {
+        return requestStatus;
+    }
+
     public void addSeller(ProductSellerRequest productSellerRequest) {
         sellerList.add(productSellerRequest);
     }
