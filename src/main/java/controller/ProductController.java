@@ -57,10 +57,10 @@ public class ProductController implements IProductController {
     @Override
     public void removeProduct(int id, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
         Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        if (session.getLoggedInUser() == null) {//todo
             throw new NotLoggedINException("You are not Logged in.");
-        } else if(session.getLoggedInUser().getRole() != Role.SELLER) {
-            throw new NoAccessException("You must be a seller to remove a product");
+        } else if (session.getLoggedInUser().getRole() == Role.CUSTOMER) {
+            throw new NoAccessException("You must be a seller|manager to remove a product");
         } else if (!productRepository.getById(id).hasSeller(session.getLoggedInUser())) {
             throw new NoAccessException("You don't have this item for sale.");
         } else {

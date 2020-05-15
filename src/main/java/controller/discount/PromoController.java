@@ -95,7 +95,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
+    public void removeCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can remove customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);

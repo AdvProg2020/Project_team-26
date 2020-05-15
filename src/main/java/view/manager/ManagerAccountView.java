@@ -9,7 +9,7 @@ import model.Promo;
 import view.*;
 import view.ViewManager;
 import view.manager.category.ManageCategoryForManagerView;
-import view.manager.discount.DiscountForManagerView;
+import view.manager.Promo.PromoForManagerView;
 import view.manager.request.ManageRequestForManagerView;
 import view.manager.users.ManageUsersForManager;
 import view.offs.AllOffView;
@@ -168,7 +168,7 @@ public class ManagerAccountView extends View {
     }
 
     protected void managerAllDiscountCode() {
-        DiscountForManagerView discountForManagerView = new DiscountForManagerView(manager);
+        PromoForManagerView discountForManagerView = new PromoForManagerView(manager);
         discountForManagerView.run();
 
     }
