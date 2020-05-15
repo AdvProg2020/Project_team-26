@@ -3,6 +3,7 @@ package controller.account;
 import controller.interfaces.account.IShowUserController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
+import exception.NoObjectIdException;
 import model.Role;
 import model.Session;
 import model.User;
@@ -57,13 +58,12 @@ public class ShowUserController implements IShowUserController {
         }
     }
 
-    public void delete(String username, String token) throws NoAccessException, InvalidTokenException {
+    public void delete(String username, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
-        } else {
+        } else
             userRepository.delete(getUserByName(username, token));
-        }
     }
 
     public User getUserByToken(String token) throws InvalidTokenException {

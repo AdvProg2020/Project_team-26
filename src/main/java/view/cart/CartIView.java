@@ -8,6 +8,7 @@ import view.*;
 import view.View;
 import view.ViewManager;
 
+import java.rmi.NoSuchObjectException;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
@@ -59,9 +60,12 @@ public class CartIView extends View implements IView {
             int id = Integer.parseInt(matcher.group(1));
             int amount;
             try {
-                amount = cartController.getAmountInCartBySellerId(this.cart, id, manager.getToken());
+                amount = cartController.getAmountInCartBySellerId(id, manager.getToken());
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                return;
+            } catch (NoSuchObjectException e) {
+                manager.inputOutput.println(e.getMessage());
                 return;
             }
             try {
@@ -147,7 +151,7 @@ public class CartIView extends View implements IView {
                 return true;
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
-             //   return false;
+                //   return false;
             }
         }
     }

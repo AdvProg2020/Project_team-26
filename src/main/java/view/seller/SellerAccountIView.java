@@ -195,7 +195,10 @@ public class SellerAccountIView extends View {
                 price = manager.inputOutput.nextLine();
             }
         }
-        ProductSeller productSeller = new ProductSeller((Seller) thisUser, Long.parseLong(price), Integer.parseInt(numbers));
+        ProductSeller productSeller = new ProductSeller();
+        productSeller.setSeller((Seller) thisUser);
+        productSeller.setPrice(Long.parseLong(price));
+        productSeller.setRemainingItems(Integer.parseInt(numbers));
         return productSeller;
     }
 
@@ -220,8 +223,12 @@ public class SellerAccountIView extends View {
         if (manager.checkTheInputIsInteger(id)) {
             try {
                 productController.removeProduct(Integer.parseInt(id), manager.getToken());
-            } catch (InvalidIdException e) {
+            } catch (InvalidIdException | NoAccessException e) {
                 manager.inputOutput.println(e.getMessage());
+            } catch (InvalidTokenException e) {
+                manager.setTokenFromController(e.getMessage());
+            } catch (NotLoggedINException e) {
+                manager.loginInAllPagesEssential();
             }
             return;
         }

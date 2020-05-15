@@ -90,4 +90,20 @@ public class Promo {
         // TODO: This function must tell if promo is available now
         return false;
     }
+
+    public void setPromoCode(String promoCode) {
+        this.promoCode = promoCode;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setMaxValidUse(int maxValidUse) {
+        this.maxValidUse = maxValidUse;
+    }
 }
