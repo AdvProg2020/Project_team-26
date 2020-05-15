@@ -1,20 +1,16 @@
 package view;
 
-import controller.SessionController;
 import controller.interfaces.product.IProductController;
 import controller.interfaces.session.ISessionController;
-import exception.AlreadyLoggedInException;
 import exception.InvalidIdException;
 import model.Product;
-import model.Session;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
 import view.products.single.SingleProductView;
 
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -140,9 +136,44 @@ public class ViewManager {
     }
 
     public Date createDate() {
+        String year = getYear();
+        String month = getValidTimeAndDate("month", 12, 1);
+        String day = getValidTimeAndDate("day", 31, 1);
+        String hour = getValidTimeAndDate("hour", 23, 0);
+        String minute = getValidTimeAndDate("minute", 59, 0);
+        String date = day + "-" + month + "-" + year + " " + hour + ":" + minute + ":" + "00";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        try {
+            return formatter.parse(date);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
         return null;
     }
-    public void ShowDate(Date date){
 
+    private String getYear() {
+        inputOutput.println("enter year");
+        String year;
+        while (true) {
+            year = inputOutput.nextLine();
+            if (checkTheInputIsInteger(year))
+                return year;
+            inputOutput.println("please enter integer.");
+        }
+    }
+
+    private String getValidTimeAndDate(String field, int max, int min) {
+        inputOutput.println("enter " + field);
+        String valid;
+        while (true) {
+            valid = inputOutput.nextLine();
+            if (checkTheInputIsInteger(valid)) {
+                if (Long.parseLong(valid) <= max && Long.parseLong(valid) >= min)
+                    return valid;
+                else
+                    inputOutput.println("please enter " + field + " between " + min + " and " + max);
+            } else
+                inputOutput.println("please enter integer.");
+        }
     }
 }
