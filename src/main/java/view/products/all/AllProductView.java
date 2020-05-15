@@ -42,7 +42,7 @@ public class AllProductView extends View {
 
     protected void categoriesOfProducts() {
         try {
-            categoryController.getAllCategoriesWithFilter(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println("name is " +
+            categoryController.getAllCategoriesWithFilter(productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println("name is " +
                     category.getName() + " with id " + category.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());

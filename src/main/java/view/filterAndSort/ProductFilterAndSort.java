@@ -33,7 +33,7 @@ public class ProductFilterAndSort extends FilterAndSort {
             return;
         }
         manager.inputOutput.println("enter the filtering you want depending on the filed(for date MM/DD/YY) ");
-        manager.inputOutput.println("if you want to have more filter or it is a BAZE seperate them by - like" +
+        manager.inputOutput.println("if you want to have more filter or it is a BAZE divide them by - like" +
                 "3900-6700");
         String value;
         value = manager.inputOutput.nextLine();

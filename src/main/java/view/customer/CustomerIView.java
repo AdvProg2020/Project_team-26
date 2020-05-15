@@ -9,7 +9,7 @@ import exception.NotLoggedINException;
 import view.*;
 import view.cart.CartIView;
 import view.customer.orders.OrdersIView;
-import view.filterAndSort.PromoFilterAndSort;
+import view.filterAndSort.PromoSort;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -21,7 +21,7 @@ public class CustomerIView extends View implements IView {
     IUserInfoController infoController;
     IShowUserController userController;
     IPromoController promoController;
-    PromoFilterAndSort customerFilterAndSort;
+    PromoSort customerFilterAndSort;
 
 
     public CustomerIView(ViewManager manager) {
@@ -29,7 +29,7 @@ public class CustomerIView extends View implements IView {
         validCommands = EnumSet.allOf(CustomerValidCommand.class);
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
-        customerFilterAndSort = new PromoFilterAndSort(manager);
+        customerFilterAndSort = new PromoSort(manager);
     }
 
     private void initialEditFields() {
@@ -60,8 +60,8 @@ public class CustomerIView extends View implements IView {
 
     protected void promoCodes() {
         try {
-            promoController.getAllPromoCodeForCustomer(customerFilterAndSort.getFilterForController(),
-                    customerFilterAndSort.getFieldNameForSort(), customerFilterAndSort.isAscending(),
+            promoController.getAllPromoCodeForCustomer(customerFilterAndSort.getFieldNameForSort(), customerFilterAndSort.
+                            isAscending(),
                     manager.getToken()).forEach(
                     promo -> manager.inputOutput.println("promo with code : " + promo.getPromoCode()
                             + " with max : " + promo.getMaxDiscount() + " and percent " + promo.getPercent() +

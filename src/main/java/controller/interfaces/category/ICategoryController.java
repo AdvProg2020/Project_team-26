@@ -12,7 +12,7 @@ import java.util.Map;
 public interface ICategoryController {
 
 
-    int addCategory(int patternId, String newCategoryName, String token) throws exception.InvalidIdException, exception.ObjectAlreadyExistException, NoAccessException, InvalidTokenException;
+    void addCategory(int patternId, Category newCategory, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException;
 
     void removeACategory(int id, int parentId, String token) throws NoAccessException, InvalidTokenException, InvalidIdException, NoObjectIdException;
 
@@ -22,7 +22,7 @@ public interface ICategoryController {
 
     void removeAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
-    void addProduct(int id, int productName, String token) throws exception.InvalidIdException, NoAccessException, InvalidTokenException, InvalidIdException;
+    void addProduct(int id, int productName, String token) throws  NoAccessException, InvalidTokenException, InvalidIdException;
 
     void removeProduct(int id, int productName, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
@@ -31,7 +31,7 @@ public interface ICategoryController {
 
     void getExceptionOfIfCategoryExist(int id, String token) throws InvalidIdException;
 
-    List<Category> getAllCategoriesWithFilter(Map<String, String> filter, String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException;
+    List<Category> getAllCategoriesWithFilter(String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException;
 
     List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 

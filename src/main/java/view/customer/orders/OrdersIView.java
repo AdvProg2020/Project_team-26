@@ -5,8 +5,7 @@ import controller.interfaces.review.IRatingController;
 import exception.*;
 import model.Order;
 import view.*;
-import view.customer.CustomerValidCommand;
-import view.filterAndSort.OrderFilter;
+import view.filterAndSort.OrderSort;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;
@@ -15,13 +14,13 @@ public class OrdersIView extends View implements IView {
     private EnumSet<OrdersViewValidCommands> validCommands;
     private IOrderController orderController;
     private IRatingController ratingController;
-    private OrderFilter orderFilter;
+    private OrderSort orderFilter;
 
 
     public OrdersIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(OrdersViewValidCommands.class);
-        orderFilter = new OrderFilter(manager);
+        orderFilter = new OrderSort(manager);
     }
 
     @Override
@@ -44,7 +43,7 @@ public class OrdersIView extends View implements IView {
 
     protected void showAll() {
         try {
-            orderController.getOrdersWithFilter(orderFilter.getFilterForController(), orderFilter.getFieldNameForSort(), orderFilter.isAscending(), manager.getToken()).forEach(order ->
+            orderController.getOrdersWithFilter(orderFilter.getFieldNameForSort(), orderFilter.isAscending(), manager.getToken()).forEach(order ->
                     manager.inputOutput.println("the order ID is " + order.getId() + " at " + order.getDate().toString() +
                             " with total price " + order.getTotalPrice()));
         } catch (NoAccessException e) {

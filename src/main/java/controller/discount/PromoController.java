@@ -32,13 +32,13 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public List<Promo> getAllPromoCodeForCustomer(Map<String, String> filter, String sortField, boolean isAcending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+    public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAcending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null)
             throw new NotLoggedINException("you are not logged in");
         if (user.getRole() != Role.CUSTOMER)
             throw new NoAccessException("only customer");
-        List<Promo> promos = (Customer) user.getPromoCodes();//todo
+        List<Promo> promos = ((Customer) user).getAvailablePromos();//todo
         return promos;
     }
 

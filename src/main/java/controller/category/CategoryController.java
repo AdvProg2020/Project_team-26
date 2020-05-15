@@ -23,21 +23,19 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public int addCategory(int patternId, String newCategoryName, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
+    public void addCategory(int patternId, Category newCategory, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can add category");
-        if (checkCategoryExistByName(newCategoryName))
-            throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", null);
+        if (checkCategoryExistByName(newCategory.getName()))
+            throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", newCategory);
         Category parentCategory = checkParentCategory(patternId);
-        Category category = new Category(newCategoryName);
         if (parentCategory == null) {
-            category.setParent(null);
+            newCategory.setParent(null);
         } else {
-            category.setParent(parentCategory);
-            parentCategory.addSubCategory(category);
+            newCategory.setParent(parentCategory);
+            parentCategory.addSubCategory(newCategory);
             categoryRepository.save(parentCategory);
         }
-        categoryRepository.save(category);
-        return category.getId();
+        categoryRepository.save(newCategory);
     }
 
     private Category checkParentCategory(int parentId) throws InvalidIdException {
@@ -181,7 +179,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public List<Category> getAllCategoriesWithFilter(Map<String, String> filter, String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException {
+    public List<Category> getAllCategoriesWithFilter(String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException {
         if (id == 0) {//todo
             return categoryRepository.getAll();
         }
