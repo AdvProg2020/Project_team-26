@@ -1,10 +1,7 @@
 package controller.review;
 
 import controller.interfaces.review.IRatingController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotBoughtTheProductException;
-import exception.NotLoggedINException;
+import exception.*;
 import model.*;
 import repository.ProductRepository;
 import repository.RatingRepository;
@@ -34,7 +31,7 @@ public class RatingController implements IRatingController {
         }
     }
 
-    public void removeRating(int id, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+    public void removeRating(int id, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException, NoObjectIdException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not Logged in.");

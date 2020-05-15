@@ -9,14 +9,14 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class discountForManagerView extends View implements IView {
-    EnumSet<discountForManagerViewValidCommands> validCommands;
+public class DiscountForManagerView extends View implements IView {
+    EnumSet<DiscountForManagerViewValidCommands> validCommands;
     private IPromoController controller;
     private IShowUserController userController;
 
-    public discountForManagerView(ViewManager manager) {
+    public DiscountForManagerView(ViewManager manager) {
         super(manager);
-        validCommands = EnumSet.allOf(discountForManagerViewValidCommands.class);
+        validCommands = EnumSet.allOf(DiscountForManagerViewValidCommands.class);
         this.controller = controller;
         this.userController = userController;
     }
@@ -27,7 +27,7 @@ public class discountForManagerView extends View implements IView {
         while (manager.getIsUserLoggedIn()) {
             if ((super.input = (manager.inputOutput.nextLine()).trim()).matches("back"))
                 break;
-            for (discountForManagerViewValidCommands command : validCommands) {
+            for (DiscountForManagerViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     command.goToFunction(this);
                     break;

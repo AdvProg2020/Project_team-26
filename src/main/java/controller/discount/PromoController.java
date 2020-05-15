@@ -38,17 +38,15 @@ public class PromoController implements IPromoController {
             throw new NotLoggedINException("you are not logged in");
         if (user.getRole() != Role.CUSTOMER)
             throw new NoAccessException("only customer");
-        List<Promo> promos = user.getPromoCodes();//todo
+        List<Promo> promos = (Customer) user.getPromoCodes();//todo
         return promos;
     }
 
     @Override
-    public int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException {
+    public int createPromoCode(Promo promo, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can create promo code");
-        Promo promo = promoRepository.getByCode(code);
-        if (promo != null)
-            throw new ObjectAlreadyExistException("the promo with code " + code + " already exist", promo);
-        promo = new Promo(code);
+        if (promoRepository.getByCode(promo.getPromoCode()) != null)
+            throw new ObjectAlreadyExistException("the promo with code " + promo.getPromoCode() + " already exist", promo);
         promoRepository.save(promo);
         return promo.getId();
     }
@@ -65,7 +63,7 @@ public class PromoController implements IPromoController {
      */
 
     @Override
-    public void removePromoCode(int promoCodeId, String token) throws NotLoggedINException, NoAccessException, InvalidIdException, InvalidTokenException {
+    public void removePromoCode(int promoCodeId, String token) throws NotLoggedINException, NoAccessException, InvalidIdException, InvalidTokenException, NoObjectIdException {
         checkAccessOfUser(token, "only manager can remove the promo");
         Promo promo = promoRepository.getById(promoCodeId);
         if (promo == null)

@@ -15,9 +15,9 @@ public interface IPromoController {
 
     //List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
 
-    int createPromoCode(String code, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException;
+    int createPromoCode(Promo promo, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException;
 
-    void removePromoCode(int promoCodeId, String token) throws NoAccessException, NotLoggedINException, NoAccessException, InvalidIdException, InvalidTokenException;
+    void removePromoCode(int promoCodeId, String token) throws NoAccessException, NotLoggedINException, NoAccessException, InvalidIdException, InvalidTokenException, NoObjectIdException;
 
     void addCustomer(int promoId, int CustomerUserId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException;
 

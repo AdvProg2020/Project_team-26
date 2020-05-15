@@ -21,7 +21,7 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
         allProductSellers = new ArrayList<>();
         productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
         for(int i = 0; i < 5; i++) {
-            allProductSellers.add(new ProductSeller())
+            allProductSellers.add(new ProductSeller());
         }
     }
 

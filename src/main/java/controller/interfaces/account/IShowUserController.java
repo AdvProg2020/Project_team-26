@@ -2,6 +2,7 @@ package controller.interfaces.account;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;
+import exception.NoObjectIdException;
 import model.User;
 
 import java.util.ArrayList;
@@ -16,5 +17,5 @@ public interface IShowUserController {
 
     Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException;
 
-    void delete(String username , String token) throws NoAccessException, NoAccessException, InvalidTokenException;
+    void delete(String username , String token) throws NoAccessException, NoAccessException, InvalidTokenException, NoObjectIdException;
 }

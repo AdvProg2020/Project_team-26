@@ -1,8 +1,6 @@
 package controller.interfaces.category;
 
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
+import exception.*;
 import exception.InvalidIdException;
 import model.Category;
 import model.CategoryFeature;
@@ -16,7 +14,7 @@ public interface ICategoryController {
 
     int addCategory(int patternId, String newCategoryName, String token) throws exception.InvalidIdException, exception.ObjectAlreadyExistException, NoAccessException, InvalidTokenException;
 
-    void removeACategory(int id, int parentId, String token) throws NoAccessException, InvalidTokenException, InvalidIdException;
+    void removeACategory(int id, int parentId, String token) throws NoAccessException, InvalidTokenException, InvalidIdException, NoObjectIdException;
 
     void addAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 

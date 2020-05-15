@@ -70,4 +70,16 @@ public class ProductSeller {
     public long getPriceInOff() {
         return priceInOff;
     }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public void setRemainingItems(int remainingItems) {
+        this.remainingItems = remainingItems;
+    }
 }

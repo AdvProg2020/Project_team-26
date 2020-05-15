@@ -100,7 +100,7 @@ public class CategoryController implements ICategoryController {
 
 
     @Override
-    public void removeACategory(int id, int parentId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    public void removeACategory(int id, int parentId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException, NoObjectIdException {
         checkAccessOfUser(token, "only manager can remove the Category.");
         Category parentCategory = checkParentCategory(parentId);
         Category category = getCategoryByIdWithCheck(id);
