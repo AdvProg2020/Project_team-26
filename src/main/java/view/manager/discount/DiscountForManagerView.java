@@ -2,7 +2,11 @@ package view.manager.discount;
 
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NotLoggedINException;
 import view.*;
+import view.filterAndSort.PromoSort;
 import view.main.MainPageView;
 import view.manager.ValidCommandsForManagerAccount;
 
@@ -12,14 +16,13 @@ import java.util.regex.Matcher;
 
 public class DiscountForManagerView extends View implements IView {
     EnumSet<DiscountForManagerViewValidCommands> validCommands;
-    private IPromoController controller;
-    private IShowUserController userController;
+    private IPromoController promoController;
+    private IShowUserController showUserController;
+    private PromoSort promoSort;
 
     public DiscountForManagerView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(DiscountForManagerViewValidCommands.class);
-        this.controller = controller;
-        this.userController = userController;
     }
 
     @Override
@@ -41,6 +44,15 @@ public class DiscountForManagerView extends View implements IView {
     }
 
     protected void showAll() {
+        try {
+            promoController.getAllPromoCodeForCustomer(promoSort.getFieldNameForSort(),promoSort.isAscending()
+                    ,manager.getToken()).forEach(promo -> manager.inputOutput.println());
+        } catch (NotLoggedINException |NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+
 
     }
 
