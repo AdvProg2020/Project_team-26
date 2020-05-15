@@ -14,13 +14,14 @@ import java.util.EnumSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ManageUsersForManager extends View implements IView {
-    EnumSet<ValidCommandsForManageUsersForManagerView> validCommands;
+public class ManageUsersForManager extends View {
+    private EnumSet<ValidCommandsForManageUsersForManagerView> validCommands;
     private IShowUserController showUserController;
 
     public ManageUsersForManager(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(ValidCommandsForManageUsersForManagerView.class);
+        showUserController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
     }
 
     @Override

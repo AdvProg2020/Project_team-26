@@ -23,7 +23,7 @@ public class FakePromoRepository implements PromoRepository {
         userRepository = new FakeUserRepository();
         allPromos = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
-            save(new Promo("Promo" + i,(Customer)userRepository.getUserByName("test8")));
+            save(new Promo("Promo" + i,(Customer)userRepository.getUserByUsername("test8")));
         }
     }
 

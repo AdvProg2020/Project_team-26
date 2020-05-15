@@ -10,7 +10,7 @@ import view.filterAndSort.OrderSort;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class OrdersIView extends View implements IView {
+public class OrdersIView extends View {
     private EnumSet<OrdersViewValidCommands> validCommands;
     private IOrderController orderController;
     private IRatingController ratingController;
@@ -21,6 +21,8 @@ public class OrdersIView extends View implements IView {
         super(manager);
         validCommands = EnumSet.allOf(OrdersViewValidCommands.class);
         orderFilter = new OrderSort(manager);
+        orderController = (IOrderController) manager.getController(ControllerContainer.Controller.OrderController);
+   ratingController = (IRatingController) manager.getController(ControllerContainer.Controller.RatingController);
     }
 
     @Override

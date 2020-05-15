@@ -1,14 +1,18 @@
 package view;
 
+import controller.SessionController;
 import controller.interfaces.product.IProductController;
+import controller.interfaces.session.ISessionController;
 import exception.AlreadyLoggedInException;
 import exception.InvalidIdException;
 import model.Product;
+import model.Session;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
 import view.products.single.SingleProductView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -18,16 +22,18 @@ public class ViewManager {
     private boolean isUserLoggedIn;
     private String token;
     public IO inputOutput;
+    private ISessionController sessionController;
     private ControllerContainer controllerContainer;
 
     public ViewManager() {
         isUserLoggedIn = false;
         inputOutput = new InputOutput();
         controllerContainer = new ControllerContainer();
+        sessionController = (ISessionController) controllerContainer.getController(ControllerContainer.Controller.SessionController);
     }
 
-    public ControllerContainer getControllerContainer() {
-        return controllerContainer;
+    public Object getController(ControllerContainer.Controller controller) {
+        return controllerContainer.getController(controller);
     }
 
 
@@ -38,11 +44,10 @@ public class ViewManager {
 
     public void setTokenFromController(String error) {
         this.inputOutput.println(error);
-        this.token = token;
-    }
-
-    public void setLoggedINByController() {
-        //  this.isUserLoggedIn
+        inputOutput.println("if you want dont want to set token type no then program will be finished.");
+        if (inputOutput.nextLine().equals("no"))
+            System.exit(0);
+        setToken(sessionController.createToken());
     }
 
     public void setToken(String token) {
@@ -62,27 +67,22 @@ public class ViewManager {
         return isUserLoggedIn;
     }
 
-    public void printError() {
-
-
-    }
-
     public boolean checkTheInputIsInteger(String input) {
-        Matcher matcher = Pattern.compile("^[0-9]*$").matcher(input);
+        Matcher matcher = Pattern.compile("^\\d+$").matcher(input);
         if (matcher.find())
             return true;
         return false;
     }
 
     public boolean checkTheInputIsDouble(String input) {
-        Matcher matcher = Pattern.compile("^[0-9]*|.*$").matcher(input);
+        Matcher matcher = Pattern.compile("^\\d+\\.\\d+").matcher(input);
         if (matcher.find())
             return true;
         return false;
     }
 
     public void singleProductView(Matcher matcher) {
-        IProductController productController = (IProductController) controllerContainer.getController("ProductController");
+        IProductController productController = (IProductController) controllerContainer.getController(ControllerContainer.Controller.ProductController);
         matcher.find();
         String id = matcher.group(1);
         if (this.checkTheInputIsInteger(id)) {
@@ -99,16 +99,16 @@ public class ViewManager {
         this.inputOutput.println("the id is invalid format.");
     }
 
-    public boolean loginInAllPagesEssential() {
+    public void loginInAllPagesEssential() {
         while (!this.getIsUserLoggedIn()) {
-            this.inputOutput.println("first login.\nenter your username or back.");
+            this.inputOutput.println("enter your username or back.");
             String username = this.inputOutput.nextLine();
             if (username.equalsIgnoreCase("back"))
-                return false;
+                return;
             AuthenticationView authenticationView = new AuthenticationView(this, "login " + username);
             authenticationView.login(Pattern.compile("login (.*)").matcher("login " + username));
         }
-        return true;
+        return;
     }
 
     public void loginInAllPagesOptional(String command) {
@@ -138,5 +138,11 @@ public class ViewManager {
         }
         new MainPageView(this).logout(this.getToken());
     }
-    //public void setTheCommandsForUserDependentOnSituation()
+
+    public Date createDate() {
+        return null;
+    }
+    public void ShowDate(Date date){
+
+    }
 }

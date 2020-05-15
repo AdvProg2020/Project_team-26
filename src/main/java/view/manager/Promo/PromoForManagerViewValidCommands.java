@@ -25,11 +25,7 @@ public enum PromoForManagerViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(PromoForManagerView page) {
-            if (page.getManager().getIsUserLoggedIn()) {
-                page.logOut();
-                return;
-            }
-            page.getManager().printError();
+            page.logOut();
         }
     },
     Help("help") {
@@ -44,6 +40,11 @@ public enum PromoForManagerViewValidCommands {
         }
     };
     private final Pattern commandPattern;
+    private final String value;
+    @Override
+    public String toString() {
+        return value;
+    }
 
     public abstract void goToFunction(PromoForManagerView page);
 
@@ -54,6 +55,7 @@ public enum PromoForManagerViewValidCommands {
 
     PromoForManagerViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
+        value = output;
     }
 
 

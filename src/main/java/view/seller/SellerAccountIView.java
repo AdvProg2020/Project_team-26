@@ -17,16 +17,16 @@ import java.util.EnumSet;
 import java.util.regex.Matcher;
 
 public class SellerAccountIView extends View {
-    EnumSet<SellerAccountViewValidCommands> validCommands;
-    ArrayList<String> editableFields;
-    IUserInfoController infoController;
-    IShowUserController userController;
-    IProductController productController;
-    ICategoryController categoryController;
-    UserView userView;
-    IOrderController orderController;
-    User thisUser;
-    SellerSort sellerSort;
+    private EnumSet<SellerAccountViewValidCommands> validCommands;
+    private ArrayList<String> editableFields;
+    private IUserInfoController infoController;
+    private IShowUserController userController;
+    private IProductController productController;
+    private ICategoryController categoryController;
+    private UserView userView;
+    private IOrderController orderController;
+    private User thisUser;
+    private SellerSort sellerSort;
 
 
     public SellerAccountIView(ViewManager managerView) {
@@ -35,6 +35,17 @@ public class SellerAccountIView extends View {
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
         sellerSort = new SellerSort(manager);
+        infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
+        userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
+        categoryController = (ICategoryController) manager.getController(ControllerContainer.Controller.CategoryController);
+        orderController = (IOrderController) manager.getController(ControllerContainer.Controller.OrderController);
+        sellerSort = new SellerSort(manager);
+        try {
+            thisUser = userController.getUserByToken(manager.getToken());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     @Override
@@ -130,6 +141,7 @@ public class SellerAccountIView extends View {
             this.thisUser = userController.getUserByToken(manager.getToken());
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
+            return;
         }
         Product product = makeProduct();
         ProductSeller productSeller = makeProductSeller();
@@ -147,6 +159,8 @@ public class SellerAccountIView extends View {
     }
 
     private void addSeller(ProductSeller productSeller, Product product) {
+        if (productSeller == null)
+            return;
         try {
             productController.addSeller(product.getId(), productSeller, manager.getToken());
         } catch (NotSellerException | NoAccessException e) {
@@ -174,6 +188,7 @@ public class SellerAccountIView extends View {
             thisUser = userController.getUserByToken(manager.getToken());
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
+            return null;
         }
         manager.inputOutput.println("enter the price");
         String price = manager.inputOutput.nextLine();

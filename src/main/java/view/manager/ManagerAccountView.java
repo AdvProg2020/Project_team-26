@@ -22,19 +22,23 @@ import java.util.*;
  */
 
 public class ManagerAccountView extends View {
-    EnumSet<ValidCommandsForManagerAccount> validCommands;
+    private EnumSet<ValidCommandsForManagerAccount> validCommands;
     private IUserInfoController infoController;
-    ArrayList<String> editableFields;
-    IShowUserController userController;
-    IProductController productController;
-    IPromoController promoController;
-    UserView userView;
+    private ArrayList<String> editableFields;
+    private IShowUserController userController;
+    private IProductController productController;
+    private IPromoController promoController;
+    private UserView userView;
 
-    ManagerAccountView(ViewManager manager, IShowUserController controller, IUserInfoController infoController) {
+    ManagerAccountView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(ValidCommandsForManagerAccount.class);
-        this.infoController = infoController;
         userView = UserView.getInstance();
+        infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
+        editableFields = new ArrayList<>();
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
+        promoController = (IPromoController) manager.getController(ControllerContainer.Controller.PromoController);
+        userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
     }
 
     @Override

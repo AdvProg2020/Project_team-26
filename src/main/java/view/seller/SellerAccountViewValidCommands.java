@@ -49,14 +49,14 @@ public enum SellerAccountViewValidCommands {
         }
 
     },
-    RemoveProductWithProductId("remove\\s+product\\s+(.*)") {
+    RemoveProductWithProductId("remove\\s+product\\s+(\\d+)") {
         @Override
         public void goToFunction(SellerAccountIView page) {
             page.removeProduct(Pattern.compile(RemoveProductWithProductId.toString()).matcher(page.getInput()));
         }
 
     },
-    ShowAllCategoriesForSeller("show\\s+categories$") {
+    ShowAllCategoriesForSeller("show\\s+categories") {
         @Override
         public void goToFunction(SellerAccountIView page) {
             page.allCategories();

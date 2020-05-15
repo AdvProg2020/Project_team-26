@@ -5,6 +5,7 @@ import exception.*;
 import model.Category;
 import model.CategoryFeature;
 import model.FeatureType;
+import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
 import view.filterAndSort.CategorySort;
@@ -15,16 +16,17 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 public class ManageCategoryForManagerView extends View {
-    int currentCategory;
-    ICategoryController categoryController;
-    CategorySort categorySort;
-    EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
+    private int currentCategory;
+    private ICategoryController categoryController;
+    private   CategorySort categorySort;
+    private  EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
 
     public ManageCategoryForManagerView(ViewManager managerView) {
         super(managerView);
         validCommands = EnumSet.allOf(ManageCategoryForManagerViewValidCommands.class);
         currentCategory = 0;
         categorySort = new CategorySort(manager);
+        categoryController = (ICategoryController) manager.getController(ControllerContainer.Controller.CategoryController);
     }
 
     @Override

@@ -22,6 +22,9 @@ public class ManageProductForSellerView extends View {
         super(managerView);
         validCommands = EnumSet.allOf(ManageProductForSellerViewValidCommands.class);
         this.thisUser = thisUser;
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
+        orderController = (IOrderController) manager.getController(ControllerContainer.Controller.OrderController);
+        productFilterAndSort = new ProductFilterAndSort(manager);
     }
 
     @Override
