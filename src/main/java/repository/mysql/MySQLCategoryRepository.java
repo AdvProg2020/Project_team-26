@@ -2,7 +2,15 @@ package repository.mysql;
 
 import model.Category;
 import repository.CategoryRepository;
+import repository.mysql.utils.EntityManagerProvider;
 
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,31 +23,19 @@ public class MySQLCategoryRepository
 
     @Override
     public Category getByName(String name) {
-        return null;
-    }
+        EntityManager em = EntityManagerProvider.getEntityManager();
 
-    @Override
-    public void edit(Category category, String Filed, String replacement) {
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+            Root<Category> root = cq.from(Category.class);
 
-    }
+            cq.select(root).where(cb.equal(root.get("name"), name));
+            TypedQuery<Category> typedQuery = em.createQuery(cq);
 
-    @Override
-    public void delete(int id) {
-
-    }
-
-    @Override
-    public void delete(Category object) {
-
-    }
-
-    @Override
-    public boolean exist(int id) {
-        return false;
-    }
-
-    @Override
-    public List<Category> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
-        return null;
+            return typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

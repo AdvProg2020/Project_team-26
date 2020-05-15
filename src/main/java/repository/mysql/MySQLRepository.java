@@ -108,14 +108,11 @@ public abstract class MySQLRepository<T> implements Repository<T> {
             CriteriaQuery<T> cq = cb.createQuery(tClass);
             Root<T> root = cq.from(tClass);
 
-            if(isAscending) {
-                cq = cq.orderBy(cb.asc(root.get(sortField)));
-            } else {
-                cq = cq.orderBy(cb.desc(root.get(sortField)));
-            }
+            //TODO: define most purchase for product and sort by that
+            applySort(sortField, isAscending, cb, cq, root);
 
-            CriteriaQuery<T> select = cq.select(root);
-            TypedQuery<T> typedQuery = em.createQuery(select);
+            cq.select(root);
+            TypedQuery<T> typedQuery = em.createQuery(cq);
 
             return typedQuery.getResultList();
         } catch (NoResultException e) {
@@ -129,5 +126,13 @@ public abstract class MySQLRepository<T> implements Repository<T> {
 
         return (int) EntityManagerFactoryProvider.getEntityManagerFactory().
                 getPersistenceUnitUtil().getIdentifier(object);
+    }
+
+    protected void applySort(String sortField, boolean isAscending, CriteriaBuilder cb, CriteriaQuery<T> cq, Root<T> root) {
+        if(isAscending) {
+            cq.orderBy(cb.asc(root.get(sortField)));
+        } else {
+            cq.orderBy(cb.desc(root.get(sortField)));
+        }
     }
 }
