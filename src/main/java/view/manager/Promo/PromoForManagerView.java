@@ -117,13 +117,8 @@ public class PromoForManagerView extends View implements IView {
     }
 
     private void addCustomer(int promoCode, int customerId) {
-        String numberOfUse = "";
-        do {
-            manager.inputOutput.println("enter the number of use should be integer");
-            numberOfUse = manager.inputOutput.nextLine();
-        } while (!manager.checkTheInputIsInteger(numberOfUse));
         try {
-            promoController.addCustomer(promoCode, customerId, Integer.parseInt(numberOfUse), manager.getToken());
+            promoController.addCustomer(promoCode, customerId, manager.getToken());
         } catch (NoAccessException | InvalidIdException | ObjectAlreadyExistException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {

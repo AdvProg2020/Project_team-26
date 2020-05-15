@@ -95,16 +95,25 @@ public class ManagerAccountView extends View {
         String percent = manager.inputOutput.nextLine();
         String max = "";
         while (!percent.equalsIgnoreCase("back") && !max.equalsIgnoreCase("back")) {
-            if (manager.checkTheInputIsInteger(percent)) {
+            if (manager.checkTheInputIsDouble(percent)) {
+                promo.setPercent(Double.parseDouble(percent));
                 manager.inputOutput.println("enter the MaxValue");
                 max = manager.inputOutput.nextLine();
                 if (manager.checkTheInputIsInteger(max)) {
                     promo.setMaxDiscount(Long.parseLong(max));
-                    manager.inputOutput.println("enter the start date");
-                    promo.setStartDate(dateOfPromo());
-                    manager.inputOutput.println("enter the end date");
-                    promo.setEndDate(dateOfPromo());
-                    return promo;
+                    manager.inputOutput.println("enter the max usage");
+                    max = manager.inputOutput.nextLine();
+                    if (manager.checkTheInputIsInteger(max)) {
+                        promo.setMaxValidUse(Integer.parseInt(max));
+                        manager.inputOutput.println("enter the start date");
+                        promo.setStartDate(dateOfPromo());
+                        manager.inputOutput.println("enter the end date");
+                        promo.setEndDate(dateOfPromo());
+                        return promo;
+                    } else {
+                        manager.inputOutput.println("enter the integer for max usage or back");
+                        max = manager.inputOutput.nextLine();
+                    }
                 } else {
                     manager.inputOutput.println("enter the integer for max or back");
                     max = manager.inputOutput.nextLine();

@@ -81,7 +81,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException {
+    public void addCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);

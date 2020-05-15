@@ -74,6 +74,13 @@ public class ViewManager {
         return false;
     }
 
+    public boolean checkTheInputIsDouble(String input) {
+        Matcher matcher = Pattern.compile("^[0-9]*|.*$").matcher(input);
+        if (matcher.find())
+            return true;
+        return false;
+    }
+
     public void singleProductView(Matcher matcher) {
         IProductController productController = (IProductController) controllerContainer.getController("ProductController");
         matcher.find();

@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class ProductSellerRequest {
 
     @Id
-    @Column(name="product_seller_request_id")
+    @Column(name = "product_seller_request_id")
     private int id;
 
     @ManyToOne
@@ -29,4 +29,13 @@ public class ProductSellerRequest {
 
     public ProductSellerRequest() {
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public RequestTpe getRequestTpe() {
+        return requestTpe;
+    }
+
 }

@@ -30,4 +30,12 @@ public class OffRequest {
 
     public OffRequest() {
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public RequestTpe getRequestTpe() {
+        return requestTpe;
+    }
 }

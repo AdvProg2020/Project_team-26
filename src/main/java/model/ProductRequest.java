@@ -29,4 +29,12 @@ public class ProductRequest {
 
     @Column(name = "request_type")
     private RequestTpe requestTpe;
+
+    public int getId() {
+        return id;
+    }
+
+    public RequestTpe getRequestTpe() {
+        return requestTpe;
+    }
 }
