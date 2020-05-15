@@ -9,7 +9,7 @@ public interface ICartController {
 
     void addOrChangeProduct(int productSellerId, int amount, String token) throws InvalidIdException, NotEnoughProductsException, InvalidTokenException;
 
-    Cart showCart(String token) throws InvalidTokenException;
+    Cart getCart(String token) throws InvalidTokenException;
 
     long getToTalPrice(Cart cart, String token) throws InvalidTokenException;
 

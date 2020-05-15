@@ -10,8 +10,6 @@ import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
-import java.io.DataOutput;
-
 public class CartControllerTest {
 
     private RepositoryContainer repositoryContainer;
@@ -34,7 +32,7 @@ public class CartControllerTest {
     @Test
     public void setAddressTest() throws InvalidTokenException {
         cartController.setAddress("Nigga", token);
-        Assertions.assertEquals(cartController.showCart(token).getAddress(), "Nigga");
+        Assertions.assertEquals(cartController.getCart(token).getAddress(), "Nigga");
     }
 
     @Test
@@ -64,7 +62,7 @@ public class CartControllerTest {
 
         authenticationController.login("test8","password8",token);
         cartController.usePromoCode("Promo1",token);
-        Assertions.assertEquals(cartController.showCart(token).getUsedPromo().getPromoCode(),"Promo1");
+        Assertions.assertEquals(cartController.getCart(token).getUsedPromo().getPromoCode(),"Promo1");
 
 
 

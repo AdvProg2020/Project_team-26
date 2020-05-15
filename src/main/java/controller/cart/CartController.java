@@ -35,7 +35,7 @@ public class CartController implements ICartController {
     }
 
     @Override
-    public Cart showCart(String token) throws InvalidTokenException {
+    public Cart getCart(String token) throws InvalidTokenException {
         Session session = Session.getSession(token);
         return session.getCart();
     }

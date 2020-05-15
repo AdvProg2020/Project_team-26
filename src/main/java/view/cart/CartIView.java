@@ -25,7 +25,7 @@ public class CartIView extends View implements IView {
     @Override
     public void run() {
         try {
-            cart = cartController.showCart(manager.getToken());
+            cart = cartController.getCart(manager.getToken());
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
             return;
