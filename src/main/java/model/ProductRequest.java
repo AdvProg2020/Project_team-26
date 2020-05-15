@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,13 @@ public class ProductRequest {
     @ManyToOne
     @Column(name = "main_product_id")
     private Product mainProduct;
+
+    @ManyToOne
+    @JoinColumn(name = "requested_by_id")
+    private Seller requestedBy;
+
+    @Column(name = "request_time")
+    private Date requestTime;
 
     @Column(name = "name", unique = true, nullable = false)
     private String name;
@@ -32,20 +40,22 @@ public class ProductRequest {
     private List<ProductSellerRequest> sellerList;
 
     @Column(name = "request_type")
-    private RequestTpe requestTpe;
+    private RequestType requestType;
 
+    @Column(name = "request_status")
     private RequestStatus requestStatus;
 
     public ProductRequest() {
     }
 
-    public ProductRequest(String name, String brand, String description, Category category, RequestTpe requestTpe) {
+    public ProductRequest(String name, String brand, String description, Category category, RequestType requestType) {
         this.name = name;
         this.brand = brand;
         this.description = description;
         this.category = category;
-        this.requestTpe = requestTpe;
+        this.requestType = requestType;
         requestStatus = RequestStatus.PENDING;
+        requestTime = new Date();
     }
 
     public void addSeller(ProductSellerRequest productSellerRequest) {

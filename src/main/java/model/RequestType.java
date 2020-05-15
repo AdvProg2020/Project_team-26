@@ -1,5 +1,5 @@
 package model;
 
-public enum RequestTpe {
+public enum RequestType {
     ADD, EDIT, DELETE
 }

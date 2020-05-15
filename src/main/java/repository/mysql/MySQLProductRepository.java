@@ -3,10 +3,12 @@ package repository.mysql;
 import model.Product;
 import model.ProductRequest;
 import model.ProductSeller;
+import model.RequestType;
 import repository.ProductRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -43,22 +45,58 @@ public class MySQLProductRepository
 
     @Override
     public void addRequest(Product product) {
-
+        ProductRequest productRequest = product.createRequest(RequestType.ADD);
+        persistRequest(productRequest);
     }
 
     @Override
     public void editRequest(Product product) {
-
+        ProductRequest productRequest = product.createRequest(RequestType.EDIT);
+        persistRequest(productRequest);
     }
 
     @Override
     public void deleteRequest(int id) {
+        Product product = getById(id);
+        ProductRequest productRequest = product.createRequest(RequestType.DELETE);
+        persistRequest(productRequest);
+    }
 
+    private void persistRequest(ProductRequest productRequest) {
+        EntityManager em = entityManagerFactory.createEntityManager();
+        EntityTransaction et = null;
+        try {
+            et = em.getTransaction();
+            et.begin();
+            em.persist(productRequest);
+            et.commit();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public List<ProductRequest> getAllRequests() {
-        return null;
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<ProductRequest> cq = cb.createQuery(ProductRequest.class);
+            Root<ProductRequest> from = cq.from(ProductRequest.class);
+
+            CriteriaQuery<ProductRequest> select = cq.select(from);
+            TypedQuery<ProductRequest> typedQuery = em.createQuery(select);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
     }
 
     @Override
