@@ -100,8 +100,27 @@ public abstract class MySQLRepository<T> implements Repository<T> {
     }
 
     @Override
-    public List<T> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
-        return null;
+    public List<T> getAllSorted(String sortField, boolean isAscending) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<T> cq = cb.createQuery(tClass);
+            Root<T> root = cq.from(tClass);
+
+            if(isAscending) {
+                cq = cq.orderBy(cb.asc(root.get(sortField)));
+            } else {
+                cq = cq.orderBy(cb.desc(root.get(sortField)));
+            }
+
+            CriteriaQuery<T> select = cq.select(root);
+            TypedQuery<T> typedQuery = em.createQuery(select);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
     }
 
     protected int getId(Class<?> object) {

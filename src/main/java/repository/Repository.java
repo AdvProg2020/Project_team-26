@@ -13,5 +13,5 @@ public interface Repository<T> {
     public void delete(int id) throws NoObjectIdException;
     public void delete(T object) throws NoObjectIdException;
     public boolean exist(int id);
-    List<T> getAllBySortAndFilter(Map<String,String> filter,String sortField,boolean isAscending);
+    List<T> getAllSorted(String sortField,boolean isAscending);
 }
