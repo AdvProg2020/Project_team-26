@@ -78,9 +78,20 @@ public class ProductController implements IProductController {
         return null;
     }
 
-    public List<Product> getAllProductWithFilter(Map<String, String> filter, String token) {
-        //return productRepository.getAllSortedAndFiltered()
-        return null;
+    @Override
+    public ProductSeller getProductSellerByIdAndSellerId(int productId, String token) throws InvalidIdException, InvalidTokenException, NotLoggedINException, NoAccessException, NoObjectIdException {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in.");
+        } else if (session.getLoggedInUser().getRole() != Role.SELLER) {
+            throw new NoAccessException("You must be a seller to do this.");
+        } else if (productRepository.getById(productId) == null) {
+            throw new NoObjectIdException("The specified Object does not Exist.");
+        } else if (!productRepository.getById(productId).hasSeller((Seller)session.getLoggedInUser())) {
+            throw new NoAccessException("This Product is not for you.");
+        } else {
+            return productSellerRepository.getProductSellerByIdAndSellerId(productId,session.getLoggedInUser().getId());
+        }
     }
 
     @Override

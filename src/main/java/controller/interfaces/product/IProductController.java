@@ -20,7 +20,7 @@ public interface IProductController {
 
     List<Product> getAllProductWithFilterForSellerId(int ProductSellerId, Map<String, String> filter, String fieldName, boolean isAscending, String token);
 
-    ProductSeller getProducSellertByIdAndSellerId(int productId, int sellerId, String token) throws InvalidIdException;
+    ProductSeller getProductSellerByIdAndSellerId(int productId, String token) throws InvalidIdException, InvalidTokenException, NotLoggedINException, NoAccessException, NoObjectIdException;
 
 
     void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException;

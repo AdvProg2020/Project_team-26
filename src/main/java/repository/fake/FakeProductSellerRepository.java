@@ -1,6 +1,7 @@
 package repository.fake;
 
 import model.ProductSeller;
+import model.ProductSellerRequest;
 import model.Seller;
 import repository.ProductRepository;
 import repository.ProductSellerRepository;
@@ -33,6 +34,26 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
     @Override
     public void addRequest(ProductSeller productSeller) {
 
+    }
+
+    @Override
+    public void acceptRequest(int requestId) {
+
+    }
+
+    @Override
+    public void rejectRequest(int requestId) {
+
+    }
+
+    @Override
+    public ProductSellerRequest getProductSellerRequestById(int requestId) {
+        return null;
+    }
+
+    @Override
+    public List<ProductSellerRequest> getAllRequests(String sortField, boolean isAscending) {
+        return null;
     }
 
     @Override

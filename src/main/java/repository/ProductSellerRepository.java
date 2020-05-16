@@ -16,4 +16,6 @@ public interface ProductSellerRepository extends Repository<ProductSeller> {
     ProductSellerRequest getProductSellerRequestById(int requestId);
 
     List<ProductSellerRequest> getAllRequests(String sortField, boolean isAscending);
+
+    public ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId);
 }

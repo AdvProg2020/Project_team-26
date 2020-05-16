@@ -44,6 +44,21 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
+    public void acceptRequest(int requestId) {
+
+    }
+
+    @Override
+    public void rejectRequest(int requestId) {
+
+    }
+
+    @Override
+    public ProductRequest getProductRequestById(int requestId) {
+        return null;
+    }
+
+    @Override
     public void editRequest(Product product) {
 
     }
@@ -87,12 +102,17 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<ProductRequest> getAllRequests() {
+    public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending) {
         return null;
     }
 
     @Override
-    public List<ProductSeller> getAllSellerRequests() {
+    public List<ProductRequest> getAllRequests(String sorField, boolean isAscending) {
+        return null;
+    }
+
+    @Override
+    public List<ProductRequest> getAllSellerRequests(int sellerId) {
         return null;
     }
 
