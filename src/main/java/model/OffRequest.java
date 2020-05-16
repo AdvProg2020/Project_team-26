@@ -36,7 +36,8 @@ public class OffRequest {
     }
 
     public RequestTpe getRequestTpe() {
-        return requestTpe;
+        return
+                requestTpe;
     }
 
     public Seller getSeller() {

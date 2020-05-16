@@ -13,7 +13,7 @@ public class OrderSort extends Sort {
 
     protected void init() {
         sortField.put(1, "date");
-        sortField.put(2, "total-price");
+        sortField.put(2, "total price");
     }
     protected void showAvailableSort() {
         sortField.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
