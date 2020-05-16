@@ -240,6 +240,7 @@ public class SellerAccountIView extends View {
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage());
             } catch (NotLoggedINException e) {
+                manager.inputOutput.println(e.getMessage());
                 manager.loginInAllPagesEssential();
             }
             return;

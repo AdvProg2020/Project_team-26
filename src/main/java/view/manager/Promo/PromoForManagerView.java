@@ -117,6 +117,8 @@ public class PromoForManagerView extends View {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
         }
     }
 
@@ -127,6 +129,9 @@ public class PromoForManagerView extends View {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
         }
     }
 
@@ -140,6 +145,9 @@ public class PromoForManagerView extends View {
                 manager.inputOutput.println(e.getMessage());
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage());
+            } catch (NotLoggedINException e) {
+                manager.inputOutput.println(e.getMessage());
+                manager.loginInAllPagesEssential();
             }
         } else
             manager.inputOutput.println("invalid percent");
@@ -155,6 +163,9 @@ public class PromoForManagerView extends View {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
         }
 
     }
@@ -169,6 +180,9 @@ public class PromoForManagerView extends View {
                 manager.inputOutput.println(e.getMessage());
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage());
+            } catch (NotLoggedINException e) {
+                manager.inputOutput.println(e.getMessage());
+                manager.loginInAllPagesEssential();
             }
         } else
             manager.inputOutput.println("invalid percent");
@@ -202,7 +216,7 @@ public class PromoForManagerView extends View {
             manager.inputOutput.println(e.getMessage());
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
-            manager.loginInAllPagesEssential();//todo
+            manager.loginInAllPagesEssential();
         }
     }
 

@@ -104,9 +104,7 @@ public class CartIView extends View {
                     manager.inputOutput.println(e.getMessage());
                     return;
                 } catch (NotLoggedINException e) {
-                    manager.inputOutput.println(e.getMessage() + "\nenter back or enter continue");
-                    if (manager.inputOutput.nextLine().equals("back"))
-                        return;
+                    manager.inputOutput.println(e.getMessage());
                     manager.loginInAllPagesEssential();
                 } catch (InvalidTokenException e) {
                     manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
@@ -129,9 +127,7 @@ public class CartIView extends View {
             } catch (InvalidPromoCodeException | PromoNotAvailableException | NoAccessException e) {
                 manager.inputOutput.println(e.getMessage());
             } catch (NotLoggedINException e) {//to be deleted
-                manager.inputOutput.println(e.getMessage() + "\nenter back or enter continue");
-                if (manager.inputOutput.nextLine().equals("back"))
-                    return;
+                manager.inputOutput.println(e.getMessage());
                 manager.loginInAllPagesEssential();
             }
         }

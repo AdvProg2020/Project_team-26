@@ -79,6 +79,7 @@ public class ManagerAccountView extends View {
                 manager.inputOutput.println(e.getMessage());
                 return;
             } catch (NotLoggedINException e) {
+                manager.inputOutput.println(e.getMessage());
                 manager.loginInAllPagesEssential();
             } catch (ObjectAlreadyExistException e) {
                 manager.inputOutput.println(e.getMessage() + "try another code or back");
@@ -149,6 +150,7 @@ public class ManagerAccountView extends View {
                 } catch (InvalidTokenException e) {
                     e.printStackTrace();
                 } catch (NotLoggedINException e) {
+                    manager.inputOutput.println(e.getMessage());
                     manager.loginInAllPagesEssential();
                 }
             } else

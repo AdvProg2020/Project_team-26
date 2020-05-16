@@ -71,6 +71,7 @@ public class CustomerIView extends View {
                             " started at " + promo.getStartDate().toString() + " end : " + promo.getEndDate().toString())
             );
         } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
             manager.loginInAllPagesEssential();
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
