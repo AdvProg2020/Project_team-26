@@ -2,6 +2,7 @@ package controller.account;
 
 import controller.interfaces.account.IUserInfoController;
 import exception.*;
+import javassist.compiler.NoFieldException;
 import model.Role;
 import model.Seller;
 import model.Session;
@@ -47,6 +48,9 @@ public class UserInfoController implements IUserInfoController {
                     break;
                 case "Company Name":
                     changeCompanyName(value, token);
+                    break;
+                default:
+                    throw new NoSuchField("No Such Field exists");
             }
         }
     }

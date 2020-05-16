@@ -6,6 +6,7 @@ import exception.NotEnoughCreditException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
@@ -47,6 +48,7 @@ public class User {
         this.password = password;
         this.email = email;
         this.role = role;
+        details = new HashMap<>();
     }
 
     public String getFullName() {

@@ -29,7 +29,7 @@ public class SessionControllerTest {
 
     @Test
     public void createTokenTest() {
-        Assertions.assertEquals("a1", sessionController.createToken());
+        Assertions.assertEquals("a2", sessionController.createToken());
     }
 
     @Test
@@ -40,9 +40,9 @@ public class SessionControllerTest {
 
     @Test
     public void isUserLoggedIn() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException {
-        Assertions.assertEquals(sessionController.isUserLoggedIn(token), "false");
+        Assertions.assertEquals(sessionController.isUserLoggedIn(token), false);
         authenticationController.login("test1", "password1", token);
-        Assertions.assertEquals(sessionController.isUserLoggedIn(token), "true");
+        Assertions.assertEquals(sessionController.isUserLoggedIn(token), true);
     }
 
     @Test
