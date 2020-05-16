@@ -33,7 +33,7 @@ public class RequestController implements IRequestController {
         } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-
+            offRepository.acceptRequest(requestId);
         }
 
     }
@@ -46,7 +46,7 @@ public class RequestController implements IRequestController {
         } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-
+            offRepository.rejectRequest(requestId);
         }
     }
 
@@ -58,7 +58,7 @@ public class RequestController implements IRequestController {
         } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            productRepository.addRequest();
+            productRepository.acceptRequest(requestId);
         }
     }
 
@@ -70,7 +70,7 @@ public class RequestController implements IRequestController {
         } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-
+            productRepository.rejectRequest(requestId);
         }
     }
 
@@ -82,7 +82,7 @@ public class RequestController implements IRequestController {
         } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-
+            productSellerRepository.acceptRequest(requestId);
         }
     }
 
@@ -94,23 +94,44 @@ public class RequestController implements IRequestController {
         } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-
+            productSellerRepository.rejectRequest(requestId);
         }
     }
 
     @Override
-    public OffRequest getOffRequestById(int id, String token) {
-        return null;
+    public OffRequest getOffRequestById(int id, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in");
+        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+            throw new NoAccessException("You must be an Admin to do this.");
+        } else {
+            return offRepository.getOffRequestById(id);
+        }
     }
 
     @Override
-    public ProductRequest getProductRequestById(int id, String token) {
-        return null;
+    public ProductRequest getProductRequestById(int id, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in");
+        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+            throw new NoAccessException("You must be an Admin to do this.");
+        } else {
+            return productRepository.getProductRequestById(id);
+        }
     }
 
     @Override
-    public ProductSellerRequest getProductSellerRequestById(int id, String token) {
-        return null;
+    public ProductSellerRequest getProductSellerRequestById(int id, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+        Session session = Session.getSession(token);
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in");
+        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+            throw new NoAccessException("You must be an Admin to do this.");
+        } else {
+            return productSellerRepository.getProductSellerRequestById(id);
+        }
     }
 
     @Override

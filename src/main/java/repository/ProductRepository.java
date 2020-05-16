@@ -13,6 +13,12 @@ public interface ProductRepository extends Repository<Product> {
 
     void addRequest(Product product);
 
+    void acceptRequest(int requestId);
+
+    void rejectRequest(int requestId);
+
+    ProductRequest getProductRequestById(int requestId);
+
     void editRequest(Product product);
 
     void deleteRequest(int id);

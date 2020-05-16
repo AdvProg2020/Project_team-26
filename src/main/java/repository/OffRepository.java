@@ -13,6 +13,12 @@ public interface OffRepository extends Repository<Off> {
 
     void addRequest(Off off);
 
+    void acceptRequest(int requestId);
+
+    void rejectRequest(int requestId);
+
+    OffRequest getOffRequestById(int requestId);
+
     void editRequest(Off off);
 
     void deleteRequest(int id);
