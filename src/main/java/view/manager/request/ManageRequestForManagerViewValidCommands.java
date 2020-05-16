@@ -34,7 +34,7 @@ public enum ManageRequestForManagerViewValidCommands {
     }, DetailOfProductSellerRequest("details\\s+\\s+product\\s+seller\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
-            page.declineTheProductSellerRequest(Pattern.compile(DetailOfProductSellerRequest.toString()).matcher(page.getInput()));
+            page.detailTheProductSellerRequest(Pattern.compile(DetailOfProductSellerRequest.toString()).matcher(page.getInput()));
         }
     },
 

@@ -50,6 +50,21 @@ public class MySQLProductRepository
     }
 
     @Override
+    public void acceptRequest(int requestId) {
+
+    }
+
+    @Override
+    public void rejectRequest(int requestId) {
+
+    }
+
+    @Override
+    public ProductRequest getProductRequestById(int requestId) {
+        return null;
+    }
+
+    @Override
     public void editRequest(Product product) {
         ProductRequest productRequest = product.createRequest(RequestType.EDIT);
         persistRequest(productRequest);
@@ -142,6 +157,11 @@ public class MySQLProductRepository
 
     @Override
     public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
+    }
+
+    @Override
+    public List<ProductRequest> getAllRequests(String sorField, boolean isAscending) {
         return null;
     }
 

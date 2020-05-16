@@ -58,8 +58,8 @@ public class ProductRequest {
         requestTime = new Date();
     }
 
-    public RequestTpe getRequestTpe() {
-        return requestTpe;
+    public RequestType getRequestTpe() {
+        return requestType;
     }
 
     public int getId() {

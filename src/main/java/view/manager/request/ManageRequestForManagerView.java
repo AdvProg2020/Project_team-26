@@ -1,21 +1,25 @@
 package view.manager.request;
 
 import controller.interfaces.request.IRequestController;
-import model.ProductSellerRequest;
-import model.RequestTpe;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NotLoggedINException;
+import model.*;
+import model.RequestType;
 import view.*;
 import view.filterAndSort.RequestSort;
 import view.main.MainPageView;
 import view.manager.users.ValidCommandsForManageUsersForManagerView;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 
 public class ManageRequestForManagerView extends View {
-    private  EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
-    private   IRequestController requestController;
-    private  RequestSort requestSort;
+    private EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
+    private IRequestController requestController;
+    private RequestSort requestSort;
 
     public ManageRequestForManagerView(ViewManager manager) {
         super(manager);
@@ -42,26 +46,49 @@ public class ManageRequestForManagerView extends View {
     }
 
     protected void showAllOff() {
-        requestController.getAllOffRequests(requestSort.getFieldNameForSort(), requestSort.isAscending(),
-                manager.getToken()).forEach(i -> manager.inputOutput.println("id : " + i.getId() + " type : " +
-                getType(i.getRequestTpe())));
-
+        try {
+            requestController.getAllOffRequests(requestSort.getFieldNameForSort(), requestSort.isAscending(),
+                    manager.getToken()).forEach(i -> manager.inputOutput.println("id : " + i.getId() + " type : " +
+                    getType(i.getRequestTpe())));
+        } catch (NoAccessException | InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        }
     }
 
     protected void showAllProduct() {
-        requestController.getAllProductRequests(requestSort.getFieldNameForSort(), requestSort.isAscending(),
-                manager.getToken()).forEach(i -> manager.inputOutput.println("id : " + i.getId() + " type : " +
-                getType(i.getRequestTpe())));
+        try {
+            requestController.getAllProductRequests(requestSort.getFieldNameForSort(), requestSort.isAscending(),
+                    manager.getToken()).forEach(i -> manager.inputOutput.println("id : " + i.getId() + " type : " +
+                    getType(i.getRequestTpe())));
+        } catch (NoAccessException | InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        }
 
     }
 
     protected void showAllProductSeller() {
-        requestController.getAllProductSellerRequests(requestSort.getFieldNameForSort(), requestSort.isAscending(),
-                manager.getToken()).forEach(i -> manager.inputOutput.println("id : " + i.getId() + " type : " +
-                getType(i.getRequestTpe())));
+        try {
+            requestController.getAllProductSellerRequests(requestSort.getFieldNameForSort(), requestSort.isAscending(),
+                    manager.getToken()).forEach(i -> manager.inputOutput.println("id : " + i.getId() + " type : " +
+                    getType(i.getRequestType())));
+        } catch (NoAccessException | InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        }
     }
 
-    private String getType(RequestTpe requestTpe) {
+    private String getType(RequestType requestTpe) {
         switch (requestTpe) {
             case ADD:
                 return "add request";
@@ -76,40 +103,134 @@ public class ManageRequestForManagerView extends View {
     }
 
     protected void detailTheOffRequest(Matcher matcher) {
-        requestController.rejectOffRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            OffRequest offRequest = requestController.getOffRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NoAccessException  e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        }catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+    }
+    private void showSingleOffRequest(){
+
     }
 
     protected void detailTheProductRequest(Matcher matcher) {
-        requestController.rejectProductRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            ProductRequest productRequest = requestController.getProductRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NoAccessException  e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        }catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void detailTheProductSellerRequest(Matcher matcher) {
-        requestController.rejectProductSellerRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            ProductSellerRequest productSellerRequest = requestController.getProductSellerRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void declineTheOffRequest(Matcher matcher) {
-        requestController.rejectOffRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            requestController.rejectOffRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void declineTheProductRequest(Matcher matcher) {
-        requestController.rejectProductRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            requestController.rejectProductRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void declineTheProductSellerRequest(Matcher matcher) {
-        requestController.rejectProductSellerRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            requestController.rejectProductSellerRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
 
     protected void acceptTheOffRequest(Matcher matcher) {
-        requestController.acceptOffRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            requestController.acceptOffRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+            return;
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void acceptTheProductRequest(Matcher matcher) {
-        requestController.acceptProductRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            requestController.acceptProductRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+            return;
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void acceptTheProductSellerRequest(Matcher matcher) {
-        requestController.acceptProductSellerRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        try {
+            requestController.acceptProductSellerRequest(Integer.parseInt(matcher.group(1)), manager.getToken());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
+            if (manager.inputOutput.nextLine().equals("yes"))
+                manager.loginInAllPagesEssential();
+            return;
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 
     protected void logOut() {
@@ -117,7 +238,7 @@ public class ManageRequestForManagerView extends View {
     }
 
     protected void help() {
-        //todo
+
     }
 
 }

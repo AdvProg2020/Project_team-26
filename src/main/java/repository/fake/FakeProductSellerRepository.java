@@ -57,6 +57,11 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
     }
 
     @Override
+    public ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId) {
+        return null;
+    }
+
+    @Override
     public List<ProductSeller> getAll() {
         return allProductSellers;
     }

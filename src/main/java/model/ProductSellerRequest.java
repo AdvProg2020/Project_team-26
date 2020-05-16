@@ -33,7 +33,7 @@ public class ProductSellerRequest {
     private int remainingItems;
 
     @Column(name = "request_type")
-    private RequestTpe requestType;
+    private RequestType requestType;
 
     @Column(name = "request_status")
     private RequestStatus requestStatus;
@@ -49,5 +49,13 @@ public class ProductSellerRequest {
         this.requestType = requestType;
         requestStatus = RequestStatus.PENDING;
         requestTime = new Date();
+    }
+
+    public RequestType getRequestType() {
+        return requestType;
+    }
+
+    public int getId() {
+        return id;
     }
 }

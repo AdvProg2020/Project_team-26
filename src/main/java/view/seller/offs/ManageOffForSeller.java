@@ -2,10 +2,7 @@ package view.seller.offs;
 
 import controller.interfaces.discount.IOffController;
 import controller.interfaces.product.IProductController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.ObjectAlreadyExistException;
+import exception.*;
 import model.*;
 import view.ControllerContainer;
 import view.View;
@@ -102,15 +99,20 @@ public class ManageOffForSeller extends View {
                 return;
             if (manager.checkTheInputIsInteger(productId)) {
                 try {
-                    ProductSeller productSeller = productController.getProducSellertByIdAndSellerId(Integer.parseInt(productId), seller.getId(), manager.getToken());
+                    ProductSeller productSeller = productController.getProductSellerByIdAndSellerId(Integer.parseInt(productId), manager.getToken());
                     priceForProduct = inputPrice();
                     if (isPercent) {
                         percentForPrice = (int) priceForProduct;
                         priceForProduct = (long) (productSeller.getPrice() * (100 - percentForPrice) / 100);
                     }
                     offItems.add(new OffItem(productSeller.getProduct(), priceForProduct));
-                } catch (InvalidIdException e) {
+                } catch (InvalidIdException | NoObjectIdException | NoAccessException e) {
                     manager.inputOutput.println(e.getMessage());
+                } catch (InvalidTokenException e) {
+                    manager.setTokenFromController(e.getMessage());
+                } catch (NotLoggedINException e) {
+                    manager.inputOutput.println(e.getMessage());
+                    manager.loginInAllPagesEssential();
                 }
             }
         }
