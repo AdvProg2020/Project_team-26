@@ -2,6 +2,8 @@ package view.filterAndSort;
 
 import view.ViewManager;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
@@ -13,31 +15,112 @@ public class ProductFilterAndSort extends FilterAndSort {
     @Override
     protected void init() {
         filterFields.put(1, "product name");
-        filterFields.put(3, "price");
-        filterFields.put(4, "rate");
-        filterFields.put(5, "seller name");
-        filterFields.put(6, "visit");
-        filterFields.put(7, "brand");
-        filterFields.put(8, "off");
-        filterFields.put(9, "category feature");
+        filterFields.put(2, "price");
+        filterFields.put(3, "rate");
+        filterFields.put(4, "brand");
+        filterFields.put(5, "description");
         sortField.put(1, "price");
         sortField.put(2, "rate");
-        sortField.put(3, "visit");
     }
 
     protected void filterWithAvailableFilter(Matcher matcher) {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
-        if (chose >= filterFields.size()) {
-            manager.inputOutput.println("enter the number exist in list");
-            return;
+        switch (chose) {
+            case 1:
+                filterProduct(1);
+                break;
+            case 2:
+                filterPrice(2);
+                break;
+            case 3:
+                filterRate(3);
+                break;
+            case 4:
+                filterBrand(4);
+                break;
+            case 5:
+                filterDescription(5);
+                break;
+            default:
+                manager.inputOutput.println("enter the number exist in list");
+                break;
         }
-        manager.inputOutput.println("enter the filtering you want depending on the filed(for date MM/DD/YY) ");
-        manager.inputOutput.println("if you want to have more filter or it is a BAZE divide them by - like" +
-                "3900-6700");
-        String value;
-        value = manager.inputOutput.nextLine();
+    }
+
+    private void filterDescription(int chose) {
+        manager.inputOutput.println("enter the descriptions you want and type finish to end");
+        filterForController.put(filterFields.get(chose), forRepoBuilder(fieldBuilder("description")));
+    }
+
+    private void filterRate(int chose) {
+        String value = periodBuilder(chose, "rate", false);
+        if (value == null)
+            return;
         filterForController.put(filterFields.get(chose), value);
+
+    }
+
+    private void filterBrand(int chose) {
+        manager.inputOutput.println("enter the brands you want and type finish to end");
+        filterForController.put(filterFields.get(chose), forRepoBuilder(fieldBuilder("brand")));
+    }
+
+    private void filterPrice(int chose) {
+        String value = periodBuilder(chose, "price", false);
+        if (value == null)
+            return;
+        filterForController.put(filterFields.get(chose), value);
+    }
+
+    private String periodBuilder(int chose, String fieldname, boolean isDouble) {
+        StringBuilder period = new StringBuilder("");
+        manager.inputOutput.println("enter minimum " + fieldname);
+        String min = manager.inputOutput.nextLine();
+        String max;
+        if (manager.isValidNUmber(min, isDouble)) {
+            period.append(min);
+            manager.inputOutput.println("enter maximum " + fieldname);
+            max = manager.inputOutput.nextLine();
+            if (manager.isValidNUmber(max, isDouble)) {
+                period.append("-" + max);
+                return period.toString();
+            }
+        }
+        manager.inputOutput.println("invalid input");
+        return null;
+    }
+
+    private void filterProduct(int chose) {
+        manager.inputOutput.println("enter the names you want and type finish to end");
+        filterForController.put(filterFields.get(chose), forRepoBuilder(fieldBuilder("name")));
+    }
+
+    private List<String> fieldBuilder(String field) {
+        List<String> list = new ArrayList<>();
+        while (true) {
+            manager.inputOutput.println("enter " + field);
+            super.input = manager.inputOutput.nextLine();
+            if (super.input.trim().equalsIgnoreCase("finish"))
+                break;
+            list.add(super.input);
+        }
+        return list;
+    }
+
+    private String forRepoBuilder(List<String> stringList) {
+        StringBuilder fields = new StringBuilder("");
+        if (stringList.size() > 0) {
+            fields.append(stringList.get(0));
+            int count = 1;
+            for (String s : stringList) {
+                if (count != 1) {
+                    fields.append("-" + s);
+                    count++;
+                }
+            }
+        }
+        return fields.toString();
     }
 
     protected void disableSelectedFilter(Matcher matcher) {
