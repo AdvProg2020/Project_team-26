@@ -69,7 +69,7 @@ public class AuthenticationController implements IAuthenticationController {
 
     private void checkEmailFormat(String Email) throws InvalidFormatException {
         if(Email == null) {
-            throw new NullPointerException();
+            throw new InvalidFormatException("email should not be empty","Email");
         }
         if (!Email.matches("^\\S+@\\S+.(?i)com(?-i)")) {
             throw new InvalidFormatException("Email format is incorrect.", "Email");
