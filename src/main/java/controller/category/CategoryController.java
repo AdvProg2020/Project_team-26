@@ -201,12 +201,15 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public Category getCategoryByName(String name, String token) throws InvalidIdException, InvalidIdException {
-        return null;
+        if(!checkCategoryExistByName(name)) {
+            throw new InvalidIdException("The specified category does not exist.");
+        } else {
+            return categoryRepository.getByName(name);
+        }
     }
 
     @Override
     public List<Category> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int id, String token) throws InvalidIdException {
-        return null;
     }
 
     @Override
