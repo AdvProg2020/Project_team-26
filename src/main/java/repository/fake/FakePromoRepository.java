@@ -50,7 +50,7 @@ public class FakePromoRepository implements PromoRepository {
 
     @Override
     public void save(Promo object) {
-        object.setMaxValidUse(10); //Todo
+        object.setMaxValidUse(10);
         lastId++;
         object.setId(lastId);
         allPromos.add(object);
