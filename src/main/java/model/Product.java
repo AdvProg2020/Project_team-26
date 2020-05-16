@@ -127,10 +127,10 @@ public class Product {
         return sellerList.stream().anyMatch(s -> s.getSeller().equals(seller));
     }
 
-    public ProductRequest createRequest(RequestTpe requestTpe) {
-        ProductRequest productRequest = new ProductRequest(name, brand, description, category, requestTpe);
+    public ProductRequest createRequest(RequestType requestType) {
+        ProductRequest productRequest = new ProductRequest(name, brand, description, category, requestType);
         for(ProductSeller seller : sellerList) {
-            productRequest.addSeller(seller.createProductSellerRequest(requestTpe));
+            productRequest.addSeller(seller.createProductSellerRequest(requestType));
         }
         return productRequest;
     }

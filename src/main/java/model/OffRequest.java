@@ -26,7 +26,7 @@ public class OffRequest {
     private List<OffItemRequest> items;
 
     @Column(name = "request_type")
-    private RequestTpe requestTpe;
+    private RequestType requestType;
 
     public OffRequest() {
     }

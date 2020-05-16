@@ -82,7 +82,7 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+    public List<Product> getAllSortedAndFiltered(Map<String, String> filter, String sortField, boolean isAscending) {
         return null;
     }
 

@@ -1,7 +1,6 @@
 package model;
 
 import exception.NotEnoughProductsException;
-import org.hibernate.annotations.Immutable;
 
 import javax.persistence.*;
 
@@ -88,7 +87,7 @@ public class ProductSeller {
         this.remainingItems = remainingItems;
     }
 
-    public ProductSellerRequest createProductSellerRequest(RequestTpe requestTpe) {
-        return new ProductSellerRequest(product, seller, price, remainingItems, requestTpe);
+    public ProductSellerRequest createProductSellerRequest(RequestType requestType) {
+        return new ProductSellerRequest(product, seller, price, remainingItems, requestType);
     }
 }
