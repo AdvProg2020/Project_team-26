@@ -1,10 +1,12 @@
 package controller.discount;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import controller.account.AuthenticationController;
 import controller.cart.CartController;
-import exception.InvalidIdException;
-import exception.NotLoggedINException;
+import exception.*;
+import model.Promo;
 import model.Session;
+import org.hibernate.exception.spi.AbstractSQLExceptionConversionDelegate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,11 +63,40 @@ public class PromoControllerTest {
     }
 
     @Test
-    public void removePromoCodeTest() {
+    public void removePromoCodeTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, InvalidIdException, NoObjectIdException, NoAccessException {
 
         /**Exception Tests **/
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> promoController.removePromoCode(12,token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
+
+        authenticationController.login("test8","password8",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> promoController.removePromoCode(12,token));
+        Assertions.assertEquals(ex.getMessage(),"only manager can remove the promo");
+        authenticationController.logout(token);
+
+        authenticationController.login("test1","password1",token);
+        ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removePromoCode(120,token));
+        Assertions.assertEquals(ex.getMessage(),"there is no promo by 120");
+        /** Exception Tests **/
+
+        Assertions.assertEquals(promoRepository.getByCode("Promo0").getPromoCode(),"Promo0");
+        promoController.removePromoCode(6,token);
+        Assertions.assertEquals(promoRepository.getByCode("Promo0"),null);
+    }
+
+
+    @Test
+    public void createPromoTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, ObjectAlreadyExistException, NoAccessException, NotLoggedINException {
+
+        /**Exception Tests **/
+        authenticationController.login("test1","password1",token);
+        Promo promo = new Promo("Promo0",null);
+        Promo promo2 = new Promo("Promo200",null);
+        Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> promoController.createPromoCode(promo,token));
+        /**Exception Tests **/
+
+        promoController.createPromoCode(promo2,token);
+        Assertions.assertEquals(promoRepository.getByCode("Promo200").getPromoCode(),"Promo200");
     }
 
 

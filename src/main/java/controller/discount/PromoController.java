@@ -7,15 +7,15 @@ import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
+import java.net.UnknownServiceException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 public class PromoController implements IPromoController {
     PromoRepository promoRepository;
     UserRepository userRepository;
 
-    public PromoController(RepositoryContainer repositoryContainer){
+    public PromoController(RepositoryContainer repositoryContainer) {
         promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
@@ -60,10 +60,9 @@ public class PromoController implements IPromoController {
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         Session session = Session.getSession(token);
 
-        if(session.getLoggedInUser() == null) {
+        if (session.getLoggedInUser() == null) {
             throw new NotLoggedINException("You are not logged in.");
-        }
-        else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException(message);
         }
     }
@@ -77,7 +76,7 @@ public class PromoController implements IPromoController {
         checkAccessOfUser(token, "only manager can remove the promo");
         Promo promo = promoRepository.getById(promoCodeId);
         if (promo == null)
-            throw new InvalidIdException("there is no promo by" + promoCodeId);
+            throw new InvalidIdException("there is no promo by " + promoCodeId);
         removeThePromoFromUsers(promo);
         promoRepository.delete(promoCodeId);
     }
@@ -91,26 +90,34 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException, NotLoggedINException {
+    public void addCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException, NotLoggedINException, NotCustomerException {
         checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
-        Customer customer = (Customer) userRepository.getById(customerId);
-        if (customer == null)
-            throw new InvalidIdException("no customer exist By " + customerId + " id");
-        List<Customer> customers = promo.getCustomers();
-        if (customers.contains(customer))
-            throw new ObjectAlreadyExistException("the promo contain this customer", customer);
-        promo.getCustomers().add(customer);
-        promoRepository.save(promo);
+
+         if (userRepository.getById(customerId) == null) {
+            throw new InvalidIdException("no customer exists By " + customerId + " id");
+        } else if (userRepository.getById(customerId).getRole() != Role.CUSTOMER) {
+            throw new NotCustomerException("Only Customers can have promo codes");
+        } else if (promo.getCustomers().contains((Customer)userRepository.getById(customerId))) {
+            throw new ObjectAlreadyExistException("the promo contain this customer", (Customer)
+            userRepository.getById(customerId));
+        } else {
+            promo.getCustomers().add((Customer)userRepository.getById(customerId));
+            promoRepository.save(promo);
+        }
+
     }
 
     @Override
-    public void removeCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    public void removeCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException, NotCustomerException {
         checkAccessOfUser(token, "only the manager can remove customer");
         Promo promo = getPromoByIdWithCheck(promoId);
-        Customer customer = (Customer) userRepository.getById(customerId);
-        if (customer == null)
+        if(userRepository.getById(customerId) == null) {
             throw new InvalidIdException("no customer exist By " + customerId + " id");
+        } else if (userRepository.getById(customerId).getRole() != Role.CUSTOMER) {
+            throw new NotCustomerException("You must choose a customer");
+        }
+        Customer customer = (Customer) userRepository.getById(customerId);
         List<Customer> promos = promo.getCustomers();
         if (!promos.contains(customer))
             throw new InvalidIdException("the promo doesnt contain " + customerId + " id");
@@ -148,12 +155,10 @@ public class PromoController implements IPromoController {
         checkAccessOfUser(token, "only manager can " + type + " date");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (type.equals("start")) {//ToDo
-
+            promo.setStartDate(date);
         } else {
-
+            promo.setEndDate(date);
         }
-
+        promoRepository.save(promo);
     }
-
-
 }

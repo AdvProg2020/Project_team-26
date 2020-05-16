@@ -19,11 +19,11 @@ public interface IPromoController {
 
     void removePromoCode(int promoCodeId, String token) throws NoAccessException, NotLoggedINException, NoAccessException, InvalidIdException, InvalidTokenException, NoObjectIdException;
 
-    void addCustomer(int promoId, int CustomerUserId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException, NotLoggedINException;
+    void addCustomer(int promoId, int CustomerUserId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException, NotLoggedINException, NotCustomerException;
 
     void setTime(int promoId, Date date, String type, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException;
 
-    void removeCustomer(int promoId, int customerId,String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException;
+    void removeCustomer(int promoId, int customerId,String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException, NotCustomerException;
 
     void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidFormatException, InvalidTokenException, InvalidDiscountPercentException, NotLoggedINException;
 
