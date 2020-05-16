@@ -118,8 +118,10 @@ public class PromoForManagerView extends View {
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
-        }
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
+        } catch (NotCustomerException e) {
+            manager.inputOutput.println(e.getMessage());}
     }
 
     private void addCustomer(int promoCode, int customerId) {
@@ -132,6 +134,8 @@ public class PromoForManagerView extends View {
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
             manager.loginInAllPagesEssential();
+        } catch (NotCustomerException e) {
+            manager.inputOutput.println(e.getMessage());
         }
     }
 
