@@ -12,14 +12,16 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class ManageRequestForManagerView extends View implements IView {
-    EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
-    IRequestController requestController;
-    RequestSort requestSort;
+public class ManageRequestForManagerView extends View {
+    private  EnumSet<ManageRequestForManagerViewValidCommands> validCommands;
+    private   IRequestController requestController;
+    private  RequestSort requestSort;
 
     public ManageRequestForManagerView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(ManageRequestForManagerViewValidCommands.class);
+        requestController = (IRequestController) manager.getController(ControllerContainer.Controller.RequestController);
+        requestSort = new RequestSort(manager);
     }
 
     @Override
@@ -112,6 +114,10 @@ public class ManageRequestForManagerView extends View implements IView {
 
     protected void logOut() {
         new MainPageView(manager).logout(manager.getToken());
+    }
+
+    protected void help() {
+        //todo
     }
 
 }

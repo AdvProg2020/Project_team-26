@@ -2,7 +2,7 @@ package view;
 
 import exception.AlreadyLoggedInException;
 
-public abstract class View implements IView {
+public abstract class View {
 
     protected String input;
     protected ViewManager manager;

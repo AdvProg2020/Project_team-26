@@ -6,6 +6,7 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.ObjectAlreadyExistException;
 import model.Off;
+import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
 import view.filterAndSort.OffFilterAndSort;
@@ -16,14 +17,16 @@ import java.util.Map;
 import java.util.regex.Matcher;
 
 public class ManageOffForSeller extends View {
-    EnumSet<ViewOffsForSellerAccountValidCommands> validCommands;
-    IOffController offController;
+    private EnumSet<ViewOffsForSellerAccountValidCommands> validCommands;
+    private  IOffController offController;
     boolean isPercent;
-    OffFilterAndSort offFilterAndSort;
+    private  OffFilterAndSort offFilterAndSort;
 
     public ManageOffForSeller(ViewManager managerView) {
         super(managerView);
         validCommands = EnumSet.allOf(ViewOffsForSellerAccountValidCommands.class);
+        offFilterAndSort = new OffFilterAndSort(manager);
+        offController = (IOffController) manager.getController(ControllerContainer.Controller.OffController);
     }
 
     @Override

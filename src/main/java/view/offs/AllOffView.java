@@ -9,7 +9,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class AllOffView extends View implements IView {
+public class AllOffView extends View {
     private EnumSet<AllOffsValidCommands> validCommands;
     private ProductFilterAndSort productFilterAndSort;
     private IOffController offController;
@@ -17,6 +17,8 @@ public class AllOffView extends View implements IView {
     public AllOffView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(AllOffsValidCommands.class);
+        productFilterAndSort = new ProductFilterAndSort(manager);
+        offController = (IOffController) manager.getController(ControllerContainer.Controller.OffController);
     }
 
     @Override

@@ -25,11 +25,7 @@ public enum ValidCommandsForManageUsersForManagerView {
     Logout("logout") {
         @Override
         public void goToFunction(ManageUsersForManager page) {
-            if (page.getManager().getIsUserLoggedIn()) {
-                page.logOut();
-                return;
-            }
-            page.getManager().printError();
+            page.logOut();
         }
     },
     Help("help") {
@@ -45,6 +41,12 @@ public enum ValidCommandsForManageUsersForManagerView {
     };
 
     private final Pattern commandPattern;
+    private final String value;
+
+    @Override
+    public String toString() {
+        return value;
+    }
 
     public abstract void goToFunction(ManageUsersForManager page);
 
@@ -55,5 +57,6 @@ public enum ValidCommandsForManageUsersForManagerView {
 
     ValidCommandsForManageUsersForManagerView(String output) {
         this.commandPattern = Pattern.compile(output);
+        value = output;
     }
 }

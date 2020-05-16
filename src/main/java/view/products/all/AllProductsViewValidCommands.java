@@ -16,7 +16,7 @@ public enum AllProductsViewValidCommands {
 
         }
     },
-    ViewSubCategory("sub\\s+(.*)") {////
+    ViewSubCategory("sub\\s+(\\d+)") {////
 
         @Override
         public void goToFunction(AllProductView page) {

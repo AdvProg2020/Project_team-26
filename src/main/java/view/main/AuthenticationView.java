@@ -5,6 +5,7 @@ import controller.account.AuthenticationController;
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
 import model.Role;
+import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
 
@@ -19,7 +20,7 @@ public class AuthenticationView extends View {
     public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         input = command;
-        control = (AuthenticationController) manager.getControllerContainer().getController("AuthenticationController");
+        control = (AuthenticationController) manager.getController(ControllerContainer.Controller.AuthenticationController);
     }
 
     @Override

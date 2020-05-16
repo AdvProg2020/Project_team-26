@@ -11,15 +11,16 @@ import view.main.MainPageView;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class PromoForManagerView extends View implements IView {
-    EnumSet<PromoForManagerViewValidCommands> validCommands;
+public class PromoForManagerView extends View {
+    private  EnumSet<PromoForManagerViewValidCommands> validCommands;
     private IPromoController promoController;
-    private IShowUserController showUserController;
     private PromoSort promoSort;
 
     public PromoForManagerView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(PromoForManagerViewValidCommands.class);
+        promoSort = new PromoSort(manager);
+        promoController = (IPromoController) manager.getController(ControllerContainer.Controller.PromoController);
     }
 
     @Override

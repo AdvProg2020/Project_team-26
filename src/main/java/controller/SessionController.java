@@ -6,8 +6,13 @@ import exception.NotLoggedINException;
 import model.Role;
 import model.Session;
 import model.User;
+import repository.RepositoryContainer;
 
 public class SessionController implements ISessionController {
+    public SessionController(RepositoryContainer repositoryContainer) {
+
+    }
+
     @Override
     public boolean isUserLoggedIn(String token) throws InvalidTokenException {
         Session session = Session.getSession(token);

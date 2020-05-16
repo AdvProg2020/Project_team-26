@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SingleProductView extends View {
-    EnumSet<SingleProductViewValidCommands> validCommands;
+    private EnumSet<SingleProductViewValidCommands> validCommands;
     private Product product;
     private ICartController cartController;
     private ICommentController commentController;
@@ -28,6 +28,9 @@ public class SingleProductView extends View {
         super(manager);
         validCommands = EnumSet.allOf(SingleProductViewValidCommands.class);
         this.product = product;
+        cartController = (ICartController) manager.getController(ControllerContainer.Controller.CartController);
+        commentController = (ICommentController) manager.getController(ControllerContainer.Controller.CommentController);
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
     }
 
     @Override

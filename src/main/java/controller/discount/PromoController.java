@@ -4,6 +4,7 @@ import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.*;
 import repository.PromoRepository;
+import repository.RepositoryContainer;
 import repository.UserRepository;
 
 import java.util.Date;
@@ -13,6 +14,10 @@ import java.util.Map;
 public class PromoController implements IPromoController {
     PromoRepository promoRepository;
     UserRepository userRepository;
+
+    public PromoController(RepositoryContainer repositoryContainer){
+
+    }
 
     @Override
     public Promo getPromoCodeTemplateByCode(String codeId, String token) throws InvalidIdException, NotLoggedINException {

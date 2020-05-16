@@ -22,7 +22,7 @@ public class MainPageView extends View {
         this.manager = manager;
         commands = EnumSet.allOf(MainPageViewValidCommands.class);
         super.input = new String();
-        controller = (AuthenticationController) manager.getControllerContainer().getController("AuthenticationController");
+        controller = (AuthenticationController) manager.getController(ControllerContainer.Controller.AuthenticationController);
     }
 
     @Override

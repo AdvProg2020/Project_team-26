@@ -74,20 +74,21 @@ public enum ManageRequestForManagerViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
-            if (page.getManager().getIsUserLoggedIn()) {
-                page.logOut();
-                return;
-            }
-            page.getManager().printError();
+           page.logOut();
         }
     },
     Help("help") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
-            // page.help(page.getManager().getIsUserLoggedin());
+             page.help();
         }
     };
     private final Pattern commandPattern;
+    private final String value;
+    @Override
+    public String toString() {
+        return value;
+    }
 
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
@@ -98,6 +99,7 @@ public enum ManageRequestForManagerViewValidCommands {
 
     ManageRequestForManagerViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
+        value = output;
     }
 
 
