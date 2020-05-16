@@ -92,6 +92,10 @@ public class Promo {
         return true;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setPromoCode(String promoCode) {
         this.promoCode = promoCode;
     }

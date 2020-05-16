@@ -16,14 +16,15 @@ public class PromoController implements IPromoController {
     UserRepository userRepository;
 
     public PromoController(RepositoryContainer repositoryContainer){
-
+        promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
+        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
     @Override
     public Promo getPromoCodeTemplateByCode(String codeId, String token) throws InvalidIdException, NotLoggedINException {
         Promo promo = promoRepository.getByCode(codeId);
         if (promo == null)
-            throw new InvalidIdException("there is no promo by" + codeId);
+            throw new InvalidIdException("there is no promo by " + codeId);
         return promo;
     }
 
@@ -32,12 +33,12 @@ public class PromoController implements IPromoController {
     public Promo getPromoCodeTemplateById(int codeId, String token) throws InvalidIdException, NotLoggedINException {
         Promo promo = promoRepository.getById(codeId);
         if (promo == null)
-            throw new InvalidIdException("there is no promo by" + codeId);
+            throw new InvalidIdException("there is no promo by " + codeId);
         return promo;
     }
 
     @Override
-    public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAcending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+    public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null)
             throw new NotLoggedINException("you are not logged in");
@@ -56,15 +57,19 @@ public class PromoController implements IPromoController {
         return promo.getId();
     }
 
-    private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
+    private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         Session session = Session.getSession(token);
-        if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+
+        if(session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You are not logged in.");
+        }
+        else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new NoAccessException(message);
         }
     }
 
     /**
-     * 2 function below should be check
+     * 2 function below should be checked
      */
 
     @Override
@@ -86,7 +91,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException {
+    public void addCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
@@ -100,7 +105,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void removeCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
+    public void removeCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only the manager can remove customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
@@ -114,7 +119,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidTokenException, InvalidDiscountPercentException {
+    public void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidTokenException, InvalidDiscountPercentException, NotLoggedINException {
         checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (percent > 100.0)
@@ -124,7 +129,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void setMaxDiscount(int promoId, long maxDiscount, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
+    public void setMaxDiscount(int promoId, long maxDiscount, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only manager can set percent");
         Promo promo = getPromoByIdWithCheck(promoId);
         promo.setMaxDiscount(maxDiscount);
@@ -139,7 +144,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void setTime(int promoId, Date date, String type, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
+    public void setTime(int promoId, Date date, String type, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only manager can " + type + " date");
         Promo promo = getPromoByIdWithCheck(promoId);
         if (type.equals("start")) {//ToDo
