@@ -119,7 +119,7 @@ public class MySQLProductRepository
     }
 
     @Override
-    public List<Product> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+    public List<Product> getAllSortedAndFiltered(Map<String, String> filter, String sortField, boolean isAscending) {
         EntityManager em = EntityManagerProvider.getEntityManager();
 
         try {
@@ -138,6 +138,11 @@ public class MySQLProductRepository
         } catch (NoResultException e) {
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
     }
 
     private CriteriaQuery applyFilter(Map<String, String> filter, CriteriaBuilder cb, CriteriaQuery<Product> cq, Root<Product> root) {

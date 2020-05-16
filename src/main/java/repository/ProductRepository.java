@@ -17,7 +17,9 @@ public interface ProductRepository extends Repository<Product> {
 
     void deleteRequest(int id);
 
-    List<Product> getAllBySortAndFilter(Map<String, String> filter, String sortField, boolean isAscending);
+    List<Product> getAllSortedAndFiltered(Map<String, String> filter, String sortField, boolean isAscending);
+
+    List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending);
 
     List<ProductRequest> getAllRequests();
 
