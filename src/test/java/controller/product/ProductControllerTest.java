@@ -1,54 +1,50 @@
 package controller.product;
 
 import controller.ProductController;
-import exception.InvalidIdException;
-import model.Product;
+import controller.account.AuthenticationController;
+import exception.*;
 import model.Session;
-import repository.RepositoryContainer;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repository.ProductRepository;
+import repository.RepositoryContainer;
 
 class ProductControllerTest {
 
-    String token;
-    ProductController productController;
-    RepositoryContainer repositoryContainer;
+    private String token;
+    private ProductController productController;
+    private RepositoryContainer repositoryContainer;
+    private AuthenticationController authenticationController;
+    private ProductRepository productRepository;
 
-   // @BeforeAll
-    void setup() {
-
-    }
-
-    @Test
-    void createProduct() {
-    }
-
-    @Test
-    void addSeller() {
-    }
-
-    @Test
-    void getProductById() {
-        repositoryContainer = new RepositoryContainer();
+    @BeforeEach
+    public void Setup() {
         token = Session.addSession();
+        repositoryContainer = new RepositoryContainer();
         productController = new ProductController(repositoryContainer);
-        try {
-            Product product = productController.getProductById(1, token);
-            Assertions.assertEquals(product, repositoryContainer.getRepository("ProductRepository").getById(1));
-        }
-        catch (InvalidIdException invalidIdException) {
-            Assertions.assertEquals(invalidIdException, null);
-        }
-
-        try {
-            Product product = productController.getProductById(1, token);
-        }
-        catch (InvalidIdException invalidIdException) {
-            Assertions.assertEquals(invalidIdException.getMessage(), "There is no product with this id");
-        }
+        authenticationController = new AuthenticationController(repositoryContainer);
+        productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
     }
 
     @Test
-    void editProduct() {
+    public void createProductTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException {
+        /** Exception Tests **/
+
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> productController.createProduct(null, token));
+        Assertions.assertEquals(ex.getMessage(), null);
+
+        authenticationController.login("test1", "password1", token);
+        ex = Assertions.assertThrows(NotSellerException.class, () -> productController.createProduct(productRepository.getByName("6"), token));
+        Assertions.assertEquals(ex.getMessage(), "You must be seller to add product");
+        authenticationController.logout(token);
+
+        authenticationController.login("test6","password6",token);
+        ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> productController.createProduct(productRepository.getByName("6"),token));
+        Assertions.assertEquals(ex.getMessage(),"Product with this name already exists");
+        /** Exception Tests **/
+
     }
+
+
 }
