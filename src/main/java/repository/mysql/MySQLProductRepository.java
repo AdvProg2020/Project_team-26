@@ -97,7 +97,8 @@ public class MySQLProductRepository
     }
 
     @Override
-    public List<ProductRequest> getAllRequests() {
+    public List<ProductRequest> getAllRequests(String sortField, boolean isAscending) {
+        //TODO
         EntityManager em = EntityManagerProvider.getEntityManager();
 
         try {
@@ -157,11 +158,6 @@ public class MySQLProductRepository
 
     @Override
     public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending) {
-        return null;
-    }
-
-    @Override
-    public List<ProductRequest> getAllRequests(String sorField, boolean isAscending) {
         return null;
     }
 
