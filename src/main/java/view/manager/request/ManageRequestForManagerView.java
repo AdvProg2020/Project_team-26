@@ -96,7 +96,6 @@ public class ManageRequestForManagerView extends View {
                 return "edit request";
             case DELETE:
                 return "delete request";
-
         }
         return "";
 
@@ -105,30 +104,108 @@ public class ManageRequestForManagerView extends View {
     protected void detailTheOffRequest(Matcher matcher) {
         try {
             OffRequest offRequest = requestController.getOffRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
-        } catch (NoAccessException  e) {
+            showSingleOffRequest(offRequest);
+        } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
             if (manager.inputOutput.nextLine().equals("yes"))
                 manager.loginInAllPagesEssential();
-        }catch (InvalidTokenException e) {
+        } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
         }
     }
-    private void showSingleOffRequest(){
 
+    private void showSingleOffRequest(OffRequest offRequest) {
+        switch (offRequest.getRequestTpe()) {
+            case ADD:
+                showDeleteOrAddOff(offRequest, "add");
+                break;
+            case EDIT:
+                showEditOff(offRequest);
+                break;
+            case DELETE:
+                showDeleteOrAddOff(offRequest, "delete");
+                break;
+        }
+    }
+
+    private void showSingleProductSellerRequest(ProductSellerRequest productSellerRequest) {
+        switch (productSellerRequest.getRequestType()) {
+            case ADD:
+                showDeleteOrAddProductSellerRequest(productSellerRequest, "add");
+                break;
+            case EDIT:
+                showEditProductSellerRequest(productSellerRequest);
+                break;
+            case DELETE:
+                showDeleteOrAddProductSellerRequest(productSellerRequest, "remove");
+                break;
+        }
+    }
+
+    private void showEditProductSellerRequest(ProductSellerRequest productSellerRequest) {
+
+    }
+
+    private void showEditOff(OffRequest offRequest) {
+        //todo
+    }
+
+    private void showEditProduct(ProductRequest productRequest) {
+        //todo
+    }
+
+    private void showDeleteOrAddProductSellerRequest(ProductSellerRequest productSellerRequest, String type) {
+        manager.inputOutput.println("seller : " + productSellerRequest.getSeller().getFullName() +
+                "(" + productSellerRequest.getSeller().getId() + ")" +
+                "wants to " + type + " himself : " + productSellerRequest.getProduct().getId());
+    }
+
+
+    private void showSingleProductRequest(ProductRequest productRequest) {
+        switch (productRequest.getRequestTpe()) {
+            case ADD:
+                showDeleteOrAddProduct(productRequest, "add");
+            case EDIT:
+                showEditProduct(productRequest);
+            case DELETE:
+                showDeleteOrAddProduct(productRequest, "delete");
+        }
+    }
+
+
+    private void showDeleteOrAddOff(OffRequest offRequest, String type) {
+        manager.inputOutput.println("seller : " + offRequest.getSeller().getFullName() +
+                "(" + offRequest.getSeller().getId() + ")" +
+                "wants to " + type + " off : " + offRequest.getId());
+        if (type.equals("add")) {
+            manager.inputOutput.println("from : " + offRequest.getStartDate() + "" +
+                    " until " + offRequest.getEndDate());
+        }
+        manager.inputOutput.println("products are : ");
+        offRequest.getItems().forEach(i -> manager.inputOutput.println(i.getProduct().getName() + " with total price +" + i.getPriceInOff()));
+    }
+
+
+    private void showDeleteOrAddProduct(ProductRequest productRequest, String type) {
+        manager.inputOutput.println(productRequest.getRequestedBy().getFullName() +
+                " with id : " + productRequest.getRequestedBy().getId() + "\nwants to " + type + " : ");
+        manager.inputOutput.println(productRequest.getName() + "with category : " + productRequest.getCategory() +
+                "with brand : " + productRequest.getBrand());
     }
 
     protected void detailTheProductRequest(Matcher matcher) {
         try {
             ProductRequest productRequest = requestController.getProductRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
-        } catch (NoAccessException  e) {
+            showSingleProductRequest(productRequest);
+        } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage() + "\nif you want to login enter yes");
             if (manager.inputOutput.nextLine().equals("yes"))
                 manager.loginInAllPagesEssential();
-        }catch (InvalidTokenException e) {
+        } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
         }
     }
@@ -136,6 +213,7 @@ public class ManageRequestForManagerView extends View {
     protected void detailTheProductSellerRequest(Matcher matcher) {
         try {
             ProductSellerRequest productSellerRequest = requestController.getProductSellerRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
+            showSingleProductSellerRequest(productSellerRequest);
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (NoAccessException e) {
@@ -235,6 +313,10 @@ public class ManageRequestForManagerView extends View {
 
     protected void logOut() {
         new MainPageView(manager).logout();
+    }
+
+    protected void sorting() {
+        requestSort.run();
     }
 
     protected void help() {

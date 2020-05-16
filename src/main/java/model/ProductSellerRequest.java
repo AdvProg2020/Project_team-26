@@ -58,4 +58,16 @@ public class ProductSellerRequest {
     public int getId() {
         return id;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public long getPrice() {
+        return price;
+    }
 }
