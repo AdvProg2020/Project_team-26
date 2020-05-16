@@ -1,6 +1,7 @@
 package repository.fake;
 
 import model.ProductSeller;
+import model.Seller;
 import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
@@ -14,12 +15,18 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
     List<ProductSeller> allProductSellers ;
     public static int lastId = 5;
     private FakeProductRepository productRepository;
+    private FakeUserRepository userRepository;
 
     public FakeProductSellerRepository() {
         allProductSellers = new ArrayList<>();
         productRepository = new FakeProductRepository();
+        userRepository = new FakeUserRepository();
         for(int i = 0; i < 5; i++) {
-            allProductSellers.add(new ProductSeller());
+            ProductSeller productSeller = new ProductSeller(lastId++,productRepository.getById(1),i);
+            productSeller.setPrice(12);
+            productSeller.setSeller((Seller) userRepository.getUserByUsername("test5"));
+            productSeller.setPriceInOff(12);
+            allProductSellers.add(productSeller);
         }
     }
 
