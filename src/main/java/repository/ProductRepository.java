@@ -13,6 +13,12 @@ public interface ProductRepository extends Repository<Product> {
 
     void addRequest(Product product);
 
+    void acceptRequest(int requestId);
+
+    void rejectRequest(int requestId);
+
+    ProductRequest getProductRequestById(int requestId);
+
     void editRequest(Product product);
 
     void deleteRequest(int id);
@@ -21,7 +27,7 @@ public interface ProductRepository extends Repository<Product> {
 
     List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending);
 
-    List<ProductRequest> getAllRequests();
+    List<ProductRequest> getAllRequests(String sorField, boolean isAscending);
 
     List<ProductRequest> getAllSellerRequests(int sellerId);
 }

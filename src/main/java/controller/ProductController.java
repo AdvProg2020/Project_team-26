@@ -79,9 +79,8 @@ public class ProductController implements IProductController {
     }
 
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String token) {
-        //todo
+        //return productRepository.getAllSortedAndFiltered()
         return null;
-
     }
 
     @Override
