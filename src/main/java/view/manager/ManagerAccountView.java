@@ -9,7 +9,7 @@ import model.Promo;
 import view.*;
 import view.ViewManager;
 import view.manager.category.ManageCategoryForManagerView;
-import view.manager.discount.DiscountForManagerView;
+import view.manager.Promo.PromoForManagerView;
 import view.manager.request.ManageRequestForManagerView;
 import view.manager.users.ManageUsersForManager;
 import view.offs.AllOffView;
@@ -22,19 +22,23 @@ import java.util.*;
  */
 
 public class ManagerAccountView extends View {
-    EnumSet<ValidCommandsForManagerAccount> validCommands;
+    private EnumSet<ValidCommandsForManagerAccount> validCommands;
     private IUserInfoController infoController;
-    ArrayList<String> editableFields;
-    IShowUserController userController;
-    IProductController productController;
-    IPromoController promoController;
-    UserView userView;
+    private ArrayList<String> editableFields;
+    private IShowUserController userController;
+    private IProductController productController;
+    private IPromoController promoController;
+    private UserView userView;
 
-    ManagerAccountView(ViewManager manager, IShowUserController controller, IUserInfoController infoController) {
+    ManagerAccountView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(ValidCommandsForManagerAccount.class);
-        this.infoController = infoController;
         userView = UserView.getInstance();
+        infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
+        editableFields = new ArrayList<>();
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
+        promoController = (IPromoController) manager.getController(ControllerContainer.Controller.PromoController);
+        userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
     }
 
     @Override
@@ -95,16 +99,25 @@ public class ManagerAccountView extends View {
         String percent = manager.inputOutput.nextLine();
         String max = "";
         while (!percent.equalsIgnoreCase("back") && !max.equalsIgnoreCase("back")) {
-            if (manager.checkTheInputIsInteger(percent)) {
+            if (manager.checkTheInputIsDouble(percent)) {
+                promo.setPercent(Double.parseDouble(percent));
                 manager.inputOutput.println("enter the MaxValue");
                 max = manager.inputOutput.nextLine();
                 if (manager.checkTheInputIsInteger(max)) {
                     promo.setMaxDiscount(Long.parseLong(max));
-                    manager.inputOutput.println("enter the start date");
-                    promo.setStartDate(dateOfPromo());
-                    manager.inputOutput.println("enter the end date");
-                    promo.setEndDate(dateOfPromo());
-                    return promo;
+                    manager.inputOutput.println("enter the max usage");
+                    max = manager.inputOutput.nextLine();
+                    if (manager.checkTheInputIsInteger(max)) {
+                        promo.setMaxValidUse(Integer.parseInt(max));
+                        manager.inputOutput.println("enter the start date");
+                        promo.setStartDate(dateOfPromo());
+                        manager.inputOutput.println("enter the end date");
+                        promo.setEndDate(dateOfPromo());
+                        return promo;
+                    } else {
+                        manager.inputOutput.println("enter the integer for max usage or back");
+                        max = manager.inputOutput.nextLine();
+                    }
                 } else {
                     manager.inputOutput.println("enter the integer for max or back");
                     max = manager.inputOutput.nextLine();
@@ -168,7 +181,7 @@ public class ManagerAccountView extends View {
     }
 
     protected void managerAllDiscountCode() {
-        DiscountForManagerView discountForManagerView = new DiscountForManagerView(manager);
+        PromoForManagerView discountForManagerView = new PromoForManagerView(manager);
         discountForManagerView.run();
 
     }

@@ -4,6 +4,7 @@ import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.*;
 import repository.PromoRepository;
+import repository.RepositoryContainer;
 import repository.UserRepository;
 
 import java.util.Date;
@@ -13,6 +14,10 @@ import java.util.Map;
 public class PromoController implements IPromoController {
     PromoRepository promoRepository;
     UserRepository userRepository;
+
+    public PromoController(RepositoryContainer repositoryContainer){
+
+    }
 
     @Override
     public Promo getPromoCodeTemplateByCode(String codeId, String token) throws InvalidIdException, NotLoggedINException {
@@ -81,7 +86,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void addCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException {
+    public void addCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can add customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);
@@ -95,7 +100,7 @@ public class PromoController implements IPromoController {
     }
 
     @Override
-    public void removeCustomer(int promoId, int customerId, int numberOfUse, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
+    public void removeCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
         checkAccessOfUser(token, "only the manager can remove customer");
         Promo promo = getPromoByIdWithCheck(promoId);
         Customer customer = (Customer) userRepository.getById(customerId);

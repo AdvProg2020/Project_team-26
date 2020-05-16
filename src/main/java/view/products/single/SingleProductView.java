@@ -12,13 +12,14 @@ import model.ProductSeller;
 import view.*;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
+import view.offs.AllOffView;
 
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SingleProductView extends View {
-    EnumSet<SingleProductViewValidCommands> validCommands;
+    private EnumSet<SingleProductViewValidCommands> validCommands;
     private Product product;
     private ICartController cartController;
     private ICommentController commentController;
@@ -28,6 +29,9 @@ public class SingleProductView extends View {
         super(manager);
         validCommands = EnumSet.allOf(SingleProductViewValidCommands.class);
         this.product = product;
+        cartController = (ICartController) manager.getController(ControllerContainer.Controller.CartController);
+        commentController = (ICommentController) manager.getController(ControllerContainer.Controller.CommentController);
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
     }
 
     @Override
@@ -42,7 +46,7 @@ public class SingleProductView extends View {
                 }
             }
             if (!isDone)
-                printError();
+                manager.inputOutput.println("enter valid commands");
         }
     }
 
@@ -170,17 +174,9 @@ public class SingleProductView extends View {
         productSellerList.forEach(productSeller -> manager.inputOutput.println("seller name :" + productSeller.getSeller().getFullName()
                 + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems() + " with price by existing off " + productSeller.getPriceInOff()));
     }
-
-    protected void changeInfo(Matcher matcher, boolean isSeller) {
-        /**
-         * will be completed when manager is completed
-         */
-
-
-    }
-
-    private void printError() {
-
+    protected void offs(){
+        AllOffView allOffView = new AllOffView(manager);
+        allOffView.run();
     }
 
     protected void logOut() {

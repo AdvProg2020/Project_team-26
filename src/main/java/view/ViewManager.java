@@ -1,16 +1,16 @@
 package view;
 
 import controller.interfaces.product.IProductController;
-import exception.AlreadyLoggedInException;
+import controller.interfaces.session.ISessionController;
 import exception.InvalidIdException;
 import model.Product;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
 import view.products.single.SingleProductView;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,16 +18,18 @@ public class ViewManager {
     private boolean isUserLoggedIn;
     private String token;
     public IO inputOutput;
+    private ISessionController sessionController;
     private ControllerContainer controllerContainer;
 
     public ViewManager() {
         isUserLoggedIn = false;
         inputOutput = new InputOutput();
         controllerContainer = new ControllerContainer();
+        sessionController = (ISessionController) controllerContainer.getController(ControllerContainer.Controller.SessionController);
     }
 
-    public ControllerContainer getControllerContainer() {
-        return controllerContainer;
+    public Object getController(ControllerContainer.Controller controller) {
+        return controllerContainer.getController(controller);
     }
 
 
@@ -38,11 +40,10 @@ public class ViewManager {
 
     public void setTokenFromController(String error) {
         this.inputOutput.println(error);
-        this.token = token;
-    }
-
-    public void setLoggedINByController() {
-        //  this.isUserLoggedIn
+        inputOutput.println("if you want dont want to set token type no then program will be finished.");
+        if (inputOutput.nextLine().equals("no"))
+            System.exit(0);
+        setToken(sessionController.createToken());
     }
 
     public void setToken(String token) {
@@ -62,20 +63,24 @@ public class ViewManager {
         return isUserLoggedIn;
     }
 
-    public void printError() {
-
-
+    public boolean checkTheInputIsInteger(String input) {
+        Matcher matcher = Pattern.compile("^\\d+$").matcher(input);
+        if (matcher.find())
+            return true;
+        return false;
     }
 
-    public boolean checkTheInputIsInteger(String input) {
-        Matcher matcher = Pattern.compile("^[0-9]*$").matcher(input);
+    public boolean checkTheInputIsDouble(String input) {
+        if(checkTheInputIsInteger(input))
+            return true;
+        Matcher matcher = Pattern.compile("^\\d+\\.\\d+").matcher(input);
         if (matcher.find())
             return true;
         return false;
     }
 
     public void singleProductView(Matcher matcher) {
-        IProductController productController = (IProductController) controllerContainer.getController("ProductController");
+        IProductController productController = (IProductController) controllerContainer.getController(ControllerContainer.Controller.ProductController);
         matcher.find();
         String id = matcher.group(1);
         if (this.checkTheInputIsInteger(id)) {
@@ -92,16 +97,16 @@ public class ViewManager {
         this.inputOutput.println("the id is invalid format.");
     }
 
-    public boolean loginInAllPagesEssential() {
+    public void loginInAllPagesEssential() {
         while (!this.getIsUserLoggedIn()) {
-            this.inputOutput.println("first login.\nenter your username or back.");
+            this.inputOutput.println("enter your username or back.");
             String username = this.inputOutput.nextLine();
             if (username.equalsIgnoreCase("back"))
-                return false;
+                return;
             AuthenticationView authenticationView = new AuthenticationView(this, "login " + username);
             authenticationView.login(Pattern.compile("login (.*)").matcher("login " + username));
         }
-        return true;
+        return;
     }
 
     public void loginInAllPagesOptional(String command) {
@@ -129,7 +134,48 @@ public class ViewManager {
             this.inputOutput.println("you should first login");
             return;
         }
-        new MainPageView(this).logout(this.getToken());
+        new MainPageView(this).logout();
     }
-    //public void setTheCommandsForUserDependentOnSituation()
+
+    public Date createDate() {
+        String year = getYear();
+        String month = getValidTimeAndDate("month", 12, 1);
+        String day = getValidTimeAndDate("day", 31, 1);
+        String hour = getValidTimeAndDate("hour", 23, 0);
+        String minute = getValidTimeAndDate("minute", 59, 0);
+        String date = day + "-" + month + "-" + year + " " + hour + ":" + minute + ":" + "00";
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        try {
+            return formatter.parse(date);
+        } catch (ParseException e) {
+            System.out.println(e.getMessage());
+        }
+        return null;
+    }
+
+    private String getYear() {
+        inputOutput.println("enter year");
+        String year;
+        while (true) {
+            year = inputOutput.nextLine();
+            if (checkTheInputIsInteger(year))
+                return year;
+            inputOutput.println("please enter integer.");
+        }
+    }
+
+    private String getValidTimeAndDate(String field, int max, int min) {
+        inputOutput.println("enter " + field);
+        String valid;
+        while (true) {
+            valid = inputOutput.nextLine();
+            if (checkTheInputIsInteger(valid)) {
+                if (Long.parseLong(valid) <= max && Long.parseLong(valid) >= min)
+                    return valid;
+                else
+                    inputOutput.println("please enter " + field + " between " + min + " and " + max);
+            } else
+                inputOutput.println("please enter integer.");
+        }
+    }
 }

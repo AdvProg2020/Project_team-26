@@ -34,9 +34,10 @@ public class ProductSeller {
 
     }
 
-    public ProductSeller(int id, Product product) {
+    public ProductSeller(int id, Product product, int remainingItems) {
         this.id = id;
         this.product = product;
+        this.remainingItems = remainingItems;
     }
 
     public int getId() {
@@ -45,6 +46,10 @@ public class ProductSeller {
 
     public Product getProduct() {
         return product;
+    }
+
+    public void setPriceInOff(long price) {
+        this.priceInOff = price;
     }
 
     public Seller getSeller() {

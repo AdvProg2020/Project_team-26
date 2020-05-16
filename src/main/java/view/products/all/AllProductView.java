@@ -10,17 +10,20 @@ import java.util.EnumSet;
 import java.util.regex.Matcher;
 
 public class AllProductView extends View {
-    EnumSet<AllProductsViewValidCommands> validCommands;
-    IProductController productController;
-    ICategoryController categoryController;
-    int currentCategory;
-    ProductFilterAndSort productFilterAndSort;
+    private EnumSet<AllProductsViewValidCommands> validCommands;
+    private  IProductController productController;
+    private    ICategoryController categoryController;
+    private   int currentCategory;
+    private  ProductFilterAndSort productFilterAndSort;
 
 
     public AllProductView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(AllProductsViewValidCommands.class);
         currentCategory = 0;
+        productFilterAndSort = new ProductFilterAndSort(manager);
+        categoryController = (ICategoryController) manager.getController(ControllerContainer.Controller.CategoryController);
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
     }
 
     @Override

@@ -4,10 +4,15 @@ import controller.interfaces.request.IRequestController;
 import model.OffRequest;
 import model.ProductRequest;
 import model.ProductSellerRequest;
+import repository.RepositoryContainer;
 
 import java.util.List;
 
 public class RequestController implements IRequestController {
+
+    public RequestController(RepositoryContainer repositoryContainer){
+
+    }
 
 
     @Override

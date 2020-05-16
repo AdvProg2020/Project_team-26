@@ -53,7 +53,11 @@ public enum ManageCategoryForManagerViewValidCommands {
 
     };
     private final Pattern commandPattern;
-
+    private final String value;
+    @Override
+    public String toString() {
+        return value;
+    }
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
 
@@ -61,6 +65,7 @@ public enum ManageCategoryForManagerViewValidCommands {
 
     ManageCategoryForManagerViewValidCommands(String output) {
         this.commandPattern = Pattern.compile(output);
+        value = output;
     }
 
     public abstract void goToFunction(ManageCategoryForManagerView page);

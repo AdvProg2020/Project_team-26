@@ -11,11 +11,9 @@ import repository.UserRepository;
 public class UserInfoController implements IUserInfoController {
 
     private UserRepository userRepository;
-    private RepositoryContainer repositoryContainer;
 
 
-    public UserInfoController() {
-        repositoryContainer = new RepositoryContainer();
+    public UserInfoController(RepositoryContainer repositoryContainer) {
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 

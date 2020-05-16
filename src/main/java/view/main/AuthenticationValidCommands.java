@@ -10,16 +10,9 @@ public enum AuthenticationValidCommands {
     LoginAccount("login\\s+(.*)");
 
 
-    private final Pattern commandPattern;
     private final String output;
 
-    public Matcher getStringMatcher(String input) {
-        return this.commandPattern.matcher(input);
-
-    }
-
     AuthenticationValidCommands(String output) {
-        this.commandPattern = Pattern.compile(output);
         this.output = output;
     }
 

@@ -8,6 +8,7 @@ import exception.ObjectAlreadyExistException;
 import model.*;
 import repository.OffRepository;
 import repository.ProductRepository;
+import repository.RepositoryContainer;
 
 import java.util.List;
 import java.util.Map;
@@ -15,6 +16,10 @@ import java.util.Map;
 public class OffController implements IOffController {
     private OffRepository offRepository;
     ProductRepository productRepository;
+
+    public OffController(RepositoryContainer repositoryContainer) {
+
+    }
 
 
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
@@ -33,11 +38,7 @@ public class OffController implements IOffController {
     @Override
     public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "seller can create a off");
-        /**
-         if(newOff.getEndDate())
-         check date
-         */
-        offRepository.addRequest(newOff);//
+        offRepository.addRequest(newOff);
     }
 
     @Override

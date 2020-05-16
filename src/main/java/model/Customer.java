@@ -34,9 +34,6 @@ public class Customer extends User {
     }
 
     public List<Promo> getAvailablePromos() {
-        for (Promo promo : availablePromos) {
-            System.out.println(promo);
-        }
         return availablePromos;
     }
 

@@ -12,7 +12,7 @@ import java.rmi.NoSuchObjectException;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
-public class CartIView extends View implements IView {
+public class CartIView extends View {
     private EnumSet<CartViewValidCommand> validCommands;
     private Cart cart;
     private CartController cartController;
@@ -20,12 +20,13 @@ public class CartIView extends View implements IView {
     public CartIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CartViewValidCommand.class);
+        cartController = (CartController) manager.getController(ControllerContainer.Controller.CartController);
     }
 
     @Override
     public void run() {
         try {
-            cart = cartController.showCart(manager.getToken());
+            cart = cartController.getCart(manager.getToken());
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
             return;
@@ -41,7 +42,7 @@ public class CartIView extends View implements IView {
     }
 
     public void showAllProducts() {
-        cart.getProductsWithSort().forEach((productSeller, integer) -> manager.inputOutput.println(
+        cart.getProduct().forEach((productSeller, integer) -> manager.inputOutput.println(
                 "product name " + productSeller.getProduct().getName() +
                         "product id :" + productSeller.getId()
                         +
@@ -93,23 +94,23 @@ public class CartIView extends View implements IView {
     public void purchase() {
         if (receiveInformation()) {
             discountCode();
-            if (manager.loginInAllPagesEssential()) {
-                while (true)
-                    try {
-                        cartController.checkout(manager.getToken());
+            if (!manager.getIsUserLoggedIn())
+                manager.loginInAllPagesEssential();
+            while (true)
+                try {
+                    cartController.checkout(manager.getToken());
+                    return;
+                } catch (NoAccessException | NotEnoughCreditException | NotEnoughProductsException e) {
+                    manager.inputOutput.println(e.getMessage());
+                    return;
+                } catch (NotLoggedINException e) {
+                    manager.inputOutput.println(e.getMessage() + "\nenter back or enter continue");
+                    if (manager.inputOutput.nextLine().equals("back"))
                         return;
-                    } catch (NoAccessException | NotEnoughCreditException | NotEnoughProductsException e) {
-                        manager.inputOutput.println(e.getMessage());
-                        return;
-                    } catch (NotLoggedINException e) {
-                        manager.inputOutput.println(e.getMessage() + "\nenter back or enter continue");
-                        if (manager.inputOutput.nextLine().equals("back"))
-                            return;
-                        manager.loginInAllPagesEssential();
-                    } catch (InvalidTokenException e) {
-                        manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
-                    }
-            }
+                    manager.loginInAllPagesEssential();
+                } catch (InvalidTokenException e) {
+                    manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                }
         }
     }
 
@@ -150,8 +151,8 @@ public class CartIView extends View implements IView {
                 cartController.setAddress(address, manager.getToken());
                 return true;
             } catch (InvalidTokenException e) {
-                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
-                //   return false;
+                manager.setTokenFromController(e.getMessage());
+                return false;
             }
         }
     }
@@ -166,6 +167,10 @@ public class CartIView extends View implements IView {
 
     protected void register() {
         manager.registerInAllPagesOptional(super.input);
+    }
+
+    protected void help() {
+
     }
 
 }

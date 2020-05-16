@@ -14,14 +14,14 @@ import view.filterAndSort.PromoSort;
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-public class CustomerIView extends View implements IView {
-    EnumSet<CustomerValidCommand> validCommands;
-    UserView userView;
-    ArrayList<String> editableFields;
-    IUserInfoController infoController;
-    IShowUserController userController;
-    IPromoController promoController;
-    PromoSort customerFilterAndSort;
+public class CustomerIView extends View {
+    private EnumSet<CustomerValidCommand> validCommands;
+    private UserView userView;
+    private ArrayList<String> editableFields;
+    private IUserInfoController infoController;
+    private IShowUserController userController;
+    private IPromoController promoController;
+    private PromoSort customerFilterAndSort;
 
 
     public CustomerIView(ViewManager manager) {
@@ -30,6 +30,9 @@ public class CustomerIView extends View implements IView {
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
         customerFilterAndSort = new PromoSort(manager);
+        infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
+        userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
+        promoController = (IPromoController) manager.getController(ControllerContainer.Controller.ProductController);
     }
 
     private void initialEditFields() {

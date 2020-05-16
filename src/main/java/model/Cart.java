@@ -42,7 +42,7 @@ public class Cart {
     public Map<ProductSeller, Integer> getProducts() {
         return products;
     }
-    public Map<ProductSeller, Integer> getProductsWithSort() {
+    public Map<ProductSeller, Integer> getProduct() {
         //todo
         return products;
     }

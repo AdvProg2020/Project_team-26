@@ -33,7 +33,7 @@ public class ProductSellerRequest {
     private int remainingItems;
 
     @Column(name = "request_type")
-    private RequestType requestType;
+    private RequestTpe requestType;
 
     @Column(name = "request_status")
     private RequestStatus requestStatus;

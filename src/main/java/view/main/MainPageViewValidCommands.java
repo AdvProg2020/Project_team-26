@@ -33,11 +33,7 @@ public enum MainPageViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(MainPageView page) {
-            if (page.getManager().getIsUserLoggedIn()) {
-                page.logout(manager.getToken());
-                return;
-            }
-            //page.printError();
+            page.logout();
         }
     },
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
@@ -61,7 +57,6 @@ public enum MainPageViewValidCommands {
 
     private Pattern commandPattern;
     private String output;
-    public static ViewManager manager;
 
 
     public Matcher getStringMatcher(String input) {

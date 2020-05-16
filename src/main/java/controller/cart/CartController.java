@@ -8,6 +8,7 @@ import repository.PromoRepository;
 import repository.RepositoryContainer;
 
 import java.rmi.NoSuchObjectException;
+import java.security.spec.RSAOtherPrimeInfo;
 import java.util.Map;
 
 public class CartController implements ICartController {
@@ -35,7 +36,7 @@ public class CartController implements ICartController {
     }
 
     @Override
-    public Cart showCart(String token) throws InvalidTokenException {
+    public Cart getCart(String token) throws InvalidTokenException {
         Session session = Session.getSession(token);
         return session.getCart();
     }
@@ -69,10 +70,6 @@ public class CartController implements ICartController {
         }
 
         Customer customer = (Customer) loggedInUser;
-        for (Promo availablePromo : customer.getAvailablePromos()) {
-            System.out.println(availablePromo.getPromoCode());
-        }
-
         if (!customer.getAvailablePromos().stream().anyMatch(userPromo -> userPromo.equals(promo))) {
             throw new PromoNotAvailableException("This promo is not for you.");
         }
@@ -95,7 +92,7 @@ public class CartController implements ICartController {
         }
 
         if (!session.isUserCustomer()) {
-            throw new NoAccessException("You must be a customer to use promo code.");
+            throw new NoAccessException("You must be a customer to be able to buy.");
         }
 
         Customer customer = (Customer) loggedInUser;
@@ -134,8 +131,8 @@ public class CartController implements ICartController {
 
     public long getToTalPrice(Cart cart, String token) throws InvalidTokenException {
         long totalPrice = 0;
-        for (Integer value : cart.getProducts().values()) {
-            totalPrice += value;
+        for (ProductSeller productSeller : cart.getProducts().keySet()) {
+            totalPrice += productSeller.getPrice();
         }
         return totalPrice;
     }

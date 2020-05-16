@@ -66,4 +66,20 @@ public class Off {
             return true;
         return false;
     }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setSeller(Seller seller) {
+        this.seller = seller;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
+    public void setItems(List<OffItem> items) {
+        this.items = items;
+    }
 }

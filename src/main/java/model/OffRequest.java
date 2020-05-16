@@ -30,4 +30,28 @@ public class OffRequest {
 
     public OffRequest() {
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public RequestTpe getRequestTpe() {
+        return requestTpe;
+    }
+
+    public Seller getSeller() {
+        return seller;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public List<OffItemRequest> getItems() {
+        return items;
+    }
 }
