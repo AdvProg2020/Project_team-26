@@ -23,4 +23,12 @@ public class OffItemRequest {
 
     public OffItemRequest() {
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public long getPriceInOff() {
+        return priceInOff;
+    }
 }

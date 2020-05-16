@@ -49,4 +49,5 @@ public class OffItem {
     public void setPriceInOff(long priceInOff) {
         this.priceInOff = priceInOff;
     }
+
 }

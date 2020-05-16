@@ -97,4 +97,16 @@ public class ProductRequest {
     public void addSeller(ProductSellerRequest productSellerRequest) {
         sellerList.add(productSellerRequest);
     }
+
+    public Seller getRequestedBy() {
+        return requestedBy;
+    }
+
+    public Date getRequestTime() {
+        return requestTime;
+    }
+
+    public RequestType getRequestType() {
+        return requestType;
+    }
 }
