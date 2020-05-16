@@ -23,7 +23,7 @@ public class FakePromoRepository implements PromoRepository {
         userRepository = new FakeUserRepository();
         allPromos = new ArrayList<>();
         for(int i = 0; i < 10; i++) {
-            save(new Promo("Promo" + i,(Customer)userRepository.getUserByName("test8")));
+            save(new Promo("Promo" + i,(Customer)userRepository.getUserByUsername("test8")));
         }
     }
 
@@ -50,10 +50,8 @@ public class FakePromoRepository implements PromoRepository {
 
     @Override
     public void save(Promo object) {
+        object.setMaxValidUse(10); //Todo
         allPromos.add(object);
-        for (Customer customer : object.getCustomers()) {
-            customer.addPromo(object);
-        }
     }
 
     @Override

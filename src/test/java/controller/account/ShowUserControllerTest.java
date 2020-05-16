@@ -2,6 +2,7 @@ package controller.account;
 
 import exception.*;
 import model.Session;
+import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 import org.junit.jupiter.api.*;
@@ -63,8 +64,8 @@ public class ShowUserControllerTest {
 
         authenticationController.login("test1","password1",token);
         showUserController.delete("test2",token);
-        Assertions.assertEquals(userRepository.getUserByName("test2"),null);
-        Assertions.assertEquals(userRepository.getUserByName("test2"),null);
+        Assertions.assertEquals(userRepository.getUserByUsername("test2"),null);
+        Assertions.assertEquals(userRepository.getUserByUsername("test2"),null);
 
         Assertions.assertEquals(showUserController.getUsers(token),userRepository.getAll());
     }
