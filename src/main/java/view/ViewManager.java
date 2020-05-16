@@ -178,4 +178,9 @@ public class ViewManager {
                 inputOutput.println("please enter integer.");
         }
     }
+    public boolean isValidNUmber(String input, boolean isDouble) {
+        if (isDouble)
+            return this.checkTheInputIsDouble(input);
+        return this.checkTheInputIsInteger(input);
+    }
 }

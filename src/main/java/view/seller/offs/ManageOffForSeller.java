@@ -11,26 +11,24 @@ import model.Seller;
 import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
-import view.filterAndSort.OffFilterAndSort;
-import view.seller.products.ManageProductForSellerViewValidCommands;
+import view.filterAndSort.ProductFilterAndSort;
 
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 
 public class ManageOffForSeller extends View {
     private EnumSet<ViewOffsForSellerAccountValidCommands> validCommands;
     private IOffController offController;
     boolean isPercent;
-    private OffFilterAndSort offFilterAndSort;
+    private ProductFilterAndSort productFilterAndSort;
     private Seller seller;
 
     public ManageOffForSeller(ViewManager managerView, Seller seller) {
         super(managerView);
         validCommands = EnumSet.allOf(ViewOffsForSellerAccountValidCommands.class);
-        offFilterAndSort = new OffFilterAndSort(manager);
+        productFilterAndSort = new ProductFilterAndSort(manager);
         offController = (IOffController) manager.getController(ControllerContainer.Controller.OffController);
         this.seller = seller;
     }
@@ -55,9 +53,9 @@ public class ManageOffForSeller extends View {
 
     protected void showAll() {
         try {
-            for (Off off : offController.getAllOfForSellerWithFilter(offFilterAndSort.getFilterForController(),
-                    offFilterAndSort.getFieldNameForSort()
-                    , offFilterAndSort.isAscending(), manager.getToken())) {
+            for (Off off : offController.getAllOfForSellerWithFilter(productFilterAndSort.getFilterForController(),
+                    productFilterAndSort.getFieldNameForSort()
+                    , productFilterAndSort.isAscending(), manager.getToken())) {
                 manager.inputOutput.println("off id :" + off.getId());
                 manager.inputOutput.println("start :" + off.getStartDate().toString());
                 off.getItems().forEach(item -> manager.inputOutput.println(item.getProduct().getName() + " with id" +
@@ -92,7 +90,8 @@ public class ManageOffForSeller extends View {
             manager.setTokenFromController(e.getMessage());
         }
     }
-    private void addOffItem(List<OffItem> offItems){
+
+    private void addOffItem(List<OffItem> offItems) {
         long priceForProduct = 0;
         int percentForPrice = 0;
         while (true) {
@@ -193,11 +192,11 @@ public class ManageOffForSeller extends View {
 
 
     protected void sorting() {
-        offFilterAndSort.run();
+        productFilterAndSort.run();
     }
 
     protected void filtering() {
-        offFilterAndSort.run();
+        productFilterAndSort.run();
     }
 
     protected void help() {
