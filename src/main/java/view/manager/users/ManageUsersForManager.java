@@ -76,7 +76,7 @@ public class ManageUsersForManager extends View {
 
 
     protected void logOut() {
-        new MainPageView(manager).logout(manager.getToken());
+        new MainPageView(manager).logout();
     }
 
     protected void deleteUser(Matcher matcher) {

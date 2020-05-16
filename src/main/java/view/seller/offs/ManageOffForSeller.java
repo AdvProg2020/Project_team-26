@@ -6,27 +6,33 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.ObjectAlreadyExistException;
 import model.Off;
+import model.OffItem;
+import model.Seller;
 import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
 import view.filterAndSort.OffFilterAndSort;
 import view.seller.products.ManageProductForSellerViewValidCommands;
 
+import java.util.Date;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 
 public class ManageOffForSeller extends View {
     private EnumSet<ViewOffsForSellerAccountValidCommands> validCommands;
-    private  IOffController offController;
+    private IOffController offController;
     boolean isPercent;
-    private  OffFilterAndSort offFilterAndSort;
+    private OffFilterAndSort offFilterAndSort;
+    private Seller seller;
 
-    public ManageOffForSeller(ViewManager managerView) {
+    public ManageOffForSeller(ViewManager managerView, Seller seller) {
         super(managerView);
         validCommands = EnumSet.allOf(ViewOffsForSellerAccountValidCommands.class);
         offFilterAndSort = new OffFilterAndSort(manager);
         offController = (IOffController) manager.getController(ControllerContainer.Controller.OffController);
+        this.seller = seller;
     }
 
     @Override
@@ -67,10 +73,16 @@ public class ManageOffForSeller extends View {
 
     protected void addOff() {
         Off off = new Off();
-        /***
-         *
-         * enter the date;
-         */
+        Date start = manager.createDate();
+        if (start == null)
+            return;
+        Date end = manager.createDate();
+        if (end == null)
+            return;
+        off.setStartDate(start);
+        off.setEndDate(end);
+        off.setSeller(this.seller);
+        List<OffItem> offItemList = off.getItems();
         try {
             offController.createNewOff(off, manager.getToken());
             addProductToPff(off);
@@ -79,6 +91,34 @@ public class ManageOffForSeller extends View {
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
         }
+    }
+    private void addOffItem(List<OffItem> offItems){
+        long priceForProduct = 0;
+        int percentForPrice = 0;
+        while (true) {
+            manager.inputOutput.println("enter the product id for adding and if you want to finish adding enter finish or back");
+            String productId = manager.inputOutput.nextLine();
+            if (productId.matches("back"))
+                return;
+            if (manager.checkTheInputIsInteger(productId)) {
+                priceForProduct = inputPrice();
+                if (isPercent) {
+                    percentForPrice = (int) priceForProduct;
+                    priceForProduct = -1;
+                }
+               /* try {//todo
+                    offController.addProductToOff(off, Integer.parseInt(productId), priceForProduct, percentForPrice, manager.getToken());
+                } catch (NoAccessException e) {
+                    manager.inputOutput.println(e.getMessage());
+                    return;
+                } catch (ObjectAlreadyExistException | InvalidIdException e) {
+                    manager.inputOutput.println(e.getMessage());
+                } catch (InvalidTokenException e) {
+                    manager.setTokenFromController(e.getMessage());
+                }*/
+            }
+        }
+
     }
 
     private void addProductToPff(Off off) {

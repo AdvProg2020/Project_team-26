@@ -14,20 +14,19 @@ import java.util.regex.Pattern;
 
 
 public class AuthenticationView extends View {
-    private String input;
     IAuthenticationController control;
 
     public AuthenticationView(ViewManager manager, String command) {
         super(manager);
-        input = command;
+        super.input = command;
         control = (AuthenticationController) manager.getController(ControllerContainer.Controller.AuthenticationController);
     }
 
     @Override
     public void run() {
-        if (input.matches(AuthenticationValidCommands.LoginAccount.toString()))
+        if (super.input.matches(AuthenticationValidCommands.LoginAccount.toString()))
             login(Pattern.compile(AuthenticationValidCommands.LoginAccount.toString()).matcher(input));
-        else if (input.matches(AuthenticationValidCommands.CreateAccount.toString()))
+        else if (super.input.matches(AuthenticationValidCommands.CreateAccount.toString()))
             register(Pattern.compile(AuthenticationValidCommands.CreateAccount.toString()).matcher(input));
     }
 
@@ -37,13 +36,13 @@ public class AuthenticationView extends View {
         manager.inputOutput.println("enter password or type back if you want to return to previous");
         account.setPassword(manager.inputOutput.nextLine());
         account.setUsername(matcher.group(1));
-        boolean isLoggedIn = false;
         while (true) {
             if (account.getUsername().equals("back") || account.getPassword().equals("back"))
                 return;
             try {
                 control.login(account.getUsername(), account.getPassword(), manager.getToken());
                 manager.setUserLoggedIn(true);
+                manager.inputOutput.println("logged in");
                 return;
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
@@ -68,6 +67,7 @@ public class AuthenticationView extends View {
                 return;
             try {
                 control.register(account, manager.getToken());
+                manager.inputOutput.println("registered");
                 return;
             } catch (NoAccessException e) {
                 manager.inputOutput.println(e.getMessage());

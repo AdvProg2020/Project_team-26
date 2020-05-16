@@ -71,6 +71,8 @@ public class ViewManager {
     }
 
     public boolean checkTheInputIsDouble(String input) {
+        if(checkTheInputIsInteger(input))
+            return true;
         Matcher matcher = Pattern.compile("^\\d+\\.\\d+").matcher(input);
         if (matcher.find())
             return true;
@@ -132,7 +134,7 @@ public class ViewManager {
             this.inputOutput.println("you should first login");
             return;
         }
-        new MainPageView(this).logout(this.getToken());
+        new MainPageView(this).logout();
     }
 
     public Date createDate() {

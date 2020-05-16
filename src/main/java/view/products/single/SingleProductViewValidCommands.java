@@ -7,12 +7,6 @@ import java.util.regex.Pattern;
 
 public enum SingleProductViewValidCommands {
     AddCommentToThisProduct("add\\s+comment") {
-        /**
-         *
-         *
-         *
-         * @param page
-         */
         @Override
         public void goToFunction(SingleProductView page) {
             page.addComment();
@@ -36,7 +30,7 @@ public enum SingleProductViewValidCommands {
             page.commentsForThisProduct();
         }
     },//
-    CompareToProductWithId("compare\\s+(.*)") {
+    CompareToProductWithId("compare\\s+(\\d+)") {
         @Override
         public void goToFunction(SingleProductView page) {
             page.compareToProductWithId(Pattern.compile(CompareToProductWithId.toString()).matcher(page.getInput()));
@@ -51,22 +45,10 @@ public enum SingleProductViewValidCommands {
     Offs("offs") {
         @Override
         public void goToFunction(SingleProductView page) {
-            //  page.offs();
+              page.offs();
         }
-    },
-    ShowProductInOffPage("show\\s+product\\s+(.*)") {
-        @Override
-        public void goToFunction(SingleProductView page) {
-            //   page.showProductInOffPage(Pattern.compile(ShowProductInOffPage.toString()).matcher(page.getInput()));
-        }
-    },
-    ChangeInfo("edit (.*)") {//todo
-
-        @Override
-        public void goToFunction(SingleProductView page) {
-            page.changeInfo(Pattern.compile(ChangeInfo.toString()).matcher(page.getInput()), true);
-        }
-    }, Logout("logout") {
+    }
+    , Logout("logout") {
         @Override
         public void goToFunction(SingleProductView page) {
             page.logOut();

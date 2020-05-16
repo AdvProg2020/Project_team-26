@@ -1,6 +1,5 @@
 package view.manager.Promo;
 
-import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.Promo;
@@ -8,11 +7,12 @@ import view.*;
 import view.filterAndSort.PromoSort;
 import view.main.MainPageView;
 
+import java.util.Date;
 import java.util.EnumSet;
 import java.util.regex.Matcher;
 
 public class PromoForManagerView extends View {
-    private  EnumSet<PromoForManagerViewValidCommands> validCommands;
+    private EnumSet<PromoForManagerViewValidCommands> validCommands;
     private IPromoController promoController;
     private PromoSort promoSort;
 
@@ -67,7 +67,7 @@ public class PromoForManagerView extends View {
         }
         String filed = "";
         while (!filed.equalsIgnoreCase("back")) {
-            manager.inputOutput.println("chose field you want to edit[customers,percent,date,max ]\nenter back.");
+            manager.inputOutput.println("chose field you want to edit[customers,percent,start,end,max ]\nenter back.");
             filed = manager.inputOutput.nextLine();
             if (filed.equalsIgnoreCase("back"))
                 return;
@@ -78,8 +78,11 @@ public class PromoForManagerView extends View {
                 case "customers":
                     fillCustomer(promoId);
                     break;
-                case "date":
-                    fillDate(promoId);
+                case "start":
+                    fillDate(promoId, "start");
+                    break;
+                case "end":
+                    fillDate(promoId, "end");
                     break;
                 case "max":
                     fillMax(promoId);
@@ -142,12 +145,18 @@ public class PromoForManagerView extends View {
             manager.inputOutput.println("invalid percent");
     }
 
-    private void fillDate(int promoCode) {
-/***
- *
- *
- * fucking date;
- */
+    private void fillDate(int promoCode, String type) {
+        Date date = manager.createDate();
+        if (date == null)
+            return;
+        try {
+            promoController.setTime(promoCode, date, type, manager.getToken());
+        } catch (NoAccessException | InvalidIdException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+
     }
 
     private void fillMax(int promoCode) {
@@ -198,7 +207,7 @@ public class PromoForManagerView extends View {
     }
 
     protected void logOut() {
-        new MainPageView(manager).logout(manager.getToken());
+        new MainPageView(manager).logout();
     }
 
     protected void help() {

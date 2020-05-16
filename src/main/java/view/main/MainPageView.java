@@ -61,9 +61,9 @@ public class MainPageView extends View {
         commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
-    public void logout(String token) {
+    public void logout() {
         try {
-            controller.logout(token);
+            controller.logout(manager.getToken());
             manager.setUserLoggedIn(false);
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());

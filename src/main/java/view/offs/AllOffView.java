@@ -23,7 +23,7 @@ public class AllOffView extends View {
 
     @Override
     public void run() {
-        showAll();
+      //  showAll();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             isDone = false;

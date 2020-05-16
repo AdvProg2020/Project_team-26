@@ -1,4 +1,4 @@
-package view;
+package view.main;
 
 import model.Session;
 import repository.RepositoryContainer;
@@ -6,9 +6,13 @@ import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import view.InputOutput;
+import view.ViewManager;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MainPageViewTest {
     ViewManager manager;
@@ -20,6 +24,7 @@ public class MainPageViewTest {
         mainPageView = new view.main.MainPageView(manager);
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }
+
     @Test
     void run() {
         setUp();
@@ -37,8 +42,9 @@ public class MainPageViewTest {
         InputOutput.input.add("back");
         InputOutput.output = new ArrayList<>();
         mainPageView.run();
-        Assertions.assertEquals("invalid command pattern",InputOutput.getOutput().get(0));
+        Assertions.assertEquals("invalid command pattern", InputOutput.getOutput().get(0));
     }
+
     @Test
     void authorizing() {
         setUp();
@@ -47,27 +53,25 @@ public class MainPageViewTest {
         InputOutput.input.add("password6");
         InputOutput.input.add("back");
         mainPageView.run();
-        Assertions.assertEquals(true,manager.getIsUserLoggedIn());
-        manager.setUserLoggedIn(false);
-        InputOutput.input.add("create account seller hi");
-        InputOutput.input.add("hello");
-        InputOutput.input.add("hello");
-        InputOutput.input.add("hello");
-        InputOutput.input.add("hello");
-        InputOutput.input.add("back");
-        manager.setToken("notloggedin");
-        mainPageView.run();
-        InputOutput.input.add("login hi");
-        InputOutput.input.add("hello");
-        InputOutput.input.add("back");
-        InputOutput.input.add("back");
-        manager.setToken("admin");
-        mainPageView.run();
         Assertions.assertEquals(true, manager.getIsUserLoggedIn());
+        InputOutput.input.add("logout");
+        InputOutput.input.add("back");
+        mainPageView.run();
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
+        InputOutput.input.add("create account buyer 90");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("hello");
+        InputOutput.input.add("amir@yahoo.com");
+        InputOutput.input.add("back");
+        manager.setToken("seller");
+        mainPageView.run();
+        assertEquals("registered",InputOutput.now);
     }
 
     @Test
     void helpTest() {
+        InputOutput.output = new ArrayList<>();
         InputOutput.input.add("help");
         InputOutput.input.add("back");
         InputOutput.input.add("help");
@@ -79,33 +83,37 @@ public class MainPageViewTest {
         commandList.add("products");
         commandList.add("login [username]");
         commandList.add("create account [manager|buyer|seller] [username]");
-        Assertions.assertEquals(commandList,InputOutput.getOutput());
+        Assertions.assertEquals(commandList, InputOutput.getOutput());
         InputOutput.output = new ArrayList<>();
         manager.setUserLoggedIn(true);
         mainPageView.run();
         commandList.remove(3);
         commandList.remove(3);
         commandList.add("logout");
-        Assertions.assertEquals(commandList,InputOutput.getOutput());
+        Assertions.assertEquals(commandList, InputOutput.getOutput());
     }
+
     @Test
     void logout() {
         setUp();
         manager.setUserLoggedIn(true);
-        mainPageView.logout("notloggedin");
-        Assertions.assertEquals("You are not logged in.",InputOutput.getOutput().get(0));
+        manager.setToken("notloggedin");
+        mainPageView.logout();
+        Assertions.assertEquals("You are not logged in.", InputOutput.getOutput().get(0));
         manager.setUserLoggedIn(true);
-        mainPageView.logout("admin");
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        manager.setToken("admin");
+        mainPageView.logout();
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
         InputOutput.input.add("jhihs");
         InputOutput.input.add("back");
         mainPageView.run();
-        Assertions.assertEquals("invalid command pattern",InputOutput.getOutput().get(1));
+        Assertions.assertEquals("invalid command pattern", InputOutput.getOutput().get(1));
         manager.setUserLoggedIn(true);
         InputOutput.input.add("logout");
         InputOutput.input.add("back");
-        manager.setToken("admin");
+        manager.setToken("notloggedin");
         mainPageView.run();
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        Assertions.assertEquals(true, manager.getIsUserLoggedIn());
+        Assertions.assertEquals(InputOutput.now, "You are not logged in.");
     }
 }

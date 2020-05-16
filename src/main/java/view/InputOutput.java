@@ -12,6 +12,7 @@ public class InputOutput implements IO {
     public static int inputNumber = 0;
     public static List<String> output = new ArrayList<>();
     public static int outPutNumber = 0;
+    public static String now;
 
     @Override
     public String nextLine() {
@@ -22,6 +23,7 @@ public class InputOutput implements IO {
     @Override
     public void println(String input) {
         output.add(input);
+        now = input;
     }
 
     @Override

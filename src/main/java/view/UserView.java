@@ -48,18 +48,15 @@ public class UserView {
                 try {
                     infoController.changeInfo(field, manager.inputOutput.nextLine(), manager.getToken());
                 } catch (NotLoggedINException e) {
-                    e.printStackTrace();
+                    manager.loginInAllPagesEssential();
                 } catch (InvalidTokenException e) {
-                    e.printStackTrace();
+                   manager.setTokenFromController(e.getMessage());
                 } catch (InvalidAuthenticationException e) {
                     e.printStackTrace();
-                } catch (InvalidFormatException e) {
-                    e.printStackTrace();
-                } catch (NoSuchField noSuchField) {
-                    noSuchField.printStackTrace();
+                } catch (InvalidFormatException | NoSuchField  e) {
+                    manager.inputOutput.println(e.getMessage());
                 }
-            } else
-                manager.inputOutput.println("enter");
+            }
         }
     }
 

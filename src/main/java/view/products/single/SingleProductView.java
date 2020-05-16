@@ -12,6 +12,7 @@ import model.ProductSeller;
 import view.*;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
+import view.offs.AllOffView;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -45,7 +46,7 @@ public class SingleProductView extends View {
                 }
             }
             if (!isDone)
-                printError();
+                manager.inputOutput.println("enter valid commands");
         }
     }
 
@@ -173,17 +174,9 @@ public class SingleProductView extends View {
         productSellerList.forEach(productSeller -> manager.inputOutput.println("seller name :" + productSeller.getSeller().getFullName()
                 + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems() + " with price by existing off " + productSeller.getPriceInOff()));
     }
-
-    protected void changeInfo(Matcher matcher, boolean isSeller) {
-        /**
-         * will be completed when manager is completed
-         */
-
-
-    }
-
-    private void printError() {
-
+    protected void offs(){
+        AllOffView allOffView = new AllOffView(manager);
+        allOffView.run();
     }
 
     protected void logOut() {

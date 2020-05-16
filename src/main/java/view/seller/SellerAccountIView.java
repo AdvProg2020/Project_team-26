@@ -122,7 +122,7 @@ public class SellerAccountIView extends View {
     }
 
     protected void offs() {
-        ManageOffForSeller manageOffForSeller = new ManageOffForSeller(manager);
+        ManageOffForSeller manageOffForSeller = new ManageOffForSeller(manager, (Seller) thisUser);
         manageOffForSeller.run();
     }
 
