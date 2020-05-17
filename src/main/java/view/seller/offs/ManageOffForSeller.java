@@ -9,6 +9,7 @@ import view.View;
 import view.ViewManager;
 import view.filterAndSort.ProductFilterAndSort;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
 import java.util.List;
@@ -44,7 +45,7 @@ public class ManageOffForSeller extends View {
                     break;
                 }
             }
-            if (isDone)
+            if (!isDone)
                 manager.inputOutput.println("invalid input");
         }
     }
@@ -100,7 +101,7 @@ public class ManageOffForSeller extends View {
             String productId = manager.inputOutput.nextLine();
             if (productId.matches("back"))
                 return;
-            if (manager.checkTheInputIsIntegerOrLong(productId)) {
+            if (manager.checkTheInputIsIntegerOrLong(productId, false)) {
                 try {
                     ProductSeller productSeller = productController.getProductSellerByIdAndSellerId(Integer.parseInt(productId), manager.getToken());
                     priceForProduct = inputPrice();
@@ -151,29 +152,28 @@ public class ManageOffForSeller extends View {
 
     private long inputPrice() {
         while (true) {
-            manager.inputOutput.println("enter the price or percent");
+            manager.inputOutput.println("enter the price or percent [d%]");
             String price = manager.inputOutput.nextLine();
-            if (price.matches("^\\d\\d%$")) {
+            if (price.contains("%")) {
                 String[] input = price.split("%");
-                isPercent = true;
-                return Integer.parseInt(input[0]);
+                if (manager.checkTheInputIsDouble(input[0]))
+                    isPercent = true;
+                return (int) Double.parseDouble(input[0]);
             }
-            if (manager.checkTheInputIsIntegerOrLong(price)) {
+            if (manager.checkTheInputIsIntegerOrLong(price, true)) {
                 isPercent = false;
                 return Long.parseLong(price);
             }
         }
-
-
     }
 
-    protected void editOff() {
+    protected void editOff() {//todo
 
     }
 
     protected void showOff(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             try {
                 Off off = offController.getOff(Integer.parseInt(matcher.group(1)), manager.getToken());
                 manager.inputOutput.println("off id :" + off.getId());
@@ -200,8 +200,19 @@ public class ManageOffForSeller extends View {
         productFilterAndSort.run();
     }
 
+
     protected void help() {
-        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("view [offId]");
+        commandList.add("edit [offId]");
+        commandList.add("add off");
+        commandList.add("sorting");
+        commandList.add("filtering");
+        commandList.add("show all");
+        commandList.add("logout");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
 }
