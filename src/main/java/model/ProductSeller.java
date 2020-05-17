@@ -77,6 +77,10 @@ public class ProductSeller {
         remainingItems -= amount;
     }
 
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public long getPriceInOff() {
         return priceInOff;
     }
@@ -95,6 +99,10 @@ public class ProductSeller {
 
     public ProductSellerRequest createProductSellerRequest(RequestType requestType) {
         return new ProductSellerRequest(product, seller, price, remainingItems, requestType);
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override

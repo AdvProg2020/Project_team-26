@@ -39,6 +39,7 @@ public class ProductController implements IProductController {
         if (productSeller == null)
             throw new NullPointerException();
         User user = Session.getSession(token).getLoggedInUser();
+        System.out.println(user);
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to add seller");
         if (!productSeller.getSeller().equals(user))
@@ -56,6 +57,7 @@ public class ProductController implements IProductController {
 
     @Override
     public Product getProductByName(String name, String token) throws NoObjectIdException {
+        System.out.println(productRepository);
         Product product = productRepository.getByName(name);
         if (product == null)
             throw new NoObjectIdException("There is no product with this name");
@@ -105,7 +107,7 @@ public class ProductController implements IProductController {
     @Override
     public void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException {
         Product product = productRepository.getById(id);
-        if (product != null)
+        if (product == null)
             throw new InvalidIdException("There is no product with this id to change");
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.SELLER)

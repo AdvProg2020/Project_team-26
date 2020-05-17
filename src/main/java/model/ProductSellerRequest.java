@@ -13,11 +13,15 @@ public class ProductSellerRequest {
 
     @ManyToOne
     @JoinColumn(name = "product_request_id")
-    private ProductSeller productRequest;
+    private ProductRequest productRequest;
 
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "product_seller_id")
+    private ProductSeller mainProductSeller;
 
     @Column(name = "request_time")
     private Date requestTime;
@@ -51,6 +55,21 @@ public class ProductSellerRequest {
         requestTime = new Date();
     }
 
+    public ProductSeller getProductSeller() {
+        ProductSeller productSeller;
+        if(this.mainProductSeller != null)
+            productSeller = this.mainProductSeller;
+        else {
+            productSeller = new ProductSeller();
+            productSeller.setProduct(product);
+        }
+
+        productSeller.setSeller(seller);
+        productSeller.setPrice(price);
+        productSeller.setRemainingItems(remainingItems);
+        return productSeller;
+    }
+
     public RequestType getRequestType() {
         return requestType;
     }
@@ -69,5 +88,21 @@ public class ProductSellerRequest {
 
     public long getPrice() {
         return price;
+    }
+
+    public ProductSeller getMainProductSeller() {
+        return mainProductSeller;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public void setMainProductSeller(ProductSeller mainProductSeller) {
+        this.mainProductSeller = mainProductSeller;
+    }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 }

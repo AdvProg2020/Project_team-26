@@ -7,7 +7,11 @@ import java.util.List;
 
 public interface ProductSellerRepository extends Repository<ProductSeller> {
 
-    public void addRequest(ProductSeller productSeller);
+    void addRequest(ProductSeller productSeller);
+
+    void editRequest(ProductSeller productSeller);
+
+    void deleteRequest(ProductSeller productSeller);
 
     void acceptRequest(int requestId);
 
@@ -17,5 +21,5 @@ public interface ProductSellerRepository extends Repository<ProductSeller> {
 
     List<ProductSellerRequest> getAllRequests(String sortField, boolean isAscending);
 
-    public ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId);
+    ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId);
 }

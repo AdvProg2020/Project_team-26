@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public class Product {
         this.name = name;
         this.brand = brand;
         this.description = description;
+        sellerList = new ArrayList<>();
     }
 
     public int getId() {
@@ -129,8 +131,10 @@ public class Product {
 
     public ProductRequest createRequest(RequestType requestType) {
         ProductRequest productRequest = new ProductRequest(name, brand, description, category, requestType);
-        for (ProductSeller seller : sellerList) {
-            productRequest.addSeller(seller.createProductSellerRequest(requestType));
+        if(requestType == RequestType.ADD) {
+            for (ProductSeller seller : sellerList) {
+                productRequest.addSeller(seller.createProductSellerRequest(requestType));
+            }
         }
         return productRequest;
     }

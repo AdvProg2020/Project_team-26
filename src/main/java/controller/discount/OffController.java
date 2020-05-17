@@ -15,7 +15,8 @@ public class OffController implements IOffController {
     private OffRepository offRepository;
 
     public OffController(RepositoryContainer repositoryContainer) {
-
+        productRepository = (ProductRepository)repositoryContainer.getRepository("ProductRepository");
+        offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
     }
 
 

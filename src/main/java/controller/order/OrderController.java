@@ -9,13 +9,14 @@ import repository.OrderRepository;
 import repository.RepositoryContainer;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderController implements IOrderController {
     OrderRepository orderRepository;
     public OrderController(RepositoryContainer repositoryContainer) {
         this.orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
     }
-    public ArrayList<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
+    public List<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if(userSession.getLoggedInUser() == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -29,12 +30,13 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public ArrayList<Order> getOrdersWithFilter( String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
+    public List<Order> getOrdersWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
         return null;
     }
 
     @Override
-    public ArrayList<User> getProductBuyerByProductId(int productId, String token) {
+    public List<User> getProductBuyerByProductId(int productId, String token) {
+        // TODO: get a List of users who bough this product, check if product belongs to the logged in seller
         return null;
     }
 

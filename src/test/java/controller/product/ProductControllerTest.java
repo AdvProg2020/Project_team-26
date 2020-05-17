@@ -2,11 +2,13 @@ package controller.product;
 
 import controller.account.AuthenticationController;
 import exception.*;
+import model.Product;
 import model.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.ProductRepository;
+import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 
 class ProductControllerTest {
@@ -16,6 +18,7 @@ class ProductControllerTest {
     private RepositoryContainer repositoryContainer;
     private AuthenticationController authenticationController;
     private ProductRepository productRepository;
+    private ProductSellerRepository productSellerRepository;
 
     @BeforeEach
     public void Setup() {
@@ -24,6 +27,7 @@ class ProductControllerTest {
         productController = new ProductController(repositoryContainer);
         authenticationController = new AuthenticationController(repositoryContainer);
         productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
+        productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
     }
 
     @Test
@@ -43,6 +47,35 @@ class ProductControllerTest {
         Assertions.assertEquals(ex.getMessage(),"Product with this name already exists");
         /** Exception Tests **/
 
+    }
+
+    @Test
+    public void getProductById() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException {
+
+        authenticationController.login("test1","password1",token);
+        productController.getProductById(1,token);
+    }
+
+    @Test
+    public void editProductTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotSellerException {
+
+        authenticationController.login("test5","password5",token);
+        productController.editProduct(2,new Product(),token);
+
+    }
+
+    @Test
+    public void addSellerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotSellerException {
+
+        authenticationController.login("test5","password5",token);
+        System.out.println(productSellerRepository.getById(7));
+        productController.addSeller(2,productSellerRepository.getById(2),token);
+    }
+
+    @Test
+    public void getProductByNameTest() {
+
+        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> productController.getProductByName("nigga",token));
     }
 
 

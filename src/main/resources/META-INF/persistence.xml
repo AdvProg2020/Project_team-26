@@ -15,10 +15,11 @@
         <class>model.Rate</class>
 
         <properties>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://ap-group26.mysql.database.azure.com:3306/store"/>
-            <property name="javax.persistence.jdbc.user" value="dbadmin@localhost"/>
-            <property name="javax.persistence.jdbc.password" value="12345678"/>
+            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+            <property name="javax.persistence.jdbc.url"
+                      value="jdbc:mysql://ap-group26.mysql.database.azure.com:3306/store?serverTimezone=UTC&amp;useSSL=true&amp;requireSSL=true"/>
+            <property name="javax.persistence.jdbc.user" value="dbadmin@ap-group26"/>
+            <property name="javax.persistence.jdbc.password" value="9K6ft53XrA16Nkef5h"/>
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>
