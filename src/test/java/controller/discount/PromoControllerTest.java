@@ -172,5 +172,15 @@ public class PromoControllerTest {
     }
 
 
+    @Test
+    public void addCustomerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException {
+        /** Exception Tests**/
+        authenticationController.login("test1","password1",token);
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.addCustomer(6,120,token));
+        Assertions.assertEquals(ex.getMessage(),"no customer exists By 120 id");
+
+    }
+
+
 
 }
