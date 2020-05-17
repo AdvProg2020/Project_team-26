@@ -1,8 +1,5 @@
 package view.seller;
 
-import view.customer.CustomerIView;
-import view.products.all.AllProductView;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

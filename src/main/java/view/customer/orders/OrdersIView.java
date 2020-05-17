@@ -1,7 +1,7 @@
 package view.customer.orders;
 
-import interfaces.order.IOrderController;
-import interfaces.review.IRatingController;
+import controller.interfaces.order.IOrderController;
+import controller.interfaces.review.IRatingController;
 import exception.*;
 import model.Order;
 import view.*;
@@ -58,7 +58,7 @@ public class OrdersIView extends View {
 
     protected void rateTheProductWithItsId(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
             try {
                 ratingController.addARating(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(1)), manager.getToken());
             } catch (NoAccessException | NotBoughtTheProductException e) {
@@ -74,7 +74,7 @@ public class OrdersIView extends View {
 
     protected void showOrdersWithIdToBuyer(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
             try {
                 Order order = orderController.getASingleOrder(Integer.parseInt(matcher.group(1)), manager.getToken());
                 manager.inputOutput.println("the order ID is " + order.getId() + " at " + order.getDate().toString() +

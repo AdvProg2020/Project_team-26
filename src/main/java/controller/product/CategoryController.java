@@ -1,6 +1,6 @@
 package controller.product;
 
-import interfaces.category.ICategoryController;
+import controller.interfaces.category.ICategoryController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.*;

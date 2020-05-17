@@ -1,6 +1,6 @@
 package controller.account;
 
-import interfaces.account.IAuthenticationController;
+import controller.interfaces.account.IAuthenticationController;
 import exception.*;
 import model.Role;
 import model.Session;

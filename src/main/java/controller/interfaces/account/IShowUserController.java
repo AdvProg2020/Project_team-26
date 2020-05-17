@@ -1,4 +1,4 @@
-package interfaces.account;
+package controller.interfaces.account;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;

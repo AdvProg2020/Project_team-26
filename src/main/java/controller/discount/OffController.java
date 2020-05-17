@@ -1,7 +1,7 @@
 package controller.discount;
 
 import exception.*;
-import interfaces.discount.IOffController;
+import controller.interfaces.discount.IOffController;
 import model.*;
 import repository.OffRepository;
 import repository.ProductRepository;

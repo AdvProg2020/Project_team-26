@@ -7,17 +7,21 @@ import view.*;
 
 import view.View;
 import view.ViewManager;
+import view.offs.AllOffView;
+import view.products.all.AllProductView;
 
 import java.rmi.NoSuchObjectException;
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
-public class CartIView extends View {
+public class CartView extends View {
     private EnumSet<CartViewValidCommand> validCommands;
     private Cart cart;
     private CartController cartController;
 
-    public CartIView(ViewManager manager) {
+    public CartView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CartViewValidCommand.class);
         cartController = (CartController) manager.getController(ControllerContainer.Controller.CartController);
@@ -28,26 +32,28 @@ public class CartIView extends View {
         try {
             cart = cartController.getCart(manager.getToken());
         } catch (InvalidTokenException e) {
-            manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+            manager.setTokenFromController(e.getMessage());
             return;
         }
-        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("exit")) {
+        boolean done;
+        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
+            done = false;
             for (CartViewValidCommand command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
                     command.goToFunction(this);
+                    done = true;
                     break;
                 }
             }
+            if (done == false)
+                manager.inputOutput.println("invalid command");
         }
     }
 
     public void showAllProducts() {
         cart.getProduct().forEach((productSeller, integer) -> manager.inputOutput.println(
                 "product name " + productSeller.getProduct().getName() +
-                        "product id :" + productSeller.getId()
-                        +
-                        " with price" + productSeller.getPrice()
-                        + " with amount" + integer.longValue()));
+                        "product id :" + productSeller.getId()));
     }
 
 
@@ -57,27 +63,18 @@ public class CartIView extends View {
 
     public void changeInNumber(Matcher matcher, int increaseOrDecrease) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             int id = Integer.parseInt(matcher.group(1));
             int amount;
             try {
                 amount = cartController.getAmountInCartBySellerId(id, manager.getToken());
-            } catch (InvalidTokenException e) {
-                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
-                return;
-            } catch (NoSuchObjectException e) {
-                manager.inputOutput.println(e.getMessage());
-                return;
-            }
-            try {
                 cartController.addOrChangeProduct(id, amount + increaseOrDecrease, manager.getToken());
-            } catch (InvalidIdException | NotEnoughProductsException e) {
-                manager.inputOutput.println(e.getMessage());
             } catch (InvalidTokenException e) {
-                manager.setTokenFromController(e.getMessage() + "\nnew token will be set  and then try again");
+                manager.setTokenFromController(e.getMessage());
+            } catch (NoSuchObjectException | InvalidIdException | NotEnoughProductsException e) {
+                manager.inputOutput.println(e.getMessage());
             }
         }
-
     }
 
 
@@ -87,16 +84,14 @@ public class CartIView extends View {
             price = cartController.getToTalPrice(this.cart, manager.getToken());
             manager.inputOutput.println("total price is: " + price);
         } catch (InvalidTokenException e) {
-            manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+            manager.setTokenFromController(e.getMessage());
         }
     }
 
     public void purchase() {
         if (receiveInformation()) {
             discountCode();
-            if (!manager.getIsUserLoggedIn())
-                manager.loginInAllPagesEssential();
-            while (true)
+            while (true) {
                 try {
                     cartController.checkout(manager.getToken());
                     return;
@@ -107,8 +102,9 @@ public class CartIView extends View {
                     manager.inputOutput.println(e.getMessage());
                     manager.loginInAllPagesEssential();
                 } catch (InvalidTokenException e) {
-                    manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                    manager.setTokenFromController(e.getMessage());
                 }
+            }
         }
     }
 
@@ -122,11 +118,11 @@ public class CartIView extends View {
                 cartController.usePromoCode(discountCode, manager.getToken());
                 return;
             } catch (InvalidTokenException e) {
-                manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                manager.setTokenFromController(e.getMessage());
                 return;
             } catch (InvalidPromoCodeException | PromoNotAvailableException | NoAccessException e) {
                 manager.inputOutput.println(e.getMessage());
-            } catch (NotLoggedINException e) {//to be deleted
+            } catch (NotLoggedINException e) {
                 manager.inputOutput.println(e.getMessage());
                 manager.loginInAllPagesEssential();
             }
@@ -135,20 +131,15 @@ public class CartIView extends View {
 
     private boolean receiveInformation() {
         while (true) {
-            manager.inputOutput.println("enter your address");
+            manager.inputOutput.println("enter your address or back to cancel payment");
             String address = manager.inputOutput.nextLine();
             if (address.equalsIgnoreCase("back"))
-                return false;
-            manager.inputOutput.println("enter your phone number");
-            String phoneNumber = manager.inputOutput.nextLine();//todo
-            if (phoneNumber.equalsIgnoreCase("back"))
                 return false;
             try {
                 cartController.setAddress(address, manager.getToken());
                 return true;
             } catch (InvalidTokenException e) {
                 manager.setTokenFromController(e.getMessage());
-                return false;
             }
         }
     }
@@ -166,7 +157,33 @@ public class CartIView extends View {
     }
 
     protected void help() {
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("offs");
+        commandList.add("show products");
+        commandList.add("products");
+        commandList.add("view [productId]");
+        commandList.add("increase [productId]");
+        commandList.add("decrease [productId]");
+        commandList.add("show total price");
+        commandList.add("purchase");
+        if (manager.getIsUserLoggedIn()) {
+            commandList.add("logout");
+        } else {
+            commandList.add("login [username]");
+            commandList.add("create account [manager|buyer|seller] [username]");
+        }
+        commandList.forEach(i -> manager.inputOutput.println(i));
+    }
+    protected void product() {
+        AllProductView allProductView = new AllProductView(manager);
+        allProductView.run();
+    }
 
+    protected void off() {
+        AllOffView allOffView = new AllOffView(manager);
+        allOffView.run();
     }
 
 }

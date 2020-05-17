@@ -1,8 +1,8 @@
 package view.manager.category;
 
-import interfaces.category.ICategoryController;
+import controller.interfaces.category.ICategoryController;
 import exception.*;
-import interfaces.product.IProductController;
+import controller.interfaces.product.IProductController;
 import model.Category;
 import model.CategoryFeature;
 import model.FeatureType;

@@ -1,6 +1,6 @@
 package view.manager.Promo;
 
-import interfaces.discount.IPromoController;
+import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.Promo;
 import view.*;
@@ -97,7 +97,7 @@ public class PromoForManagerView extends View {
             String id = manager.inputOutput.nextLine();
             if (id.equalsIgnoreCase("back"))
                 return;
-            if (manager.checkTheInputIsInteger(id)) {
+            if (manager.checkTheInputIsIntegerOrLong(id)) {
                 manager.inputOutput.println("add or delete.");
                 String action = manager.inputOutput.nextLine();
                 if (action.equalsIgnoreCase("add"))
@@ -143,7 +143,7 @@ public class PromoForManagerView extends View {
     private void fillPercent(int promoCode) {
         manager.inputOutput.println("enter the percent");
         String percent = manager.inputOutput.nextLine();
-        if (manager.checkTheInputIsInteger(percent)) {
+        if (manager.checkTheInputIsIntegerOrLong(percent)) {
             try {
                 promoController.setPercent(promoCode, Integer.parseInt(percent), manager.getToken());
             } catch (InvalidIdException | NoAccessException | InvalidFormatException | InvalidDiscountPercentException e) {
@@ -178,7 +178,7 @@ public class PromoForManagerView extends View {
     private void fillMax(int promoCode) {
         manager.inputOutput.println("enter the Max");
         String max = manager.inputOutput.nextLine();
-        if (manager.checkTheInputIsInteger(max)) {
+        if (manager.checkTheInputIsIntegerOrLong(max)) {
             try {
                 promoController.setMaxDiscount(promoCode, Long.parseLong(max), manager.getToken());
             } catch (InvalidIdException | NoAccessException e) {

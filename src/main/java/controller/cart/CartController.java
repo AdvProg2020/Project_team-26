@@ -1,6 +1,6 @@
 package controller.cart;
 
-import interfaces.cart.ICartController;
+import controller.interfaces.cart.ICartController;
 import exception.*;
 import model.*;
 import repository.ProductSellerRepository;

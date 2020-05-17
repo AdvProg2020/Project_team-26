@@ -1,9 +1,9 @@
 package view.manager;
 
-import interfaces.account.IShowUserController;
-import interfaces.account.IUserInfoController;
-import interfaces.discount.IPromoController;
-import interfaces.product.IProductController;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
+import controller.interfaces.discount.IPromoController;
+import controller.interfaces.product.IProductController;
 import exception.*;
 import model.Promo;
 import view.*;
@@ -30,7 +30,7 @@ public class ManagerAccountView extends View {
     private IPromoController promoController;
     private UserView userView;
 
-    ManagerAccountView(ViewManager manager) {
+    public ManagerAccountView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(ValidCommandsForManagerAccount.class);
         userView = UserView.getInstance();

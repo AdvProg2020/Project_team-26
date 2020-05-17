@@ -1,6 +1,6 @@
 package view.offs;
 
-import interfaces.discount.IOffController;
+import controller.interfaces.discount.IOffController;
 import model.Product;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;

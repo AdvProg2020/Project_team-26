@@ -1,4 +1,4 @@
-package interfaces.review;
+package controller.interfaces.review;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;

@@ -1,7 +1,7 @@
 package view.products.all;
 
-import interfaces.category.ICategoryController;
-import interfaces.product.IProductController;
+import controller.interfaces.category.ICategoryController;
+import controller.interfaces.product.IProductController;
 import exception.InvalidIdException;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
@@ -64,7 +64,7 @@ public class AllProductView extends View {
     protected void subcategory(Matcher matcher) {
         matcher.find();
         String id = matcher.group(1);
-        if (manager.checkTheInputIsInteger(id)) {
+        if (manager.checkTheInputIsIntegerOrLong(id)) {
             try {
                 int nextId = Integer.parseInt(id);
                 categoryController.getExceptionOfIfCategoryExist(nextId, manager.getToken());

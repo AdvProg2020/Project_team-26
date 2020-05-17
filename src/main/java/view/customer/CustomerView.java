@@ -1,20 +1,20 @@
 package view.customer;
 
-import interfaces.account.IShowUserController;
-import interfaces.account.IUserInfoController;
-import interfaces.discount.IPromoController;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
+import controller.interfaces.discount.IPromoController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
 import view.*;
-import view.cart.CartIView;
+import view.cart.CartView;
 import view.customer.orders.OrdersIView;
 import view.filterAndSort.PromoSort;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 
-public class CustomerIView extends View {
+public class CustomerView extends View {
     private EnumSet<CustomerValidCommand> validCommands;
     private UserView userView;
     private ArrayList<String> editableFields;
@@ -24,7 +24,7 @@ public class CustomerIView extends View {
     private PromoSort customerFilterAndSort;
 
 
-    public CustomerIView(ViewManager manager) {
+    public CustomerView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CustomerValidCommand.class);
         userView = UserView.getInstance();
@@ -89,7 +89,7 @@ public class CustomerIView extends View {
     }
 
     protected void cart() {
-        CartIView cartIView = new CartIView(manager);
+        CartView cartIView = new CartView(manager);
         cartIView.run();
     }
 

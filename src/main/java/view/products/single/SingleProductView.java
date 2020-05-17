@@ -1,8 +1,8 @@
 package view.products.single;
 
-import interfaces.cart.ICartController;
-import interfaces.product.IProductController;
-import interfaces.review.ICommentController;
+import controller.interfaces.cart.ICartController;
+import controller.interfaces.product.IProductController;
+import controller.interfaces.review.ICommentController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -77,7 +77,7 @@ public class SingleProductView extends View {
             String amountInput = manager.inputOutput.nextLine();
             if (amountInput.equalsIgnoreCase("back"))
                 return 0;
-            if (manager.checkTheInputIsInteger(amountInput)) {
+            if (manager.checkTheInputIsIntegerOrLong(amountInput)) {
                 amount = Integer.parseInt(amountInput);
             }
             manager.inputOutput.println("you should enter positive number.");
@@ -99,7 +99,7 @@ public class SingleProductView extends View {
             String chose = manager.inputOutput.nextLine();
             if (chose.equalsIgnoreCase("back"))
                 return 0;
-            if (manager.checkTheInputIsInteger(chose)) {
+            if (manager.checkTheInputIsIntegerOrLong(chose)) {
                 numbers = Integer.parseInt(chose);
                 if (numbers < ids.size() && numbers > 0) {
                     return ids.get(numbers).getId();
@@ -118,7 +118,7 @@ public class SingleProductView extends View {
 
     protected void compareToProductWithId(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
             try {
                 Product compareProduct = productController.getProductById(Integer.parseInt(matcher.group(1)), manager.getToken());
                 showCompare(compareProduct);

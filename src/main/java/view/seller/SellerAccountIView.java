@@ -1,10 +1,10 @@
 package view.seller;
 
-import interfaces.account.IShowUserController;
-import interfaces.account.IUserInfoController;
-import interfaces.category.ICategoryController;
-import interfaces.order.IOrderController;
-import interfaces.product.IProductController;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
+import controller.interfaces.category.ICategoryController;
+import controller.interfaces.order.IOrderController;
+import controller.interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.*;
@@ -77,7 +77,7 @@ public class SellerAccountIView extends View {
 
     protected void subCategory(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
             try {
                 categoryController.getAllCategories(Integer.parseInt(matcher.group(1)), manager.getToken()).
                         forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
@@ -192,8 +192,8 @@ public class SellerAccountIView extends View {
         manager.inputOutput.println("enter the number");
         String numbers = manager.inputOutput.nextLine();
         while (true) {
-            if (manager.checkTheInputIsInteger(price)) {
-                if (manager.checkTheInputIsInteger(numbers))
+            if (manager.checkTheInputIsIntegerOrLong(price)) {
+                if (manager.checkTheInputIsIntegerOrLong(numbers))
                     break;
                 else {
                     manager.inputOutput.println("please enter integer for number");
@@ -229,7 +229,7 @@ public class SellerAccountIView extends View {
     protected void removeProduct(Matcher matcher) {
         matcher.find();
         String id = matcher.group(1);
-        if (manager.checkTheInputIsInteger(id)) {
+        if (manager.checkTheInputIsIntegerOrLong(id)) {
             try {
                 productController.removeProduct(Integer.parseInt(id), manager.getToken());
             } catch (InvalidIdException | NoAccessException e) {

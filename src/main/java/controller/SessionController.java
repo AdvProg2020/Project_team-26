@@ -1,6 +1,6 @@
 package controller;
 
-import interfaces.session.ISessionController;
+import controller.interfaces.session.ISessionController;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
 import model.Role;

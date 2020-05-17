@@ -1,7 +1,7 @@
 package view;
 
-import interfaces.account.IShowUserController;
-import interfaces.account.IUserInfoController;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
 import exception.*;
 
 import java.util.ArrayList;
@@ -39,6 +39,9 @@ public class UserView {
             String field = manager.inputOutput.nextLine();
             if (field.matches("back"))
                 return;
+            if (field.matches("username")) {
+                manager.inputOutput.println("you cant change username");
+            }
             if (field.matches("password")) {
                 changePassword(manager, infoController);
             } else if (editableFields.stream().filter(i -> field.matches(field)).collect(Collectors.toList()).size() > 0) {
@@ -48,10 +51,10 @@ public class UserView {
                 } catch (NotLoggedINException e) {
                     manager.loginInAllPagesEssential();
                 } catch (InvalidTokenException e) {
-                   manager.setTokenFromController(e.getMessage());
+                    manager.setTokenFromController(e.getMessage());
                 } catch (InvalidAuthenticationException e) {
                     e.printStackTrace();
-                } catch (InvalidFormatException | NoSuchField  e) {
+                } catch (InvalidFormatException | NoSuchField e) {
                     manager.inputOutput.println(e.getMessage());
                 }
             }
@@ -104,5 +107,4 @@ public class UserView {
             manager.setTokenFromController(e.getMessage());
         }
     }
-
 }

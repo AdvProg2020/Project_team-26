@@ -1,4 +1,4 @@
-package interfaces.session;
+package controller.interfaces.session;
 
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;

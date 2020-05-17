@@ -1,4 +1,4 @@
-package interfaces.discount;
+package controller.interfaces.discount;
 
 import exception.*;
 import model.*;

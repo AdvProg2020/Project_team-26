@@ -1,7 +1,5 @@
 package view.customer.orders;
 
-import view.cart.CartIView;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

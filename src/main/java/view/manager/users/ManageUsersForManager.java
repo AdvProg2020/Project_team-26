@@ -1,6 +1,6 @@
 package view.manager.users;
 
-import interfaces.account.IShowUserController;
+import controller.interfaces.account.IShowUserController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
