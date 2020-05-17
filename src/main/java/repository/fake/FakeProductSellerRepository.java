@@ -27,7 +27,7 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
             productSeller.setPrice(12);
             productSeller.setSeller((Seller) userRepository.getUserByUsername("test5"));
             productSeller.setPriceInOff(12);
-            allProductSellers.add(productSeller);
+            save(productSeller);
         }
     }
 
@@ -68,14 +68,18 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
 
     @Override
     public ProductSeller getById(int id) {
-        List<ProductSeller> productSellers = allProductSellers.stream().filter(ProductSeller -> ProductSeller.getId() == id).collect(Collectors.toList());
-        if (productSellers.size() == 0)
-            return null;
-        return productSellers.get(0);
+        for (ProductSeller productSeller : allProductSellers) {
+            if(productSeller.getId() == id) {
+                return productSeller;
+            }
+        }
+        return null;
     }
 
     @Override
     public void save(ProductSeller object) {
+        lastId++;
+        object.setId(lastId);
         allProductSellers.add(object);
     }
 
