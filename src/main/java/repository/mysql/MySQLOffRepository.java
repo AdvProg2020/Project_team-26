@@ -24,16 +24,6 @@ public class MySQLOffRepository
     }
 
     @Override
-    public Off getOffByStringCode(String stringCode) {
-        return null;
-    }
-
-    @Override
-    public OffItem getItemByProductIdFromAllOffs(int id) {
-        return null;
-    }
-
-    @Override
     public void addRequest(Off off) {
         OffRequest request = off.createRequest(RequestType.ADD);
         persistRequest(request);
