@@ -2,9 +2,11 @@ package view.manager.category;
 
 import interfaces.category.ICategoryController;
 import exception.*;
+import interfaces.product.IProductController;
 import model.Category;
 import model.CategoryFeature;
 import model.FeatureType;
+import model.Product;
 import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
@@ -18,6 +20,7 @@ import java.util.regex.Matcher;
 public class ManageCategoryForManagerView extends View {
     private int currentCategory;
     private ICategoryController categoryController;
+    IProductController productController;
     private CategorySort categorySort;
     private EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
 
@@ -150,7 +153,68 @@ public class ManageCategoryForManagerView extends View {
     }
 
     protected void editCategoryForManager(Matcher matcher) {
+        matcher.find();
+        Category category = null;
+        try {
+            category = categoryController.getCategoryByName(matcher.group(1), manager.getToken());
+            String filed = "";
+            while (!filed.equalsIgnoreCase("back")) {
+                manager.inputOutput.println("chose field you want to edit[add attribute,remove attribute,add product,remove product]\nenter back.");
+                filed = manager.inputOutput.nextLine();
+                if (filed.equalsIgnoreCase("back"))
+                    return;
+                switch (filed) {
+                    case "add attribute":
+                        changeAttribute(category, "add");
+                        break;
+                    case "remove attribute":
+                        changeAttribute(category, "remove");
+                        break;
+                    case "add product":
+                        changeProduct(category, "add");
+                        break;
+                    case "remove product":
+                        changeProduct(category, "remove");
+                }
+            }
+        } catch (InvalidIdException e) {
+            manager.inputOutput.println(e.getMessage());
+        }
+    }
 
-        //todo
+    private void changeProduct(Category category, String type) {
+        manager.inputOutput.println("enter the name :");
+        String name = manager.inputOutput.nextLine();
+        try {
+            Product product = productController.getProductByName(name, manager.getToken());
+            if (type.equals("remove")) {
+                categoryController.removeProduct(category.getId(), product.getId(), manager.getToken());
+                return;
+            }
+            categoryController.addProduct(category.getId(), product.getId(), manager.getToken());
+        } catch (NoObjectIdException | InvalidIdException | NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
+
+    }
+
+    private void changeAttribute(Category category, String type) {
+        manager.inputOutput.println("enter the name:");
+        String name = manager.inputOutput.nextLine();
+        try {
+            if (type.equals("remove")) {
+                categoryController.removeAttribute(category.getId(), name, manager.getToken());
+                return;
+            }
+            manager.inputOutput.println("enter the type: [double , int , string]");
+            String feature = manager.inputOutput.nextLine();
+            categoryController.addAttribute(category.getId(), name, getFeatureType(feature), manager.getToken());
+        } catch (InvalidIdException | NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        }
     }
 }

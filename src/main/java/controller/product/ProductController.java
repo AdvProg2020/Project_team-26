@@ -55,6 +55,14 @@ public class ProductController implements IProductController {
     }
 
     @Override
+    public Product getProductByName(String name, String token) throws NoObjectIdException {
+        Product product = productRepository.getByName(name);
+        if (product == null)
+            throw new NoObjectIdException("There is no product with this name");
+        return product;
+    }
+
+    @Override
     public void removeProduct(int id, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
         Session session = Session.getSession(token);
         if (session.getLoggedInUser() == null) {//todo
@@ -81,16 +89,16 @@ public class ProductController implements IProductController {
     @Override
     public ProductSeller getProductSellerByIdAndSellerId(int productId, String token) throws InvalidIdException, InvalidTokenException, NotLoggedINException, NoAccessException, NoObjectIdException {
         Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        if (session.getLoggedInUser() == null) {
             throw new NotLoggedINException("You are not logged in.");
         } else if (session.getLoggedInUser().getRole() != Role.SELLER) {
             throw new NoAccessException("You must be a seller to do this.");
         } else if (productRepository.getById(productId) == null) {
             throw new NoObjectIdException("The specified Object does not Exist.");
-        } else if (!productRepository.getById(productId).hasSeller((Seller)session.getLoggedInUser())) {
+        } else if (!productRepository.getById(productId).hasSeller((Seller) session.getLoggedInUser())) {
             throw new NoAccessException("This Product is not for you.");
         } else {
-            return productSellerRepository.getProductSellerByIdAndSellerId(productId,session.getLoggedInUser().getId());
+            return productSellerRepository.getProductSellerByIdAndSellerId(productId, session.getLoggedInUser().getId());
         }
     }
 

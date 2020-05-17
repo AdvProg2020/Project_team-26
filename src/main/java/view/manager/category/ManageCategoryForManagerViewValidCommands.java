@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ManageCategoryForManagerViewValidCommands {
-    EditCategoryForManager("edit\\s+(\\d+)") {
+    EditCategoryForManager("edit\\s+(.*)") {
         @Override
         public void goToFunction(ManageCategoryForManagerView page) {
             page.editCategoryForManager(Pattern.compile(EditCategoryForManager.toString()).matcher(page.getInput()));
@@ -54,10 +54,12 @@ public enum ManageCategoryForManagerViewValidCommands {
     };
     private final Pattern commandPattern;
     private final String value;
+
     @Override
     public String toString() {
         return value;
     }
+
     public Matcher getStringMatcher(String input) {
         return this.commandPattern.matcher(input);
 

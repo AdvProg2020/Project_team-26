@@ -4,6 +4,7 @@ import exception.*;
 import exception.InvalidIdException;
 import model.Category;
 import model.CategoryFeature;
+import model.FeatureType;
 import model.Product;
 
 import java.util.List;
@@ -16,11 +17,9 @@ public interface ICategoryController {
 
     void removeACategory(int id, int parentId, String token) throws NoAccessException, InvalidTokenException, InvalidIdException, NoObjectIdException;
 
-    void addAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
+    void addAttribute(int id, String attributeName, FeatureType featureType, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
-    void changeAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
-
-    void removeAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
+    void removeAttribute(int id, String attributeName, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
     void addProduct(int id, int productName, String token) throws  NoAccessException, InvalidTokenException, InvalidIdException;
 

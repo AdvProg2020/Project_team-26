@@ -61,20 +61,11 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public void addAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    public void addAttribute(int id, String attributeName, FeatureType featureType, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
-        CategoryFeature categoryFeature = new CategoryFeature(attributeName, FeatureType.DOUBLE);
+        CategoryFeature categoryFeature = new CategoryFeature(attributeName, featureType);
         category.getFeatures().add(categoryFeature);
-        categoryRepository.save(category);
-    }
-
-    @Override
-    public void changeAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
-        checkAccessOfUser(token, "only manager can change or add attribute");
-        Category category = getCategoryByIdWithCheck(id);
-        CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
-        categoryFeature.setFeatureName(attribute);
         categoryRepository.save(category);
     }
 
@@ -88,7 +79,7 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public void removeAttribute(int id, String attributeName, String attribute, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    public void removeAttribute(int id, String attributeName, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can remove attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);

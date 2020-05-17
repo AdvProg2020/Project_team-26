@@ -92,69 +92,71 @@ public class ManagerAccountView extends View {
         }
     }
 
+    private String makeString(String field, boolean isDouble) {
+        while (true) {
+            manager.inputOutput.println("enter the " + field);
+            String output = manager.inputOutput.nextLine();
+            if (output.equals("back"))
+                return null;
+            if (manager.isValidNUmber(output, isDouble)){
+                return output;
+            }
+            manager.inputOutput.println("enter integer");
+        }
+    }
+
     private Promo makePromo() {
+        Date date;
         Promo promo = new Promo();
         manager.inputOutput.println("enter the code");
         promo.setPromoCode(manager.inputOutput.nextLine());
-        manager.inputOutput.println("enter the percent");
-        String percent = manager.inputOutput.nextLine();
-        String max = "";
-        while (!percent.equalsIgnoreCase("back") && !max.equalsIgnoreCase("back")) {
-            if (manager.checkTheInputIsDouble(percent)) {
-                promo.setPercent(Double.parseDouble(percent));
-                manager.inputOutput.println("enter the MaxValue");
-                max = manager.inputOutput.nextLine();
-                if (manager.checkTheInputIsInteger(max)) {
-                    promo.setMaxDiscount(Long.parseLong(max));
-                    manager.inputOutput.println("enter the max usage");
-                    max = manager.inputOutput.nextLine();
-                    if (manager.checkTheInputIsInteger(max)) {
-                        promo.setMaxValidUse(Integer.parseInt(max));
-                        manager.inputOutput.println("enter the start date");
-                        promo.setStartDate(dateOfPromo());
-                        manager.inputOutput.println("enter the end date");
-                        promo.setEndDate(dateOfPromo());
-                        return promo;
-                    } else {
-                        manager.inputOutput.println("enter the integer for max usage or back");
-                        max = manager.inputOutput.nextLine();
+        String field = makeString("percent", true);
+        if (field != null) {
+            promo.setPercent(Double.parseDouble(field));
+            field = makeString("max value", false);
+            if (field != null) {
+                promo.setMaxDiscount(Long.parseLong(field));
+                field = makeString("max use", false);
+                if (field != null) {
+                    promo.setMaxValidUse(Integer.parseInt(field));
+                    manager.inputOutput.println("start date");
+                    date = dateOfPromo();
+                    if (date != null) {
+                        promo.setStartDate(date);
+                        manager.inputOutput.println("start date");
+                        date = dateOfPromo();
+                        if (date != null) {
+                            promo.setEndDate(date);
+                            return promo;
+                        }
                     }
-                } else {
-                    manager.inputOutput.println("enter the integer for max or back");
-                    max = manager.inputOutput.nextLine();
                 }
-            } else {
-                manager.inputOutput.println("enter the integer for percent or back");
-                percent = manager.inputOutput.nextLine();
             }
         }
         return null;
     }
 
     private Date dateOfPromo() {
-        //todo
-        return null;
+        return manager.createDate();
     }
 
     protected void manageAllProductForManager() {
         while (true) {
-            manager.inputOutput.println("enter back or remove [id]");
-            String productId = manager.inputOutput.nextLine();
-            if (productId.equalsIgnoreCase("back"))
+            manager.inputOutput.println("enter back or remove [name]");
+            String ProductName = manager.inputOutput.nextLine();
+            if (ProductName.equalsIgnoreCase("back"))
                 return;
-            if (manager.checkTheInputIsInteger(productId)) {
-                try {
-                    productController.removeProduct(Integer.parseInt(productId), manager.getToken());
-                } catch (InvalidIdException | NoAccessException e) {
-                    manager.inputOutput.println(e.getMessage());
-                } catch (InvalidTokenException e) {
-                    e.printStackTrace();
-                } catch (NotLoggedINException e) {
-                    manager.inputOutput.println(e.getMessage());
-                    manager.loginInAllPagesEssential();
-                }
-            } else
-                manager.inputOutput.println("enter int as id");
+            try {
+                productController.removeProduct(productController.
+                        getProductByName(ProductName, manager.getToken()).getId(), manager.getToken());
+            } catch (InvalidIdException | NoObjectIdException | NoAccessException e) {
+                manager.inputOutput.println(e.getMessage());
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                manager.inputOutput.println(e.getMessage());
+                manager.loginInAllPagesEssential();
+            }
         }
     }
 

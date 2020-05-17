@@ -22,7 +22,7 @@ public enum ManageProductForSellerViewValidCommands {
     EditProductWithId("edit\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageProductForSellerView page) {
-            page.edit();
+            page.edit(Pattern.compile(EditProductWithId.toString()).matcher(page.getInput()));
         }
     },
     ShowAllProduct("show all") {

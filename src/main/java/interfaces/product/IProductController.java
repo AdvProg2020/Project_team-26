@@ -10,6 +10,8 @@ import java.util.Map;
 public interface IProductController {
     void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException;
 
+    Product getProductByName(String name, String token) throws NoObjectIdException;
+
     void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException;
 
     Product getProductById(int id, String token) throws InvalidIdException;
