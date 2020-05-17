@@ -16,6 +16,7 @@ public class Cart {
     }
 
     public boolean addItems(ProductSeller productSeller, int amount) {
+        // TODO: when amount becomes 0 remove product from map
         if(products.containsKey(productSeller)) {
             int newAmount = products.get(productSeller) + amount;
             if(newAmount <= productSeller.getRemainingItems() && newAmount >= 0) {

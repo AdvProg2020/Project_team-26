@@ -51,6 +51,15 @@ public class ProductSellerRequest {
         requestTime = new Date();
     }
 
+    public ProductSeller getProductSeller() {
+        // TODO: for edit
+        ProductSeller productSeller = new ProductSeller();
+        productSeller.setSeller(seller);
+        productSeller.setPrice(price);
+        productSeller.setRemainingItems(remainingItems);
+        return productSeller;
+    }
+
     public RequestType getRequestType() {
         return requestType;
     }

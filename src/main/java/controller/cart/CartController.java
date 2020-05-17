@@ -83,6 +83,7 @@ public class CartController implements ICartController {
     @Override
     public void checkout(String token)
             throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughProductsException, NotEnoughCreditException {
+        // TODO: check if max discount is considered
         Session session = Session.getSession(token);
         User loggedInUser = session.getLoggedInUser();
 

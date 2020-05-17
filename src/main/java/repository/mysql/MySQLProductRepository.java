@@ -1,9 +1,6 @@
 package repository.mysql;
 
-import model.Product;
-import model.ProductRequest;
-import model.ProductSeller;
-import model.RequestType;
+import model.*;
 import repository.ProductRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
@@ -50,23 +47,9 @@ public class MySQLProductRepository
     }
 
     @Override
-    public void acceptRequest(int requestId) {
-
-    }
-
-    @Override
-    public void rejectRequest(int requestId) {
-
-    }
-
-    @Override
-    public ProductRequest getProductRequestById(int requestId) {
-        return null;
-    }
-
-    @Override
     public void editRequest(Product product) {
         ProductRequest productRequest = product.createRequest(RequestType.EDIT);
+        productRequest.setMainProduct(product);
         persistRequest(productRequest);
     }
 
@@ -74,7 +57,42 @@ public class MySQLProductRepository
     public void deleteRequest(int id) {
         Product product = getById(id);
         ProductRequest productRequest = product.createRequest(RequestType.DELETE);
+        productRequest.setMainProduct(product);
         persistRequest(productRequest);
+    }
+
+    @Override
+    public void acceptRequest(int requestId) {
+        ProductRequest request = getProductRequestById(requestId);
+        switch (request.getRequestType()) {
+            case ADD:
+            case EDIT:
+                save(request.getProduct());
+                request.setRequestStatus(RequestStatus.ACCEPTED);
+                persistRequest(request);
+                break;
+            case DELETE:
+                delete(request.getMainProduct());
+                break;
+        }
+    }
+
+    @Override
+    public void rejectRequest(int requestId) {
+        ProductRequest request = getProductRequestById(requestId);
+        request.setRequestStatus(RequestStatus.REJECTED);
+        persistRequest(request);
+    }
+
+    @Override
+    public ProductRequest getProductRequestById(int requestId) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            return em.find(ProductRequest.class, requestId);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     private void persistRequest(ProductRequest productRequest) {
@@ -98,7 +116,6 @@ public class MySQLProductRepository
 
     @Override
     public List<ProductRequest> getAllRequests(String sortField, boolean isAscending) {
-        //TODO
         EntityManager em = EntityManagerProvider.getEntityManager();
 
         try {
@@ -106,6 +123,11 @@ public class MySQLProductRepository
             CriteriaQuery<ProductRequest> cq = cb.createQuery(ProductRequest.class);
             Root<ProductRequest> root = cq.from(ProductRequest.class);
 
+            if(isAscending) {
+                cq.orderBy(cb.asc(root.get(sortField)));
+            } else {
+                cq.orderBy(cb.desc(root.get(sortField)));
+            }
             cq.select(root);
             TypedQuery<ProductRequest> typedQuery = em.createQuery(cq);
 
@@ -125,7 +147,7 @@ public class MySQLProductRepository
             Root<ProductRequest> root = cq.from(ProductRequest.class);
 
             cq.select(root);
-            cq.where(cb.equal(root.get("created_by_id"), sellerId));
+            cq.where(cb.equal(root.get("requested_by_id"), sellerId));
             TypedQuery<ProductRequest> typedQuery = em.createQuery(cq);
 
             return typedQuery.getResultList();
