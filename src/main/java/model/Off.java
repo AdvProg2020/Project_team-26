@@ -86,4 +86,12 @@ public class Off {
     public void setId(int id) {
         this.id = id;
     }
+
+    public OffRequest createRequest(RequestType requestType) {
+        OffRequest request = new OffRequest(seller, startDate, endDate, requestType);
+        for (OffItem item : items) {
+            OffItemRequest offItemRequest = new OffItemRequest(request, item.getProduct(), item.getPriceInOff());
+        }
+        return request;
+    }
 }
