@@ -3,6 +3,7 @@ package repository.mysql;
 import model.ProductSeller;
 import model.ProductSellerRequest;
 import model.RequestStatus;
+import model.RequestType;
 import repository.ProductSellerRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
@@ -18,7 +19,9 @@ public class MySQLProductSellerRepository
 
     @Override
     public void addRequest(ProductSeller productSeller) {
-
+        ProductSellerRequest request = productSeller.createProductSellerRequest(RequestType.ADD);
+        request.setProduct(productSeller.getProduct());
+        persistRequest(request);
     }
 
     @Override

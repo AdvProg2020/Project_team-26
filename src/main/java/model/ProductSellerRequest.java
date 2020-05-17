@@ -94,6 +94,10 @@ public class ProductSellerRequest {
         return mainProductSeller;
     }
 
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
