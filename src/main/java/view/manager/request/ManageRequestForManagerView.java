@@ -266,7 +266,6 @@ public class ManageRequestForManagerView extends View {
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
             manager.loginInAllPagesEssential();
-            return;
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
