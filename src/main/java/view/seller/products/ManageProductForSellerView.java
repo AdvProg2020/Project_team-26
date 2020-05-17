@@ -11,6 +11,7 @@ import model.User;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,7 +47,7 @@ public class ManageProductForSellerView extends View {
                     break;
                 }
             }
-            if (isDone)
+            if (!isDone)
                 manager.inputOutput.println("invalid input");
         }
     }
@@ -164,6 +165,9 @@ public class ManageProductForSellerView extends View {
         manager.logoutInAllPages();
     }
 
+    protected void viewRequestStatus() {
+        //todo
+    }
 
     protected void sorting() {
         productFilterAndSort.run();
@@ -174,7 +178,17 @@ public class ManageProductForSellerView extends View {
     }
 
     protected void help() {
-
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("view [productId]");
+        commandList.add("view buyers [productId]");
+        commandList.add("edit [productId]");
+        commandList.add("sorting");
+        commandList.add("filtering");
+        commandList.add("show all");
+        commandList.add("logout");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
 }
