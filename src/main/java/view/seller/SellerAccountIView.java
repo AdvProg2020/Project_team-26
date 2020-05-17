@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 public class SellerAccountIView extends View {
     private EnumSet<SellerAccountViewValidCommands> validCommands;
@@ -34,6 +35,7 @@ public class SellerAccountIView extends View {
         super(managerView);
         validCommands = EnumSet.allOf(SellerAccountViewValidCommands.class);
         userView = UserView.getInstance();
+        orderSort = new OrderSort(manager);
         editableFields = new ArrayList<>();
         infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
         productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
@@ -78,7 +80,7 @@ public class SellerAccountIView extends View {
 
     protected void subCategory(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1),false)) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             try {
                 categoryController.getAllCategories(Integer.parseInt(matcher.group(1)), manager.getToken()).
                         forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
@@ -99,12 +101,15 @@ public class SellerAccountIView extends View {
         }
     }
 
-    protected void history() {//todo
+    protected void history() {
         try {
-            for (Order order : orderController.getOrdersWithFilter(orderSort.getFieldNameForSort(), orderSort.isAscending(), manager.getToken())) {
-                manager.inputOutput.println("the user " + order.getCustomer().getFullName() + "with id :" +
-                        "at : " + order.getDate().toString());
-
+            List<Order> orders = orderController.getOrders(manager.getToken());
+            for (Order order : orders) {
+                manager.inputOutput.println(order.getCustomer().getFullName() + " at : " + order.getDate().toString()
+                        + "has bought : ");
+                order.getItems().stream().filter(orderItem -> orderItem.getSeller().getId() == thisUser.getId()).
+                        collect(Collectors.toList()).forEach(i -> manager.inputOutput.println(i.getAmount() + " of " + i.getProduct().getName() +
+                        "\nand paid : " + i.getPaidPrice()));
             }
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
