@@ -68,7 +68,7 @@ public class ProductRequest {
         } else {
             Product product = new Product(name, brand, description);
             product.setCategory(category);
-            ProductSeller productSeller = sellerList.get(0).getProductSeller();
+            ProductSeller productSeller = sellerList.get(0).getMainProductSeller();
             productSeller.setProduct(product);
             product.addSeller(productSeller);
             return product;
