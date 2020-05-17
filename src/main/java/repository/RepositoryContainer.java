@@ -1,7 +1,6 @@
 package repository;
 
 import repository.fake.*;
-import repository.fake.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +20,7 @@ public class RepositoryContainer {
         map.put("CategoryRepository", new FakeCategoryRepository());
         map.put("UserRepository", new FakeUserRepository());
         map.put("CommentRepository", new FakeCommentRepository());
-        map.put("RatingRepository", new FakeRatingRepository());
+        map.put("RatingRepository", new FakeRateRepository());
         map.put("PromoRepository",new FakePromoRepository());
         map.put("ProductSellerRepository",new FakeProductSellerRepository());
         map.put("OffRepository",new FakeOffRepository());

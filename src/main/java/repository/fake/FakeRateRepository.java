@@ -2,15 +2,14 @@ package repository.fake;
 
 import model.Customer;
 import model.Rate;
-import repository.RatingRepository;
+import repository.RateRepository;
 import repository.RepositoryContainer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-public class FakeRatingRepository implements RatingRepository {
+public class FakeRateRepository implements RateRepository {
 
     List<Rate> allRatings;
     public int lastId = 5;
@@ -18,26 +17,13 @@ public class FakeRatingRepository implements RatingRepository {
     private FakeUserRepository fakeUserRepository;
     private FakeProductRepository fakeProductRepository;
 
-    public FakeRatingRepository() {
+    public FakeRateRepository() {
         allRatings = new ArrayList<>();
         fakeUserRepository = new FakeUserRepository();
         fakeProductRepository = new FakeProductRepository();
         for (int i = 0; i < 4; i++) {
             save(new Rate((Customer)fakeUserRepository.getById(i + 8),5.0,fakeProductRepository.getById(i)));
         }
-    }
-
-    @Override
-    public boolean doesItMatch(int rateId, int customerId) {
-        if(getById(rateId).getCustomerId() == customerId) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void editRate(int RateId, double newRating) {
-        getById(RateId).setScore(newRating);
     }
 
     @Override
