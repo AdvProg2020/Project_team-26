@@ -35,6 +35,7 @@ public class OffRequest {
     @Column(name = "request_type")
     private RequestType requestType;
 
+    @Column(name = "request_status")
     private RequestStatus requestStatus;
 
     public OffRequest() {
