@@ -77,6 +77,10 @@ public class ProductSeller {
         remainingItems -= amount;
     }
 
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     public long getPriceInOff() {
         return priceInOff;
     }

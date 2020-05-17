@@ -131,8 +131,10 @@ public class Product {
 
     public ProductRequest createRequest(RequestType requestType) {
         ProductRequest productRequest = new ProductRequest(name, brand, description, category, requestType);
-        for (ProductSeller seller : sellerList) {
-            productRequest.addSeller(seller.createProductSellerRequest(requestType));
+        if(requestType == RequestType.ADD) {
+            for (ProductSeller seller : sellerList) {
+                productRequest.addSeller(seller.createProductSellerRequest(requestType));
+            }
         }
         return productRequest;
     }

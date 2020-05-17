@@ -58,6 +58,23 @@ public class ProductRequest {
         requestTime = new Date();
     }
 
+    public Product getProduct() {
+        if(mainProduct != null) {
+            mainProduct.setName(name);
+            mainProduct.setBrand(brand);
+            mainProduct.setDescription(description);
+            mainProduct.setCategory(category);
+            return mainProduct;
+        } else {
+            Product product = new Product(name, brand, description);
+            product.setCategory(category);
+            ProductSeller productSeller = sellerList.get(0).getMainProductSeller();
+            productSeller.setProduct(product);
+            product.addSeller(productSeller);
+            return product;
+        }
+    }
+
     public RequestType getRequestTpe() {
         return requestType;
     }
@@ -108,5 +125,13 @@ public class ProductRequest {
 
     public RequestType getRequestType() {
         return requestType;
+    }
+
+    public void setMainProduct(Product mainProduct) {
+        this.mainProduct = mainProduct;
+    }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 }
