@@ -25,6 +25,20 @@ public class MySQLProductSellerRepository
     }
 
     @Override
+    public void editRequest(ProductSeller productSeller) {
+        ProductSellerRequest request = productSeller.createProductSellerRequest(RequestType.EDIT);
+        request.setMainProductSeller(productSeller);
+        persistRequest(request);
+    }
+
+    @Override
+    public void deleteRequest(ProductSeller productSeller) {
+        ProductSellerRequest request = productSeller.createProductSellerRequest(RequestType.DELETE);
+        request.setMainProductSeller(productSeller);
+        persistRequest(request);
+    }
+
+    @Override
     public void acceptRequest(int requestId) {
         ProductSellerRequest request = getProductSellerRequestById(requestId);
         switch (request.getRequestType()) {

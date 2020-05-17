@@ -98,6 +98,10 @@ public class ProductSellerRequest {
         this.product = product;
     }
 
+    public void setMainProductSeller(ProductSeller mainProductSeller) {
+        this.mainProductSeller = mainProductSeller;
+    }
+
     public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
