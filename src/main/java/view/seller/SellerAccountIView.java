@@ -8,6 +8,7 @@ import interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.*;
+import view.filterAndSort.OrderSort;
 import view.seller.offs.ManageOffForSeller;
 import view.seller.products.ManageProductForSellerView;
 
@@ -24,8 +25,8 @@ public class SellerAccountIView extends View {
     private ICategoryController categoryController;
     private UserView userView;
     private IOrderController orderController;
+    private OrderSort orderSort;
     private User thisUser;
-    private SellerSort sellerSort;
 
 
     public SellerAccountIView(ViewManager managerView) {
@@ -33,13 +34,11 @@ public class SellerAccountIView extends View {
         validCommands = EnumSet.allOf(SellerAccountViewValidCommands.class);
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
-        sellerSort = new SellerSort(manager);
         infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
         productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
         userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
         categoryController = (ICategoryController) manager.getController(ControllerContainer.Controller.CategoryController);
         orderController = (IOrderController) manager.getController(ControllerContainer.Controller.OrderController);
-        sellerSort = new SellerSort(manager);
         try {
             thisUser = userController.getUserByToken(manager.getToken());
         } catch (InvalidTokenException e) {
@@ -101,7 +100,7 @@ public class SellerAccountIView extends View {
 
     protected void history() {//todo
         try {
-            for (Order order : orderController.getOrdersWithFilter(sellerSort.getFieldNameForSort(), sellerSort.isAscending(), manager.getToken())) {
+            for (Order order : orderController.getOrdersWithFilter(orderSort.getFieldNameForSort(), orderSort.isAscending(), manager.getToken())) {
                 manager.inputOutput.println("the user " + order.getCustomer().getFullName() + "with id :" +
                         "at : " + order.getDate().toString());
 
@@ -256,12 +255,9 @@ public class SellerAccountIView extends View {
 
 
     protected void sorting() {
-        sellerSort.run();
+        orderSort.run();
     }
 
-    protected void filtering() {
-        sellerSort.run();
-    }
 
     protected void help() {
         validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));

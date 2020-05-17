@@ -169,15 +169,6 @@ public class CategoryController implements ICategoryController {
 
     }
 
-    @Override
-    public List<Category> getAllCategoriesWithFilter(String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException {
-        if (id == 0) {//todo
-            return categoryRepository.getAll();
-        }
-        Category category = getCategoryByIdWithCheck(id);
-        return category.getSubCategory();
-    }
-
     public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "you are not manager.");
         Category category = getCategoryByIdWithCheck(id);

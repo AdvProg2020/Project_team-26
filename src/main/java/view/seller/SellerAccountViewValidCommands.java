@@ -93,12 +93,6 @@ public enum SellerAccountViewValidCommands {
             page.sorting();
         }
     },
-    Filtering("filtering") {
-        @Override
-        public void goToFunction(SellerAccountIView page) {
-            page.filtering();
-        }
-    },
     Help("help") {
         @Override
         public void goToFunction(SellerAccountIView page) {
