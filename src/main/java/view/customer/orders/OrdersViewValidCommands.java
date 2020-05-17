@@ -1,6 +1,6 @@
 package view.customer.orders;
 
-import view.cart.CartIView;
+import view.cart.CartView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -12,25 +12,38 @@ public enum OrdersViewValidCommands {
             page.showOrdersWithIdToBuyer(Pattern.compile(ShowOrdersWithIdToBuyer.toString()).matcher(page.getInput()));
         }
     },
-    RateTheProductWithItsId("rate\\s+(\\d+)\\s+([1-5]{1})") {
+    RateTheProductWithItsId("rate\\s+(\\d+)\\s+(.*)") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.rateTheProductWithItsId(Pattern.compile(RateTheProductWithItsId.toString()).matcher(page.getInput()));
         }
-    }, Sorting("sorting") {
+    },
+    Sorting("sorting") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.sorting();
         }
-    }, Filtering("filtering") {
-        @Override
-        public void goToFunction(OrdersIView page) {
-            page.filtering();
-        }
-    }, Help("help") {
+    },
+    Help("help") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.help();
+        }
+    },
+    Logout("logout") {
+        @Override
+        public void goToFunction(OrdersIView page) {
+            if (page.getManager().getIsUserLoggedIn()) {
+                page.logOut();
+                return;
+            }
+            page.getManager().inputOutput.println("you are not logged in");
+        }
+    },
+    ShowAll("show all") {
+        @Override
+        public void goToFunction(OrdersIView page) {
+            page.showAll();
         }
     };
     private final Pattern commandPattern;
@@ -40,7 +53,6 @@ public enum OrdersViewValidCommands {
         return this.commandPattern.matcher(input);
 
     }
-
 
     public abstract void goToFunction(OrdersIView page);
 

@@ -101,6 +101,10 @@ public class ProductSeller {
         return new ProductSellerRequest(product, seller, price, remainingItems, requestType);
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     @Override
     public ProductSeller clone() {
         return new ProductSeller(this.id, this.product.clone(), this.remainingItems, this.price, this.priceInOff);

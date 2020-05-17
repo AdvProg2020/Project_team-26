@@ -2,7 +2,7 @@ package view.main;
 
 import controller.account.Account;
 import controller.account.AuthenticationController;
-import interfaces.account.IAuthenticationController;
+import controller.interfaces.account.IAuthenticationController;
 import exception.*;
 import model.Role;
 import view.ControllerContainer;

@@ -1,9 +1,9 @@
 package view.seller.products;
 
 import exception.*;
-import interfaces.category.ICategoryController;
-import interfaces.order.IOrderController;
-import interfaces.product.IProductController;
+import controller.interfaces.category.ICategoryController;
+import controller.interfaces.order.IOrderController;
+import controller.interfaces.product.IProductController;
 import model.Category;
 import model.Product;
 import model.ProductSeller;
@@ -11,7 +11,6 @@ import model.User;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -107,7 +106,7 @@ public class ManageProductForSellerView extends View {
     private void changeNumber(String field, Product product, ProductSeller productSeller) {
         manager.inputOutput.println("enter replace for : " + field);
         String replace = manager.inputOutput.nextLine();
-        if (manager.checkTheInputIsInteger(replace)) {
+        if (manager.checkTheInputIsIntegerOrLong(replace)) {
             if (product.getSellerList().contains(productSeller))
                 product.getSellerList().remove(productSeller);
             else {
@@ -153,7 +152,7 @@ public class ManageProductForSellerView extends View {
 
     protected void showBuyer(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
             List<User> userList = orderController.getProductBuyerByProductId(Integer.parseInt(matcher.group(1)), manager.getToken());
             userList.forEach(i -> manager.inputOutput.println(i.getFullName()));
             return;

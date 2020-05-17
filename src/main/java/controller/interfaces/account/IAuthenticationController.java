@@ -1,4 +1,4 @@
-package interfaces.account;
+package controller.interfaces.account;
 
 import controller.account.Account;
 import exception.*;

@@ -1,6 +1,6 @@
 package view.manager.users;
 
-import interfaces.account.IShowUserController;
+import controller.interfaces.account.IShowUserController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
@@ -9,7 +9,9 @@ import view.main.AuthenticationValidCommands;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -89,7 +91,15 @@ public class ManageUsersForManager extends View {
     }
 
     protected void help() {
-        //todo
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("view [username]");
+        commandList.add("delete user [username]");
+        commandList.add("create manager profile");
+        commandList.add("logout");
+        commandList.add("show all");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
 }

@@ -33,7 +33,11 @@ public enum MainPageViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(MainPageView page) {
-            page.logout();
+            if (page.getManager().getIsUserLoggedIn()) {
+                page.logout();
+                return;
+            }
+            page.getManager().inputOutput.println("you are mot logged in");
         }
     },
     CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
@@ -43,6 +47,7 @@ public enum MainPageViewValidCommands {
                 page.authorizing();
                 return;
             }
+            page.getManager().inputOutput.println("first logout");
         }
     },
     LoginAccount("login\\s+(.*)") {
@@ -52,6 +57,13 @@ public enum MainPageViewValidCommands {
                 page.authorizing();
                 return;
             }
+            page.getManager().inputOutput.println("first logout");
+        }
+    },
+    PersonalPage("personal\\s+page") {
+        @Override
+        public void goToFunction(MainPageView page) {
+            page.personalPage();
         }
     };
 

@@ -1,6 +1,6 @@
 package controller.order;
 
-import interfaces.order.IOrderController;
+import controller.interfaces.order.IOrderController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;

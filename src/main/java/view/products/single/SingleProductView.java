@@ -1,8 +1,8 @@
 package view.products.single;
 
-import interfaces.cart.ICartController;
-import interfaces.product.IProductController;
-import interfaces.review.ICommentController;
+import controller.interfaces.cart.ICartController;
+import controller.interfaces.product.IProductController;
+import controller.interfaces.review.ICommentController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -11,6 +11,7 @@ import model.Product;
 import model.ProductSeller;
 import view.*;
 import view.offs.AllOffView;
+import view.products.all.AllProductView;
 
 import java.util.*;
 import java.util.regex.Matcher;
@@ -77,7 +78,7 @@ public class SingleProductView extends View {
             String amountInput = manager.inputOutput.nextLine();
             if (amountInput.equalsIgnoreCase("back"))
                 return 0;
-            if (manager.checkTheInputIsInteger(amountInput)) {
+            if (manager.checkTheInputIsIntegerOrLong(amountInput, false)) {
                 amount = Integer.parseInt(amountInput);
             }
             manager.inputOutput.println("you should enter positive number.");
@@ -94,12 +95,12 @@ public class SingleProductView extends View {
                     + " with price " + productSeller.getPrice());
             numbers++;
         }
-        manager.inputOutput.println("enter the number of each you want to buy from");
+        manager.inputOutput.println("enter the number of each you want to buy from or back");
         while (true) {
             String chose = manager.inputOutput.nextLine();
             if (chose.equalsIgnoreCase("back"))
                 return 0;
-            if (manager.checkTheInputIsInteger(chose)) {
+            if (manager.checkTheInputIsIntegerOrLong(chose, false)) {
                 numbers = Integer.parseInt(chose);
                 if (numbers < ids.size() && numbers > 0) {
                     return ids.get(numbers).getId();
@@ -112,13 +113,13 @@ public class SingleProductView extends View {
 
     protected void attributeOfProduct() {
         digest();
-        //todo
-        //what do you mean all of information
+        showSellers(product.getSellerList());
+        commentsForThisProduct();
     }
 
     protected void compareToProductWithId(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             try {
                 Product compareProduct = productController.getProductById(Integer.parseInt(matcher.group(1)), manager.getToken());
                 showCompare(compareProduct);
@@ -131,11 +132,16 @@ public class SingleProductView extends View {
     }
 
     private void showCompare(Product compare) {
-        manager.inputOutput.println("name :" + product.getName() + " <-> " + compare.getName());
-        manager.inputOutput.println("brand :" + product.getBrand() + " <-> " + compare.getBrand());
-        manager.inputOutput.println("price :" + product.getMinimumPrice() + " <-> " + compare.getMinimumPrice());
-        manager.inputOutput.println("rate :" + product.getAverageRate() + " <-> " + compare.getAverageRate());
-        manager.inputOutput.println("category :" + product.getCategory().getName() + " <-> " + compare.getCategory().getName());
+        manager.inputOutput.println("name :" + product.getName() + " <--> " + compare.getName());
+        manager.inputOutput.println("brand :" + product.getBrand() + " <--> " + compare.getBrand());
+        manager.inputOutput.println("rate :" + product.getAverageRate() + " <--> " + compare.getAverageRate());
+        manager.inputOutput.println("description  :" + product.getDescription() + " <--> " + compare.getDescription());
+        manager.inputOutput.println("category :" + product.getCategory().getName() + " <--> " + compare.getCategory().getName());
+        manager.inputOutput.println("minimum price :" + product.getCategory().getName() + " <--> " + compare.getCategory().getName());
+        manager.inputOutput.println("the sellers of" + product.getName() + " are :");
+        showSellers(product.getSellerList());
+        manager.inputOutput.println("<--->\nthe sellers of" + compare.getName() + " are :");
+        showSellers(compare.getSellerList());
     }
 
     protected void commentsForThisProduct() {
@@ -163,17 +169,44 @@ public class SingleProductView extends View {
         manager.inputOutput.println("the average rate is :" + product.getAverageRate());
         manager.inputOutput.println("Category is: with name: " + product.getCategory().getName()
                 + " with id : " + product.getCategory().getId());
-        manager.inputOutput.println("the sellers are :");
-        showSellers(product.getSellerList());
     }
 
     private void showSellers(List<ProductSeller> productSellerList) {
         productSellerList.forEach(productSeller -> manager.inputOutput.println("seller name :" + productSeller.getSeller().getFullName()
-                + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems() + " with price by existing off " + productSeller.getPriceInOff()));
+                + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems()
+                + "\nwith actual price : " + productSeller.getPrice() + " with price by existing off " + productSeller.getPriceInOff()));
     }
-    protected void offs(){
+
+
+    protected void product() {
+        AllProductView allProductView = new AllProductView(manager);
+        allProductView.run();
+    }
+
+    protected void off() {
         AllOffView allOffView = new AllOffView(manager);
         allOffView.run();
+    }
+
+    protected void help() {
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("offs");
+        commandList.add("products");
+        commandList.add("digest");
+        commandList.add("add to cart");
+        commandList.add("attributes");
+        commandList.add("compare [productID]");
+        commandList.add("Comments");
+        commandList.add("add comment");
+        if (manager.getIsUserLoggedIn()) {
+            commandList.add("logout");
+        } else {
+            commandList.add("login [username]");
+            commandList.add("create account [manager|buyer|seller] [username]");
+        }
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
     protected void logOut() {
@@ -188,7 +221,4 @@ public class SingleProductView extends View {
         manager.registerInAllPagesOptional(super.input);
     }
 
-    protected void help() {
-        validCommands.forEach(i -> manager.inputOutput.println(i.toString()));
-    }
 }

@@ -78,6 +78,10 @@ public class Order {
         return items;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void addItem(OrderItem orderItem) {
         items.add(orderItem);
     }
@@ -98,5 +102,9 @@ public class Order {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

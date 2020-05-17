@@ -54,7 +54,7 @@ public class ProductFilterAndSort extends FilterAndSort {
     }
 
     private void filterRate(int chose) {
-        String value = periodBuilder(chose, "rate", false);
+        String value = periodBuilder(chose, "rate", true, false);
         if (value == null)
             return;
         filterForController.put(filterFields.get(chose), value);
@@ -67,22 +67,22 @@ public class ProductFilterAndSort extends FilterAndSort {
     }
 
     private void filterPrice(int chose) {
-        String value = periodBuilder(chose, "price", false);
+        String value = periodBuilder(chose, "price", false, true);
         if (value == null)
             return;
         filterForController.put(filterFields.get(chose), value);
     }
 
-    private String periodBuilder(int chose, String fieldname, boolean isDouble) {
+    private String periodBuilder(int chose, String fieldname, boolean isDouble, boolean isLong) {
         StringBuilder period = new StringBuilder("");
         manager.inputOutput.println("enter minimum " + fieldname);
         String min = manager.inputOutput.nextLine();
         String max;
-        if (manager.isValidNUmber(min, isDouble)) {
+        if (manager.isValidNUmber(min, isDouble, isLong)) {
             period.append(min);
             manager.inputOutput.println("enter maximum " + fieldname);
             max = manager.inputOutput.nextLine();
-            if (manager.isValidNUmber(max, isDouble)) {
+            if (manager.isValidNUmber(max, isDouble, isLong)) {
                 period.append("-" + max);
                 return period.toString();
             }
@@ -172,5 +172,26 @@ public class ProductFilterAndSort extends FilterAndSort {
             return;
         }
         isAscending = false;
+    }
+
+    protected void logOut() {
+        manager.logoutInAllPages();
+    }
+
+    protected void help() {
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("show available sorts");
+        commandList.add("sort [number]");
+        commandList.add("current sort");
+        commandList.add("disable sort");
+        commandList.add("show available filters");
+        commandList.add("filter [number]");
+        commandList.add("current filters");
+        commandList.add("disable filter [number]");
+        if (manager.getIsUserLoggedIn())
+            commandList.add("logout");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 }

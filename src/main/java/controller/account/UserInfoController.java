@@ -1,6 +1,6 @@
 package controller.account;
 
-import interfaces.account.IUserInfoController;
+import controller.interfaces.account.IUserInfoController;
 import exception.*;
 import model.Role;
 import model.Seller;

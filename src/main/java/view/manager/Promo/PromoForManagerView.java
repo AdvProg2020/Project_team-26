@@ -1,6 +1,6 @@
 package view.manager.Promo;
 
-import interfaces.discount.IPromoController;
+import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.Promo;
 import view.*;
@@ -97,7 +97,7 @@ public class PromoForManagerView extends View {
             String id = manager.inputOutput.nextLine();
             if (id.equalsIgnoreCase("back"))
                 return;
-            if (manager.checkTheInputIsInteger(id)) {
+            if (manager.checkTheInputIsIntegerOrLong(id, false)) {
                 manager.inputOutput.println("add or delete.");
                 String action = manager.inputOutput.nextLine();
                 if (action.equalsIgnoreCase("add"))
@@ -143,9 +143,9 @@ public class PromoForManagerView extends View {
     private void fillPercent(int promoCode) {
         manager.inputOutput.println("enter the percent");
         String percent = manager.inputOutput.nextLine();
-        if (manager.checkTheInputIsInteger(percent)) {
+        if (manager.checkTheInputIsDouble(percent)) {
             try {
-                promoController.setPercent(promoCode, Integer.parseInt(percent), manager.getToken());
+                promoController.setPercent(promoCode, Double.parseDouble(percent), manager.getToken());
             } catch (InvalidIdException | NoAccessException | InvalidFormatException | InvalidDiscountPercentException e) {
                 manager.inputOutput.println(e.getMessage());
             } catch (InvalidTokenException e) {
@@ -178,7 +178,7 @@ public class PromoForManagerView extends View {
     private void fillMax(int promoCode) {
         manager.inputOutput.println("enter the Max");
         String max = manager.inputOutput.nextLine();
-        if (manager.checkTheInputIsInteger(max)) {
+        if (manager.checkTheInputIsIntegerOrLong(max, true)) {
             try {
                 promoController.setMaxDiscount(promoCode, Long.parseLong(max), manager.getToken());
             } catch (InvalidIdException | NoAccessException e) {
@@ -230,7 +230,8 @@ public class PromoForManagerView extends View {
     }
 
     protected void help() {
-        manager.inputOutput.println("view discount code [id]\nedit discount code [id]\nremove discount code [id]\nhelp");
+        manager.inputOutput.println("view discount code [id]\nedit discount code [id]\nremove discount code [id]\nhelp\n" +
+                "sorting");
         manager.inputOutput.println("logout");
     }
 

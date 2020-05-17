@@ -1,4 +1,4 @@
-package interfaces.order;
+package controller.interfaces.order;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;

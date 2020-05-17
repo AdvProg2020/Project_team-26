@@ -1,7 +1,7 @@
 package controller.discount;
 
 import exception.*;
-import interfaces.discount.IOffController;
+import controller.interfaces.discount.IOffController;
 import model.*;
 import repository.OffRepository;
 import repository.ProductRepository;
@@ -15,7 +15,8 @@ public class OffController implements IOffController {
     private OffRepository offRepository;
 
     public OffController(RepositoryContainer repositoryContainer) {
-
+        productRepository = (ProductRepository)repositoryContainer.getRepository("ProductRepository");
+        offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
     }
 
 

@@ -3,11 +3,15 @@ package view.main;
 import controller.account.AuthenticationController;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
+import model.Role;
 import view.*;
 
 import view.ViewManager;
+import view.customer.CustomerView;
+import view.manager.ManagerAccountView;
 import view.offs.AllOffView;
 import view.products.all.AllProductView;
+import view.seller.SellerAccountIView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -68,8 +72,29 @@ public class MainPageView extends View {
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
-            manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+            manager.setTokenFromController(e.getMessage());
             return;
+        }
+    }
+
+    protected void personalPage() {
+        Role role = manager.getRoleOfUser();
+        switch (role) {
+            case ADMIN: {
+                ManagerAccountView managerAccountView = new ManagerAccountView(manager);
+                managerAccountView.run();
+                return;
+            }
+            case SELLER: {
+                SellerAccountIView sellerAccountIView = new SellerAccountIView(manager);
+                sellerAccountIView.run();
+                return;
+            }
+            case CUSTOMER: {
+                CustomerView customerIView = new CustomerView(manager);
+                customerIView.run();
+                return;
+            }
         }
     }
 

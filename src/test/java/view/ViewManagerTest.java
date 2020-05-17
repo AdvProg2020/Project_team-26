@@ -6,9 +6,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.RepositoryContainer;
 import repository.UserRepository;
-import model.Session;
-import repository.RepositoryContainer;
-import repository.UserRepository;
 import view.main.MainPageView;
 
 import java.text.ParseException;
@@ -67,10 +64,10 @@ public class ViewManagerTest {
 
     @Test
     void checkNumber() {
-        Assertions.assertEquals(manager.checkTheInputIsInteger("098765432"), true);
-        Assertions.assertEquals(manager.checkTheInputIsInteger("098y765432"), false);
-        Assertions.assertEquals(manager.checkTheInputIsInteger("098765.432"), false);
-        Assertions.assertEquals(manager.checkTheInputIsInteger("-098765432"), false);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098765432"), true);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098y765432"), false);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098765.432"), false);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("-098765432"), false);
         Assertions.assertEquals(manager.checkTheInputIsDouble("098765432"), true);
         Assertions.assertEquals(manager.checkTheInputIsDouble("-098765432"), false);
         Assertions.assertEquals(manager.checkTheInputIsDouble("8934.839"), true);

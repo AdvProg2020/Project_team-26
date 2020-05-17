@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,6 +49,7 @@ public class Product {
         this.name = name;
         this.brand = brand;
         this.description = description;
+        sellerList = new ArrayList<>();
     }
 
     public int getId() {

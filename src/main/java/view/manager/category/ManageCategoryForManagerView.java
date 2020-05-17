@@ -1,8 +1,8 @@
 package view.manager.category;
 
-import interfaces.category.ICategoryController;
+import controller.interfaces.category.ICategoryController;
 import exception.*;
-import interfaces.product.IProductController;
+import controller.interfaces.product.IProductController;
 import model.Category;
 import model.CategoryFeature;
 import model.FeatureType;
@@ -27,6 +27,7 @@ public class ManageCategoryForManagerView extends View {
         validCommands = EnumSet.allOf(ManageCategoryForManagerViewValidCommands.class);
         currentCategory = 0;
         categoryController = (ICategoryController) manager.getController(ControllerContainer.Controller.CategoryController);
+        productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
     }
 
     @Override
@@ -42,7 +43,7 @@ public class ManageCategoryForManagerView extends View {
                     break;
                 }
             }
-            if (isDone)
+            if (!isDone)
                 manager.inputOutput.println("the format is invalid");
         }
     }
@@ -76,7 +77,8 @@ public class ManageCategoryForManagerView extends View {
     protected void RemoveCategoryForManager(Matcher matcher) {
         matcher.find();
         try {
-            categoryController.removeACategory(Integer.parseInt(matcher.group(1)), currentCategory, manager.getToken());
+            Category category = categoryController.getCategoryByName(matcher.group(1), manager.getToken());
+            categoryController.removeACategory(category.getId(), currentCategory, manager.getToken());
         } catch (NoAccessException | InvalidIdException | NoObjectIdException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
@@ -135,11 +137,12 @@ public class ManageCategoryForManagerView extends View {
     protected void help() {
         List<String> commandList = new ArrayList<>();
         commandList.add("help");
-        commandList.add("edit [id]");
+        commandList.add("edit [name]");
         commandList.add("show all");
-        commandList.add("remove [id]");
+        commandList.add("remove [name]");
         commandList.add("view sub [id]");
         commandList.add("add [name]");
+        commandList.add("logout");
         commandList.forEach(i -> manager.inputOutput.println(i));
     }
 

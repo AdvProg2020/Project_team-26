@@ -1,5 +1,6 @@
 package view.products.single;
 
+import view.main.MainPageView;
 import view.products.all.AllProductView;
 
 import java.util.regex.Matcher;
@@ -45,29 +46,55 @@ public enum SingleProductViewValidCommands {
     Offs("offs") {
         @Override
         public void goToFunction(SingleProductView page) {
-              page.offs();
+            page.off();
         }
-    }
-    , Logout("logout") {
+    },
+    ShowProducts("products") {
         @Override
         public void goToFunction(SingleProductView page) {
-            page.logOut();
+            page.product();
         }
-    }, CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+    },
+    ShowOffs("offs") {
         @Override
         public void goToFunction(SingleProductView page) {
-            page.register();
+            page.off();
+        }
+    },
+    Help("help") {
+        @Override
+        public void goToFunction(SingleProductView page) {
+            page.help();
+        }
+    },
+    Logout("logout") {
+        @Override
+        public void goToFunction(SingleProductView page) {
+            if (page.getManager().getIsUserLoggedIn()) {
+                page.logOut();
+                return;
+            }
+            page.getManager().inputOutput.println("you are mot logged in");
+        }
+    },
+    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+        @Override
+        public void goToFunction(SingleProductView page) {
+            if (!page.getManager().getIsUserLoggedIn()) {
+                page.register();
+                return;
+            }
+            page.getManager().inputOutput.println("first logout");
         }
     },
     LoginAccount("login\\s+(.*)") {
         @Override
         public void goToFunction(SingleProductView page) {
-            page.login();
-        }
-    }, Help("help") {
-        @Override
-        public void goToFunction(SingleProductView page) {
-            page.help();
+            if (!page.getManager().getIsUserLoggedIn()) {
+                page.login();
+                return;
+            }
+            page.getManager().inputOutput.println("first logout");
         }
     };
     private final Pattern commandPattern;

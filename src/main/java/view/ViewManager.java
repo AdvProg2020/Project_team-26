@@ -1,9 +1,12 @@
 package view;
 
-import interfaces.product.IProductController;
-import interfaces.session.ISessionController;
+import controller.interfaces.product.IProductController;
+import controller.interfaces.session.ISessionController;
 import exception.InvalidIdException;
+import exception.InvalidTokenException;
+import exception.NotLoggedINException;
 import model.Product;
+import model.Role;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
 import view.products.single.SingleProductView;
@@ -26,10 +29,23 @@ public class ViewManager {
         inputOutput = new InputOutput();
         controllerContainer = new ControllerContainer();
         sessionController = (ISessionController) controllerContainer.getController(ControllerContainer.Controller.SessionController);
+        token = sessionController.createToken();
     }
 
     public Object getController(ControllerContainer.Controller controller) {
         return controllerContainer.getController(controller);
+    }
+
+    public Role getRoleOfUser() {
+        try {
+            return sessionController.getUserRole(token);
+        } catch (NotLoggedINException e) {
+            inputOutput.println(e.getMessage());
+            loginInAllPagesEssential();
+        } catch (InvalidTokenException e) {
+            setTokenFromController(e.getMessage());
+        }
+        return null;
     }
 
 
@@ -39,10 +55,7 @@ public class ViewManager {
 
 
     public void setTokenFromController(String error) {
-        this.inputOutput.println(error);
-        inputOutput.println("if you want dont want to set token type no then program will be finished.");
-        if (inputOutput.nextLine().equals("no"))
-            System.exit(0);
+        this.inputOutput.println(error + "\nnew one will be set");
         setToken(sessionController.createToken());
     }
 
@@ -63,27 +76,45 @@ public class ViewManager {
         return isUserLoggedIn;
     }
 
-    public boolean checkTheInputIsInteger(String input) {
+    public boolean checkTheInputIsIntegerOrLong(String input, boolean isLong) {
         Matcher matcher = Pattern.compile("^\\d+$").matcher(input);
-        if (matcher.find())
-            return true;
+        if (matcher.find()) {
+            if (isLong) {
+                try {
+                    Long.parseLong(input);
+                    return true;
+                } catch (NumberFormatException e) {
+                    inputOutput.println("number you have entered is bigger than long");
+                    return false;
+                }
+            }
+            try {
+                Integer.parseInt(input);
+                return true;
+            } catch (NumberFormatException e) {
+                inputOutput.println("number you have entered is bigger than long");
+                return false;
+            }
+        }
         return false;
     }
 
+
     public boolean checkTheInputIsDouble(String input) {
-        if(checkTheInputIsInteger(input))
+        try {
+            Double.parseDouble(input);
             return true;
-        Matcher matcher = Pattern.compile("^\\d+\\.\\d+").matcher(input);
-        if (matcher.find())
-            return true;
-        return false;
+        } catch (NumberFormatException e) {
+            inputOutput.println("number you have entered is bigger than long");
+            return false;
+        }
     }
 
     public void singleProductView(Matcher matcher) {
         IProductController productController = (IProductController) controllerContainer.getController(ControllerContainer.Controller.ProductController);
         matcher.find();
         String id = matcher.group(1);
-        if (this.checkTheInputIsInteger(id)) {
+        if (this.checkTheInputIsIntegerOrLong(id, false)) {
             int productId = Integer.parseInt(id);
             try {
                 Product product = productController.getProductById(productId, this.getToken());
@@ -158,7 +189,7 @@ public class ViewManager {
         String year;
         while (true) {
             year = inputOutput.nextLine();
-            if (checkTheInputIsInteger(year))
+            if (checkTheInputIsIntegerOrLong(year, true))
                 return year;
             inputOutput.println("please enter integer.");
         }
@@ -169,18 +200,19 @@ public class ViewManager {
         String valid;
         while (true) {
             valid = inputOutput.nextLine();
-            if (checkTheInputIsInteger(valid)) {
+            if (checkTheInputIsIntegerOrLong(valid, false)) {
                 if (Long.parseLong(valid) <= max && Long.parseLong(valid) >= min)
                     return valid;
                 else
                     inputOutput.println("please enter " + field + " between " + min + " and " + max);
             } else
-                inputOutput.println("please enter integer.");
+                inputOutput.println("please enter integer for" + field);
         }
     }
-    public boolean isValidNUmber(String input, boolean isDouble) {
+
+    public boolean isValidNUmber(String input, boolean isDouble, boolean isLong) {
         if (isDouble)
             return this.checkTheInputIsDouble(input);
-        return this.checkTheInputIsInteger(input);
+        return this.checkTheInputIsIntegerOrLong(input, isLong);
     }
 }

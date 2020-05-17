@@ -1,6 +1,6 @@
 package controller;
 
-import interfaces.request.IRequestController;
+import controller.interfaces.request.IRequestController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;

@@ -1,35 +1,38 @@
 package view.customer;
 
-import interfaces.account.IShowUserController;
-import interfaces.account.IUserInfoController;
-import interfaces.discount.IPromoController;
+import controller.interfaces.account.IShowUserController;
+import controller.interfaces.account.IUserInfoController;
+import controller.interfaces.discount.IPromoController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
 import view.*;
-import view.cart.CartIView;
+import view.cart.CartView;
 import view.customer.orders.OrdersIView;
 import view.filterAndSort.PromoSort;
+import view.offs.AllOffView;
+import view.products.all.AllProductView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 
-public class CustomerIView extends View {
+public class CustomerView extends View {
     private EnumSet<CustomerValidCommand> validCommands;
     private UserView userView;
     private ArrayList<String> editableFields;
     private IUserInfoController infoController;
     private IShowUserController userController;
     private IPromoController promoController;
-    private PromoSort customerFilterAndSort;
+    private PromoSort promoSort;
 
 
-    public CustomerIView(ViewManager manager) {
+    public CustomerView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(CustomerValidCommand.class);
         userView = UserView.getInstance();
         editableFields = new ArrayList<>();
-        customerFilterAndSort = new PromoSort(manager);
+        promoSort = new PromoSort(manager);
         infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
         userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) manager.getController(ControllerContainer.Controller.ProductController);
@@ -42,7 +45,7 @@ public class CustomerIView extends View {
     @Override
     public void run() {
         boolean isDone;
-        while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
+        while ((!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) && manager.getIsUserLoggedIn()) {
             isDone = false;
             for (CustomerValidCommand command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -63,11 +66,11 @@ public class CustomerIView extends View {
 
     protected void promoCodes() {
         try {
-            promoController.getAllPromoCodeForCustomer(customerFilterAndSort.getFieldNameForSort(), customerFilterAndSort.
+            promoController.getAllPromoCodeForCustomer(promoSort.getFieldNameForSort(), promoSort.
                             isAscending(),
                     manager.getToken()).forEach(
                     promo -> manager.inputOutput.println("promo with code : " + promo.getPromoCode()
-                            + " with max : " + promo.getMaxDiscount() + " and percent " + promo.getPercent() +
+                            + " with max : " + promo.getMaxDiscount() + "\nand percent " + promo.getPercent() +
                             " started at " + promo.getStartDate().toString() + " end : " + promo.getEndDate().toString())
             );
         } catch (NotLoggedINException e) {
@@ -89,7 +92,7 @@ public class CustomerIView extends View {
     }
 
     protected void cart() {
-        CartIView cartIView = new CartIView(manager);
+        CartView cartIView = new CartView(manager);
         cartIView.run();
     }
 
@@ -99,11 +102,7 @@ public class CustomerIView extends View {
     }
 
     protected void sorting() {
-        customerFilterAndSort.run();
-    }
-
-    protected void filtering() {
-        customerFilterAndSort.run();
+        promoSort.run();
     }
 
     protected void logOut() {
@@ -111,6 +110,29 @@ public class CustomerIView extends View {
     }
 
     protected void help() {
-        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("offs");
+        commandList.add("view personal info");
+        commandList.add("products");
+        commandList.add("edit");
+        commandList.add("view cart");
+        commandList.add("view orders");
+        commandList.add("view balance");
+        commandList.add("view discount codes");
+        commandList.add("logout");
+        commandList.add("sorting");
+        commandList.forEach(i -> manager.inputOutput.println(i));
+    }
+
+    protected void product() {
+        AllProductView allProductView = new AllProductView(manager);
+        allProductView.run();
+    }
+
+    protected void off() {
+        AllOffView allOffView = new AllOffView(manager);
+        allOffView.run();
     }
 }

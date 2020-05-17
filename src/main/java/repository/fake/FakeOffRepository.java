@@ -13,7 +13,7 @@ public class FakeOffRepository implements OffRepository {
 
     private List<Off> allOffs;
     private FakeUserRepository fakeUserRepository;
-    private static int lastId = 0;
+    private int lastId = 0;
 
 
     public FakeOffRepository() {
@@ -37,7 +37,7 @@ public class FakeOffRepository implements OffRepository {
 
     @Override
     public void addRequest(Off off) {
-
+        allOffs.add(off);
     }
 
     @Override

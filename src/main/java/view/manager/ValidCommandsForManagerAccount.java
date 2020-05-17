@@ -1,6 +1,7 @@
 package view.manager;
 
 import view.ViewManager;
+import view.cart.CartView;
 import view.main.MainPageViewValidCommands;
 import view.manager.category.ManageCategoryForManagerView;
 
@@ -22,6 +23,16 @@ public enum ValidCommandsForManagerAccount {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.edit();
+        }
+    },
+    Logout("logout") {
+        @Override
+        public void goToFunction(ManagerAccountView page) {
+            if (page.getManager().getIsUserLoggedIn()) {
+                page.logOut();
+                return;
+            }
+            page.getManager().inputOutput.println("you are not logged in");
         }
     },
     ManageUsers("manage\\s+users") {
@@ -65,7 +76,7 @@ public enum ValidCommandsForManagerAccount {
         public void goToFunction(ManagerAccountView page) {
             page.goToProductsMenu();
         }
-    },GoToOffsMenu("offs") {
+    }, GoToOffsMenu("offs") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.goToOffsMenu();

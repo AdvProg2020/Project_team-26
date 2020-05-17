@@ -1,7 +1,7 @@
 package view.seller.offs;
 
-import interfaces.discount.IOffController;
-import interfaces.product.IProductController;
+import controller.interfaces.discount.IOffController;
+import controller.interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.ControllerContainer;
@@ -100,7 +100,7 @@ public class ManageOffForSeller extends View {
             String productId = manager.inputOutput.nextLine();
             if (productId.matches("back"))
                 return;
-            if (manager.checkTheInputIsInteger(productId)) {
+            if (manager.checkTheInputIsIntegerOrLong(productId)) {
                 try {
                     ProductSeller productSeller = productController.getProductSellerByIdAndSellerId(Integer.parseInt(productId), manager.getToken());
                     priceForProduct = inputPrice();
@@ -158,7 +158,7 @@ public class ManageOffForSeller extends View {
                 isPercent = true;
                 return Integer.parseInt(input[0]);
             }
-            if (manager.checkTheInputIsInteger(price)) {
+            if (manager.checkTheInputIsIntegerOrLong(price)) {
                 isPercent = false;
                 return Long.parseLong(price);
             }
@@ -173,7 +173,7 @@ public class ManageOffForSeller extends View {
 
     protected void showOff(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsInteger(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
             try {
                 Off off = offController.getOff(Integer.parseInt(matcher.group(1)), manager.getToken());
                 manager.inputOutput.println("off id :" + off.getId());

@@ -1,6 +1,6 @@
 package controller.review;
 
-import interfaces.review.ICommentController;
+import controller.interfaces.review.ICommentController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
