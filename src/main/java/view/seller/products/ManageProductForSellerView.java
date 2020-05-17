@@ -11,6 +11,7 @@ import model.User;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -46,7 +47,7 @@ public class ManageProductForSellerView extends View {
                     break;
                 }
             }
-            if (isDone)
+            if (!isDone)
                 manager.inputOutput.println("invalid input");
         }
     }
@@ -106,7 +107,7 @@ public class ManageProductForSellerView extends View {
     private void changeNumber(String field, Product product, ProductSeller productSeller) {
         manager.inputOutput.println("enter replace for : " + field);
         String replace = manager.inputOutput.nextLine();
-        if (manager.checkTheInputIsIntegerOrLong(replace)) {
+        if (manager.checkTheInputIsIntegerOrLong(replace, false)) {
             if (product.getSellerList().contains(productSeller))
                 product.getSellerList().remove(productSeller);
             else {
@@ -120,6 +121,7 @@ public class ManageProductForSellerView extends View {
                 case "price":
                     productSeller.setPrice(Long.parseLong(replace));
             }
+            product.getSellerList().add(productSeller);
         }
     }
 
@@ -152,7 +154,7 @@ public class ManageProductForSellerView extends View {
 
     protected void showBuyer(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             List<User> userList = orderController.getProductBuyerByProductId(Integer.parseInt(matcher.group(1)), manager.getToken());
             userList.forEach(i -> manager.inputOutput.println(i.getFullName()));
             return;
@@ -163,6 +165,9 @@ public class ManageProductForSellerView extends View {
         manager.logoutInAllPages();
     }
 
+    protected void viewRequestStatus() {
+        //todo
+    }
 
     protected void sorting() {
         productFilterAndSort.run();
@@ -173,7 +178,17 @@ public class ManageProductForSellerView extends View {
     }
 
     protected void help() {
-
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("view [productId]");
+        commandList.add("view buyers [productId]");
+        commandList.add("edit [productId]");
+        commandList.add("sorting");
+        commandList.add("filtering");
+        commandList.add("show all");
+        commandList.add("logout");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
 }

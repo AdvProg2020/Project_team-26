@@ -53,6 +53,11 @@ public enum ManageProductForSellerViewValidCommands {
         public void goToFunction(ManageProductForSellerView page) {
             page.help();
         }
+    },Request("view\\s+request") {
+        @Override
+        public void goToFunction(ManageProductForSellerView page) {
+            page.help();
+        }
     };
     private final Pattern commandPattern;
 

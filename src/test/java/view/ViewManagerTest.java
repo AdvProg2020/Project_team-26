@@ -64,10 +64,10 @@ public class ViewManagerTest {
 
     @Test
     void checkNumber() {
-        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098765432"), true);
-        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098y765432"), false);
-        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098765.432"), false);
-        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("-098765432"), false);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098765432", true), true);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098y765432", true), false);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("098765.432", true), false);
+        Assertions.assertEquals(manager.checkTheInputIsIntegerOrLong("-098765432", true), false);
         Assertions.assertEquals(manager.checkTheInputIsDouble("098765432"), true);
         Assertions.assertEquals(manager.checkTheInputIsDouble("-098765432"), false);
         Assertions.assertEquals(manager.checkTheInputIsDouble("8934.839"), true);
@@ -79,38 +79,41 @@ public class ViewManagerTest {
         Assertions.assertEquals(mainPageView.getInput(), "hi");
         Assertions.assertEquals(mainPageView.getManager(), manager);
     }
+
     @Test
-    void logOut(){
+    void logOut() {
         manager.setUserLoggedIn(true);
         manager.setToken("admin");
         manager.logoutInAllPages();
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
         manager.setUserLoggedIn(false);
         manager.setToken("admin");
         manager.logoutInAllPages();
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
     }
+
     @Test
-    void register(){
+    void register() {
         manager.setUserLoggedIn(true);
         manager.setToken("admin");
         manager.logoutInAllPages();
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
         manager.setUserLoggedIn(false);
         manager.setToken("admin");
         manager.logoutInAllPages();
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
     }
+
     @Test
-    void login(){
+    void login() {
         manager.setUserLoggedIn(true);
         manager.setToken("admin");
         manager.logoutInAllPages();
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
         manager.setUserLoggedIn(false);
         manager.setToken("admin");
         manager.logoutInAllPages();
-        Assertions.assertEquals(false,manager.getIsUserLoggedIn());
+        Assertions.assertEquals(false, manager.getIsUserLoggedIn());
     }
 
 }
