@@ -1,6 +1,5 @@
 package controller.product;
 
-import controller.ProductController;
 import controller.account.AuthenticationController;
 import exception.*;
 import model.Session;

@@ -1,6 +1,6 @@
 package view.manager.users;
 
-import controller.interfaces.account.IShowUserController;
+import interfaces.account.IShowUserController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
@@ -8,7 +8,6 @@ import view.*;
 import view.main.AuthenticationValidCommands;
 import view.main.AuthenticationView;
 import view.main.MainPageView;
-import view.manager.ValidCommandsForManagerAccount;
 
 import java.util.EnumSet;
 import java.util.regex.Matcher;

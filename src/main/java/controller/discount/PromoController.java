@@ -1,6 +1,6 @@
 package controller.discount;
 
-import controller.interfaces.discount.IPromoController;
+import interfaces.discount.IPromoController;
 import exception.*;
 import model.*;
 import repository.PromoRepository;

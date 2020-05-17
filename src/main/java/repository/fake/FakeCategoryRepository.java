@@ -10,11 +10,11 @@ import java.util.stream.Collectors;
 
 public class FakeCategoryRepository implements CategoryRepository {
     List<Category> allCategory;
-    public int lastId = 5;
+    public int lastId = 1;
 
     public FakeCategoryRepository() {
         this.allCategory = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 20; i++) {
             save(new Category("" + i + 1));
             Category category = allCategory.get(i);
             category.setParent(getByName("" + i % 3 + 1));

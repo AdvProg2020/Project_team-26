@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class FakeRatingRepository implements RatingRepository {
 
     List<Rate> allRatings;
-    public static int lastId = 5;
+    public int lastId = 5;
     private RepositoryContainer repositoryContainer;
     private FakeUserRepository fakeUserRepository;
     private FakeProductRepository fakeProductRepository;

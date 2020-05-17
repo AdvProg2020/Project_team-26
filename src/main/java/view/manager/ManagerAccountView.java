@@ -1,9 +1,9 @@
 package view.manager;
 
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.account.IUserInfoController;
-import controller.interfaces.discount.IPromoController;
-import controller.interfaces.product.IProductController;
+import interfaces.account.IShowUserController;
+import interfaces.account.IUserInfoController;
+import interfaces.discount.IPromoController;
+import interfaces.product.IProductController;
 import exception.*;
 import model.Promo;
 import view.*;

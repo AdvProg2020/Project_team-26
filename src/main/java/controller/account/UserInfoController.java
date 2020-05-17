@@ -1,8 +1,7 @@
 package controller.account;
 
-import controller.interfaces.account.IUserInfoController;
+import interfaces.account.IUserInfoController;
 import exception.*;
-import javassist.compiler.NoFieldException;
 import model.Role;
 import model.Seller;
 import model.Session;

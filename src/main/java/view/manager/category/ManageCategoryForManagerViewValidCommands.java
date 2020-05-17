@@ -36,7 +36,7 @@ public enum ManageCategoryForManagerViewValidCommands {
     ViewSubCategories("view\\s+sub\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageCategoryForManagerView page) {
-            page.viewSubCategories(Pattern.compile(RemoveCategoryForManager.toString()).matcher(page.getInput()));
+            page.viewSubCategories(Pattern.compile(ViewSubCategories.toString()).matcher(page.getInput()));
         }
     },
     Sort("sorting") {

@@ -1,4 +1,4 @@
-package controller.interfaces.product;
+package interfaces.product;
 
 import exception.*;
 import model.Product;

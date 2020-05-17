@@ -1,6 +1,6 @@
 package controller.discount;
 
-import controller.interfaces.discount.IOffController;
+import interfaces.discount.IOffController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.InvalidIdException;

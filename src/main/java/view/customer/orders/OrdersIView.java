@@ -1,7 +1,7 @@
 package view.customer.orders;
 
-import controller.interfaces.order.IOrderController;
-import controller.interfaces.review.IRatingController;
+import interfaces.order.IOrderController;
+import interfaces.review.IRatingController;
 import exception.*;
 import model.Order;
 import view.*;

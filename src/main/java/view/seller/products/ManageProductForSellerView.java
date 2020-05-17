@@ -1,11 +1,17 @@
 package view.seller.products;
 
-import controller.interfaces.order.IOrderController;
-import controller.interfaces.product.IProductController;
+import exception.*;
+import interfaces.category.ICategoryController;
+import interfaces.order.IOrderController;
+import interfaces.product.IProductController;
+import model.Category;
+import model.Product;
+import model.ProductSeller;
 import model.User;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -15,6 +21,7 @@ public class ManageProductForSellerView extends View {
     private IProductController productController;
     private ProductFilterAndSort productFilterAndSort;
     private IOrderController orderController;
+    ICategoryController categoryController;
     private User thisUser;
 
 
@@ -46,9 +53,91 @@ public class ManageProductForSellerView extends View {
     }
 
 
-    protected void edit() {//todo
+    protected void edit(Matcher matcher) {
+        Product product = null;
+        try {
+            product = productController.getProductById(Integer.parseInt(matcher.group(1)), manager.getToken()).clone();
+            ProductSeller productSeller = productController.getProductSellerByIdAndSellerId(product.getId(), manager.getToken()).clone();
+            String field = "";
+            while (!field.matches("back|finish")) {
+                manager.inputOutput.println("type field you want to edit,[name,price,description,brand,category,number]");
+                field = manager.inputOutput.nextLine();
+                switch (field) {
+                    case "name":
+                        changeStringField(field, product);
+                        break;
+                    case "description":
+                        changeStringField(field, product);
+                        break;
+                    case "brand":
+                        changeStringField(field, product);
+                        break;
+                    case "number":
+                        changeNumber(field, product, productSeller);
+                        break;
+                    case "category":
+                        changeCategory(product);
+                        break;
+                    case "price":
+                        changeNumber(field, product, productSeller);
+                        break;
+                }
+            }
+            productController.editProduct(product.getId(), product, manager.getToken());
+        } catch (NoObjectIdException | NoAccessException | InvalidIdException | NotSellerException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
+        }
+    }
 
+    private void changeCategory(Product product) {
+        String name = manager.inputOutput.nextLine();
+        try {
+            Category category = categoryController.getCategoryByName(name, manager.getToken());
+            product.setCategory(category);
+        } catch (InvalidIdException e) {
+            manager.inputOutput.println(e.getMessage());
+        }
+    }
 
+    private void changeNumber(String field, Product product, ProductSeller productSeller) {
+        manager.inputOutput.println("enter replace for : " + field);
+        String replace = manager.inputOutput.nextLine();
+        if (manager.checkTheInputIsInteger(replace)) {
+            if (product.getSellerList().contains(productSeller))
+                product.getSellerList().remove(productSeller);
+            else {
+                manager.inputOutput.println("you are not this product seller");
+                return;
+            }
+            switch (field) {
+                case "number":
+                    productSeller.setRemainingItems(Integer.parseInt(replace));
+                    break;
+                case "price":
+                    productSeller.setPrice(Long.parseLong(replace));
+            }
+        }
+    }
+
+    private void changeStringField(String field, Product product) {
+        manager.inputOutput.println("type replace : " + field);
+        String replace = manager.inputOutput.nextLine();
+        switch (field) {
+            case "name":
+                product.setName(replace);
+                break;
+            case "brand":
+                product.setBrand(replace);
+                break;
+            case "description":
+                product.setDescription(replace);
+                break;
+        }
     }
 
     protected void showAll() {
@@ -85,7 +174,7 @@ public class ManageProductForSellerView extends View {
     }
 
     protected void help() {
-        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
+
     }
 
 }

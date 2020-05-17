@@ -1,7 +1,7 @@
 package view.seller.offs;
 
-import controller.interfaces.discount.IOffController;
-import controller.interfaces.product.IProductController;
+import interfaces.discount.IOffController;
+import interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.ControllerContainer;
@@ -164,7 +164,7 @@ public class ManageOffForSeller extends View {
 
     }
 
-    protected void editOff() {//todo
+    protected void editOff() {
 
     }
 

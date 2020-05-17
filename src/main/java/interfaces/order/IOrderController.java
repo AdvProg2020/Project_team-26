@@ -1,15 +1,13 @@
-package controller.interfaces.order;
+package interfaces.order;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.InvalidIdException;
 import exception.NoObjectIdException;
 import model.Order;
-import model.Product;
 import model.User;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public interface IOrderController {
 

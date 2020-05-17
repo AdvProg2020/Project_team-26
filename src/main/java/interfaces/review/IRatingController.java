@@ -1,4 +1,4 @@
-package controller.interfaces.review;
+package interfaces.review;
 
 import exception.*;
 

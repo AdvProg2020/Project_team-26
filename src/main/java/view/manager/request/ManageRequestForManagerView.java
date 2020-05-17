@@ -1,6 +1,6 @@
 package view.manager.request;
 
-import controller.interfaces.request.IRequestController;
+import interfaces.request.IRequestController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
@@ -9,11 +9,8 @@ import model.RequestType;
 import view.*;
 import view.filterAndSort.RequestSort;
 import view.main.MainPageView;
-import view.manager.users.ValidCommandsForManageUsersForManagerView;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.EnumSet;
-import java.util.List;
 import java.util.regex.Matcher;
 
 public class ManageRequestForManagerView extends View {

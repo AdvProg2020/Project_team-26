@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class FakePromoRepository implements PromoRepository {
 
-    private static int lastId = 5;
+    private int lastId = 5;
     private List<Promo> allPromos;
     private FakeUserRepository userRepository;
     private RepositoryContainer repositoryContainer;
@@ -22,9 +22,13 @@ public class FakePromoRepository implements PromoRepository {
     public FakePromoRepository() {
         userRepository = new FakeUserRepository();
         allPromos = new ArrayList<>();
-        for(int i = 0; i < 10; i++) {
-            save(new Promo("Promo" + i,(Customer)userRepository.getUserByUsername("test8")));
+        for (int i = 0; i < 10; i++) {
+            save(new Promo("Promo" + i, (Customer) userRepository.getUserByUsername("test8")));
         }
+        Promo promo = new Promo("Promo" + 788, (Customer) userRepository.getUserByUsername("test8"));
+        save(promo);
+        promo.setId(7878);
+        save(promo);
     }
 
     @Override
@@ -51,15 +55,18 @@ public class FakePromoRepository implements PromoRepository {
     @Override
     public void save(Promo object) {
         object.setMaxValidUse(10);
-        lastId++;
-        object.setId(lastId);
+        if (object.getId() == 0) {
+            lastId++;
+            object.setId(lastId);
+        }
+        allPromos.remove(object);
         allPromos.add(object);
     }
 
     @Override
     public void delete(int id) throws NoObjectIdException {
         for (Promo promo : allPromos) {
-            if(promo.getId() == id) {
+            if (promo.getId() == id) {
                 allPromos.remove(promo);
                 return;
             }

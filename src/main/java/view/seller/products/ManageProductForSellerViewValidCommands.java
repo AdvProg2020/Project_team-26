@@ -19,7 +19,7 @@ public enum ManageProductForSellerViewValidCommands {
             page.showBuyer(Pattern.compile(ViewBuyersOfProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    EditProductWithId("edit") {
+    EditProductWithId("edit\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageProductForSellerView page) {
             page.edit();

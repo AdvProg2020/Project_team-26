@@ -1,7 +1,7 @@
 package view.products.all;
 
-import controller.interfaces.category.ICategoryController;
-import controller.interfaces.product.IProductController;
+import interfaces.category.ICategoryController;
+import interfaces.product.IProductController;
 import exception.InvalidIdException;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;

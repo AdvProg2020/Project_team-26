@@ -1,12 +1,10 @@
 package view;
 
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.account.IUserInfoController;
+import interfaces.account.IShowUserController;
+import interfaces.account.IUserInfoController;
 import exception.*;
-import model.User;
 
 import java.util.ArrayList;
-import java.util.regex.Matcher;
 import java.util.stream.Collectors;
 
 public class UserView {

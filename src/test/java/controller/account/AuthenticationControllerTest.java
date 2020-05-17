@@ -29,7 +29,7 @@ public class AuthenticationControllerTest {
     public void registerTest() throws InvalidTokenException, InvalidFormatException, NoAccessException, InvalidAuthenticationException, PasswordIsWrongException, AuthenticationException, AlreadyLoggedInException {
         /**Exception Tests**/
         Exception ex = assertThrows(NoAccessException.class, () -> authenticationController.register(
-                new Account("AryaRezaei","1234",Role.ADMIN),token));
+                new Account("AryaRezaei","1234",Role.ADMIN,"a@yahoo.com"),token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
         ex = assertThrows(InvalidFormatException.class, () -> authenticationController.register(
@@ -41,22 +41,22 @@ public class AuthenticationControllerTest {
         Assertions.assertEquals(ex.getMessage(),"Username format is incorrect.");
 
         ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.register(
-                new Account("test1","1234",Role.CUSTOMER),token));
+                new Account("test1","1234",Role.CUSTOMER,"niga@yahoo.com"),token));
         Assertions.assertEquals(ex.getMessage(),"Username is already taken.");
 
         ex = assertThrows(NotLoggedINException.class, () -> authenticationController.logout(token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
         /**End of Exception Tests**/
 
-        authenticationController.register(new Account("Arya","1234",Role.SELLER),token);
+        authenticationController.register(new Account("Arya","1234",Role.SELLER,"h@yahoo.com"),token);
         Assertions.assertEquals("Arya",userRepository.getUserByUsername("Arya").getUsername());
-        authenticationController.register(new Account("Tataloo","124",Role.CUSTOMER),token);
+        authenticationController.register(new Account("Tataloo","124",Role.CUSTOMER,"h2@yahoo.com"),token);
         Assertions.assertEquals("Tataloo",userRepository.getUserByUsername("Tataloo").getUsername());
 
         /** Logging in and then doing stuff**/
 
         authenticationController.login("test1","password1",token);
-        authenticationController.register(new Account("Admin","admin",Role.ADMIN),token);
+        authenticationController.register(new Account("Admin","admin",Role.ADMIN,"a@yahoo.com"),token);
         Assertions.assertEquals("Admin",userRepository.getUserByUsername("Admin").getUsername());
 
     }

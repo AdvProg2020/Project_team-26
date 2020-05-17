@@ -1,13 +1,13 @@
 package view;
 
-import controller.ProductController;
+import controller.product.ProductController;
 import controller.RequestController;
 import controller.SessionController;
 import controller.account.AuthenticationController;
 import controller.account.ShowUserController;
 import controller.account.UserInfoController;
 import controller.cart.CartController;
-import controller.category.CategoryController;
+import controller.product.CategoryController;
 import controller.discount.OffController;
 import controller.discount.PromoController;
 import controller.order.OrderController;

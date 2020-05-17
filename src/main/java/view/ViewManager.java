@@ -1,7 +1,7 @@
 package view;
 
-import controller.interfaces.product.IProductController;
-import controller.interfaces.session.ISessionController;
+import interfaces.product.IProductController;
+import interfaces.session.ISessionController;
 import exception.InvalidIdException;
 import model.Product;
 import view.main.AuthenticationView;

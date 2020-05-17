@@ -1,6 +1,5 @@
 package controller.product;
 
-import controller.category.CategoryController;
 import exception.*;
 import model.Category;
 import model.Product;
@@ -31,9 +30,9 @@ public class CategoryControllerTest {
     void removeACategory() throws InvalidIdException, InvalidTokenException, NoAccessException, NoObjectIdException {
         setup();
         List<Category> categories = new ArrayList<>();
-        Category category = categoryController.getCategory(19, "admin");
+        Category category = categoryController.getCategory(6, "admin");
         categoryController.getAllCategories(0, "admin").forEach(i -> categories.add(i.clone()));
-        categoryController.removeACategory(19, 0, "admin");
+        categoryController.removeACategory(7, 0, "admin");
         List<Integer> ids = new ArrayList<>();
         List<Integer> afterids = new ArrayList<>();
         categoryController.getAllCategories(0, "admin").forEach(i -> ids.add(i.getId()));

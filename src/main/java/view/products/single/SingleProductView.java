@@ -1,8 +1,8 @@
 package view.products.single;
 
-import controller.interfaces.cart.ICartController;
-import controller.interfaces.product.IProductController;
-import controller.interfaces.review.ICommentController;
+import interfaces.cart.ICartController;
+import interfaces.product.IProductController;
+import interfaces.review.ICommentController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -10,13 +10,10 @@ import exception.NotEnoughProductsException;
 import model.Product;
 import model.ProductSeller;
 import view.*;
-import view.main.AuthenticationView;
-import view.main.MainPageView;
 import view.offs.AllOffView;
 
 import java.util.*;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class SingleProductView extends View {
     private EnumSet<SingleProductViewValidCommands> validCommands;

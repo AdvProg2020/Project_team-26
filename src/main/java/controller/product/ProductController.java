@@ -1,6 +1,6 @@
-package controller;
+package controller.product;
 
-import controller.interfaces.product.IProductController;
+import interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import repository.ProductRepository;

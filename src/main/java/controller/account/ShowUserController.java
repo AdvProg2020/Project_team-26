@@ -1,6 +1,6 @@
 package controller.account;
 
-import controller.interfaces.account.IShowUserController;
+import interfaces.account.IShowUserController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;

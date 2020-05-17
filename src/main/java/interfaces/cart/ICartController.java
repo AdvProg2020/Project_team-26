@@ -1,4 +1,4 @@
-package controller.interfaces.cart;
+package interfaces.cart;
 
 import exception.*;
 import model.Cart;

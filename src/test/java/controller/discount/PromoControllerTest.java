@@ -47,11 +47,11 @@ public class PromoControllerTest {
     public void getPromoCodeTemplateByCodeTest() throws InvalidIdException, NotLoggedINException {
 
         /** Exception Tests **/
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.getPromoCodeTemplateByCode("base dg",token));
-        Assertions.assertEquals(ex.getMessage(),"there is no promo by base dg");
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.getPromoCodeTemplateByCode("base dg", token));
+        Assertions.assertEquals(ex.getMessage(), "there is no promo by base dg");
         /** Exception Tests **/
 
-        Assertions.assertEquals(promoController.getPromoCodeTemplateByCode("Promo1",token).getPromoCode(),"Promo1");
+        Assertions.assertEquals(promoController.getPromoCodeTemplateByCode("Promo1", token).getPromoCode(), "Promo1");
 
     }
 
@@ -59,33 +59,33 @@ public class PromoControllerTest {
     public void getPromoCodeTemplateByIdTest() throws InvalidIdException, NotLoggedINException {
 
         /** Exception Tests **/
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.getPromoCodeTemplateById(120,token));
-        Assertions.assertEquals(ex.getMessage(),"there is no promo by 120");
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.getPromoCodeTemplateById(120, token));
+        Assertions.assertEquals(ex.getMessage(), "there is no promo by 120");
         /** Exception Tests **/
 
-        Assertions.assertEquals(promoController.getPromoCodeTemplateById(6,token).getPromoCode(),"Promo0");
+        Assertions.assertEquals(promoController.getPromoCodeTemplateById(6, token).getPromoCode(), "Promo0");
     }
 
     @Test
     public void removePromoCodeTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, InvalidIdException, NoObjectIdException, NoAccessException {
 
         /**Exception Tests **/
-        Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> promoController.removePromoCode(12,token));
-        Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
+        Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> promoController.removePromoCode(12, token));
+        Assertions.assertEquals(ex.getMessage(), "You are not logged in.");
 
-        authenticationController.login("test8","password8",token);
-        ex = Assertions.assertThrows(NoAccessException.class, () -> promoController.removePromoCode(12,token));
-        Assertions.assertEquals(ex.getMessage(),"only manager can remove the promo");
+        authenticationController.login("test8", "password8", token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> promoController.removePromoCode(12, token));
+        Assertions.assertEquals(ex.getMessage(), "only manager can remove the promo");
         authenticationController.logout(token);
 
-        authenticationController.login("test1","password1",token);
-        ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removePromoCode(120,token));
-        Assertions.assertEquals(ex.getMessage(),"there is no promo by 120");
+        authenticationController.login("test1", "password1", token);
+        ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removePromoCode(120, token));
+        Assertions.assertEquals(ex.getMessage(), "there is no promo by 120");
         /** Exception Tests **/
 
-        Assertions.assertEquals(promoRepository.getByCode("Promo0").getPromoCode(),"Promo0");
-        promoController.removePromoCode(6,token);
-        Assertions.assertEquals(promoRepository.getByCode("Promo0"),null);
+        Assertions.assertEquals(promoRepository.getByCode("Promo0").getPromoCode(), "Promo0");
+        promoController.removePromoCode(6, token);
+        Assertions.assertEquals(promoRepository.getByCode("Promo0"), null);
     }
 
 
@@ -93,36 +93,36 @@ public class PromoControllerTest {
     public void createPromoTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, ObjectAlreadyExistException, NoAccessException, NotLoggedINException {
 
         /**Exception Tests **/
-        authenticationController.login("test1","password1",token);
-        Promo promo = new Promo("Promo0",null);
-        Promo promo2 = new Promo("Promo200",null);
-        Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> promoController.createPromoCode(promo,token));
+        authenticationController.login("test1", "password1", token);
+        Promo promo = new Promo("Promo0", null);
+        Promo promo2 = new Promo("Promo200", null);
+        Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> promoController.createPromoCode(promo, token));
         /**Exception Tests **/
 
-        promoController.createPromoCode(promo2,token);
-        Assertions.assertEquals(promoRepository.getByCode("Promo200").getPromoCode(),"Promo200");
+        promoController.createPromoCode(promo2, token);
+        Assertions.assertEquals(promoRepository.getByCode("Promo200").getPromoCode(), "Promo200");
     }
 
     @Test
     public void setPercentTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException, InvalidDiscountPercentException {
 
         /** Exception Tests **/
-        authenticationController.login("test1","password1",token);
-        Exception ex = Assertions.assertThrows(InvalidDiscountPercentException.class, () -> promoController.setPercent(6,200,token));
-        Assertions.assertEquals(ex.getMessage(),"the percent can't exceed 100%");
+        authenticationController.login("test1", "password1", token);
+        Exception ex = Assertions.assertThrows(InvalidDiscountPercentException.class, () -> promoController.setPercent(6, 200, token));
+        Assertions.assertEquals(ex.getMessage(), "the percent can't exceed 100%");
         /** Exception Tests **/
 
-        promoController.setPercent(6,20,token);
-        Assertions.assertEquals(promoRepository.getByCode("Promo0").getPercent(),20.0);
+        promoController.setPercent(6, 20, token);
+        Assertions.assertEquals(promoRepository.getByCode("Promo0").getPercent(), 20.0);
 
     }
 
     @Test
     public void setMaxDiscountTest() throws InvalidIdException, NoAccessException, InvalidTokenException, NotLoggedINException, InvalidFormatException, PasswordIsWrongException, InvalidAuthenticationException {
 
-        authenticationController.login("test1","password1",token);
-        promoController.setMaxDiscount(6,200,token);
-        Assertions.assertEquals(promoRepository.getByCode("Promo0").getMaxDiscount(),200);
+        authenticationController.login("test1", "password1", token);
+        promoController.setMaxDiscount(6, 200, token);
+        Assertions.assertEquals(promoRepository.getByCode("Promo0").getMaxDiscount(), 200);
     }
 
     @Test
@@ -130,13 +130,13 @@ public class PromoControllerTest {
 
         /**Exception Tests **/
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> promoController.getAllPromoCodeForCustomer(
-                "asd",true,token));
-        Assertions.assertEquals(ex.getMessage(),"you are not logged in");
+                "asd", true, token));
+        Assertions.assertEquals(ex.getMessage(), "you are not logged in");
 
-        authenticationController.login("test5","password5",token);
+        authenticationController.login("test5", "password5", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> promoController.getAllPromoCodeForCustomer(
-                "asd",true,token));
-        Assertions.assertEquals(ex.getMessage(),"only customer");
+                "asd", true, token));
+        Assertions.assertEquals(ex.getMessage(), "only customer");
         /**Exception Tests**/
 
     }
@@ -144,43 +144,42 @@ public class PromoControllerTest {
     @Test
     public void setTimeTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
 
-        authenticationController.login("test1","password1",token);
-        promoController.setTime(6, new Date(),"start",token);
-        promoController.setTime(7,new Date(), "end",token);
+        authenticationController.login("test1", "password1", token);
+        promoController.setTime(6, new Date(), "start", token);
+        promoController.setTime(7, new Date(), "end", token);
 
     }
 
 
     @Test
-    public void removeCustomerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NotCustomerException, NoAccessException, NotLoggedINException {
+    public void removeCustomerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NotCustomerException, NoAccessException, NotLoggedINException, ObjectAlreadyExistException {
         /** Exception Tests **/
-        authenticationController.login("test1","password1",token);
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removeCustomer(6,120,token));
-        Assertions.assertEquals(ex.getMessage(),"no customer exist By 120 id");
+        authenticationController.login("test1", "password1", token);
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removeCustomer(6, 120, token));
+        Assertions.assertEquals(ex.getMessage(), "no customer exist By 120 id");
 
-        ex = Assertions.assertThrows(NotCustomerException.class, () -> promoController.removeCustomer(6,1,token));
-        Assertions.assertEquals(ex.getMessage(),"You must choose a customer");
+        ex = Assertions.assertThrows(NotCustomerException.class, () -> promoController.removeCustomer(6, 1, token));
+        Assertions.assertEquals(ex.getMessage(), "You must choose a customer");
 
-        ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removeCustomer(6,9,token));
-        Assertions.assertEquals(ex.getMessage(),"the promo doesnt contain 9 id");
+        ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removeCustomer(6, 9, token));
+        Assertions.assertEquals(ex.getMessage(), "the promo doesnt contain 9 id");
         /** Exception Tests **/
 
+        promoController.addCustomer(7878, 8, token);
+        promoController.removeCustomer(7878 ,8, token);
+        Assertions.assertEquals(promoRepository.getByCode("Promo0").getCustomers().contains(userRepository.getUserByUsername("test8")), false);
 
-        promoController.removeCustomer(6,8,token);
-        Assertions.assertEquals(promoRepository.getByCode("Promo0").getCustomers().contains(userRepository.getUserByUsername("test8")),false);
-        
     }
 
 
     @Test
     public void addCustomerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException {
         /** Exception Tests**/
-        authenticationController.login("test1","password1",token);
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.addCustomer(6,120,token));
-        Assertions.assertEquals(ex.getMessage(),"no customer exists By 120 id");
+        authenticationController.login("test1", "password1", token);
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.addCustomer(6, 120, token));
+        Assertions.assertEquals(ex.getMessage(), "no customer exists By 120 id");
 
     }
-
 
 
 }

@@ -129,9 +129,22 @@ public class Product {
 
     public ProductRequest createRequest(RequestType requestType) {
         ProductRequest productRequest = new ProductRequest(name, brand, description, category, requestType);
-        for(ProductSeller seller : sellerList) {
+        for (ProductSeller seller : sellerList) {
             productRequest.addSeller(seller.createProductSellerRequest(requestType));
         }
         return productRequest;
+    }
+
+    public void setSellerList(List<ProductSeller> sellerList) {
+        this.sellerList = sellerList;
+    }
+
+    @Override
+    public Product clone() {
+        Product product = new Product(this.name, this.brand, this.description);
+        product.setCategory(category);
+        product.setId(id);
+        product.setSellerList(sellerList);
+        return product;
     }
 }

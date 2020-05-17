@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 
 public class FakeProductSellerRepository implements ProductSellerRepository {
     List<ProductSeller> allProductSellers ;
-    public static int lastId = 5;
+    public int lastId = 5;
     private FakeProductRepository productRepository;
     private FakeUserRepository userRepository;
 

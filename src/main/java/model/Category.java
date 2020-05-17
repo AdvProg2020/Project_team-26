@@ -37,7 +37,7 @@ public class Category {
 
     public Category(String name) {
         this.name = name;
-//        features = new ArrayList<CategoryFeature>();
+        features = new ArrayList<CategoryFeature>();
         subCategory = new ArrayList<Category>();
         products = new ArrayList<Product>();
     }

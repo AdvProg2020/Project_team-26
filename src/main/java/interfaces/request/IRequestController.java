@@ -1,4 +1,4 @@
-package controller.interfaces.request;
+package interfaces.request;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;

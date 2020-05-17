@@ -1,8 +1,8 @@
 package view.customer;
 
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.account.IUserInfoController;
-import controller.interfaces.discount.IPromoController;
+import interfaces.account.IShowUserController;
+import interfaces.account.IUserInfoController;
+import interfaces.discount.IPromoController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;

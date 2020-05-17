@@ -1,10 +1,10 @@
 package view.seller;
 
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.account.IUserInfoController;
-import controller.interfaces.category.ICategoryController;
-import controller.interfaces.order.IOrderController;
-import controller.interfaces.product.IProductController;
+import interfaces.account.IShowUserController;
+import interfaces.account.IUserInfoController;
+import interfaces.category.ICategoryController;
+import interfaces.order.IOrderController;
+import interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.*;

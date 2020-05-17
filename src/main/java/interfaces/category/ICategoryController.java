@@ -1,4 +1,4 @@
-package controller.interfaces.category;
+package interfaces.category;
 
 import exception.*;
 import exception.InvalidIdException;

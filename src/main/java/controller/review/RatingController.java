@@ -1,6 +1,6 @@
 package controller.review;
 
-import controller.interfaces.review.IRatingController;
+import interfaces.review.IRatingController;
 import exception.*;
 import model.*;
 import repository.ProductRepository;

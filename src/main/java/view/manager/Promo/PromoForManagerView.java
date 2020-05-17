@@ -1,6 +1,6 @@
 package view.manager.Promo;
 
-import controller.interfaces.discount.IPromoController;
+import interfaces.discount.IPromoController;
 import exception.*;
 import model.Promo;
 import view.*;

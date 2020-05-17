@@ -1,9 +1,7 @@
-package controller.interfaces.account;
+package interfaces.account;
 
 import controller.account.Account;
 import exception.*;
-
-import javax.naming.AuthenticationException;
 
 public interface IAuthenticationController {
 

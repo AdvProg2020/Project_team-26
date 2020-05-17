@@ -6,11 +6,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "product_seller")
-@SecondaryTable(name = "product_seller_off", pkJoinColumns=@PrimaryKeyJoinColumn(name="product_seller_id"))
+@SecondaryTable(name = "product_seller_off", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_seller_id"))
 public class ProductSeller {
 
     @Id
-    @Column(name="product_seller_id")
+    @Column(name = "product_seller_id")
     private int id;
 
     @ManyToOne
@@ -35,6 +35,12 @@ public class ProductSeller {
     }
 
     public ProductSeller(int id, Product product, int remainingItems) {
+        this.id = id;
+        this.product = product;
+        this.remainingItems = remainingItems;
+    }
+
+    public ProductSeller(int id, Product product, int remainingItems, long price, long priceInOff) {
         this.id = id;
         this.product = product;
         this.remainingItems = remainingItems;
@@ -89,5 +95,11 @@ public class ProductSeller {
 
     public ProductSellerRequest createProductSellerRequest(RequestType requestType) {
         return new ProductSellerRequest(product, seller, price, remainingItems, requestType);
+    }
+
+    @Override
+    public ProductSeller clone() {
+        return new ProductSeller(this.id, this.product.clone(), this.remainingItems, this.price, this.priceInOff);
+
     }
 }

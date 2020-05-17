@@ -1,6 +1,6 @@
 package view.manager.category;
 
-import controller.interfaces.category.ICategoryController;
+import interfaces.category.ICategoryController;
 import exception.*;
 import model.Category;
 import model.CategoryFeature;
@@ -9,8 +9,8 @@ import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
 import view.filterAndSort.CategorySort;
-import view.products.all.AllProductsViewValidCommands;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -18,8 +18,8 @@ import java.util.regex.Matcher;
 public class ManageCategoryForManagerView extends View {
     private int currentCategory;
     private ICategoryController categoryController;
-    private   CategorySort categorySort;
-    private  EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
+    private CategorySort categorySort;
+    private EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
 
     public ManageCategoryForManagerView(ViewManager managerView) {
         super(managerView);
@@ -138,10 +138,19 @@ public class ManageCategoryForManagerView extends View {
     }
 
     protected void help() {
-        //todo
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("edit [id]");
+        commandList.add("show all");
+        commandList.add("sorting");
+        commandList.add("remove [id]");
+        commandList.add("view sub [id]");
+        commandList.add("add [name]");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
     protected void editCategoryForManager(Matcher matcher) {
+
         //todo
     }
 }
