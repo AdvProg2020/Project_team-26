@@ -9,6 +9,4 @@ public interface OrderRepository extends Repository<Order> {
     public List<Order> getAllCustomerOrders(int customerId);
 
     public List<Order> getAllSellerOrders(int sellerId);
-
-    public List<Order> getASingleSellerOrder(Seller seller, Order wantedOrder);
 }

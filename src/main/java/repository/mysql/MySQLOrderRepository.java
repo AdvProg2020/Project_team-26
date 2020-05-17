@@ -21,9 +21,4 @@ public class MySQLOrderRepository
     public List<Order> getAllSellerOrders(int sellerId) {
         return null;
     }
-
-    @Override
-    public List<Order> getASingleSellerOrder(Seller seller, Order wantedOrder) {
-        return null;
-    }
 }
