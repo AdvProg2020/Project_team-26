@@ -3,8 +3,10 @@ package repository;
 import model.Off;
 import model.OffItem;
 import model.OffRequest;
+import model.Product;
 
 import java.util.List;
+import java.util.Map;
 
 public interface OffRepository extends Repository<Off> {
     void addRequest(Off off);
@@ -16,6 +18,8 @@ public interface OffRepository extends Repository<Off> {
     void acceptRequest(int requestId);
 
     void rejectRequest(int requestId);
+
+    public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending);
 
     OffRequest getOffRequestById(int requestId);
 
