@@ -5,18 +5,22 @@ import controller.interfaces.discount.IOffController;
 import model.*;
 import repository.OffRepository;
 import repository.ProductRepository;
+import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class OffController implements IOffController {
     ProductRepository productRepository;
     private OffRepository offRepository;
+    private ProductSellerRepository productSellerRepository;
 
     public OffController(RepositoryContainer repositoryContainer) {
         productRepository = (ProductRepository)repositoryContainer.getRepository("ProductRepository");
         offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
+        productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
     }
 
 
@@ -108,7 +112,7 @@ public class OffController implements IOffController {
 
     @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
-        return null;
+        return offRepository.getAllProductWithOff(filter,sortFiled,isAscending);
     }
 
     @Override

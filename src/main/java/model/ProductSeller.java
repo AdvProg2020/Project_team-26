@@ -54,10 +54,6 @@ public class ProductSeller {
         return product;
     }
 
-    public void setPriceInOff(long price) {
-        this.priceInOff = price;
-    }
-
     public Seller getSeller() {
         return seller;
     }
@@ -82,6 +78,9 @@ public class ProductSeller {
     }
 
     public long getPriceInOff() {
+        if(priceInOff == null) {
+            return price;
+        }
         return priceInOff;
     }
 

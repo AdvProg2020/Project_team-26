@@ -13,6 +13,13 @@ public class OffRequest {
     private int id;
 
     @ManyToOne
+    @JoinColumn(name = "off_id")
+    private Off mainOff;
+
+    @Column(name = "request_time")
+    private Date requestTime;
+
+    @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "user_id")
     private Seller seller;
 
@@ -28,11 +35,31 @@ public class OffRequest {
     @Column(name = "request_type")
     private RequestType requestType;
 
+    @Column(name = "request_status")
+    private RequestStatus requestStatus;
+
     public OffRequest() {
+    }
+
+    public OffRequest(Seller seller, Date startDate, Date endDate, RequestType requestType) {
+        this.seller = seller;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.requestType = requestType;
+        requestTime = new Date();
+        requestStatus = RequestStatus.PENDING;
     }
 
     public int getId() {
         return id;
+    }
+
+    public Off getMainOff() {
+        return mainOff;
+    }
+
+    public Date getRequestTime() {
+        return requestTime;
     }
 
     public RequestType getRequestTpe() {
@@ -53,5 +80,13 @@ public class OffRequest {
 
     public List<OffItemRequest> getItems() {
         return items;
+    }
+
+    public void setMainOff(Off mainOff) {
+        this.mainOff = mainOff;
+    }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
     }
 }

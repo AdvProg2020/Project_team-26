@@ -24,6 +24,12 @@ public class OffItemRequest {
     public OffItemRequest() {
     }
 
+    public OffItemRequest(OffRequest offRequest, Product product, long priceInOff) {
+        this.offRequest = offRequest;
+        this.product = product;
+        this.priceInOff = priceInOff;
+    }
+
     public Product getProduct() {
         return product;
     }
