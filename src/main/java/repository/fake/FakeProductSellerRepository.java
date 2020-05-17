@@ -37,6 +37,16 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
     }
 
     @Override
+    public void editRequest(ProductSeller productSeller) {
+
+    }
+
+    @Override
+    public void deleteRequest(ProductSeller productSeller) {
+
+    }
+
+    @Override
     public void acceptRequest(int requestId) {
 
     }

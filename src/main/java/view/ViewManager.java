@@ -77,6 +77,8 @@ public class ViewManager {
     }
 
     public boolean checkTheInputIsIntegerOrLong(String input, boolean isLong) {
+        if (input.contains("-"))
+            return false;
         Matcher matcher = Pattern.compile("^\\d+$").matcher(input);
         if (matcher.find()) {
             if (isLong) {
@@ -101,6 +103,8 @@ public class ViewManager {
 
 
     public boolean checkTheInputIsDouble(String input) {
+        if (input.contains("-"))
+            return false;
         try {
             Double.parseDouble(input);
             return true;
@@ -211,6 +215,8 @@ public class ViewManager {
     }
 
     public boolean isValidNUmber(String input, boolean isDouble, boolean isLong) {
+        if (input.contains("-"))
+            return false;
         if (isDouble)
             return this.checkTheInputIsDouble(input);
         return this.checkTheInputIsIntegerOrLong(input, isLong);
