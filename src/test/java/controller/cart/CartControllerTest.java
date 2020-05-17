@@ -95,7 +95,7 @@ public class CartControllerTest {
         cartController.addOrChangeProduct(6, 1, token);
         Assertions.assertEquals(cartController.getAmountInCartBySellerId(6, token), 1);
 
-        Assertions.assertEquals(cartController.getToTalPrice(cartController.getCart(token), token), 12);
+        Assertions.assertEquals(cartController.getTotalPrice(cartController.getCart(token), token), 12);
 
     }
 

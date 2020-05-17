@@ -84,7 +84,7 @@ public class CartIView extends View {
     public void showTotalPriceToBuyer() {
         long price = 0;
         try {
-            price = cartController.getToTalPrice(this.cart, manager.getToken());
+            price = cartController.getTotalPrice(this.cart, manager.getToken());
             manager.inputOutput.println("total price is: " + price);
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");

@@ -128,7 +128,7 @@ public class CartController implements ICartController {
         }
     }
 
-    public long getToTalPrice(Cart cart, String token) throws InvalidTokenException {
+    public long getTotalPrice(Cart cart, String token) throws InvalidTokenException {
         long totalPrice = 0;
         for (ProductSeller productSeller : cart.getProducts().keySet()) {
             totalPrice += productSeller.getPrice();

@@ -11,7 +11,7 @@ public interface ICartController {
 
     Cart getCart(String token) throws InvalidTokenException;
 
-    long getToTalPrice(Cart cart, String token) throws InvalidTokenException;
+    long getTotalPrice(Cart cart, String token) throws InvalidTokenException;
 
     void setAddress(String address, String token) throws InvalidTokenException;
 
