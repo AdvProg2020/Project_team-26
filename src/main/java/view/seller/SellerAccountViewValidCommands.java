@@ -59,7 +59,7 @@ public enum SellerAccountViewValidCommands {
             page.allCategories();
         }
 
-    }, ShowSubCategoriesForSeller("show\\s+sub\\s+category (\\d+)") {
+    }, ShowSubCategoriesForSeller("sub (\\d+)") {
         @Override
         public void goToFunction(SellerAccountIView page) {
             page.subCategory(Pattern.compile(ShowSubCategoriesForSeller.toString()).matcher(page.getInput()));

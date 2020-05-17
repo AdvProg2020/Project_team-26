@@ -106,7 +106,7 @@ public class ManageProductForSellerView extends View {
     private void changeNumber(String field, Product product, ProductSeller productSeller) {
         manager.inputOutput.println("enter replace for : " + field);
         String replace = manager.inputOutput.nextLine();
-        if (manager.checkTheInputIsIntegerOrLong(replace)) {
+        if (manager.checkTheInputIsIntegerOrLong(replace, false)) {
             if (product.getSellerList().contains(productSeller))
                 product.getSellerList().remove(productSeller);
             else {
@@ -120,6 +120,7 @@ public class ManageProductForSellerView extends View {
                 case "price":
                     productSeller.setPrice(Long.parseLong(replace));
             }
+            product.getSellerList().add(productSeller);
         }
     }
 
@@ -152,7 +153,7 @@ public class ManageProductForSellerView extends View {
 
     protected void showBuyer(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             List<User> userList = orderController.getProductBuyerByProductId(Integer.parseInt(matcher.group(1)), manager.getToken());
             userList.forEach(i -> manager.inputOutput.println(i.getFullName()));
             return;

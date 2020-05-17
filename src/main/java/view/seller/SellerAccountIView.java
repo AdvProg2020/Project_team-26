@@ -14,6 +14,7 @@ import view.seller.products.ManageProductForSellerView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class SellerAccountIView extends View {
@@ -58,7 +59,7 @@ public class SellerAccountIView extends View {
                     break;
                 }
             }
-            if (isDone)
+            if (!isDone)
                 manager.inputOutput.println("invalid input");
         }
     }
@@ -77,7 +78,7 @@ public class SellerAccountIView extends View {
 
     protected void subCategory(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1),false)) {
             try {
                 categoryController.getAllCategories(Integer.parseInt(matcher.group(1)), manager.getToken()).
                         forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
@@ -192,8 +193,8 @@ public class SellerAccountIView extends View {
         manager.inputOutput.println("enter the number");
         String numbers = manager.inputOutput.nextLine();
         while (true) {
-            if (manager.checkTheInputIsIntegerOrLong(price)) {
-                if (manager.checkTheInputIsIntegerOrLong(numbers))
+            if (manager.checkTheInputIsIntegerOrLong(price, true)) {
+                if (manager.checkTheInputIsIntegerOrLong(numbers, false))
                     break;
                 else {
                     manager.inputOutput.println("please enter integer for number");
@@ -229,7 +230,7 @@ public class SellerAccountIView extends View {
     protected void removeProduct(Matcher matcher) {
         matcher.find();
         String id = matcher.group(1);
-        if (manager.checkTheInputIsIntegerOrLong(id)) {
+        if (manager.checkTheInputIsIntegerOrLong(id, false)) {
             try {
                 productController.removeProduct(Integer.parseInt(id), manager.getToken());
             } catch (InvalidIdException | NoAccessException e) {
@@ -260,7 +261,25 @@ public class SellerAccountIView extends View {
 
 
     protected void help() {
-        validCommands.forEach(validCommand -> manager.inputOutput.println(validCommand.toString()));
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("offs");
+        commandList.add("products");
+        commandList.add("view personal info");
+        commandList.add("edit");
+        commandList.add("view company information");
+        commandList.add("view sales history");
+        commandList.add("manage products");
+        commandList.add("add products");
+        commandList.add("remove product [id]");
+        commandList.add("show categories");
+        commandList.add("sub [id]");
+        commandList.add("view offs");
+        commandList.add("view balance");
+        commandList.add("logout");
+        commandList.add("sorting");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
 
