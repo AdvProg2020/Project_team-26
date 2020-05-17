@@ -82,4 +82,8 @@ public class Off {
     public void setItems(List<OffItem> items) {
         this.items = items;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

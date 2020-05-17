@@ -4,6 +4,7 @@ import controller.account.AuthenticationController;
 import controller.cart.CartController;
 import model.Session;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import repository.ProductSellerRepository;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
@@ -18,7 +19,7 @@ public class OffControllerTest {
     private String token;
     private AuthenticationController authenticationController;
     private CartController cartController;
-    private PromoController promoController;
+    private OffController offController;
 
     @BeforeEach
     public void setup() {
@@ -29,7 +30,17 @@ public class OffControllerTest {
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
-        promoController = new PromoController(repositoryContainer);
+        offController = new OffController(repositoryContainer);
     }
+
+
+    @Test
+    public void createNewOffTest() {
+        /** Exception Tests **/
+        a
+    }
+
+
+
 
 }

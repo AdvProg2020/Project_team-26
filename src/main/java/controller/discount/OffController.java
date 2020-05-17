@@ -1,10 +1,7 @@
 package controller.discount;
 
+import exception.*;
 import interfaces.discount.IOffController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.InvalidIdException;
-import exception.ObjectAlreadyExistException;
 import model.*;
 import repository.OffRepository;
 import repository.ProductRepository;
@@ -14,17 +11,19 @@ import java.util.List;
 import java.util.Map;
 
 public class OffController implements IOffController {
-    private OffRepository offRepository;
     ProductRepository productRepository;
+    private OffRepository offRepository;
 
     public OffController(RepositoryContainer repositoryContainer) {
 
     }
 
 
-    private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
+    private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         Session session = Session.getSession(token);
-        if (!(session.getLoggedInUser().getRole() == Role.SELLER))
+        if (session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You must be logged in.");
+        } else if (!(session.getLoggedInUser().getRole() == Role.SELLER))
             throw new NoAccessException(message);
     }
 
@@ -36,13 +35,13 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException {
+    public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "seller can create a off");
         offRepository.addRequest(newOff);
     }
 
     @Override
-    public void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException {
+    public void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
@@ -79,7 +78,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException {
+    public void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
@@ -95,7 +94,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void removeAOff(int id, String token) throws NoAccessException, InvalidIdException, InvalidTokenException {
+    public void removeAOff(int id, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller can remove off");
         getOffByIdWithCheck(id);
         offRepository.deleteRequest(id);
@@ -112,7 +111,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException {
+    public List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller");
         return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs();
     }
@@ -128,7 +127,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, InvalidIdException {
+    public void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, InvalidIdException, NotLoggedINException {
         checkAccessOfUser(token, "only seller");
         Off off = getOffByIdWithCheck(id);
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
