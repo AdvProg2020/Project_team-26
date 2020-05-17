@@ -2,6 +2,9 @@ package view;
 
 import org.hibernate.dialect.SybaseAnywhereDialect;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,11 +16,32 @@ public class InputOutput implements IO {
     public static List<String> output = new ArrayList<>();
     public static int outPutNumber = 0;
     public static String now;
+    String inputFile;
+    String fileName = "temp.txt";
+    BufferedWriter bufferedWriter;
+    FileWriter fileWriter;
+
+
+    public InputOutput() {
+        try {
+            fileWriter = new FileWriter(fileName);
+            bufferedWriter = new BufferedWriter(fileWriter);
+        } catch (IOException e) {
+            println(e.getMessage());
+        }
+    }
 
     @Override
     public String nextLine() {
         inputNumber++;
-        return input.get(inputNumber - 1);
+        inputFile = input.get(inputNumber - 1);
+        try {
+            bufferedWriter.write(inputFile);
+            bufferedWriter.newLine();
+        } catch (IOException e) {
+            println(e.getMessage());
+        }
+        return inputFile;
     }
 
     @Override
@@ -36,4 +60,5 @@ public class InputOutput implements IO {
     public static List<String> getOutput() {
         return output;
     }
+
 }

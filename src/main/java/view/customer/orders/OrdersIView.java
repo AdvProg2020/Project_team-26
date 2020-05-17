@@ -14,15 +14,15 @@ public class OrdersIView extends View {
     private EnumSet<OrdersViewValidCommands> validCommands;
     private IOrderController orderController;
     private IRatingController ratingController;
-    private OrderSort orderFilter;
+    private OrderSort orderSort;
 
 
     public OrdersIView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(OrdersViewValidCommands.class);
-        orderFilter = new OrderSort(manager);
+        orderSort = new OrderSort(manager);
         orderController = (IOrderController) manager.getController(ControllerContainer.Controller.OrderController);
-   ratingController = (IRatingController) manager.getController(ControllerContainer.Controller.RatingController);
+        ratingController = (IRatingController) manager.getController(ControllerContainer.Controller.RatingController);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class OrdersIView extends View {
 
     protected void showAll() {
         try {
-            orderController.getOrdersWithFilter(orderFilter.getFieldNameForSort(), orderFilter.isAscending(), manager.getToken()).forEach(order ->
+            orderController.getOrdersWithFilter(orderSort.getFieldNameForSort(), orderSort.isAscending(), manager.getToken()).forEach(order ->
                     manager.inputOutput.println("the order ID is " + order.getId() + " at " + order.getDate().toString() +
                             " with total price " + order.getTotalPrice()));
         } catch (NoAccessException e) {
@@ -95,11 +95,11 @@ public class OrdersIView extends View {
     }
 
     protected void sorting() {
-        orderFilter.run();
+        orderSort.run();
     }
 
     protected void filtering() {
-        orderFilter.run();
+        orderSort.run();
     }
 
     protected void help() {

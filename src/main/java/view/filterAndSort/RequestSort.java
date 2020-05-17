@@ -11,26 +11,8 @@ public class RequestSort extends Sort {
 
     @Override
     protected void init() {
-
+        sortField.put(1, "date");
     }
 
-    @Override
-    protected void showAvailableSort() {
 
-    }
-
-    @Override
-    protected void showCurrentSort() {
-
-    }
-
-    @Override
-    protected void disableSelectedSort() {
-
-    }
-
-    @Override
-    protected void sortWithAvailableSort(Matcher matcher) {
-
-    }
 }

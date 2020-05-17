@@ -28,6 +28,8 @@ public abstract class FilterAndSort extends View {
 
     @Override
     public void run() {
+        showAvailableFilter();
+        showAvailableSort();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             isDone = false;
@@ -44,15 +46,16 @@ public abstract class FilterAndSort extends View {
     }
 
     protected abstract void init();
-    public String getFieldNameForSort(){
+
+    public String getFieldNameForSort() {
         return fieldNameForSort;
     }
 
-    public boolean isAscending(){
+    public boolean isAscending() {
         return isAscending;
     }
 
-   abstract protected void disableSelectedFilter(Matcher matcher);/* {
+    abstract protected void disableSelectedFilter(Matcher matcher);/* {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
         if (chose >= filterFields.size()) {
@@ -78,11 +81,11 @@ public abstract class FilterAndSort extends View {
             filterForController.remove(filterFields.get(chose));
     }*/
 
-    abstract protected void showAvailableFilter() ;/*{
+    abstract protected void showAvailableFilter();/*{
         filterFields.forEach((number, filed) -> manager.inputOutput.println("" + number + ". " + filed));
     }*/
 
-    abstract protected void showCurrentFilters() ;/*{
+    abstract protected void showCurrentFilters();/*{
         filterForController.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
     }*/
 

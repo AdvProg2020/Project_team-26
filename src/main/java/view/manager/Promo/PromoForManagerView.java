@@ -121,7 +121,8 @@ public class PromoForManagerView extends View {
             manager.inputOutput.println(e.getMessage());
             manager.loginInAllPagesEssential();
         } catch (NotCustomerException e) {
-            manager.inputOutput.println(e.getMessage());}
+            manager.inputOutput.println(e.getMessage());
+        }
     }
 
     private void addCustomer(int promoCode, int customerId) {

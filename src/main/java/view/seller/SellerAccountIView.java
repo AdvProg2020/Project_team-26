@@ -8,7 +8,6 @@ import interfaces.product.IProductController;
 import exception.*;
 import model.*;
 import view.*;
-import view.filterAndSort.SellerSort;
 import view.seller.offs.ManageOffForSeller;
 import view.seller.products.ManageProductForSellerView;
 
@@ -71,7 +70,7 @@ public class SellerAccountIView extends View {
 
     protected void allCategories() {
         try {
-            categoryController.getAllCategoriesWithFilter(sellerSort.getFieldNameForSort(), sellerSort.isAscending(), 0, manager.getToken()).forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
+            categoryController.getAllCategories(0, manager.getToken()).forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
         } catch (InvalidIdException e) {
             manager.setTokenFromController(e.getMessage());
         }
@@ -81,8 +80,7 @@ public class SellerAccountIView extends View {
         matcher.find();
         if (manager.checkTheInputIsInteger(matcher.group(1))) {
             try {
-                categoryController.getAllCategoriesWithFilter(sellerSort.getFieldNameForSort(), sellerSort.isAscending(),
-                        Integer.parseInt(matcher.group(1)), manager.getToken()).
+                categoryController.getAllCategories(Integer.parseInt(matcher.group(1)), manager.getToken()).
                         forEach(i -> manager.inputOutput.println(i.getName() + " with id " + i.getId()));
             } catch (InvalidIdException e) {
                 manager.setTokenFromController(e.getMessage());

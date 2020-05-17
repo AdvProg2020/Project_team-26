@@ -135,6 +135,7 @@ public class ProductFilterAndSort extends FilterAndSort {
     }
 
     protected void showAvailableFilter() {
+        manager.inputOutput.println("filters:");
         filterFields.forEach((number, filed) -> manager.inputOutput.println("" + number + ". " + filed));
     }
 
@@ -143,6 +144,7 @@ public class ProductFilterAndSort extends FilterAndSort {
     }
 
     protected void showAvailableSort() {
+        manager.inputOutput.println("sorts:");
         sortField.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
     }
 

@@ -30,8 +30,6 @@ public interface ICategoryController {
 
     void getExceptionOfIfCategoryExist(int id, String token) throws InvalidIdException;
 
-    List<Category> getAllCategoriesWithFilter(String sortFiled, boolean isAscending, int id, String token) throws InvalidIdException;
-
     List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
     Category getCategory(int id, String token) throws InvalidIdException;

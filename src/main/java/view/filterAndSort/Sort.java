@@ -23,6 +23,7 @@ public abstract class Sort extends View {
 
     @Override
     public void run() {
+        showAvailableSort();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             isDone = false;
@@ -47,22 +48,52 @@ public abstract class Sort extends View {
         return isAscending;
     }
 
-    abstract protected void showAvailableSort();/*{
+    protected void showAvailableSort() {
         sortField.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
-    }*/
+    }
 
-    abstract protected void showCurrentSort();/* {
+    protected void showCurrentSort() {
         manager.inputOutput.println(fieldNameForSort);
     }
-*/
 
-
-    abstract protected void disableSelectedSort(); /*{
+    protected void disableSelectedSort() {
         fieldNameForSort = new String();
-    }*/
+    }
 
 
-    abstract protected void sortWithAvailableSort(Matcher matcher);/* {
+    protected void sortWithAvailableSort(Matcher matcher) {
+        matcher.find();
+        int chose = Integer.parseInt(matcher.group(1)) - 1;
+        if (chose >= sortField.size()) {
+            manager.inputOutput.println("enter the number exist in list");
+            return;
+        }
+        fieldNameForSort = sortField.get(chose);
+        manager.inputOutput.println("do you want to sort ascending. if type yes it will be ascending" +
+                "and if no otherwise");
+        if (manager.inputOutput.nextLine().trim().equalsIgnoreCase("yes")) {
+            isAscending = true;
+            return;
+        }
+        isAscending = false;
+    }
+
+   /* abstract protected void showAvailableSort();*//*{
+        sortField.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
+    }*//*
+
+    abstract protected void showCurrentSort();*//* {
+        manager.inputOutput.println(fieldNameForSort);
+    }
+*//*
+
+
+    abstract protected void disableSelectedSort(); *//*{
+        fieldNameForSort = new String();
+    }*//*
+
+
+    abstract protected void sortWithAvailableSort(Matcher matcher);*//* {
         matcher.find();
         int chose = Integer.parseInt(matcher.group(1)) - 1;
         if (chose >= sortField.size()) {

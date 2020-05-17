@@ -39,16 +39,10 @@ public enum ManageCategoryForManagerViewValidCommands {
             page.viewSubCategories(Pattern.compile(ViewSubCategories.toString()).matcher(page.getInput()));
         }
     },
-    Sort("sorting") {
+    ShowAll("show all") {
         @Override
         public void goToFunction(ManageCategoryForManagerView page) {
-            page.sorting();
-        }
-
-    }, ShowAll("show all") {
-        @Override
-        public void goToFunction(ManageCategoryForManagerView page) {
-            page.sorting();
+            page.showAll();
         }
 
     };

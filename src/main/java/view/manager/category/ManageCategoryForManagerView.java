@@ -10,7 +10,6 @@ import model.Product;
 import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
-import view.filterAndSort.CategorySort;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -21,14 +20,12 @@ public class ManageCategoryForManagerView extends View {
     private int currentCategory;
     private ICategoryController categoryController;
     IProductController productController;
-    private CategorySort categorySort;
     private EnumSet<ManageCategoryForManagerViewValidCommands> validCommands;
 
     public ManageCategoryForManagerView(ViewManager managerView) {
         super(managerView);
         validCommands = EnumSet.allOf(ManageCategoryForManagerViewValidCommands.class);
         currentCategory = 0;
-        categorySort = new CategorySort(manager);
         categoryController = (ICategoryController) manager.getController(ControllerContainer.Controller.CategoryController);
     }
 
@@ -54,10 +51,9 @@ public class ManageCategoryForManagerView extends View {
         currentCategory = id;
     }
 
-    private void showAll() {
+    protected void showAll() {
         try {
-            categoryController.getAllCategoriesWithFilter(categorySort.getFieldNameForSort(), categorySort.isAscending()
-                    , currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println(category.getName() + "with id: "
+            categoryController.getAllCategories(currentCategory, manager.getToken()).forEach(category -> manager.inputOutput.println(category.getName() + "with id: "
                     + category.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
@@ -75,10 +71,6 @@ public class ManageCategoryForManagerView extends View {
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
         }
-    }
-
-    protected void sorting() {
-        categorySort.run();
     }
 
     protected void RemoveCategoryForManager(Matcher matcher) {
@@ -145,7 +137,6 @@ public class ManageCategoryForManagerView extends View {
         commandList.add("help");
         commandList.add("edit [id]");
         commandList.add("show all");
-        commandList.add("sorting");
         commandList.add("remove [id]");
         commandList.add("view sub [id]");
         commandList.add("add [name]");
