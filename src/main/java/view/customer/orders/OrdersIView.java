@@ -7,7 +7,9 @@ import model.Order;
 import view.*;
 import view.filterAndSort.OrderSort;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class OrdersIView extends View {
@@ -58,31 +60,34 @@ public class OrdersIView extends View {
 
     protected void rateTheProductWithItsId(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
-            try {
-                ratingController.addARating(Integer.parseInt(matcher.group(2)), Integer.parseInt(matcher.group(1)), manager.getToken());
-            } catch (NoAccessException | NotBoughtTheProductException e) {
-                manager.inputOutput.println(e.getMessage());
-            } catch (InvalidTokenException e) {
-                manager.setTokenFromController(e.getMessage());
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
+            if (manager.checkTheInputIsDouble(matcher.group(2))) {
+                try {
+                    ratingController.addARating(Double.parseDouble(matcher.group(2)), Integer.parseInt(matcher.group(1)), manager.getToken());
+                } catch (NoAccessException | NotBoughtTheProductException e) {
+                    manager.inputOutput.println(e.getMessage());
+                } catch (InvalidTokenException e) {
+                    manager.setTokenFromController(e.getMessage());
+                }
+                return;
             }
-            return;
-        }
-        manager.inputOutput.println("enter the number plz.");
+            manager.inputOutput.println("enter the valid rate plz.");
+        } else
+            manager.inputOutput.println("enter the valid id plz.");
 
     }
 
     protected void showOrdersWithIdToBuyer(Matcher matcher) {
         matcher.find();
-        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1))) {
+        if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             try {
                 Order order = orderController.getASingleOrder(Integer.parseInt(matcher.group(1)), manager.getToken());
                 manager.inputOutput.println("the order ID is " + order.getId() + " at " + order.getDate().toString() +
                         " with total price " + order.getTotalPrice());
                 order.getItems().forEach(orderItem -> manager.inputOutput.println("you have bough "
                         + orderItem.getProduct().getName()
-                        + " with id : " + orderItem.getProductId() + " with total paid bill : "
-                        + orderItem.getPaidPrice() + " and amount: " +
+                        + " with id : " + orderItem.getProductId() + "\nwith total paid bill : "
+                        + orderItem.getPaidPrice() + " actual price : " + orderItem.getPrice() + " and amount: " +
                         orderItem.getAmount()));
                 return;
             } catch (NoAccessException | InvalidIdException | NoObjectIdException e) {
@@ -98,11 +103,19 @@ public class OrdersIView extends View {
         orderSort.run();
     }
 
-    protected void filtering() {
-        orderSort.run();
+    protected void logOut() {
+        manager.logoutInAllPages();
     }
 
     protected void help() {
-        validCommands.forEach(command -> manager.inputOutput.println(command.toString()));
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("logout");
+        commandList.add("sorting");
+        commandList.add("show order [orderId]");
+        commandList.add("rate [productId] [1-5]");
+        commandList.add("show all");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 }

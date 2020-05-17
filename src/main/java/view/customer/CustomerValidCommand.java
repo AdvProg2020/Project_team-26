@@ -1,5 +1,7 @@
 package view.customer;
 
+import view.cart.CartView;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,14 +12,12 @@ public enum CustomerValidCommand {
             page.editTheField();
         }
     },
-
     ViewBalanceToBuyer("view\\s+balance") {
         @Override
         public void goToFunction(CustomerView page) {
             page.balance();
         }
     },
-
     ViewCart("view\\s+cart") {
         @Override
         public void goToFunction(CustomerView page) {
@@ -28,7 +28,6 @@ public enum CustomerValidCommand {
         @Override
         public void goToFunction(CustomerView page) {
             page.promoCodes();
-
         }
     },
     ViewOrdersForBuyer("view\\s+orders") {
@@ -49,24 +48,30 @@ public enum CustomerValidCommand {
             page.sorting();
         }
     },
-    Filtering("filtering") {
-        @Override
-        public void goToFunction(CustomerView page) {
-            page.filtering();
-        }
-    },
     Help("help") {
         @Override
         public void goToFunction(CustomerView page) {
             page.help();
         }
     },
-    Logout("logout"){
+    Logout("logout") {
         @Override
         public void goToFunction(CustomerView page) {
             page.logOut();
         }
-    };
+    },
+    ShowProducts("products") {
+        @Override
+        public void goToFunction(CustomerView page) {
+            page.product();
+        }
+    },
+    ShowOffs("offs") {
+        @Override
+        public void goToFunction(CustomerView page) {
+            page.off();
+        }
+    };;
     private final Pattern commandPattern;
     private final String value;
 

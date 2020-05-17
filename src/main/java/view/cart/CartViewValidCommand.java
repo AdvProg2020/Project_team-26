@@ -41,7 +41,8 @@ public enum CartViewValidCommand {
         public void goToFunction(CartView page) {
             page.purchase();
         }
-    }, Logout("logout") {
+    },
+    Logout("logout") {
         @Override
         public void goToFunction(CartView page) {
             if (page.getManager().getIsUserLoggedIn()) {
@@ -70,12 +71,14 @@ public enum CartViewValidCommand {
             }
             page.getManager().inputOutput.println("first logout");
         }
-    }, Help("help") {
+    },
+    Help("help") {
         @Override
         public void goToFunction(CartView page) {
             page.help();
         }
-    }, ShowProducts("products") {
+    },
+    ShowProducts("products") {
         @Override
         public void goToFunction(CartView page) {
             page.product();
