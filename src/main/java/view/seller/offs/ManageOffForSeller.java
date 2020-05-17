@@ -86,6 +86,9 @@ public class ManageOffForSeller extends View {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
         }
     }
 
