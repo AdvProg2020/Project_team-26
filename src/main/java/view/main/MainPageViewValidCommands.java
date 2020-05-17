@@ -59,7 +59,8 @@ public enum MainPageViewValidCommands {
             }
             page.getManager().inputOutput.println("first logout");
         }
-    }, PersonalPage("personal\\s+page") {
+    },
+    PersonalPage("personal\\s+page") {
         @Override
         public void goToFunction(MainPageView page) {
             page.personalPage();

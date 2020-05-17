@@ -5,8 +5,11 @@ import controller.interfaces.product.IProductController;
 import exception.InvalidIdException;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
+import view.offs.AllOffView;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class AllProductView extends View {
@@ -38,8 +41,8 @@ public class AllProductView extends View {
                     break;
                 }
             }
-            if (isDone)
-                printError();
+            if (!isDone)
+                manager.inputOutput.println("invalid command.");
         }
     }
 
@@ -64,7 +67,7 @@ public class AllProductView extends View {
     protected void subcategory(Matcher matcher) {
         matcher.find();
         String id = matcher.group(1);
-        if (manager.checkTheInputIsIntegerOrLong(id)) {
+        if (manager.checkTheInputIsIntegerOrLong(id, false)) {
             try {
                 int nextId = Integer.parseInt(id);
                 categoryController.getExceptionOfIfCategoryExist(nextId, manager.getToken());
@@ -96,10 +99,6 @@ public class AllProductView extends View {
         manager.registerInAllPagesOptional(super.input);
     }
 
-    protected void printError() {
-
-    }
-
     protected void filter() {
         productFilterAndSort.run();
     }
@@ -108,7 +107,31 @@ public class AllProductView extends View {
         productFilterAndSort.run();
     }
 
-    public void setCurrentCategory(int currentCategory) {
+    protected void off() {
+        AllOffView allOffView = new AllOffView(manager);
+        allOffView.run();
+    }
+
+    protected void help() {
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("offs");
+        commandList.add("view categories");
+        commandList.add("filtering");
+        commandList.add("sorting");
+        commandList.add("show products");
+        commandList.add("show product [productId]");
+        if (manager.getIsUserLoggedIn()) {
+            commandList.add("logout");
+        } else {
+            commandList.add("login [username]");
+            commandList.add("create account [manager|buyer|seller] [username]");
+        }
+        commandList.forEach(i -> manager.inputOutput.println(i));
+    }
+
+    private void setCurrentCategory(int currentCategory) {
         this.currentCategory = currentCategory;
     }
 }

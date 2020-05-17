@@ -1,12 +1,13 @@
 package view.offs;
 
+import view.main.MainPageView;
 import view.products.single.SingleProductView;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum AllOffsValidCommands {
-    ShowProductWithId("show\\s+product\\s+(.*)") {
+    ShowProductWithId("show\\s+product\\s+(\\d+)") {
         @Override
         public void goToFunction(AllOffView page) {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
@@ -23,21 +24,53 @@ public enum AllOffsValidCommands {
         public void goToFunction(AllOffView page) {
             page.filter();
         }
-    }, Logout("logout") {
+    },
+    ShowProducts("products") {
         @Override
         public void goToFunction(AllOffView page) {
-            page.logOut();
+            page.product();
         }
-    }, CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+    },
+
+    Help("help") {
         @Override
         public void goToFunction(AllOffView page) {
-            page.register();
+            page.help();
+        }
+    },
+    Logout("logout") {
+        @Override
+        public void goToFunction(AllOffView page) {
+            if (page.getManager().getIsUserLoggedIn()) {
+                page.logOut();
+                return;
+            }
+            page.getManager().inputOutput.println("you are mot logged in");
+        }
+    },
+    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+        @Override
+        public void goToFunction(AllOffView page) {
+            if (!page.getManager().getIsUserLoggedIn()) {
+                page.register();
+                return;
+            }
+            page.getManager().inputOutput.println("first logout");
         }
     },
     LoginAccount("login\\s+(.*)") {
         @Override
         public void goToFunction(AllOffView page) {
-            page.login();
+            if (!page.getManager().getIsUserLoggedIn()) {
+                page.login();
+                return;
+            }
+            page.getManager().inputOutput.println("first logout");
+        }
+    }, ShowAll("show all") {
+        @Override
+        public void goToFunction(AllOffView page) {
+            page.showAll();
         }
     };
     private final Pattern commandPattern;
