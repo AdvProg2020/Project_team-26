@@ -10,7 +10,6 @@ public class Seller extends User {
 
     @OneToMany(mappedBy = "seller")
     private List<Off> allOffs;
-    private String companyName;
 
     public Seller() {
     }
