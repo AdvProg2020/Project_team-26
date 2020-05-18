@@ -38,7 +38,7 @@ public class User {
     @Column(name = "credit", nullable = false)
     private long credit;
 
-    @ElementCollection()
+    @ElementCollection
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "key")
     @Column(name = "value")
