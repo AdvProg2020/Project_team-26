@@ -124,7 +124,7 @@ public class ManagerAccountView extends View {
                     date = dateOfPromo();
                     if (date != null) {
                         promo.setStartDate(date);
-                        manager.inputOutput.println("start date");
+                        manager.inputOutput.println("end date");
                         date = dateOfPromo();
                         if (date != null) {
                             promo.setEndDate(date);
