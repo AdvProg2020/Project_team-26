@@ -31,6 +31,7 @@ public class OrderItem {
     @Column(name = "paid_price", nullable = false)
     private long paidPrice;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "shipment_state", nullable = false)
     private ShipmentState state;
 
