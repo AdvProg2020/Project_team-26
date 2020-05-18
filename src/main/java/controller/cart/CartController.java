@@ -128,7 +128,7 @@ public class CartController implements ICartController {
         try {
             endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
             promo.setEndDate(endDate);
-            promo.setPromoCode("randomForBuy" + customer.getUsername() + order.getPaidAmount());
+            promo.setPromoCode("randomForBuy" + year + order.getPaidAmount());
             promoRepository.save(promo);
             userRepository.save(customer);
         } catch (ParseException e) {

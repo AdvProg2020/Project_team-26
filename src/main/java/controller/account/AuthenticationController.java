@@ -52,7 +52,7 @@ public class AuthenticationController implements IAuthenticationController {
         try {
             endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
             promo.setEndDate(endDate);
-            promo.setPromoCode("randomForLogin" + year + customer.getUsername());
+            promo.setPromoCode("randomForLogin" + year + token);
             promoRepository.save(promo);
             userRepository.save(customer);
         } catch (ParseException e) {
