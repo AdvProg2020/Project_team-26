@@ -8,6 +8,7 @@ import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ public class OffController implements IOffController {
     private ProductSellerRepository productSellerRepository;
 
     public OffController(RepositoryContainer repositoryContainer) {
-        productRepository = (ProductRepository)repositoryContainer.getRepository("ProductRepository");
-        offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
+        productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
+        offRepository = (OffRepository) repositoryContainer.getRepository("OffRepository");
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
     }
 
@@ -111,7 +112,7 @@ public class OffController implements IOffController {
 
     @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
-        return offRepository.getAllProductInOff(filter,sortFiled,isAscending);
+        return offRepository.getAllProductInOff(filter, sortFiled, isAscending);
     }
 
     @Override
@@ -121,9 +122,10 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public List<Off> getAllOfForSellerWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
-        return null;
+    public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        return new ArrayList<>();
     }
+
 
     @Override
     public Off getOff(int id, String token) throws InvalidIdException {

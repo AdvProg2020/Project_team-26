@@ -58,8 +58,6 @@ public class AllProductView extends View {
                 manager.inputOutput.println("feature names : ");
                 category.getFeatures().forEach(categoryFeature -> manager.inputOutput.println(categoryFeature.getFeatureName()));
             }
-            categoryList.forEach(category -> manager.inputOutput.println("name is " +
-                    category.getName() + " with id " + category.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
         }

@@ -124,4 +124,9 @@ public class MySQLOffRepository
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int SellerId) {
+        return null;
+    }
 }

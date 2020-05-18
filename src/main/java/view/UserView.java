@@ -36,11 +36,12 @@ public class UserView {
         while (true) {
             manager.inputOutput.println("enter the field");
             String field = manager.inputOutput.nextLine();
+            manager.inputOutput.println("Password");
             if (field.matches("back"))
                 return;
-            if (field.matches("username")) {
+            if (field.matches("Username")) {
                 manager.inputOutput.println("you cant change username");
-            } else if (field.matches("password")) {
+            } else if (field.matches("Password")) {
                 changePassword(manager, infoController);
             } else if (editableFields.stream().filter(i -> field.matches(field)).collect(Collectors.toList()).size() > 0) {
                 manager.inputOutput.println("enter new one");

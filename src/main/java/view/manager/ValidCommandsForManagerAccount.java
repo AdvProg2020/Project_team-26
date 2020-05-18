@@ -81,6 +81,11 @@ public enum ValidCommandsForManagerAccount {
         public void goToFunction(ManagerAccountView page) {
             page.goToOffsMenu();
         }
+    }, Help("^help$") {
+        @Override
+        public void goToFunction(ManagerAccountView page) {
+            page.help();
+        }
     };
 
     private final Pattern commandPattern;

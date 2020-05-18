@@ -43,12 +43,6 @@ public enum ViewOffsForSellerAccountValidCommands {
             page.sorting();
         }
     },
-    Filtering("filtering") {
-        @Override
-        public void goToFunction(ManageOffForSeller page) {
-            page.filtering();
-        }
-    },
     Help("help") {
         @Override
         public void goToFunction(ManageOffForSeller page) {

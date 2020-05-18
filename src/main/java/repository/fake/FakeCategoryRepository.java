@@ -1,6 +1,7 @@
 package repository.fake;
 
 import model.Category;
+import model.Product;
 import repository.CategoryRepository;
 
 import java.util.ArrayList;
@@ -27,6 +28,11 @@ public class FakeCategoryRepository implements CategoryRepository {
         if (categories.size() == 0)
             return null;
         return categories.get(0);
+    }
+
+    @Override
+    public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
     }
 
     @Override

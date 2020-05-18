@@ -56,7 +56,7 @@ public class MainPageView extends View {
     protected void help(boolean isLoggedIn) {
         List<String> commandList = new ArrayList<>();
         commandList.add("help");
-        commandList.add("back|exit");
+        commandList.add("back");
         commandList.add("offs");
         commandList.add("products");
         commandList.add("view cart");
