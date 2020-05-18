@@ -1,14 +1,17 @@
 package repository.mysql;
 
-import model.ProductSeller;
-import model.ProductSellerRequest;
-import model.RequestStatus;
-import model.RequestType;
+import model.*;
 import repository.ProductSellerRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MySQLProductSellerRepository
@@ -93,11 +96,61 @@ public class MySQLProductSellerRepository
 
     @Override
     public List<ProductSellerRequest> getAllRequests(String sortField, boolean isAscending) {
-        return null;
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<ProductSellerRequest> cq = cb.createQuery(ProductSellerRequest.class);
+            Root<ProductSellerRequest> root = cq.from(ProductSellerRequest.class);
+
+            if(isAscending) {
+                cq.orderBy(cb.asc(root.get(sortField)));
+            } else {
+                cq.orderBy(cb.desc(root.get(sortField)));
+            }
+            cq.select(root);
+            cq.where(cb.equal(root.get("request_status"), "PENDING"));
+            TypedQuery<ProductSellerRequest> typedQuery = em.createQuery(cq);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
+        }
     }
+
+//    EntityManager em = EntityManagerProvider.getEntityManager();
+//
+//        try {
+//        CriteriaBuilder cb = em.getCriteriaBuilder();
+//        CriteriaQuery<ProductSellerRequest> cq = cb.createQuery(ProductSellerRequest.class);
+//        Root<ProductSellerRequest> root = cq.from(ProductSellerRequest.class);
+//
+//        cq.select(root);
+//        cq.where(cb.equal(root.get("seller_id"), sellerId));
+//        TypedQuery<ProductSellerRequest> typedQuery = em.createQuery(cq);
+//
+//        return typedQuery.getResultList();
+//    } catch (NoResultException e) {
+//        return new ArrayList<>();
+//    }
 
     @Override
     public ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId) {
-        return null;
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<ProductSeller> cq = cb.createQuery(ProductSeller.class);
+            Root<ProductSeller> root = cq.from(ProductSeller.class);
+
+            cq.select(root);
+            cq.where(cb.equal(root.get("product_id"), productId));
+            cq.where(cb.equal(root.get("seller_id"), sellerId));
+            TypedQuery<ProductSeller> typedQuery = em.createQuery(cq);
+
+            return typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

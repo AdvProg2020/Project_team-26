@@ -133,6 +133,7 @@ public class MySQLProductRepository
                 cq.orderBy(cb.desc(root.get(sortField)));
             }
             cq.select(root);
+            cq.where(cb.equal(root.get("request_status"), "PENDING"));
             TypedQuery<ProductRequest> typedQuery = em.createQuery(cq);
 
             return typedQuery.getResultList();
