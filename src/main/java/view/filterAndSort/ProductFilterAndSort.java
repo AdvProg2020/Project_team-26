@@ -14,14 +14,12 @@ public class ProductFilterAndSort extends FilterAndSort {
 
     @Override
     protected void init() {
-        filterFields.put(1, "product name");
-        filterFields.put(2, "price");
-        filterFields.put(3, "rate");
+        filterFields.put(1, "name");
+        filterFields.put(3, "average_rate");
         filterFields.put(4, "brand");
         filterFields.put(5, "description");
-        sortField.put(1, "price");
-        sortField.put(2, "rate");
-        fieldNameForSort = "rate";
+        sortField.put(2, "average_rate");
+        fieldNameForSort = "average_rate";
         isAscending = true;
     }
 

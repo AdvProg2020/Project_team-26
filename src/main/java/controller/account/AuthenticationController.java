@@ -54,7 +54,6 @@ public class AuthenticationController implements IAuthenticationController {
             promo.setEndDate(endDate);
             promo.setPromoCode("randomForLogin" + year + token);
             promoRepository.save(promo);
-            userRepository.save(customer);
         } catch (ParseException e) {
         }
     }

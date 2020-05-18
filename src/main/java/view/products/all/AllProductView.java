@@ -25,7 +25,7 @@ public class AllProductView extends View {
     public AllProductView(ViewManager manager) {
         super(manager);
         validCommands = EnumSet.allOf(AllProductsViewValidCommands.class);
-        currentCategory = 0;
+        currentCategory = 1;
         productFilterAndSort = new ProductFilterAndSort(manager);
         categoryController = (ICategoryController) manager.getController(ControllerContainer.Controller.CategoryController);
         productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
