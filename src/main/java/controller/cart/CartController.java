@@ -24,6 +24,7 @@ public class CartController implements ICartController {
     public CartController(RepositoryContainer repositoryContainer) {
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
+        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
     @Override
@@ -131,9 +132,7 @@ public class CartController implements ICartController {
             promoRepository.save(promo);
             userRepository.save(customer);
         } catch (ParseException e) {
-            return;
         }
-        return;
     }
 
     private Order createOrder(Cart cart, Customer customer) throws NotEnoughProductsException {
