@@ -66,6 +66,7 @@ public class MySQLProductRepository
         ProductRequest request = getProductRequestById(requestId);
         switch (request.getRequestType()) {
             case ADD:
+                request.getSellerList().get(0).setRequestStatus(RequestStatus.ACCEPTED);
             case EDIT:
                 save(request.getProduct());
                 request.setRequestStatus(RequestStatus.ACCEPTED);
@@ -80,6 +81,9 @@ public class MySQLProductRepository
     @Override
     public void rejectRequest(int requestId) {
         ProductRequest request = getProductRequestById(requestId);
+        if(request.getRequestType() == RequestType.ADD) {
+            request.getSellerList().get(0).setRequestStatus(RequestStatus.REJECTED);
+        }
         request.setRequestStatus(RequestStatus.REJECTED);
         persistRequest(request);
     }
