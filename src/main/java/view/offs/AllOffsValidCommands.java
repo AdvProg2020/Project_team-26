@@ -7,38 +7,38 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum AllOffsValidCommands {
-    ShowProductWithId("show\\s+product\\s+(\\d+)") {
+    ShowProductWithId("^show\\s+product\\s+(\\d+)$") {
         @Override
         public void goToFunction(AllOffView page) {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    Sorting("sorting") {
+    Sorting("^sorting$") {
         @Override
         public void goToFunction(AllOffView page) {
             page.sort();
         }
     },
-    Filtering("filtering") {
+    Filtering("^filtering$") {
         @Override
         public void goToFunction(AllOffView page) {
             page.filter();
         }
     },
-    ShowProducts("products") {
+    ShowProducts("^products$") {
         @Override
         public void goToFunction(AllOffView page) {
             page.product();
         }
     },
 
-    Help("help") {
+    Help("^help$") {
         @Override
         public void goToFunction(AllOffView page) {
             page.help();
         }
     },
-    Logout("logout") {
+    Logout("^logout$") {
         @Override
         public void goToFunction(AllOffView page) {
             if (page.getManager().getIsUserLoggedIn()) {
@@ -48,7 +48,7 @@ public enum AllOffsValidCommands {
             page.getManager().inputOutput.println("you are mot logged in");
         }
     },
-    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+    CreateAccount("^create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
         @Override
         public void goToFunction(AllOffView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -58,7 +58,7 @@ public enum AllOffsValidCommands {
             page.getManager().inputOutput.println("first logout");
         }
     },
-    LoginAccount("login\\s+(.*)") {
+    LoginAccount("^login\\s+(.*)") {
         @Override
         public void goToFunction(AllOffView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -67,7 +67,7 @@ public enum AllOffsValidCommands {
             }
             page.getManager().inputOutput.println("first logout");
         }
-    }, ShowAll("show all") {
+    }, ShowAll("^show all$") {
         @Override
         public void goToFunction(AllOffView page) {
             page.showAll();

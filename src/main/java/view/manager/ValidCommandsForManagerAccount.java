@@ -13,70 +13,70 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ValidCommandsForManagerAccount {
-    ViewPersonalInfo("view\\s+personal\\s+info") {
+    ViewPersonalInfo("^view\\s+personal\\s+info$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.viewPersonalInfo();
         }
     },
-    EditTheFiled("edit") {
+    EditTheFiled("^edit$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.edit();
         }
     },
-    Logout("logout") {
+    Logout("^logout$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             if (page.getManager().getIsUserLoggedIn()) {
                 page.logOut();
                 return;
             }
-            page.getManager().inputOutput.println("you are not logged in");
+            page.getManager().inputOutput.println("^you are not logged in$");
         }
     },
-    ManageUsers("manage\\s+users") {
+    ManageUsers("^manage\\s+users$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.managerAllUsers();
         }
     },
-    ManageAllProduct("manage\\s+all\\s+products") {
+    ManageAllProduct("^manage\\s+all\\s+products$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.manageAllProductForManager();
         }
     },
-    CreateDiscountCode("create\\s+discount\\s+code") {
+    CreateDiscountCode("^create\\s+discount\\s+code$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.createPromoCode();
         }
     },
-    ViewAllDiscountCodes("view\\s+discount\\s+codes") {
+    ViewAllDiscountCodes("^view\\s+discount\\s+codes$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.managerAllDiscountCode();
         }
     },
-    ManagingRequestForManager("manage\\s+requests") {
+    ManagingRequestForManager("^manage\\s+requests$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.managerAllRequest();
         }
     },
-    ManageCategories("manage\\s+categories") {
+    ManageCategories("^manage\\s+categories$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.managerAllCategories();
         }
     },
-    GoToProductsMenu("products") {
+    GoToProductsMenu("^products$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.goToProductsMenu();
         }
-    }, GoToOffsMenu("offs") {
+    }, GoToOffsMenu("^offs$") {
         @Override
         public void goToFunction(ManagerAccountView page) {
             page.goToOffsMenu();
