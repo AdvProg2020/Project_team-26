@@ -99,6 +99,10 @@ public class CartController implements ICartController {
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.getPaidAmount());
         customer.addOrder(order);
+        //todo add if paid is more than a bilion and promo code with percent 20% and max 100hezar from now until 1 month
+        //todo
+
+
     }
 
     private Order createOrder(Cart cart, Customer customer) throws NotEnoughProductsException {
