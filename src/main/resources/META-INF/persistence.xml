@@ -17,7 +17,7 @@
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
             <property name="javax.persistence.jdbc.url"
-                      value="jdbc:mysql://ap-group26.mysql.database.azure.com:3306/store?serverTimezone=UTC&amp;useSSL=true&amp;requireSSL=true"/>
+                      value="jdbc:mysql://ap-group26.mysql.database.azure.com:3306/store?serverTimezone=UTC&amp;useSSL=true&amp;requireSSL=true&amp;autoReconnect=true"/>
             <property name="javax.persistence.jdbc.user" value="dbadmin@ap-group26"/>
             <property name="javax.persistence.jdbc.password" value="H5890asd23Yzq"/>
             <property name="hibernate.show_sql" value="true"/>
