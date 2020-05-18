@@ -14,13 +14,13 @@ public enum SortValidCommands {
 
         }
     },
-    Sort("sort\\s+(\\d+)") {
+    Sort("^sort\\s+(\\d+)$") {
         @Override
         public void goToFunction(Sort page) {
             page.sortWithAvailableSort(Pattern.compile(Sort.toString()).matcher(page.getInput()));
         }
     },
-    Logout("logout") {
+    Logout("^logout$") {
         @Override
         public void goToFunction(Sort page) {
             if (page.getManager().getIsUserLoggedIn()) {
@@ -30,19 +30,19 @@ public enum SortValidCommands {
             page.getManager().inputOutput.println("you are not logged in");
         }
     },
-    Help("help") {
+    Help("^help$") {
         @Override
         public void goToFunction(Sort page) {
             page.help();
         }
     },
-    CurrentSort("current\\s+sort") {
+    CurrentSort("^current\\s+sort$") {
         @Override
         public void goToFunction(Sort page) {
             page.showCurrentSort();
         }
     },
-    DisableSort("disable\\s+sort") {
+    DisableSort("^disable\\s+sort$") {
         @Override
         public void goToFunction(Sort page) {
             page.disableSelectedSort();

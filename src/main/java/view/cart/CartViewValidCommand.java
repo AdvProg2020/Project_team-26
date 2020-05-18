@@ -6,43 +6,43 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum CartViewValidCommand {
-    ShowAllProducts("show\\s+products") {
+    ShowAllProducts("^show\\s+products$") {
         @Override
         public void goToFunction(CartView page) {
             page.showAllProducts();
         }
     },
-    ShowProductWithId("view\\s+(\\d+)") {
+    ShowProductWithId("^view\\s+(\\d+)$") {
         @Override
         public void goToFunction(CartView page) {
             page.showProductWithId(Pattern.compile(ShowProductWithId.toString()).matcher(page.getInput()));
         }
     },
-    IncreaseNumberOfProductForBuyerWithId("increase\\s+(\\d+)") {
+    IncreaseNumberOfProductForBuyerWithId("^increase\\s+(\\d+)$") {
         @Override
         public void goToFunction(CartView page) {
             page.changeInNumber(Pattern.compile(IncreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), +1);
         }
     },
-    DecreaseNumberOfProductForBuyerWithId("decrease\\s+(\\d+)") {
+    DecreaseNumberOfProductForBuyerWithId("^decrease\\s+(\\d+)$") {
         @Override
         public void goToFunction(CartView page) {
             page.changeInNumber(Pattern.compile(DecreaseNumberOfProductForBuyerWithId.toString()).matcher(page.getInput()), -1);
         }
     },
-    ShowTotalPriceToBuyer("show\\s+total\\s+price") {
+    ShowTotalPriceToBuyer("^show\\s+total\\s+price$") {
         @Override
         public void goToFunction(CartView page) {
             page.showTotalPriceToBuyer();
         }
     },
-    Purchase("purchase") {
+    Purchase("^purchase$") {
         @Override
         public void goToFunction(CartView page) {
             page.purchase();
         }
     },
-    Logout("logout") {
+    Logout("^logout$") {
         @Override
         public void goToFunction(CartView page) {
             if (page.getManager().getIsUserLoggedIn()) {
@@ -52,7 +52,7 @@ public enum CartViewValidCommand {
             page.getManager().inputOutput.println("you are not logged in");
         }
     },
-    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+    CreateAccount("^create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
         @Override
         public void goToFunction(CartView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -62,7 +62,7 @@ public enum CartViewValidCommand {
             page.getManager().inputOutput.println("first logout");
         }
     },
-    LoginAccount("login\\s+(.*)") {
+    LoginAccount("^login\\s+(.*)") {
         @Override
         public void goToFunction(CartView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -72,19 +72,19 @@ public enum CartViewValidCommand {
             page.getManager().inputOutput.println("first logout");
         }
     },
-    Help("help") {
+    Help("^help$") {
         @Override
         public void goToFunction(CartView page) {
             page.help();
         }
     },
-    ShowProducts("products") {
+    ShowProducts("^products$") {
         @Override
         public void goToFunction(CartView page) {
             page.product();
         }
     },
-    ShowOffs("offs") {
+    ShowOffs("^offs$") {
         @Override
         public void goToFunction(CartView page) {
             page.off();

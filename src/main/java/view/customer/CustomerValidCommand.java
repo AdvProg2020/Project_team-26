@@ -6,67 +6,67 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum CustomerValidCommand {
-    EditTheFiled("edit") {
+    EditTheFiled("^edit$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.editTheField();
         }
     },
-    ViewBalanceToBuyer("view\\s+balance") {
+    ViewBalanceToBuyer("^view\\s+balance$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.balance();
         }
     },
-    ViewCart("view\\s+cart") {
+    ViewCart("^view\\s+cart$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.cart();
         }
     },
-    ViewDiscountCodesToBuyer("view\\s+discount\\s+codes") {
+    ViewDiscountCodesToBuyer("^view\\s+discount\\s+codes$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.promoCodes();
         }
     },
-    ViewOrdersForBuyer("view\\s+orders") {
+    ViewOrdersForBuyer("^view\\s+orders$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.orders();
         }
     },
-    ViewPersonalInfo("view\\s+personal\\s+info") {
+    ViewPersonalInfo("^view\\s+personal\\s+info$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.viewPersonalInfo();
         }
     },
-    Sorting("sorting") {
+    Sorting("^sorting$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.sorting();
         }
     },
-    Help("help") {
+    Help("^help$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.help();
         }
     },
-    Logout("logout") {
+    Logout("^logout$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.logOut();
         }
     },
-    ShowProducts("products") {
+    ShowProducts("^products$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.product();
         }
     },
-    ShowOffs("offs") {
+    ShowOffs("^offs$") {
         @Override
         public void goToFunction(CustomerView page) {
             page.off();

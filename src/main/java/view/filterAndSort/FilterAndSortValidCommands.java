@@ -5,58 +5,58 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum FilterAndSortValidCommands {
-    ShowAvailableFilter("show\\s+available\\s+filters") {
+    ShowAvailableFilter("^show\\s+available\\s+filters$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.showAvailableFilter();
 
         }
     },
-    FilterWithAvailableFilter("filter\\s+(\\d+)") {
+    FilterWithAvailableFilter("^filter\\s+(\\d+)$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.filterWithAvailableFilter(Pattern.compile(FilterWithAvailableFilter.toString()).matcher(page.getInput()));
 
         }
     },
-    ShowCurrentFilters("current\\s+filters") {
+    ShowCurrentFilters("^current\\s+filters$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.showCurrentFilters();
 
         }
     },
-    DisableASelectedFilters("disable\\s+filter\\s+(\\d+)") {
+    DisableASelectedFilters("^disable\\s+filter\\s+(\\d+)$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.disableSelectedFilter(Pattern.compile(DisableASelectedFilters.toString()).matcher(page.getInput()));
         }
     },
-    ShowAvailableSorts("show\\s+available\\s+sorts") {
+    ShowAvailableSorts("^show\\s+available\\s+sorts$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.showAvailableSort();
 
         }
     },
-    Sort("sort\\s+(\\d+)") {
+    Sort("^sort\\s+(\\d+)$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.sortWithAvailableSort(Pattern.compile(Sort.toString()).matcher(page.getInput()));
         }
     },
-    CurrentSort("current\\s+sort") {
+    CurrentSort("^current\\s+sort$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.showCurrentSort();
         }
     },
-    DisableSort("disable\\s+sort") {
+    DisableSort("^disable\\s+sort$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.disableSelectedSort();
         }
-    },Help("help") {
+    },Help("^help$") {
         @Override
         public void goToFunction(FilterAndSort page) {
             page.help();

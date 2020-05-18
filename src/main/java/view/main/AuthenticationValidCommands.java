@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum AuthenticationValidCommands {
-    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
-    LoginAccount("login\\s+(.*)");
+    CreateAccount("^create\\s+account\\s+(buyer|seller|manager)\\s+(.*)"),
+    LoginAccount("^login\\s+(.*)");
 
 
     private final String output;

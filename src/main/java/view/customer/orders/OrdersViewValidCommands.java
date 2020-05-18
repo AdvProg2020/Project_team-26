@@ -6,31 +6,31 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum OrdersViewValidCommands {
-    ShowOrdersWithIdToBuyer("show\\s+order\\s+(\\d+)") {
+    ShowOrdersWithIdToBuyer("^show\\s+order\\s+(\\d+)$") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.showOrdersWithIdToBuyer(Pattern.compile(ShowOrdersWithIdToBuyer.toString()).matcher(page.getInput()));
         }
     },
-    RateTheProductWithItsId("rate\\s+(\\d+)\\s+(.*)") {
+    RateTheProductWithItsId("^rate\\s+(\\d+)\\s+(.*)") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.rateTheProductWithItsId(Pattern.compile(RateTheProductWithItsId.toString()).matcher(page.getInput()));
         }
     },
-    Sorting("sorting") {
+    Sorting("^sorting$") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.sorting();
         }
     },
-    Help("help") {
+    Help("^help$") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.help();
         }
     },
-    Logout("logout") {
+    Logout("^logout$") {
         @Override
         public void goToFunction(OrdersIView page) {
             if (page.getManager().getIsUserLoggedIn()) {
@@ -40,7 +40,7 @@ public enum OrdersViewValidCommands {
             page.getManager().inputOutput.println("you are not logged in");
         }
     },
-    ShowAll("show all") {
+    ShowAll("^show all$") {
         @Override
         public void goToFunction(OrdersIView page) {
             page.showAll();

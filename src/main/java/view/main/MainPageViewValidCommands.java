@@ -6,31 +6,31 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum MainPageViewValidCommands {
-    Exit("exit") {
+    Exit("^exit$") {
         @Override
         public void goToFunction(MainPageView page) {
 
         }
     },
-    ShowProducts("products") {
+    ShowProducts("^products$") {
         @Override
         public void goToFunction(MainPageView page) {
             page.product();
         }
     },
-    ShowOffs("offs") {
+    ShowOffs("^offs$") {
         @Override
         public void goToFunction(MainPageView page) {
             page.off();
         }
     },
-    Help("help") {
+    Help("^help$") {
         @Override
         public void goToFunction(MainPageView page) {
             page.help(page.getManager().getIsUserLoggedIn());
         }
     },
-    Logout("logout") {
+    Logout("^logout$") {
         @Override
         public void goToFunction(MainPageView page) {
             if (page.getManager().getIsUserLoggedIn()) {
@@ -40,7 +40,7 @@ public enum MainPageViewValidCommands {
             page.getManager().inputOutput.println("you are mot logged in");
         }
     },
-    CreateAccount("create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
+    CreateAccount("^create\\s+account\\s+(buyer|seller|manager)\\s+(.*)") {
         @Override
         public void goToFunction(MainPageView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -50,7 +50,7 @@ public enum MainPageViewValidCommands {
             page.getManager().inputOutput.println("first logout");
         }
     },
-    LoginAccount("login\\s+(.*)") {
+    LoginAccount("^login\\s+(.*)") {
         @Override
         public void goToFunction(MainPageView page) {
             if (!page.getManager().getIsUserLoggedIn()) {
@@ -60,7 +60,7 @@ public enum MainPageViewValidCommands {
             page.getManager().inputOutput.println("first logout");
         }
     },
-    PersonalPage("personal\\s+page") {
+    PersonalPage("^personal\\s+page$") {
         @Override
         public void goToFunction(MainPageView page) {
             page.personalPage();
