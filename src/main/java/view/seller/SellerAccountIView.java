@@ -105,11 +105,14 @@ public class SellerAccountIView extends View {
         try {
             List<Order> orders = orderController.getOrders(manager.getToken());
             for (Order order : orders) {
-                manager.inputOutput.println(order.getCustomer().getFullName() + " at : " + order.getDate().toString()
-                        + "has bought : ");
-                order.getItems().stream().filter(orderItem -> orderItem.getSeller().getId() == thisUser.getId()).
-                        collect(Collectors.toList()).forEach(i -> manager.inputOutput.println(i.getAmount() + " of " + i.getProduct().getName() +
-                        "\nand paid : " + i.getPaidPrice()));
+                if (order.getItems().stream().filter(orderItem -> orderItem.getSeller().getId() == thisUser.getId()).
+                        collect(Collectors.toList()).size() > 0) {
+                    manager.inputOutput.println(order.getCustomer().getFullName() + " at : " + order.getDate().toString()
+                            + "has bought : ");
+                    order.getItems().stream().filter(orderItem -> orderItem.getSeller().getId() == thisUser.getId()).
+                            collect(Collectors.toList()).forEach(i -> manager.inputOutput.println(i.getAmount() + " of " + i.getProduct().getName() +
+                            "\nand paid : " + i.getPaidPrice()));
+                }
             }
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());

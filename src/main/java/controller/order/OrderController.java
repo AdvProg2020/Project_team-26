@@ -10,20 +10,26 @@ import repository.RepositoryContainer;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class OrderController implements IOrderController {
     OrderRepository orderRepository;
+
     public OrderController(RepositoryContainer repositoryContainer) {
         this.orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
     }
+
     public List<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
         Session userSession = Session.getSession(token);
-        if(userSession.getLoggedInUser() == null) {
+        if (userSession.getLoggedInUser() == null) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             switch (userSession.getLoggedInUser().getRole()) {
-                case SELLER: return (ArrayList<Order>) orderRepository.getAllSellerOrders(userSession.getLoggedInUser().getId());
-                case CUSTOMER: return (ArrayList<Order>) orderRepository.getAllCustomerOrders(userSession.getLoggedInUser().getId());
+                case SELLER:
+                    return (ArrayList<Order>) orderRepository.getAllSellerOrders(userSession.getLoggedInUser().getId());
+                case CUSTOMER:
+                    return (ArrayList<Order>) orderRepository.getAllCustomerOrders(userSession.getLoggedInUser().getId());
             }
             return null;
         }
@@ -43,16 +49,18 @@ public class OrderController implements IOrderController {
 
     public Order getASingleOrder(int id, String token) throws NoAccessException, NoObjectIdException, InvalidTokenException {
         Session userSession = Session.getSession(token);
-        if(userSession.getLoggedInUser() == null) {
+        if (userSession.getLoggedInUser() == null) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             Order wantedOrder = orderRepository.getById(id);
-            if(wantedOrder == null) {
+            if (wantedOrder == null) {
                 throw new NoObjectIdException("Object does not exist.");
             } else {
                 switch (userSession.getLoggedInUser().getRole()) {
-                    case CUSTOMER: return getSingleCustomerOrder((Customer) userSession.getLoggedInUser(),wantedOrder);
-                    case SELLER: return getSingleSellerOrder((Seller) userSession.getLoggedInUser(),wantedOrder);
+                    case CUSTOMER:
+                        return getSingleCustomerOrder((Customer) userSession.getLoggedInUser(), wantedOrder);
+                    case SELLER:
+                        return getSingleSellerOrder((Seller) userSession.getLoggedInUser(), wantedOrder);
                 }
             }
             return null;
@@ -60,9 +68,9 @@ public class OrderController implements IOrderController {
     }
 
     private Order getSingleCustomerOrder(Customer customer, Order wantedOrder) throws NoAccessException {
-        if(!wantedOrder.getCustomer().getUsername().equals(customer.getUsername())) {
+        if (!wantedOrder.getCustomer().getUsername().equals(customer.getUsername())) {
             throw new NoAccessException("You are not allowed to do that.");
-        }else {
+        } else {
             return orderRepository.getById(wantedOrder.getId());
         }
     }
@@ -70,6 +78,7 @@ public class OrderController implements IOrderController {
     private Order getSingleSellerOrder(Seller seller, Order wantedOrder) {
         return (Order) orderRepository.getASingleSellerOrder(seller,wantedOrder);
     }
+
 
 
 }
