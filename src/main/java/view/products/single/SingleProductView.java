@@ -73,18 +73,17 @@ public class SingleProductView extends View {
 
 
     private int getAmountOfProduct() {
-        int amount = 0;
-        while (amount <= 0) {
+        while (true) {
             manager.inputOutput.println("enter amount you want or back");
             String amountInput = manager.inputOutput.nextLine();
             if (amountInput.equalsIgnoreCase("back"))
                 return 0;
             if (manager.checkTheInputIsIntegerOrLong(amountInput, false)) {
-                amount = Integer.parseInt(amountInput);
+                if (Integer.parseInt(amountInput) > 0)
+                    return Integer.parseInt(amountInput);
+                manager.inputOutput.println("enter positive number");
             }
-            manager.inputOutput.println("you should enter positive number.");
         }
-        return amount;
     }
 
     private int getSellerId(List<ProductSeller> productSellerList) {
@@ -92,7 +91,7 @@ public class SingleProductView extends View {
         int numbers = 1;
         for (ProductSeller productSeller : productSellerList) {
             ids.put(numbers, productSeller);
-            manager.inputOutput.println("the product seller by name " + productSeller.getSeller().getFullName()
+            manager.inputOutput.println(numbers + "." + "the product seller by name " + productSeller.getSeller().getFullName()
                     + " with price " + productSeller.getPrice());
             numbers++;
         }

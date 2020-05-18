@@ -40,8 +40,7 @@ public class UserView {
                 return;
             if (field.matches("username")) {
                 manager.inputOutput.println("you cant change username");
-            }
-            if (field.matches("password")) {
+            } else if (field.matches("password")) {
                 changePassword(manager, infoController);
             } else if (editableFields.stream().filter(i -> field.matches(field)).collect(Collectors.toList()).size() > 0) {
                 manager.inputOutput.println("enter new one");
