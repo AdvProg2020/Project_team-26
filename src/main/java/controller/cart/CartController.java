@@ -6,18 +6,21 @@ import model.*;
 import repository.ProductSellerRepository;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
+import repository.UserRepository;
 
 import java.rmi.NoSuchObjectException;
 import java.util.Map;
 
 public class CartController implements ICartController {
 
-    ProductSellerRepository productSellerRepository;
-    PromoRepository promoRepository;
+    private ProductSellerRepository productSellerRepository;
+    private PromoRepository promoRepository;
+    private UserRepository userRepository;
 
     public CartController(RepositoryContainer repositoryContainer) {
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
+        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
     @Override
@@ -99,6 +102,7 @@ public class CartController implements ICartController {
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.getPaidAmount());
         customer.addOrder(order);
+        userRepository.save(customer);
     }
 
     private Order createOrder(Cart cart, Customer customer) throws NotEnoughProductsException {
