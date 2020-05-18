@@ -8,7 +8,11 @@ import repository.PromoRepository;
 import repository.RepositoryContainer;
 
 import java.rmi.NoSuchObjectException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
+import java.util.Random;
 
 public class CartController implements ICartController {
 
@@ -94,15 +98,37 @@ public class CartController implements ICartController {
         if (!session.isUserCustomer()) {
             throw new NoAccessException("You must be a customer to be able to buy.");
         }
-
+//todo save these
         Customer customer = (Customer) loggedInUser;
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.getPaidAmount());
         customer.addOrder(order);
-        //todo add if paid is more than a bilion and promo code with percent 20% and max 100hezar from now until 1 month
-        //todo
+        if (order.getPaidAmount() > 500000) {
+            creatRandomPromo(order, customer);
+        }
+    }
 
-
+    private void creatRandomPromo(Order order, Customer customer) {
+        Promo promo = new Promo();
+        promo.getCustomers().add(customer);
+        promo.setMaxValidUse(1);
+        promo.setMaxDiscount(100000);
+        promo.setPercent(15);
+        Date startDate = new Date();
+        promo.setStartDate(startDate);
+        Date endDate;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        Random r = new Random();
+        int year = r.nextInt(2050 - 2020) + 2020;
+        try {
+            endDate = formatter.parse("20-6-" + year + " 8:00:00");
+            promo.setEndDate(endDate);
+            promo.setPromoCode("randomForBuy" + year + customer.getUsername() + startDate.toString());
+            promoRepository.save(promo);
+        } catch (ParseException e) {
+            return;
+        }
+        return;
     }
 
     private Order createOrder(Cart cart, Customer customer) throws NotEnoughProductsException {
@@ -145,7 +171,7 @@ public class CartController implements ICartController {
     public int getAmountInCartBySellerId(int productSelleId, String token) throws InvalidTokenException, NoSuchObjectException {
         Session session = Session.getSession(token);
         for (ProductSeller productSeller : session.getCart().getProducts().keySet()) {
-            if(productSeller.getId() == productSelleId) {
+            if (productSeller.getId() == productSelleId) {
                 return session.getCart().getProducts().get(productSeller);
             }
         }
