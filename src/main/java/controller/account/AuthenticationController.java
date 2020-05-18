@@ -30,15 +30,14 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByUsername(username));
         if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
             Random r = new Random();
-            if (r.nextInt(100 - 1) < 60) {
-                creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
-            }
+            //
+            creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
+            //  }
         }
     }
 
     private void creatRandomPromo(Customer customer, String token) {
         Promo promo = new Promo();
-
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
         promo.setMaxDiscount(50000);

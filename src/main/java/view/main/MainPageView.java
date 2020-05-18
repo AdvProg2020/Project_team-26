@@ -82,6 +82,7 @@ public class MainPageView extends View {
             return;
         }
     }
+
     protected void cart() {
         CartView cartIView = new CartView(manager);
         cartIView.run();
@@ -89,21 +90,23 @@ public class MainPageView extends View {
 
     protected void personalPage() {
         Role role = manager.getRoleOfUser();
-        switch (role) {
-            case ADMIN: {
-                ManagerAccountView managerAccountView = new ManagerAccountView(manager);
-                managerAccountView.run();
-                return;
-            }
-            case SELLER: {
-                SellerAccountIView sellerAccountIView = new SellerAccountIView(manager);
-                sellerAccountIView.run();
-                return;
-            }
-            case CUSTOMER: {
-                CustomerView customerIView = new CustomerView(manager);
-                customerIView.run();
-                return;
+        if (role != null) {
+            switch (role) {
+                case ADMIN: {
+                    ManagerAccountView managerAccountView = new ManagerAccountView(manager);
+                    managerAccountView.run();
+                    return;
+                }
+                case SELLER: {
+                    SellerAccountIView sellerAccountIView = new SellerAccountIView(manager);
+                    sellerAccountIView.run();
+                    return;
+                }
+                case CUSTOMER: {
+                    CustomerView customerIView = new CustomerView(manager);
+                    customerIView.run();
+                    return;
+                }
             }
         }
     }
