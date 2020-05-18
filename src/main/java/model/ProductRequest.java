@@ -13,7 +13,7 @@ public class ProductRequest {
     private int id;
 
     @ManyToOne
-    @Column(name = "main_product_id")
+    @JoinColumn(name = "main_product_id")
     private Product mainProduct;
 
     @ManyToOne
