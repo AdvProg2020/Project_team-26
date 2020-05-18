@@ -88,7 +88,7 @@ public class OrdersIView extends View {
                         + orderItem.getProduct().getName()
                         + " with id : " + orderItem.getProductId() + "\nwith total paid bill : "
                         + orderItem.getPaidPrice() + " actual price : " + orderItem.getPrice() + " and amount: " +
-                        orderItem.getAmount()));
+                        orderItem.getAmount() + " from " + orderItem.getSeller().getFullName()));
                 return;
             } catch (NoAccessException | InvalidIdException | NoObjectIdException e) {
                 manager.inputOutput.println(e.getMessage());

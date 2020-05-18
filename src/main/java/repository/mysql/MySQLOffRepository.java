@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class MySQLOffRepository
     extends MySQLRepository<Off> implements OffRepository {
@@ -54,6 +55,11 @@ public class MySQLOffRepository
         OffRequest request = getOffRequestById(requestId);
         request.setRequestStatus(RequestStatus.REJECTED);
         persistRequest(request);
+    }
+
+    @Override
+    public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending) {
+        return null;
     }
 
     @Override

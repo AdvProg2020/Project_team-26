@@ -142,7 +142,13 @@ public class ManageRequestForManagerView extends View {
     }
 
     private void showEditProductSellerRequest(ProductSellerRequest productSellerRequest) {
-
+        manager.inputOutput.println(productSellerRequest.getSeller().getUsername() + " wants to : "
+                + " change into : \n" + " price : " + productSellerRequest.getProductSeller().getPrice());
+        manager.inputOutput.println(" amount : " + productSellerRequest.getProductSeller().getRemainingItems());
+        manager.inputOutput.println(" name : " + productSellerRequest.getProduct().getName());
+        manager.inputOutput.println(" category : " + productSellerRequest.getProduct().getCategory().getName());
+        manager.inputOutput.println(" description : " + productSellerRequest.getProduct().getDescription());
+        manager.inputOutput.println(" brand : " + productSellerRequest.getProduct().getBrand());
     }
 
     private void showEditOff(OffRequest offRequest) {
@@ -156,7 +162,7 @@ public class ManageRequestForManagerView extends View {
     private void showDeleteOrAddProductSellerRequest(ProductSellerRequest productSellerRequest, String type) {
         manager.inputOutput.println("seller : " + productSellerRequest.getSeller().getFullName() +
                 "(" + productSellerRequest.getSeller().getId() + ")" +
-                "wants to " + type + " himself : " + productSellerRequest.getProduct().getId());
+                "wants to " + type + " himself : " + (type.equals("add") ? "to " : "from ") + productSellerRequest.getProduct().getId());
     }
 
 
