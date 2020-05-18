@@ -80,12 +80,12 @@ public class ProductController implements IProductController {
 
     @Override
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, String token) {
-        return null;
+        return productRepository.getAllSortedAndFiltered(filter,fieldName,isAscending);
     }
 
     @Override
     public List<Product> getAllProductWithFilterForSellerId(int ProductSellerId, Map<String, String> filter, String fieldName, boolean isAscending, String token) {
-        return null;
+        productRepository.get
     }
 
     @Override
