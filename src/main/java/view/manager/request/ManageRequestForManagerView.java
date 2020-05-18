@@ -29,6 +29,7 @@ public class ManageRequestForManagerView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("request manage page :");
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
             isDone = false;
@@ -154,11 +155,21 @@ public class ManageRequestForManagerView extends View {
     }
 
     private void showEditOff(OffRequest offRequest) {
-        //todo
+        manager.inputOutput.println(offRequest.getSeller().getUsername() + " wants to : "
+                + " change into : \n" + " start : " + offRequest.getStartDate().toString());
+        manager.inputOutput.println(" end : " + offRequest.getEndDate().toString());
+        manager.inputOutput.println("products :");
+        offRequest.getItems().forEach(offItemRequest -> manager.inputOutput.println(offItemRequest.getProduct().getName() +
+                " with price " + offItemRequest.getPriceInOff()));
     }
 
     private void showEditProduct(ProductRequest productRequest) {
-        //todo
+        manager.inputOutput.println(productRequest.getRequestedBy().getUsername() + " wants to : "
+                + " change into : \n" + " name : " + productRequest.getName());
+        manager.inputOutput.println(" category : " + productRequest.getCategory().getName());
+        manager.inputOutput.println(" brand : " + productRequest.getBrand());
+        manager.inputOutput.println(" category : " + productRequest.getCategory().getName());
+        manager.inputOutput.println(" description : " + productRequest.getProduct().getDescription());
     }
 
     private void showDeleteOrAddProductSellerRequest(ProductSellerRequest productSellerRequest, String type) {
@@ -194,9 +205,9 @@ public class ManageRequestForManagerView extends View {
 
 
     private void showDeleteOrAddProduct(ProductRequest productRequest, String type) {
-        manager.inputOutput.println(productRequest.getRequestedBy().getFullName() +
+        manager.inputOutput.println(productRequest.getRequestedBy().getUsername() +
                 " with id : " + productRequest.getRequestedBy().getId() + "\nwants to " + type + " : ");
-        manager.inputOutput.println(productRequest.getName() + "with category : " + productRequest.getCategory() +
+        manager.inputOutput.println(productRequest.getName() + " with category : " + productRequest.getCategory() +
                 "with brand : " + productRequest.getBrand());
     }
 
@@ -319,7 +330,7 @@ public class ManageRequestForManagerView extends View {
         List<String> commandList = new ArrayList<>();
         commandList.add("help");
         commandList.add("back");
-        commandList.add("show offs request");
+        commandList.add("show all");
         commandList.add("show products request");
         commandList.add("show sellers request");
         commandList.add("detail off [id]");

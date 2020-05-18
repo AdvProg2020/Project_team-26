@@ -17,10 +17,12 @@ public abstract class Sort extends View {
         validCommands = EnumSet.allOf(SortValidCommands.class);
         sortField = new HashMap<>();
         this.fieldNameForSort = new String();
+        init();
     }
 
     @Override
     public void run() {
+        manager.inputOutput.println("sort menu :");
         showAvailableSort();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {

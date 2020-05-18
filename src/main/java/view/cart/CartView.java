@@ -9,6 +9,7 @@ import view.View;
 import view.ViewManager;
 import view.offs.AllOffView;
 import view.products.all.AllProductView;
+import view.products.single.SingleProductView;
 
 import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class CartView extends View {
             manager.setTokenFromController(e.getMessage());
             return;
         }
+        manager.inputOutput.println("cart menu :");
         boolean done;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             done = false;
@@ -58,7 +60,7 @@ public class CartView extends View {
 
 
     public void showProductWithId(Matcher matcher) {
-        manager.singleProductView(matcher);
+        manager.singleProductPage(matcher);
     }
 
     public void changeInNumber(Matcher matcher, int increaseOrDecrease) {
@@ -176,6 +178,7 @@ public class CartView extends View {
         }
         commandList.forEach(i -> manager.inputOutput.println(i));
     }
+
     protected void product() {
         AllProductView allProductView = new AllProductView(manager);
         allProductView.run();

@@ -8,7 +8,6 @@ public class OrderSort extends Sort {
 
     public OrderSort(ViewManager manager) {
         super(manager);
-        init();
     }
 
     protected void init() {

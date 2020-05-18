@@ -44,6 +44,7 @@ public class CustomerView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("customer menu :");
         boolean isDone;
         while ((!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) && manager.getIsUserLoggedIn()) {
             isDone = false;

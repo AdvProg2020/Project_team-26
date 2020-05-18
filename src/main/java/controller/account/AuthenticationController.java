@@ -2,15 +2,20 @@ package controller.account;
 
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
-import model.Role;
-import model.Session;
-import model.User;
+import model.*;
+import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Random;
 
 public class AuthenticationController implements IAuthenticationController {
 
     UserRepository userRepository;
+    PromoRepository promoRepository;
 
     public AuthenticationController(RepositoryContainer repositoryContainer) {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
@@ -22,6 +27,35 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameFormat(username);
         checkUsernameAndPassword(username, password);
         userSession.login(userRepository.getUserByUsername(username));
+        if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
+            Random r = new Random();
+            if (r.nextInt(100 - 1) < 60) {
+                creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
+            }
+        }
+    }
+
+    private void creatRandomPromo(Customer customer, String token) {
+        Promo promo = new Promo();
+        promo.getCustomers().add(customer);
+        promo.setMaxValidUse(1);
+        promo.setMaxDiscount(50000);
+        promo.setPercent(10);
+        Date startDate = new Date();
+        promo.setStartDate(startDate);
+        Date endDate;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
+        Random r = new Random();
+        int year = r.nextInt(2050 - 2022) + 2020;
+        int month = r.nextInt(11 - 1) + 1;
+        try {
+            endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
+            promo.setEndDate(endDate);
+            promo.setPromoCode("randomForLogin" + year + customer.getUsername() + startDate.toString() + token);
+            promoRepository.save(promo);
+            userRepository.save(customer);
+        } catch (ParseException e) {
+        }
     }
 
     public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
@@ -68,8 +102,8 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     private void checkEmailFormat(String Email) throws InvalidFormatException {
-        if(Email == null) {
-            throw new InvalidFormatException("email should not be empty","Email");
+        if (Email == null) {
+            throw new InvalidFormatException("email should not be empty", "Email");
         }
         if (!Email.matches("^\\S+@\\S+.(?i)com(?-i)")) {
             throw new InvalidFormatException("Email format is incorrect.", "Email");

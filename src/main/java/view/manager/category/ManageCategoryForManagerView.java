@@ -32,6 +32,7 @@ public class ManageCategoryForManagerView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("category manage page :");
         boolean isDone;
         showAll();
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
@@ -137,9 +138,10 @@ public class ManageCategoryForManagerView extends View {
     protected void help() {
         List<String> commandList = new ArrayList<>();
         commandList.add("help");
+        commandList.add("back");
         commandList.add("edit [name]");
         commandList.add("show all");
-        commandList.add("remove [name]");
+        commandList.add("remove [id]");
         commandList.add("view sub [id]");
         commandList.add("add [name]");
         commandList.add("logout");

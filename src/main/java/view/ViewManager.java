@@ -114,7 +114,7 @@ public class ViewManager {
         }
     }
 
-    public void singleProductView(Matcher matcher) {
+    public void singleProductPage(Matcher matcher) {
         IProductController productController = (IProductController) controllerContainer.getController(ControllerContainer.Controller.ProductController);
         matcher.find();
         String id = matcher.group(1);
@@ -131,6 +131,7 @@ public class ViewManager {
         }
         this.inputOutput.println("the id is invalid format.");
     }
+
 
     public void loginInAllPagesEssential() {
         while (!this.getIsUserLoggedIn()) {
