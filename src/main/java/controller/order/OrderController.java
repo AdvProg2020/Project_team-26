@@ -1,9 +1,7 @@
 package controller.order;
 
 import controller.interfaces.order.IOrderController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NoObjectIdException;
+import exception.*;
 import model.*;
 import repository.OrderRepository;
 import repository.RepositoryContainer;
@@ -36,8 +34,21 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public List<Order> getOrdersWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
-        return null;
+    public List<Order> getOrdersWithFilter(String sortField, boolean isAscending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
+            throw new NotLoggedINException("You must be logged in");
+        } else if(user.getRole() != Role.CUSTOMER) {
+            throw new NoAccessException("You must be a customer to gte Orders");
+        } else {
+            List<Order> allOrders  = new ArrayList<>();
+            for (Order order : orderRepository.getAllSorted(sortField, isAscending)) {
+                if(order.getCustomer().getUsername().equals(user.getUsername())) {
+                    allOrders.add(order);
+                }
+            }
+            return allOrders;
+        }
     }
 
     @Override

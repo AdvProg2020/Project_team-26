@@ -24,4 +24,6 @@ public interface OffRepository extends Repository<Off> {
     OffRequest getOffRequestById(int requestId);
 
     List<OffRequest> getAllRequests(String sortField, boolean isAscending);
+
+    List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int SellerId);
 }

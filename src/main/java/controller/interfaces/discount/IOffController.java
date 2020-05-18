@@ -20,7 +20,7 @@ public interface IOffController {
 
     List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 
-    List<Off> getAllOfForSellerWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException;
+    List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 
     Off getOff(int id, String token) throws InvalidIdException;
 
