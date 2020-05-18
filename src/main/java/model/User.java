@@ -3,6 +3,7 @@ package model;
 import controller.account.Account;
 import exception.NoAccessException;
 import exception.NotEnoughCreditException;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
+
+import static javax.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "user")
@@ -35,10 +38,11 @@ public class User {
     @Column(name = "credit", nullable = false)
     private long credit;
 
-    @ElementCollection
-    @MapKeyColumn(name="key")
-    @Column(name="value")
-    @CollectionTable(name="user_details", joinColumns=@JoinColumn(name="user_id"))
+    @ElementCollection()
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
+    @MapKeyColumn(name = "key")
+    @Column(name = "value")
+    @CollectionTable(name = "user_details", joinColumns = @JoinColumn(name = "user_id"))
     private Map<String, String> details;
 
     public User() {
@@ -58,11 +62,11 @@ public class User {
     }
 
     public void changeFirstName(String name) {
-        details.put("firstname",name);
+        details.put("firstname", name);
     }
 
     public void changeLastName(String name) {
-        details.put("lastname",name);
+        details.put("lastname", name);
     }
 
     public void changeEmail(String Email) {
@@ -107,7 +111,7 @@ public class User {
     }
 
     public void changePassword(String oldPassword, String newPassword) throws NoAccessException {
-        if(oldPassword.equals(this.password)) {
+        if (oldPassword.equals(this.password)) {
             this.password = newPassword;
         } else {
             throw new NoAccessException("You are not allowed to do that.");
