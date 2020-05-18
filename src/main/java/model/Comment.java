@@ -24,6 +24,7 @@ public class Comment {
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "state", nullable = false)
     private CommentState state;
 

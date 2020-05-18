@@ -32,9 +32,11 @@ public class OffRequest {
     @OneToMany(mappedBy = "offRequest", cascade = CascadeType.ALL)
     private List<OffItemRequest> items;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_type")
     private RequestType requestType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_status")
     private RequestStatus requestStatus;
 

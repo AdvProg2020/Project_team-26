@@ -39,9 +39,11 @@ public class ProductRequest {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSellerRequest> sellerList;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_type")
     private RequestType requestType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_status")
     private RequestStatus requestStatus;
 

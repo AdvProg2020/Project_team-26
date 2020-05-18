@@ -36,9 +36,11 @@ public class ProductSellerRequest {
     @Column(name = "remaining_items")
     private int remainingItems;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_type")
     private RequestType requestType;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "request_status")
     private RequestStatus requestStatus;
 
