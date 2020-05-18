@@ -19,7 +19,7 @@ public interface OffRepository extends Repository<Off> {
 
     void rejectRequest(int requestId);
 
-    public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending);
+    public List<Product> getAllProductInOff(Map<String, String> filter, String sortFiled, boolean isAscending);
 
     OffRequest getOffRequestById(int requestId);
 

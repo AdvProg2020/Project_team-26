@@ -58,8 +58,18 @@ public class MySQLOffRepository
     }
 
     @Override
-    public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending) {
-        return null;
+    public List<Product> getAllProductInOff(Map<String, String> filter, String sortFiled, boolean isAscending) {
+        List<Product> allProducts = new MySQLProductRepository().getAllSortedAndFiltered(filter, sortFiled, isAscending);
+        List<Product> result = new ArrayList<>();
+        for (Product product : allProducts) {
+            for (ProductSeller productSeller : product.getSellerList()) {
+                if(productSeller.getPriceInOff() < productSeller.getPrice()) {
+                    result.add(product);
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     @Override

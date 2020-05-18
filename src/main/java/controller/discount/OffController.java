@@ -8,7 +8,6 @@ import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -112,7 +111,7 @@ public class OffController implements IOffController {
 
     @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
-        return offRepository.getAllProductWithOff(filter,sortFiled,isAscending);
+        return offRepository.getAllProductInOff(filter,sortFiled,isAscending);
     }
 
     @Override
