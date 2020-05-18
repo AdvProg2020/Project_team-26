@@ -19,7 +19,9 @@ public class ViewManagerTest {
 
     @BeforeEach
     void setUp() {
-        manager = new ViewManager();
+        RepositoryContainer repositoryContainer = new RepositoryContainer();
+        ControllerContainer controllerContainer =  new ControllerContainer(repositoryContainer);
+        manager = new ViewManager(controllerContainer);
         mainPageView = new view.main.MainPageView(manager);
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }

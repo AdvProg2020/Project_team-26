@@ -26,7 +26,6 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
             ProductSeller productSeller = new ProductSeller(lastId++,productRepository.getById(1),i);
             productSeller.setPrice(12);
             productSeller.setSeller((Seller) userRepository.getUserByUsername("test5"));
-            productSeller.set(12);
             save(productSeller);
         }
     }

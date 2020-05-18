@@ -12,6 +12,7 @@ import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import view.ControllerContainer;
 import view.InputOutput;
 import view.ViewManager;
 import view.main.AuthenticationValidCommands;
@@ -28,7 +29,9 @@ public class AuthenticationViewTest {
 
     @BeforeEach
     void setUp() {
-        manager = new ViewManager();
+        RepositoryContainer repositoryContainer = new RepositoryContainer();
+        ControllerContainer controllerContainer = new ControllerContainer(repositoryContainer);
+        manager = new ViewManager(controllerContainer);
         authenticationView = new AuthenticationView(manager, "hello");
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }
@@ -100,7 +103,7 @@ public class AuthenticationViewTest {
         manager.setToken("seller");
         authenticationView.setInput("create account buyer 90");
         authenticationView.run();
-        assertEquals("registered",InputOutput.now);
+        assertEquals("registered", InputOutput.now);
         InputOutput.input.add("89");
         InputOutput.input.add("hel lo");
         InputOutput.input.add("hello");

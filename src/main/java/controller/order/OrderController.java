@@ -71,14 +71,17 @@ public class OrderController implements IOrderController {
         if (!wantedOrder.getCustomer().getUsername().equals(customer.getUsername())) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            return orderRepository.getById(wantedOrder.getId());
+            return orderRepository.getById(wantedOrder.getId());//todo correct
         }
     }
 
-    private Order getSingleSellerOrder(Seller seller, Order wantedOrder) {
-        return (Order) orderRepository.getASingleSellerOrder(seller,wantedOrder);
+    private Order getSingleSellerOrder(Seller seller, Order wantedOrder) throws NoAccessException {
+        if (!wantedOrder.getCustomer().getUsername().equals(seller.getUsername())) {
+            throw new NoAccessException("You are not allowed to do that.");
+        } else {
+            return orderRepository.getById(wantedOrder.getId());
+        }
     }
-
 
 
 }

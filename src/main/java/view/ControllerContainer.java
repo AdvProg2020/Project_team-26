@@ -28,13 +28,13 @@ public class ControllerContainer {
     private Map<Controller, Object> map;
     RepositoryContainer repository;
 
-    public ControllerContainer() {
+    public ControllerContainer(RepositoryContainer repositoryContainer) {
         map = new HashMap<>();
-        repository = new RepositoryContainer();
-        initialize();
+        repository = repositoryContainer;
+        initializeFake();
     }
 
-    private void initialize() {
+    private void initializeFake() {
         map.put(Controller.AuthenticationController, new AuthenticationController(repository));
         map.put(Controller.SessionController, new SessionController(repository));
         map.put(Controller.ShowUserController, new ShowUserController(repository));

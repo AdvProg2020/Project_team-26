@@ -24,12 +24,11 @@ public class ViewManager {
     private ISessionController sessionController;
     private ControllerContainer controllerContainer;
 
-    public ViewManager() {
+    public ViewManager(ControllerContainer controllerContainer) {
         isUserLoggedIn = false;
-        inputOutput = new InputOutput();
-        controllerContainer = new ControllerContainer();
+        inputOutput = new InputOutput("console");
+        this.controllerContainer = controllerContainer;
         sessionController = (ISessionController) controllerContainer.getController(ControllerContainer.Controller.SessionController);
-        token = sessionController.createToken();
     }
 
     public Object getController(ControllerContainer.Controller controller) {
@@ -64,6 +63,7 @@ public class ViewManager {
     }
 
     public void startProgram() {
+        token = sessionController.createToken();
         MainPageView startView = new MainPageView(this);
         startView.run();
     }

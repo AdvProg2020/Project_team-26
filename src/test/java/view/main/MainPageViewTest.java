@@ -6,6 +6,7 @@ import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import view.ControllerContainer;
 import view.InputOutput;
 import view.ViewManager;
 
@@ -20,7 +21,9 @@ public class MainPageViewTest {
 
     @BeforeEach
     void setUp() {
-        manager = new ViewManager();
+        RepositoryContainer repositoryContainer = new RepositoryContainer();
+        ControllerContainer controllerContainer =  new ControllerContainer(repositoryContainer);
+        manager = new ViewManager(controllerContainer);
         mainPageView = new view.main.MainPageView(manager);
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }

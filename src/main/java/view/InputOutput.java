@@ -9,6 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 public class InputOutput implements IO {
     public static List<String> input = new ArrayList<>();
@@ -17,10 +18,15 @@ public class InputOutput implements IO {
     public static int outPutNumber = 0;
     public static String now;
     String inputFile;
+    Scanner scanner;
     String fileName = "temp.txt";
     BufferedWriter bufferedWriter;
     FileWriter fileWriter;
 
+    public InputOutput(String console) {
+        if (console.equals("console"))
+            scanner = new Scanner(System.in);
+    }
 
     public InputOutput() {
         try {
@@ -33,6 +39,21 @@ public class InputOutput implements IO {
 
     @Override
     public String nextLine() {
+        return scanner.nextLine();
+    }
+
+    @Override
+    public void println(String input) {
+        System.out.println(input);
+    }
+
+    public void printlnForTest(String input) {
+        output.add(input);
+        now = input;
+
+    }
+
+    public String nextLineForTest() {
         inputNumber++;
         inputFile = input.get(inputNumber - 1);
         try {
@@ -42,12 +63,6 @@ public class InputOutput implements IO {
             println(e.getMessage());
         }
         return inputFile;
-    }
-
-    @Override
-    public void println(String input) {
-        output.add(input);
-        now = input;
     }
 
     @Override

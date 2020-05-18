@@ -3,6 +3,7 @@ package view;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repository.RepositoryContainer;
 import view.ControllerContainer.Controller.*;
 
 import static view.ControllerContainer.Controller.*;
@@ -10,7 +11,8 @@ import static view.ControllerContainer.Controller.*;
 public class CortollerContainerTest {
     @Test
     void testAll() {
-        ControllerContainer controllerContainer = new ControllerContainer();
+        RepositoryContainer repositoryContainer = new RepositoryContainer();
+        ControllerContainer controllerContainer = new ControllerContainer(repositoryContainer);
         Assertions.assertEquals(controllerContainer.getController(AuthenticationController), controllerContainer.getController(AuthenticationController));
         Assertions.assertEquals(controllerContainer.getController(ShowUserController), controllerContainer.getController(ShowUserController));
         Assertions.assertEquals(controllerContainer.getController(SessionController), controllerContainer.getController(SessionController));
