@@ -12,6 +12,8 @@ public class RequestSort extends Sort {
     @Override
     protected void init() {
         sortField.put(1, "date");
+        fieldNameForSort = "date";
+        isAscending = true;
     }
 
 

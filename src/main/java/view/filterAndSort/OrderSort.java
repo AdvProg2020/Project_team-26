@@ -12,5 +12,7 @@ public class OrderSort extends Sort {
 
     protected void init() {
         sortField.put(1, "date");
+        fieldNameForSort = "date";
+        isAscending = true;
     }
 }

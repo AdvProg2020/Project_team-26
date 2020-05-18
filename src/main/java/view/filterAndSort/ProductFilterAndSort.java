@@ -21,6 +21,8 @@ public class ProductFilterAndSort extends FilterAndSort {
         filterFields.put(5, "description");
         sortField.put(1, "price");
         sortField.put(2, "rate");
+        fieldNameForSort = "rate";
+        isAscending = true;
     }
 
     protected void filterWithAvailableFilter(Matcher matcher) {
