@@ -58,7 +58,10 @@ public abstract class MySQLRepository<T> implements Repository<T> {
         try {
             et = em.getTransaction();
             et.begin();
-            em.merge(object);
+            if (getId(object) == 0)
+                em.persist(object);
+            else
+                em.merge(object);
             et.commit();
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -120,7 +123,7 @@ public abstract class MySQLRepository<T> implements Repository<T> {
         }
     }
 
-    protected int getId(Class<?> object) {
+    protected int getId(T object) {
         if (object == null)
             return -1;
 
@@ -129,7 +132,7 @@ public abstract class MySQLRepository<T> implements Repository<T> {
     }
 
     protected void applySort(String sortField, boolean isAscending, CriteriaBuilder cb, CriteriaQuery<T> cq, Root<T> root) {
-        if(isAscending) {
+        if (isAscending) {
             cq.orderBy(cb.asc(root.get(sortField)));
         } else {
             cq.orderBy(cb.desc(root.get(sortField)));
