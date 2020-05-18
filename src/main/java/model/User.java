@@ -54,7 +54,7 @@ public class User {
     }
 
     public String getFullName() {
-        return details.get("firstname") + details.get("lastname");
+        return details.get("firstname") + " " + details.get("lastname");
     }
 
     public void changeFirstName(String name) {
