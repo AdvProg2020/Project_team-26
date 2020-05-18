@@ -119,11 +119,12 @@ public class CartController implements ICartController {
         Date endDate;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Random r = new Random();
-        int year = r.nextInt(2050 - 2020) + 2020;
+        int year = r.nextInt(2050 - 2022) + 2020;
+        int month = r.nextInt(11 - 1) + 1;
         try {
-            endDate = formatter.parse("20-6-" + year + " 8:00:00");
+            endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
             promo.setEndDate(endDate);
-            promo.setPromoCode("randomForBuy" + year + customer.getUsername() + startDate.toString());
+            promo.setPromoCode("randomForBuy" + year + customer.getUsername() + startDate.toString() + order.getPaidAmount());
             promoRepository.save(promo);
         } catch (ParseException e) {
             return;
