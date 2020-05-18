@@ -6,6 +6,7 @@ import model.*;
 import repository.ProductSellerRepository;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
+import repository.UserRepository;
 
 import java.rmi.NoSuchObjectException;
 import java.text.ParseException;
@@ -16,8 +17,9 @@ import java.util.Random;
 
 public class CartController implements ICartController {
 
-    ProductSellerRepository productSellerRepository;
-    PromoRepository promoRepository;
+    private ProductSellerRepository productSellerRepository;
+    private PromoRepository promoRepository;
+    private UserRepository userRepository;
 
     public CartController(RepositoryContainer repositoryContainer) {
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
@@ -103,6 +105,7 @@ public class CartController implements ICartController {
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.getPaidAmount());
         customer.addOrder(order);
+        userRepository.save(customer);
         if (order.getPaidAmount() > 500000) {
             creatRandomPromo(order, customer);
         }
@@ -172,7 +175,7 @@ public class CartController implements ICartController {
     public int getAmountInCartBySellerId(int productSelleId, String token) throws InvalidTokenException, NoSuchObjectException {
         Session session = Session.getSession(token);
         for (ProductSeller productSeller : session.getCart().getProducts().keySet()) {
-            if (productSeller.getId() == productSelleId) {
+            if(productSeller.getId() == productSelleId) {
                 return session.getCart().getProducts().get(productSeller);
             }
         }
