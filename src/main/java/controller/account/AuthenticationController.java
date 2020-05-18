@@ -37,6 +37,7 @@ public class AuthenticationController implements IAuthenticationController {
 
     private void creatRandomPromo(Customer customer, String token) {
         Promo promo = new Promo();
+
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
         promo.setMaxDiscount(50000);

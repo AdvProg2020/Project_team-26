@@ -46,6 +46,8 @@ public class ProductRequest {
     private RequestStatus requestStatus;
 
     public ProductRequest() {
+        requestTime = new Date();
+        requestStatus = RequestStatus.PENDING;
     }
 
     public ProductRequest(String name, String brand, String description, Category category, RequestType requestType) {

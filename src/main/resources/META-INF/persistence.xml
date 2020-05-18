@@ -19,7 +19,7 @@
             <property name="javax.persistence.jdbc.url"
                       value="jdbc:mysql://ap-group26.mysql.database.azure.com:3306/store?serverTimezone=UTC&amp;useSSL=true&amp;requireSSL=true"/>
             <property name="javax.persistence.jdbc.user" value="dbadmin@ap-group26"/>
-            <property name="javax.persistence.jdbc.password" value="9K6ft53XrA16Nkef5h"/>
+            <property name="javax.persistence.jdbc.password" value="H5890asd23Yzq"/>
             <property name="hibernate.show_sql" value="true"/>
         </properties>
     </persistence-unit>

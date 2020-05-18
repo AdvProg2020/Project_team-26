@@ -39,6 +39,7 @@ public class Promo {
     private List<Customer> customers;
 
     public Promo() {
+        customers = new ArrayList<>();
     }
 
     public Promo(String code,Customer customer) {

@@ -33,6 +33,9 @@ public class Category {
     private List<CategoryFeature> features;
 
     public Category() {
+        features = new ArrayList<CategoryFeature>();
+        subCategory = new ArrayList<Category>();
+        products = new ArrayList<Product>();
     }
 
     public Category(String name) {

@@ -27,10 +27,13 @@ public class Off {
     private List<OffItem> items;
 
     public Off() {
+        items = new ArrayList<OffItem>();
+
     }
 
-    public Off(String stringCode) {
+    public Off(String f) {
         items = new ArrayList<OffItem>();
+
     }
 
     public int getId() {

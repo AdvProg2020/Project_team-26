@@ -44,6 +44,8 @@ public class ProductSeller {
         this.id = id;
         this.product = product;
         this.remainingItems = remainingItems;
+        this.price = price;
+        this.priceInOff = priceInOff;
     }
 
     public int getId() {
@@ -78,7 +80,7 @@ public class ProductSeller {
     }
 
     public long getPriceInOff() {
-        if(priceInOff == null) {
+        if (priceInOff == null) {
             return price;
         }
         return priceInOff;

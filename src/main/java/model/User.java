@@ -42,6 +42,7 @@ public class User {
     private Map<String, String> details;
 
     public User() {
+        details = new HashMap<>();
     }
 
     public User(String username, String password, String email, Role role) {

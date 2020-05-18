@@ -39,6 +39,8 @@ public class OffRequest {
     private RequestStatus requestStatus;
 
     public OffRequest() {
+        requestTime = new Date();
+        requestStatus = RequestStatus.PENDING;
     }
 
     public OffRequest(Seller seller, Date startDate, Date endDate, RequestType requestType) {

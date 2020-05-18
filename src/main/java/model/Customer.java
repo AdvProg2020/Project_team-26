@@ -20,6 +20,8 @@ public class Customer extends User {
     private List<Promo> availablePromos;
 
     public Customer() {
+        orders = new ArrayList<>();
+        availablePromos = new ArrayList<>();
     }
 
     public Customer(String username, String password, String email, Role role) {

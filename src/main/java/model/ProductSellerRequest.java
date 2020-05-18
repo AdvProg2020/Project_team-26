@@ -43,6 +43,8 @@ public class ProductSellerRequest {
     private RequestStatus requestStatus;
 
     public ProductSellerRequest() {
+        requestTime = new Date();
+        requestStatus = RequestStatus.PENDING;
     }
 
     public ProductSellerRequest(Product product, Seller seller, long price, int remainingItems, RequestType requestType) {

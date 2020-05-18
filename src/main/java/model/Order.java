@@ -40,6 +40,7 @@ public class Order {
     public Order(int id) {
         this.id = id;
         items = new ArrayList<OrderItem>();
+        //todo set date for order
     }
 
     public Order(Customer customer, Promo usedPromo, String address) {

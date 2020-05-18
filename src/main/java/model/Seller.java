@@ -12,6 +12,7 @@ public class Seller extends User {
     private List<Off> allOffs;
 
     public Seller() {
+        allOffs = new ArrayList<>();
     }
 
     public Seller(String username, String password, String email, Role role) {

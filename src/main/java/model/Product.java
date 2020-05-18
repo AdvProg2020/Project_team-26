@@ -43,6 +43,7 @@ public class Product {
     private Map<CategoryFeature, String> categoryFeatures;
 
     public Product() {
+        sellerList = new ArrayList<>();
     }
 
     public Product(String name, String brand, String description) {

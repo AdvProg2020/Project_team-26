@@ -116,8 +116,8 @@ public class ProductFilterAndSort extends FilterAndSort {
             for (String s : stringList) {
                 if (count != 1) {
                     fields.append("-" + s);
-                    count++;
                 }
+                count++;
             }
         }
         return fields.toString();
@@ -136,11 +136,11 @@ public class ProductFilterAndSort extends FilterAndSort {
 
     protected void showAvailableFilter() {
         manager.inputOutput.println("filters:");
-        filterFields.forEach((number, filed) -> manager.inputOutput.println("" + number + ". " + filed));
+        filterFields.forEach((number, filed) -> manager.inputOutput.println("" + number + " : " + filed));
     }
 
     protected void showCurrentFilters() {
-        filterForController.forEach((field, value) -> manager.inputOutput.println("" + field + ". " + value));
+        filterForController.forEach((field, value) -> manager.inputOutput.println("" + field + " : " + value));
     }
 
     protected void showAvailableSort() {

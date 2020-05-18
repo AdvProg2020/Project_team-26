@@ -22,7 +22,7 @@ public class FakeOffRepository implements OffRepository {
         fakeUserRepository = new FakeUserRepository();
         allOffs = new ArrayList<>();
         for(int i = 0; i < 5; i++) {
-            save(new Off("SALE" + i));
+            save(new Off());
         }
 
     }
