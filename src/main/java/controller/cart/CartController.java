@@ -129,6 +129,7 @@ public class CartController implements ICartController {
             promo.setEndDate(endDate);
             promo.setPromoCode("randomForBuy" + year + customer.getUsername() + startDate.toString() + order.getPaidAmount());
             promoRepository.save(promo);
+            userRepository.save(customer);
         } catch (ParseException e) {
             return;
         }
@@ -175,7 +176,7 @@ public class CartController implements ICartController {
     public int getAmountInCartBySellerId(int productSelleId, String token) throws InvalidTokenException, NoSuchObjectException {
         Session session = Session.getSession(token);
         for (ProductSeller productSeller : session.getCart().getProducts().keySet()) {
-            if(productSeller.getId() == productSelleId) {
+            if (productSeller.getId() == productSelleId) {
                 return session.getCart().getProducts().get(productSeller);
             }
         }
