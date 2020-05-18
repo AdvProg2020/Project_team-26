@@ -68,6 +68,11 @@ public class FakeOffRepository implements OffRepository {
     }
 
     @Override
+    public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int SellerId) {
+        return null;
+    }
+
+    @Override
     public List<Off> getAll() {
         return allOffs;
     }

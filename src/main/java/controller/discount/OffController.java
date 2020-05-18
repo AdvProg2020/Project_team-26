@@ -122,9 +122,10 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public List<Off> getAllOfForSellerWithFilter(Map<String, String> filter, String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException {
+    public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         return new ArrayList<>();
     }
+
 
     @Override
     public Off getOff(int id, String token) throws InvalidIdException {

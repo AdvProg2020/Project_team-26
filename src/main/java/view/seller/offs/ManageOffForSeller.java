@@ -7,6 +7,7 @@ import model.*;
 import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
+import view.filterAndSort.OffSort;
 import view.filterAndSort.ProductFilterAndSort;
 
 import java.util.ArrayList;
@@ -20,13 +21,13 @@ public class ManageOffForSeller extends View {
     private IOffController offController;
     private IProductController productController;
     boolean isPercent;
-    private ProductFilterAndSort productFilterAndSort;
+    private OffSort offSort;
     private Seller seller;
 
     public ManageOffForSeller(ViewManager managerView, Seller seller) {
         super(managerView);
         validCommands = EnumSet.allOf(ViewOffsForSellerAccountValidCommands.class);
-        productFilterAndSort = new ProductFilterAndSort(manager);
+        offSort = new OffSort(manager);
         offController = (IOffController) manager.getController(ControllerContainer.Controller.OffController);
         productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
         this.seller = seller;
@@ -53,9 +54,9 @@ public class ManageOffForSeller extends View {
 
     protected void showAll() {
         try {
-            for (Off off : offController.getAllOfForSellerWithFilter(productFilterAndSort.getFilterForController(),
-                    productFilterAndSort.getFieldNameForSort()
-                    , productFilterAndSort.isAscending(), manager.getToken())) {
+            for (Off off : offController.getAllOfForSellerWithFilter(
+                    offSort.getFieldNameForSort()
+                    , offSort.isAscending(), manager.getToken())) {
                 manager.inputOutput.println("off id :" + off.getId());
                 manager.inputOutput.println("start :" + off.getStartDate().toString());
                 off.getItems().forEach(item -> manager.inputOutput.println(item.getProduct().getName() + " with id" +
@@ -66,6 +67,9 @@ public class ManageOffForSeller extends View {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
             manager.setTokenFromController(e.getMessage());
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
         }
     }
 
@@ -194,13 +198,8 @@ public class ManageOffForSeller extends View {
 
 
     protected void sorting() {
-        productFilterAndSort.run();
+        offSort.run();
     }
-
-    protected void filtering() {
-        productFilterAndSort.run();
-    }
-
 
     protected void help() {
         List<String> commandList = new ArrayList<>();
@@ -210,7 +209,6 @@ public class ManageOffForSeller extends View {
         commandList.add("edit [offId]");
         commandList.add("add off");
         commandList.add("sorting");
-        commandList.add("filtering");
         commandList.add("show all");
         commandList.add("logout");
         commandList.forEach(i -> manager.inputOutput.println(i));

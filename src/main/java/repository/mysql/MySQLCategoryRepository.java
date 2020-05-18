@@ -1,6 +1,7 @@
 package repository.mysql;
 
 import model.Category;
+import model.Product;
 import repository.CategoryRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
@@ -37,5 +38,10 @@ public class MySQLCategoryRepository
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Override
+    public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending) {
+        return null;
     }
 }

@@ -162,6 +162,11 @@ public class MySQLProductRepository
     }
 
     @Override
+    public List<Product> getAllProductsWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
+        return null;
+    }
+
+    @Override
     public List<Product> getAllSortedAndFiltered(Map<String, String> filter, String sortField, boolean isAscending) {
         EntityManager em = EntityManagerProvider.getEntityManager();
 

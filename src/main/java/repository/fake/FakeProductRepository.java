@@ -117,6 +117,11 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
+    public List<Product> getAllProductsWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
+        return null;
+    }
+
+    @Override
     public void save(Product object) {
         if (object == null)
             return;

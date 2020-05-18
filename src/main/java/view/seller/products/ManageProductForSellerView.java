@@ -143,10 +143,19 @@ public class ManageProductForSellerView extends View {
     }
 
     protected void showAll() {
-        productController.getAllProductWithFilterForSellerId(thisUser.getId(), productFilterAndSort.getFilterForController(),
-                productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending()
-                , manager.getToken()).forEach(product -> manager.inputOutput.println(
-                product.getName() + "with id: " + product.getId() + "in category :" + product.getCategory().getName()));
+        try {
+            productController.getAllProductWithFilterForSellerId(productFilterAndSort.getFilterForController(),
+                    productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending()
+                    , manager.getToken()).forEach(product -> manager.inputOutput.println(
+                    product.getName() + "with id: " + product.getId() + "in category :" + product.getCategory().getName()));
+        } catch (NotLoggedINException e) {
+            manager.inputOutput.println(e.getMessage());
+        } catch (InvalidTokenException e) {
+            manager.setTokenFromController(e.getMessage());
+        } catch (NoAccessException e) {
+            manager.inputOutput.println(e.getMessage());
+            manager.loginInAllPagesEssential();
+        }
     }
 
     protected void showWithId(Matcher matcher) {
