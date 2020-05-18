@@ -8,10 +8,9 @@ import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class UserView {
-    private static UserView userView;
+    private static UserView userView = new UserView();
 
     private UserView() {
-        UserView.userView = new UserView();
     }
 
     public static UserView getInstance() {

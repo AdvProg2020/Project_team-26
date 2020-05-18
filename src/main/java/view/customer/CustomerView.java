@@ -35,7 +35,7 @@ public class CustomerView extends View {
         promoSort = new PromoSort(manager);
         infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
         userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
-        promoController = (IPromoController) manager.getController(ControllerContainer.Controller.ProductController);
+        promoController = (IPromoController) manager.getController(ControllerContainer.Controller.PromoController);
     }
 
     private void initialEditFields() {
