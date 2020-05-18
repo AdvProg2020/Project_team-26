@@ -132,6 +132,8 @@ public abstract class MySQLRepository<T> implements Repository<T> {
     }
 
     protected void applySort(String sortField, boolean isAscending, CriteriaBuilder cb, CriteriaQuery<T> cq, Root<T> root) {
+        if(sortField == null || sortField == "")
+            return;
         if (isAscending) {
             cq.orderBy(cb.asc(root.get(sortField)));
         } else {
