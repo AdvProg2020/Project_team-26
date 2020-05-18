@@ -1,7 +1,6 @@
 package repository.mysql;
 
-import model.Category;
-import model.User;
+import model.*;
 import repository.UserRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
@@ -56,6 +55,18 @@ public class MySQLUserRepository
 
     @Override
     public boolean hasBoughtProduct(int customerId, int productId) {
-        return false;
+        try {
+            Customer customer = (Customer) getById(customerId);
+            for (Order order : customer.getOrders()) {
+                for (OrderItem item : order.getItems()) {
+                    if(item.getProduct().getId() == productId) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }
