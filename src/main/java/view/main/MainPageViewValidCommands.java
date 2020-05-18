@@ -65,6 +65,12 @@ public enum MainPageViewValidCommands {
         public void goToFunction(MainPageView page) {
             page.personalPage();
         }
+    },
+    Cart("^view\\s+cart$") {
+        @Override
+        public void goToFunction(MainPageView page) {
+            page.cart();
+        }
     };
 
     private Pattern commandPattern;

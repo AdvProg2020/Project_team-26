@@ -27,7 +27,6 @@ public class SellerAccountIView extends View {
     private ICategoryController categoryController;
     private UserView userView;
     private IOrderController orderController;
-    private OrderSort orderSort;
     private User thisUser;
 
 
@@ -35,7 +34,6 @@ public class SellerAccountIView extends View {
         super(managerView);
         validCommands = EnumSet.allOf(SellerAccountViewValidCommands.class);
         userView = UserView.getInstance();
-        orderSort = new OrderSort(manager);
         editableFields = new ArrayList<>();
         infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
         productController = (IProductController) manager.getController(ControllerContainer.Controller.ProductController);
@@ -264,10 +262,6 @@ public class SellerAccountIView extends View {
     }
 
 
-    protected void sorting() {
-        orderSort.run();
-    }
-
 
     protected void help() {
         List<String> commandList = new ArrayList<>();
@@ -287,7 +281,6 @@ public class SellerAccountIView extends View {
         commandList.add("view offs");
         commandList.add("view balance");
         commandList.add("logout");
-        commandList.add("sorting");
         commandList.forEach(i -> manager.inputOutput.println(i));
     }
 

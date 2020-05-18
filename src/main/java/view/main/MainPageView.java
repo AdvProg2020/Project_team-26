@@ -7,6 +7,7 @@ import model.Role;
 import view.*;
 
 import view.ViewManager;
+import view.cart.CartView;
 import view.customer.CustomerView;
 import view.manager.ManagerAccountView;
 import view.offs.AllOffView;
@@ -58,6 +59,8 @@ public class MainPageView extends View {
         commandList.add("back|exit");
         commandList.add("offs");
         commandList.add("products");
+        commandList.add("view cart");
+        commandList.add("personal page");
         if (isLoggedIn) {
             commandList.add("logout");
         } else {
@@ -78,6 +81,10 @@ public class MainPageView extends View {
             manager.setTokenFromController(e.getMessage());
             return;
         }
+    }
+    protected void cart() {
+        CartView cartIView = new CartView(manager);
+        cartIView.run();
     }
 
     protected void personalPage() {

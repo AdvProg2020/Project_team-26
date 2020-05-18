@@ -65,8 +65,8 @@ public abstract class Sort extends View {
 
     protected void sortWithAvailableSort(Matcher matcher) {
         matcher.find();
-        int chose = Integer.parseInt(matcher.group(1)) - 1;
-        if (chose >= sortField.size()) {
+        int chose = Integer.parseInt(matcher.group(1));
+        if (chose > sortField.size()) {
             manager.inputOutput.println("enter the number exist in list");
             return;
         }
