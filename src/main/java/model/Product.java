@@ -90,8 +90,8 @@ public class Product {
         return description;
     }
 
-    public double getAverageRate() {
-        return averageRate;//todo buuggggggg[jizz]
+    public Double getAverageRate() {
+        return averageRate;
     }
 
     public List<Comment> getComments() {
