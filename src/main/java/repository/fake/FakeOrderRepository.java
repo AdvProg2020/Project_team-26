@@ -34,11 +34,6 @@ public class FakeOrderRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> getASingleSellerOrder(Seller seller, Order wantedOrder) {
-        return null;
-    }
-
-    @Override
     public List<Order> getAll() {
         return allOrders;
     }

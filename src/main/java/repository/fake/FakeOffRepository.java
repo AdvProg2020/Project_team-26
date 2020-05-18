@@ -4,10 +4,12 @@ import exception.NoObjectIdException;
 import model.Off;
 import model.OffItem;
 import model.OffRequest;
+import model.Product;
 import repository.OffRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FakeOffRepository implements OffRepository {
 
@@ -26,16 +28,6 @@ public class FakeOffRepository implements OffRepository {
     }
 
     @Override
-    public Off getOffByStringCode(String stringCode) {
-        return null;
-    }
-
-    @Override
-    public OffItem getItemByProductIdFromAllOffs(int id) {
-        return null;
-    }
-
-    @Override
     public void addRequest(Off off) {
         allOffs.add(off);
     }
@@ -48,6 +40,11 @@ public class FakeOffRepository implements OffRepository {
     @Override
     public void rejectRequest(int requestId) {
 
+    }
+
+    @Override
+    public List<Product> getAllProductInOff(Map<String, String> filter, String sortFiled, boolean isAscending) {
+        return null;
     }
 
     @Override
