@@ -91,7 +91,7 @@ public class Product {
     }
 
     public double getAverageRate() {
-        return averageRate;
+        return averageRate;//todo buuggggggg[jizz]
     }
 
     public List<Comment> getComments() {

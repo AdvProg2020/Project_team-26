@@ -55,7 +55,7 @@ public class CustomerView extends View {
                     break;
                 }
             }
-            if (isDone)
+            if (!isDone)
                 manager.inputOutput.println("invalid input");
         }
     }

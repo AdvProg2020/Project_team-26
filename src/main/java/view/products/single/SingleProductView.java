@@ -163,13 +163,13 @@ public class SingleProductView extends View {
     }
 
     protected void digest() {
-        manager.inputOutput.println("name is:" + product.getName());
-        manager.inputOutput.println("brand is:" + product.getBrand());
-        manager.inputOutput.println("this product:" + product.getDescription());
-        manager.inputOutput.println("minimum price :" + product.getMinimumPrice());
+        manager.inputOutput.println("name is:" + (product.getName() == null ? "" : product.getName()));
+        manager.inputOutput.println("brand is:" + (product.getBrand() == null ? "" : product.getBrand()));
+        manager.inputOutput.println("this product:" + (product.getDescription() == null ? "" : product.getName()));
+        manager.inputOutput.println("minimum price :" + (product.getMinimumPrice()));
         manager.inputOutput.println("the average rate is :" + product.getAverageRate());
-        manager.inputOutput.println("Category is: with name: " + product.getCategory().getName()
-                + " with id : " + product.getCategory().getId());
+        manager.inputOutput.println("Category is: with name: " + (product.getCategory().getName() == null ? "" : product.getName()
+                + " with id : " + product.getCategory().getId()));
     }
 
     private void showSellers(List<ProductSeller> productSellerList) {
