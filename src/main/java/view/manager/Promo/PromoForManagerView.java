@@ -7,8 +7,10 @@ import view.*;
 import view.filterAndSort.PromoSort;
 import view.main.MainPageView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class PromoForManagerView extends View {
@@ -25,6 +27,7 @@ public class PromoForManagerView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("promo manage page :");
         showAll();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
@@ -215,7 +218,7 @@ public class PromoForManagerView extends View {
             manager.inputOutput.println(promo.getPromoCode() + " with id : " + promo.getId() + " with max : " + promo.getMaxValidUse() +
                     "\nwith percent : " + promo.getPercent());
             manager.inputOutput.println("its customers are : ");
-            promo.getCustomers().forEach(customer -> manager.inputOutput.println(customer.getFullName() +
+            promo.getCustomers().forEach(customer -> manager.inputOutput.println(customer.getUsername() +
                     " with id : " + customer.getId()));
         } catch (InvalidIdException e) {
             manager.inputOutput.println(e.getMessage());
@@ -229,10 +232,17 @@ public class PromoForManagerView extends View {
         new MainPageView(manager).logout();
     }
 
+
     protected void help() {
-        manager.inputOutput.println("view discount code [id]\nedit discount code [id]\nremove discount code [id]\nhelp\n" +
-                "sorting");
-        manager.inputOutput.println("logout");
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("show all");
+        commandList.add("view discount code [id]");
+        commandList.add("remove discount code [id]");
+        commandList.add("sorting");
+        commandList.add("logout");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
 
     protected void sorting() {

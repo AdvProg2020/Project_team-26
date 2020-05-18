@@ -51,6 +51,7 @@ public class SellerAccountIView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("seller menu");
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
             isDone = false;
@@ -107,11 +108,11 @@ public class SellerAccountIView extends View {
             for (Order order : orders) {
                /* if (order.getItems().stream().filter(orderItem -> orderItem.getSeller().getId() == thisUser.getId()).
                         collect(Collectors.toList()).size() > 0) {*/
-                    manager.inputOutput.println(order.getCustomer().getFullName() + " at : " + order.getDate().toString()
-                            + "has bought : ");
-                    order.getItems().stream().filter(orderItem -> orderItem.getSeller().getId() == thisUser.getId()).
-                            collect(Collectors.toList()).forEach(i -> manager.inputOutput.println(i.getAmount() + " of " + i.getProduct().getName() +
-                            "\nand paid : " + i.getPaidPrice()));
+                manager.inputOutput.println(order.getCustomer().getFullName() + " at : " + order.getDate().toString()
+                        + "has bought : ");
+                order.getItems().stream().filter(orderItem -> orderItem.getSeller().getId() == thisUser.getId()).
+                        collect(Collectors.toList()).forEach(i -> manager.inputOutput.println(i.getAmount() + " of " + i.getProduct().getName() +
+                        "\nand paid : " + i.getPaidPrice()));
 
             }
         } catch (NoAccessException e) {

@@ -35,6 +35,7 @@ public class SingleProductView extends View {
     @Override
     public void run() {
         boolean isDone = false;
+        manager.inputOutput.println("product menu :");
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             for (SingleProductViewValidCommands command : validCommands) {
                 if ((command.getStringMatcher(super.input).find())) {
@@ -111,7 +112,7 @@ public class SingleProductView extends View {
         }
     }
 
-    protected void attributeOfProduct() {
+    public void attributeOfProduct() {
         digest();
         showSellers(product.getSellerList());
         commentsForThisProduct();
@@ -172,7 +173,7 @@ public class SingleProductView extends View {
     }
 
     private void showSellers(List<ProductSeller> productSellerList) {
-        productSellerList.forEach(productSeller -> manager.inputOutput.println("seller name :" + productSeller.getSeller().getFullName()
+        productSellerList.forEach(productSeller -> manager.inputOutput.println("seller name :" + productSeller.getSeller().getUsername()
                 + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems()
                 + "\nwith actual price : " + productSeller.getPrice() + " with price by existing off " + productSeller.getPriceInOff()));
     }

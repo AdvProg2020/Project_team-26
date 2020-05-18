@@ -25,6 +25,7 @@ public class AllOffView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("offs :");
         showAll();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
@@ -45,13 +46,13 @@ public class AllOffView extends View {
         List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), manager.getToken());
         for (Product product : productList) {
             manager.inputOutput.println("name " + product.getName() + " with id:" + product.getId());
-            product.getSellerList().forEach(i -> manager.inputOutput.println("seller :" + i.getSeller().getFullName() +
+            product.getSellerList().forEach(i -> manager.inputOutput.println("seller :" + i.getSeller().getUsername() +
                     " with id : " + i.getSeller().getId() + "with price " + i.getPrice() + " and price in off " + i.getPriceInOff()));
         }
     }
 
     protected void showProductWithId(Matcher matcher) {
-        manager.singleProductView(matcher);
+        manager.singleProductPage(matcher);
     }
 
     protected void sort() {

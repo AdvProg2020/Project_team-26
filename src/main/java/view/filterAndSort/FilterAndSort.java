@@ -24,10 +24,12 @@ public abstract class FilterAndSort extends View {
         filterFields = new HashMap<>();
         sortField = new HashMap<>();
         this.fieldNameForSort = new String();
+        init();
     }
 
     @Override
     public void run() {
+        manager.inputOutput.println("filter and sort menu :");
         showAvailableFilter();
         showAvailableSort();
         boolean isDone;
@@ -40,7 +42,7 @@ public abstract class FilterAndSort extends View {
                     break;
                 }
             }
-            if (isDone)
+            if (!isDone)
                 manager.inputOutput.println("invalid input");
         }
     }

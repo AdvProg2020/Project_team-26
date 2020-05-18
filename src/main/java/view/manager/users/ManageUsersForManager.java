@@ -27,6 +27,7 @@ public class ManageUsersForManager extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("users manage page :");
         showAll();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {

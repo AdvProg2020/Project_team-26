@@ -7,6 +7,7 @@ import model.Category;
 import view.*;
 import view.filterAndSort.ProductFilterAndSort;
 import view.offs.AllOffView;
+import view.products.single.SingleProductView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
@@ -32,6 +33,7 @@ public class AllProductView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("products menu : ");
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back")) {
             isDone = false;
@@ -93,7 +95,7 @@ public class AllProductView extends View {
     }
 
     protected void singleProductView(Matcher matcher) {
-        manager.singleProductView(matcher);
+        manager.singleProductPage(matcher);
     }
 
 

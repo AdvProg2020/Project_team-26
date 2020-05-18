@@ -31,6 +31,7 @@ public class MainPageView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("main page :");
         boolean isFound;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("exit|back")) {
             isFound = false;
@@ -54,6 +55,7 @@ public class MainPageView extends View {
     protected void help(boolean isLoggedIn) {
         List<String> commandList = new ArrayList<>();
         commandList.add("help");
+        commandList.add("back|exit");
         commandList.add("offs");
         commandList.add("products");
         if (isLoggedIn) {
@@ -69,6 +71,7 @@ public class MainPageView extends View {
         try {
             controller.logout(manager.getToken());
             manager.setUserLoggedIn(false);
+            manager.inputOutput.println("logged out.");
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {

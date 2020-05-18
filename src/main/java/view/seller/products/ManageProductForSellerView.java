@@ -36,6 +36,7 @@ public class ManageProductForSellerView extends View {
 
     @Override
     public void run() {
+        manager.inputOutput.println("seller products menu");
         showAll();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
@@ -149,7 +150,7 @@ public class ManageProductForSellerView extends View {
     }
 
     protected void showWithId(Matcher matcher) {
-        manager.singleProductView(matcher);
+        manager.singleProductPage(matcher);
     }
 
     protected void showBuyer(Matcher matcher) {

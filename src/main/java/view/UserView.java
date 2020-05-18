@@ -23,7 +23,7 @@ public class UserView {
 
     public void viewPersonalInfo(ViewManager manager, IShowUserController userController) {
         try {
-            userController.getUserInfo(manager.getToken()).forEach((key, info) -> manager.inputOutput.println(key + " : " + info));
+            userController.getUserInfo(manager.getToken()).forEach((key, info) -> manager.inputOutput.println(key + " : " + (info != null ? info : "empty")));
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {

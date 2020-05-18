@@ -38,9 +38,15 @@ public enum PromoForManagerViewValidCommands {
         public void goToFunction(PromoForManagerView page) {
             page.sorting();
         }
+    }, ShowAll("show all") {
+        @Override
+        public void goToFunction(PromoForManagerView page) {
+            page.showAll();
+        }
     };
     private final Pattern commandPattern;
     private final String value;
+
     @Override
     public String toString() {
         return value;
