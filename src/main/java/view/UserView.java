@@ -23,6 +23,10 @@ public class UserView {
 
     public void viewPersonalInfo(ViewManager manager, IShowUserController userController) {
         try {
+           /* editableFields.add("Username");
+            editableFields.add("FirstName");
+            editableFields.add("LastName");
+            editableFields.add("Email");*/
             userController.getUserInfo(manager.getToken()).forEach((key, info) -> manager.inputOutput.println(key + " : " + (info != null ? info : "empty")));
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
@@ -99,7 +103,11 @@ public class UserView {
 
     public void initialEditFields(ArrayList<String> editableFields, ViewManager manager, IShowUserController userController) {
         try {
-            editableFields.clear();
+           /* editableFields.clear();
+            editableFields.add("Username");
+            editableFields.add("FirstName");
+            editableFields.add("LastName");
+            editableFields.add("Email");*/
             userController.getUserInfo(manager.getToken()).forEach((key, info) -> editableFields.add(key));
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());

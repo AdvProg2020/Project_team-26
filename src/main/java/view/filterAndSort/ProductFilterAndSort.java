@@ -25,7 +25,7 @@ public class ProductFilterAndSort extends FilterAndSort {
 
     protected void filterWithAvailableFilter(Matcher matcher) {
         matcher.find();
-        int chose = Integer.parseInt(matcher.group(1)) - 1;
+        int chose = Integer.parseInt(matcher.group(1));
         switch (chose) {
             case 1:
                 filterProduct(1);
@@ -159,8 +159,8 @@ public class ProductFilterAndSort extends FilterAndSort {
 
     protected void sortWithAvailableSort(Matcher matcher) {
         matcher.find();
-        int chose = Integer.parseInt(matcher.group(1)) - 1;
-        if (chose >= sortField.size()) {
+        int chose = Integer.parseInt(matcher.group(1));
+        if (chose > sortField.size()) {
             manager.inputOutput.println("enter the number exist in list");
             return;
         }

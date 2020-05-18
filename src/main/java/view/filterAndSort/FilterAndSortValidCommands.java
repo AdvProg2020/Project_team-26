@@ -56,8 +56,12 @@ public enum FilterAndSortValidCommands {
         public void goToFunction(FilterAndSort page) {
             page.disableSelectedSort();
         }
+    },Help("help") {
+        @Override
+        public void goToFunction(FilterAndSort page) {
+            page.help();
+        }
     };
-
     private final Pattern commandPattern;
     private final String value;
 

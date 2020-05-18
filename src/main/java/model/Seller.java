@@ -20,11 +20,11 @@ public class Seller extends User {
     }
 
     public void setCompanyName(String companyName) {
-        this.companyName = companyName;
+        getDetails().put("Company Name", companyName);
     }
 
     public String getCompanyName() {
-        return companyName;
+        return getDetails().get("Company Name");
     }
 
     public void setAllOffs(List<Off> allOffs) {
@@ -36,6 +36,6 @@ public class Seller extends User {
     }
 
     public void changeCompanyName(String companyName) {
-        this.companyName = companyName;
+        getDetails().put("Company Name", companyName);
     }
 }

@@ -71,6 +71,8 @@ public abstract class FilterAndSort extends View {
 
     abstract protected void disableSelectedSort();
 
+    abstract protected void help();
+
 
     abstract protected void sortWithAvailableSort(Matcher matcher);
 
