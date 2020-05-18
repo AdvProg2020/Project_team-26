@@ -36,6 +36,7 @@ public class CustomerView extends View {
         infoController = (IUserInfoController) manager.getController(ControllerContainer.Controller.UserInfoController);
         userController = (IShowUserController) manager.getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) manager.getController(ControllerContainer.Controller.PromoController);
+        initialEditFields();
     }
 
     private void initialEditFields() {
@@ -61,7 +62,6 @@ public class CustomerView extends View {
     }
 
     protected void editTheField() {
-        initialEditFields();
         userView.edit(editableFields, manager, infoController);
     }
 
