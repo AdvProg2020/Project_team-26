@@ -19,6 +19,7 @@ public class AuthenticationController implements IAuthenticationController {
 
     public AuthenticationController(RepositoryContainer repositoryContainer) {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        this.promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
     }
 
     public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
