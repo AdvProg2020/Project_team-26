@@ -1,7 +1,7 @@
 package controller.review;
 
 import repository.ProductRepository;
-import repository.RatingRepository;
+import repository.RateRepository;
 import repository.RepositoryContainer;
 import controller.account.AuthenticationController;
 import exception.*;
@@ -15,7 +15,7 @@ public class RatingControllerTest {
 
     private RepositoryContainer repositoryContainer;
     private UserRepository userRepository;
-    private RatingRepository ratingRepository;
+    private RateRepository rateRepository;
     private ProductRepository productRepository;
     private String token;
     private AuthenticationController authenticationController;
@@ -31,7 +31,7 @@ public class RatingControllerTest {
         ratingController = new RatingController(repositoryContainer);
         commentController = new CommentController(repositoryContainer);
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        ratingRepository = (RatingRepository) repositoryContainer.getRepository("RatingRepository");
+        rateRepository = (RateRepository) repositoryContainer.getRepository("RatingRepository");
         productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
     }
 
@@ -39,46 +39,34 @@ public class RatingControllerTest {
     public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException, NoObjectIdException {
         /** Exception Tests **/
 
-        Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addARating(5.0,
+        Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addRating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
-        ex = Assertions.assertThrows(NotLoggedINException.class, () -> ratingController.editRating(2,0.0,token));
-        Assertions.assertEquals(ex.getMessage(),"You are not Logged in.");
-
-        ex = Assertions.assertThrows(NotLoggedINException.class, () -> ratingController.removeRating(6,token));
-        Assertions.assertEquals(ex.getMessage(),"You are not Logged in.");
-
         authenticationController.login("test8","password8",token);
-        ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.addARating(5.0,
+        ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.addRating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You have not bought this product");
         authenticationController.logout(token);
 
         authenticationController.login("test6","password6",token);
-        ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addARating(5.0,
+        ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addRating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
 
         authenticationController.login("test8","password8",token);
-        ratingController.addARating(5.0,1,token);
+        ratingController.addRating(5.0,1,token);
         authenticationController.logout(token);
         authenticationController.login("test9","password9",token);
-        ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.removeRating(6,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
 
         /** Exception Tests **/
 
         authenticationController.login("test8","password8",token);
-        ratingController.addARating(5.0,1,token);
-        Assertions.assertEquals(ratingRepository.getById(6).getScore(),5.0);
-
-        ratingController.editRating(6,2.0,token);
-        Assertions.assertEquals(ratingRepository.getById(6).getScore(),2.0);
-        ratingController.removeRating(6,token);
-        Assertions.assertEquals(null,ratingRepository.getById(6));
+        ratingController.addRating(5.0,1,token);
+        Assertions.assertEquals(rateRepository.getById(6).getScore(),5.0);
 
     }
 
