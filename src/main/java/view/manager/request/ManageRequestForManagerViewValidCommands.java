@@ -4,51 +4,51 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ManageRequestForManagerViewValidCommands {
-    ShowAllOff("show\\s+offs") {
+    ShowAllOff("show\\s+offs\\s+request") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.showAllOff();
         }
-    }, ShowAllProduct("show\\s+products") {
+    }, ShowAllProduct("show\\s+products\\s+request") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.showAllProduct();
         }
-    }, ShowAllProductSeller("show\\s+sellers") {
+    }, ShowAllProductSeller("show\\s+sellers\\s+request") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.showAllProductSeller();
         }
     },
-    DetailOfOffRequest("details\\s+\\s+off\\s+(\\d+)") {
+    DetailOfOffRequest("detail\\s+off\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.detailTheOffRequest(Pattern.compile(DetailOfOffRequest.toString()).matcher(page.getInput()));
         }
     },
-    DetailOfProductRequest("details\\s+\\s+products\\s+(\\d+)") {
+    DetailOfProductRequest("detail\\s+products\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.detailTheProductRequest(Pattern.compile(DetailOfProductRequest.toString()).matcher(page.getInput()));
         }
-    }, DetailOfProductSellerRequest("details\\s+\\s+product\\s+seller\\s+(\\d+)") {
+    }, DetailOfProductSellerRequest("detail\\s+product\\s+seller\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.detailTheProductSellerRequest(Pattern.compile(DetailOfProductSellerRequest.toString()).matcher(page.getInput()));
         }
     },
 
-    AcceptTheOffRequest("accept\\s+\\s+off\\s+(\\d+)") {
+    AcceptTheOffRequest("accept\\s+off\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.acceptTheOffRequest(Pattern.compile(AcceptTheOffRequest.toString()).matcher(page.getInput()));
         }
-    }, AcceptTheProductRequest("accept\\s+\\s+product\\s+(\\d+)") {
+    }, AcceptTheProductRequest("accept\\s+product\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.acceptTheProductRequest(Pattern.compile(AcceptTheProductRequest.toString()).matcher(page.getInput()));
         }
-    }, AcceptTheProductSellerRequest("accept\\s+\\s+product\\s+seller\\s+(\\d+)") {
+    }, AcceptTheProductSellerRequest("accept\\s+product\\s+seller\\s+(\\d+)") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.acceptTheProductSellerRequest(Pattern.compile(AcceptTheProductSellerRequest.toString()).matcher(page.getInput()));
@@ -74,17 +74,18 @@ public enum ManageRequestForManagerViewValidCommands {
     Logout("logout") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
-           page.logOut();
+            page.logOut();
         }
     },
     Help("help") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
-             page.help();
+            page.help();
         }
     };
     private final Pattern commandPattern;
     private final String value;
+
     @Override
     public String toString() {
         return value;

@@ -10,7 +10,9 @@ import view.*;
 import view.filterAndSort.RequestSort;
 import view.main.MainPageView;
 
+import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.List;
 import java.util.regex.Matcher;
 
 public class ManageRequestForManagerView extends View {
@@ -314,7 +316,23 @@ public class ManageRequestForManagerView extends View {
     }
 
     protected void help() {
-
+        List<String> commandList = new ArrayList<>();
+        commandList.add("help");
+        commandList.add("back");
+        commandList.add("show offs request");
+        commandList.add("show products request");
+        commandList.add("show sellers request");
+        commandList.add("detail off [id]");
+        commandList.add("detail products [id]");
+        commandList.add("detail product seller [id]");
+        commandList.add("accept off [id]");
+        commandList.add("accept product [id]");
+        commandList.add("accept product seller [id]");
+        commandList.add("decline off [id]");
+        commandList.add("decline product [id]");
+        commandList.add("decline product seller [id]");
+        commandList.add("logout");
+        commandList.add("sorting");
+        commandList.forEach(i -> manager.inputOutput.println(i));
     }
-
 }
