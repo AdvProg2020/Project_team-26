@@ -10,6 +10,7 @@ import javax.persistence.*;
 public class ProductSeller {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_seller_id")
     private int id;
 

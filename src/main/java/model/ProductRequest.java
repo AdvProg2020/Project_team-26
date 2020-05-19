@@ -9,6 +9,7 @@ import java.util.List;
 public class ProductRequest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_request_id", unique = true)
     private int id;
 
@@ -20,6 +21,7 @@ public class ProductRequest {
     @JoinColumn(name = "requested_by_id")
     private Seller requestedBy;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "request_time")
     private Date requestTime;
 

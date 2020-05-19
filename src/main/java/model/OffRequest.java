@@ -9,23 +9,24 @@ import java.util.List;
 public class OffRequest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "off_request_id")
     private int id;
 
     @ManyToOne
     @JoinColumn(name = "off_id")
     private Off mainOff;
-
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "request_time")
     private Date requestTime;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "user_id")
     private Seller seller;
-
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_date", nullable = false)
     private Date startDate;
-
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
