@@ -43,11 +43,6 @@ public class FakeOffRepository implements OffRepository {
     }
 
     @Override
-    public List<Product> getAllProductInOff(Map<String, String> filter, String sortFiled, boolean isAscending) {
-        return null;
-    }
-
-    @Override
     public OffRequest getOffRequestById(int requestId) {
         return null;
     }
