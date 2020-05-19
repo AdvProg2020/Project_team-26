@@ -96,15 +96,15 @@ public class User {
 
     public Map<String, String> getDetails() {
 
-        Map<String,String> details = new HashMap();
-        details.put("Username",this.username);
-        details.put("FirstName",details.get("firstname"));
-        details.put("LastName",details.get("lastname"));
-        details.put("Email",this.email);
+        Map<String,String> essentialDetails = new HashMap();
+        essentialDetails.put("Username",this.username);
+        essentialDetails.put("FirstName",details.get("firstname"));
+        essentialDetails.put("LastName",details.get("lastname"));
+        essentialDetails.put("Email",this.email);
         if(role == Role.SELLER) {
-            details.put("Company Name",details.get("Company Name"));
+            essentialDetails.put("Company Name",details.get("Company Name"));
         }
-        return details;
+        return essentialDetails;
     }
 
 
