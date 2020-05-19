@@ -107,7 +107,7 @@ public class OffController implements IOffController {
 
     @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
-        return productRepository.getAllSortedAndFilteredInOff(filter, sortFiled, isAscending);
+        return productRepository.getAllSortedAndFiltered(filter, sortFiled, isAscending);
     }
 
     @Override
