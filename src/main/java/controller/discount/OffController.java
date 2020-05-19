@@ -1,14 +1,13 @@
 package controller.discount;
 
-import exception.*;
 import controller.interfaces.discount.IOffController;
+import exception.*;
 import model.*;
 import repository.OffRepository;
 import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +46,7 @@ public class OffController implements IOffController {
 
     @Override
     public void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
-        checkAccessOfUser(token, "only seller can add product");
+       /* checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
             throw new InvalidIdException("no product exist");
@@ -63,7 +62,29 @@ public class OffController implements IOffController {
         else
             offItem = new OffItem(product, priceInOff);
         offItems.add(offItem);
+        offRepository.addRequest(off); */
+
+
+        checkAccessOfUser(token, "Only Seller Can Add Product");
+        Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
+        ProductSeller productSeller = productSellerRepository.getProductSellerByIdAndSellerId(productId, seller.getId());
+        Product product = productRepository.getById(productId);
+        List<OffItem> offItems = off.getItems();
+        OffItem offItem = getOffItem(offItems, productId);
+        if (product == null) {
+            throw new InvalidIdException("No Such product Exists");
+        } else if (offItem != null) {
+            throw new ObjectAlreadyExistException("the product exist in your off list", product);
+        } else if (productSeller == null) {
+            throw new NoAccessException("the product you have choose you are not its seller");
+        } else if (priceInOff < 0) {
+            offItem = new OffItem(productSeller, (long) productSeller.getPrice() * (100 - percent) / 100);
+        } else {
+            offItem = new OffItem(productSeller, priceInOff);
+        }
+        offItems.add(offItem);
         offRepository.addRequest(off);
+
     }
 
     private OffItem getOffItem(List<OffItem> offItems, int productId) {
