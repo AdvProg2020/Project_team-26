@@ -10,15 +10,18 @@ import java.util.List;
 public class Promo {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "promo_id", unique = true)
     private int id;
 
     @Column(name = "promo_code", unique = true)
     private String promoCode;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_date", nullable = false)
     private Date startDate;
 
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 

@@ -19,6 +19,7 @@ import static javax.persistence.CascadeType.*;
 public class User {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", unique = true)
     private int id;
 
