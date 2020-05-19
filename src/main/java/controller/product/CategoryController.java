@@ -55,8 +55,8 @@ public class CategoryController implements ICategoryController {
     }
 
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null || session.getLoggedInUser().getRole() != Role.ADMIN)
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null || user.getRole() != Role.ADMIN)
             throw new NoAccessException(message);
     }
 

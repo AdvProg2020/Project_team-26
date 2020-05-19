@@ -26,7 +26,7 @@ public class CartControllerTest {
 
     @BeforeEach
     public void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
         cartController = new CartController(repositoryContainer);
@@ -49,7 +49,7 @@ public class CartControllerTest {
                 "as", token));
         Assertions.assertEquals(ex.getMessage(), "You must login before using promo code.");
 
-        authenticationController.login("test1", "password1", token);
+        authenticationController.login("aria", "aria", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> cartController.usePromoCode("as", token));
         Assertions.assertEquals(ex.getMessage(), "You must be a customer to use promo code.");
         authenticationController.logout(token);
@@ -81,9 +81,9 @@ public class CartControllerTest {
                 12, 2, token));
         Assertions.assertEquals(ex.getMessage(), "There is no product seller with this id");
 
-        ex = Assertions.assertThrows(NotEnoughProductsException.class, () -> cartController.addOrChangeProduct(
+        ex = Assertions.assertThrows(InvalidIdException.class, () -> cartController.addOrChangeProduct(
                 5, 1, token));
-        Assertions.assertEquals(ex.getMessage(), "There isn't enough products available");
+        Assertions.assertEquals(ex.getMessage(), "There is no product seller with this id");
 
         ex = Assertions.assertThrows(NoSuchObjectException.class, () -> cartController.getAmountInCartBySellerId(
                 5, token));

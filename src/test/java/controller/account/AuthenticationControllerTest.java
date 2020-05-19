@@ -19,7 +19,7 @@ public class AuthenticationControllerTest {
 
     @BeforeEach
     public void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
@@ -55,7 +55,7 @@ public class AuthenticationControllerTest {
 
         /** Logging in and then doing stuff**/
 
-        authenticationController.login("test1","password1",token);
+        authenticationController.login("aria","aria",token);
         authenticationController.register(new Account("Admin","admin",Role.ADMIN,"a@yahoo.com"),token);
         Assertions.assertEquals("Admin",userRepository.getUserByUsername("Admin").getUsername());
 
