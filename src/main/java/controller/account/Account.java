@@ -1,7 +1,6 @@
 package controller.account;
 
 import model.*;
-import view.ViewManager;
 
 public class Account {
     private String password;
@@ -22,12 +21,13 @@ public class Account {
         token = new String();
     }
 
-    public Account(String username, String password,Role role) {
+    public Account(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
     }
-    public Account(String username, String password,Role role,String email) {
+
+    public Account(String username, String password, Role role, String email) {
         this.username = username;
         this.password = password;
         this.role = role;
@@ -36,6 +36,10 @@ public class Account {
 
     public String getUsername() {
         return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -55,37 +59,36 @@ public class Account {
         return firstName;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public String getId() {
         return id;
     }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLastName() {
         return lastName;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Role getRole() {
+        return role;
     }
 
     public void setRole(Role role) {
@@ -93,16 +96,23 @@ public class Account {
     }
 
     public User makeUser() {
-        if ( this.getRole() == Role.ADMIN)
-            return new Admin( this.getUsername(),  this.getPassword(),  this.getEmail(),  this.getRole());
-        if ( this.getRole() == Role.SELLER)
-            return new Seller( this.getUsername(),  this.getPassword(),  this.getEmail(),  this.getRole());
-        return new Customer( this.getUsername(),  this.getPassword(),  this.getEmail(),  this.getRole());
-
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+        if (role == Role.CUSTOMER) {
+            Customer customer = new Customer(username, password, email, role);
+            customer.changeFirstName(firstName);
+            customer.changeLastName(lastName);
+            return customer;
+        }
+        else if (role == Role.SELLER) {
+            Seller seller = new Seller(username, password, email, role);
+            seller.changeFirstName(firstName);
+            seller.changeLastName(lastName);
+            return seller;
+        } else {
+            Admin admin = new Admin(username,password,email,role);
+            admin.changeFirstName(firstName);
+            admin.changeLastName(lastName);
+            return admin;
+        }
     }
 
 }
