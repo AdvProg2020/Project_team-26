@@ -68,7 +68,7 @@ public class OffController implements IOffController {
 
     private OffItem getOffItem(List<OffItem> offItems, int productId) {
         for (OffItem offItem : offItems) {
-            if (offItem.getProduct().getId() == productId)
+            if (offItem.getProductSeller().getId() == productId)
                 return offItem;
         }
         return null;

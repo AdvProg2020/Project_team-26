@@ -16,8 +16,8 @@ public class OffItem {
     private Off off;
 
     @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+    @JoinColumn(name = "product_seller_id")
+    private ProductSeller productSeller;
 
     @Column(name = "price_in_off")
     private long priceInOff;
@@ -25,9 +25,9 @@ public class OffItem {
     public OffItem() {
     }
 
-    public OffItem(Product product, long priceInOff) {
+    public OffItem(ProductSeller productSeller, long priceInOff) {
         this.priceInOff = priceInOff;
-        this.product = product;
+        this.productSeller = productSeller;
     }
 
 
@@ -35,16 +35,16 @@ public class OffItem {
         return id;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductSeller getProductSeller() {
+        return productSeller;
     }
 
     public long getPriceInOff() {
         return priceInOff;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setProductSeller(ProductSeller productSeller) {
+        this.productSeller = productSeller;
     }
 
     public void setPriceInOff(long priceInOff) {

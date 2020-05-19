@@ -55,7 +55,7 @@ public class Off {
 
     public OffItem getItemByProductId(int id) {
         for (OffItem item : items) {
-            if (item.getProduct().getId() == id)
+            if (item.getProductSeller().getId() == id)
                 return item;
         }
         return null;
@@ -94,7 +94,7 @@ public class Off {
     public OffRequest createRequest(RequestType requestType) {
         OffRequest request = new OffRequest(seller, startDate, endDate, requestType);
         for (OffItem item : items) {
-            OffItemRequest offItemRequest = new OffItemRequest(request, item.getProduct(), item.getPriceInOff());
+            OffItemRequest offItemRequest = new OffItemRequest(request, item.getProductSeller(), item.getPriceInOff());
         }
         return request;
     }

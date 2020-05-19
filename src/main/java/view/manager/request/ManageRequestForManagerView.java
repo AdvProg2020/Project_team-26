@@ -159,7 +159,7 @@ public class ManageRequestForManagerView extends View {
                 + " change into : \n" + " start : " + offRequest.getStartDate().toString());
         manager.inputOutput.println(" end : " + offRequest.getEndDate().toString());
         manager.inputOutput.println("products :");
-        offRequest.getItems().forEach(offItemRequest -> manager.inputOutput.println(offItemRequest.getProduct().getName() +
+        offRequest.getItems().forEach(offItemRequest -> manager.inputOutput.println(offItemRequest.getProductSeller().getName() +
                 " with price " + offItemRequest.getPriceInOff()));
     }
 
@@ -200,7 +200,7 @@ public class ManageRequestForManagerView extends View {
                     " until " + offRequest.getEndDate());
         }
         manager.inputOutput.println("products are : ");
-        offRequest.getItems().forEach(i -> manager.inputOutput.println(i.getProduct().getName() + " with total price +" + i.getPriceInOff()));
+        offRequest.getItems().forEach(i -> manager.inputOutput.println(i.getProductSeller().getName() + " with total price +" + i.getPriceInOff()));
     }
 
 

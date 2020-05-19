@@ -17,7 +17,7 @@ public class OffItemRequest {
 
     @ManyToOne
     @JoinColumn(name = "product_id")
-    private Product product;
+    private ProductSeller productSeller;
 
     @Column(name = "price_in_off")
     private long priceInOff;
@@ -25,14 +25,14 @@ public class OffItemRequest {
     public OffItemRequest() {
     }
 
-    public OffItemRequest(OffRequest offRequest, Product product, long priceInOff) {
+    public OffItemRequest(OffRequest offRequest, ProductSeller productSeller, long priceInOff) {
         this.offRequest = offRequest;
-        this.product = product;
+        this.productSeller = productSeller;
         this.priceInOff = priceInOff;
     }
 
-    public Product getProduct() {
-        return product;
+    public ProductSeller getProductSeller() {
+        return productSeller;
     }
 
     public long getPriceInOff() {

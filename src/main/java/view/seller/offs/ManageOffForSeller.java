@@ -8,7 +8,6 @@ import view.ControllerContainer;
 import view.View;
 import view.ViewManager;
 import view.filterAndSort.OffSort;
-import view.filterAndSort.ProductFilterAndSort;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,8 +58,8 @@ public class ManageOffForSeller extends View {
                     , offSort.isAscending(), manager.getToken())) {
                 manager.inputOutput.println("off id :" + off.getId());
                 manager.inputOutput.println("start :" + off.getStartDate().toString());
-                off.getItems().forEach(item -> manager.inputOutput.println(item.getProduct().getName() + " with id" +
-                        item.getProduct().getId() + "with price" + item.getPriceInOff()));
+                off.getItems().forEach(item -> manager.inputOutput.println(item.getProductSeller().getName() + " with id" +
+                        item.getProductSeller().getId() + "with price" + item.getPriceInOff()));
                 manager.inputOutput.println("end :" + off.getEndDate().toString());
             }
         } catch (NoAccessException e) {
@@ -183,8 +182,8 @@ public class ManageOffForSeller extends View {
                 Off off = offController.getOff(Integer.parseInt(matcher.group(1)), manager.getToken());
                 manager.inputOutput.println("off id :" + off.getId());
                 manager.inputOutput.println("start :" + off.getStartDate().toString());
-                off.getItems().forEach(item -> manager.inputOutput.println(item.getProduct().getName() + " with id" +
-                        item.getProduct().getId() + "with price" + item.getPriceInOff()));
+                off.getItems().forEach(item -> manager.inputOutput.println(item.getProductSeller().getName() + " with id" +
+                        item.getProductSeller().getId() + "with price" + item.getPriceInOff()));
                 manager.inputOutput.println("end :" + off.getEndDate().toString());
             } catch (InvalidIdException e) {
                 manager.inputOutput.println(e.getMessage());
