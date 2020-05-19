@@ -58,8 +58,8 @@ public class ManageOffForSeller extends View {
                     , offSort.isAscending(), manager.getToken())) {
                 manager.inputOutput.println("off id :" + off.getId());
                 manager.inputOutput.println("start :" + off.getStartDate().toString());
-                off.getItems().forEach(item -> manager.inputOutput.println(item.getProductSeller().getName() + " with id" +
-                        item.getProductSeller().getId() + "with price" + item.getPriceInOff()));
+                off.getItems().forEach(item -> manager.inputOutput.println(item.getProductSeller().getProduct().getName() + " with id" +
+                        item.getProductSeller().getId() + " with price " + item.getPriceInOff()));
                 manager.inputOutput.println("end :" + off.getEndDate().toString());
             }
         } catch (NoAccessException e) {
@@ -113,7 +113,7 @@ public class ManageOffForSeller extends View {
                         percentForPrice = (int) priceForProduct;
                         priceForProduct = (long) (productSeller.getPrice() * (100 - percentForPrice) / 100);
                     }
-                    offItems.add(new OffItem(productSeller.getProduct(), priceForProduct));
+                    offItems.add(new OffItem(productSeller, priceForProduct));
                 } catch (InvalidIdException | NoObjectIdException | NoAccessException e) {
                     manager.inputOutput.println(e.getMessage());
                 } catch (InvalidTokenException e) {
@@ -180,11 +180,11 @@ public class ManageOffForSeller extends View {
         if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             try {
                 Off off = offController.getOff(Integer.parseInt(matcher.group(1)), manager.getToken());
-                manager.inputOutput.println("off id :" + off.getId());
-                manager.inputOutput.println("start :" + off.getStartDate().toString());
-                off.getItems().forEach(item -> manager.inputOutput.println(item.getProductSeller().getName() + " with id" +
-                        item.getProductSeller().getId() + "with price" + item.getPriceInOff()));
-                manager.inputOutput.println("end :" + off.getEndDate().toString());
+                manager.inputOutput.println("off id : " + off.getId());
+                manager.inputOutput.println("start : " + off.getStartDate().toString());
+                off.getItems().forEach(item -> manager.inputOutput.println(item.getProductSeller().getProduct().getName() + " with id" +
+                        item.getProductSeller().getId() + " with price : " + item.getPriceInOff()));
+                manager.inputOutput.println(" end : " + off.getEndDate().toString());
             } catch (InvalidIdException e) {
                 manager.inputOutput.println(e.getMessage());
             }

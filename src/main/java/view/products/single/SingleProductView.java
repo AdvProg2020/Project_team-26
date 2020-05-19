@@ -140,7 +140,7 @@ public class SingleProductView extends View {
         manager.inputOutput.println("minimum price :" + product.getCategory().getName() + " <--> " + compare.getCategory().getName());
         manager.inputOutput.println("the sellers of" + product.getName() + " are :");
         showSellers(product.getSellerList());
-        manager.inputOutput.println("<--->\nthe sellers of" + compare.getName() + " are :");
+        manager.inputOutput.println("<<<<<\n|||||\n|||||\n|||||\n>>>>>\nthe sellers of" + compare.getName() + " are :");
         showSellers(compare.getSellerList());
     }
 
@@ -162,19 +162,19 @@ public class SingleProductView extends View {
     }
 
     protected void digest() {
-        manager.inputOutput.println("name is:" + (product.getName() == null ? "" : product.getName()));
-        manager.inputOutput.println("brand is:" + (product.getBrand() == null ? "" : product.getBrand()));
-        manager.inputOutput.println("this product:" + (product.getDescription() == null ? "" : product.getName()));
-        manager.inputOutput.println("minimum price :" + (product.getMinimumPrice()));
-        manager.inputOutput.println("the average rate is :" + product.getAverageRate());
-        manager.inputOutput.println("Category is: " + (product.getCategory().getName() == null ? "" : product.getCategory().getName()
-                + " with id : " + product.getCategory().getId()));
+        manager.inputOutput.println("name is: " + (product.getName() == null ? "" : product.getName()));
+        manager.inputOutput.println("brand is: " + (product.getBrand() == null ? "" : product.getBrand()));
+        manager.inputOutput.println("this product: " + (product.getDescription() == null ? "" : product.getName()));
+        manager.inputOutput.println("minimum price : " + (product.getMinimumPrice()));
+        manager.inputOutput.println("the average rate is : " + product.getAverageRate());
+        manager.inputOutput.println("Category is : " + (product.getCategory().getName() == null ? "" : product.getCategory().getName()
+                + " with id :  " + product.getCategory().getId()));
     }
 
     private void showSellers(List<ProductSeller> productSellerList) {
-        productSellerList.forEach(productSeller -> manager.inputOutput.println("seller name :" + productSeller.getSeller().getUsername()
-                + " with id : " + productSeller.getSeller().getId() + "\nwith total amount of :" + productSeller.getRemainingItems()
-                + "\nwith actual price : " + productSeller.getPrice() + " with price by existing off " + productSeller.getPriceInOff()));
+        productSellerList.forEach(i -> manager.inputOutput.println("seller name :" + i.getSeller().getUsername()
+                + " with id : " + i.getSeller().getId() + "\nwith total amount of : " + i.getRemainingItems()
+                + "\nwith actual price : " + i.getPrice() + ((i.getPrice() == i.getPriceInOff()) ? "" : " with price by existing off " + i.getPriceInOff())));
     }
 
 

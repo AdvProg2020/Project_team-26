@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 public class AllOffView extends View {
     private EnumSet<AllOffsValidCommands> validCommands;
@@ -45,9 +46,11 @@ public class AllOffView extends View {
     protected void showAll() {
         List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), manager.getToken());
         for (Product product : productList) {
-            manager.inputOutput.println("name " + product.getName() + " with id:" + product.getId());
-            product.getSellerList().forEach(i -> manager.inputOutput.println((i.getPriceInOff() != i.getPrice()) ? ("seller :" + i.getSeller().getUsername() +
-                    " with id : " + i.getSeller().getId() + "with price " + i.getPrice() + " and price in off " + i.getPriceInOff()) : ""));
+            manager.inputOutput.println("name : " + product.getName() + " with id : " + product.getId());
+            product.getSellerList().stream().filter(i -> i.getPriceInOff() != i.getPrice()).collect(Collectors.
+                    toList()).forEach(i -> manager.inputOutput.println((i.getPriceInOff() != i.getPrice())
+                    ? ("seller : " + i.getSeller().getUsername() + " with id : " + i.getSeller().getId()
+                    + " with price " + i.getPrice() + " and price in off " + i.getPriceInOff()) : ""));
         }
     }
 
