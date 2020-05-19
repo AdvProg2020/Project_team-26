@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class OrderItem {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_details_id", unique = true)
     private int id;
 

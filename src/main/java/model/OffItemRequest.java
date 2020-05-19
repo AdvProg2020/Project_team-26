@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class OffItemRequest {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "off_details_request_id")
     private int id;
 

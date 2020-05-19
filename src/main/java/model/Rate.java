@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Rate {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "rate_id", unique = true)
     private int id;
 

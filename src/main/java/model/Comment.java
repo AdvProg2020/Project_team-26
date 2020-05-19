@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class Comment {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="comment_id", unique = true)
     private int id;
 

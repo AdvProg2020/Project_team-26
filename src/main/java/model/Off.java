@@ -10,16 +10,17 @@ import java.util.List;
 public class Off {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "off_id")
     private int id;
 
     @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "user_id")
     private Seller seller;
-
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_date", nullable = false)
     private Date startDate;
-
+    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date", nullable = false)
     private Date endDate;
 
