@@ -30,9 +30,8 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByUsername(username));
         if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
             Random r = new Random();
-            //
-            creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
-            //  }
+            if (r.nextInt(100) < 60)
+                creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
         }
     }
 

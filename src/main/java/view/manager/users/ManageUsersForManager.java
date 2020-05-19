@@ -82,6 +82,7 @@ public class ManageUsersForManager extends View {
     }
 
     protected void deleteUser(Matcher matcher) {
+        matcher.find();
         try {
             showUserController.delete(matcher.group(1), manager.getToken());
         } catch (NoAccessException | NoObjectIdException e) {

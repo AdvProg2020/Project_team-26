@@ -9,10 +9,9 @@ public class OffSort extends Sort {
 
     @Override
     protected void init() {
-        sortField.put(1, "start_date");
-        sortField.put(2, "end_date");
-        fieldNameForSort = "start_date";
+        sortField.put(1, "startDate");
+        sortField.put(2, "endDate");
+        fieldNameForSort = "startDate";
         isAscending = true;
-
     }
 }

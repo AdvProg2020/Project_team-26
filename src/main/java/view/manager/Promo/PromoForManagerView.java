@@ -28,7 +28,7 @@ public class PromoForManagerView extends View {
     @Override
     public void run() {
         manager.inputOutput.println("promo manage page :");
-        showAll();
+        //showAll();
         boolean isDone;
         while (!(super.input = (manager.inputOutput.nextLine()).trim()).matches("back") && manager.getIsUserLoggedIn()) {
             isDone = false;
