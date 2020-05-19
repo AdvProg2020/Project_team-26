@@ -8,6 +8,7 @@ import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 
+import javax.swing.text.Segment;
 import java.util.List;
 import java.util.Map;
 
@@ -24,11 +25,11 @@ public class ProductController implements IProductController {
     }
 
     @Override
-    public void createProduct(Product product, String token)
-            throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+    public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+        User user = Session.getSession(token).getLoggedInUser();
         if (product == null)
             throw new NullPointerException();
-        if (Session.getSession(token).getLoggedInUser().getRole() != Role.SELLER)
+        if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to add product");
         Product productWithSameName = productRepository.getByName(product.getName());
         if (productWithSameName != null)
@@ -39,8 +40,8 @@ public class ProductController implements IProductController {
     }
 
     @Override
-    public void addSeller(int id, ProductSeller productSeller, String token)
-            throws NotSellerException, NoAccessException, InvalidTokenException {
+    public void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException {
+
         if (productSeller == null)
             throw new NullPointerException();
         User user = Session.getSession(token).getLoggedInUser();
@@ -62,7 +63,6 @@ public class ProductController implements IProductController {
 
     @Override
     public Product getProductByName(String name, String token) throws NoObjectIdException {
-        System.out.println(productRepository);
         Product product = productRepository.getByName(name);
         if (product == null)
             throw new NoObjectIdException("There is no product with this name");
@@ -71,12 +71,12 @@ public class ProductController implements IProductController {
 
     @Override
     public void removeProduct(int id, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {//todo
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {//todo
             throw new NotLoggedINException("You are not Logged in.");
-        } else if (session.getLoggedInUser().getRole() == Role.CUSTOMER) {
+        } else if (user.getRole() == Role.CUSTOMER) {
             throw new NoAccessException("You must be a seller|manager to remove a product");
-        } else if (!productRepository.getById(id).hasSeller(session.getLoggedInUser())) {
+        } else if (!productRepository.getById(id).hasSeller(user)) {
             throw new NoAccessException("You don't have this item for sale.");
         } else {
             productRepository.deleteRequest(id);
@@ -104,13 +104,15 @@ public class ProductController implements IProductController {
     @Override
     public ProductSeller getProductSellerByIdAndSellerId(int productId, String token) throws InvalidIdException, InvalidTokenException, NotLoggedINException, NoAccessException, NoObjectIdException {
         Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        Product product = productRepository.getById(productId);
+        if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
-        } else if (session.getLoggedInUser().getRole() != Role.SELLER) {
+        } else if (user.getRole() != Role.SELLER) {
             throw new NoAccessException("You must be a seller to do this.");
-        } else if (productRepository.getById(productId) == null) {
+        } else if (product == null) {
             throw new NoObjectIdException("The specified Object does not Exist.");
-        } else if (!productRepository.getById(productId).hasSeller((Seller) session.getLoggedInUser())) {
+        } else if (!product.hasSeller((Seller) user)) {
             throw new NoAccessException("This Product is not for you.");
         } else {
             return productSellerRepository.getProductSellerByIdAndSellerId(productId, session.getLoggedInUser().getId());

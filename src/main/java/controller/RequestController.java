@@ -27,10 +27,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public void acceptOffRequest(int requestId, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             offRepository.acceptRequest(requestId);
@@ -40,10 +40,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public void rejectOffRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             offRepository.rejectRequest(requestId);
@@ -52,10 +52,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public void acceptProductRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             productRepository.acceptRequest(requestId);
@@ -64,10 +64,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public void rejectProductRequest(int requestId, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             productRepository.rejectRequest(requestId);
@@ -76,10 +76,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public void acceptProductSellerRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             productSellerRepository.acceptRequest(requestId);
@@ -88,10 +88,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public void rejectProductSellerRequest(int requestId, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             productSellerRepository.rejectRequest(requestId);
@@ -100,10 +100,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public OffRequest getOffRequestById(int id, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             return offRepository.getOffRequestById(id);
@@ -112,10 +112,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public ProductRequest getProductRequestById(int id, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             return productRepository.getProductRequestById(id);
@@ -124,10 +124,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public ProductSellerRequest getProductSellerRequestById(int id, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             return productSellerRepository.getProductSellerRequestById(id);
@@ -136,10 +136,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public List<ProductRequest> getAllProductRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             return productRepository.getAllRequests(sortField,isAscending);
@@ -148,10 +148,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public List<OffRequest> getAllOffRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             return offRepository.getAllRequests(sortField,isAscending);
@@ -160,10 +160,10 @@ public class RequestController implements IRequestController {
 
     @Override
     public List<ProductSellerRequest> getAllProductSellerRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
             throw new NotLoggedINException("You are not logged in");
-        } else if (session.getLoggedInUser().getRole() != Role.ADMIN) {
+        } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
             return productSellerRepository.getAllRequests(sortField,isAscending);

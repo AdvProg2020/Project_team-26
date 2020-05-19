@@ -29,7 +29,7 @@ public class OffControllerTest {
 
     @BeforeEach
     public void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
         cartController = new CartController(repositoryContainer);
@@ -65,7 +65,7 @@ public class OffControllerTest {
     public void addProductToOffTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, ObjectAlreadyExistException, NoAccessException, NotLoggedINException, InvalidIdException {
 
         /**Exception Tests **/
-        authenticationController.login("test5","password5",token);
+        authenticationController.login("test5","test5",token);
         Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> offController.addProductToOff(
                 offRepository.getById(2),200,300,20,token));
         Assertions.assertEquals(ex.getMessage(),"no product exist");
@@ -89,7 +89,7 @@ public class OffControllerTest {
     @Test
     public void editTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
 
-        authenticationController.login("test5","password5",token);
+        authenticationController.login("test5","test5",token);
         Exception ex = Assertions.assertThrows(NoAccessException.class,() ->offController.edit(new Off("sd"),5,token));
         Assertions.assertEquals(ex.getMessage(),"you can only change your off");
 
@@ -100,7 +100,7 @@ public class OffControllerTest {
     public void removeProductFromOffTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
 
         /** Exception Tests **/
-        authenticationController.login("test5","password5",token);
+        authenticationController.login("test5","test5",token);
         Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> offController.removeProductFromOff(
                 offRepository.getById(2),2,token));
         /** Exception Tests **/

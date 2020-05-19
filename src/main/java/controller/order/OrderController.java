@@ -19,15 +19,15 @@ public class OrderController implements IOrderController {
     }
 
     public List<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
-        Session userSession = Session.getSession(token);
-        if (userSession.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            switch (userSession.getLoggedInUser().getRole()) {
+            switch (user.getRole()) {
                 case SELLER:
-                    return (ArrayList<Order>) orderRepository.getAllSellerOrders(userSession.getLoggedInUser().getId());
+                    return (ArrayList<Order>) orderRepository.getAllSellerOrders(user.getId());
                 case CUSTOMER:
-                    return (ArrayList<Order>) orderRepository.getAllCustomerOrders(userSession.getLoggedInUser().getId());
+                    return (ArrayList<Order>) orderRepository.getAllCustomerOrders(user.getId());
             }
             return null;
         }
@@ -59,19 +59,19 @@ public class OrderController implements IOrderController {
 
 
     public Order getASingleOrder(int id, String token) throws NoAccessException, NoObjectIdException, InvalidTokenException {
-        Session userSession = Session.getSession(token);
-        if (userSession.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             Order wantedOrder = orderRepository.getById(id);
             if (wantedOrder == null) {
                 throw new NoObjectIdException("Object does not exist.");
             } else {
-                switch (userSession.getLoggedInUser().getRole()) {
+                switch (user.getRole()) {
                     case CUSTOMER:
-                        return getSingleCustomerOrder((Customer) userSession.getLoggedInUser(), wantedOrder);
+                        return getSingleCustomerOrder((Customer) user, wantedOrder);
                     case SELLER:
-                        return getSingleSellerOrder((Seller) userSession.getLoggedInUser(), wantedOrder);
+                        return getSingleSellerOrder((Seller) user, wantedOrder);
                 }
             }
             return null;

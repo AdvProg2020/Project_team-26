@@ -44,10 +44,10 @@ public class MySQLUserRepository
             CriteriaQuery<User> cq = cb.createQuery(User.class);
             Root<User> root = cq.from(User.class);
 
-            cq.select(root).where(cb.equal(root.get("DTYPE"), "Admin"));
+            cq.select(root).where(cb.equal(root.get("role"), Role.ADMIN));
             TypedQuery<User> typedQuery = em.createQuery(cq);
 
-            return typedQuery.getSingleResult() != null;
+            return typedQuery.getResultList().size() > 0;
         } catch (NoResultException e) {
             return false;
         }

@@ -21,7 +21,7 @@ public class ShowUserControllerTest {
 
     @BeforeEach
     public void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
         showUserController = new ShowUserController(repositoryContainer);
@@ -46,7 +46,7 @@ public class ShowUserControllerTest {
 
         /**Exception Tests After Login**/
 
-        authenticationController.login("test7","password7",token);
+        authenticationController.login("test7","test7",token);
         ex = assertThrows(NoAccessException.class, () -> showUserController.delete("test1",token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
@@ -62,9 +62,8 @@ public class ShowUserControllerTest {
         authenticationController.logout(token);
         /** Normal Tests**/
 
-        authenticationController.login("test1","password1",token);
+        authenticationController.login("aria","aria",token);
         showUserController.delete("test2",token);
-        Assertions.assertEquals(userRepository.getUserByUsername("test2"),null);
         Assertions.assertEquals(userRepository.getUserByUsername("test2"),null);
 
         Assertions.assertEquals(showUserController.getUsers(token),userRepository.getAll());

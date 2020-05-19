@@ -5,6 +5,7 @@ import exception.*;
 import model.Role;
 import model.Seller;
 import model.Session;
+import model.User;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
@@ -19,17 +20,17 @@ public class UserInfoController implements IUserInfoController {
 
 
     public void changePassword(String oldPassword, String newPassword, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
         } else {
-            session.getLoggedInUser().changePassword(oldPassword, newPassword);
+            user.changePassword(oldPassword, newPassword);
         }
     }
 
     public void changeInfo(String key, String value, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
         } else {
             switch (key) {
@@ -55,71 +56,71 @@ public class UserInfoController implements IUserInfoController {
     }
 
     private void changeUsername(String value, String token) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
         } else if (userRepository.getUserByUsername(value) != null) {
             throw new InvalidAuthenticationException("Username is already taken.", "Username");
         } else {
-            session.getLoggedInUser().changeUsername(value);
+            user.changeUsername(value);
         }
     }
 
     private void changeEmail(String value, String token) throws InvalidTokenException, InvalidFormatException {
-        Session session = Session.getSession(token);
+        User user = Session.getSession(token).getLoggedInUser();
         if (!value.matches("^\\S+@\\S+.(?i)com(?-i)")) {
             throw new InvalidFormatException("Email format is incorrect.", "Email");
         } else {
-            session.getLoggedInUser().changeEmail(value);
+            user.changeEmail(value);
         }
     }
 
     private void changeName(String value, String token, int state) throws InvalidTokenException {
-        Session session = Session.getSession(token);
+        User user = Session.getSession(token).getLoggedInUser();
         if (state == 1) {
-            session.getLoggedInUser().changeFirstName(value);
+            user.changeFirstName(value);
         } else {
-            session.getLoggedInUser().changeLastName(value);
+            user.changeLastName(value);
         }
     }
 
     private void changeCompanyName(String value, String token) throws NoSuchField, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if(session.getLoggedInUser().getRole() != Role.SELLER) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user.getRole() != Role.SELLER) {
             throw new NoSuchField("No Such Field exists.");
         } else {
-            ((Seller) session.getLoggedInUser()).changeCompanyName(value);
+            ((Seller) user).changeCompanyName(value);
         }
     }
 
     @Override
     public String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NotLoggedINException("You are not Logged in.");
-        } else if (session.getLoggedInUser().getRole() != Role.SELLER) {
+        } else if (user.getRole() != Role.SELLER) {
             throw new NoSuchField("This field does not exist.");
         } else {
-            return ((Seller) session.getLoggedInUser()).getCompanyName();
+            return ((Seller) user).getCompanyName();
         }
     }
 
     @Override
     public String getBalance(String token) throws NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NotLoggedINException("You are not logged in");
         } else {
-            return String.valueOf(session.getLoggedInUser().getCredit());
+            return String.valueOf(user.getCredit());
         }
     }
 
     public String getRole(String token) throws NotLoggedINException, InvalidTokenException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
             throw new NotLoggedINException("You are not logged in");
         } else {
-            return session.getLoggedInUser().getRole().toString();
+            return user.getRole().toString();
         }
     }
 }

@@ -120,10 +120,11 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     private void checkUsernameAndPassword(String username, String password) throws InvalidAuthenticationException, PasswordIsWrongException {
-        if (userRepository.getUserByUsername(username) == null) {
+        User user = userRepository.getUserByUsername(username);
+        if (user == null) {
             throw new InvalidAuthenticationException("Username is invalid.", "Username");
         }
-        if (!userRepository.getUserByUsername(username).checkPassword(password)) {
+        if (!user.checkPassword(password)) {
             throw new InvalidAuthenticationException("Password is wrong", "Password");
         }
     }
