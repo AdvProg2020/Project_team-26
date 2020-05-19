@@ -190,7 +190,17 @@ public class MySQLProductRepository
 
     @Override
     public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending) {
-        return null;
+        List<Product> allProducts = getAllSortedAndFiltered(filter, sortField, isAscending);// TODO: define properly
+        List<Product> result = new ArrayList<>();
+        for (Product product : allProducts) {
+            for (ProductSeller productSeller : product.getSellerList()) {
+                if(productSeller.getPriceInOff() < productSeller.getPrice()) {
+                    result.add(product);
+                    break;
+                }
+            }
+        }
+        return result;
     }
 
     private CriteriaQuery applyFilter(Map<String, String> filter, CriteriaBuilder cb, CriteriaQuery<Product> cq, Root<Product> root) {
