@@ -39,9 +39,4 @@ public class MySQLCategoryRepository
             return null;
         }
     }
-
-    @Override
-    public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending) {
-        return null;
-    }
 }
