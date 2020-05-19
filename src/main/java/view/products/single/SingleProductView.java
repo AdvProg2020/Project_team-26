@@ -167,7 +167,7 @@ public class SingleProductView extends View {
         manager.inputOutput.println("this product:" + (product.getDescription() == null ? "" : product.getName()));
         manager.inputOutput.println("minimum price :" + (product.getMinimumPrice()));
         manager.inputOutput.println("the average rate is :" + product.getAverageRate());
-        manager.inputOutput.println("Category is: with name: " + (product.getCategory().getName() == null ? "" : product.getName()
+        manager.inputOutput.println("Category is: " + (product.getCategory().getName() == null ? "" : product.getCategory().getName()
                 + " with id : " + product.getCategory().getId()));
     }
 

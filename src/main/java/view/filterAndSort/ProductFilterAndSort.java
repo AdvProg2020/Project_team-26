@@ -18,7 +18,7 @@ public class ProductFilterAndSort extends FilterAndSort {
         filterFields.put(3, "averageRate");
         filterFields.put(4, "brand");
         filterFields.put(5, "description");
-        sortField.put(2, "averageRate");
+        sortField.put(1, "averageRate");
         fieldNameForSort = "averageRate";
         isAscending = true;
     }

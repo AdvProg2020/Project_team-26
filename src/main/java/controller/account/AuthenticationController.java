@@ -29,8 +29,8 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameAndPassword(username, password);
         userSession.login(userRepository.getUserByUsername(username));
         if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
-            Random r = new Random();
-            if (r.nextInt(100) < 60)
+            /*Random r = new Random();
+            if (r.nextInt(100) < 60)*/
                 creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
         }
     }
@@ -46,7 +46,7 @@ public class AuthenticationController implements IAuthenticationController {
         Date endDate;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Random r = new Random();
-        int year = r.nextInt(2050 - 2022) + 2020;
+        int year = r.nextInt(2030 - 2022) + 2020;
         int month = r.nextInt(11 - 1) + 1;
         try {
             endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");

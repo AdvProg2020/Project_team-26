@@ -174,7 +174,7 @@ public class ViewManager {
     }
 
     public Date createDate() {
-        String year = getYear();
+        String year = getValidTimeAndDate("year", 2031, 2020);
         String month = getValidTimeAndDate("month", 12, 1);
         String day = getValidTimeAndDate("day", 31, 1);
         String hour = getValidTimeAndDate("hour", 23, 0);

@@ -106,24 +106,14 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public List<Off> getAllOffs(String token) {
-        return offRepository.getAll();
-    }
-
-    @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
-        return offRepository.getAllProductInOff(filter, sortFiled, isAscending);
-    }
-
-    @Override
-    public List<Off> getAllOfForSeller(String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
-        checkAccessOfUser(token, "only seller");
-        return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs();
+        return productRepository.getAllSortedAndFilteredInOff(filter, sortFiled, isAscending);
     }
 
     @Override
     public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
-        return new ArrayList<>();
+        checkAccessOfUser(token, "only seller");
+        return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs();
     }
 
 

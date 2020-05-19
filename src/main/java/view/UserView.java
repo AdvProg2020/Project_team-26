@@ -36,7 +36,6 @@ public class UserView {
         while (true) {
             manager.inputOutput.println("enter the field");
             String field = manager.inputOutput.nextLine();
-            manager.inputOutput.println("Password");
             if (field.matches("back"))
                 return;
             if (field.matches("Username")) {
