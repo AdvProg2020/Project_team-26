@@ -41,7 +41,7 @@ public class User {
 
     @ElementCollection
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-    @MapKeyColumn(name = "key")
+    @MapKeyColumn(name = "`key`")
     @Column(name = "value")
     @CollectionTable(name = "user_details", joinColumns = @JoinColumn(name = "user_id"))
     private Map<String, String> details;
