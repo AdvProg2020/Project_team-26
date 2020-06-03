@@ -43,6 +43,10 @@ public class Product {
     @CollectionTable(name = "product_category_feature", joinColumns = @JoinColumn(name = "product_id"))
     private Map<CategoryFeature, String> categoryFeatures;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
     public Product() {
         sellerList = new ArrayList<>();
     }

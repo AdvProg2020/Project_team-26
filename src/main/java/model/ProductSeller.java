@@ -31,6 +31,10 @@ public class ProductSeller {
     @Column(name = "remaining_items")
     private int remainingItems;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
     public ProductSeller() {
 
     }

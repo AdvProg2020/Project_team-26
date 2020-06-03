@@ -27,6 +27,10 @@ public class Off {
     @OneToMany(mappedBy = "off", cascade = CascadeType.ALL)
     private List<OffItem> items;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private Status status;
+
     public Off() {
         items = new ArrayList<OffItem>();
 
