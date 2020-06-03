@@ -30,6 +30,9 @@ public class OffItem {
         this.productSeller = productSeller;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getId() {
         return id;

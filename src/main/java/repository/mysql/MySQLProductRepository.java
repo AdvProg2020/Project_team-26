@@ -95,6 +95,7 @@ public class MySQLProductRepository
     @Override
     public void deleteRequest(int id, User requestedBy) {
         Request request = new Request(requestedBy, new Date(), RequestType.DELETE, RequestStatus.PENDING);
+        request.setProduct(getById(id));
         requestRepository.save(request);
     }
 

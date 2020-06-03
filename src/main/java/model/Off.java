@@ -17,9 +17,11 @@ public class Off {
     @ManyToOne
     @JoinColumn(name = "seller_id", referencedColumnName = "user_id")
     private Seller seller;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "start_date", nullable = false)
     private Date startDate;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date", nullable = false)
     private Date endDate;
@@ -53,16 +55,12 @@ public class Off {
         return endDate;
     }
 
-    public List<OffItem> getItems() {
-        return items;
+    public Seller getSeller() {
+        return seller;
     }
 
-    public OffItem getItemByProductId(int id) {
-        for (OffItem item : items) {
-            if (item.getProductSeller().getId() == id)
-                return item;
-        }
-        return null;
+    public List<OffItem> getItems() {
+        return items;
     }
 
     @Override
@@ -93,6 +91,10 @@ public class Off {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public OffRequest createRequest(RequestType requestType) {

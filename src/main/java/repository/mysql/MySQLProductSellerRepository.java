@@ -54,8 +54,10 @@ public class MySQLProductSellerRepository
     }
 
     @Override
-    public void deleteRequest(ProductSeller productSeller) {
+    public void deleteRequest(int id) {
+        ProductSeller productSeller = getById(id);
         Request request = new Request(productSeller.getSeller(), new Date(), RequestType.DELETE, RequestStatus.PENDING);
+        request.setProductSeller(productSeller);
         requestRepository.save(request);
     }
 

@@ -11,7 +11,7 @@ public interface ProductSellerRepository extends Repository<ProductSeller> {
 
     void editRequest(ProductSeller productSeller);
 
-    void deleteRequest(ProductSeller productSeller);
+    void deleteRequest(int id);
 
     void acceptRequest(int requestId);
 

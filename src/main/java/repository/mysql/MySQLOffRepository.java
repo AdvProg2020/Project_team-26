@@ -4,6 +4,7 @@ import exception.NoObjectIdException;
 import model.*;
 import repository.OffRepository;
 import repository.Repository;
+import repository.RequestRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
@@ -14,11 +15,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class MySQLOffRepository
     extends MySQLRepository<Off> implements OffRepository {
+
+    RequestRepository requestRepository;
 
     public MySQLOffRepository() {
         super(Off.class);
@@ -26,25 +30,35 @@ public class MySQLOffRepository
 
     @Override
     public void addRequest(Off off) {
-        OffRequest request = off.createRequest(RequestType.ADD);
-        persistRequest(request);
+        off.setStatus(Status.DEACTIVE);
+        Request request = new Request(off.getSeller(), new Date(), RequestType.ADD, RequestStatus.PENDING);
+        request.setOff(off);
+        requestRepository.save(request);
     }
 
     @Override
     public void editRequest(Off off) {
-        OffRequest request = off.createRequest(RequestType.EDIT);
-        request.setMainOff(off);
-        persistRequest(request);
+        off.setStatus(Status.DEACTIVE);
+        save(off);
+
+        off.setId(0);
+        off.getItems().forEach(offItem -> offItem.setId(0));
+        off.setStatus(Status.DEACTIVE);
+        Request request = new Request(off.getSeller(), new Date(), RequestType.ADD, RequestStatus.PENDING);
+        request.setOff(off);
+        requestRepository.save(request);
     }
 
     @Override
     public void deleteRequest(int id) {
         Off off = getById(id);
-        OffRequest request = off.createRequest(RequestType.DELETE);
-        request.setMainOff(off);
-        persistRequest(request);
+        Request request = new Request(off.getSeller(), new Date(), RequestType.DELETE, RequestStatus.PENDING);
+        request.setOff(off);
+        requestRepository.save(request);
     }
 
+    //*****************************
+    // Not useful anymore
     @Override
     public void acceptRequest(int requestId) {
 
@@ -109,6 +123,7 @@ public class MySQLOffRepository
             return new ArrayList<>();
         }
     }
+    //*****************************
 
     @Override
     public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int SellerId) {
