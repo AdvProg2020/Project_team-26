@@ -52,13 +52,44 @@ public class MySQLProductRepository
         request.setProduct(product);
         if(product.getSellerList().size() > 0) {
             request.setProductSeller(product.getSellerList().get(0));
+            product.getSellerList().forEach(productSeller -> productSeller.setStatus(Status.DEACTIVE));
         }
         requestRepository.save(request);
     }
 
     @Override
     public void editRequest(Product product, User requestedBy) {
+        Product oldProduct = getById(product.getId());
 
+        if(oldProduct.getName() != product.getName()) {
+            Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            request.setProduct(oldProduct);
+            request.setForEdit("name", product.getName());
+            requestRepository.save(request);
+        }
+
+        if(oldProduct.getBrand() != product.getBrand()) {
+            Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            request.setProduct(oldProduct);
+            request.setForEdit("brand", product.getBrand());
+            requestRepository.save(request);
+        }
+
+        if(oldProduct.getDescription() != product.getDescription()) {
+            Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            request.setProduct(oldProduct);
+            request.setForEdit("description", product.getDescription());
+            requestRepository.save(request);
+        }
+
+        if(!oldProduct.getCategory().equals(product.getCategory())) {
+            Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            request.setProduct(oldProduct);
+            request.setForEdit("category", "" + product.getCategory());
+            requestRepository.save(request);
+        }
+
+        // TODO: Process changes in category feature
     }
 
     @Override
@@ -67,6 +98,8 @@ public class MySQLProductRepository
         requestRepository.save(request);
     }
 
+    //*****************************
+    // Not useful anymore
     @Override
     public void acceptRequest(int requestId) {
         ProductRequest request = getProductRequestById(requestId);
@@ -166,6 +199,7 @@ public class MySQLProductRepository
             return new ArrayList<>();
         }
     }
+    //*****************************
 
     @Override
     public List<Product> getAllProductsWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int id) {

@@ -103,6 +103,10 @@ public class ProductSeller {
         this.remainingItems = remainingItems;
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public ProductSellerRequest createProductSellerRequest(RequestType requestType) {
         return new ProductSellerRequest(product, seller, price, remainingItems, requestType);
     }

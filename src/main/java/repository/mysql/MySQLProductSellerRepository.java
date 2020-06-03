@@ -2,6 +2,7 @@ package repository.mysql;
 
 import model.*;
 import repository.ProductSellerRepository;
+import repository.RequestRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
@@ -12,35 +13,54 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MySQLProductSellerRepository
         extends MySQLRepository<ProductSeller> implements ProductSellerRepository {
+
+    private final RequestRepository requestRepository;
+
     public MySQLProductSellerRepository() {
         super(ProductSeller.class);
+        requestRepository = (RequestRepository) MySQLRepository.repositoryContainer.getRepository("RequestRepository");
     }
 
     @Override
     public void addRequest(ProductSeller productSeller) {
-        ProductSellerRequest request = productSeller.createProductSellerRequest(RequestType.ADD);
-        request.setProduct(productSeller.getProduct());
-        persistRequest(request);
+        productSeller.setStatus(Status.DEACTIVE);
+        Request request = new Request(productSeller.getSeller(), new Date(), RequestType.ADD, RequestStatus.PENDING);
+        request.setProductSeller(productSeller);
+        requestRepository.save(request);
     }
 
     @Override
     public void editRequest(ProductSeller productSeller) {
-        ProductSellerRequest request = productSeller.createProductSellerRequest(RequestType.EDIT);
-        request.setMainProductSeller(productSeller);
-        persistRequest(request);
+        ProductSeller oldProductSeller = getById(productSeller.getId());
+
+        if(oldProductSeller.getPrice() != productSeller.getPrice()) {
+            Request request = new Request(productSeller.getSeller(), new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            request.setProductSeller(oldProductSeller);
+            request.setForEdit("price", "" + productSeller.getPrice());
+            requestRepository.save(request);
+        }
+
+        if(oldProductSeller.getRemainingItems() != productSeller.getRemainingItems()) {
+            Request request = new Request(productSeller.getSeller(), new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            request.setProductSeller(oldProductSeller);
+            request.setForEdit("remainingItems", "" + productSeller.getRemainingItems());
+            requestRepository.save(request);
+        }
     }
 
     @Override
     public void deleteRequest(ProductSeller productSeller) {
-        ProductSellerRequest request = productSeller.createProductSellerRequest(RequestType.DELETE);
-        request.setMainProductSeller(productSeller);
-        persistRequest(request);
+        Request request = new Request(productSeller.getSeller(), new Date(), RequestType.DELETE, RequestStatus.PENDING);
+        requestRepository.save(request);
     }
 
+    //*****************************
+    // Not useful anymore
     @Override
     public void acceptRequest(int requestId) {
         ProductSellerRequest request = getProductSellerRequestById(requestId);
@@ -103,7 +123,7 @@ public class MySQLProductSellerRepository
             CriteriaQuery<ProductSellerRequest> cq = cb.createQuery(ProductSellerRequest.class);
             Root<ProductSellerRequest> root = cq.from(ProductSellerRequest.class);
 
-            if(isAscending) {
+            if (isAscending) {
                 cq.orderBy(cb.asc(root.get(sortField)));
             } else {
                 cq.orderBy(cb.desc(root.get(sortField)));
@@ -117,6 +137,7 @@ public class MySQLProductSellerRepository
             return new ArrayList<>();
         }
     }
+    //*****************************
 
 //    EntityManager em = EntityManagerProvider.getEntityManager();
 //
