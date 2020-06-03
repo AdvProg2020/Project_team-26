@@ -1,6 +1,7 @@
 package repository.mysql;
 
 import repository.Repository;
+import repository.RepositoryContainer;
 import repository.mysql.utils.EntityManagerFactoryProvider;
 import repository.mysql.utils.EntityManagerProvider;
 
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class MySQLRepository<T> implements Repository<T> {
+
+    protected static RepositoryContainer repositoryContainer;
 
     protected EntityManagerFactory entityManagerFactory;
     protected Class<T> tClass;

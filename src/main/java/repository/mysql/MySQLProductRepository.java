@@ -2,6 +2,7 @@ package repository.mysql;
 
 import model.*;
 import repository.ProductRepository;
+import repository.RequestRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
@@ -12,14 +13,18 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 public class MySQLProductRepository
         extends MySQLRepository<Product> implements ProductRepository {
 
+    private RequestRepository requestRepository;
+
     public MySQLProductRepository() {
         super(Product.class);
+        requestRepository = (RequestRepository) MySQLRepository.repositoryContainer.getRepository("RequestRepository");
     }
 
     @Override
@@ -41,24 +46,25 @@ public class MySQLProductRepository
     }
 
     @Override
-    public void addRequest(Product product) {
-        ProductRequest productRequest = product.createRequest(RequestType.ADD);
-        persistRequest(productRequest);
+    public void addRequest(Product product, User requestedBy) {
+        product.setStatus(Status.DEACTIVE);
+        Request request = new Request(requestedBy, new Date(), RequestType.ADD, RequestStatus.PENDING);
+        request.setProduct(product);
+        if(product.getSellerList().size() > 0) {
+            request.setProductSeller(product.getSellerList().get(0));
+        }
+        requestRepository.save(request);
     }
 
     @Override
-    public void editRequest(Product product) {
-        ProductRequest productRequest = product.createRequest(RequestType.EDIT);
-        productRequest.setMainProduct(product);
-        persistRequest(productRequest);
+    public void editRequest(Product product, User requestedBy) {
+
     }
 
     @Override
-    public void deleteRequest(int id) {
-        Product product = getById(id);
-        ProductRequest productRequest = product.createRequest(RequestType.DELETE);
-        productRequest.setMainProduct(product);
-        persistRequest(productRequest);
+    public void deleteRequest(int id, User requestedBy) {
+        Request request = new Request(requestedBy, new Date(), RequestType.DELETE, RequestStatus.PENDING);
+        requestRepository.save(request);
     }
 
     @Override

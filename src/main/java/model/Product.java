@@ -131,6 +131,10 @@ public class Product {
         this.sellerList.add(productSeller);
     }
 
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
     public boolean hasSeller(User seller) {
         return sellerList.stream().anyMatch(s -> s.getSeller().equals(seller));
     }
