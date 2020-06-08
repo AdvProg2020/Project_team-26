@@ -53,7 +53,6 @@ public class FakeProductRepository implements ProductRepository {
     public void deleteRequest(int id, User requestedBy) {
 
     }
-
     @Override
     public void acceptRequest(int requestId) {
 
@@ -68,6 +67,8 @@ public class FakeProductRepository implements ProductRepository {
     public ProductRequest getProductRequestById(int requestId) {
         return null;
     }
+
+
 
     @Override
     public List<Product> getAll() {

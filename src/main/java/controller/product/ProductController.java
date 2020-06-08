@@ -78,7 +78,7 @@ public class ProductController implements IProductController {
         } else if (!productRepository.getById(id).hasSeller(user)) {
             throw new NoAccessException("You don't have this item for sale.");
         } else {
-            productRepository.deleteRequest(id, user);
+            productRepository.deleteRequest(id);
         }
     }
 
