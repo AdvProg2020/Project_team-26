@@ -41,7 +41,7 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
     }
 
     @Override
-    public void deleteRequest(ProductSeller productSeller) {
+    public void deleteRequest(int id) {
 
     }
 
