@@ -8,7 +8,6 @@ import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
 
-import javax.swing.text.Segment;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +35,7 @@ public class ProductController implements IProductController {
             throw new ObjectAlreadyExistException("Product with this name already exists", productWithSameName);
         if (product.getCategory() == null)
             product.setCategory(categoryRepository.getById(1));
-        productRepository.addRequest(product);
+        productRepository.addRequest(product, user);
     }
 
     @Override
@@ -79,7 +78,7 @@ public class ProductController implements IProductController {
         } else if (!productRepository.getById(id).hasSeller(user)) {
             throw new NoAccessException("You don't have this item for sale.");
         } else {
-            productRepository.deleteRequest(id);
+            productRepository.deleteRequest(id, user);
         }
     }
 
@@ -96,7 +95,7 @@ public class ProductController implements IProductController {
         } else if (user.getRole() != Role.SELLER) {
             throw new NoAccessException("Only a seller can view his/her products");
         } else {
-            return productRepository.getAllProductsWithFilterForSellerId(filter, fieldName, isAscending, user.getId());
+            return productRepository.getAllProductsWithFilterForSeller(filter, fieldName, isAscending, user.getId());
         }
 
     }
@@ -130,6 +129,6 @@ public class ProductController implements IProductController {
         if (!product.hasSeller(user))
             throw new NoAccessException("You can only change your own products");
         newProduct.setId(id);
-        productRepository.editRequest(newProduct);
+        productRepository.editRequest(newProduct, user);
     }
 }

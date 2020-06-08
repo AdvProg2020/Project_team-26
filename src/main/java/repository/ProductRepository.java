@@ -32,6 +32,6 @@ public interface ProductRepository extends Repository<Product> {
 
     List<ProductRequest> getAllSellerRequests(int sellerId);
 
-    List<Product> getAllProductsWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int id);
+    List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, String fieldName, boolean isAscending, int id);
 }
 

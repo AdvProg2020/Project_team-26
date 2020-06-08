@@ -4,6 +4,7 @@ import exception.NoObjectIdException;
 import model.Product;
 import model.ProductRequest;
 import model.ProductSeller;
+import model.User;
 import repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -39,7 +40,17 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public void addRequest(Product product) {
+    public void addRequest(Product product, User requestedBy) {
+
+    }
+
+    @Override
+    public void editRequest(Product product, User requestedBy) {
+
+    }
+
+    @Override
+    public void deleteRequest(int id, User requestedBy) {
 
     }
 
@@ -56,16 +67,6 @@ public class FakeProductRepository implements ProductRepository {
     @Override
     public ProductRequest getProductRequestById(int requestId) {
         return null;
-    }
-
-    @Override
-    public void editRequest(Product product) {
-
-    }
-
-    @Override
-    public void deleteRequest(int id) {
-
     }
 
     @Override
@@ -117,7 +118,7 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> getAllProductsWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
+    public List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
         return null;
     }
 

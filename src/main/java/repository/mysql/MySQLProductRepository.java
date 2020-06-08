@@ -203,7 +203,7 @@ public class MySQLProductRepository
     //*****************************
 
     @Override
-    public List<Product> getAllProductsWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
+    public List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
         return null;
     }
 
