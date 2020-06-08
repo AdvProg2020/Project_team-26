@@ -142,4 +142,8 @@ public abstract class MySQLRepository<T> implements Repository<T> {
             cq.orderBy(cb.desc(root.get(sortField)));
         }
     }
+
+    public static void setRepositoryContainer(RepositoryContainer container) {
+        repositoryContainer = container;
+    }
 }

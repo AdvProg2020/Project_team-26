@@ -13,7 +13,7 @@ public class Request {
     private int id;
 
     @ManyToOne
-    @Column(name = "user_id")
+    @JoinColumn(name = "user_id")
     private User requestedBy;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -29,19 +29,19 @@ public class Request {
     private RequestStatus requestStatus;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name = "product_id")
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name = "product_seller_id")
+    @JoinColumn(name = "product_seller_id")
     private ProductSeller productSeller;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name = "off_id")
+    @JoinColumn(name = "off_id")
     private Off off;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @Column(name = "off_details_id")
+    @JoinColumn(name = "off_details_id")
     private OffItem offItem;
 
     @Column(name = "type")

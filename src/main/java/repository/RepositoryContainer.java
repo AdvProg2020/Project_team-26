@@ -18,11 +18,14 @@ public class RepositoryContainer {
 
     public RepositoryContainer(String sql) {
         map = new HashMap<>();
-        if (sql.equals("sql"))
+        if (sql.equals("sql")) {
+            MySQLRepository.setRepositoryContainer(this);
             initializeSQLRep();
+        }
     }
 
     public void initializeSQLRep() {
+        map.put("RequestRepository", new MySQLRequestRepository());
         map.put("ProductRepository", new MySQLProductRepository());
         map.put("CategoryRepository", new MySQLCategoryRepository());
         map.put("UserRepository", new MySQLUserRepository());
