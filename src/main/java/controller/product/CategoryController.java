@@ -196,6 +196,7 @@ public class CategoryController implements ICategoryController {
         if(category == null) {
             throw new InvalidIdException("No such category exists");
         } else {
+            filter.put("category", "" + id);
             return productRepository.getAllSortedAndFiltered(filter,sortField,isAscending);
         }
     }

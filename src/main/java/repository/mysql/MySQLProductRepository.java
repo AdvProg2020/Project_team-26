@@ -249,6 +249,9 @@ public class MySQLProductRepository
             String value = filter.get(key);
             String[] split = value.split("-");
             switch (key) {
+                case "category":
+                    cq.where(cb.equal(root.get("category"), Integer.parseInt(value)));
+                    break;
                 case "product name":
                     cq.where(cb.like(root.get("name"), "%" + value + "%"));
                     break;
