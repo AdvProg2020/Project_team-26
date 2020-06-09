@@ -1,13 +1,22 @@
+import javafx.application.Application;
+import javafx.stage.Stage;
 import repository.RepositoryContainer;
 import view.ControllerContainer;
 import view.ViewManager;
 
-public class Main {
+public class Main extends Application {
 
     public static void main(String[] args) {
-        RepositoryContainer repositoryContainer = new RepositoryContainer("sql");
+       /* RepositoryContainer repositoryContainer = new RepositoryContainer("sql");
         ControllerContainer controllerContainer = new ControllerContainer(repositoryContainer);
         ViewManager manager = new ViewManager(controllerContainer);
-        manager.startProgram();
+        manager.startProgram();*/
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
+
+
     }
 }
