@@ -1,49 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0"
-      prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="pageHBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <VBox prefHeight="600.0" prefWidth="1000.0">
+        <VBox fx:id="productsVBox" prefHeight="600.0" prefWidth="1000.0">
             <children>
-                <ScrollPane prefHeight="600.0" prefWidth="1000.0">
+                <ScrollPane fx:id="productsScrollPain" prefHeight="600.0" prefWidth="1000.0">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="600.0" prefWidth="983.0">
                             <children>
-                                <GridPane prefHeight="600.0" prefWidth="983.0">
+                                <GridPane fx:id="productsGridPain" prefHeight="600.0" prefWidth="983.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="246.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
-                                    <children>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="2"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="1"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="3"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.rowIndex="1"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.rowIndex="2"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="1"
-                                              GridPane.rowIndex="1"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="1"
-                                              GridPane.rowIndex="2"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="2"
-                                              GridPane.rowIndex="1"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="3"
-                                              GridPane.rowIndex="1"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="3"
-                                              GridPane.rowIndex="2"/>
-                                        <Pane prefHeight="200.0" prefWidth="246.0" GridPane.columnIndex="2"
-                                              GridPane.rowIndex="2"/>
-                                    </children>
                                 </GridPane>
                             </children>
                         </AnchorPane>
@@ -51,41 +44,35 @@
                 </ScrollPane>
             </children>
         </VBox>
-        <VBox prefHeight="600.0" prefWidth="200.0">
+        <VBox fx:id="optionsVBox" prefHeight="600.0" prefWidth="200.0">
             <children>
-                <VBox prefHeight="56.0" prefWidth="200.0">
+                <VBox fx:id="treeViewVBox" prefHeight="56.0" prefWidth="200.0">
                     <children>
-                        <Pane prefHeight="59.0" prefWidth="200.0">
+                        <Pane fx:id="treeViewPane" prefHeight="59.0" prefWidth="200.0">
                             <children>
-                                <TreeView layoutX="10.0" layoutY="12.0" prefHeight="38.0" prefWidth="180.0"/>
+                                <TreeView fx:id="categoryTreeView" layoutX="10.0" layoutY="12.0" prefHeight="38.0" prefWidth="180.0" />
                             </children>
                         </Pane>
                     </children>
                 </VBox>
-                <VBox prefHeight="543.0" prefWidth="200.0">
+                <VBox fx:id="filterAndOffVbox" prefHeight="543.0" prefWidth="200.0">
                     <children>
-                        <Pane fx:id="rortField" prefHeight="545.0" prefWidth="200.0">
+                        <Pane fx:id="filterAndOffPane" prefHeight="545.0" prefWidth="200.0">
                             <children>
-                                <ComboBox layoutX="32.0" layoutY="114.0" prefWidth="150.0"/>
-                                <TextArea layoutX="33.0" layoutY="150.0" prefHeight="31.0" prefWidth="149.0"
-                                          promptText="search name"/>
-                                <TextField layoutX="32.0" layoutY="200.0" prefHeight="31.0" prefWidth="149.0"
-                                           promptText="SEARCH BRAND"/>
-                                <CheckBox layoutX="24.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0"
-                                          prefWidth="75.0" text="offs"/>
-                                <ComboBox layoutX="24.0" layoutY="391.0" prefWidth="150.0"/>
-                                <Label layoutX="114.0" layoutY="360.0" prefHeight="17.0" prefWidth="60.0" text="sort "/>
-                                <Label layoutX="14.0" layoutY="423.0" prefHeight="17.0" prefWidth="60.0"
-                                       text="start date"/>
-                                <Label layoutX="14.0" layoutY="474.0" prefHeight="17.0" prefWidth="60.0"
-                                       text="end date"/>
-                                <DatePicker layoutX="12.0" layoutY="449.0"/>
-                                <DatePicker layoutX="13.0" layoutY="498.0"/>
-                                <Label layoutX="32.0" layoutY="86.0" prefHeight="17.0" prefWidth="60.0" text="product"/>
-                                <Label layoutX="127.0" layoutY="86.0" prefHeight="17.0" prefWidth="60.0" text="sort "/>
-                                <ColorPicker layoutX="43.0" layoutY="42.0"/>
-                                <Label layoutX="28.0" layoutY="14.0" prefHeight="17.0" prefWidth="157.0"
-                                       text="choose your background"/>
+                                <ComboBox fx:id="productSortComboBox" layoutX="32.0" layoutY="114.0" prefWidth="150.0" />
+                                <TextArea fx:id="nameFilterTextArea" layoutX="33.0" layoutY="150.0" prefHeight="31.0" prefWidth="149.0" promptText="search name" />
+                                <TextField fx:id="brandSearchTextField" layoutX="32.0" layoutY="200.0" prefHeight="31.0" prefWidth="149.0" promptText="SEARCH BRAND" />
+                                <CheckBox fx:id="offsCheckBox" layoutX="24.0" layoutY="356.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="75.0" text="offs" />
+                                <ComboBox fx:id="offSortCombowBox" layoutX="24.0" layoutY="391.0" prefWidth="150.0" />
+                                <Label fx:id="offSortLabel" layoutX="114.0" layoutY="360.0" prefHeight="17.0" prefWidth="60.0" text="sort " />
+                                <Label fx:id="startOffsDateLabel" layoutX="14.0" layoutY="423.0" prefHeight="17.0" prefWidth="60.0" text="start date" />
+                                <Label fx:id="endOffsDateLabel" layoutX="14.0" layoutY="474.0" prefHeight="17.0" prefWidth="60.0" text="end date" />
+                                <DatePicker fx:id="startOffsDateDatePicker" layoutX="12.0" layoutY="449.0" />
+                                <DatePicker fx:id="endOffsDateDatePicker" layoutX="13.0" layoutY="498.0" />
+                                <Label fx:id="productLabel" layoutX="32.0" layoutY="86.0" prefHeight="17.0" prefWidth="60.0" text="product" />
+                                <Label fx:id="productSortLabel" layoutX="127.0" layoutY="86.0" prefHeight="17.0" prefWidth="60.0" text="sort " />
+                                <ColorPicker fx:id="backgroundColorPicker" layoutX="43.0" layoutY="42.0" />
+                                <Label fx:id="chooseBackgroundLabel" layoutX="28.0" layoutY="14.0" prefHeight="17.0" prefWidth="157.0" text="choose your background" />
                             </children>
                         </Pane>
                     </children>
