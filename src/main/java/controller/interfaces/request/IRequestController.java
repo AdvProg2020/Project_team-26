@@ -23,5 +23,8 @@ public interface IRequestController {
     public List<ProductRequest> getAllProductRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
     public List<OffRequest> getAllOffRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
     public List<ProductSellerRequest> getAllProductSellerRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
+    public List<ProductRequest> getAllProductRequests(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
+    public List<OffRequest> getAllOffRequests(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
+    public List<ProductSellerRequest> getAllProductSellerRequests(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
 
 }

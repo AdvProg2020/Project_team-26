@@ -24,14 +24,14 @@ public interface ProductRepository extends Repository<Product> {
 
     ProductRequest getProductRequestById(int requestId);
 
-    List<Product> getAllSortedAndFiltered(Map<String, String> filter, String sortField, boolean isAscending);
+    List<Product> getAllSortedAndFiltered(Map<String, String> filter, Pageable pageable);//todo
 
-    List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending);
+    List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, Pageable pageable);//todo
 
-    List<ProductRequest> getAllRequests(String sorField, boolean isAscending);
+    List<ProductRequest> getAllRequests(Pageable pageable); //todo
 
     List<ProductRequest> getAllSellerRequests(int sellerId);
 
-    List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, String fieldName, boolean isAscending, int id);
+    List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, Pageable pageable, int id);//todo
 }
 

@@ -1,5 +1,7 @@
 package model;
 
+import repository.Pageable;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -32,7 +34,8 @@ public class Seller extends User {
         this.allOffs = allOffs;
     }
 
-    public List<Off> getAllOffs() {
+    public List<Off> getAllOffs(Pageable pageable) {
+        //todo
         return allOffs;
     }
 

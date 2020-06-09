@@ -1,15 +1,38 @@
 package repository;
 
+import java.util.HashMap;
+
 public class Pageable {
 
     private boolean isPaged;
     private int from;
     private int maxResult;
-    private int sortField;
+    private String sortField;
     private Direction direction;
+    private HashMap<String,String> filters;
+
+    public Pageable(int from, int maxResult, String sortField, Direction direction) {
+        isPaged = true;
+        this.from = from;
+        this.maxResult = maxResult;
+        this.sortField = sortField;
+        this.direction = direction;
+    }
+
+    public Pageable() {
+        isPaged = false;
+    }
 
     public boolean isPaged() {
         return isPaged;
+    }
+
+    public HashMap<String, String> getFilters() {
+        return filters;
+    }
+
+    public void setFilters(HashMap<String, String> filters) {
+        this.filters = filters;
     }
 
     public void setPaged(boolean paged) {
@@ -34,11 +57,11 @@ public class Pageable {
         this.maxResult = maxResult;
     }
 
-    public int getSortField() {
+    public String getSortField() {
         return sortField;
     }
 
-    public void setSortField(int sortField) {
+    public void setSortField(String sortField) {
         isPaged = true;
         this.sortField = sortField;
     }
@@ -52,7 +75,7 @@ public class Pageable {
         this.direction = direction;
     }
 
-    enum Direction{
+    public enum Direction{
         ASCENDING, DESCENDING
     }
 }
