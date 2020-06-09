@@ -1,22 +1,16 @@
 package view.main;
 
-import controller.account.Account;
-import exception.InvalidAuthenticationException;
-import exception.InvalidFormatException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
-import model.Role;
 import model.Session;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.ControllerContainer;
-import view.InputOutput;
-import view.ViewManager;
-import view.main.AuthenticationValidCommands;
-import view.main.AuthenticationView;
+import view.terminal.ControllerContainer;
+import view.terminal.InputOutput;
+import view.terminal.ViewManager;
+import view.terminal.main.AuthenticationValidCommands;
+import view.terminal.main.AuthenticationView;
 
 import java.util.regex.Pattern;
 

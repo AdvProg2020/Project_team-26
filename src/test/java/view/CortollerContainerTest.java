@@ -1,12 +1,11 @@
 package view;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.RepositoryContainer;
-import view.ControllerContainer.Controller.*;
+import view.terminal.ControllerContainer;
 
-import static view.ControllerContainer.Controller.*;
+import static view.terminal.ControllerContainer.Controller.*;
 
 public class CortollerContainerTest {
     @Test

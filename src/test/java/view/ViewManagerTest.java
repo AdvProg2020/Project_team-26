@@ -6,7 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.RepositoryContainer;
 import repository.UserRepository;
-import view.main.MainPageView;
+import view.terminal.ControllerContainer;
+import view.terminal.InputOutput;
+import view.terminal.ViewManager;
+import view.terminal.main.MainPageView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -22,7 +25,7 @@ public class ViewManagerTest {
         RepositoryContainer repositoryContainer = new RepositoryContainer();
         ControllerContainer controllerContainer =  new ControllerContainer(repositoryContainer);
         manager = new ViewManager(controllerContainer);
-        mainPageView = new view.main.MainPageView(manager);
+        mainPageView = new MainPageView(manager);
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }
 
