@@ -2,6 +2,16 @@ package repository.mysql;
 
 import model.*;
 import repository.*;
+import repository.mysql.utils.EntityManagerProvider;
+
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MySQLRequestRepository
  extends MySQLRepository<Request> implements RequestRepository {
@@ -141,6 +151,29 @@ public class MySQLRequestRepository
                 off.setStatus(Status.DEACTIVE);
                 offRepository.save(off);
                 break;
+        }
+    }
+
+    @Override
+    public List<Request> getAllPending(int from, int count) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Request> cq = cb.createQuery(Request.class);
+            Root<Request> root = cq.from(Request.class);
+
+            cq.select(root);
+            cq.where(cb.equal(root.get("requestStatus"), RequestStatus.PENDING));
+            TypedQuery<Request> typedQuery = em.createQuery(cq);
+
+            if(count != 0) {
+                typedQuery.setFirstResult(from);
+                typedQuery.setMaxResults(count);
+            }
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return new ArrayList<>();
         }
     }
 }
