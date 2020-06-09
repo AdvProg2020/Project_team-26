@@ -49,11 +49,11 @@ public class MySQLProductRepository
     public void addRequest(Product product, User requestedBy) {
         product.setStatus(Status.DEACTIVE);
         Request request = new Request(requestedBy, new Date(), RequestType.ADD, RequestStatus.PENDING);
-        request.setProduct(product);
         if(product.getSellerList().size() > 0) {
             request.setProductSeller(product.getSellerList().get(0));
             product.getSellerList().forEach(productSeller -> productSeller.setStatus(Status.DEACTIVE));
         }
+        request.setProduct(product);
         requestRepository.save(request);
     }
 

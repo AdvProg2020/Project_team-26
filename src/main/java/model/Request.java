@@ -141,4 +141,8 @@ public class Request {
     public String getNewValue() {
         return newValue;
     }
+
+    public void setRequestStatus(RequestStatus requestStatus) {
+        this.requestStatus = requestStatus;
+    }
 }

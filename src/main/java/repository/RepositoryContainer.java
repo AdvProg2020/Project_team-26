@@ -35,6 +35,8 @@ public class RepositoryContainer {
         map.put("ProductSellerRepository", new MySQLProductSellerRepository());
         map.put("OffRepository", new MySQLOffRepository());
         map.put("OrderRepository", new MySQLOrderRepository());
+
+        ((MySQLRequestRepository) map.get("RequestRepository")).initializeRepositories(this);
     }
 
     public void initializeFakeRep() {
