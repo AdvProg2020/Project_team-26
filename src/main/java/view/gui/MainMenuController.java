@@ -57,14 +57,11 @@ public class MainMenuController {
     @FXML
     private Label chooseBackgroundLabel;
     @FXML
-    public Pane rangeSliderPane;
-
-   // private RangeSlider priceSlider;
-
+    private Pane priceRangePane;
     @FXML
     public void initialize() {
-     /*   priceSlider = new RangeSlider(0, 10000, 0, 10000);
-       *//* priceSlider.setLowValue(0.0);
+        /*   priceSlider = new RangeSlider(0, 10000, 0, 10000);
+         *//* priceSlider.setLowValue(0.0);
         priceSlider.setHighValue(10000);
         priceSlider.setMin(0);
         priceSlider.setMax(10000);*//*
