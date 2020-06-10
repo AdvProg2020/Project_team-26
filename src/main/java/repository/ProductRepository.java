@@ -22,16 +22,16 @@ public interface ProductRepository extends Repository<Product> {
 
     void rejectRequest(int requestId);
 
+    List<ProductRequest> getAllRequests(String sortField, boolean isAscending);
+
     ProductRequest getProductRequestById(int requestId);
-
-    List<Product> getAllSortedAndFiltered(Map<String, String> filter, Pageable pageable);//todo
-
-    List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, Pageable pageable);//todo
-
-    List<ProductRequest> getAllRequests(Pageable pageable); //todo
 
     List<ProductRequest> getAllSellerRequests(int sellerId);
 
-    List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, Pageable pageable, int id);//todo
+    List<Product> getAllSortedAndFiltered(Map<String, String> filter, Pageable pageable);
+
+    List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, Pageable pageable);
+
+    List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, Pageable pageable, int sellerId);
 }
 
