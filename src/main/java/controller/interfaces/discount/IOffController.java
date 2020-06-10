@@ -1,9 +1,11 @@
 package controller.interfaces.discount;
 
 import exception.*;
-import model.*;
+import model.Off;
+import model.Product;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 public interface IOffController {
     void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
@@ -14,11 +16,13 @@ public interface IOffController {
 
     void removeAOff(int id, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException;
 
-
     List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, String token);
 
+    List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, String token);
 
-    List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
+    List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
+
+    List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 
     Off getOff(int id, String token) throws InvalidIdException;
 

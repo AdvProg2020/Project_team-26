@@ -7,6 +7,7 @@ import exception.*;
 import exception.ObjectAlreadyExistException;
 import model.*;
 import repository.CategoryRepository;
+import repository.Pageable;
 import repository.ProductRepository;
 import repository.RepositoryContainer;
 
@@ -192,12 +193,25 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int id, String token) throws InvalidIdException {
+        Pageable page = createAPage(sortField,isAscending,0,0);
         Category category = categoryRepository.getById(id);
         if(category == null) {
             throw new InvalidIdException("No such category exists");
         } else {
             filter.put("category", "" + id);
-            return productRepository.getAllSortedAndFiltered(filter,sortField,isAscending);
+            return productRepository.getAllSortedAndFiltered(filter,page);
+        }
+    }
+
+    @Override
+    public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
+        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        Category category = categoryRepository.getById(id);
+        if(category == null) {
+            throw new InvalidIdException("No such category exists");
+        } else {
+            filter.put("category", "" + id);
+            return productRepository.getAllSortedAndFiltered(filter,page);
         }
     }
 
@@ -213,5 +227,13 @@ public class CategoryController implements ICategoryController {
         if (category == null)
             throw new InvalidIdException("no such name exist.");
         return category;
+    }
+
+    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
+        if(isAscending) {
+            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
+        } else {
+            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
+        }
     }
 }

@@ -19,7 +19,7 @@ public interface ProductSellerRepository extends Repository<ProductSeller> {
 
     ProductSellerRequest getProductSellerRequestById(int requestId);
 
-    List<ProductSellerRequest> getAllRequests(String sortField, boolean isAscending);
+    List<ProductSellerRequest> getAllRequests(Pageable pageable); //todo
 
     ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId);
 }

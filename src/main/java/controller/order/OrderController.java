@@ -4,6 +4,7 @@ import controller.interfaces.order.IOrderController;
 import exception.*;
 import model.*;
 import repository.OrderRepository;
+import repository.Pageable;
 import repository.RepositoryContainer;
 
 import java.util.ArrayList;
@@ -52,6 +53,25 @@ public class OrderController implements IOrderController {
     }
 
     @Override
+    public List<Order> getOrdersWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        Pageable page =  createAPage(sortField,isAscending,startIndex,endIndex);
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
+            throw new NotLoggedINException("You must be logged in");
+        } else if(user.getRole() != Role.CUSTOMER) {
+            throw new NoAccessException("You must be a customer to gte Orders");
+        } else {
+            List<Order> allOrders  = new ArrayList<>();
+            for (Order order : orderRepository.getAll(page)) {
+                if(order.getCustomer().getUsername().equals(user.getUsername())) {
+                    allOrders.add(order);
+                }
+            }
+            return allOrders;
+        }
+    }
+
+    @Override
     public List<User> getProductBuyerByProductId(int productId, String token) {
         // TODO: get a List of users who bough this product, check if product belongs to the logged in seller
         return null;
@@ -91,6 +111,14 @@ public class OrderController implements IOrderController {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             return orderRepository.getById(wantedOrder.getId());
+        }
+    }
+
+    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
+        if(isAscending) {
+            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
+        } else {
+            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
         }
     }
 

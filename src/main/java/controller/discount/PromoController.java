@@ -3,6 +3,7 @@ package controller.discount;
 import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.*;
+import repository.Pageable;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
@@ -49,7 +50,22 @@ public class PromoController implements IPromoController {
         } else {
             return promoRepository.getAllSorted(sortField,isAscending);
         }
+    }
 
+    @Override
+    public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
+            throw new NotLoggedINException("you are not logged in");
+        } else if (user.getRole() == Role.SELLER) {
+            throw new NoAccessException("only customer");
+        }
+        if (user.getRole() == Role.CUSTOMER) {
+            return ((Customer) user).getAvailablePromos();
+        } else {
+            return promoRepository.getAll(page);
+        }
     }
 
     @Override
@@ -67,6 +83,14 @@ public class PromoController implements IPromoController {
             throw new NotLoggedINException("You are not logged in.");
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException(message);
+        }
+    }
+
+    private Pageable createAPage(String sortField,boolean isAscending, int startIndex, int endIndex){
+        if(isAscending) {
+            return new Pageable(startIndex,endIndex,sortField, Pageable.Direction.ASCENDING);
+        }else {
+            return new Pageable(startIndex,endIndex,sortField, Pageable.Direction.DESCENDING);
         }
     }
 
