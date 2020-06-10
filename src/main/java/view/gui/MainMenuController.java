@@ -4,11 +4,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import org.controlsfx.control.RangeSlider;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MainMenuController implements Initializable {
+public class MainMenuController {
     @FXML
     private HBox pageHBox;
     @FXML
@@ -55,10 +56,25 @@ public class MainMenuController implements Initializable {
     private ColorPicker backgroundColorPicker;
     @FXML
     private Label chooseBackgroundLabel;
+    @FXML
+    public Pane rangeSliderPane;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+   // private RangeSlider priceSlider;
+
+    @FXML
+    public void initialize() {
+     /*   priceSlider = new RangeSlider(0, 10000, 0, 10000);
+       *//* priceSlider.setLowValue(0.0);
+        priceSlider.setHighValue(10000);
+        priceSlider.setMin(0);
+        priceSlider.setMax(10000);*//*
+        priceSlider.setShowTickLabels(true);
+        priceSlider.setShowTickMarks(true);
+        priceSlider.setMajorTickUnit(25);
+        priceSlider.setBlockIncrement(10);
+        rangeSliderPane.getChildren().addAll(priceSlider);*/
+        productSortComboBox.setPromptText("sorting products");
+        offSortCombowBox.setPromptText("sorting offs");
         System.out.println("second");
-
     }
 }
