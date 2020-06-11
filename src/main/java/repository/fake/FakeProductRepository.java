@@ -5,6 +5,7 @@ import model.Product;
 import model.ProductRequest;
 import model.ProductSeller;
 import model.User;
+import repository.Pageable;
 import repository.ProductRepository;
 
 import java.util.ArrayList;
@@ -76,6 +77,11 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
+    public List<Product> getAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
     public Product getById(int id) {
         for (Product product : allProducts) {
             if (product.getId() == id)
@@ -99,16 +105,6 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> getAllSortedAndFiltered(Map<String, String> filter, String sortField, boolean isAscending) {
-        return null;
-    }
-
-    @Override
-    public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending) {
-        return null;
-    }
-
-    @Override
     public List<ProductRequest> getAllRequests(String sorField, boolean isAscending) {
         return null;
     }
@@ -119,10 +115,19 @@ public class FakeProductRepository implements ProductRepository {
     }
 
     @Override
-    public List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
+    public List<Product> getAllSortedAndFiltered(Map<String, String> filter, Pageable pageable) {
         return null;
     }
 
+    @Override
+    public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, Pageable pageable, int sellerId) {
+        return null;
+    }
     @Override
     public void save(Product object) {
         if (object == null)

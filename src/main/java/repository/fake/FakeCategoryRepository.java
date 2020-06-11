@@ -3,6 +3,7 @@ package repository.fake;
 import model.Category;
 import model.Product;
 import repository.CategoryRepository;
+import repository.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,11 @@ public class FakeCategoryRepository implements CategoryRepository {
     @Override
     public List<Category> getAll() {
         return allCategory;
+    }
+
+    @Override
+    public List<Category> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override

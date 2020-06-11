@@ -2,6 +2,7 @@ package repository.fake;
 
 import model.Customer;
 import model.Rate;
+import repository.Pageable;
 import repository.RateRepository;
 import repository.RepositoryContainer;
 
@@ -29,6 +30,11 @@ public class FakeRateRepository implements RateRepository {
     @Override
     public List<Rate> getAll() {
         return allRatings;
+    }
+
+    @Override
+    public List<Rate> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override

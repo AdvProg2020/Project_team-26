@@ -3,6 +3,7 @@ package repository.fake;
 import model.ProductSeller;
 import model.ProductSellerRequest;
 import model.Seller;
+import repository.Pageable;
 import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
@@ -73,6 +74,11 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
     @Override
     public List<ProductSeller> getAll() {
         return allProductSellers;
+    }
+
+    @Override
+    public List<ProductSeller> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override
