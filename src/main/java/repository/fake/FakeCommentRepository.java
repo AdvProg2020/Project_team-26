@@ -3,6 +3,7 @@ package repository.fake;
 import model.Comment;
 import model.Customer;
 import repository.CommentRepository;
+import repository.Pageable;
 import repository.RepositoryContainer;
 
 import java.util.ArrayList;
@@ -30,6 +31,11 @@ public class FakeCommentRepository implements CommentRepository {
     @Override
     public List<Comment> getAll() {
         return allComments;
+    }
+
+    @Override
+    public List<Comment> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override

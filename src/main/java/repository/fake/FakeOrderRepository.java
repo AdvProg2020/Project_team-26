@@ -5,6 +5,7 @@ import model.Customer;
 import model.Order;
 import model.Seller;
 import repository.OrderRepository;
+import repository.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +38,11 @@ public class FakeOrderRepository implements OrderRepository {
     @Override
     public List<Order> getAll() {
         return allOrders;
+    }
+
+    @Override
+    public List<Order> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override

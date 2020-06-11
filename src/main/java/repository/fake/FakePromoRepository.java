@@ -4,6 +4,7 @@ import exception.NoObjectIdException;
 import model.Customer;
 import model.Promo;
 import model.User;
+import repository.Pageable;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
@@ -42,6 +43,11 @@ public class FakePromoRepository implements PromoRepository {
     @Override
     public List<Promo> getAll() {
         return allPromos;
+    }
+
+    @Override
+    public List<Promo> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override

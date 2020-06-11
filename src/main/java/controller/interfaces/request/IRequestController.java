@@ -6,6 +6,7 @@ import exception.NotLoggedINException;
 import model.OffRequest;
 import model.ProductRequest;
 import model.ProductSellerRequest;
+import model.Request;
 
 import java.util.List;
 
@@ -23,8 +24,6 @@ public interface IRequestController {
     public List<ProductRequest> getAllProductRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
     public List<OffRequest> getAllOffRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
     public List<ProductSellerRequest> getAllProductSellerRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
-    public List<ProductRequest> getAllProductRequests(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
-    public List<OffRequest> getAllOffRequests(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
-    public List<ProductSellerRequest> getAllProductSellerRequests(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException;
+    public List<Request> getAllRequests(String sortField,boolean isAscending,int startIndex,int endIndex,String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
 
 }

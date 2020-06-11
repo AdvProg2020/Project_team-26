@@ -6,6 +6,7 @@ import model.OffItem;
 import model.OffRequest;
 import model.Product;
 import repository.OffRepository;
+import repository.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +71,11 @@ public class FakeOffRepository implements OffRepository {
     @Override
     public List<Off> getAll() {
         return allOffs;
+    }
+
+    @Override
+    public List<Off> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override
