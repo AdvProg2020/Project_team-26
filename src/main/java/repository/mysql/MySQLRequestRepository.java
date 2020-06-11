@@ -155,7 +155,7 @@ public class MySQLRequestRepository
     }
 
     @Override
-    public List<Request> getAllPending(int from, int count) {
+    public List<Request> getAllPending(Pageable pageable) {
         EntityManager em = EntityManagerProvider.getEntityManager();
 
         try {
@@ -165,12 +165,7 @@ public class MySQLRequestRepository
 
             cq.select(root);
             cq.where(cb.equal(root.get("requestStatus"), RequestStatus.PENDING));
-            TypedQuery<Request> typedQuery = em.createQuery(cq);
-
-            if(count != 0) {
-                typedQuery.setFirstResult(from);
-                typedQuery.setMaxResults(count);
-            }
+            TypedQuery<Request> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
             return typedQuery.getResultList();
         } catch (NoResultException e) {
             return new ArrayList<>();

@@ -10,5 +10,5 @@ public interface RequestRepository extends Repository<Request> {
 
     void reject(int id);
 
-    List<Request> getAllPending(Pageable pageable); //todo
+    List<Request> getAllPending(Pageable pageable);
 }
