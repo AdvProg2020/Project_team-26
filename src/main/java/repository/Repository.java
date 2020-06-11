@@ -7,11 +7,19 @@ import java.util.Map;
 
 public interface Repository<T> {
 
-    public List<T> getAll();
-    public T getById(int id);
-    public void save(T object);
-    public void delete(int id) throws NoObjectIdException;
-    public void delete(T object) throws NoObjectIdException;
-    public boolean exist(int id);
-    public List<T> getAllSorted(String sortField,boolean isAscending);
+    List<T> getAll();
+
+    List<T> getAll(Pageable pageable);
+
+    T getById(int id);
+
+    void save(T object);
+
+    void delete(int id) throws NoObjectIdException;
+
+    void delete(T object) throws NoObjectIdException;
+
+    boolean exist(int id);
+
+    List<T> getAllSorted(String sortField, boolean isAscending);
 }

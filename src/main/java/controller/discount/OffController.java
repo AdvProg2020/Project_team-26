@@ -3,10 +3,7 @@ package controller.discount;
 import controller.interfaces.discount.IOffController;
 import exception.*;
 import model.*;
-import repository.OffRepository;
-import repository.ProductRepository;
-import repository.ProductSellerRepository;
-import repository.RepositoryContainer;
+import repository.*;
 
 import java.util.List;
 import java.util.Map;
@@ -128,13 +125,35 @@ public class OffController implements IOffController {
 
     @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
-        return productRepository.getAllSortedAndFilteredInOff(filter, sortFiled, isAscending);
+        Pageable page = createAPage(sortFiled,isAscending,0,0);
+        return productRepository.getAllSortedAndFilteredInOff(filter, page);
+    }
+
+    @Override
+    public List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, String token) {
+        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        return productRepository.getAllSortedAndFiltered(filter,page);
     }
 
     @Override
     public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAcsending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller");
-        return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs();
+        return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs(new Pageable());
+    }
+
+    @Override
+    public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        checkAccessOfUser(token, "only seller");
+        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs(page);
+    }
+
+    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
+        if(isAscending) {
+            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
+        } else {
+            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
+        }
     }
 
 
@@ -148,7 +167,7 @@ public class OffController implements IOffController {
         checkAccessOfUser(token, "only seller");
         Off off = getOffByIdWithCheck(id);
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
-        if (!seller.getAllOffs().contains(off))
+        if (!seller.getAllOffs(new Pageable()).contains(off))
             throw new NoAccessException("you can only change your off");
         offRepository.addRequest(off);
     }

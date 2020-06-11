@@ -1,6 +1,7 @@
 package repository.mysql;
 
 import model.*;
+import repository.Pageable;
 import repository.ProductRepository;
 import repository.RequestRepository;
 import repository.mysql.utils.EntityManagerProvider;
@@ -49,11 +50,11 @@ public class MySQLProductRepository
     public void addRequest(Product product, User requestedBy) {
         product.setStatus(Status.DEACTIVE);
         Request request = new Request(requestedBy, new Date(), RequestType.ADD, RequestStatus.PENDING);
-        request.setProduct(product);
         if(product.getSellerList().size() > 0) {
             request.setProductSeller(product.getSellerList().get(0));
             product.getSellerList().forEach(productSeller -> productSeller.setStatus(Status.DEACTIVE));
         }
+        request.setProduct(product);
         requestRepository.save(request);
     }
 
@@ -203,12 +204,7 @@ public class MySQLProductRepository
     //*****************************
 
     @Override
-    public List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, String fieldName, boolean isAscending, int id) {
-        return null;
-    }
-
-    @Override
-    public List<Product> getAllSortedAndFiltered(Map<String, String> filter, String sortField, boolean isAscending) {
+    public List<Product> getAllSortedAndFiltered(Map<String, String> filter, Pageable pageable) {
         EntityManager em = EntityManagerProvider.getEntityManager();
 
         try {
@@ -216,12 +212,11 @@ public class MySQLProductRepository
             CriteriaQuery<Product> cq = cb.createQuery(Product.class);
             Root<Product> root = cq.from(Product.class);
 
-            applySort(sortField, isAscending, cb, cq, root);
             cq.select(root);
 
             applyFilter(filter, cb, cq, root);
 
-            TypedQuery<Product> typedQuery = em.createQuery(cq);
+            TypedQuery<Product> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
 
             return typedQuery.getResultList();
         } catch (NoResultException e) {
@@ -230,12 +225,27 @@ public class MySQLProductRepository
     }
 
     @Override
-    public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, String sortField, boolean isAscending) {
-        List<Product> allProducts = getAllSortedAndFiltered(filter, sortField, isAscending);// TODO: define properly
+    public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, Pageable pageable) {
+        List<Product> allProducts = getAllSortedAndFiltered(filter, pageable);// TODO: define properly
         List<Product> result = new ArrayList<>();
         for (Product product : allProducts) {
             for (ProductSeller productSeller : product.getSellerList()) {
                 if(productSeller.getPriceInOff() < productSeller.getPrice()) {
+                    result.add(product);
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
+    @Override
+    public List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, Pageable pageable, int sellerId) {
+        List<Product> allProducts = getAllSortedAndFiltered(filter, pageable);// TODO: define properly
+        List<Product> result = new ArrayList<>();
+        for (Product product : allProducts) {
+            for (ProductSeller productSeller : product.getSellerList()) {
+                if(productSeller.getSeller().getId() == sellerId) {
                     result.add(product);
                     break;
                 }
