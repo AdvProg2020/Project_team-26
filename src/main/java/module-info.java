@@ -6,9 +6,7 @@ module Project {
     requires java.persistence;
     requires org.hibernate.orm.core;
     requires java.rmi;
-    requires controlsfx;
+    requires org.controlsfx.controls;
     opens view;
     opens view.gui;
-
-
 }

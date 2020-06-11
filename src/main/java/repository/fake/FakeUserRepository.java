@@ -2,6 +2,7 @@ package repository.fake;
 
 import controller.account.Account;
 import model.*;
+import repository.Pageable;
 import repository.UserRepository;
 
 import java.util.ArrayList;
@@ -77,6 +78,11 @@ public class FakeUserRepository implements UserRepository {
     @Override
     public List<User> getAll() {
         return allUsers;
+    }
+
+    @Override
+    public List<User> getAll(Pageable pageable) {
+        return null;
     }
 
     @Override

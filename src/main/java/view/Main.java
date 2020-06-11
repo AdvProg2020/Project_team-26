@@ -16,7 +16,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         windowOfApp = primaryStage;
         windowOfApp.setResizable(false);
-        scene = new Scene(loadFXML("mainMenu"));
+        scene = new Scene(loadFXML("menu"));
         windowOfApp.setScene(scene);
         windowOfApp.setOnCloseRequest(e -> {
             windowOfApp.close();

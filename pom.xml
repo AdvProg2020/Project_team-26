@@ -44,11 +44,11 @@
             <version>14</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate</groupId>-->
-<!--            <artifactId>hibernate-entitymanager</artifactId>-->
-<!--            <version>5.4.8.Final</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.hibernate</groupId>-->
+        <!--            <artifactId>hibernate-entitymanager</artifactId>-->
+        <!--            <version>5.4.8.Final</version>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -63,7 +63,7 @@
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
-            <version>15-ea+5</version>
+            <version>14</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
         <dependency>
@@ -71,13 +71,6 @@
             <artifactId>controlsfx</artifactId>
             <version>11.0.1</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.controlsfx/controlsfx -->
-        <dependency>
-            <groupId>org.controlsfx</groupId>
-            <artifactId>controlsfx</artifactId>
-            <version>8.40.14</version>
-        </dependency>
-
     </dependencies>
 
 </project>
