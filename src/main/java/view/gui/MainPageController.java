@@ -1,7 +1,6 @@
 package view.gui;
 
 import controller.interfaces.category.ICategoryController;
-import exception.InvalidIdException;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -9,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import model.Category;
-import view.terminal.ViewManager;
+import view.cli.ViewManager;
 
 public class MainPageController {
     private ICategoryController categoryController;

@@ -6,11 +6,11 @@ import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.terminal.ControllerContainer;
-import view.terminal.InputOutput;
-import view.terminal.ViewManager;
-import view.terminal.main.AuthenticationValidCommands;
-import view.terminal.main.AuthenticationView;
+import view.cli.ControllerContainer;
+import view.cli.InputOutput;
+import view.cli.ViewManager;
+import view.cli.main.AuthenticationValidCommands;
+import view.cli.main.AuthenticationView;
 
 import java.util.regex.Pattern;
 
