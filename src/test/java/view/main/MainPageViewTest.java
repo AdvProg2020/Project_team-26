@@ -6,9 +6,10 @@ import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.ControllerContainer;
-import view.InputOutput;
-import view.ViewManager;
+import view.terminal.ControllerContainer;
+import view.terminal.InputOutput;
+import view.terminal.ViewManager;
+import view.terminal.main.MainPageView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,14 +18,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MainPageViewTest {
     ViewManager manager;
-    view.main.MainPageView mainPageView;
+    MainPageView mainPageView;
 
     @BeforeEach
     void setUp() {
         RepositoryContainer repositoryContainer = new RepositoryContainer();
         ControllerContainer controllerContainer =  new ControllerContainer(repositoryContainer);
         manager = new ViewManager(controllerContainer);
-        mainPageView = new view.main.MainPageView(manager);
+        mainPageView = new MainPageView(manager);
         Session.initializeFake((UserRepository) (new RepositoryContainer()).getRepository("UserRepository"));
     }
 
