@@ -224,6 +224,6 @@
       </HBox>
    </center>
    <left>
-      <VBox prefHeight="651.0" prefWidth="47.0" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="651.0" prefWidth="10.0" BorderPane.alignment="CENTER" />
    </left>
 </BorderPane>
