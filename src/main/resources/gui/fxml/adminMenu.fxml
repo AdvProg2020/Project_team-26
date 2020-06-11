@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <VBox prefHeight="699.0" prefWidth="124.0" BorderPane.alignment="CENTER">
@@ -72,12 +71,12 @@
             <HBox prefHeight="269.0" prefWidth="1156.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fitHeight="324.0" fitWidth="310.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../../../../../Desktop/download.png" />
-                     </image>
                      <HBox.margin>
                         <Insets left="20.0" top="5.0" />
                      </HBox.margin>
+                     <image>
+                        <Image url="@../pic/AdminProfilePicture.png" />
+                     </image>
                   </ImageView>
                   <HBox alignment="TOP_RIGHT" prefHeight="412.0" prefWidth="826.0">
                      <children>
