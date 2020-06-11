@@ -31,6 +31,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @Lob
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<ProductSeller> sellerList;
 
@@ -95,6 +99,10 @@ public class Product {
         return description;
     }
 
+    public byte[] getImage() {
+        return image;
+    }
+
     public Double getAverageRate() {
         return averageRate;
     }
@@ -125,6 +133,10 @@ public class Product {
 
     public void setAverageRate(double averageRate) {
         this.averageRate = averageRate;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public void addSeller(ProductSeller productSeller) {
