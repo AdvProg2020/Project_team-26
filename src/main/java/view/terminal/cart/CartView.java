@@ -10,7 +10,6 @@ import view.terminal.ViewManager;
 import view.terminal.offs.AllOffView;
 import view.terminal.products.all.AllProductView;
 
-import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;

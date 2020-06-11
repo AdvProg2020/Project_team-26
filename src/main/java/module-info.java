@@ -5,6 +5,5 @@ open module Project {
     requires javafx.graphics;
     requires java.persistence;
     requires org.hibernate.orm.core;
-    requires java.rmi;
     requires org.controlsfx.controls;
 }

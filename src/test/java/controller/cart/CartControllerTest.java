@@ -74,7 +74,7 @@ public class CartControllerTest {
     }
 
     @Test
-    public void addOrChangeProduct() throws InvalidIdException, NotEnoughProductsException, InvalidTokenException, NoSuchObjectException {
+    public void addOrChangeProduct() throws InvalidIdException, NotEnoughProductsException, InvalidTokenException, NoSuchObjectException, exception.NoSuchObjectException {
         /** Exception Tests **/
 
         Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> cartController.addOrChangeProduct(
