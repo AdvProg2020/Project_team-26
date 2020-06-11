@@ -14,11 +14,13 @@ public class RequestController implements IRequestController {
     private OffRepository offRepository;
     private ProductSellerRepository productSellerRepository;
     private ProductRepository productRepository;
+    private RequestRepository requestRepository;
 
     public RequestController(RepositoryContainer repositoryContainer){
         this.offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
         this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
+        this.requestRepository = (RequestRepository) repositoryContainer.getRepository("RequestRepository");
     }
 
 
@@ -30,7 +32,7 @@ public class RequestController implements IRequestController {
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            offRepository.acceptRequest(requestId);
+            requestRepository.accept(requestId);
         }
 
     }
@@ -43,7 +45,7 @@ public class RequestController implements IRequestController {
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            offRepository.rejectRequest(requestId);
+            requestRepository.reject(requestId);
         }
     }
 
@@ -55,7 +57,7 @@ public class RequestController implements IRequestController {
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            productRepository.acceptRequest(requestId);
+            requestRepository.accept(requestId);
         }
     }
 
@@ -67,7 +69,7 @@ public class RequestController implements IRequestController {
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            productRepository.rejectRequest(requestId);
+            requestRepository.reject(requestId);
         }
     }
 
@@ -79,7 +81,7 @@ public class RequestController implements IRequestController {
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            productSellerRepository.acceptRequest(requestId);
+            requestRepository.accept(requestId);
         }
     }
 
@@ -91,7 +93,7 @@ public class RequestController implements IRequestController {
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            productSellerRepository.rejectRequest(requestId);
+            requestRepository.reject(requestId);
         }
     }
 
@@ -133,32 +135,42 @@ public class RequestController implements IRequestController {
 
     @Override
     public List<ProductRequest> getAllProductRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,0,0);
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            return productRepository.getAllRequests(page);
+            return productRepository.getAllRequests(sortField,isAscending);
         }
     }
 
     @Override
     public List<OffRequest> getAllOffRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,0,0);
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            return offRepository.getAllRequests(page);
+            return offRepository.getAllRequests(sortField,isAscending);
         }
     }
 
     @Override
     public List<ProductSellerRequest> getAllProductSellerRequests(String sortField, boolean isAscending, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
+            throw new NotLoggedINException("You are not logged in");
+        } else if (user.getRole() != Role.ADMIN) {
+            throw new NoAccessException("You must be an Admin to do this.");
+        } else {
+            return productSellerRepository.getAllRequests(sortField, isAscending);
+        }
+    }
+
+    @Override
+    public List<Request> getAllRequests(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
         Pageable page = createAPage(sortField,isAscending,0,0);
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
@@ -166,48 +178,10 @@ public class RequestController implements IRequestController {
         } else if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You must be an Admin to do this.");
         } else {
-            return productSellerRepository.getAllRequests(page);
+            return requestRepository.getAllPending(page);
         }
     }
 
-    @Override
-    public List<ProductRequest> getAllProductRequests(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            return productRepository.getAllRequests(page);
-        }
-    }
-
-    @Override
-    public List<OffRequest> getAllOffRequests(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            return offRepository.getAllRequests(page);
-        }
-    }
-
-    @Override
-    public List<ProductSellerRequest> getAllProductSellerRequests(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            return productSellerRepository.getAllRequests(page);
-        }
-    }
 
     private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
         if(isAscending) {
