@@ -17,6 +17,9 @@ public class Comment {
     @Column(name = "text", nullable = false)
     private String text;
 
+    // TODO
+    private boolean hasBought;
+
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
@@ -33,34 +36,66 @@ public class Comment {
 
     }
 
-    public String getText() {
-        return text;
+    public Comment(Customer customer, Product product, String text, String title) {
+        this.customer = customer;
+        this.product = product;
+        this.text = text;
+        this.title = title;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public Comment(int id) {
-        this.id = id;
+    public int getId() {
+        return id;
     }
 
     public void setId(int id) {
         this.id = id;
     }
 
-    public int getId() {
-        return this.id;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getText() {
+        return text;
     }
 
     public void setText(String text) {
         this.text = text;
     }
 
-    public Comment(Customer customer, Product product, String text, String title) {
+    public boolean hasBought() {
+        return hasBought;
+    }
+
+    public void setHasBought(boolean hasBought) {
+        this.hasBought = hasBought;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
         this.product = product;
-        this.text = text;
-        this.title = title;
+    }
+
+    public CommentState getState() {
+        return state;
+    }
+
+    public void setState(CommentState state) {
+        this.state = state;
     }
 }

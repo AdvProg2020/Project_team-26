@@ -3,9 +3,9 @@ package view;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import repository.RepositoryContainer;
-import view.terminal.ControllerContainer;
+import view.cli.ControllerContainer;
 
-import static view.terminal.ControllerContainer.Controller.*;
+import static view.cli.ControllerContainer.Controller.*;
 
 public class CortollerContainerTest {
     @Test

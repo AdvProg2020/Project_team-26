@@ -6,10 +6,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.RepositoryContainer;
 import repository.UserRepository;
-import view.terminal.ControllerContainer;
-import view.terminal.InputOutput;
-import view.terminal.ViewManager;
-import view.terminal.main.MainPageView;
+import view.cli.ControllerContainer;
+import view.cli.InputOutput;
+import view.cli.ViewManager;
+import view.cli.main.MainPageView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

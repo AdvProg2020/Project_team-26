@@ -6,10 +6,10 @@ import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import view.terminal.ControllerContainer;
-import view.terminal.InputOutput;
-import view.terminal.ViewManager;
-import view.terminal.main.MainPageView;
+import view.cli.ControllerContainer;
+import view.cli.InputOutput;
+import view.cli.ViewManager;
+import view.cli.main.MainPageView;
 
 import java.util.ArrayList;
 import java.util.List;
