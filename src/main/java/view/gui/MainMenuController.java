@@ -58,18 +58,20 @@ public class MainMenuController {
     private Label chooseBackgroundLabel;
     @FXML
     private Pane priceRangePane;
+    private RangeSlider priceSlider;
+
     @FXML
     public void initialize() {
-        /*   priceSlider = new RangeSlider(0, 10000, 0, 10000);
-         *//* priceSlider.setLowValue(0.0);
+      /*  priceSlider = new RangeSlider(0, 10000, 0, 10000);
+        priceSlider.setLowValue(0.0);
         priceSlider.setHighValue(10000);
         priceSlider.setMin(0);
-        priceSlider.setMax(10000);*//*
+        priceSlider.setMax(10000);
         priceSlider.setShowTickLabels(true);
         priceSlider.setShowTickMarks(true);
         priceSlider.setMajorTickUnit(25);
         priceSlider.setBlockIncrement(10);
-        rangeSliderPane.getChildren().addAll(priceSlider);*/
+        priceRangePane.getChildren().addAll(priceSlider);*/
         productSortComboBox.setPromptText("sorting products");
         offSortCombowBox.setPromptText("sorting offs");
         System.out.println("second");

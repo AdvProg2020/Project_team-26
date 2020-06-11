@@ -33,7 +33,7 @@ public class Main extends Application {
     }
 
     private  Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/" + fxml + ".fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/" + fxml + ".fxml"));
         return fxmlLoader.load();
     }
 
