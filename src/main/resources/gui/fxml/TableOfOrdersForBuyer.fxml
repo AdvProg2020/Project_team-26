@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TableView prefHeight="333.0" prefWidth="568.0">
+    <columns>
+        <TableColumn prefWidth="125.99995422363281" text="Buyer" />
+        <TableColumn prefWidth="134.66664123535156" text="Date" />
+        <TableColumn minWidth="6.0" prefWidth="102.0" text="price" />
+        <TableColumn prefWidth="247.33333333333337" text="Address" />
+    </columns>
+</TableView>
