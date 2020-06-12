@@ -31,7 +31,7 @@ public class AuthenticationController implements IAuthenticationController {
         if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
             /*Random r = new Random();
             if (r.nextInt(100) < 60)*/
-                creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
+            creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
         }
     }
 
@@ -51,8 +51,9 @@ public class AuthenticationController implements IAuthenticationController {
         try {
             endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
             promo.setEndDate(endDate);
-            promo.setPromoCode("randomForLogin" + year + token);
-            promoRepository.save(promo);
+            promo.setPromoCode(customer.getUsername() + new Date().getTime());
+            if (promoRepository.getByCode(promo.getPromoCode()) == null)
+                promoRepository.save(promo);
         } catch (ParseException e) {
         }
     }
