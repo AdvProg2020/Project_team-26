@@ -25,7 +25,7 @@ public class RatingControllerTest {
 
     @BeforeEach
     public void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
         ratingController = new RatingController(repositoryContainer);
