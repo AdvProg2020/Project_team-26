@@ -30,6 +30,7 @@ public class MySQLProductSellerRepository
     public void addRequest(ProductSeller productSeller) {
         productSeller.setStatus(Status.DEACTIVE);
         Request request = new Request(productSeller.getSeller(), new Date(), RequestType.ADD, RequestStatus.PENDING);
+        save(productSeller);
         request.setProductSeller(productSeller);
         requestRepository.save(request);
     }

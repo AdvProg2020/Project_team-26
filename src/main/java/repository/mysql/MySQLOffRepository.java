@@ -33,6 +33,7 @@ public class MySQLOffRepository
     public void addRequest(Off off) {
         off.setStatus(Status.DEACTIVE);
         Request request = new Request(off.getSeller(), new Date(), RequestType.ADD, RequestStatus.PENDING);
+        save(off);
         request.setOff(off);
         requestRepository.save(request);
     }

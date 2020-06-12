@@ -28,19 +28,19 @@ public class Request {
     @Column(name = "request_status")
     private RequestStatus requestStatus;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "product_seller_id")
     private ProductSeller productSeller;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "off_id")
     private Off off;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "off_details_id")
     private OffItem offItem;
 
