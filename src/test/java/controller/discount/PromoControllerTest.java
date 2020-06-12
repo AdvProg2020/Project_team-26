@@ -83,9 +83,9 @@ public class PromoControllerTest {
         Assertions.assertEquals(ex.getMessage(), "there is no promo by 1200");
         /** Exception Tests **/
 
-        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2024a4").getPromoCode(), "randomForLogin2024a4");
-        promoController.removePromoCode(95, token);
-        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2024a4"), null);
+        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2023a9").getPromoCode(), "randomForLogin2023a9");
+        promoController.removePromoCode(promoRepository.getByCode("randomForLogin2023a9").getId(), token);
+        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2023a9"), null);
     }
 
 
@@ -93,9 +93,11 @@ public class PromoControllerTest {
     public void createPromoTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, ObjectAlreadyExistException, NoAccessException, NotLoggedINException {
 
         /**Exception Tests **/
-        authenticationController.login("test1", "password1", token);
-        Promo promo = new Promo("Promo0", null);
+        authenticationController.login("aria", "aria", token);
+        Promo promo = new Promo("randomForLogin2026a3", null);
         Promo promo2 = new Promo("Promo200", null);
+        promo2.setStartDate(new Date(105,9,12));
+        promo2.setEndDate(new Date(121,5,6));
         Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> promoController.createPromoCode(promo, token));
         /**Exception Tests **/
 
