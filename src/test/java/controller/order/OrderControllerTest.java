@@ -26,7 +26,7 @@ public class OrderControllerTest  {
 
     @BeforeEach
     public void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
         cartController = new CartController(repositoryContainer);
@@ -59,7 +59,7 @@ public class OrderControllerTest  {
     @Test
     public void getOrdersWithFiltersTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotLoggedINException {
 
-        authenticationController.login("test8","password8",token);
+        authenticationController.login("test8","test8",token);
         Assertions.assertEquals(orderController.getOrdersWithFilter("sd",true,token),null);
     }
 }
