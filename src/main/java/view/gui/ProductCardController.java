@@ -26,4 +26,8 @@ public class ProductCardController {
             descriptionText.setText(product.getDescription());
         }
     }
+
+    public void open() {
+        //Constants.manager.openPage();
+    }
 }

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="180.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.ProductCardController">
+<VBox alignment="TOP_CENTER" onMouseClicked="#open" prefHeight="360.0" prefWidth="180.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.ProductCardController">
     <children>
         <ImageView fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
             <image>
@@ -27,7 +27,7 @@
             <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
             <Text fx:id="brandText" layoutX="79.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brand" />
             <Text fx:id="priceText" layoutX="10.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
-            <Text fx:id="descriptionText" layoutX="79.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Short description" wrappingWidth="160.0" />
+            <Text fx:id="descriptionText" layoutX="79.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Short description Short description Short description Short description Short description" wrappingWidth="160.0" />
          </children>
          <padding>
             <Insets top="10.0" />
