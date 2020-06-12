@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.*;
 
+import java.util.ArrayList;
+
 public class OrderControllerTest  {
 
     private RepositoryContainer repositoryContainer;
@@ -45,21 +47,22 @@ public class OrderControllerTest  {
     @Test
     public void getASingleOrderTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NoObjectIdException {
 
-        authenticationController.login("test8","password8",token);
-        orderController.getASingleOrder(1,token);
+        authenticationController.login("test5","test5",token);
+        Exception ex = Assertions.assertThrows(NoObjectIdException.class, () -> orderController.getASingleOrder(1,token));
+        Assertions.assertEquals(ex.getMessage(),"Object does not exist.");
     }
 
     @Test
     public void getOrdersTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException {
 
-        authenticationController.login("test8","password8",token);
+        authenticationController.login("test5","test5",token);
         orderController.getOrders(token);
     }
 
     @Test
     public void getOrdersWithFiltersTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotLoggedINException {
 
-        authenticationController.login("test8","test8",token);
-        Assertions.assertEquals(orderController.getOrdersWithFilter("sd",true,token),null);
+        authenticationController.login("test5","test5",token);
+        Assertions.assertEquals(orderController.getOrdersWithFilter(null,true,token),new ArrayList<>());
     }
 }
