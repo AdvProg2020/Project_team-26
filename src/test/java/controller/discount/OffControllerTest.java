@@ -65,13 +65,13 @@ public class OffControllerTest {
     public void addProductToOffTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, ObjectAlreadyExistException, NoAccessException, NotLoggedINException, InvalidIdException {
 
         /**Exception Tests **/
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("test2","test2",token);
         Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> offController.addProductToOff(
                 offRepository.getById(2),200,300,20,token));
         Assertions.assertEquals(ex.getMessage(),"No Such product Exists");
         /** Exception Tests **/
 
-        offController.addProductToOff(offRepository.getById(2),2,300,20,token);
+        offController.addProductToOff(offRepository.getById(2),11,300,20,token);
     }
 
 
@@ -90,7 +90,7 @@ public class OffControllerTest {
     public void editTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
 
         authenticationController.login("test4","test4",token);
-        Exception ex = Assertions.assertThrows(NoAccessException.class,() ->offController.edit(new Off("sd"),5,token));
+        Exception ex = Assertions.assertThrows(NoAccessException.class,() ->offController.edit(new Off("sd"),2,token));
         Assertions.assertEquals(ex.getMessage(),"you can only change your off");
 
     }

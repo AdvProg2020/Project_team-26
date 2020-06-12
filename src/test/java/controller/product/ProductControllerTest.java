@@ -65,22 +65,20 @@ class ProductControllerTest {
         Assertions.assertEquals(ex.getMessage(),"You can only change your own products");
         authenticationController.logout(token);
         authenticationController.login("test1","test1",token);
-        productController.editProduct(7,new Product(),token);
+        productController.editProduct(7,productRepository.getById(10),token);
     }
 
     @Test
     public void addSellerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotSellerException, NotLoggedINException {
 
-        authenticationController.login("test5","password5",token);
-        System.out.println(productSellerRepository.getById(7));
-        productController.addSeller(2,productSellerRepository.getById(2),token);
+        authenticationController.login("test1","test1",token);
+        productController.addSeller(2,productSellerRepository.getById(4),token);
         authenticationController.logout(token);
     }
 
     @Test
     public void getProductByNameTest() {
-
-        Exception ex = Assertions.assertThrows(NullPointerException.class, () -> productController.getProductByName("nigga",token));
+        Exception ex = Assertions.assertThrows(NoObjectIdException.class, () -> productController.getProductByName("nigga",token));
     }
 
 

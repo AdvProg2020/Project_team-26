@@ -23,7 +23,7 @@ public class CommentControllerTest {
 
     @BeforeEach
     public void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         token = Session.addSession();
         authenticationController = new AuthenticationController(repositoryContainer);
         commentController = new CommentController(repositoryContainer);

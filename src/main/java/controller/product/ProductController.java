@@ -41,7 +41,6 @@ public class ProductController implements IProductController {
         if (productSeller == null)
             throw new NullPointerException();
         User user = Session.getSession(token).getLoggedInUser();
-        System.out.println(user);
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to add seller");
         if (!productSeller.getSeller().equals(user))
