@@ -282,6 +282,7 @@ public class MySQLProductRepository
                     break;
             }
         }
+        cq.where(predicate);
         return cq;
     }
 
