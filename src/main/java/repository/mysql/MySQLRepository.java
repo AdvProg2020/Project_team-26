@@ -68,9 +68,9 @@ public abstract class MySQLRepository<T> implements Repository<T> {
         try {
             et = em.getTransaction();
             et.begin();
-            if (getId(object) == 0)
-                em.persist(object);
-            else
+//            if (getId(object) == 0)
+//                em.persist(object);
+//            else
                 em.merge(object);
             et.commit();
         } catch (Exception e) {

@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "comment")
+@SecondaryTable(name = "comment_product_bought", pkJoinColumns = @PrimaryKeyJoinColumn(name = "comment_id"))
 public class Comment {
 
     @Id
@@ -17,8 +18,8 @@ public class Comment {
     @Column(name = "text", nullable = false)
     private String text;
 
-    // TODO
-    private boolean hasBought;
+    @Column(name = "has_bought", table = "comment_product_bought", insertable = false, updatable = false)
+    private Boolean hasBought;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", nullable = false)
@@ -68,11 +69,10 @@ public class Comment {
     }
 
     public boolean hasBought() {
+        if(hasBought == null) {
+            return false;
+        }
         return hasBought;
-    }
-
-    public void setHasBought(boolean hasBought) {
-        this.hasBought = hasBought;
     }
 
     public Customer getCustomer() {
