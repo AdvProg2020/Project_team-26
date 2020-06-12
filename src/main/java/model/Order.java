@@ -1,12 +1,14 @@
 package model;
 
+import org.hibernate.annotations.Fetch;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
+@Table(name = "`order`")
 public class Order {
 
     @Id

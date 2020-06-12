@@ -167,8 +167,8 @@ public class MySQLProductSellerRepository
             Root<ProductSeller> root = cq.from(ProductSeller.class);
 
             cq.select(root);
-            cq.where(cb.equal(root.get("product_id"), productId));
-            cq.where(cb.equal(root.get("seller_id"), sellerId));
+            cq.where(cb.equal(root.get("product"), productId));
+            cq.where(cb.equal(root.get("seller"), sellerId));
             TypedQuery<ProductSeller> typedQuery = em.createQuery(cq);
 
             return typedQuery.getSingleResult();

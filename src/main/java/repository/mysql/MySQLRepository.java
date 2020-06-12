@@ -99,10 +99,17 @@ public abstract class MySQLRepository<T> implements Repository<T> {
     @Override
     public void delete(T object) {
         EntityManager em = EntityManagerProvider.getEntityManager();
+        EntityTransaction et = null;
         try {
+            et = em.getTransaction();
+            et.begin();
             em.remove(object);
+            et.commit();
         } catch (Exception e) {
             System.err.println(e.getMessage());
+            if (et != null) {
+                et.rollback();
+            }
             e.printStackTrace();
         }
     }
