@@ -68,7 +68,7 @@ public class OffControllerTest {
         authenticationController.login("test4","test4",token);
         Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> offController.addProductToOff(
                 offRepository.getById(2),200,300,20,token));
-        Assertions.assertEquals(ex.getMessage(),"no product exist");
+        Assertions.assertEquals(ex.getMessage(),"No Such product Exists");
         /** Exception Tests **/
 
         offController.addProductToOff(offRepository.getById(2),2,300,20,token);
