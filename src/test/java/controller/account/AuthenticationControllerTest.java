@@ -48,8 +48,8 @@ public class AuthenticationControllerTest {
         Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
         /**End of Exception Tests**/
 
-        authenticationController.register(new Account("Arya","1234",Role.SELLER,"h@yahoo.com"),token);
-        Assertions.assertEquals("Arya",userRepository.getUserByUsername("Arya").getUsername());
+        authenticationController.register(new Account("Arya200","1234",Role.SELLER,"h200@yahoo.com"),token);
+        Assertions.assertEquals("Arya200",userRepository.getUserByUsername("Arya200").getUsername());
         authenticationController.register(new Account("Tataloo","124",Role.CUSTOMER,"h2@yahoo.com"),token);
         Assertions.assertEquals("Tataloo",userRepository.getUserByUsername("Tataloo").getUsername());
 

@@ -28,7 +28,7 @@ public class MySQLPromoRepository
             CriteriaQuery<Promo> cq = cb.createQuery(Promo.class);
             Root<Promo> root = cq.from(Promo.class);
 
-            cq.select(root).where(cb.equal(root.get("promo_code"), promoCode));
+            cq.select(root).where(cb.equal(root.get("promoCode"), promoCode));
             TypedQuery<Promo> typedQuery = em.createQuery(cq);
 
             return typedQuery.getSingleResult();
