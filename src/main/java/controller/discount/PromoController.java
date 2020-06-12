@@ -104,16 +104,7 @@ public class PromoController implements IPromoController {
         Promo promo = promoRepository.getById(promoCodeId);
         if (promo == null)
             throw new InvalidIdException("there is no promo by " + promoCodeId);
-        removeThePromoFromUsers(promo);
-        promoRepository.delete(promoCodeId);
-    }
-
-    private void removeThePromoFromUsers(Promo promo) {
-        List<Customer> customers = promo.getCustomers();
-        for (Customer customer : customers) {
-            customer.getAvailablePromos().remove(promo);
-            userRepository.save(customer);
-        }
+        promoRepository.delete(promo);
     }
 
     @Override
