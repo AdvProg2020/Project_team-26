@@ -3,6 +3,7 @@ package view.gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.util.Pair;
+import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class Manager {
 
+    private ControllerContainer controllerContainer;
     private String token;
     private boolean isLoggedIn;
     private List<Pair<String, Integer>> pages;
@@ -34,5 +36,29 @@ public class Manager {
 
     private void showNode(Node node) {
         // TODO: show the node in the main scene
+    }
+
+    public ControllerContainer getControllerContainer() {
+        return controllerContainer;
+    }
+
+    public void setControllerContainer(ControllerContainer controllerContainer) {
+        this.controllerContainer = controllerContainer;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 }

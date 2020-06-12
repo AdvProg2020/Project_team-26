@@ -5,6 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import repository.RepositoryContainer;
+import view.cli.ControllerContainer;
+import view.gui.Constants;
 
 import java.io.IOException;
 
@@ -38,6 +41,9 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+        RepositoryContainer repositoryContainer = new RepositoryContainer("sql");
+        ControllerContainer controllerContainer = new ControllerContainer(repositoryContainer);
+        Constants.manager.setControllerContainer(controllerContainer);
         launch(args);
     }
 

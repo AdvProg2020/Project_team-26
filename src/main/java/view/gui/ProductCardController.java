@@ -4,6 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import model.Product;
 
+import java.io.IOException;
+
 public class ProductCardController {
 
     @FXML
@@ -27,7 +29,7 @@ public class ProductCardController {
         }
     }
 
-    public void open() {
-        //Constants.manager.openPage();
+    public void open() throws IOException {
+        Constants.manager.openPage("SingleProduct", product.getId());
     }
 }
