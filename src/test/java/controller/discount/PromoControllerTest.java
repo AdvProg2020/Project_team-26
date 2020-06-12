@@ -63,7 +63,7 @@ public class PromoControllerTest {
         Assertions.assertEquals(ex.getMessage(), "there is no promo by 120");
         /** Exception Tests **/
 
-        Assertions.assertEquals(promoController.getPromoCodeTemplateById(6, token).getPromoCode(), "Promo0");
+        Assertions.assertEquals(promoController.getPromoCodeTemplateById(22, token).getPromoCode(), "randomForLogin2026a1");
     }
 
     @Test
@@ -73,19 +73,19 @@ public class PromoControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> promoController.removePromoCode(12, token));
         Assertions.assertEquals(ex.getMessage(), "You are not logged in.");
 
-        authenticationController.login("test8", "password8", token);
+        authenticationController.login("test5", "test5", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> promoController.removePromoCode(12, token));
         Assertions.assertEquals(ex.getMessage(), "only manager can remove the promo");
         authenticationController.logout(token);
 
-        authenticationController.login("test1", "password1", token);
-        ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removePromoCode(120, token));
-        Assertions.assertEquals(ex.getMessage(), "there is no promo by 120");
+        authenticationController.login("aria", "aria", token);
+        ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removePromoCode(1200, token));
+        Assertions.assertEquals(ex.getMessage(), "there is no promo by 1200");
         /** Exception Tests **/
 
-        Assertions.assertEquals(promoRepository.getByCode("Promo0").getPromoCode(), "Promo0");
-        promoController.removePromoCode(6, token);
-        Assertions.assertEquals(promoRepository.getByCode("Promo0"), null);
+        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2024a4").getPromoCode(), "randomForLogin2024a4");
+        promoController.removePromoCode(95, token);
+        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2024a4"), null);
     }
 
 
@@ -133,9 +133,9 @@ public class PromoControllerTest {
                 "asd", true, token));
         Assertions.assertEquals(ex.getMessage(), "you are not logged in");
 
-        authenticationController.login("aria", "aria", token);
+        authenticationController.login("test4", "test4", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> promoController.getAllPromoCodeForCustomer(
-                "asd", true, token));
+               null , true, token));
         Assertions.assertEquals(ex.getMessage(), "only customer");
         /**Exception Tests**/
 
