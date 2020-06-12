@@ -4,11 +4,18 @@ import controller.interfaces.category.ICategoryController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import model.Category;
+import model.Product;
 import view.cli.ViewManager;
+
+import java.io.IOException;
+import java.util.List;
 
 public class MainPageController {
     private ICategoryController categoryController;
@@ -31,6 +38,8 @@ public class MainPageController {
     private TextField brandTextField;
     @FXML
     private VBox priceVBoxForSlider;
+    @FXML
+    private GridPane mainGrid;
 
     @FXML
     public void initialize() {
@@ -116,6 +125,23 @@ public class MainPageController {
         leave.setExpanded(true);
         for (Category category1 : category.getSubCategory()) {
             loadCategoriesToTree(category1, leave);
+        }
+    }
+
+    private void updateGrid(List<Product> products) throws IOException {
+        mainGrid.getChildren().removeAll();
+        for(int i = 0; i < products.size(); i++) {
+            Product product = products.get(i);
+            int column = ((i + 1) % Constants.productGridColumnCount) - 1;
+            int row = i / Constants.productGridColumnCount;
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductCard.fxml"));
+            ProductCardController productCardController = (ProductCardController) loader.getController();
+            productCardController.load(product);
+
+            Node element = loader.load();
+            mainGrid.setConstraints(element, column, row);
+            mainGrid.getChildren().add(element);
         }
     }
 }
