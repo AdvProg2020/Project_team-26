@@ -67,14 +67,9 @@ public class CartControllerTest {
 
         /** Exception Tests **/
 
-        //authenticationController.login("aria","aria",token);
-        //promoController.addCustomer(22,33,token);
-        //authenticationController.logout(token);
-
-
         authenticationController.login("test5", "test5", token);
         cartController.usePromoCode("randomForLogin2026a1", token);
-        Assertions.assertEquals(cartController.getCart(token).getUsedPromo().getPromoCode(), "randomForLogin2030a1");
+        Assertions.assertEquals(cartController.getCart(token).getUsedPromo().getPromoCode(), "randomForLogin2026a1");
 
     }
 

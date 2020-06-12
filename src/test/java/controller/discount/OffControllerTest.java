@@ -48,14 +48,14 @@ public class OffControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> offController.createNewOff(new Off("pp"),token));
         Assertions.assertEquals(ex.getMessage(),"You must be logged in.");
 
-        authenticationController.login("test1","password1",token);
+        authenticationController.login("aria","aria",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> offController.createNewOff(new Off("pp"),token));
         Assertions.assertEquals(ex.getMessage(),"seller can create a off");
         authenticationController.logout(token);
 
         /**Exception Tests **/
 
-        authenticationController.login("test5","password5",token);
+        authenticationController.login("test4","test4",token);
         offController.createNewOff(new Off("pp"),token);
 
     }
