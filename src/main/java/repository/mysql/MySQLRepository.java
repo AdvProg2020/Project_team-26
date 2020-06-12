@@ -150,9 +150,9 @@ public abstract class MySQLRepository<T> implements Repository<T> {
     protected TypedQuery<T> getPagedQuery(EntityManager em, CriteriaBuilder cb, CriteriaQuery<T> cq, Root<T> root, Pageable pageable) {
         if(pageable != null && pageable.isPaged()) {
             if (pageable.getDirection() == Pageable.Direction.ASCENDING) {
-                cq.orderBy(cb.asc(root.get(pageable.getSortField())));
+                applySort(pageable.getSortField(), true, cb, cq, root);
             } else {
-                cq.orderBy(cb.desc(root.get(pageable.getSortField())));
+                applySort(pageable.getSortField(), false, cb, cq, root);
             }
 
             TypedQuery<T> typedQuery = em.createQuery(cq);
@@ -171,10 +171,14 @@ public abstract class MySQLRepository<T> implements Repository<T> {
     protected void applySort(String sortField, boolean isAscending, CriteriaBuilder cb, CriteriaQuery<T> cq, Root<T> root) {
         if(sortField == null || sortField == "")
             return;
-        if (isAscending) {
-            cq.orderBy(cb.asc(root.get(sortField)));
-        } else {
-            cq.orderBy(cb.desc(root.get(sortField)));
+        try {
+            if (isAscending) {
+                cq.orderBy(cb.asc(root.get(sortField)));
+            } else {
+                cq.orderBy(cb.desc(root.get(sortField)));
+            }
+        } catch (Exception e) {
+            cq.getOrderList().removeIf(order -> true);
         }
     }
 
