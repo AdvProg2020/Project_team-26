@@ -22,7 +22,7 @@ public class Manager {
         pages.add(new Pair<>(pageName, id));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
         InitializableController controller = (InitializableController) loader.getController();
-        controller.initilize(id);
+        controller.initialize(id);
         Node node = loader.load();
         showNode(node);
     }
