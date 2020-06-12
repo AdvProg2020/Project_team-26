@@ -6,4 +6,5 @@ open module Project {
     requires java.persistence;
     requires org.hibernate.orm.core;
     requires org.controlsfx.controls;
+    requires java.naming;
 }
