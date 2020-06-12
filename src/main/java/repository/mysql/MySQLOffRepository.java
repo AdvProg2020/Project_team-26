@@ -26,6 +26,7 @@ public class MySQLOffRepository
 
     public MySQLOffRepository() {
         super(Off.class);
+        requestRepository = (RequestRepository) MySQLRepository.repositoryContainer.getRepository("RequestRepository");
     }
 
     @Override
