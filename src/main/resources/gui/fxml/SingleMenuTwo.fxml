@@ -24,9 +24,9 @@
                <children>
                   <HBox alignment="CENTER" prefHeight="253.0" prefWidth="342.0">
                      <children>
-                        <VBox prefHeight="258.0" prefWidth="342.0">
+                        <VBox prefHeight="239.0" prefWidth="321.0">
                            <children>
-                              <ImageView fitHeight="228.0" fitWidth="351.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../pic/background.jpg" />
                                  </image>
