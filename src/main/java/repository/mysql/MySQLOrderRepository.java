@@ -29,7 +29,7 @@ public class MySQLOrderRepository
             CriteriaQuery<Order> cq = cb.createQuery(Order.class);
             Root<Order> root = cq.from(Order.class);
 
-            cq.select(root).where(cb.equal(root.get("customer_id"), customerId));
+            cq.select(root).where(cb.equal(root.get("customer"), customerId));
             TypedQuery<Order> typedQuery = em.createQuery(cq);
 
             return typedQuery.getResultList();
