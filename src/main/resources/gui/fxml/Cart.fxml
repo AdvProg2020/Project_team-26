@@ -5,9 +5,8 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.CartControllerPage">
    <content>
       <VBox prefHeight="703.0" prefWidth="1278.0">
          <children>
@@ -25,20 +24,16 @@
                               </VBox>
                               <VBox alignment="CENTER" prefHeight="63.0" prefWidth="164.0">
                                  <children>
-                                    <Label prefHeight="41.0" prefWidth="85.0" text="8795797000" />
+                                    <Label fx:id="totalPriceLabel" prefHeight="41.0" prefWidth="85.0" text="8795797000" />
                                  </children>
                               </VBox>
                            </children>
                         </VBox>
-                        <Button mnemonicParsing="false" prefHeight="70.0" prefWidth="104.0" text="purchase" />
+                        <Button fx:id="purchaseButton" mnemonicParsing="false" onAction="#purchaseButtonClicked" prefHeight="70.0" prefWidth="104.0" text="purchase" />
                      </children>
                   </HBox>
                </children></VBox>
-            <Label prefHeight="228.0" prefWidth="1054.0" text="WE WILL ADD FXML FILE OF EVERY PRODUCT IN CART HERE" textAlignment="CENTER">
-               <font>
-                  <Font size="36.0" />
-               </font>
-            </Label>
+            <VBox fx:id="cartProductsVBox" prefHeight="574.0" prefWidth="1278.0" />
          </children>
       </VBox>
    </content>
