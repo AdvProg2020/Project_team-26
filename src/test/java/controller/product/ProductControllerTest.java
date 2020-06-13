@@ -51,7 +51,7 @@ class ProductControllerTest {
     }
 
     @Test
-    public void getProductById() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NotLoggedINException {
+    public void getProductByIdTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NotLoggedINException {
 
         authenticationController.login("aria","aria",token);
         productController.getProductById(1,token);
@@ -79,6 +79,52 @@ class ProductControllerTest {
     @Test
     public void getProductByNameTest() {
         Exception ex = Assertions.assertThrows(NoObjectIdException.class, () -> productController.getProductByName("nigga",token));
+    }
+
+    @Test
+    public void getProductSellerByIdAndSellerIdTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, InvalidIdException, NoObjectIdException, NoAccessException {
+        /** Exception Tests **/
+        Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> productController.getProductSellerByIdAndSellerId(12,token));
+        Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
+
+        authenticationController.login("aria","aria",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> productController.getProductSellerByIdAndSellerId(12,token));
+        Assertions.assertEquals(ex.getMessage(),"You must be a seller to do this.");
+        authenticationController.logout(token);
+
+        authenticationController.login("test4","test4",token);
+        ex = Assertions.assertThrows(NoObjectIdException.class, () -> productController.getProductSellerByIdAndSellerId(102,token));
+        Assertions.assertEquals(ex.getMessage(),"The specified Object does not Exist.");
+
+        ex = Assertions.assertThrows(NoAccessException.class, () -> productController.getProductSellerByIdAndSellerId(12,token));
+        Assertions.assertEquals(ex.getMessage(),"This Product is not for you.");
+        authenticationController.logout(token);
+
+        /** Exception Tests **/
+
+        authenticationController.login("test1","test1",token);
+        Assertions.assertEquals(13,productController.getProductSellerByIdAndSellerId(12,token).getId());
+    }
+
+    @Test
+    public void getAllProductWithFilterForSellerIdTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, NoAccessException {
+        /** Exception Tests **/
+
+        Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> productController.getAllProductWithFilterForSellerId(
+                null,"name",true,token
+        ));
+        Assertions.assertEquals(ex.getMessage(),"You must be logged in to view all of your products");
+
+        authenticationController.login("aria","aria",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> productController.getAllProductWithFilterForSellerId(
+                null,"name",true,token));
+        Assertions.assertEquals(ex.getMessage(),"Only a seller can view his/her products");
+        authenticationController.logout(token);
+        /** Exception Tests **/
+
+        authenticationController.login("test2","test2",token);
+        Assertions.assertNotEquals(null,productController.getAllProductWithFilterForSellerId(
+                null,"name",true,token));
     }
 
 

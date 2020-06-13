@@ -74,7 +74,7 @@ public class OffController implements IOffController {
         } else if (offItem != null) {
             throw new ObjectAlreadyExistException("the product exist in your off list", product);
         } else if (productSeller == null) {
-            throw new NoAccessException("the product you have choose you are not its seller");
+            throw new NoAccessException("you are not the seller of the product you have chosen.");
         } else if (priceInOff < 0) {
             offItem = new OffItem(productSeller, (long) productSeller.getPrice() * (100 - percent) / 100);
         } else {

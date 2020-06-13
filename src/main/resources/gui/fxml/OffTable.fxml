@@ -26,7 +26,7 @@
                 <Insets left="10.0" />
             </VBox.margin>
         </HBox>
-        <TableView prefHeight="295.0" prefWidth="515.0">
+        <TableView prefHeight="295.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css">
             <columns>
                 <TableColumn prefWidth="163.33331298828125" text="start date" />
                 <TableColumn prefWidth="170.0" text="end date" />
