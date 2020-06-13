@@ -25,12 +25,12 @@ public class FakeOrderRepository implements OrderRepository {
     }
 
     @Override
-    public List<Order> getAllCustomerOrders(int customerId) {
+    public List<Order> getAllCustomerOrders(int customerId, Pageable pageable) {
         return null;
     }
 
     @Override
-    public List<Order> getAllSellerOrders(int sellerId) {
+    public List<Order> getAllSellerOrders(int sellerId, Pageable pageable) {
         return null;
     }
 

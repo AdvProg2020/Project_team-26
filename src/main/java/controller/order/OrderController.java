@@ -26,9 +26,9 @@ public class OrderController implements IOrderController {
         } else {
             switch (user.getRole()) {
                 case SELLER:
-                    return (ArrayList<Order>) orderRepository.getAllSellerOrders(user.getId());
+                    return (ArrayList<Order>) orderRepository.getAllSellerOrders(user.getId(), null);
                 case CUSTOMER:
-                    return (ArrayList<Order>) orderRepository.getAllCustomerOrders(user.getId());
+                    return (ArrayList<Order>) orderRepository.getAllCustomerOrders(user.getId(), null);
             }
             return null;
         }
