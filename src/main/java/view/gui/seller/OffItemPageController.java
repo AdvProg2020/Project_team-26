@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.seller;
 
 import controller.interfaces.discount.IOffController;
 import exception.*;
@@ -10,6 +10,8 @@ import javafx.scene.text.*;
 import model.Off;
 import model.OffItem;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
+import view.gui.InitializableController;
 
 import java.io.IOException;
 

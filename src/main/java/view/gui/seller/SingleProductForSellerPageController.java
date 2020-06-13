@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.seller;
 
 import controller.interfaces.product.IProductController;
 import exception.InvalidIdException;
@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.*;
 import model.*;
+import view.gui.Constants;
+import view.gui.InitializableController;
 
 import java.io.IOException;
 
@@ -35,13 +37,13 @@ public class SingleProductForSellerPageController implements InitializableContro
     @FXML
     private TextArea descriptionTextArea;
     @FXML
-    private Button editButton;
+    private Button productInfoEditButton;
     @FXML
     private Button productSellerInfoEditButton;
     @FXML
-    private Button productInfoEditButton;
-    @FXML
     private Label nameLabel;
+    @FXML
+    TableView<String> buyersTableView;
 
 
     @Override
@@ -85,19 +87,20 @@ public class SingleProductForSellerPageController implements InitializableContro
 
     @FXML
     public void productSellerInfoEditButtonClicked() {
-        if (editButton.getText().equals("Edit seller")) {
+        if (productSellerInfoEditButton.getText().equals("Edit seller")) {
             setEditableForProductSeller(true);
-            editButton.setText("update");
-        } else {//todo change product
+            productSellerInfoEditButton.setText("Update seller");
+        } else {
+            productController.
 
         }
     }
 
     @FXML
     public void productInfoEditButtonClicked() {
-        if (editButton.getText().equals("Edit product")) {
+        if (productInfoEditButton.getText().equals("Edit product")) {
             setEditableForProduct(true);
-            editButton.setText("Update product");
+            productInfoEditButton.setText("Update product");
         } else {
             Product product = productSeller.getProduct().clone();
             product.setDescription(descriptionTextArea.getText());

@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.seller;
 
 import controller.interfaces.discount.IOffController;
 import controller.interfaces.product.IProductController;
@@ -10,6 +10,8 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import model.*;
+import view.gui.Constants;
+import view.gui.InitializableController;
 
 import java.io.IOException;
 

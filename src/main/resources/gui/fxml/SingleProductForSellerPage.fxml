@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.SingleProductForSellerPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.SingleProductForSellerPageController">
     <children>
         <HBox prefHeight="453.0" prefWidth="600.0">
             <children>
@@ -159,7 +159,7 @@
                             <children>
                         <VBox alignment="CENTER" prefHeight="70.0" prefWidth="144.0">
                            <children>
-                                      <Button fx:id="editButton" mnemonicParsing="false" onAction="#productSellerInfoEditButtonClicked" prefHeight="25.0" prefWidth="134.0" text="edit seller info">
+                                      <Button fx:id="productInfoEditButton" mnemonicParsing="false" onAction="#productSellerInfoEditButtonClicked" prefHeight="25.0" prefWidth="134.0" text="edit seller info">
                                  <padding>
                                     <Insets bottom="5.0" />
                                  </padding>
