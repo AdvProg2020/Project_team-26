@@ -4,10 +4,7 @@ import exception.*;
 import controller.interfaces.category.ICategoryController;
 import controller.interfaces.order.IOrderController;
 import controller.interfaces.product.IProductController;
-import model.Category;
-import model.Product;
-import model.ProductSeller;
-import model.User;
+import model.*;
 import view.cli.ControllerContainer;
 import view.cli.View;
 import view.cli.ViewManager;
@@ -167,8 +164,20 @@ public class ManageProductForSellerView extends View {
     protected void showBuyer(Matcher matcher) {
         matcher.find();
         if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
-            List<User> userList = orderController.getProductBuyerByProductId(Integer.parseInt(matcher.group(1)), manager.getToken());
-            userList.forEach(i -> manager.inputOutput.println(i.getFullName()));
+            List<Customer> userList = null;
+            try {
+                userList = orderController.getProductBuyerByProductId(Integer.parseInt(matcher.group(1)), manager.getToken());
+                userList.forEach(i -> manager.inputOutput.println(i.getFullName()));
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.printStackTrace();
+            } catch (InvalidIdException e) {
+                e.printStackTrace();
+            }
+
             return;
         }
     }
