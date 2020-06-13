@@ -35,6 +35,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     @FXML
     private Label nameLabel;
 
+
     @Override
     public void initialize(int id) throws IOException {
         productId = id;
@@ -52,15 +53,21 @@ public class SingleProductForSellerPageController implements InitializableContro
         brandTextField.setText(product.getBrand());
         amountTextField.setText("" + productSeller.getRemainingItems());
         descriptionTextArea.setText(product.getDescription());
-        setEditable(false);
+        setEditableForProduct(false);
+        setEditableForProductSeller(false);
     }
 
-    private void setEditable(boolean type) {
+    private void setEditableForProductSeller(boolean type) {
+        amountTextField.setEditable(type);
+        priceTextField.setEditable(type);
+    }
+
+    private void setEditableForProduct(boolean type) {
         nameTextField.setEditable(type);
         brandTextField.setEditable(type);
-        amountTextField.setEditable(type);
         descriptionTextArea.setEditable(type);
     }
+
 
     @FXML
     public void editButtonClicked() {
@@ -71,8 +78,9 @@ public class SingleProductForSellerPageController implements InitializableContro
 
         }
     }
+
     @FXML
-    public void uploadButtonClicked(){
-        //todo
+    public void uploadButtonClicked() {
+        //todo set image
     }
 }

@@ -28,7 +28,7 @@
             <Insets left="10.0" />
          </VBox.margin>
       </HBox>
-       <TableView prefHeight="295.0" prefWidth="515.0">
+       <TableView prefHeight="295.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css">
            <columns>
                <TableColumn prefWidth="125.99995422363281" text="Product Name" />
                <TableColumn prefWidth="134.66664123535156" text="Category" />
