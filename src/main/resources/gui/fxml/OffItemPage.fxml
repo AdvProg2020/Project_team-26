@@ -8,7 +8,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="194.0" prefWidth="297.0">
@@ -20,7 +19,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="131.4700756072998">
+                  <Text fx:id="name" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="131.4700756072998">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -34,7 +33,7 @@
                         <Insets left="10.0" />
                      </HBox.margin>
                   </Label>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="131.4700756072998">
+                  <Text fx:id="price" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="131.4700756072998">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -55,17 +54,12 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="259.0">
                            <children>
                               <Label prefHeight="91.0" prefWidth="82.0" text="price in Off" />
-                              <TextField prefHeight="25.0" prefWidth="199.0" />
+                              <TextField fx:id="priceInOff" prefHeight="25.0" prefWidth="199.0" />
                            </children>
                         </HBox>
                         <HBox alignment="BOTTOM_RIGHT" prefHeight="91.0" prefWidth="92.0">
                            <children>
-                              <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="53.0" text="edit">
-                                 <HBox.margin>
-                                    <Insets bottom="10.0" right="40.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Button mnemonicParsing="false" text="delete">
+                              <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClicked" text="delete">
                                  <HBox.margin>
                                     <Insets bottom="10.0" right="10.0" />
                                  </HBox.margin>

@@ -47,6 +47,10 @@ public class Cart {
         //todo
         return products;
     }
+    public long getTotalPrice(){
+        //todo
+        return 0;
+    }
 
     public void setUsedPromo(Promo usedPromo) {
         this.usedPromo = usedPromo;
