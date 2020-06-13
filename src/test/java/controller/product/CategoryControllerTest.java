@@ -1,15 +1,18 @@
 package controller.product;
 
+import controller.account.AuthenticationController;
 import exception.*;
 import model.Category;
 import model.Product;
 import model.Session;
+import repository.CategoryRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +20,46 @@ public class CategoryControllerTest {
     RepositoryContainer repositoryContainer;
     String token;
     CategoryController categoryController;
+    AuthenticationController authenticationController;
+    CategoryRepository categoryRepository;
+
+
+    @BeforeEach
+    void setup() {
+        repositoryContainer = new RepositoryContainer("sql");
+        Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
+        token = Session.addSession();
+        categoryController = new CategoryController(repositoryContainer);
+        authenticationController = new AuthenticationController(repositoryContainer);
+        categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
+    }
 
     @Test
-    void addCategory() throws InvalidIdException, NoAccessException, ObjectAlreadyExistException, InvalidTokenException {
-        setup();
-        Category newcategory = new Category("new");
-        categoryController.addCategory(0, newcategory, "admin");
-        Category category = categoryController.getByName("new");
+    void addCategory() throws InvalidIdException, NoAccessException, ObjectAlreadyExistException, InvalidTokenException, InvalidFormatException, PasswordIsWrongException, InvalidAuthenticationException, NotLoggedINException {
+
+        String name = createRandomName();
+
+        /** Exception Tests **/
+        authenticationController.login("test1","test1",token);
+        Exception ex = Assertions.assertThrows(NoAccessException.class, () -> categoryController.addCategory(0,new Category("name"),token));
+        Assertions.assertEquals(ex.getMessage(),"only manager can add category");
+        authenticationController.logout(token);
+
+        authenticationController.login("aria","aria",token);
+        ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> categoryController.addCategory(0,new Category("pens"),token));
+        Assertions.assertEquals(ex.getMessage(),"the category name should be uniq and this name is already taken");
+
+        ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.addCategory(1222,new Category(name),token));
+        Assertions.assertEquals(ex.getMessage(),"the father Category doesnt exist");
+        /** Exception Tests **/
+
+        categoryController.addCategory(0,new Category(name),token);
+        Assertions.assertNotEquals(categoryRepository.getByName(name),null);
+
     }
 
     @Test
     void removeACategory() throws InvalidIdException, InvalidTokenException, NoAccessException, NoObjectIdException {
-        setup();
         List<Category> categories = new ArrayList<>();
         Category category = categoryController.getCategory(6, "admin");
         categoryController.getAllCategories(0, "admin").forEach(i -> categories.add(i.clone()));
@@ -45,17 +76,10 @@ public class CategoryControllerTest {
 //       /** end test*/
     }
 
-    @BeforeEach
-    void setup() {
-        repositoryContainer = new RepositoryContainer("sql");
-        Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
-        token = Session.addSession();
-        categoryController = new CategoryController(repositoryContainer);
-    }
+
 
     @Test
     void getAllCategoriesWith() throws InvalidIdException {
-        setup();
         List<Category> categoryControllerList = categoryController.getAllCategories(0, token);
         Assertions.assertEquals(categoryControllerList, repositoryContainer.getRepository("CategoryRepository").getAll());
         /** check exception*/
@@ -66,7 +90,6 @@ public class CategoryControllerTest {
 
     @Test
     void getCategory() throws InvalidIdException {
-        setup();
         Category category1 = (Category) repositoryContainer.getRepository("CategoryRepository").getById(16);
         Category category = categoryController.getCategory(16, token);
         Assertions.assertEquals(category1.getId(), category.getId());
@@ -78,7 +101,6 @@ public class CategoryControllerTest {
 
     @Test
     void removeProduct() {
-        setup();
         repositoryContainer = new RepositoryContainer();
         token = Session.addSession();
         categoryController = new CategoryController(repositoryContainer);
@@ -95,5 +117,11 @@ public class CategoryControllerTest {
         } catch (InvalidTokenException e) {
             e.printStackTrace();
         }
+    }
+
+    private String createRandomName() {
+        String randomName = "randomCategory";
+        randomName += LocalTime.now();
+        return randomName;
     }
 }

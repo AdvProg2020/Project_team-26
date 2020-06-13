@@ -30,7 +30,7 @@ public class CategoryController implements ICategoryController {
             throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", newCategory);
         Category parentCategory = checkParentCategory(patternId);
         if (parentCategory == null) {
-            newCategory.setParent(null);
+            newCategory.setParent(categoryRepository.getById(1));
         } else {
             newCategory.setParent(parentCategory);
             parentCategory.addSubCategory(newCategory);

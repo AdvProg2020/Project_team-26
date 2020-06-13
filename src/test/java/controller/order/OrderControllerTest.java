@@ -61,8 +61,28 @@ public class OrderControllerTest  {
 
     @Test
     public void getOrdersWithFiltersTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotLoggedINException {
-
         authenticationController.login("test5","test5",token);
         Assertions.assertEquals(orderController.getOrdersWithFilter(null,true,token),new ArrayList<>());
+    }
+
+    @Test
+    public void getOrdersWithFilterAndPageTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, NoAccessException {
+
+        /**Exception Tests **/
+
+        Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> orderController.getOrdersWithFilter(null,true,0,0,token));
+        Assertions.assertEquals(ex.getMessage(),"You must be logged in");
+
+        authenticationController.login("aria","aria",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> orderController.getOrdersWithFilter(null,true,0,0,token));
+        Assertions.assertEquals(ex.getMessage(),"You must be a customer to gte Orders");
+        authenticationController.logout(token);
+
+        /** Exception Tests **/
+
+        authenticationController.login("test5","test5",token);
+        Assertions.assertEquals(new ArrayList<>(),orderController.getOrdersWithFilter(null,true,0,0,token));
+
+
     }
 }
