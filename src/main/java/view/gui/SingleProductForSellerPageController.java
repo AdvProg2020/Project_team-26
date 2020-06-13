@@ -1,5 +1,10 @@
 package view.gui;
 
+import controller.interfaces.product.IProductController;
+import exception.InvalidIdException;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NotSellerException;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
@@ -12,6 +17,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     private int productId;
     private Product product;
     private ProductSeller productSeller;
+    IProductController productController;
     @FXML
     private ImageView productImage;
     @FXML
@@ -31,7 +37,9 @@ public class SingleProductForSellerPageController implements InitializableContro
     @FXML
     private Button editButton;
     @FXML
-    private Button uploadPhoto;
+    private Button productSellerInfoEditButton;
+    @FXML
+    private Button productInfoEditButton;
     @FXML
     private Label nameLabel;
 
@@ -49,12 +57,18 @@ public class SingleProductForSellerPageController implements InitializableContro
         categoryText.setText(product.getCategory().getName());
         productRateSlider.setValue(product.getAverageRate());
         productRateSlider.setValueChanging(false);
+    }
+
+    private void initPrimitiveFields() {
+        productInfoEditButton.setText("Edit product");
+        productSellerInfoEditButton.setText("Edit seller");
         nameTextField.setText(product.getName());
         brandTextField.setText(product.getBrand());
         amountTextField.setText("" + productSeller.getRemainingItems());
         descriptionTextArea.setText(product.getDescription());
         setEditableForProduct(false);
         setEditableForProductSeller(false);
+
     }
 
     private void setEditableForProductSeller(boolean type) {
@@ -70,14 +84,48 @@ public class SingleProductForSellerPageController implements InitializableContro
 
 
     @FXML
-    public void editButtonClicked() {
-        if (editButton.getText().equals("edit")) {
-            setEditable(true);
+    public void productSellerInfoEditButtonClicked() {
+        if (editButton.getText().equals("Edit seller")) {
+            setEditableForProductSeller(true);
             editButton.setText("update");
         } else {//todo change product
 
         }
     }
+
+    @FXML
+    public void productInfoEditButtonClicked() {
+        if (editButton.getText().equals("Edit product")) {
+            setEditableForProduct(true);
+            editButton.setText("Update product");
+        } else {
+            Product product = productSeller.getProduct().clone();
+            product.setDescription(descriptionTextArea.getText());
+            product.setBrand(brandTextField.getText());
+            product.setName(nameTextField.getText());
+            setEditableForProduct(false);
+            productInfoEditButton.setText("Edit product");
+            try {
+                productController.editProduct(product.getId(), product, Constants.manager.getToken());
+            } catch (InvalidIdException e) {
+                e.printStackTrace();
+            } catch (NotSellerException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.printStackTrace();
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } finally {
+                //todo reload changes
+            }
+        }
+    }
+
+    @FXML
+    public void cancleButtonClicked() {
+        initPrimitiveFields();
+    }
+
 
     @FXML
     public void uploadButtonClicked() {

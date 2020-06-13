@@ -15,9 +15,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="588.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.SingleProductForSellerPageController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.SingleProductForSellerPageController">
     <children>
-        <HBox prefHeight="413.0" prefWidth="600.0">
+        <HBox prefHeight="453.0" prefWidth="600.0">
             <children>
                 <VBox prefHeight="400.0" prefWidth="320.0">
                     <children>
@@ -157,10 +157,9 @@
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="75.0" prefWidth="280.0" spacing="40.0">
                             <children>
-                                <Button fx:id="uploadPhoto" mnemonicParsing="false" onAction="#uploadButtonClicked" text="Upload photo" />
-                        <VBox prefHeight="59.0" prefWidth="137.0">
+                        <VBox alignment="CENTER" prefHeight="70.0" prefWidth="144.0">
                            <children>
-                                      <Button fx:id="editButton" mnemonicParsing="false" onAction="#editButtonClicked" prefHeight="25.0" prefWidth="116.0" text="edit seller info">
+                                      <Button fx:id="editButton" mnemonicParsing="false" onAction="#productSellerInfoEditButtonClicked" prefHeight="25.0" prefWidth="134.0" text="edit seller info">
                                  <padding>
                                     <Insets bottom="5.0" />
                                  </padding>
@@ -168,7 +167,17 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="productInfoEditButton" mnemonicParsing="false" onAction="#productInfoEditButtonClicked" prefHeight="25.0" prefWidth="115.0" text="edit product info " />
+                              <Button fx:id="productSellerInfoEditButton" mnemonicParsing="false" onAction="#productInfoEditButtonClicked" prefHeight="25.0" prefWidth="131.0" text="edit product info " />
+                           </children>
+                        </VBox>
+                        <VBox alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="105.0">
+                           <children>
+                                      <Button fx:id="uploadPhoto" mnemonicParsing="false" onAction="#uploadButtonClicked" text="Upload photo" />
+                              <Button mnemonicParsing="false" onAction="#cancleButtonClicked" prefHeight="25.0" prefWidth="89.0" text="cancle">
+                                 <VBox.margin>
+                                    <Insets top="5.0" />
+                                 </VBox.margin>
+                              </Button>
                            </children>
                         </VBox>
                             </children>
@@ -178,7 +187,7 @@
 
             </children>
         </HBox>
-      <TableView prefHeight="200.0" prefWidth="200.0">
+      <TableView prefHeight="195.0" prefWidth="600.0">
         <columns>
           <TableColumn fx:id="buyersTableView" prefWidth="598.6666666269302" text="Buyer" />
         </columns>
