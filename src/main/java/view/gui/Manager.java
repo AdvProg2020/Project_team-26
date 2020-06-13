@@ -3,12 +3,14 @@ package view.gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.DatePicker;
 import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Manager {
@@ -72,5 +74,8 @@ public class Manager {
         } catch (NumberFormatException e) {
             return false;
         }
+    }
+    public Date getDateFromDatePicker(DatePicker datePicker){
+        return null;//todo
     }
 }
