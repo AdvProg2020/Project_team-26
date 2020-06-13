@@ -20,7 +20,7 @@ public class SingleProductOfCartController implements InitializableController {
     private ICartController cartController;
     private ProductSeller productSeller;
     private int amount;
-    private int cartId;
+    private Cart cart;
 
     @FXML
     private ImageView productImage;
@@ -40,10 +40,11 @@ public class SingleProductOfCartController implements InitializableController {
     @Override
     public void initialize(int id) throws IOException {
         cartController = (ICartController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CartController);
-        cartId = id;
+        //id todo
     }
 
     public void load(ProductSeller productSeller, int amount) {
+        //todo add cart
         this.productSeller = productSeller;
         this.amount = amount;
         //  productImage.setImage(productSeller.getProduct().getImage());todo

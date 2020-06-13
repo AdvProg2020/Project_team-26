@@ -9,16 +9,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="68.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="view.gui.SingleProductOfCartController">
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.SingleProductOfCartController">
     <children>
         <VBox alignment="CENTER" prefHeight="78.0" prefWidth="97.0">
             <children>
-                <ImageView fx:id="productImage" fitHeight="61.0" fitWidth="96.0" pickOnBounds="true"
-                           preserveRatio="true">
+                <ImageView fx:id="productImage" fitHeight="61.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pic/background.jpg"/>
+                        <Image url="@../pic/background.jpg" />
                     </image>
                 </ImageView>
             </children>
@@ -29,13 +26,12 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Label prefHeight="43.0" prefWidth="80.0" text="Price"/>
+                                <Label prefHeight="43.0" prefWidth="80.0" text="Price" />
                             </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Text fx:id="priceText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"
-                                      wrappingWidth="116.13670873641968"/>
+                                <Text fx:id="priceText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="116.13670873641968" />
                             </children>
                         </HBox>
                     </children>
@@ -44,13 +40,12 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Label prefHeight="43.0" prefWidth="80.0" text="Off"/>
+                                <Label prefHeight="43.0" prefWidth="80.0" text="Off" />
                             </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Text fx:id="priceOffText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"
-                                      wrappingWidth="118.13670873641968"/>
+                                <Text fx:id="priceOffText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="118.13670873641968" />
                             </children>
                         </HBox>
                     </children>
@@ -63,12 +58,12 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Label fx:id="amountLabel" prefHeight="43.0" prefWidth="80.0" text="Amount"/>
+                                <Label fx:id="amountLabel" prefHeight="43.0" prefWidth="80.0" text="Amount" />
                             </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <TextField fx:id="amountTextField" promptText="5"/>
+                                <TextField fx:id="amountTextField" promptText="5" />
                             </children>
                         </HBox>
                     </children>
@@ -79,13 +74,12 @@
                             <children>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                     <children>
-                                        <Label prefHeight="43.0" prefWidth="80.0" text="Total price"/>
+                                        <Label prefHeight="43.0" prefWidth="80.0" text="Total price" />
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                     <children>
-                                        <Text fx:id="totalPrice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text"
-                                              wrappingWidth="86.80339741706848"/>
+                                        <Text fx:id="totalPrice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="86.80339741706848" />
                                     </children>
                                 </HBox>
                             </children>
@@ -96,7 +90,7 @@
         </VBox>
         <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
             <children>
-                <Button fx:id="editButtonClick" mnemonicParsing="false" onAction="#updateButtonClicked" text="edit"/>
+                <Button fx:id="editButtonClick" mnemonicParsing="false" onAction="#updateButtonClicked" text="edit" />
             </children>
         </VBox>
     </children>

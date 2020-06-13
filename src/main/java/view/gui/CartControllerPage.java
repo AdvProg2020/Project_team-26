@@ -1,20 +1,22 @@
 package view.gui;
 
 import controller.interfaces.cart.ICartController;
-import exception.InvalidTokenException;
+import exception.*;
+import javafx.beans.InvalidationListener;
+import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import model.Cart;
-import model.Product;
-import model.ProductSeller;
-import view.cli.ControllerContainer;
+import javafx.scene.text.Text;
+import model.*;
+import view.cli.*;
+import view.gui.*;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CartControllerPage implements InitializableController {
     private Cart cart;
@@ -24,7 +26,13 @@ public class CartControllerPage implements InitializableController {
     @FXML
     Button purchaseButton;
     @FXML
-    Label totalPriceLabel;
+    Text totalPriceText;
+    @FXML
+    Label promoLabel;
+    @FXML
+    TextField addressTextField;
+    @FXML
+    TextField promoTextField;
 
 
     @Override
@@ -32,8 +40,9 @@ public class CartControllerPage implements InitializableController {
         cartController = (ICartController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CartController);
         try {
             cart = cartController.getCart(Constants.manager.getToken());
-            totalPriceLabel.setText("total price");//todo
-        //    totalPriceLabel.textProperty().bind(cart.)//todo
+            totalPriceText.setText("total price");//todo
+           /* totalPriceLabel.textProperty().bind(
+            }cartController.getTotalPrice(cart, Constants.manager.getToken()))//todo*/
         } catch (InvalidTokenException e) {
             e.printStackTrace();//todo
         }
@@ -44,7 +53,7 @@ public class CartControllerPage implements InitializableController {
     private void loadCart(Cart cart) {
         try {
             cart = cartController.getCart(Constants.manager.getToken());
-            totalPriceLabel.setText("total price");//todo
+            totalPriceText.setText("total price");//todo
             //totalPriceLabel.textProperty().bind(cart.)//todo
         } catch (InvalidTokenException e) {
             e.printStackTrace();//todo
@@ -57,13 +66,35 @@ public class CartControllerPage implements InitializableController {
         for (Map.Entry<ProductSeller, Integer> entry : products.entrySet()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductOFCart.fxml"));
             SingleProductOfCartController singleProductOfCartController = (SingleProductOfCartController) loader.getController();
-            singleProductOfCartController.load(entry.getKey(), entry.getValue() , cart);
+            singleProductOfCartController.load(entry.getKey(), entry.getValue());
             cartProductsVBox.getChildren().add(loader.load());
         }
     }
 
     @FXML
     public void purchaseButtonClicked() {
+        try {
+            cartController.setAddress(addressTextField.getText(), Constants.manager.getToken());
+            cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
+            cartController.checkout(Constants.manager.getToken());
+            //todo load main page
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();//todo
+        } catch (InvalidPromoCodeException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();//todo access exception
+        } catch (PromoNotAvailableException e) {
+            e.printStackTrace();//todo red label
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        } catch (NotEnoughCreditException e) {
+            e.printStackTrace();//todo
+        } catch (NotEnoughProductsException e) {
+            e.printStackTrace();//todo tell
+        }
+
+
         //todo load the purchase page here
     }
 }
