@@ -9,6 +9,7 @@ import javafx.util.Pair;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -69,13 +70,34 @@ public class Manager {
 
     public boolean checkInputIsInt(String input) {
         try {
-            Long.parseLong(input);
-            return true;
+            if (0 > Integer.parseInt(input))
+                return true;
+            return false;
         } catch (NumberFormatException e) {
             return false;
         }
     }
-    public Date getDateFromDatePicker(DatePicker datePicker){
+
+    public boolean checkIsLong(String input) {
+        try {
+            if (0 > Long.parseLong(input))
+                return true;
+            return false;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    public boolean checkIsPercent(String input) {
+        if (input.matches("\\d+(?:\\.\\d+)%$")) {
+            if (input.split("%")[0].length() <= 2)
+                return true;
+            return false;
+        }
+        return false;
+    }
+
+    public Date getDateFromDatePicker(DatePicker datePicker) {
         return null;//todo
     }
 }

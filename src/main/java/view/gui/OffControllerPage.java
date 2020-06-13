@@ -1,10 +1,8 @@
 package view.gui;
 
 import controller.interfaces.discount.IOffController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
+import controller.interfaces.product.IProductController;
+import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -24,6 +22,7 @@ public class OffControllerPage implements InitializableController {
     private Off off;
     private int offId;
     private IOffController offController;
+    private IProductController productController;
 
     @FXML
     private DatePicker startDate;
@@ -94,10 +93,40 @@ public class OffControllerPage implements InitializableController {
             } catch (NotLoggedINException e) {
                 e.printStackTrace();
             }
-
-
         }
-
     }
 
+    @FXML
+    public void addProductButtonclicked() {
+        if (productName.getText().equals("") || priceInOff.getText().equals("")) {
+            //todo red the field
+            return;
+        }
+        try {
+            Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
+            if (Constants.manager.checkIsPercent(priceInOff.getText())) {
+                offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), Constants.manager.getToken());
+            } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
+                offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, Constants.manager.getToken());
+            } else {
+                //todo red the box
+                return;
+            }
+        } catch (NoObjectIdException e) {
+            e.printStackTrace();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (ObjectAlreadyExistException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        }
+        //todo reload page
+
+
+    }
 }

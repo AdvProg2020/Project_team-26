@@ -43,7 +43,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    public void addProductToOff(Off off, int productId, long priceInOff, double percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
        /* checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
@@ -76,7 +76,7 @@ public class OffController implements IOffController {
         } else if (productSeller == null) {
             throw new NoAccessException("you are not the seller of the product you have chosen.");
         } else if (priceInOff < 0) {
-            offItem = new OffItem(productSeller, (long) productSeller.getPrice() * (100 - percent) / 100);
+            offItem = new OffItem(productSeller, (long) ((long) productSeller.getPrice() * (100 - percent) / 100));
         } else {
             offItem = new OffItem(productSeller, priceInOff);
         }
@@ -126,14 +126,14 @@ public class OffController implements IOffController {
 
     @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortFiled, boolean isAscending, String token) {
-        Pageable page = createAPage(sortFiled,isAscending,0,0);
+        Pageable page = createAPage(sortFiled, isAscending, 0, 0);
         return productRepository.getAllSortedAndFilteredInOff(filter, page);
     }
 
     @Override
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, String token) {
-        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
-        return productRepository.getAllSortedAndFiltered(filter,page);
+        Pageable page = createAPage(sortField, isAscending, startIndex, endIndex);
+        return productRepository.getAllSortedAndFiltered(filter, page);
     }
 
     @Override
@@ -145,15 +145,15 @@ public class OffController implements IOffController {
     @Override
     public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller");
-        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        Pageable page = createAPage(sortField, isAscending, startIndex, endIndex);
         return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs(page);
     }
 
     private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if(isAscending) {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
+        if (isAscending) {
+            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.ASCENDING);
         } else {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
+            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.DESCENDING);
         }
     }
 
