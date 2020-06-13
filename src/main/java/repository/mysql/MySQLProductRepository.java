@@ -1,6 +1,7 @@
 package repository.mysql;
 
 import model.*;
+import model.Order;
 import repository.Pageable;
 import repository.ProductRepository;
 import repository.RequestRepository;
@@ -290,6 +291,9 @@ public class MySQLProductRepository
 
     private Predicate filter(Map<String, String> filter, CriteriaBuilder cb, CriteriaQuery<Product> cq, Root<Product> root) {
         Predicate predicate = cb.conjunction();
+        if(filter == null) {
+            return predicate;
+        }
         for(String key : filter.keySet()) {
             String value = filter.get(key);
             String[] split = value.split("-");

@@ -1,9 +1,6 @@
 package repository;
 
-import model.Product;
-import model.ProductRequest;
-import model.ProductSeller;
-import model.User;
+import model.*;
 
 import java.util.List;
 import java.util.Map;
