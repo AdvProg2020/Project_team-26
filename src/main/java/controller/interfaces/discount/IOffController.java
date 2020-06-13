@@ -10,7 +10,7 @@ import java.util.Map;
 public interface IOffController {
     void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 
-    void addProductToOff(Off off, int productId, long priceInOff, int percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException;
+    void addProductToOff(Off off, int productId, long priceInOff, double percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException;
 
     void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException;
 

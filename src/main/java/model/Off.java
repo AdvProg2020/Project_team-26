@@ -104,4 +104,12 @@ public class Off {
         }
         return request;
     }
+
+    @Override
+    public Off clone()  {
+        Off newOff = new Off();
+        newOff.setSeller(seller);
+        newOff.setItems(items);
+        return newOff;
+    }
 }

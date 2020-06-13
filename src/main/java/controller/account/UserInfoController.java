@@ -9,13 +9,20 @@ import model.User;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
 public class UserInfoController implements IUserInfoController {
 
     private UserRepository userRepository;
+    private List<String> allFields;
 
 
     public UserInfoController(RepositoryContainer repositoryContainer) {
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        allFields = Arrays.asList("Username", "FirstName", "LastName", "Email", "Company Name");
     }
 
 
@@ -86,7 +93,7 @@ public class UserInfoController implements IUserInfoController {
 
     private void changeCompanyName(String value, String token) throws NoSuchField, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user.getRole() != Role.SELLER) {
+        if (user.getRole() != Role.SELLER) {
             throw new NoSuchField("No Such Field exists.");
         } else {
             ((Seller) user).changeCompanyName(value);
@@ -102,6 +109,20 @@ public class UserInfoController implements IUserInfoController {
             throw new NoSuchField("This field does not exist.");
         } else {
             return ((Seller) user).getCompanyName();
+        }
+    }
+
+    @Override
+    public void changeInfo(Map<String, String> values, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
+        if (values.keySet().stream().anyMatch(n -> !allFields.contains(n))) {
+            NoSuchField noSuchField = new NoSuchField("One or more fields is wrong");
+            noSuchField.addAFields(values.keySet().stream().filter(field -> !allFields.contains(field))
+                    .collect(Collectors.toList()));
+            throw noSuchField;
+        } else {
+            for (Map.Entry<String, String> pair: values.entrySet()) {
+                changeInfo(pair.getKey(),pair.getValue(),token);
+            }
         }
     }
 

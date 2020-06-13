@@ -9,6 +9,8 @@ import org.junit.jupiter.api.*;
 
 import javax.naming.AuthenticationException;
 
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AuthenticationControllerTest {
@@ -48,15 +50,15 @@ public class AuthenticationControllerTest {
         Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
         /**End of Exception Tests**/
 
-        authenticationController.register(new Account("Arya200","1234",Role.SELLER,"h200@yahoo.com"),token);
+        authenticationController.register(new Account(getRandomName(),"1234",Role.SELLER,getRandomEmail()),token);
         Assertions.assertEquals("Arya200",userRepository.getUserByUsername("Arya200").getUsername());
-        authenticationController.register(new Account("Tataloo","124",Role.CUSTOMER,"h2@yahoo.com"),token);
+        authenticationController.register(new Account(getRandomName(),"124",Role.CUSTOMER,getRandomEmail()),token);
         Assertions.assertEquals("Tataloo",userRepository.getUserByUsername("Tataloo").getUsername());
 
         /** Logging in and then doing stuff**/
 
         authenticationController.login("aria","aria",token);
-        authenticationController.register(new Account("Admin","admin",Role.ADMIN,"a@yahoo.com"),token);
+        authenticationController.register(new Account(getRandomName(),"admin",Role.ADMIN,getRandomEmail()),token);
         Assertions.assertEquals("Admin",userRepository.getUserByUsername("Admin").getUsername());
 
     }
@@ -71,7 +73,19 @@ public class AuthenticationControllerTest {
                 "mamad","password",token));
         Assertions.assertEquals(ex.getMessage(),"Username is invalid.");
         /** End of Exception Tests**/
+    }
 
+    private String getRandomName() {
+        String randomName = "randomName";
+        randomName += LocalTime.now();
+        return randomName;
+    }
+
+    private String getRandomEmail() {
+        String email = "";
+        email += LocalTime.now();
+        email += "@gmail.com";
+        return email;
     }
 
 

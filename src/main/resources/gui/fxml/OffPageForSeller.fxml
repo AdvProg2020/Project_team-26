@@ -9,70 +9,64 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <HBox prefHeight="144.0" prefWidth="600.0">
-         <children>
-            <HBox prefHeight="148.0" prefWidth="200.0">
-               <children>
-                  <VBox alignment="TOP_CENTER" prefHeight="159.0" prefWidth="216.0">
-                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="71.0" prefWidth="200.0">
-                           <children>
-                              <Label prefHeight="39.0" prefWidth="63.0" text="Start date" />
-                              <DatePicker fx:id="startDate" />
-                           </children>
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.OffControllerPage">
+    <children>
+        <HBox prefHeight="144.0" prefWidth="600.0">
+            <children>
+                <HBox prefHeight="148.0" prefWidth="200.0">
+                    <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="159.0" prefWidth="216.0">
+                            <children>
+                                <VBox alignment="TOP_CENTER" prefHeight="71.0" prefWidth="200.0">
+                                    <children>
+                                        <Label prefHeight="39.0" prefWidth="63.0" text="Start date" />
+                                        <DatePicker fx:id="startDate" />
+                                    </children>
+                                </VBox>
+                                <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="71.0" prefWidth="200.0">
+                                    <children>
+                                        <Label prefHeight="39.0" prefWidth="63.0" text="End date" />
+                                        <DatePicker fx:id="endDate" />
+                                    </children>
+                                </VBox>
+                            </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="71.0" prefWidth="200.0">
-                           <children>
-                              <Label prefHeight="39.0" prefWidth="63.0" text="End date" />
-                              <DatePicker fx:id="endDate" />
-                           </children>
-                        </VBox>
-                     </children>
-                  </VBox>
-               </children>
-            </HBox>
-            <VBox alignment="TOP_CENTER" prefHeight="119.0" prefWidth="150.0">
-               <children>
-                  <Label prefHeight="43.0" prefWidth="90.0" text="Max valid off" />
-                  <TextField fx:id="MaxValidOff">
-                     <VBox.margin>
-                        <Insets left="20.0" right="20.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <HBox alignment="BOTTOM_RIGHT" prefHeight="73.0" prefWidth="145.0">
-                     <children>
-                        <Button fx:id="updateButton" mnemonicParsing="false" prefHeight="34.0" prefWidth="108.0" text="update">
-                           <padding>
-                              <Insets left="20.0" right="20.0" />
-                           </padding>
-                        </Button>
-                     </children>
-                     <padding>
-                        <Insets left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </HBox>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" prefHeight="140.0" prefWidth="265.0">
-               <children>
-                  <Region prefHeight="41.0" prefWidth="261.0" />
-                  <TextField fx:id="productName" prefHeight="25.0" prefWidth="176.0" promptText="product name">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="15.0" right="15.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <TextField fx:id="priceInOff" promptText="price in off">
-                     <VBox.margin>
-                        <Insets bottom="10.0" left="40.0" right="40.0" top="5.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Button fx:id="addProductButton" mnemonicParsing="false" prefHeight="31.0" prefWidth="91.0" text="Add product" />
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <VBox prefHeight="364.0" prefWidth="600.0" />
-   </children>
+                    </children>
+                </HBox>
+                <VBox alignment="TOP_CENTER" prefHeight="119.0" prefWidth="150.0">
+                    <children>
+                        <HBox alignment="BOTTOM_RIGHT" prefHeight="73.0" prefWidth="145.0">
+                            <children>
+                                <Button fx:id="updateButton" mnemonicParsing="false" onAction="#updateButtonClicked" prefHeight="34.0" prefWidth="108.0" text="update">
+                                    <padding>
+                                        <Insets left="20.0" right="20.0" />
+                                    </padding>
+                                </Button>
+                            </children>
+                            <padding>
+                                <Insets left="20.0" right="20.0" top="20.0" />
+                            </padding>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox alignment="TOP_CENTER" prefHeight="140.0" prefWidth="265.0">
+                    <children>
+                        <Region prefHeight="41.0" prefWidth="261.0" />
+                        <TextField fx:id="productName" prefHeight="25.0" prefWidth="176.0" promptText="product name">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="15.0" right="15.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <TextField fx:id="priceInOff" promptText="price in off">
+                            <VBox.margin>
+                                <Insets bottom="10.0" left="40.0" right="40.0" top="5.0" />
+                            </VBox.margin>
+                        </TextField>
+                        <Button fx:id="addProductButton" mnemonicParsing="false" onAction="#addProductButtonclicked" prefHeight="31.0" prefWidth="91.0" text="Add product" />
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+        <VBox fx:id="offVBox" prefHeight="364.0" prefWidth="600.0" />
+    </children>
 </VBox>

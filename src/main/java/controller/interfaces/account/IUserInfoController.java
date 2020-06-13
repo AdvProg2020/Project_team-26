@@ -2,6 +2,9 @@ package controller.interfaces.account;
 
 import exception.*;
 
+import java.util.List;
+import java.util.Map;
+
 public interface IUserInfoController {
 
     void changePassword(String oldPassword, String newPassword, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException;
@@ -13,4 +16,6 @@ public interface IUserInfoController {
     String getRole(String token) throws NotLoggedINException, InvalidTokenException;
 
     String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField;
+
+    public void changeInfo(Map<String,String> values, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField;
 }
