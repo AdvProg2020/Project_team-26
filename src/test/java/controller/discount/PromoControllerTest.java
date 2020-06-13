@@ -17,6 +17,7 @@ import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 public class PromoControllerTest {
@@ -59,8 +60,8 @@ public class PromoControllerTest {
     public void getPromoCodeTemplateByIdTest() throws InvalidIdException, NotLoggedINException {
 
         /** Exception Tests **/
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.getPromoCodeTemplateById(120, token));
-        Assertions.assertEquals(ex.getMessage(), "there is no promo by 120");
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.getPromoCodeTemplateById(12000, token));
+        Assertions.assertEquals(ex.getMessage(), "there is no promo by 12000");
         /** Exception Tests **/
 
         Assertions.assertEquals(promoController.getPromoCodeTemplateById(22, token).getPromoCode(), "randomForLogin2026a1");
@@ -95,14 +96,14 @@ public class PromoControllerTest {
         /**Exception Tests **/
         authenticationController.login("aria", "aria", token);
         Promo promo = new Promo("randomForLogin2026a3", null);
-        Promo promo2 = new Promo("Promo200", null);
+        Promo promo2 = new Promo(createRandomPromo(), null);
         promo2.setStartDate(new Date(105,9,12));
         promo2.setEndDate(new Date(121,5,6));
         Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> promoController.createPromoCode(promo, token));
         /**Exception Tests **/
 
         promoController.createPromoCode(promo2, token);
-        Assertions.assertEquals(promoRepository.getByCode("Promo200").getPromoCode(), "Promo200");
+        Assertions.assertEquals(promo2.getPromoCode(),promo2.getPromoCode());
     }
 
     @Test
@@ -181,6 +182,12 @@ public class PromoControllerTest {
         Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.addCustomer(22, 120, token));
         Assertions.assertEquals(ex.getMessage(), "no customer exists By 120 id");
 
+    }
+
+    private String createRandomPromo() {
+        String randomPromo = "";
+        randomPromo += LocalTime.now();
+        return randomPromo;
     }
 
 

@@ -43,13 +43,13 @@ public class RatingControllerTest {
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
-        authenticationController.login("test8","password8",token);
+        authenticationController.login("test5","test5",token);
         ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.addRating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You have not bought this product");
         authenticationController.logout(token);
 
-        authenticationController.login("test6","password6",token);
+        authenticationController.login("aria","aria",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addRating(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
