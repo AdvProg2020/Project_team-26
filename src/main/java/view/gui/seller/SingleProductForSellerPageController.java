@@ -1,5 +1,6 @@
 package view.gui.seller;
 
+import controller.interfaces.order.IOrderController;
 import controller.interfaces.product.IProductController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -17,6 +18,7 @@ import view.gui.Constants;
 import view.gui.InitializableController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class SingleProductForSellerPageController implements InitializableController {
@@ -24,6 +26,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     private Product product;
     private ProductSeller productSeller;
     IProductController productController;
+    IOrderController orderController;
     @FXML
     private ImageView productImage;
     @FXML
@@ -47,7 +50,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     @FXML
     private Label nameLabel;
     @FXML
-    TableView<String> buyersTableView;
+    TableView<Buyers> buyersTableView;
     @FXML
     TableColumn<String, Buyers> buyersTableViewColumns;
 
@@ -66,6 +69,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         categoryText.setText(product.getCategory().getName());
         productRateSlider.setValue(product.getAverageRate());
         productRateSlider.setValueChanging(false);
+        setBuyersTableView();
     }
 
     private void initPrimitiveFields() {
@@ -92,12 +96,15 @@ public class SingleProductForSellerPageController implements InitializableContro
     }
 
     private void setBuyersTableView() {
-       /* List<User> users = productController.
+        List<User> users = orderController.getProductBuyerByProductId(product.getId(), Constants.manager.getToken());
+        List<Buyers> buyersList = new ArrayList<>();
+        users.forEach(i -> buyersList.add(new Buyers(i.getId(), i.getUsername(), i.getFullName() == null ? "" : i.getFullName())));
+        ObservableList<Buyers> observableList = FXCollections.observableList(buyersList);
         TableColumn buyers = new TableColumn("Buyers");
         buyers.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        buyersTableView.getColumns().add(buyers);
+        buyersTableView.setItems(observableList);
 
-        buyersTableView.getColumns().add(buyers);*/
-        //todo
 
     }
 
