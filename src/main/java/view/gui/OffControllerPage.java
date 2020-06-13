@@ -64,7 +64,7 @@ public class OffControllerPage implements InitializableController {
         for (OffItem item : off.getItems()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
             OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
-            offItemPageController.load(item, off);
+            offItemPageController.load(item, off, false);
             offItemPageController.initialize(item.getId());
             offVBox.getChildren().add(loader.load());
         }
@@ -105,9 +105,10 @@ public class OffControllerPage implements InitializableController {
         try {
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
-                offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), Constants.manager.getToken());
+                offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), false, Constants.manager.getToken());
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
-                offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, Constants.manager.getToken());
+                offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, false, Constants.manager.getToken());
+
             } else {
                 //todo red the box
                 return;
@@ -126,7 +127,5 @@ public class OffControllerPage implements InitializableController {
             e.printStackTrace();
         }
         //todo reload page
-
-
     }
 }

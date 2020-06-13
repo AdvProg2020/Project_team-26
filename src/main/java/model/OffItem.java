@@ -30,6 +30,12 @@ public class OffItem {
         this.productSeller = productSeller;
     }
 
+    public OffItem(ProductSeller productSeller, long priceInOff, Off off) {
+        this.priceInOff = priceInOff;
+        this.productSeller = productSeller;
+        this.off = off;
+    }
+
     public void setId(int id) {
         this.id = id;
     }

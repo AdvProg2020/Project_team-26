@@ -43,7 +43,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void addProductToOff(Off off, int productId, long priceInOff, double percent, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    public void addProductToOff(Off off, int productId, long priceInOff, double percent, boolean isFirstTime, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
        /* checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
@@ -81,7 +81,8 @@ public class OffController implements IOffController {
             offItem = new OffItem(productSeller, priceInOff);
         }
         offItems.add(offItem);
-        offRepository.addRequest(off);
+        if (!isFirstTime)
+            offRepository.addRequest(off);
 
     }
 
@@ -102,7 +103,7 @@ public class OffController implements IOffController {
     }
 
     @Override
-    public void removeProductFromOff(Off off, int productId, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    public void removeProductFromOff(Off off, int productId, boolean isForAdd, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
@@ -114,7 +115,8 @@ public class OffController implements IOffController {
         ProductSeller productSeller = getProductSeller(Session.getSession(token).getLoggedInUser().getId(), product.getSellerList());
         if (productSeller == null)
             throw new NoAccessException("the product you have choose is not in your list");
-        offRepository.deleteRequest(off.getId());
+        if (!isForAdd)
+            offRepository.deleteRequest(off.getId());
     }
 
     @Override
