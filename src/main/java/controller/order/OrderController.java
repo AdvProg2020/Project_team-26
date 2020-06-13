@@ -3,9 +3,7 @@ package controller.order;
 import controller.interfaces.order.IOrderController;
 import exception.*;
 import model.*;
-import repository.OrderRepository;
-import repository.Pageable;
-import repository.RepositoryContainer;
+import repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +12,13 @@ import java.util.stream.Collectors;
 
 public class OrderController implements IOrderController {
     OrderRepository orderRepository;
+    ProductRepository productRepository;
+    CustomerRepository customerRepository;
 
     public OrderController(RepositoryContainer repositoryContainer) {
         this.orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
+        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
+        this.customerRepository = (CustomerRepository) repositoryContainer.getRepository("CustomerRepository");
     }
 
     public List<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
@@ -72,9 +74,20 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public List<User> getProductBuyerByProductId(int productId, String token) {
-        // TODO: get a List of users who bough this product, check if product belongs to the logged in seller
-        return null;
+    public List<Customer> getProductBuyerByProductId(int productId, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, InvalidIdException {
+        Product product = productRepository.getById(productId);
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
+            throw new NotLoggedINException("You must be Logged in to do this.");
+        } else if (user.getRole() != Role.SELLER) {
+            throw new NoAccessException("You must be a seller to view buyers of a product.");
+        } else if (product == null) {
+            throw new InvalidIdException("The specified product does not exist.");
+        } else if (!product.getSellerList().contains((Seller)user)) {
+            throw new NoAccessException("You don't own this product.");
+        } else {
+            return customerRepository.getAllProductBuyers(productId,null);
+        }
     }
 
 

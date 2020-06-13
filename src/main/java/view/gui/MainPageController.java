@@ -46,8 +46,6 @@ public class MainPageController {
         initCheckBoxs();
         initComBowBoxs();
         buildTreeViewOfCategories();
-
-
     }
 
 
