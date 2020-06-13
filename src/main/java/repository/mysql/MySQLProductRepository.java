@@ -10,10 +10,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -216,7 +213,7 @@ public class MySQLProductRepository
 
             cq.select(root);
 
-            applyFilter(filter, cb, cq, root);
+            cq.where(filter(filter, cb, cq, root));
 
             TypedQuery<Product> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
 
@@ -228,36 +225,71 @@ public class MySQLProductRepository
 
     @Override
     public List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, Pageable pageable) {
-        List<Product> allProducts = getAllSortedAndFiltered(filter, pageable);// TODO: define properly
-        List<Product> result = new ArrayList<>();
-        for (Product product : allProducts) {
-            for (ProductSeller productSeller : product.getSellerList()) {
-                if(productSeller.getPriceInOff() < productSeller.getPrice()) {
-                    result.add(product);
-                    break;
-                }
-            }
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+            Root<Product> root = cq.from(Product.class);
+            Join<Product, ProductSeller> productSellerJoin = root.join("sellerList");
+
+            cq.select(root);
+            cq.where(cb.and(cb.isNotNull(productSellerJoin.get("priceInOff")), filter(filter, cb, cq, root)));
+            TypedQuery<Product> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return null;
         }
-        return result;
+
+//        List<Product> allProducts = getAllSortedAndFiltered(filter, pageable);
+//        List<Product> result = new ArrayList<>();
+//        for (Product product : allProducts) {
+//            for (ProductSeller productSeller : product.getSellerList()) {
+//                if(productSeller.getPriceInOff() < productSeller.getPrice()) {
+//                    result.add(product);
+//                    break;
+//                }
+//            }
+//        }
+//        return result;
     }
 
     @Override
     public List<Product> getAllProductsWithFilterForSeller(Map<String, String> filter, Pageable pageable, int sellerId) {
-        List<Product> allProducts = getAllSortedAndFiltered(filter, pageable);// TODO: define properly
-        List<Product> result = new ArrayList<>();
-        for (Product product : allProducts) {
-            for (ProductSeller productSeller : product.getSellerList()) {
-                if(productSeller.getSeller().getId() == sellerId) {
-                    result.add(product);
-                    break;
-                }
-            }
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+            Root<Product> root = cq.from(Product.class);
+            Join<Product, ProductSeller> productSellerJoin = root.join("sellerList");
+
+            cq.select(root);
+            cq.where(cb.and(cb.equal(productSellerJoin.get("seller"), sellerId), filter(filter, cb, cq, root)));
+            TypedQuery<Product> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return null;
         }
-        return result;
+
+
+//        List<Product> allProducts = getAllSortedAndFiltered(filter, pageable);
+//        List<Product> result = new ArrayList<>();
+//        for (Product product : allProducts) {
+//            for (ProductSeller productSeller : product.getSellerList()) {
+//                if(productSeller.getSeller().getId() == sellerId) {
+//                    result.add(product);
+//                    break;
+//                }
+//            }
+//        }
+//        return result;
     }
 
-    private CriteriaQuery applyFilter(Map<String, String> filter, CriteriaBuilder cb, CriteriaQuery<Product> cq, Root<Product> root) {
-        Predicate predicate = null;
+    private Predicate filter(Map<String, String> filter, CriteriaBuilder cb, CriteriaQuery<Product> cq, Root<Product> root) {
+        Predicate predicate = cb.conjunction();
         for(String key : filter.keySet()) {
             String value = filter.get(key);
             String[] split = value.split("-");
@@ -282,8 +314,7 @@ public class MySQLProductRepository
                     break;
             }
         }
-        cq.where(predicate);
-        return cq;
+        return predicate;
     }
 
 }
