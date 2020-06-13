@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
@@ -168,8 +169,9 @@ public class MySQLProductSellerRepository
             Root<ProductSeller> root = cq.from(ProductSeller.class);
 
             cq.select(root);
-            cq.where(cb.equal(root.get("product"), productId));
-            cq.where(cb.equal(root.get("seller"), sellerId));
+            Predicate productPredicate = cb.equal(root.get("product"), productId);
+            Predicate sellerPredicate = cb.equal(root.get("seller"), sellerId);
+            cq.where(cb.and(productPredicate, sellerPredicate));
             TypedQuery<ProductSeller> typedQuery = em.createQuery(cq);
 
             return typedQuery.getSingleResult();

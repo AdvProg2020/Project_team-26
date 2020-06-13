@@ -12,6 +12,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
@@ -256,30 +257,32 @@ public class MySQLProductRepository
     }
 
     private CriteriaQuery applyFilter(Map<String, String> filter, CriteriaBuilder cb, CriteriaQuery<Product> cq, Root<Product> root) {
+        Predicate predicate = null;
         for(String key : filter.keySet()) {
             String value = filter.get(key);
             String[] split = value.split("-");
             switch (key) {
                 case "category":
-                    cq.where(cb.equal(root.get("category"), Integer.parseInt(value)));
+                    predicate = cb.and(predicate, cb.equal(root.get("category"), Integer.parseInt(value)));
                     break;
                 case "product name":
-                    cq.where(cb.like(root.get("name"), "%" + value + "%"));
+                    predicate = cb.and(predicate, cb.like(root.get("name"), "%" + value + "%"));
                     break;
                 case "brand":
-                    cq.where(cb.like(root.get("brand"), "%" + value + "%"));
+                    predicate = cb.and(predicate, cb.like(root.get("brand"), "%" + value + "%"));
                     break;
                 case "description":
-                    cq.where(cb.like(root.get("description"), "%" + value + "%"));
+                    predicate = cb.and(predicate, cb.like(root.get("description"), "%" + value + "%"));
                     break;
                 case "price":
-                    cq.select(root).where(cb.between(root.get("price"), Integer.parseInt(split[0]), Integer.parseInt(split[1])));
+                    predicate = cb.and(predicate, cb.between(root.get("price"), Integer.parseInt(split[0]), Integer.parseInt(split[1])));
                     break;
                 case "rate":
-                    cq.select(root).where(cb.between(root.get("rate"), Integer.parseInt(split[0]), Integer.parseInt(split[1])));
+                    predicate = cb.and(predicate, cb.between(root.get("rate"), Integer.parseInt(split[0]), Integer.parseInt(split[1])));
                     break;
             }
         }
+        cq.where(predicate);
         return cq;
     }
 

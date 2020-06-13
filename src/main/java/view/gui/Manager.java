@@ -2,6 +2,8 @@ package view.gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 import view.cli.ControllerContainer;
 
@@ -30,6 +32,7 @@ public class Manager {
     }
 
     public void back() throws IOException {
+        pages.remove(pages.size() - 1);
         Pair<String, Integer> page = pages.remove(pages.size() - 1);
         openPage(page.getKey(), page.getValue());
     }
