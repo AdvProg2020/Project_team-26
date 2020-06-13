@@ -34,7 +34,7 @@ public class CommentController implements ICommentController {
             throw new NoAccessException("You are not allowed to do that.");
         } else if (user.getRole() == Role.ADMIN) {
             commentRepository.delete(id);
-        } else if (commentRepository.getById(id).getCustomer().equals((Customer) user)) {
+        } else if (!commentRepository.getById(id).getCustomer().equals((Customer) user)) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             commentRepository.delete(id);

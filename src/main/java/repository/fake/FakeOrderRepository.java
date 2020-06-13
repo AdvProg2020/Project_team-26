@@ -24,16 +24,6 @@ public class FakeOrderRepository implements OrderRepository {
         }
     }
 
-    @Override
-    public List<Order> getAllCustomerOrders(int customerId) {
-        return null;
-    }
-
-    @Override
-    public List<Order> getAllSellerOrders(int sellerId) {
-        return null;
-    }
-
 
     @Override
     public List<Order> getAll() {
@@ -80,6 +70,16 @@ public class FakeOrderRepository implements OrderRepository {
 
     @Override
     public List<Order> getAllSorted(String sortField, boolean isAscending) {
+        return null;
+    }
+
+    @Override
+    public List<Order> getAllCustomerOrders(int customerId, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public List<Order> getAllSellerOrders(int sellerId, Pageable pageable) {
         return null;
     }
 }
