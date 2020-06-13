@@ -57,7 +57,7 @@ public class CartControllerPage implements InitializableController {
         for (Map.Entry<ProductSeller, Integer> entry : products.entrySet()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductOFCart.fxml"));
             SingleProductOfCartController singleProductOfCartController = (SingleProductOfCartController) loader.getController();
-            singleProductOfCartController.load(entry.getKey(), entry.getValue());
+            singleProductOfCartController.load(entry.getKey(), entry.getValue() , cart);
             cartProductsVBox.getChildren().add(loader.load());
         }
     }

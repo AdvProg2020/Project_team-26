@@ -61,4 +61,13 @@ public class Manager {
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
+
+    public boolean checkInputIsInt(String input) {
+        try {
+            Long.parseLong(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
 }
