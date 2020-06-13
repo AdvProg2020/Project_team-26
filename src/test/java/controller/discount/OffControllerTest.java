@@ -67,11 +67,11 @@ public class OffControllerTest {
         /**Exception Tests **/
         authenticationController.login("test2","test2",token);
         Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> offController.addProductToOff(
-                offRepository.getById(2),200,300,20,token));
+                offRepository.getById(2),200,300,20,false,token));
         Assertions.assertEquals(ex.getMessage(),"No Such product Exists");
         /** Exception Tests **/
 
-        offController.addProductToOff(offRepository.getById(2),11,300,20,token);
+        offController.addProductToOff(offRepository.getById(2),11,300,20,false,token);
     }
 
 
@@ -102,7 +102,7 @@ public class OffControllerTest {
         /** Exception Tests **/
         authenticationController.login("test4","test4",token);
         Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> offController.removeProductFromOff(
-                offRepository.getById(2),2,token));
+                offRepository.getById(2),2,false,token));
         /** Exception Tests **/
         offController.removeAOff(2,token);
     }
