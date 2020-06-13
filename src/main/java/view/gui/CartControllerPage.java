@@ -2,10 +2,6 @@ package view.gui;
 
 import controller.interfaces.cart.ICartController;
 import exception.*;
-import javafx.beans.InvalidationListener;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
@@ -13,7 +9,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.*;
 import view.cli.*;
-import view.gui.*;
 
 import java.io.IOException;
 import java.util.*;
@@ -64,7 +59,7 @@ public class CartControllerPage implements InitializableController {
         cartProductsVBox.getChildren().removeAll();
         Map<ProductSeller, Integer> products = cart.getProduct();
         for (Map.Entry<ProductSeller, Integer> entry : products.entrySet()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductOFCart.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductOfCart.fxml"));
             SingleProductOfCartController singleProductOfCartController = (SingleProductOfCartController) loader.getController();
             singleProductOfCartController.load(entry.getKey(), entry.getValue());
             cartProductsVBox.getChildren().add(loader.load());

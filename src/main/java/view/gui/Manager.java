@@ -4,8 +4,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
-import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.util.Pair;
+import model.Role;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
@@ -19,7 +20,9 @@ public class Manager {
     private ControllerContainer controllerContainer;
     private String token;
     private boolean isLoggedIn;
+    private Role role;
     private List<Pair<String, Integer>> pages;
+    private MainController controller;
 
     public Manager() {
         pages = new ArrayList<>();
@@ -41,7 +44,23 @@ public class Manager {
     }
 
     private void showNode(Node node) {
-        // TODO: show the node in the main scene
+        controller.setCenter(node);
+    }
+
+    public void start(Stage primaryStage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/Main.fxml"));
+        Scene scene = new Scene(loader.load());
+
+        controller = (MainController) loader.getController();
+        reloadTop();
+
+        primaryStage.setTitle("Store");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+    public void reloadTop() {
+        controller.reload();
     }
 
     public ControllerContainer getControllerContainer() {
@@ -66,6 +85,14 @@ public class Manager {
 
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public boolean checkInputIsInt(String input) {

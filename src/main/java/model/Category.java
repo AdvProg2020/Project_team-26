@@ -107,6 +107,8 @@ public class Category {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
         if ((obj instanceof Category))
             return false;
         Category category = (Category) obj;

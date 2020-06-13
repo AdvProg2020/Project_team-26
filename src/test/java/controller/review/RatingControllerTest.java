@@ -55,16 +55,16 @@ public class RatingControllerTest {
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
 
-        authenticationController.login("test8","password8",token);
+        authenticationController.login("test8","test8",token);
         ratingController.addRating(5.0,1,token);
         authenticationController.logout(token);
-        authenticationController.login("test9","password9",token);
+        authenticationController.login("aria","aria",token);
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
 
         /** Exception Tests **/
 
-        authenticationController.login("test8","password8",token);
+        authenticationController.login("test8","test8",token);
         ratingController.addRating(5.0,1,token);
         Assertions.assertEquals(rateRepository.getById(6).getScore(),5.0);
 
