@@ -6,7 +6,7 @@ import model.Seller;
 import java.util.List;
 
 public interface OrderRepository extends Repository<Order> {
-    public List<Order> getAllCustomerOrders(int customerId);
+    List<Order> getAllCustomerOrders(int customerId, Pageable pageable);
 
-    public List<Order> getAllSellerOrders(int sellerId);
+    List<Order> getAllSellerOrders(int sellerId, Pageable pageable);
 }
