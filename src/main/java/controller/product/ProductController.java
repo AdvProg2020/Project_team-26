@@ -148,6 +148,19 @@ public class ProductController implements IProductController {
         productRepository.editRequest(newProduct, user);
     }
 
+    @Override
+    public void editProductSeller(int id, ProductSeller newProductSeller,String token) throws InvalidIdException, InvalidTokenException, NotSellerException, NoAccessException {
+        ProductSeller productSeller = productSellerRepository.getById(id);
+        if (productSeller == null)
+            throw new InvalidIdException("There is no productSeller with this id to change");
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user.getRole() != Role.SELLER)
+            throw new NotSellerException("You must be seller to edit productSeller");
+        if (!productSeller.getSeller().equals(productSeller))
+            throw new NoAccessException("You can only change your own products");
+        productSellerRepository.editRequest(newProductSeller);
+    }
+
     private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
         if(isAscending) {
             return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
