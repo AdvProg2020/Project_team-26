@@ -187,9 +187,9 @@
 
             </children>
         </HBox>
-      <TableView prefHeight="195.0" prefWidth="600.0">
+      <TableView fx:id="buyersTableView" prefHeight="195.0" prefWidth="600.0">
         <columns>
-          <TableColumn fx:id="buyersTableView" prefWidth="598.6666666269302" text="Buyer" />
+          <TableColumn fx:id="buyersTableViewColumns" prefWidth="598.6666666269302" text="Buyer" />
         </columns>
       </TableView>
 
