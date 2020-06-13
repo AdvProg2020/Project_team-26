@@ -48,7 +48,7 @@ public class OrderControllerTest  {
     public void getASingleOrderTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NoObjectIdException {
 
         authenticationController.login("test5","test5",token);
-        Exception ex = Assertions.assertThrows(NoObjectIdException.class, () -> orderController.getASingleOrder(1,token));
+        Exception ex = Assertions.assertThrows(NoObjectIdException.class, () -> orderController.getASingleOrder(100,token));
         Assertions.assertEquals(ex.getMessage(),"Object does not exist.");
     }
 

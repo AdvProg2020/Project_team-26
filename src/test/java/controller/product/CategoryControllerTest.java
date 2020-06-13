@@ -47,7 +47,7 @@ public class CategoryControllerTest {
 
     @BeforeEach
     void setup() {
-        repositoryContainer = new RepositoryContainer();
+        repositoryContainer = new RepositoryContainer("sql");
         Session.initializeFake((UserRepository) repositoryContainer.getRepository("UserRepository"));
         token = Session.addSession();
         categoryController = new CategoryController(repositoryContainer);
