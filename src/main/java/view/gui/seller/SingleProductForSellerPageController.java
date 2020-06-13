@@ -2,10 +2,7 @@ package view.gui.seller;
 
 import controller.interfaces.order.IOrderController;
 import controller.interfaces.product.IProductController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotSellerException;
+import exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -96,16 +93,25 @@ public class SingleProductForSellerPageController implements InitializableContro
     }
 
     private void setBuyersTableView() {
-        List<User> users = orderController.getProductBuyerByProductId(product.getId(), Constants.manager.getToken());
-        List<Buyers> buyersList = new ArrayList<>();
-        users.forEach(i -> buyersList.add(new Buyers(i.getId(), i.getUsername(), i.getFullName() == null ? "" : i.getFullName())));
-        ObservableList<Buyers> observableList = FXCollections.observableList(buyersList);
-        TableColumn buyers = new TableColumn("Buyers");
-        buyers.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        buyersTableView.getColumns().add(buyers);
-        buyersTableView.setItems(observableList);
-
-
+        List<Customer> users = null;
+        try {
+            users = orderController.getProductBuyerByProductId(product.getId(), Constants.manager.getToken());
+            List<Buyers> buyersList = new ArrayList<>();
+            users.forEach(i -> buyersList.add(new Buyers(i.getId(), i.getUsername(), i.getFullName() == null ? "" : i.getFullName())));
+            ObservableList<Buyers> observableList = FXCollections.observableList(buyersList);
+            TableColumn buyers = new TableColumn("Buyers");
+            buyers.setCellValueFactory(new PropertyValueFactory<>("userName"));
+            buyersTableView.getColumns().add(buyers);
+            buyersTableView.setItems(observableList);
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
+        }
     }
 
 
