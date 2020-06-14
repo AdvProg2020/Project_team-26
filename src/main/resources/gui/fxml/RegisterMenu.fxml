@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <left>
+      <AnchorPane prefHeight="684.0" prefWidth="246.0" style="-fx-background-color: #eb5234;" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="48.0" layoutY="247.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pic/shopping-cart-icon-png-7.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="11.0" layoutY="50.0" text="Register Now!" textFill="WHITE">
+               <font>
+                  <Font size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="15.0" layoutY="115.0" text="And get To Shopping :D" textFill="WHITE">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </left>
+   <right>
+      <AnchorPane prefHeight="684.0" prefWidth="619.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="116.0" layoutY="31.0" text="Create an Account" textFill="#eb5234">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField layoutX="116.0" layoutY="154.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField layoutX="116.0" layoutY="196.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField layoutX="330.0" layoutY="152.0" promptText="First Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField layoutX="330.0" layoutY="194.0" promptText="Last Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField layoutX="116.0" layoutY="242.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField layoutX="330.0" layoutY="240.0" promptText="Confirm Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <MenuButton layoutX="116.0" layoutY="291.0" mnemonicParsing="false" text="Role">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+              </items>
+            </MenuButton>
+            <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="78.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pic/icons8-user-24.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="78.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pic/email+gmail+google+internet+message+icon-1320192780259745073.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="78.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pic/icons8-password-30.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="293.0" layoutY="156.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pic/first-name-2220853-1853393.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="293.0" layoutY="196.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pic/first-name-2220853-1853393.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="293.0" layoutY="242.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pic/icons8-password-30.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>
