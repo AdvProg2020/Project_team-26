@@ -66,16 +66,21 @@ public class CreateProductForSeller implements InitializableController {
     @FXML
     public void saveButtomClicked() {
         try {
-            if (saveButton.getText().equals("AddSeller") && checkInputsForProductSeller()) {
+            if (saveButton.getText().equals("AddSeller")) {
+                if (checkInputsForProductSeller()) {
+                    ProductSeller productSeller = new ProductSeller();
+                    productSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
+                    productSeller.setPrice(Long.parseLong(priceTextField.getText()));
+                    productController.addSeller(product.getId(), productSeller, Constants.manager.getToken());
+                    //TODO reload
+                }
+            } else if (checkInputsForProduct() && checkInputsForProductSeller()) {
                 ProductSeller productSeller = new ProductSeller();
                 productSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
                 productSeller.setPrice(Long.parseLong(priceTextField.getText()));
-                productController.addSeller(product.getId(), productSeller, Constants.manager.getToken());
-                //TODO reload
-            } else if (checkInputsForProduct()) {
                 Product newProduct = new Product(nameTextField.getText(), brandTextField.getText(), descriptionField.getText());
                 newProduct.setCategory(category);
-                //TODO add seller
+                newProduct.getSellerList().add(productSeller);
                 productController.createProduct(newProduct, Constants.manager.getToken());
                 //TODO reload
             }
