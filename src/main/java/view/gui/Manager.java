@@ -115,6 +115,10 @@ public class Manager {
         }
     }
 
+    public void setTokenFromController(String error) {
+        //todo
+    }
+
     public boolean checkIsPercent(String input) {
         if (input.matches("\\d+(?:\\.\\d+)%$")) {
             if (input.split("%")[0].length() <= 2)
