@@ -11,6 +11,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import view.cli.ControllerContainer;
 
+import java.io.IOException;
+
 public class LoginPageController {
 
     @FXML
@@ -50,6 +52,11 @@ public class LoginPageController {
                 errorLabel.setText("Your password is Wrong.");
             }
         }
+    }
+
+    @FXML
+    private void redirectToRegister(ActionEvent actionEvent) throws IOException {
+        Constants.manager.switchScene("Register");
     }
 
 

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="684.0" prefWidth="832.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.RegisterMenuController">
    <left>
       <AnchorPane prefHeight="684.0" prefWidth="246.0" style="-fx-background-color: #eb5234;" BorderPane.alignment="CENTER">
          <children>
@@ -33,26 +32,20 @@
          </children>
       </AnchorPane>
    </left>
-   <right>
-      <AnchorPane prefHeight="684.0" prefWidth="619.0" BorderPane.alignment="CENTER">
+   <center>
+      <AnchorPane id="anchor" prefHeight="684.0" prefWidth="619.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="116.0" layoutY="31.0" text="Create an Account" textFill="#eb5234">
+            <Label layoutX="184.0" layoutY="39.0" text="Create an Account" textFill="#eb5234">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField layoutX="116.0" layoutY="154.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField layoutX="116.0" layoutY="196.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField layoutX="330.0" layoutY="152.0" promptText="First Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField layoutX="330.0" layoutY="194.0" promptText="Last Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField layoutX="116.0" layoutY="242.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField layoutX="330.0" layoutY="240.0" promptText="Confirm Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <MenuButton layoutX="116.0" layoutY="291.0" mnemonicParsing="false" text="Role">
-              <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-              </items>
-            </MenuButton>
+            <TextField id="usernameText" layoutX="116.0" layoutY="154.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField id="emailText" layoutX="116.0" layoutY="196.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField id="firstNameText" layoutX="330.0" layoutY="152.0" promptText="First Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField id="lastNameText" layoutX="330.0" layoutY="194.0" promptText="Last Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField id="passwordText" layoutX="116.0" layoutY="242.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField id="confirmPasswordText" layoutX="330.0" layoutY="240.0" promptText="Confirm Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
             <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="78.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pic/icons8-user-24.png" />
@@ -83,7 +76,10 @@
                   <Image url="@../pic/icons8-password-30.png" />
                </image>
             </ImageView>
+            <ChoiceBox id="roleChoice" layoutX="116.0" layoutY="287.0" prefWidth="150.0" />
+            <Label layoutX="73.0" layoutY="291.0" text="Role" />
+            <Label id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="106.0" prefHeight="17.0" prefWidth="286.0" textAlignment="CENTER" textFill="RED" />
          </children>
       </AnchorPane>
-   </right>
+   </center>
 </BorderPane>

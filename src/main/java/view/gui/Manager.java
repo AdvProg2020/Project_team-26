@@ -4,6 +4,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
@@ -23,6 +24,7 @@ public class Manager {
     private Role role;
     private List<Pair<String, Integer>> pages;
     private MainController controller;
+    private AuthenticationStageManager authenticationStageManager;
 
     public Manager() {
         pages = new ArrayList<>();
@@ -117,6 +119,17 @@ public class Manager {
 
     public void setTokenFromController(String error) {
         //todo
+    }
+
+    public void setAuthenticationStageManager(AuthenticationStageManager authenticationStageManager) {
+        this.authenticationStageManager = authenticationStageManager;
+    }
+
+    public void switchScene(String scene) throws IOException {
+        if(scene.equals("Login"))
+            authenticationStageManager.switchToLogin();
+        else
+            authenticationStageManager.switchToRegister();
     }
 
     public boolean checkIsPercent(String input) {
