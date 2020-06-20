@@ -16,7 +16,7 @@ import view.cli.ControllerContainer;
 
 public class RegisterMenuController {
 
-    ObservableList<String> roles = FXCollections.observableArrayList("Manager", "Customer", "Seller");
+    private final ObservableList<String> roles = FXCollections.observableArrayList("Manager", "Customer", "Seller");
 
     @FXML
     private TextField usernameText;

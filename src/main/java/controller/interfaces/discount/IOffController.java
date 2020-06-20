@@ -16,11 +16,7 @@ public interface IOffController {
 
     void removeAOff(int id, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException;
 
-    List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, String token);
-
     List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, String token);
-
-    List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 
     List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 

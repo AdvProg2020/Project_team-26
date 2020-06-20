@@ -11,11 +11,7 @@ public interface IPromoController {
 
     Promo getPromoCodeTemplateById(int codeId, String token) throws InvalidIdException, NotLoggedINException;
 
-    List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
-
     List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
-
-    //List<Promo> getAllPromoCode(String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
 
     int createPromoCode(Promo promo, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException;
 
