@@ -192,18 +192,6 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
-    public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int id, String token) throws InvalidIdException {
-        Pageable page = createAPage(sortField,isAscending,0,0);
-        Category category = categoryRepository.getById(id);
-        if(category == null) {
-            throw new InvalidIdException("No such category exists");
-        } else {
-            filter.put("category", "" + id);
-            return productRepository.getAllSortedAndFiltered(filter,page);
-        }
-    }
-
-    @Override
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
         Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
         Category category = categoryRepository.getById(id);

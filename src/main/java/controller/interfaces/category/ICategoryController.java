@@ -36,8 +36,6 @@ public interface ICategoryController {
 
     Category getCategoryByName(String name, String token) throws InvalidIdException,InvalidIdException;
 
-    List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int id, String token) throws InvalidIdException;
-
     List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending,int startIndex,int endIndex, int id, String token) throws InvalidIdException;
 
     List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;

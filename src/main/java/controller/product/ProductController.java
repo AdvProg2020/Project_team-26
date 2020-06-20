@@ -78,29 +78,11 @@ public class ProductController implements IProductController {
         }
     }
 
-    @Override
-    public List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, String token) {
-        Pageable page = createAPage(fieldName,isAscending,0,0);
-        return productRepository.getAllSortedAndFiltered(filter, page);
-    }
 
     @Override
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token) {
         Pageable page = createAPage(fieldName,isAscending,startIndex,endIndex);
         return productRepository.getAllSortedAndFiltered(filter, page);
-    }
-
-    @Override
-    public List<Product> getAllProductWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, String token) throws NotLoggedINException, InvalidTokenException, NoAccessException {
-        Pageable page = createAPage(fieldName,isAscending,0,0);
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null) {
-            throw new NotLoggedINException("You must be logged in to view all of your products");
-        } else if (user.getRole() != Role.SELLER) {
-            throw new NoAccessException("Only a seller can view his/her products");
-        } else {
-            return productRepository.getAllProductsWithFilterForSeller(filter, page, user.getId());
-        }
     }
 
     @Override

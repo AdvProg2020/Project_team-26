@@ -37,24 +37,6 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public List<Order> getOrdersWithFilter(String sortField, boolean isAscending, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null) {
-            throw new NotLoggedINException("You must be logged in");
-        } else if(user.getRole() != Role.CUSTOMER) {
-            throw new NoAccessException("You must be a customer to gte Orders");
-        } else {
-            List<Order> allOrders  = new ArrayList<>();
-            for (Order order : orderRepository.getAllSorted(sortField, isAscending)) {
-                if(order.getCustomer().getUsername().equals(user.getUsername())) {
-                    allOrders.add(order);
-                }
-            }
-            return allOrders;
-        }
-    }
-
-    @Override
     public List<Order> getOrdersWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         Pageable page =  createAPage(sortField,isAscending,startIndex,endIndex);
         User user = Session.getSession(token).getLoggedInUser();

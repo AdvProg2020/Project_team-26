@@ -37,20 +37,6 @@ public class PromoController implements IPromoController {
         return promo;
     }
 
-    @Override
-    public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null) {
-            throw new NotLoggedINException("you are not logged in");
-        } else if (user.getRole() == Role.SELLER) {
-            throw new NoAccessException("only customer");
-        }
-        if (user.getRole() == Role.CUSTOMER) {
-            return ((Customer) user).getAvailablePromos();
-        } else {
-            return promoRepository.getAllSorted(sortField,isAscending);
-        }
-    }
 
     @Override
     public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
