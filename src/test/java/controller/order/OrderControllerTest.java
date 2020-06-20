@@ -62,7 +62,7 @@ public class OrderControllerTest  {
     @Test
     public void getOrdersWithFiltersTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotLoggedINException {
         authenticationController.login("test5","test5",token);
-        Assertions.assertEquals(orderController.getOrdersWithFilter(null,true,token),new ArrayList<>());
+        Assertions.assertEquals(orderController.getOrdersWithFilter(null,true,0,0,token),new ArrayList<>());
     }
 
     @Test

@@ -111,20 +111,20 @@ class ProductControllerTest {
         /** Exception Tests **/
 
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> productController.getAllProductWithFilterForSellerId(
-                null,"name",true,token
+                null,"name",true,0,0,token
         ));
         Assertions.assertEquals(ex.getMessage(),"You must be logged in to view all of your products");
 
         authenticationController.login("aria","aria",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> productController.getAllProductWithFilterForSellerId(
-                null,"name",true,token));
+                null,"name",true,0,0,token));
         Assertions.assertEquals(ex.getMessage(),"Only a seller can view his/her products");
         authenticationController.logout(token);
         /** Exception Tests **/
 
         authenticationController.login("test2","test2",token);
         Assertions.assertNotEquals(null,productController.getAllProductWithFilterForSellerId(
-                null,"name",true,token));
+                null,"name",true,0,0,token));
     }
 
 

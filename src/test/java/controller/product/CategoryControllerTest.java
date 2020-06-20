@@ -146,7 +146,7 @@ public class CategoryControllerTest {
         Assertions.assertEquals(ex.getMessage(),"No such category exists");
         /**Exception Tests **/
 
-        Assertions.assertNotEquals(null,categoryController.getAllProductWithFilter(new HashMap<>(),"name",true,12,token));
+        Assertions.assertNotEquals(null,categoryController.getAllProductWithFilter(new HashMap<>(),"name",true,0,0,12,token));
 
     }
 

@@ -133,12 +133,12 @@ public class PromoControllerTest {
 
         /**Exception Tests **/
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> promoController.getAllPromoCodeForCustomer(
-                "asd", true, token));
+                "asd", true,0,0, token));
         Assertions.assertEquals(ex.getMessage(), "you are not logged in");
 
         authenticationController.login("test4", "test4", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> promoController.getAllPromoCodeForCustomer(
-               null , true, token));
+               null , true,0,0, token));
         Assertions.assertEquals(ex.getMessage(), "only customer");
         /**Exception Tests**/
 
