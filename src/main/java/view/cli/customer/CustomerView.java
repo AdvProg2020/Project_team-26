@@ -72,7 +72,7 @@ public class CustomerView extends View {
         try {
             promoController.getAllPromoCodeForCustomer(promoSort.getFieldNameForSort(), promoSort.
                             isAscending(),
-                    manager.getToken()).forEach(
+                   0,0,manager.getToken()).forEach(
                     promo -> manager.inputOutput.println("promo with code : " + promo.getPromoCode()
                             + " with max : " + promo.getMaxDiscount() + "\nand percent " + promo.getPercent() +
                             " started at " + promo.getStartDate().toString() + " end : " + promo.getEndDate().toString())

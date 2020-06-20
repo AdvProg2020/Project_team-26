@@ -145,7 +145,7 @@ public class ManageProductForSellerView extends View {
         try {
             productController.getAllProductWithFilterForSellerId(productFilterAndSort.getFilterForController(),
                     productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending()
-                    , manager.getToken()).forEach(product -> manager.inputOutput.println(
+                    ,0,0, manager.getToken()).forEach(product -> manager.inputOutput.println(
                     product.getName() + "with id: " + product.getId() + "in category :" + product.getCategory().getName()));
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());

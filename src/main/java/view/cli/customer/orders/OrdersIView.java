@@ -50,7 +50,7 @@ public class OrdersIView extends View {
 
     protected void showAll() {
         try {
-            orderController.getOrdersWithFilter(orderSort.getFieldNameForSort(), orderSort.isAscending(), manager.getToken()).forEach(order ->
+            orderController.getOrdersWithFilter(orderSort.getFieldNameForSort(), orderSort.isAscending(),0,0, manager.getToken()).forEach(order ->
                     manager.inputOutput.println("the order ID is " + order.getId() + " at " + order.getDate().toString() +
                             " with total price " + order.getTotalPrice()));
         } catch (NoAccessException e) {

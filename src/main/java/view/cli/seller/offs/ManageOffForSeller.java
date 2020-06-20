@@ -55,7 +55,7 @@ public class ManageOffForSeller extends View {
         try {
             for (Off off : offController.getAllOfForSellerWithFilter(
                     offSort.getFieldNameForSort()
-                    , offSort.isAscending(), manager.getToken())) {
+                    , offSort.isAscending(),0,0, manager.getToken())) {
                 manager.inputOutput.println("off id :" + off.getId());
                 manager.inputOutput.println("start :" + off.getStartDate().toString());
                 off.getItems().forEach(item -> manager.inputOutput.println(item.getProductSeller().getProduct().getName() + " with id" +

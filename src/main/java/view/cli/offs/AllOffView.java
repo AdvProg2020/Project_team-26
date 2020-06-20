@@ -46,7 +46,7 @@ public class AllOffView extends View {
     }
 
     protected void showAll() {
-        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), manager.getToken());
+        List<Product> productList = offController.getAllProductWithOff(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(), productFilterAndSort.isAscending(), 0,0,manager.getToken());
         for (Product product : productList) {
             manager.inputOutput.println("name : " + product.getName() + " with id : " + product.getId());
             product.getSellerList().stream().filter(i -> i.getPriceInOff() != i.getPrice()).collect(Collectors.

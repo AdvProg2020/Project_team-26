@@ -49,7 +49,7 @@ public class PromoForManagerView extends View {
     protected void showAll() {
         try {
             promoController.getAllPromoCodeForCustomer(promoSort.getFieldNameForSort(), promoSort.isAscending()
-                    , manager.getToken()).forEach(promo -> manager.inputOutput.println(promo.getPromoCode() +
+                    ,0,0, manager.getToken()).forEach(promo -> manager.inputOutput.println(promo.getPromoCode() +
                     " with id : " + promo.getId()));
         } catch (NotLoggedINException | NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
