@@ -1,5 +1,6 @@
 package controller.review;
 
+import controller.cart.CartController;
 import repository.ProductRepository;
 import repository.RateRepository;
 import repository.RepositoryContainer;
@@ -21,6 +22,7 @@ public class RatingControllerTest {
     private AuthenticationController authenticationController;
     private CommentController commentController;
     private RatingController ratingController;
+    private CartController cartController;
 
 
     @BeforeEach
@@ -30,13 +32,14 @@ public class RatingControllerTest {
         authenticationController = new AuthenticationController(repositoryContainer);
         ratingController = new RatingController(repositoryContainer);
         commentController = new CommentController(repositoryContainer);
+        cartController = new CartController(repositoryContainer);
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
         rateRepository = (RateRepository) repositoryContainer.getRepository("RatingRepository");
         productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
     }
 
     @Test
-    public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException, NoObjectIdException {
+    public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException, NoObjectIdException, NotEnoughCreditException, NotEnoughProductsException, InvalidIdException {
         /** Exception Tests **/
 
         Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addRating(5.0,
@@ -55,9 +58,6 @@ public class RatingControllerTest {
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
 
-        authenticationController.login("test8","test8",token);
-        ratingController.addRating(5.0,1,token);
-        authenticationController.logout(token);
         authenticationController.login("aria","aria",token);
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
@@ -65,6 +65,8 @@ public class RatingControllerTest {
         /** Exception Tests **/
 
         authenticationController.login("test8","test8",token);
+        cartController.addOrChangeProduct(18,1,token);
+        cartController.checkout(token);
         ratingController.addRating(5.0,1,token);
         Assertions.assertEquals(rateRepository.getById(6).getScore(),5.0);
 
