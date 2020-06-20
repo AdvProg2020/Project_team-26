@@ -41,6 +41,7 @@ public class OffItemPageController implements InitializableController {
     public void load(OffItem offItem, Off off, boolean isForAdd) {
         this.off = off;
         this.offItem = offItem;
+        this.isForAdd = isForAdd;
         name.setText(offItem.getProductSeller().getProduct().getName());
         price.setText("" + offItem.getProductSeller().getPrice());
         priceInOff.setText("" + offItem.getPriceInOff());

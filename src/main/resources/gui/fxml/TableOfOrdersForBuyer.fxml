@@ -3,11 +3,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
-<TableView prefHeight="333.0" prefWidth="568.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<TableView fx:id="tableView" prefHeight="333.0" prefWidth="568.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.customer.OrderTableControllerForCustomer">
     <columns>
-        <TableColumn prefWidth="125.99995422363281" text="Buyer" />
-        <TableColumn prefWidth="134.66664123535156" text="Date" />
-        <TableColumn minWidth="6.0" prefWidth="102.0" text="price" />
-        <TableColumn prefWidth="203.99996948242188" text="Address" />
+        <TableColumn fx:id="buyerColumn" prefWidth="125.99995422363281" text="Buyer" />
+        <TableColumn fx:id="dateColumn" prefWidth="134.66664123535156" text="Date" />
+        <TableColumn fx:id="priceColumn" minWidth="6.0" prefWidth="102.0" text="price" />
+        <TableColumn fx:id="addressColumn" prefWidth="203.99996948242188" text="Address" />
     </columns>
 </TableView>
