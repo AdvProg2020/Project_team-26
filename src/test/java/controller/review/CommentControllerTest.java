@@ -71,11 +71,6 @@ public class CommentControllerTest {
         Assertions.assertEquals(commentRepository.getById(1).getText(),"garage");
 
         /** End of Exceptions**/
-
-        authenticationController.login("test8", "test8", token);
-        commentController.removeComment(1, token);
-        Assertions.assertEquals(commentRepository.getById(1), null);
-
         authenticationController.logout(token);
 
         authenticationController.login("aria", "aria", token);

@@ -68,7 +68,7 @@ public class PromoControllerTest {
     }
 
     @Test
-    public void removePromoCodeTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, InvalidIdException, NoObjectIdException, NoAccessException {
+    public void removePromoCodeTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, InvalidIdException, NoObjectIdException, NoAccessException, ObjectAlreadyExistException {
 
         /**Exception Tests **/
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> promoController.removePromoCode(12, token));
@@ -84,6 +84,10 @@ public class PromoControllerTest {
         Assertions.assertEquals(ex.getMessage(), "there is no promo by 1200");
         /** Exception Tests **/
 
+        Promo promo = new Promo("randomForLogin2023a9", null);
+        promo.setStartDate(new Date(105,9,12));
+        promo.setEndDate(new Date(121,5,6));
+        promoController.createPromoCode(promo,token);
         Assertions.assertEquals(promoRepository.getByCode("randomForLogin2023a9").getPromoCode(), "randomForLogin2023a9");
         promoController.removePromoCode(promoRepository.getByCode("randomForLogin2023a9").getId(), token);
         Assertions.assertEquals(promoRepository.getByCode("randomForLogin2023a9"), null);
@@ -168,9 +172,9 @@ public class PromoControllerTest {
         Assertions.assertEquals(ex.getMessage(), "the promo doesnt contain 60 id");
         /** Exception Tests **/
 
-        promoController.addCustomer(22, 33, token);
         promoController.removeCustomer(22 ,33, token);
         Assertions.assertEquals(promoRepository.getByCode("randomForLogin2026a1").getCustomers().contains(userRepository.getUserByUsername("test5")), false);
+        promoController.addCustomer(22, 33, token);
 
     }
 
