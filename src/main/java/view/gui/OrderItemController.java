@@ -12,6 +12,8 @@ import java.io.IOException;
 import static model.Status.DEACTIVE;
 
 public class OrderItemController implements InitializableController {
+    private int offItemId;
+    private int productId;
     @FXML
     private Button productPageButton;
     @FXML
@@ -29,28 +31,30 @@ public class OrderItemController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
+        this.offItemId = id;
 
     }
-    public void load(OrderItem orderItem){
+
+    public void load(OrderItem orderItem) {
+        this.productId = orderItem.getProductId();
         sellerName.setText(orderItem.getSeller().getFullName());
         productName.setText(orderItem.getProduct().getName());
-        price.setText(""+orderItem.getPrice());
-        paidPrice.setText(""+orderItem.getPaidPrice());
-        number.setText(""+orderItem.getAmount());
-        state.setText(""+ShipmentState.getState(orderItem.getState()));
-        if(orderItem.getProduct().getStatus() == Status.DEACTIVE){
+        price.setText("" + orderItem.getPrice());
+        paidPrice.setText("" + orderItem.getPaidPrice());
+        number.setText("" + orderItem.getAmount());
+        state.setText("" + ShipmentState.getState(orderItem.getState()));
+        if (orderItem.getProduct().getStatus() == Status.DEACTIVE) {
             productPageButton.setVisible(false);
             return;
         }
 
 
-
-
         //todo
     }
+
     @FXML
-    public void productButtonClicked(){
-        if(productPageButton.isVisible() == false)
+    public void productButtonClicked() {
+        if (productPageButton.isVisible() == false)
             return;
         //todo load page
     }
