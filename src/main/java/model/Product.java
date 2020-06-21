@@ -165,6 +165,10 @@ public class Product {
         this.sellerList = sellerList;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     @Override
     public Product clone() {
         Product product = new Product(this.name, this.brand, this.description);

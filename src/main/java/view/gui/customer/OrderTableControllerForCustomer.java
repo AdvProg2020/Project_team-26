@@ -1,29 +1,18 @@
 package view.gui.customer;
 
 import controller.interfaces.order.IOrderController;
-import controller.order.OrderController;
 import exception.*;
-import javafx.beans.Observable;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
+import javafx.collections.*;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.control.Tab;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.fxml.*;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import model.Order;
 import model.OrderItem;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
 import view.gui.*;
-import view.gui.seller.OffItemPageController;
-import view.gui.seller.SingleProductForSellerPageController;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;

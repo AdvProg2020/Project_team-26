@@ -7,9 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="view.gui.OrderItemController">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="147.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.OrderItemController">
    <children>
       <VBox alignment="CENTER_LEFT" prefHeight="147.0" prefWidth="243.0">
          <padding>
@@ -19,13 +17,13 @@ fx:controller="view.gui.OrderItemController">
             <HBox alignment="CENTER" prefHeight="84.0" prefWidth="222.0" spacing="30.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="67.0" text="Seller" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="115.47002911567688" />
+                  <Text fx:id="sellerName" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="115.47002911567688" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="20.0" layoutY="42.0" prefHeight="84.0" prefWidth="222.0" spacing="30.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="25.0" prefWidth="74.0" text="Product" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="115.47002911567688" />
+                  <Button fx:id="productPageButton" mnemonicParsing="false" onAction="#productButtonClicked" prefHeight="25.0" prefWidth="74.0" text="Product" />
+                  <Text fx:id="productName" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="115.47002911567688" />
                </children>
             </HBox>
          </children>
@@ -35,13 +33,13 @@ fx:controller="view.gui.OrderItemController">
             <HBox alignment="CENTER" prefHeight="84.0" prefWidth="222.0" spacing="30.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="87.0" text="Main price" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="66.80334234237671" />
+                  <Text fx:id="price" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="66.80334234237671" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="84.0" prefWidth="222.0" spacing="30.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="83.0" text="Paid price" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="70.13665521144867" />
+                  <Text fx:id="paidPrice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="70.13665521144867" />
                </children>
             </HBox>
          </children>
@@ -54,13 +52,13 @@ fx:controller="view.gui.OrderItemController">
             <HBox alignment="CENTER" prefHeight="71.0" prefWidth="184.0" spacing="30.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="87.0" text="Amount" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="99.4700288772583" />
+                  <Text fx:id="number" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="99.4700288772583" />
                </children>
             </HBox>
             <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="65.0" prefWidth="184.0" spacing="30.0">
                <children>
                   <Label prefHeight="17.0" prefWidth="47.0" text="State" />
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="93.46996855735779" />
+                  <Text fx:id="state" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="93.46996855735779" />
                </children>
             </HBox>
          </children>

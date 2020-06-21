@@ -79,4 +79,8 @@ public class OrderItem {
     public int getAmount() {
         return amount;
     }
+
+    public ShipmentState getState() {
+        return state;
+    }
 }
