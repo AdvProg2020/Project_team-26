@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="720.0" prefWidth="568.0">
+         <children>
+            <HBox prefHeight="82.0" prefWidth="442.0">
+               <children>
+                  <Label text="Username:">
+                     <HBox.margin>
+                        <Insets left="15.0" top="35.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField style="-fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets left="25.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label text="First Name:">
+                     <HBox.margin>
+                        <Insets left="15.0" top="35.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField style="-fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets left="25.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="82.0" prefWidth="442.0">
+               <children>
+                  <Label text="Email:">
+                     <HBox.margin>
+                        <Insets left="15.0" top="35.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField style="-fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets left="25.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Label text="Last Name:">
+                     <HBox.margin>
+                        <Insets left="40.0" top="35.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField style="-fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets left="25.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+            <HBox prefHeight="82.0" prefWidth="442.0">
+               <children>
+                  <Label text="Phone Number:">
+                     <HBox.margin>
+                        <Insets left="15.0" top="35.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField style="-fx-background-color: transparent;">
+                     <HBox.margin>
+                        <Insets left="25.0" top="30.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <ScrollPane prefHeight="720.0" prefWidth="457.0">
+         <content>
+            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+              <columns>
+                <TableColumn prefWidth="224.0" text="C1" />
+                <TableColumn prefWidth="223.0" text="C2" />
+              </columns>
+            </TableView>
+         </content>
+      </ScrollPane>
+   </children>
+</HBox>

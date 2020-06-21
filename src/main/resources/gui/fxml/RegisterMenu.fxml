@@ -33,19 +33,19 @@
       </AnchorPane>
    </left>
    <center>
-      <AnchorPane id="anchor" prefHeight="684.0" prefWidth="619.0" BorderPane.alignment="CENTER">
+      <AnchorPane id="anchor" fx:id="anchor" prefHeight="684.0" prefWidth="619.0" BorderPane.alignment="CENTER">
          <children>
             <Label layoutX="184.0" layoutY="39.0" text="Create an Account" textFill="#eb5234">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField id="usernameText" layoutX="116.0" layoutY="154.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField id="emailText" layoutX="116.0" layoutY="196.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField id="firstNameText" layoutX="330.0" layoutY="152.0" promptText="First Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField id="lastNameText" layoutX="330.0" layoutY="194.0" promptText="Last Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField id="passwordText" layoutX="116.0" layoutY="242.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
-            <PasswordField id="confirmPasswordText" layoutX="330.0" layoutY="240.0" promptText="Confirm Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField id="usernameText" fx:id="usernameText" layoutX="116.0" layoutY="154.0" promptText="Username" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField id="emailText" fx:id="emailText" layoutX="116.0" layoutY="196.0" promptText="Email" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField id="firstNameText" fx:id="firstNameText" layoutX="330.0" layoutY="152.0" promptText="First Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField id="lastNameText" fx:id="lastNameText" layoutX="330.0" layoutY="194.0" promptText="Last Name" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField id="passwordText" fx:id="passwordText" layoutX="116.0" layoutY="242.0" promptText="Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
+            <PasswordField id="confirmPasswordText" fx:id="confirmPasswordText" layoutX="330.0" layoutY="240.0" promptText="Confirm Password" style="-fx-background-color: transparent; -fx-border-color: #eb5234; -fx-border-width: 0px 0px 2px 0px;" />
             <ImageView fitHeight="21.0" fitWidth="18.0" layoutX="78.0" layoutY="154.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pic/icons8-user-24.png" />
@@ -76,9 +76,9 @@
                   <Image url="@../pic/icons8-password-30.png" />
                </image>
             </ImageView>
-            <ChoiceBox id="roleChoice" layoutX="116.0" layoutY="287.0" prefWidth="150.0" />
+            <ChoiceBox id="roleChoice" fx:id="roleChoice" layoutX="116.0" layoutY="287.0" prefWidth="150.0" />
             <Label layoutX="73.0" layoutY="291.0" text="Role" />
-            <Label id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="106.0" prefHeight="17.0" prefWidth="286.0" textAlignment="CENTER" textFill="RED" />
+            <Label id="errorLabel" fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="106.0" prefHeight="17.0" prefWidth="286.0" textAlignment="CENTER" textFill="RED" />
          </children>
       </AnchorPane>
    </center>

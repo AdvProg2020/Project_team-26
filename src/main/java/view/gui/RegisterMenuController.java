@@ -80,15 +80,15 @@ public class RegisterMenuController {
             try {
                 controller.register(account,Constants.manager.getToken());
             } catch (NoAccessException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidFormatException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidAuthenticationException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (AlreadyLoggedInException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             }
         }
     }
