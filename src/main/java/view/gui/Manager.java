@@ -11,7 +11,10 @@ import model.Role;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -141,7 +144,14 @@ public class Manager {
         return false;
     }
 
-    public Date getDateFromDatePicker(DatePicker datePicker) {
+    public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException {
+        LocalDate localDate = datePicker.getValue();
+        Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
+        Date date = Date.from(instant);
+
+
+
+
         return null;//todo
     }
 }

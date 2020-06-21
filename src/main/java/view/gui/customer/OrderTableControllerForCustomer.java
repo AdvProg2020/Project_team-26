@@ -1,11 +1,15 @@
 package view.gui.customer;
 
 import controller.interfaces.order.IOrderController;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NotLoggedINException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import model.Order;
+import view.gui.Constants;
 import view.gui.InitializableController;
 
 import java.io.IOException;
@@ -28,8 +32,11 @@ public class OrderTableControllerForCustomer implements InitializableController 
     public void initialize(int id) throws IOException {
 
     }
-    public void load(String token){
-     //   List<Order> orders = orderController.get
+    public void load(String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+        List<Order> orders = orderController.getOrdersWithFilter("date",true,0,50, Constants.manager.getToken());
+        orders.forEach(i-> i.);
+
+
 
     }
     private class Orders{
