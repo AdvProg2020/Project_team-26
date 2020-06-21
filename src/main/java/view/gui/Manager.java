@@ -28,6 +28,7 @@ public class Manager {
     private List<Pair<String, Integer>> pages;
     private MainController controller;
     private AuthenticationStageManager authenticationStageManager;
+    private Date endTimeDate;
 
     public Manager() {
         pages = new ArrayList<>();
@@ -144,14 +145,12 @@ public class Manager {
         return false;
     }
 
-    public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException {
+    public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException,IllegalArgumentException {
         LocalDate localDate = datePicker.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date date = Date.from(instant);
-
-
-
-
-        return null;//todo
+        if(date.after(endTimeDate))
+            throw new IllegalArgumentException("pick closer");
+        return date;
     }
 }

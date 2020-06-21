@@ -15,6 +15,7 @@ import view.gui.Constants;
 import view.gui.InitializableController;
 
 import java.io.IOException;
+import java.time.DateTimeException;
 import java.time.LocalDate;
 
 public class OffControllerPage implements InitializableController {
@@ -91,6 +92,8 @@ public class OffControllerPage implements InitializableController {
                 e.printStackTrace();
             } catch (NotLoggedINException e) {
                 e.printStackTrace();
+            }catch (DateTimeException | IllegalArgumentException e){
+                //todo red the date picker
             }
         }
     }

@@ -49,7 +49,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     @FXML
     TableView<Buyers> buyersTableView;
     @FXML
-    TableColumn<String, Buyers> buyersTableViewColumns;
+    TableColumn<String, Buyers> buyersTableViewColumns;//todo
 
 
     @Override
