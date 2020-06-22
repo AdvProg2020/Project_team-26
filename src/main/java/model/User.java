@@ -94,15 +94,29 @@ public class User {
         return role;
     }
 
+    public String getFirstName() {
+        return details.get("firstname");
+    }
+
+    public String getLastName() {
+        return details.get("lastname");
+    }
+
+    public String getCompanyName() {
+        if (role == Role.SELLER)
+            return details.get("Company Name");
+        return null;
+    }
+
     public Map<String, String> getDetails() {
 
-        Map<String,String> essentialDetails = new HashMap();
-        essentialDetails.put("Username",this.username);
-        essentialDetails.put("FirstName",details.get("firstname"));
-        essentialDetails.put("LastName",details.get("lastname"));
-        essentialDetails.put("Email",this.email);
-        if(role == Role.SELLER) {
-            essentialDetails.put("Company Name",details.get("Company Name"));
+        Map<String, String> essentialDetails = new HashMap();
+        essentialDetails.put("Username", this.username);
+        essentialDetails.put("FirstName", details.get("firstname"));
+        essentialDetails.put("LastName", details.get("lastname"));
+        essentialDetails.put("Email", this.email);
+        if (role == Role.SELLER) {
+            essentialDetails.put("Company Name", details.get("Company Name"));
         }
         return essentialDetails;
     }

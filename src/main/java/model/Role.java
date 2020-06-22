@@ -14,4 +14,15 @@ public enum Role {
         }
         return null;
     }
+
+    public static String getRoleType(Role role) {
+        switch (role) {
+            case CUSTOMER:
+                return "Customer";
+            case SELLER:
+                return "Seller";
+            default:
+                return "Manager";
+        }
+    }
 }
