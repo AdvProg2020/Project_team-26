@@ -18,6 +18,7 @@ public class PromoCodesForCustomer implements InitializableController {
     private int id;
     @FXML
     private TableView tableView;
+    @FXML
     private TableColumn<Date, PromoPaper> startDate;
     @FXML
     private TableColumn<Date, PromoPaper> endDate;

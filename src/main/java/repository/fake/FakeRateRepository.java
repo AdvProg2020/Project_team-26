@@ -73,4 +73,8 @@ public class FakeRateRepository implements RateRepository {
     }
 
 
+    @Override
+    public Rate getCustomerRate(int customerId, int productId) {
+        return null;
+    }
 }
