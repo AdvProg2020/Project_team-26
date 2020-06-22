@@ -20,6 +20,10 @@ public class PersonalInfoController implements InitializableController {
     private int id;
     private User user;
     private IUserInfoController userInfoController;
+    private String newPassword = "";
+    private String oldPassword = "";
+    private String confirmPassword = "";
+    //todo hashmap for labels
 
     @FXML
     private Label usernameLabel;
@@ -50,7 +54,7 @@ public class PersonalInfoController implements InitializableController {
     @FXML
     private TextField balance;
     @FXML
-    private TextField password;
+    private PasswordField password;
     @FXML
     private Button cancelButton;
     @FXML
@@ -61,6 +65,8 @@ public class PersonalInfoController implements InitializableController {
     private ScrollPane detailScrollPane;
     @FXML
     private VBox detailVBox;
+    @FXML
+    private Button changePasswordButton;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -74,46 +80,18 @@ public class PersonalInfoController implements InitializableController {
         password.setEditable(false);
         usernameTextField.setEditable(false);
         setEditable(false);
-        editButton.setOnMouseClicked(e->{
+        changePasswordButton.setText("Change Password");
+        editButton.setOnMouseClicked(e -> {
             handleEditButton();
         });
-    }
-    private void handleEditButton(){
-        if(editButton.getText().equals("Edit")){
-            setEditable(true);
-            editButton.setText("Submit");
-            cancelButton.setVisible(true);
-        }else{
-            HashMap<String ,String > changedInfo = new HashMap<>();
-            changedInfo.put("",)//todo
-            if() {
-                try {
-                    userInfoController.changeInfo(changedInfo,Constants.manager.getToken());
-                } catch (NotLoggedINException e) {
-                    e.printStackTrace();//wating for pooya respond //todo
-                } catch (InvalidTokenException e) {
-                    e.printStackTrace();
-                } catch (InvalidAuthenticationException e) {
-                    e.printStackTrace();
-                } catch (InvalidFormatException e) {
-                    e.printStackTrace();
-                } catch (NoSuchField noSuchField) {
-                    noSuchField.printStackTrace();
+        cancelButton.setOnMouseClicked(e -> {
+                    handleCancelButton();
                 }
-            }
-
-        }
+        );
+        changePasswordButton.setOnMouseClicked(e -> {
+            handleChangePasswordButton();
+        });
     }
-    private void handleCancelButton(){
-        setEditable(false);
-        load(this.user);
-        editButton.setText("Edit");
-        cancelButton.setVisible(false);
-    }
-    private boolean isEveryThingOk(){
-
-    }
-
 
     public void load(User user) {
         this.user = user;
@@ -131,6 +109,112 @@ public class PersonalInfoController implements InitializableController {
         }
     }
 
+    private void handleChangePasswordButton() {
+        if (changePasswordButton.getText().matches("Change Password")) {
+            changePasswordButton.setText("Old Password");
+            password.setEditable(true);
+        } else if (changePasswordButton.getText().matches("Old Password")) {
+            oldPassword = password.getText();
+            password.setText("");
+            changePasswordButton.setText("Change");
+        } else if (changePasswordButton.getText().matches("Change")) {
+            newPassword = password.getText();
+            if (!oldPassword.matches(newPassword)) {
+                //todo red
+                return;
+            }
+            password.setText("");
+            changePasswordButton.setText("Confirm");
+        } else {
+            confirmPassword = password.getText();
+            if (!confirmPassword.matches(newPassword)) {
+                //todo red
+                return;
+            }
+            try {
+                userInfoController.changePassword(oldPassword, newPassword, Constants.manager.getToken());
+                initPasswordButton();
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+    }
+
+    private void initPasswordButton() {
+        oldPassword = "";
+        newPassword = "";
+        confirmPassword = "";
+        changePasswordButton.setText("Change Password");
+        password.setEditable(false);
+        password.setText("");
+    }
+
+    private void handleEditButton() {
+        if (editButton.getText().equals("Edit")) {
+            setEditable(true);
+            editButton.setText("Submit");
+            cancelButton.setVisible(true);
+        } else {
+            HashMap<String, String> changedInfo = new HashMap<>();
+            /* changedInfo.put("",)//todo*/
+            if (isEveryThingOk()) {
+                try {
+                    userInfoController.changeInfo(changedInfo, Constants.manager.getToken());
+                    setEditable(false);
+                    editButton.setText("Edit");
+                    cancelButton.setVisible(false);
+                } catch (NotLoggedINException e) {
+                    e.printStackTrace();//wating for pooya respond //todo
+                } catch (InvalidTokenException e) {
+                    e.printStackTrace();
+                } catch (InvalidAuthenticationException e) {
+                    e.printStackTrace();
+                } catch (InvalidFormatException e) {
+                    e.printStackTrace();
+                } catch (NoSuchField noSuchField) {
+                    noSuchField.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    private void handleCancelButton() {
+        setEditable(false);
+        load(this.user);
+        editButton.setText("Edit");
+        cancelButton.setVisible(false);
+        initPasswordButton();
+    }
+
+    private boolean isEveryThingOk() {
+        boolean result = true;
+        if (firstName.getText().isBlank()) {
+            //todo red the label
+            result = false;
+        }
+        if (lastName.getText().isBlank()) {
+            //todo red the label
+            result = false;
+        }
+        if (email.getText().isBlank() || !email.getText().matches("^\\S+@\\S+.(?i)com(?-i)")) {
+            //todo red the label
+            result = false;
+        }
+        if (balance.getText().isBlank() || !Constants.manager.checkIsLong(balance.getText())) {
+            //todo red the label
+            result = false;
+        }
+        return result;
+    }
+
+
     private void setEditable(boolean type) {
         firstName.setEditable(type);
         lastName.setEditable(type);
@@ -144,11 +228,24 @@ public class PersonalInfoController implements InitializableController {
         detailVBox.getChildren().addAll(nodes);
     }
 
+    public void setTableScrollPane(TableView newTableView) {
+        tableScrollPane.getChildrenUnmodifiable().removeAll();
+        tableScrollPane.getChildrenUnmodifiable().add(newTableView);
+    }
+
     public void addSingleItemToBox(Node node) {
         detailVBox.getChildren().add(node);
     }
 
     public void clearBox() {
         detailVBox.getChildren().removeAll();
+    }
+
+    public ScrollPane getTableScrollPane() {
+        return tableScrollPane;
+    }
+
+    public ScrollPane getDetailScrollPane() {
+        return getDetailScrollPane();
     }
 }
