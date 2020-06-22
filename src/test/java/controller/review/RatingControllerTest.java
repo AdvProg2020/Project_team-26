@@ -12,8 +12,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.UserRepository;
 
-import java.net.ServerSocket;
-
 public class RatingControllerTest {
 
     private RepositoryContainer repositoryContainer;
@@ -44,18 +42,18 @@ public class RatingControllerTest {
     public void addARatingTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotBoughtTheProductException, NotLoggedINException, NoObjectIdException, NotEnoughCreditException, NotEnoughProductsException, InvalidIdException {
         /** Exception Tests **/
 
-        Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addRating(5.0,
+        Exception ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.rate(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
         authenticationController.login("test5","test5",token);
-        ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.addRating(5.0,
+        ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.rate(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You have not bought this product");
         authenticationController.logout(token);
 
         authenticationController.login("aria","aria",token);
-        ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.addRating(5.0,
+        ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.rate(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
@@ -69,7 +67,7 @@ public class RatingControllerTest {
         cartController.addOrChangeProduct(18,1,token);
         cartController.setAddress("retard abad",token);
         cartController.checkout(token);
-        ratingController.addRating(5.0,14,token);
+        ratingController.rate(5.0,14,token);
         Assertions.assertEquals(rateRepository.getById(6).getScore(),5.0);
     }
 

@@ -99,7 +99,7 @@ public class CartController implements ICartController {
         if (!session.isUserCustomer()) {
             throw new NoAccessException("You must be a customer to be able to buy.");
         }
-//todo save these
+
         Customer customer = (Customer) loggedInUser;
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.getPaidAmount());
