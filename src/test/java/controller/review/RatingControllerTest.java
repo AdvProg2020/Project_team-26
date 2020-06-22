@@ -67,8 +67,8 @@ public class RatingControllerTest {
 
         authenticationController.login("test8","test8",token);
         cartController.addOrChangeProduct(18,1,token);
-        cartController.checkout(token);
         cartController.setAddress("retard abad",token);
+        cartController.checkout(token);
         ratingController.addRating(5.0,1,token);
         Assertions.assertEquals(rateRepository.getById(6).getScore(),5.0);
 
