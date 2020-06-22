@@ -14,7 +14,9 @@ import javafx.scene.layout.AnchorPane;
 import model.Role;
 import view.cli.ControllerContainer;
 
-public class RegisterMenuController {
+import java.io.IOException;
+
+public class RegisterMenuController implements InitializableController {
 
     private final ObservableList<String> roles = FXCollections.observableArrayList("Manager", "Customer", "Seller");
 
@@ -136,4 +138,8 @@ public class RegisterMenuController {
     }
 
 
+    @Override
+    public void initialize(int id) throws IOException {
+
+    }
 }
