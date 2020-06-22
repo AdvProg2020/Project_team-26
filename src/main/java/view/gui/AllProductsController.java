@@ -17,7 +17,7 @@ import view.cli.ViewManager;
 import java.io.IOException;
 import java.util.List;
 
-public class MainPageController implements InitializableController {
+public class AllProductsController implements InitializableController {
     private ICategoryController categoryController;
     private ViewManager manager;
     @FXML
@@ -49,7 +49,7 @@ public class MainPageController implements InitializableController {
 
 
     private void initComBowBoxs() {
-        sortFieldComBowBox.setPromptText("chooseSorting");
+        sortFieldComBowBox.setPromptText("Choose Sorting");
         sortFieldComBowBox.getItems().addAll("default", "average Rate", "most sold");
         isAcendingComBowBox.getItems().addAll("ascending", "depending");
         isAcendingComBowBox.setPromptText("ascending/descending");

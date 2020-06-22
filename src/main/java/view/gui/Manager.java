@@ -31,7 +31,6 @@ public class Manager {
     private List<Pair<String, Integer>> pages;
     private MainController controller;
     private AuthenticationStageManager authenticationStageManager;
-    private Date endTimeDate;
 
     public Manager() {
         pages = new ArrayList<>();
@@ -133,7 +132,7 @@ public class Manager {
     }
 
     public void switchScene(String scene) throws IOException {
-        if(scene.equals("Login"))
+        if (scene.equals("Login"))
             authenticationStageManager.switchToLogin();
         else
             authenticationStageManager.switchToRegister();
@@ -148,11 +147,11 @@ public class Manager {
         return false;
     }
 
-    public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException,IllegalArgumentException {
+    public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException, IllegalArgumentException {
         LocalDate localDate = datePicker.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date date = Date.from(instant);
-        if(date.after(endTimeDate))
+        if (date.getTime() < 0)
             throw new IllegalArgumentException("pick closer");
         return date;
     }
