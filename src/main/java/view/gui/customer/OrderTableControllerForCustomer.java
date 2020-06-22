@@ -66,7 +66,13 @@ public class OrderTableControllerForCustomer implements InitializableController 
         personalInfoController.clearBox();
         observableList.forEach(i -> {
             try {
-                orderController.getASingleOrder(i.getId(), Constants.manager.getToken()).getItems().forEach(j -> loadFxmlOfSingleOrder(j));
+                orderController.getASingleOrder(i.getId(), Constants.manager.getToken()).getItems().forEach(j -> {
+                    try {
+                        loadFxmlOfSingleOrder(j);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
             } catch (NoAccessException e) {//todo
                 e.printStackTrace();
             } catch (InvalidIdException e) {
@@ -80,16 +86,12 @@ public class OrderTableControllerForCustomer implements InitializableController 
 
     }
 
-    private void loadFxmlOfSingleOrder(OrderItem item) {
+    private void loadFxmlOfSingleOrder(OrderItem item) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OrderItem.fxml"));
         OrderItemController orderItemController = (OrderItemController) loader.getController();
-        try {
             orderItemController.initialize(item.getId());
             orderItemController.load(item);
             personalInfoController.addSingleItemToBox(loader.load());
-        } catch (IOException e) {
-            return;
-        }
     }
 
     private class Orders {

@@ -59,6 +59,10 @@ public class Off {
         return seller;
     }
 
+    public Status getStatus(){
+        return status;
+    }
+
     public List<OffItem> getItems() {
         return items;
     }

@@ -23,6 +23,7 @@ public class OffControllerPage implements InitializableController, OffController
     private int offId;
     private IOffController offController;
     private IProductController productController;
+    private OffTableController offTableController;
 
     @FXML
     private DatePicker startDate;
@@ -50,13 +51,14 @@ public class OffControllerPage implements InitializableController, OffController
         addProductButton.setText("Add Product");
     }
 
-    public void loadOffPage(Off off) throws IOException {
+    public void loadOffPage(Off off, OffTableController offTableController) throws IOException {
+        this.offTableController = offTableController;
         startDate.setValue(LocalDate.from(off.getStartDate().toInstant()));
         endDate.setValue(LocalDate.from(off.getEndDate().toInstant()));
         setEditable(false);
         loadOffItems(off);
-        deleteButton.setOnMouseClicked(e->{
-            //todo call parent to clear
+        deleteButton.setOnMouseClicked(e -> {
+            offTableController.deleteOffAndReloadBox(offId);
         });
     }
 
@@ -108,7 +110,7 @@ public class OffControllerPage implements InitializableController, OffController
     public void reloadPage() throws IOException {
         try {
             off = offController.getOff(offId, Constants.manager.getToken());
-            loadOffPage(off);
+            loadOffPage(off, this.offTableController);
         } catch (InvalidIdException e) {
             //reload main page todo call mainPage
         }

@@ -1,37 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="515.0">
-            <children>
-                <ImageView fx:id="searchIconImage" fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
-                    <image>
-                        <Image url="@../pic/icons8-search-480.png" />
-                    </image>
-                </ImageView>
-                <Region prefHeight="47.0" prefWidth="331.0" />
-                <ComboBox prefWidth="150.0" />
-            </children>
-            <VBox.margin>
-                <Insets left="10.0" />
-            </VBox.margin>
-        </HBox>
-        <TableView prefHeight="295.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css">
-            <columns>
-                <TableColumn prefWidth="163.33331298828125" text="start date" />
-                <TableColumn prefWidth="170.0" text="end date" />
-                <TableColumn prefWidth="181.33331298828125" text="state" />
-            </columns>
-        </TableView>
-    </children>
-</VBox>
+<TableView fx:id="offTableView" prefHeight="337.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="view.gui.seller.OffTableController">
+   <columns>
+      <TableColumn fx:id="startDate" prefWidth="173.3333078622818" text="start date" />
+      <TableColumn fx:id="endDate" prefWidth="188.6667022705078" text="end date" />
+      <TableColumn fx:id="status" prefWidth="152.66671752929688" text="state" />
+   </columns>
+</TableView>
