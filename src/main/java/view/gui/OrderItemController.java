@@ -12,7 +12,7 @@ import java.io.IOException;
 import static model.Status.DEACTIVE;
 
 public class OrderItemController implements InitializableController {
-    private int offItemId;
+    private int orderItemId;
     private int productId;
     @FXML
     private Button productPageButton;
@@ -31,12 +31,13 @@ public class OrderItemController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
-        this.offItemId = id;
+        this.orderItemId = id;
 
     }
 
     public void load(OrderItem orderItem) {
         this.productId = orderItem.getProductId();
+        productPageButton.setText("product");
         sellerName.setText(orderItem.getSeller().getFullName());
         productName.setText(orderItem.getProduct().getName());
         price.setText("" + orderItem.getPrice());
@@ -47,15 +48,12 @@ public class OrderItemController implements InitializableController {
             productPageButton.setVisible(false);
             return;
         }
-
-
-        //todo
     }
 
     @FXML
-    public void productButtonClicked() {
+    public void productButtonClicked() throws IOException {
         if (productPageButton.isVisible() == false)
             return;
-        //todo load page
+        Constants.manager.openPage("SingleProduct", productId);
     }
 }
