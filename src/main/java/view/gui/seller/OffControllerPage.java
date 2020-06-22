@@ -42,7 +42,7 @@ public class OffControllerPage implements InitializableController {
     @Override
     public void initialize(int id) throws IOException {
         offController = (IOffController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OffController);
-        this.offId = offId;
+        this.offId = id;
         updateButton.setText("Edit");
         addProductButton.setText("Add Product");
     }
@@ -64,14 +64,14 @@ public class OffControllerPage implements InitializableController {
         for (OffItem item : off.getItems()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
             OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
-            offItemPageController.load(item, off, false);
+            offItemPageController.load(item, off, false, this);
             offItemPageController.initialize(item.getId());
             offVBox.getChildren().add(loader.load());
         }
     }
 
     @FXML
-    public void updateButtonClicked() {
+    public void updateButtonClicked() throws IOException {
         if (updateButton.getText().equals("Edit")) {
             setEditable(true);
             updateButton.setText("Update");
@@ -83,7 +83,7 @@ public class OffControllerPage implements InitializableController {
                 offController.edit(newOff, offId, Constants.manager.getToken());
                 setEditable(false);
                 updateButton.setText("Edit");
-                //todo reload offs;
+                reloadPage();
             } catch (NoAccessException e) {
                 e.printStackTrace();
             } catch (InvalidTokenException e) {
@@ -92,10 +92,21 @@ public class OffControllerPage implements InitializableController {
                 e.printStackTrace();
             } catch (NotLoggedINException e) {
                 e.printStackTrace();
-            }catch (DateTimeException | IllegalArgumentException e){
+            } catch (DateTimeException | IllegalArgumentException e) {
                 //todo red the date picker
             }
         }
+    }
+
+    public void reloadPage() throws IOException {
+        try {
+            off = offController.getOff(offId, Constants.manager.getToken());
+            loadOffPage(off);
+        } catch (InvalidIdException e) {
+            //reload main page todo call mainPage
+        }
+
+
     }
 
     @FXML
@@ -108,9 +119,10 @@ public class OffControllerPage implements InitializableController {
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), false, Constants.manager.getToken());
+                reloadItems();
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, false, Constants.manager.getToken());
-
+                reloadItems();
             } else {
                 //todo red the box
                 return;
@@ -128,6 +140,15 @@ public class OffControllerPage implements InitializableController {
         } catch (NotLoggedINException e) {
             e.printStackTrace();
         }
-        //todo reload page
+    }
+
+    public void reloadItems() {
+        try {
+            off = offController.getOff(offId, Constants.manager.getToken());
+            reloadItems();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
+        }
+
     }
 }

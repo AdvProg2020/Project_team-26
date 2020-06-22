@@ -21,6 +21,7 @@ public class OffItemPageController implements InitializableController {
     private Off off;
     private int offItemId;
     private boolean isForAdd;
+    private OffControllerPage offControllerPage;
     @FXML
     private Text name;
     @FXML
@@ -38,7 +39,8 @@ public class OffItemPageController implements InitializableController {
         offItemId = id;
     }
 
-    public void load(OffItem offItem, Off off, boolean isForAdd) {
+    public void load(OffItem offItem, Off off, boolean isForAdd, OffControllerPage offControllerPage) {
+        this.offControllerPage = offControllerPage;
         this.off = off;
         this.offItem = offItem;
         this.isForAdd = isForAdd;
@@ -54,7 +56,7 @@ public class OffItemPageController implements InitializableController {
     public void deleteButtonClicked() {
         try {
             offController.removeProductFromOff(off, offItem.getProductSeller().getProduct().getId(), isForAdd, Constants.manager.getToken());
-            //todo reload the offPages
+            offControllerPage.reloadItems();
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (ObjectAlreadyExistException e) {
