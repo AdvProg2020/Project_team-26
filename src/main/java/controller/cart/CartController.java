@@ -3,10 +3,8 @@ package controller.cart;
 import controller.interfaces.cart.ICartController;
 import exception.*;
 import model.*;
-import repository.ProductSellerRepository;
-import repository.PromoRepository;
-import repository.RepositoryContainer;
-import repository.UserRepository;
+import repository.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,11 +16,13 @@ public class CartController implements ICartController {
     private ProductSellerRepository productSellerRepository;
     private PromoRepository promoRepository;
     private UserRepository userRepository;
+    private OrderRepository orderRepository;
 
     public CartController(RepositoryContainer repositoryContainer) {
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        orderRepository = (OrderRepository)repositoryContainer.getRepository("OrderRepository");
     }
 
     @Override
@@ -104,7 +104,7 @@ public class CartController implements ICartController {
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.getPaidAmount());
         customer.addOrder(order);
-        userRepository.save(customer);
+        orderRepository.save(order);
         if (order.getPaidAmount() > 500000) {
             creatRandomPromo(order, customer);
         }
@@ -158,6 +158,7 @@ public class CartController implements ICartController {
     private void processOrder(Map<ProductSeller, Integer> orderItems) throws NotEnoughProductsException {
         for (ProductSeller productSeller : orderItems.keySet()) {
             productSeller.sell(orderItems.get(productSeller));
+            productSellerRepository.save(productSeller);
         }
     }
 
