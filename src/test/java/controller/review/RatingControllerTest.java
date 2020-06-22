@@ -12,6 +12,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.UserRepository;
 
+import java.net.ServerSocket;
+
 public class RatingControllerTest {
 
     private RepositoryContainer repositoryContainer;
@@ -57,7 +59,6 @@ public class RatingControllerTest {
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
-
         authenticationController.login("aria","aria",token);
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);

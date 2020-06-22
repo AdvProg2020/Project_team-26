@@ -12,7 +12,9 @@ import javafx.scene.control.TextField;
 import model.Role;
 import view.cli.ControllerContainer;
 
-public class AdminRegistryController {
+import java.io.IOException;
+
+public class AdminRegistryController implements InitializableController {
 
     @FXML
     private Button submitButton;
@@ -70,5 +72,8 @@ public class AdminRegistryController {
     }
 
 
+    @Override
+    public void initialize(int id) throws IOException {
 
+    }
 }

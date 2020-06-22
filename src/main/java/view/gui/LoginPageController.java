@@ -13,7 +13,7 @@ import view.cli.ControllerContainer;
 
 import java.io.IOException;
 
-public class LoginPageController {
+public class LoginPageController implements InitializableController {
 
     @FXML
     private TextField usernameField;
@@ -60,5 +60,8 @@ public class LoginPageController {
     }
 
 
+    @Override
+    public void initialize(int id) throws IOException {
 
+    }
 }
