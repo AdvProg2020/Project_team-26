@@ -26,6 +26,8 @@ public class RatingController implements IRatingController {
             throw new NoAccessException("You are not allowed to do that.");
         } else if (!userRepository.hasBoughtProduct(user.getId(), productId)) {
             throw new NotBoughtTheProductException("You have not bought this product");
+        } else if(rateRepository.hasTheCustomerRatedBefore(user,productRepository.getById(productId))) {
+            rateRepository.update(new Rate((Customer) user,rating,productRepository.getById(productId)));
         } else {
             rateRepository.save(new Rate((Customer) user, rating, productRepository.getById(productId)));
         }

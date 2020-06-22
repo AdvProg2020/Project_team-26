@@ -71,7 +71,6 @@ public class RatingControllerTest {
         cartController.checkout(token);
         ratingController.addRating(5.0,14,token);
         Assertions.assertEquals(rateRepository.getById(6).getScore(),5.0);
-
     }
 
 }
