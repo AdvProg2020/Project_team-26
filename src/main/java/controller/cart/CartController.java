@@ -105,6 +105,7 @@ public class CartController implements ICartController {
         customer.pay(order.getPaidAmount());
         customer.addOrder(order);
         orderRepository.save(order);
+        userRepository.save(customer);
         if (order.getPaidAmount() > 500000) {
             creatRandomPromo(order, customer);
         }
@@ -148,6 +149,7 @@ public class CartController implements ICartController {
                     productSeller.getPrice(), productSeller.getPriceInOff(),
                     ShipmentState.WAITING_TO_SEND);
 
+            orderItem.setOrder(order);
             order.addItem(orderItem);
         }
 

@@ -15,6 +15,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id", unique = true)
     private int id;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "date")
     private Date date;
@@ -34,16 +35,10 @@ public class Order {
     @JoinColumn(name = "promo_id")
     private Promo usedPromo;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
 
     public Order() {
-    }
-
-    public Order(int id) {
-        this.id = id;
-        items = new ArrayList<OrderItem>();
-        //todo set date for order
     }
 
     public Order(Customer customer, Promo usedPromo, String address) {
@@ -51,7 +46,7 @@ public class Order {
         this.usedPromo = usedPromo;
         this.address = address;
         this.items = new ArrayList<>();
-        // TODO: set date for order
+        this.date = new Date();
     }
 
     public Customer getCustomer() {
