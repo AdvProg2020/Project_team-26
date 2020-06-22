@@ -1,6 +1,9 @@
 package repository;
 
+import model.Admin;
 import model.User;
+
+import java.util.List;
 
 public interface UserRepository extends Repository<User> {
     User getUserByUsername(String username);
@@ -8,4 +11,6 @@ public interface UserRepository extends Repository<User> {
     boolean doWeHaveAManager();
 
     boolean hasBoughtProduct(int customerId, int productId);
+
+    List<Admin> getManagers(int id);
 }

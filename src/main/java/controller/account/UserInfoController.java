@@ -35,6 +35,15 @@ public class UserInfoController implements IUserInfoController {
         }
     }
 
+    public void changePassword(String newPassword, String token) throws InvalidTokenException, NotLoggedINException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
+            throw new NotLoggedINException("You are not Logged In.");
+        } else {
+            user.changePassword(newPassword);
+        }
+    }
+
     public void changeInfo(String key, String value, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {

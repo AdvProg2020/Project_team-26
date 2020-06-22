@@ -9,6 +9,8 @@ public interface IUserInfoController {
 
     void changePassword(String oldPassword, String newPassword, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException;
 
+    void changePassword(String newPassword, String token) throws InvalidTokenException, NotLoggedINException;
+
     void changeInfo(String key, String value, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField;
 
     String getBalance(String token) throws NotLoggedINException, InvalidTokenException;
