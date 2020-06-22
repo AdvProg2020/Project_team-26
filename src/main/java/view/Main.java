@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import repository.RepositoryContainer;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
+import view.gui.Manager;
 
 import java.io.IOException;
 
@@ -17,15 +18,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        windowOfApp = primaryStage;
-        windowOfApp.setResizable(false);
-        scene = new Scene(loadFXML("menu"));
-        windowOfApp.setScene(scene);
-        windowOfApp.setOnCloseRequest(e -> {
-            windowOfApp.close();
-        });
-        windowOfApp.show();
-
+        Constants.manager.start(primaryStage);
+        Constants.manager.openPage("AllProduct", 0);
     }
 
     public  void setRootForScene(String fxml) throws IOException {

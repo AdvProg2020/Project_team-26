@@ -2,6 +2,7 @@ package view.gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
@@ -39,10 +40,10 @@ public class Manager {
     public void openPage(String pageName, int id) throws IOException {
         pages.add(new Pair<>(pageName, id));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
-        InitializableController controller = (InitializableController) loader.getController();
+        Parent parent = loader.load();
+        InitializableController controller = loader.getController();
         controller.initialize(id);
-        Node node = loader.load();
-        showNode(node);
+        showNode(parent);
     }
 
     public void back() throws IOException {
@@ -59,7 +60,7 @@ public class Manager {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/Main.fxml"));
         Scene scene = new Scene(loader.load());
 
-        controller = (MainController) loader.getController();
+        controller = loader.getController();
         reloadTop();
 
         primaryStage.setTitle("Store");
