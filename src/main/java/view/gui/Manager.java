@@ -3,8 +3,10 @@ package view.gui;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
@@ -152,5 +154,18 @@ public class Manager {
         if(date.after(endTimeDate))
             throw new IllegalArgumentException("pick closer");
         return date;
+    }
+
+    public void showErrorPopUp(String errorMessage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
+        ErrorPageController controller = loader.getController();
+        Button okButton = controller.getButton();
+        controller.setText(errorMessage);
+        Stage windows = new Stage(loader.load());
+        okButton.setOnMouseClicked(e -> windows.close());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
+
     }
 }
