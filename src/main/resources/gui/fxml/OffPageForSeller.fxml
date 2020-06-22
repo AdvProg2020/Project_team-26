@@ -47,6 +47,11 @@
                                 <Insets left="20.0" right="20.0" top="20.0" />
                             </padding>
                         </HBox>
+                  <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="105.0" text="Delete">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Button>
                     </children>
                 </VBox>
                 <VBox alignment="TOP_CENTER" prefHeight="140.0" prefWidth="265.0">

@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-public class OffControllerPage implements InitializableController {
+public class OffControllerPage implements InitializableController, OffControllerForFxml {
     private Off off;
     private int offId;
     private IOffController offController;
@@ -31,6 +31,8 @@ public class OffControllerPage implements InitializableController {
     @FXML
     private Button updateButton;
     @FXML
+    private Button deleteButton;
+    @FXML
     private Button addProductButton;
     @FXML
     private TextField productName;
@@ -42,6 +44,7 @@ public class OffControllerPage implements InitializableController {
     @Override
     public void initialize(int id) throws IOException {
         offController = (IOffController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OffController);
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         this.offId = id;
         updateButton.setText("Edit");
         addProductButton.setText("Add Product");
@@ -52,6 +55,9 @@ public class OffControllerPage implements InitializableController {
         endDate.setValue(LocalDate.from(off.getEndDate().toInstant()));
         setEditable(false);
         loadOffItems(off);
+        deleteButton.setOnMouseClicked(e->{
+            //todo call parent to clear
+        });
     }
 
     private void setEditable(boolean type) {
@@ -98,6 +104,7 @@ public class OffControllerPage implements InitializableController {
         }
     }
 
+
     public void reloadPage() throws IOException {
         try {
             off = offController.getOff(offId, Constants.manager.getToken());
@@ -139,9 +146,14 @@ public class OffControllerPage implements InitializableController {
             e.printStackTrace();
         } catch (NotLoggedINException e) {
             e.printStackTrace();
+        } finally {
+            priceInOff.setText("");
+            productName.setText("");
+
         }
     }
 
+    @Override
     public void reloadItems() {
         try {
             off = offController.getOff(offId, Constants.manager.getToken());

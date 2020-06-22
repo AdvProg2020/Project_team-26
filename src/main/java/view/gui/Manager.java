@@ -56,10 +56,8 @@ public class Manager {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/Main.fxml"));
         Scene scene = new Scene(loader.load());
-
         controller = (MainController) loader.getController();
         reloadTop();
-
         primaryStage.setTitle("Store");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -149,7 +147,7 @@ public class Manager {
         LocalDate localDate = datePicker.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date date = Date.from(instant);
-        if(date.after(endTimeDate))
+        if(date.before(endTimeDate))
             throw new IllegalArgumentException("pick closer");
         return date;
     }

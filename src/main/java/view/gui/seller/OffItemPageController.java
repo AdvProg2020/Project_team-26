@@ -4,7 +4,6 @@ import controller.interfaces.discount.IOffController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.text.*;
 import model.Off;
@@ -21,15 +20,15 @@ public class OffItemPageController implements InitializableController {
     private Off off;
     private int offItemId;
     private boolean isForAdd;
-    private OffControllerPage offControllerPage;
+    private OffControllerForFxml offControllerPage;
     @FXML
     private Text name;
     @FXML
     private Text price;
     @FXML
     private TextField priceInOff;
-    @FXML
-    private Button editButton;
+   /* @FXML
+    private Button editButton;*/
     @FXML
     private Button deleteButton;
 
@@ -39,7 +38,7 @@ public class OffItemPageController implements InitializableController {
         offItemId = id;
     }
 
-    public void load(OffItem offItem, Off off, boolean isForAdd, OffControllerPage offControllerPage) {
+    public void load(OffItem offItem, Off off, boolean isForAdd, OffControllerForFxml offControllerPage) {
         this.offControllerPage = offControllerPage;
         this.off = off;
         this.offItem = offItem;
@@ -48,7 +47,7 @@ public class OffItemPageController implements InitializableController {
         price.setText("" + offItem.getProductSeller().getPrice());
         priceInOff.setText("" + offItem.getPriceInOff());
         priceInOff.setEditable(false);
-        editButton.setText("Edit");
+       // editButton.setText("Edit");
         deleteButton.setText("Delete");
     }
 

@@ -15,7 +15,7 @@ import view.gui.InitializableController;
 
 import java.io.IOException;
 
-public class CreateOfForSellerController implements InitializableController {
+public class CreateOfForSellerController implements InitializableController, OffControllerForFxml {
     private IOffController offController;
     private IProductController productController;
     private boolean isOk;
@@ -75,16 +75,12 @@ public class CreateOfForSellerController implements InitializableController {
         //todo reload page
     }
 
-    private void updateVBox(OffItem item) {
-        try {
+    private void updateVBox(OffItem item) throws IOException {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
             OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
-            offItemPageController.load(item, off, true);
+            offItemPageController.load(item, off, true,this);
             offItemPageController.initialize(item.getId());
             itemsVBox.getChildren().add(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();//todo
-        }
     }
 
     @FXML
@@ -104,4 +100,9 @@ public class CreateOfForSellerController implements InitializableController {
     }
 
 
+    @Override
+    public void reloadItems() {
+
+
+    }
 }
