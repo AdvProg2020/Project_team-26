@@ -69,7 +69,7 @@ public class OrdersIView extends View {
         if (manager.checkTheInputIsIntegerOrLong(matcher.group(1), false)) {
             if (manager.checkTheInputIsDouble(matcher.group(2))) {
                 try {
-                    ratingController.addRating(Double.parseDouble(matcher.group(2)), Integer.parseInt(matcher.group(1)), manager.getToken());
+                    ratingController.rate(Double.parseDouble(matcher.group(2)), Integer.parseInt(matcher.group(1)), manager.getToken());
                 } catch (NoAccessException | NotBoughtTheProductException e) {
                     manager.inputOutput.println(e.getMessage());
                 } catch (InvalidTokenException e) {

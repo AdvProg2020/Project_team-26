@@ -4,6 +4,7 @@ import controller.interfaces.account.IShowUserController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
+import model.Admin;
 import model.Role;
 import model.Session;
 import model.User;
@@ -11,6 +12,7 @@ import repository.RepositoryContainer;
 import repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class ShowUserController implements IShowUserController {
@@ -58,6 +60,10 @@ public class ShowUserController implements IShowUserController {
         }
     }
 
+    public List<Admin> getManagers(int id) {
+        return userRepository.getManagers(id);
+    }
+
     public void delete(String username, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.ADMIN) {
@@ -69,4 +75,5 @@ public class ShowUserController implements IShowUserController {
     public User getUserByToken(String token) throws InvalidTokenException {
         return Session.getSession(token).getLoggedInUser();
     }
+
 }

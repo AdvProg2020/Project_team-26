@@ -6,6 +6,7 @@ import controller.interfaces.request.IRequestController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
+import exception.ObjectAlreadyExistException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Promo;
 import view.cli.ControllerContainer;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -57,6 +59,34 @@ public class PromoManagerController {
         cols.get(3).setCellValueFactory(new PropertyValueFactory<Promo,Double>("percent"));
         cols.get(4).setCellValueFactory(new PropertyValueFactory<Promo,Long>("maxDiscount"));
     }
+
+    @FXML
+    private void add() {
+        Date start = Constants.manager.getDateFromDatePicker(startDate);
+        Date end = Constants.manager.getDateFromDatePicker(endDate);
+        String code = codeText.getText();
+        double percent = Double.parseDouble(offPercent.getText());
+        if(!end.after(start)) {
+            //todo
+        } else if (code.isBlank() || offPercent.getText().isBlank()) {
+            //todo
+        }
+        try {
+            Promo promoCode = new Promo(code,null);
+            promoCode.setStartDate(start);
+            promoCode.setEndDate(end);
+            controller.createPromoCode(promoCode,Constants.manager.getToken());
+        } catch (ObjectAlreadyExistException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }

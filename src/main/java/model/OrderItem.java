@@ -83,4 +83,8 @@ public class OrderItem {
     public ShipmentState getState() {
         return state;
     }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 }

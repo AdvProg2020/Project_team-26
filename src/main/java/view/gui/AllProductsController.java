@@ -17,7 +17,7 @@ import view.cli.ViewManager;
 import java.io.IOException;
 import java.util.List;
 
-public class MainPageController {
+public class AllProductsController implements InitializableController {
     private ICategoryController categoryController;
     private ViewManager manager;
     @FXML
@@ -41,8 +41,7 @@ public class MainPageController {
     @FXML
     private GridPane mainGrid;
 
-    @FXML
-    public void initialize() {
+    public void initialize(int id) {
         initCheckBoxs();
         initComBowBoxs();
         buildTreeViewOfCategories();
@@ -50,7 +49,7 @@ public class MainPageController {
 
 
     private void initComBowBoxs() {
-        sortFieldComBowBox.setPromptText("chooseSorting");
+        sortFieldComBowBox.setPromptText("Choose Sorting");
         sortFieldComBowBox.getItems().addAll("default", "average Rate", "most sold");
         isAcendingComBowBox.getItems().addAll("ascending", "depending");
         isAcendingComBowBox.setPromptText("ascending/descending");

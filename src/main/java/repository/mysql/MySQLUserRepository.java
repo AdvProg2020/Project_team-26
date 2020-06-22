@@ -10,6 +10,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 public class MySQLUserRepository
         extends MySQLRepository<User> implements UserRepository {
@@ -68,5 +69,10 @@ public class MySQLUserRepository
         } catch (Exception e) {
             return false;
         }
+    }
+
+    @Override
+    public List<Admin> getManagers(int id) {
+        return null;
     }
 }

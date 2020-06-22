@@ -2,9 +2,12 @@ package view.gui;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
@@ -28,7 +31,6 @@ public class Manager {
     private List<Pair<String, Integer>> pages;
     private MainController controller;
     private AuthenticationStageManager authenticationStageManager;
-    private Date endTimeDate;
 
     public Manager() {
         pages = new ArrayList<>();
@@ -37,10 +39,10 @@ public class Manager {
     public void openPage(String pageName, int id) throws IOException {
         pages.add(new Pair<>(pageName, id));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
-        InitializableController controller = (InitializableController) loader.getController();
+        Parent parent = loader.load();
+        InitializableController controller = loader.getController();
         controller.initialize(id);
-        Node node = loader.load();
-        showNode(node);
+        showNode(parent);
     }
 
     public void back() throws IOException {
@@ -56,8 +58,10 @@ public class Manager {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/Main.fxml"));
         Scene scene = new Scene(loader.load());
-        controller = (MainController) loader.getController();
+
+        controller = loader.getController();
         reloadTop();
+
         primaryStage.setTitle("Store");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -128,7 +132,7 @@ public class Manager {
     }
 
     public void switchScene(String scene) throws IOException {
-        if(scene.equals("Login"))
+        if (scene.equals("Login"))
             authenticationStageManager.switchToLogin();
         else
             authenticationStageManager.switchToRegister();
@@ -143,12 +147,25 @@ public class Manager {
         return false;
     }
 
-    public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException,IllegalArgumentException {
+    public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException, IllegalArgumentException {
         LocalDate localDate = datePicker.getValue();
         Instant instant = Instant.from(localDate.atStartOfDay(ZoneId.systemDefault()));
         Date date = Date.from(instant);
-        if(date.before(endTimeDate))
+        if (date.getTime() < 0)
             throw new IllegalArgumentException("pick closer");
         return date;
+    }
+
+    public void showErrorPopUp(String errorMessage) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
+        ErrorPageController controller = loader.getController();
+        Button okButton = controller.getButton();
+        controller.setText(errorMessage);
+        Stage windows = new Stage(loader.load());
+        okButton.setOnMouseClicked(e -> windows.close());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
+
     }
 }

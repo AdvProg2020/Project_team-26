@@ -4,5 +4,5 @@ import exception.*;
 
 public interface IRatingController {
 
-    void addRating(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException;
+    void rate(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException;
 }

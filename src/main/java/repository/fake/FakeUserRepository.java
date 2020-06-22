@@ -75,6 +75,12 @@ public class FakeUserRepository implements UserRepository {
         return false;
     }
 
+
+    @Override
+    public List<Admin> getManagers(int id) {
+        return null;
+    }
+
     @Override
     public List<User> getAll() {
         return allUsers;
