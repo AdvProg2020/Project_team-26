@@ -12,10 +12,11 @@ import javafx.scene.layout.VBox;
 import model.*;
 import view.gui.Constants;
 import view.gui.InitializableController;
+import view.gui.ParentPageController;
 
 import java.io.IOException;
 
-public class CreateOfForSellerController implements InitializableController, OffControllerForFxml {
+public class CreateOfForSellerController implements InitializableController, ParentPageController {
     private IOffController offController;
     private IProductController productController;
     private boolean isOk;

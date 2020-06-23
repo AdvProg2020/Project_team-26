@@ -7,6 +7,7 @@ import exception.NotSellerException;
 import exception.ObjectAlreadyExistException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
@@ -39,10 +40,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
     @FXML
     private TextField amountTextField;
     @FXML
-    private VBox categoryVBox;
-    @FXML
-    private VBox featuresBox;
-
+    private ScrollPane categoryScrollPane;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -60,8 +58,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
         nameTextField.setText("");
         priceTextField.setText("");
         amountTextField.setText("");
-        //setcategory todo
-        featuresBox.getChildren().removeAll();
+
     }
 
     @FXML
@@ -109,6 +106,10 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 !nameTextField.getText().isBlank() && Constants.manager.checkIsLong(priceTextField.getText()) &&
                 Constants.manager.checkInputIsInt(amountTextField.getText());
         //check image and category todo
+    }
+
+    public void setcategory(){
+
     }
 
 }

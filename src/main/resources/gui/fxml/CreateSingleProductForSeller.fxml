@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
@@ -33,9 +34,8 @@
             </VBox>
          </children>
       </HBox>
-      <HBox alignment="CENTER_LEFT" prefHeight="102.0" prefWidth="600.0" spacing="20.0">
+      <HBox alignment="CENTER_LEFT" prefHeight="63.0" prefWidth="600.0" spacing="20.0">
          <children>
-            <Button fx:id="uploadButton" mnemonicParsing="false" onAction="#uploadPhotoClicked" text="upload photo" />
             <VBox alignment="CENTER_LEFT" prefHeight="77.0" prefWidth="194.0">
                <children>
                   <TextField fx:id="priceTextField" promptText="Price" />
@@ -52,17 +52,9 @@
                   <Insets left="10.0" right="10.0" />
                </padding>
             </VBox>
-            <VBox fx:id="categoryVBox" alignment="CENTER" prefHeight="97.0" prefWidth="163.0" />
-            <VBox alignment="CENTER" prefHeight="102.0" prefWidth="110.0">
-               <children>
-                  <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="34.0" prefWidth="91.0" text="save">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </Button>
-                  <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearAllClicked" prefHeight="33.0" prefWidth="91.0" text="clear all" />
-               </children>
-            </VBox>
+            <Button fx:id="uploadButton" mnemonicParsing="false" onAction="#uploadPhotoClicked" text="upload photo" />
+            <Button fx:id="clearButton" mnemonicParsing="false" onAction="#clearAllClicked" prefHeight="33.0" prefWidth="91.0" text="clear all" />
+            <Button fx:id="saveButton" mnemonicParsing="false" onAction="#saveButtonClicked" prefHeight="34.0" prefWidth="91.0" text="save" />
          </children>
          <VBox.margin>
             <Insets />
@@ -71,6 +63,6 @@
             <Insets left="10.0" />
          </padding>
       </HBox>
-      <VBox fx:id="featuresBox" minHeight="200.0" />
+      <ScrollPane fx:id="categoryScrollPane" prefHeight="251.0" prefWidth="600.0" />
    </children>
 </VBox>

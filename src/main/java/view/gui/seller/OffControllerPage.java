@@ -13,12 +13,13 @@ import model.*;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
+import view.gui.ParentPageController;
 
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-public class OffControllerPage implements InitializableController, OffControllerForFxml {
+public class OffControllerPage implements InitializableController, ParentPageController {
     private Off off;
     private int offId;
     private IOffController offController;

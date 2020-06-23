@@ -11,6 +11,7 @@ import model.OffItem;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
+import view.gui.ParentPageController;
 
 import java.io.IOException;
 
@@ -20,7 +21,7 @@ public class OffItemPageController implements InitializableController {
     private Off off;
     private int offItemId;
     private boolean isForAdd;
-    private OffControllerForFxml offControllerPage;
+    private ParentPageController offControllerPage;
     @FXML
     private Text name;
     @FXML
@@ -38,7 +39,7 @@ public class OffItemPageController implements InitializableController {
         offItemId = id;
     }
 
-    public void load(OffItem offItem, Off off, boolean isForAdd, OffControllerForFxml offControllerPage) {
+    public void load(OffItem offItem, Off off, boolean isForAdd, ParentPageController offControllerPage) {
         this.offControllerPage = offControllerPage;
         this.off = off;
         this.offItem = offItem;
