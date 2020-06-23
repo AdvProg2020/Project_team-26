@@ -13,13 +13,14 @@ import model.*;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
-import view.gui.ParentPageController;
+import view.gui.*;
+import view.gui.Reloadable;
 
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-public class OffControllerPage implements InitializableController, ParentPageController {
+public class OffControllerPage implements InitializableController, Reloadable {
     private Off off;
     private int offId;
     private IOffController offController;
@@ -120,7 +121,7 @@ public class OffControllerPage implements InitializableController, ParentPageCon
     }
 
     @FXML
-    public void addProductButtonclicked() {
+    public void addProductButtonclicked() throws IOException {
         if (productName.getText().equals("") || priceInOff.getText().equals("")) {
             //todo red the field
             return;
@@ -129,10 +130,10 @@ public class OffControllerPage implements InitializableController, ParentPageCon
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), false, Constants.manager.getToken());
-                reloadItems();
+                reload();
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, false, Constants.manager.getToken());
-                reloadItems();
+                reload();
             } else {
                 //todo red the box
                 return;
@@ -157,18 +158,13 @@ public class OffControllerPage implements InitializableController, ParentPageCon
     }
 
     @Override
-    public void reload() {
+    public void reload() throws IOException {
         try {
             off = offController.getOff(offId, Constants.manager.getToken());
             reloadPage();
         } catch (InvalidIdException e) {
             e.printStackTrace();
         }
-
-    }
-
-    @Override
-    public void reloadItems(Object object) throws IOException {
 
     }
 }

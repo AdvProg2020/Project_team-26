@@ -31,7 +31,13 @@ public class CategoryListController implements InitializableController {
         try {
             category = categoryController.getCategory(id, Constants.manager.getToken());
             load(category);
-            categoryList.setOnMouseClicked(e -> click());
+            categoryList.setOnMouseClicked(e -> {
+                try {
+                    click();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
         } catch (InvalidIdException invalidIdException) {
             invalidIdException.printStackTrace();
         }
@@ -45,7 +51,7 @@ public class CategoryListController implements InitializableController {
         categoryList.setItems(categoryObservableList);
     }
 
-    public void goToParent() {
+    public void goToParent() throws IOException {
         category = category.getParent();
         try {
             load(category);
@@ -55,7 +61,7 @@ public class CategoryListController implements InitializableController {
         }
     }
 
-    private void click() {
+    private void click() throws IOException {
         if (categoryList.getItems() != null) {
             Category selectedCategory = (Category) categoryList.getSelectionModel().getSelectedItem();
             try {
