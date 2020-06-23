@@ -16,7 +16,7 @@
       <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="515.0">
          <children>
             <TextField fx:id="searchTextField" promptText="NAME" />
-            <ImageView fx:id="searchIconImage" fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="searchIconImage" fitHeight="30.0" fitWidth="44.0" onMouseClicked="#searchIconClicked" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pic/icons8-search-480.png" />
                </image>

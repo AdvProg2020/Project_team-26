@@ -44,6 +44,10 @@ public class ProductTableForSellerController implements InitializableController 
     public void initialize(int id) throws IOException {
         sortComBowBox.getItems().addAll("mostSold", "price");
         searchTextField.setPromptText("Name");
+        price.setCellValueFactory(new PropertyValueFactory<>("price"));
+        brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
+        categoryName.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
+        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
     }
 
     private void loadSingleProduct(ProductForTable productForTable) throws IOException {
@@ -73,10 +77,7 @@ public class ProductTableForSellerController implements InitializableController 
         this.personalInfoController = personalInfoController;
         productList.forEach(i -> productForTables.add(new ProductForTable(i.getId(), i.getCategory().getId(), i.getName()
                 , i.getCategory().getName(), i.getMinimumPrice(), i.getBrand())));
-        price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        brand.setCellValueFactory(new PropertyValueFactory<>("brand"));
-        categoryName.setCellValueFactory(new PropertyValueFactory<>("categoryName"));
-        productName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        tableView.getItems().removeAll();
         tableView.setItems(FXCollections.observableList(productForTables));
         tableView.setEditable(false);
         tableView.setOnMouseClicked(e -> {
@@ -87,6 +88,23 @@ public class ProductTableForSellerController implements InitializableController 
                 //todo
             }
         });
+    }
+
+    @FXML
+    public void searchIconClicked() {
+        HashMap<String, String> filter = new HashMap<>();
+        filter.put("name", searchTextField.getText());
+        try {
+            List<Product> productList = productController.getAllProductWithFilterForSellerId(filter, "price", true, 0, 50, Constants
+                    .manager.getToken());
+            load(productList, this.personalInfoController);
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        }
     }
 
     private class ProductForTable {
