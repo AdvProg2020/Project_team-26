@@ -43,11 +43,15 @@ public class OrderControllerTest {
 
 
     @Test
-    public void getASingleOrderTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NoObjectIdException {
+    public void getASingleOrderTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NoObjectIdException, NotLoggedINException {
 
         authenticationController.login("test5", "test5", token);
         Exception ex = Assertions.assertThrows(NoObjectIdException.class, () -> orderController.getASingleOrder(100, token));
         Assertions.assertEquals(ex.getMessage(), "Object does not exist.");
+        authenticationController.logout(token);
+
+        authenticationController.login("test10","test10",token);
+        Assertions.assertNotEquals(null,orderController.getASingleOrder(1,token));
     }
 
     @Test
@@ -109,7 +113,7 @@ public class OrderControllerTest {
         authenticationController.login("test3","test3",token);
         Assertions.assertNotEquals(null,orderController.getProductBuyerByProductId(14,token));
 
-
-
     }
+
+
 }

@@ -3,9 +3,7 @@ package controller.product;
 import antlr.ASdebug.ASDebugStream;
 import controller.account.AuthenticationController;
 import exception.*;
-import model.Category;
-import model.Product;
-import model.Session;
+import model.*;
 import org.hibernate.boot.spi.InFlightMetadataCollector;
 import repository.CategoryRepository;
 import repository.RepositoryContainer;
@@ -117,7 +115,7 @@ public class CategoryControllerTest {
         Assertions.assertEquals(ex.getMessage(), "product by 21 id already exist");
         /** Exception Tests **/
 
-        categoryController.addProduct(13,21,token);
+        categoryController.addProduct(13, 21, token);
 
     }
 
@@ -142,11 +140,11 @@ public class CategoryControllerTest {
     @Test
     public void getAllProductWithFilter() throws InvalidIdException {
         /** Exception Tests **/
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllProductWithFilter(null,"name",true,0,0,5000,token));
-        Assertions.assertEquals(ex.getMessage(),"No such category exists");
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllProductWithFilter(null, "name", true, 0, 0, 5000, token));
+        Assertions.assertEquals(ex.getMessage(), "No such category exists");
         /**Exception Tests **/
 
-        Assertions.assertNotEquals(null,categoryController.getAllProductWithFilter(new HashMap<>(),"name",true,0,0,12,token));
+        Assertions.assertNotEquals(null, categoryController.getAllProductWithFilter(new HashMap<>(), "name", true, 0, 0, 12, token));
 
     }
 
@@ -162,6 +160,35 @@ public class CategoryControllerTest {
 
         authenticationController.login("aria", "aria", token);
         Assertions.assertNotEquals(null, categoryController.getProducts(7, token));
+    }
+
+    @Test
+    public void getByNameTest() throws InvalidIdException {
+
+        /** Exception Tests **/
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getByName("halva"));
+        Assertions.assertEquals(ex.getMessage(),"no such name exist.");
+        /** Exception Tests **/
+
+        Assertions.assertEquals("pens",categoryController.getByName("pens").getName());
+    }
+
+    @Test
+    public void addAttributeTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, InvalidIdException {
+
+        authenticationController.login("aria","aria",token);
+        categoryController.addAttribute(1,"test", FeatureType.STRING,token);
+        List<CategoryFeature> test = categoryController.getAttribute(1,token);
+        test.forEach(e -> System.out.println(e.getFeatureName()));
+        Assertions.assertNotEquals(null,categoryController.getAttribute(1,token));
+    }
+
+    @Test
+    public void remoteAttributeTest() throws InvalidIdException, InvalidTokenException, NoAccessException, InvalidFormatException, PasswordIsWrongException, InvalidAuthenticationException {
+
+        authenticationController.login("aria","aria",token);
+        categoryController.removeAttribute(1,"test",token);
+        Assertions.assertEquals(null,categoryController.getAttribute(1,token));
     }
 
     private String createRandomName() {

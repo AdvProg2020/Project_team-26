@@ -73,7 +73,6 @@ public class OrderController implements IOrderController {
     }
 
     private boolean doesHeOwnTheProduct(Product product, Seller seller) {
-        product.getSellerList().forEach(e -> System.out.println(e.getSeller().getUsername()));
         return product.getSellerList().stream().anyMatch(e -> e.getSeller().equals(seller));
     }
 
