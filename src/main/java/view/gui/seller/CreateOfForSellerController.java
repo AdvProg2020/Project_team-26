@@ -12,11 +12,11 @@ import javafx.scene.layout.VBox;
 import model.*;
 import view.gui.Constants;
 import view.gui.InitializableController;
-import view.gui.ParentPageController;
+import view.gui.Reloadable;
 
 import java.io.IOException;
 
-public class CreateOfForSellerController implements InitializableController, ParentPageController {
+public class CreateOfForSellerController implements InitializableController, Reloadable {
     private IOffController offController;
     private IProductController productController;
     private boolean isOk;
@@ -102,7 +102,7 @@ public class CreateOfForSellerController implements InitializableController, Par
 
 
     @Override
-    public void reloadItems() {
+    public void reload() {
 
 
     }

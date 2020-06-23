@@ -12,7 +12,6 @@ import java.util.Map;
 
 public interface ICategoryController {
 
-
     void addCategory(int patternId, Category newCategory, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException;
 
     void removeACategory(int id, int parentId, String token) throws NoAccessException, InvalidTokenException, InvalidIdException, NoObjectIdException;
@@ -34,7 +33,9 @@ public interface ICategoryController {
 
     Category getCategory(int id, String token) throws InvalidIdException;
 
-    Category getCategoryByName(String name, String token) throws InvalidIdException,InvalidIdException;
+    List<Category> getSubCategories(int id, String token) throws InvalidIdException;
+
+    Category getCategoryByName(String name, String token) throws InvalidIdException;
 
     List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending,int startIndex,int endIndex, int id, String token) throws InvalidIdException;
 

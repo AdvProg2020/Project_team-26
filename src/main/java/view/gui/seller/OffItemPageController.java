@@ -11,7 +11,7 @@ import model.OffItem;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
-import view.gui.ParentPageController;
+import view.gui.Reloadable;
 
 import java.io.IOException;
 
@@ -21,7 +21,7 @@ public class OffItemPageController implements InitializableController {
     private Off off;
     private int offItemId;
     private boolean isForAdd;
-    private ParentPageController offControllerPage;
+    private Reloadable offControllerPage;
     @FXML
     private Text name;
     @FXML
@@ -39,7 +39,7 @@ public class OffItemPageController implements InitializableController {
         offItemId = id;
     }
 
-    public void load(OffItem offItem, Off off, boolean isForAdd, ParentPageController offControllerPage) {
+    public void load(OffItem offItem, Off off, boolean isForAdd, Reloadable offControllerPage) {
         this.offControllerPage = offControllerPage;
         this.off = off;
         this.offItem = offItem;
@@ -56,7 +56,7 @@ public class OffItemPageController implements InitializableController {
     public void deleteButtonClicked() {
         try {
             offController.removeProductFromOff(off, offItem.getProductSeller().getProduct().getId(), isForAdd, Constants.manager.getToken());
-            offControllerPage.reloadItems();
+            offControllerPage.reload();
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (ObjectAlreadyExistException e) {
