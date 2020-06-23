@@ -188,7 +188,7 @@ public class CategoryControllerTest {
 
         authenticationController.login("aria","aria",token);
         categoryController.removeAttribute(1,"test",token);
-        Assertions.assertEquals(null,categoryController.getAttribute(1,token));
+        Assertions.assertEquals(new ArrayList<>(),categoryController.getAttribute(1,token));
     }
 
     private String createRandomName() {

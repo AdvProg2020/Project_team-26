@@ -73,7 +73,6 @@ public class CategoryController implements ICategoryController {
     private CategoryFeature getCategoryFeature(Category category, String name) throws InvalidIdException {
         List<CategoryFeature> categoryFeatures = category.getFeatures();
         for (CategoryFeature categoryFeature : categoryFeatures) {
-            System.out.println(categoryFeature.getFeatureName());
             if (categoryFeature.getFeatureName().equals(name))
                 return categoryFeature;
         }
