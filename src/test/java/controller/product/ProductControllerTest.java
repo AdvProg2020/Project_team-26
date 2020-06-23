@@ -3,6 +3,7 @@ package controller.product;
 import controller.account.AuthenticationController;
 import exception.*;
 import model.Product;
+import model.ProductSeller;
 import model.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import repository.ProductRepository;
 import repository.ProductSellerRepository;
 import repository.RepositoryContainer;
+
+import java.util.List;
 
 class ProductControllerTest {
 
@@ -125,6 +128,56 @@ class ProductControllerTest {
         authenticationController.login("test2","test2",token);
         Assertions.assertNotEquals(null,productController.getAllProductWithFilterForSellerId(
                 null,"name",true,0,0,token));
+    }
+
+    @Test
+    public void removeProductTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, NoAccessException, InvalidIdException {
+
+        /** Exception Tests **/
+        Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> productController.removeProduct(2,token));
+        Assertions.assertEquals(ex.getMessage(),"You are not Logged in.");
+
+        authenticationController.login("test5","test5",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> productController.removeProduct(2,token));
+        Assertions.assertEquals(ex.getMessage(),"You must be a seller|manager to remove a product");
+        authenticationController.logout(token);
+
+        authenticationController.login("test4","test4",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> productController.removeProduct(14,token));
+        Assertions.assertEquals(ex.getMessage(),"You don't have this item for sale.");
+        authenticationController.logout(token);
+
+        /** Exception Tests **/
+
+        authenticationController.login("test3","test3",token);
+        productController.removeProduct(14,token);
+
+    }
+
+    @Test
+    public void editProductSellerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException {
+
+        /** Exception Tests **/
+        authenticationController.login("test4","test4",token);
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> productController.editProductSeller(1200,new ProductSeller(),token));
+        Assertions.assertEquals(ex.getMessage(),"There is no productSeller with this id to change");
+        authenticationController.logout(token);
+
+        authenticationController.login("aria","aria",token);
+        ex = Assertions.assertThrows(NotSellerException.class, () -> productController.editProductSeller(14,new ProductSeller(),token));
+        Assertions.assertEquals(ex.getMessage(),"You must be seller to edit productSeller");
+        authenticationController.logout(token);
+
+        authenticationController.login("test3","test3",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> productController.editProductSeller(3,new ProductSeller(),token));
+        Assertions.assertEquals(ex.getMessage(),"You can only change your own products");
+        /**Exception Tests **/
+
+    }
+
+    @Test
+    public void getAllProductWithFilterTest() {
+       List<Product> list = productController.getAllProductWithFilter(null,"name",true,0,0,token);
     }
 
 

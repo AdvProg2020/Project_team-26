@@ -100,7 +100,7 @@ public class CartControllerTest {
     }
 
     @Test
-    public void checkoutTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, InvalidIdException, NotEnoughProductsException {
+    public void checkoutTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, InvalidIdException, NotEnoughProductsException, NoAccessException, NotEnoughCreditException {
 
         /** Exception tests **/
 
@@ -116,9 +116,16 @@ public class CartControllerTest {
         cartController.addOrChangeProduct(6,1,token);
         ex = Assertions.assertThrows(NotEnoughCreditException.class,() -> cartController.checkout(token));
         Assertions.assertEquals(ex.getMessage(),"You don't have enough creadit to pay 3456");
+        authenticationController.logout(token);
+        /** Exception Tests **/
+
+        authenticationController.login("test14","test14",token);
+        cartController.addOrChangeProduct(23,1,token);
+        cartController.checkout(token);
 
 
     }
+
 
 
 }

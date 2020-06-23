@@ -69,5 +69,16 @@ public class ShowUserControllerTest {
         Assertions.assertEquals(showUserController.getUsers(token),userRepository.getAll());
     }
 
+    @Test
+    public void getUserByTokenTest() throws InvalidTokenException, InvalidFormatException, PasswordIsWrongException, InvalidAuthenticationException {
+        authenticationController.login("aria","aria",token);
+        Assertions.assertNotEquals(null,showUserController.getUserByToken(token));
+    }
+
+    @Test
+    public void getManagersTest() {
+        Assertions.assertNotEquals(showUserController.getManagers(28),null);
+    }
+
 
 }

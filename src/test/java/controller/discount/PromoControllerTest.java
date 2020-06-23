@@ -84,13 +84,15 @@ public class PromoControllerTest {
         Assertions.assertEquals(ex.getMessage(), "there is no promo by 1200");
         /** Exception Tests **/
 
-        Promo promo = new Promo("randomForLogin2023a9", null);
+        String promoCode = createRandomPromo();
+
+        Promo promo = new Promo(promoCode, null);
         promo.setStartDate(new Date(105,9,12));
         promo.setEndDate(new Date(121,5,6));
         promoController.createPromoCode(promo,token);
-        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2023a9").getPromoCode(), "randomForLogin2023a9");
-        promoController.removePromoCode(promoRepository.getByCode("randomForLogin2023a9").getId(), token);
-        Assertions.assertEquals(promoRepository.getByCode("randomForLogin2023a9"), null);
+        Assertions.assertEquals(promoRepository.getByCode(promoCode).getPromoCode(), promoCode);
+        promoController.removePromoCode(promoRepository.getByCode(promoCode).getId(), token);
+        Assertions.assertEquals(promoRepository.getByCode(promoCode), null);
     }
 
 
