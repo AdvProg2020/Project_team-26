@@ -16,6 +16,7 @@ public class CategoryFeature {
     @Column(name = "name")
     private String featureName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private FeatureType featureType;
 
