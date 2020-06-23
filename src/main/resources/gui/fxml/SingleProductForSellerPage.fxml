@@ -194,11 +194,11 @@
                 <TableColumn fx:id="buyersTableViewColumns" prefWidth="127.99997198581696" text="Buyer" />
               </columns>
             </TableView>
-            <TableView fx:id="categoryFeatursOfProduct" prefHeight="188.0" prefWidth="473.0">
+            <TableView fx:id="categoryFeatures" prefHeight="188.0" prefWidth="473.0">
               <columns>
-                <TableColumn fx:id="categoryFeaturName" prefWidth="97.33331298828125" text="Name" />
-                <TableColumn prefWidth="92.00001525878906" text="Type" />
-                  <TableColumn fx:id="descriptionOfFeature" prefWidth="281.3333231608073" text="Description" />
+                <TableColumn fx:id="featureName" prefWidth="97.33331298828125" text="Name" />
+                <TableColumn fx:id="featureType" prefWidth="92.00001525878906" text="Type" />
+                  <TableColumn fx:id="featureDescription" prefWidth="281.3333231608073" text="Description" />
               </columns>
             </TableView>
          </children>

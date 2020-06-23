@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,7 @@ public class Product {
 
     public Product() {
         sellerList = new ArrayList<>();
+        categoryFeatures = new HashMap<>();
     }
 
     public Product(String name, String brand, String description) {
@@ -63,6 +65,7 @@ public class Product {
         this.brand = brand;
         this.description = description;
         sellerList = new ArrayList<>();
+        categoryFeatures = new HashMap<>();
         comments = new ArrayList<>();
     }
 
@@ -180,5 +183,9 @@ public class Product {
         product.setId(id);
         product.setSellerList(sellerList);
         return product;
+    }
+
+    public Map<CategoryFeature, String> getCategoryFeatures() {
+        return categoryFeatures;
     }
 }

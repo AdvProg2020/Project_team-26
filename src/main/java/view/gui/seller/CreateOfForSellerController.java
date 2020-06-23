@@ -12,11 +12,11 @@ import javafx.scene.layout.VBox;
 import model.*;
 import view.gui.Constants;
 import view.gui.InitializableController;
-import view.gui.Reloadable;
+import view.gui.ParentPageController;
 
 import java.io.IOException;
 
-public class CreateOfForSellerController implements InitializableController, Reloadable {
+public class CreateOfForSellerController implements InitializableController, ParentPageController {
     private IOffController offController;
     private IProductController productController;
     private boolean isOk;
@@ -49,13 +49,15 @@ public class CreateOfForSellerController implements InitializableController, Rel
     }
 
     @FXML
-    public void addProductButtonclicked() {
+    public void addProductButtonclicked() throws IOException {
         try {
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), true, Constants.manager.getToken());
+                updateVBox(off.getItems().get(off.getItems().size() - 1));
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, true, Constants.manager.getToken());
+                updateVBox(off.getItems().get(off.getItems().size() - 1));
             } else {
                 //todo red the box
                 return;
@@ -77,11 +79,11 @@ public class CreateOfForSellerController implements InitializableController, Rel
     }
 
     private void updateVBox(OffItem item) throws IOException {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
-            OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
-            offItemPageController.load(item, off, true,this);
-            offItemPageController.initialize(item.getId());
-            itemsVBox.getChildren().add(loader.load());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
+        OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
+        offItemPageController.load(item, off, true, this);
+        offItemPageController.initialize(item.getId());
+        itemsVBox.getChildren().add(loader.load());
     }
 
     @FXML
@@ -102,13 +104,20 @@ public class CreateOfForSellerController implements InitializableController, Rel
 
 
     @Override
-    public void reload() {
-
+    public void reloadItems() {
+        itemsVBox.getChildren().removeAll();
+        off.getItems().forEach(i-> {
+            try {
+                updateVBox(i);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
     }
 
     @Override
-    public void reloadItems(Object object) {
+    public void reloadItems(Object object) throws IOException {
 
     }
 }

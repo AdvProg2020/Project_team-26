@@ -88,8 +88,6 @@ public class CartControllerPage implements InitializableController {
         } catch (NotEnoughProductsException e) {
             e.printStackTrace();//todo tell
         }
-
-
         //todo load the purchase page here
     }
 }

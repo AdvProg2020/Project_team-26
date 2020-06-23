@@ -13,13 +13,13 @@ import model.*;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
-import view.gui.Reloadable;
+import view.gui.ParentPageController;
 
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 
-public class OffControllerPage implements InitializableController, Reloadable {
+public class OffControllerPage implements InitializableController, ParentPageController {
     private Off off;
     private int offId;
     private IOffController offController;
@@ -129,10 +129,10 @@ public class OffControllerPage implements InitializableController, Reloadable {
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), false, Constants.manager.getToken());
-                reload();
+                reloadItems();
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, false, Constants.manager.getToken());
-                reload();
+                reloadItems();
             } else {
                 //todo red the box
                 return;
@@ -160,7 +160,7 @@ public class OffControllerPage implements InitializableController, Reloadable {
     public void reload() {
         try {
             off = offController.getOff(offId, Constants.manager.getToken());
-            reload();
+            reloadPage();
         } catch (InvalidIdException e) {
             e.printStackTrace();
         }
@@ -168,7 +168,7 @@ public class OffControllerPage implements InitializableController, Reloadable {
     }
 
     @Override
-    public void reloadItems(Object object) {
+    public void reloadItems(Object object) throws IOException {
 
     }
 }

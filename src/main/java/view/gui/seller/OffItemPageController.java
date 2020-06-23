@@ -28,8 +28,6 @@ public class OffItemPageController implements InitializableController {
     private Text price;
     @FXML
     private TextField priceInOff;
-   /* @FXML
-    private Button editButton;*/
     @FXML
     private Button deleteButton;
 
@@ -53,7 +51,7 @@ public class OffItemPageController implements InitializableController {
     }
 
     @FXML
-    public void deleteButtonClicked() {
+    public void deleteButtonClicked() throws IOException {
         try {
             offController.removeProductFromOff(off, offItem.getProductSeller().getProduct().getId(), isForAdd, Constants.manager.getToken());
             offControllerPage.reload();
