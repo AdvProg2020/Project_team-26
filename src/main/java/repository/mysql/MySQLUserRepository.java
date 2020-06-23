@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -73,6 +74,21 @@ public class MySQLUserRepository
 
     @Override
     public List<Admin> getManagers(int id) {
-        return null;
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Admin> cq = cb.createQuery(Admin.class);
+            Root<Admin> root = cq.from(Admin.class);
+
+            Predicate adminPredicate = cb.equal(root.get("role"), Role.ADMIN);
+            Predicate notIdPredicate = cb.notEqual(root.get("id"), id);
+            cq.select(root).where(cb.and(adminPredicate, notIdPredicate));
+            TypedQuery<Admin> typedQuery = em.createQuery(cq);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

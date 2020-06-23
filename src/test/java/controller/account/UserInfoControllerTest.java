@@ -13,6 +13,8 @@ import repository.UserRepository;
 import java.beans.Transient;
 import java.net.UnknownServiceException;
 import java.rmi.NoSuchObjectException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserInfoControllerTest {
 
@@ -78,6 +80,13 @@ public class UserInfoControllerTest {
 
         userInfoController.changeInfo("FirstName","arya",token);
         Assertions.assertEquals(userRepository.getUserByUsername("aria").getFullName(),"arya mamad");
+
+        authenticationController.login("aria","aria",token);
+        Map<String,String> newInfo =  new HashMap<>();
+        newInfo.put("Email","jafar@yahoo.com");
+        newInfo.put("LastName","bagherqomi");
+        userInfoController.changeInfo(newInfo,token);
+        Assertions.assertEquals("bagherqomi",userRepository.getUserByUsername("aria").getLastName());
 
     }
 

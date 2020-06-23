@@ -103,7 +103,7 @@ public class CategoryController implements ICategoryController {
     }
 
     private Category getCategoryByIdWithCheck(int id) throws InvalidIdException {
-        Category category = (Category) categoryRepository.getById(id);
+        Category category = categoryRepository.getById(id);
         if (category == null)
             throw new InvalidIdException("no category exist.");
         return category;
@@ -183,6 +183,12 @@ public class CategoryController implements ICategoryController {
     }
 
     @Override
+    public List<Category> getSubCategories(int id, String token) throws InvalidIdException {
+        Category category = getCategoryByIdWithCheck(id);
+        return category.getSubCategory();
+    }
+
+    @Override
     public Category getCategoryByName(String name, String token) throws InvalidIdException, InvalidIdException {
         if(!checkCategoryExistByName(name)) {
             throw new InvalidIdException("The specified category does not exist.");
@@ -193,7 +199,7 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
-        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        Pageable page = createPage(sortField,isAscending,startIndex,endIndex);
         Category category = categoryRepository.getById(id);
         if(category == null) {
             throw new InvalidIdException("No such category exists");
@@ -217,7 +223,7 @@ public class CategoryController implements ICategoryController {
         return category;
     }
 
-    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
+    private Pageable createPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
         if(isAscending) {
             return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
         } else {

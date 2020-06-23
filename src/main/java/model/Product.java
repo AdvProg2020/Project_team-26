@@ -1,5 +1,7 @@
 package model;
 
+import org.hibernate.annotations.Cascade;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +45,7 @@ public class Product {
     private List<Comment> comments;
 
     @ElementCollection
+    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "category_feature_id")
     @Column(name = "value")
     @CollectionTable(name = "product_category_feature", joinColumns = @JoinColumn(name = "product_id"))
