@@ -32,11 +32,13 @@ public class CreateCategoryForAddingController implements InitializableControlle
                 try {
                     Category newCategory = categoryController.getCategory(selectedCategory.getId(), Constants.manager.getToken());
                     parentPageController.reloadItems(newCategory);
-                } catch (InvalidIdException ex) {
+                    load(newCategory, this.parentPageController);
+                } catch (InvalidIdException | IOException ex) {
                     ex.printStackTrace();
                 }
             }
         });
+
     }
 
     public void load(Category category, ParentPageController parentPageController) {

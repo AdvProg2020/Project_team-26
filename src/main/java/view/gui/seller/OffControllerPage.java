@@ -166,4 +166,9 @@ public class OffControllerPage implements InitializableController, ParentPageCon
         }
 
     }
+
+    @Override
+    public void reloadItems(Object object) throws IOException {
+
+    }
 }

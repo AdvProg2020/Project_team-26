@@ -106,4 +106,9 @@ public class CreateOfForSellerController implements InitializableController, Par
 
 
     }
+
+    @Override
+    public void reloadItems(Object object) throws IOException {
+
+    }
 }

@@ -47,13 +47,19 @@ public class SingleProductForSellerPageController implements InitializableContro
     @FXML
     private Label nameLabel;
     @FXML
-    TableView<Buyers> buyersTableView;
+    private TableView<Buyers> buyersTableView;
     @FXML
-    TableColumn<String, Buyers> buyersTableViewColumns;//todo
-
+    private TableView<Feature> categoryFeatures;
+    @FXML
+    private TableColumn<String, Buyers> buyersTableViewColumns;
+    @FXML
+    private TableColumn<String, Feature> featureName;
+    @FXML
+    private TableColumn<String, Feature> featureType;
+    @FXML
+    private TableColumn<String, Feature> featureDescription;
 
     @Override
-
     public void initialize(int id) throws IOException {
         productId = id;
 
@@ -67,6 +73,17 @@ public class SingleProductForSellerPageController implements InitializableContro
         productRateSlider.setValue(product.getAverageRate());
         productRateSlider.setValueChanging(false);
         setBuyersTableView();
+        setFeaturesTable(product);
+    }
+
+    private void setFeaturesTable(Product product) {
+        featureName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        featureType.setCellValueFactory(new PropertyValueFactory<>("featureType"));
+        featureDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        categoryFeatures.setEditable(false);
+        ArrayList<Feature> features = new ArrayList<>();
+        product.getCategoryFeatures().entrySet().forEach(i -> features.add(new Feature(i.getKey().getFeatureName(), i.getKey().getFeatureType(), i.getValue())));
+        categoryFeatures.setItems(FXCollections.observableList(features));
     }
 
     private void initPrimitiveFields() {
@@ -99,9 +116,7 @@ public class SingleProductForSellerPageController implements InitializableContro
             List<Buyers> buyersList = new ArrayList<>();
             users.forEach(i -> buyersList.add(new Buyers(i.getId(), i.getUsername(), i.getFullName() == null ? "" : i.getFullName())));
             ObservableList<Buyers> observableList = FXCollections.observableList(buyersList);
-            TableColumn buyers = new TableColumn("Buyers");
-            buyers.setCellValueFactory(new PropertyValueFactory<>("userName"));
-            buyersTableView.getColumns().add(buyers);
+            buyersTableViewColumns.setCellValueFactory(new PropertyValueFactory<>("userName"));
             buyersTableView.setItems(observableList);
         } catch (InvalidTokenException e) {
             e.printStackTrace();
@@ -195,4 +210,29 @@ public class SingleProductForSellerPageController implements InitializableContro
             return userName;
         }
     }
+
+    private class Feature {
+        private String name;
+        private String featureType;
+        private String description;
+
+        public Feature(String name, FeatureType featureType, String description) {
+            this.name = name;
+            this.featureType = FeatureType.getType(featureType);
+            this.description = description;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getFeatureType() {
+            return featureType;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+    }
+
 }

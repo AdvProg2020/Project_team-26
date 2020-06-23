@@ -63,6 +63,15 @@
             <Insets left="10.0" />
          </padding>
       </HBox>
-      <ScrollPane fx:id="categoryScrollPane" prefHeight="251.0" prefWidth="600.0" />
+      <ScrollPane fx:id="categoryScrollPane" prefHeight="251.0" prefWidth="600.0">
+         <content>
+            <HBox prefWidth="594.0">
+               <children>
+                  <VBox fx:id="categoryBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="150.0" />
+                  <VBox fx:id="featuresBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="445.0" spacing="50.0" />
+               </children>
+            </HBox>
+         </content>
+      </ScrollPane>
    </children>
 </VBox>
