@@ -128,7 +128,7 @@ public class MySQLOffRepository
     //*****************************
 
     @Override
-    public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int SellerId) {
+    public List<Off> getAllOffForSellerWithFilter(String sortField, boolean isAscending, int SellerId) {
         return null;
     }
 }

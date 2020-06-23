@@ -24,7 +24,6 @@ public interface ICategoryController {
 
     void removeProduct(int id, int productName, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 
-
     List<Category> getAllCategories(int id, String token) throws InvalidIdException;
 
     void getExceptionOfIfCategoryExist(int id, String token) throws InvalidIdException;
@@ -37,7 +36,9 @@ public interface ICategoryController {
 
     Category getCategoryByName(String name, String token) throws InvalidIdException;
 
-    List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending,int startIndex,int endIndex, int id, String token) throws InvalidIdException;
+    List<Product> getAllProducts(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException;
+
+    List<Product> getAllProductsInOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException;
 
     List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException;
 

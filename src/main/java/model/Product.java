@@ -63,6 +63,7 @@ public class Product {
         this.brand = brand;
         this.description = description;
         sellerList = new ArrayList<>();
+        comments = new ArrayList<>();
     }
 
     public int getId() {

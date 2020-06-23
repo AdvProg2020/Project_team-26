@@ -66,7 +66,7 @@ public class AllProductView extends View {
 
     protected void showAllProducts() {
         try {
-            categoryController.getAllProductWithFilter(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(),
+            categoryController.getAllProducts(productFilterAndSort.getFilterForController(), productFilterAndSort.getFieldNameForSort(),
                     productFilterAndSort.isAscending(), currentCategory,0,0, manager.getToken())
                     .forEach(product -> manager.inputOutput.println(
                             "name is : " + product.getName() + "id is: " + product.getId()));

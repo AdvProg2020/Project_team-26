@@ -1,10 +1,8 @@
 package controller.product;
 
-import antlr.ASdebug.ASDebugStream;
 import controller.account.AuthenticationController;
 import exception.*;
 import model.*;
-import org.hibernate.boot.spi.InFlightMetadataCollector;
 import repository.CategoryRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
@@ -140,11 +138,11 @@ public class CategoryControllerTest {
     @Test
     public void getAllProductWithFilter() throws InvalidIdException {
         /** Exception Tests **/
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllProductWithFilter(null, "name", true, 0, 0, 5000, token));
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> categoryController.getAllProducts(null, "name", true, 0, 0, 5000, token));
         Assertions.assertEquals(ex.getMessage(), "No such category exists");
         /**Exception Tests **/
 
-        Assertions.assertNotEquals(null, categoryController.getAllProductWithFilter(new HashMap<>(), "name", true, 0, 0, 12, token));
+        Assertions.assertNotEquals(null, categoryController.getAllProducts(new HashMap<>(), "name", true, 0, 0, 12, token));
 
     }
 

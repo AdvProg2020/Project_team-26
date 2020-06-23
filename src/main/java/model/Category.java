@@ -106,6 +106,11 @@ public class Category {
     }
 
     @Override
+    public String toString() {
+        return name;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
