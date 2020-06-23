@@ -192,7 +192,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         }
 
         public String getUserName() {
-            return "the user " + name + " with userName " + userName + " has bought this product";
+            return userName;
         }
     }
 }

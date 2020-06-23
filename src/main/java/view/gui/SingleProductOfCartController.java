@@ -65,6 +65,7 @@ public class SingleProductOfCartController implements InitializableController {
                     cartController.addOrChangeProduct(productSeller.getId(), Integer.parseInt(amountTextField.getText()), Constants.manager.getToken());
                     amountTextField.setEditable(false);
                     editButtonClick.setText("Edit");
+                    //todo reload cart page
                 } catch (InvalidIdException e) {
                     e.printStackTrace();
                 } catch (NotEnoughProductsException e) {

@@ -89,9 +89,9 @@ public class OrderTableControllerForCustomer implements InitializableController 
     private void loadFxmlOfSingleOrder(OrderItem item) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OrderItem.fxml"));
         OrderItemController orderItemController = (OrderItemController) loader.getController();
-            orderItemController.initialize(item.getId());
-            orderItemController.load(item);
-            personalInfoController.addSingleItemToBox(loader.load());
+        orderItemController.initialize(item.getId());
+        orderItemController.load(item);
+        personalInfoController.addSingleItemToBox(loader.load());
     }
 
     private class Orders {

@@ -11,30 +11,29 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="332.0" prefWidth="515.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.ProductTableForSellerController">
    <children>
       <HBox alignment="CENTER_LEFT" prefHeight="57.0" prefWidth="515.0">
          <children>
-            <TextField promptText="NAME" />
+            <TextField fx:id="searchTextField" promptText="NAME" />
             <ImageView fx:id="searchIconImage" fitHeight="30.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pic/icons8-search-480.png" />
                </image>
             </ImageView>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <ComboBox prefWidth="150.0" />
+            <ComboBox fx:id="sortComBowBox" prefWidth="150.0" />
          </children>
          <VBox.margin>
             <Insets left="10.0" />
          </VBox.margin>
       </HBox>
-       <TableView prefHeight="295.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css">
+       <TableView fx:id="tableView" prefHeight="295.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css">
            <columns>
-               <TableColumn prefWidth="125.99995422363281" text="Product Name" />
-               <TableColumn prefWidth="134.66664123535156" text="Category" />
-               <TableColumn minWidth="0.0" prefWidth="0.0" text="Brand" />
-            <TableColumn prefWidth="133.33331298828125" text="amount" />
-            <TableColumn prefWidth="120.00002034505212" text="Price" />
+               <TableColumn fx:id="productName" prefWidth="155.33334350585938" text="Product Name" />
+               <TableColumn fx:id="categoryName" prefWidth="126.66668701171875" text="Category" />
+               <TableColumn fx:id="brand" minWidth="0.0" prefWidth="128.66668701171875" text="Brand" />
+            <TableColumn fx:id="price" prefWidth="104.0" text="Price" />
            </columns>
        </TableView>
    </children>

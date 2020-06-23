@@ -166,6 +166,5 @@ public class Manager {
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
         windows.show();
-
     }
 }
