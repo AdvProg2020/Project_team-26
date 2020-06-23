@@ -35,6 +35,7 @@ public class RepositoryContainer {
         map.put("ProductSellerRepository", new MySQLProductSellerRepository());
         map.put("OffRepository", new MySQLOffRepository());
         map.put("OrderRepository", new MySQLOrderRepository());
+        map.put("CustomerRepository", new MySQLCustomerRepository());
 
         ((MySQLRequestRepository) map.get("RequestRepository")).initializeRepositories(this);
     }

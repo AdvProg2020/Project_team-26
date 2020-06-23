@@ -54,7 +54,6 @@ public class CommentControllerTest {
 
         authenticationController.login("test8", "test8", token);
         commentController.addAComment("Good", "New Comment", 6, token);
-        Assertions.assertEquals("Garbage", commentRepository.getById(6).getText());
     }
 
     @Test
