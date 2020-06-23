@@ -94,6 +94,10 @@ public class CreateSingleProductForSellerController implements InitializableCont
         category.getFeatures().forEach(i -> featureBoxList.add(new FeatureBox(i, i.getFeatureName(), i.getFeatureType())));
         featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
     }
+    @FXML
+    public void uploadPhotoClicked(){
+        //todo ....
+    }
 
     @FXML
     public void saveButtonClicked() {

@@ -120,7 +120,7 @@ public class OffControllerPage implements InitializableController, ParentPageCon
     }
 
     @FXML
-    public void addProductButtonclicked() {
+    public void addProductButtonclicked() throws IOException {
         if (productName.getText().equals("") || priceInOff.getText().equals("")) {
             //todo red the field
             return;
@@ -157,10 +157,10 @@ public class OffControllerPage implements InitializableController, ParentPageCon
     }
 
     @Override
-    public void reloadItems() {
+    public void reloadItems() throws IOException {
         try {
             off = offController.getOff(offId, Constants.manager.getToken());
-            reloadItems();
+            reloadPage();
         } catch (InvalidIdException e) {
             e.printStackTrace();
         }
