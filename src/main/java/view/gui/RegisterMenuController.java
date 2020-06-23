@@ -38,18 +38,30 @@ public class RegisterMenuController implements InitializableController {
     private AnchorPane anchor;
     @FXML
     private Label errorLabel;
-
+    @FXML
     private Button loginButton;
+    @FXML
+    private TextField usernameTextLogin;
+    @FXML
+    private TextField passwordTextLogin;
+    @FXML
+    private Tab registerTab;
+    @FXML
+    private Tab loginTab;
+    @FXML
+    private TabPane tabPane;
+
+    private Button registerButton;
     private TextField textField;
     private IAuthenticationController controller;
 
 
     private void initialize() {
         roleChoice.setItems(roles);
-        loginButton = new Button("Login");
-        loginButton.setLayoutX(255);
-        loginButton.setLayoutY(355);
-        loginButton.setOnMouseClicked(e -> register());
+        registerButton = new Button("Register");
+        registerButton.setLayoutX(255);
+        registerButton.setLayoutY(355);
+        registerButton.setOnMouseClicked(e -> register());
         textField = new TextField();
         textField.setLayoutX(330);
         textField.setLayoutY(287);
@@ -95,8 +107,37 @@ public class RegisterMenuController implements InitializableController {
         }
     }
 
+    public void login(ActionEvent actionEvent) {
+        controller = (AuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
+        String username = usernameTextLogin.getText();
+        String password = passwordTextLogin.getText();
+        if(username.isBlank() || password.isBlank()) {
+            errorLabel.setText("Please Fill all of the boxes.");
+        } else {
+            try {
+                controller.login(username, password, Constants.manager.getToken());
+                Constants.manager.setLoggedIn(true);
+                return;
+            } catch (InvalidTokenException e) {
+                Constants.manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                return;
+            } catch (InvalidFormatException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (InvalidAuthenticationException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (PasswordIsWrongException e) {
+                errorLabel.setText("Your password is Wrong.");
+            }
+        }
+    }
+
+    @FXML
+    private void redirectToRegister(ActionEvent actionEvent) throws IOException {
+        tabPane.getSelectionModel().select(registerTab);
+    }
+
     private void fillManager() {
-        anchor.getChildren().addAll(loginButton);
+        anchor.getChildren().addAll(registerButton);
     }
 
     private void fillSeller() {
@@ -104,7 +145,7 @@ public class RegisterMenuController implements InitializableController {
             textField.setPromptText("Company Name");
         else {
             textField.setPromptText("Company Name");
-            anchor.getChildren().addAll(textField, loginButton);
+            anchor.getChildren().addAll(textField, registerButton);
         }
     }
 
@@ -113,7 +154,7 @@ public class RegisterMenuController implements InitializableController {
             textField.setPromptText("Customer Credit");
         else {
             textField.setPromptText("Customer Credit");
-            anchor.getChildren().addAll(textField, loginButton);
+            anchor.getChildren().addAll(textField, registerButton);
         }
     }
 

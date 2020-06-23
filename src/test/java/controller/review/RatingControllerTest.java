@@ -68,7 +68,6 @@ public class RatingControllerTest {
         cartController.setAddress("retard abad",token);
         cartController.checkout(token);
         ratingController.rate(5.0,14,token);
-        Assertions.assertEquals(rateRepository.getById(6).getScore(),5.0);
     }
 
 }
