@@ -8,7 +8,9 @@ import exception.NoAccessException;
 import exception.NotLoggedINException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import model.Seller;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
@@ -17,6 +19,7 @@ import view.gui.PersonalInfoController;
 import view.gui.customer.OrderTableController;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,6 +40,8 @@ public class SellerButtonsController implements InitializableController {
     private Button manageOff;
     @FXML
     private Button manageProduct;
+    @FXML
+    private HBox box;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -81,9 +86,13 @@ public class SellerButtonsController implements InitializableController {
         });
     }
 
-    public void load(PersonalInfoController personalInfoController, Seller seller) {
+    public void load(Seller seller) throws IOException {
         this.seller = seller;
-        this.personalInfoController = personalInfoController;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
+        this.personalInfoController = (PersonalInfoController) loader.getController();
+        personalInfoController.initialize(userId);
+        personalInfoController.load(seller);
+        box.getChildren().addAll((Node) loader.load());
     }
 
     private void createOffHandle() throws IOException {

@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import model.Product;
+import org.controlsfx.control.RangeSlider;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

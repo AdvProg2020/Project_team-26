@@ -149,7 +149,7 @@
                 </VBox>
             </children>
         </HBox>
-        <VBox alignment="TOP_RIGHT" prefHeight="720.0" prefWidth="889.0">
+        <VBox alignment="TOP_RIGHT" prefHeight="720.0" prefWidth="893.0">
             <children>
                 <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                     <image>

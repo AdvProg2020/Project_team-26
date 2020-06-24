@@ -59,10 +59,8 @@ public class Manager {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/Main.fxml"));
         Scene scene = new Scene(loader.load());
-
         controller = loader.getController();
         reloadTop();
-
         primaryStage.setTitle("Store");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -124,31 +122,25 @@ public class Manager {
         }
     }
 
-    public void openSellerPage() {
-        //TODO set seller buttons left and personal page center and toolbar top
-    }
+    public void openAccountPage(){
 
-    public void openManagerPage() {
-    //TODO set manager page base on aria design
-    }
 
-    public void openCustomerPage() {
-    //TODO set Customer buttons left and personal page center and toolbar top
     }
 
     public void openCart() {
-   //TODO set cart and toolbar up
+        //TODO set cart and toolbar up
     }
 
     public void openSingleProductPage() {
-        //TODO set Customer buttons left and personal page center and toolbar top
+        //todo
     }
-    //todo
+
 
     public void setTokenFromController(String error) {
         //todo
     }
-    public void showCompareStage(){
+
+    public void showCompareStage() {
         //TODO get list then load the compare pane
         //TODO then add the compareProduct with loading it by function andToBox in compare pane controller
     }
