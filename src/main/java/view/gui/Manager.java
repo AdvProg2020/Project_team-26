@@ -148,6 +148,10 @@ public class Manager {
     public void setTokenFromController(String error) {
         //todo
     }
+    public void showCompareStage(){
+        //TODO get list then load the compare pane
+        //TODO then add the compareProduct with loading it by function andToBox in compare pane controller
+    }
 
     public void setAuthenticationStageManager(AuthenticationStageManager authenticationStageManager) {
         this.authenticationStageManager = authenticationStageManager;
