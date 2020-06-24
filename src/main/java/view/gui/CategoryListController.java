@@ -6,6 +6,7 @@ import exception.InvalidIdException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import model.Category;
@@ -25,6 +26,8 @@ public class CategoryListController implements InitializableController {
     private Label currentCategory;
     @FXML
     private ListView categoryList;
+    @FXML
+    private Button goToParentButton;
 
 
     @Override
@@ -40,10 +43,14 @@ public class CategoryListController implements InitializableController {
     }
 
     public void load(Category category) throws InvalidIdException {
+        if(category.getId() == 1)
+            goToParentButton.setDisable(true);
+        else
+            goToParentButton.setDisable(false);
         List<Category> categories = new ArrayList<>();
         categories.addAll(categoryController.getSubCategories(category.getId(), Constants.manager.getToken()));
         categories.removeIf(c -> c.getId() == category.getId());
-        ObservableList<Category> categoryObservableList = FXCollections.observableList(category.getSubCategory());
+        ObservableList<Category> categoryObservableList = FXCollections.observableList(categories);
         categoryList.setItems(categoryObservableList);
         currentCategory.setText(category.getName());
     }
