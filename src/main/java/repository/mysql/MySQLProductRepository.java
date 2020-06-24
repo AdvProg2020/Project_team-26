@@ -1,6 +1,9 @@
 package repository.mysql;
 
 import model.*;
+import model.enums.RequestStatus;
+import model.enums.RequestType;
+import model.enums.Status;
 import repository.CategoryRepository;
 import repository.Pageable;
 import repository.ProductRepository;

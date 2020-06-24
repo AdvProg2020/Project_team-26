@@ -6,7 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
-import model.Role;
+import model.enums.Role;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.interfaces.InitializableController;

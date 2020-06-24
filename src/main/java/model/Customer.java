@@ -1,6 +1,6 @@
 package model;
 
-import exception.NotEnoughCreditException;
+import model.enums.Role;
 
 import javax.persistence.*;
 import java.util.ArrayList;

@@ -1,6 +1,8 @@
 package repository.mysql;
 
 import model.*;
+import model.enums.RequestStatus;
+import model.enums.Status;
 import repository.*;
 import repository.mysql.utils.EntityManagerProvider;
 

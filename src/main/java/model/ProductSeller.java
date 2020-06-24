@@ -1,6 +1,8 @@
 package model;
 
 import exception.NotEnoughProductsException;
+import model.enums.RequestType;
+import model.enums.Status;
 
 import javax.persistence.*;
 

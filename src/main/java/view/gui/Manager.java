@@ -1,8 +1,6 @@
 package view.gui;
 
-import controller.SessionController;
 import controller.interfaces.account.IShowUserController;
-import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +13,6 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
-import model.Session;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.admin.AdminRegistryController;
@@ -153,7 +150,7 @@ public class Manager {
             } else if (user.getRole() == Role.CUSTOMER) {
                 openPage("CustomersButton", user.getId());
             } else if (user.getRole() == Role.ADMIN) {
-                openPage("AdminOptionMenu", user.getId());
+                openPage("AdminOptionMenu",user.getId());
             } else {
                 //TODO open main page here
             }
@@ -163,7 +160,7 @@ public class Manager {
     }
 
     public void openCart() throws IOException {
-        openPage("Cart", 0);
+        openPage("Cart",0);
     }
 
     public void setTokenFromController() {
@@ -229,10 +226,14 @@ public class Manager {
 
     public void showLoginMenu() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
+        VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
-        Stage windows = new Stage(loader.load());
+        controller.initialize(2);
+        Stage windows = new Stage();
+        windows.setScene(new Scene(vBox));
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
+        controller.redirectToLogin();
         windows.show();
     }
 
@@ -251,7 +252,9 @@ public class Manager {
 
     public void showErrorPopUp(String errorMessage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
-        Stage windows = new Stage(loader.load());
+        BorderPane borderPane = new BorderPane((Node)loader.load());
+        Stage windows = new Stage();
+        windows.setScene(new Scene(borderPane));
         ErrorPageController controller = loader.getController();
         Button okButton = controller.getButton();
         controller.load(errorMessage);

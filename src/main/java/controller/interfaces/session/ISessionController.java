@@ -2,7 +2,7 @@ package controller.interfaces.session;
 
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
-import model.Role;
+import model.enums.Role;
 import model.User;
 
 public interface ISessionController {

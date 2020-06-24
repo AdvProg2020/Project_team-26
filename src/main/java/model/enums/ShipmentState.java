@@ -1,4 +1,4 @@
-package model;
+package model.enums;
 
 public enum ShipmentState {
     WAITING_TO_SEND, SENT, RECEIVED;

@@ -3,6 +3,7 @@ package controller.cart;
 import controller.interfaces.cart.ICartController;
 import exception.*;
 import model.*;
+import model.enums.ShipmentState;
 import repository.*;
 
 import java.text.ParseException;

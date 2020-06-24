@@ -4,7 +4,7 @@ import exception.*;
 import exception.InvalidIdException;
 import model.Category;
 import model.CategoryFeature;
-import model.FeatureType;
+import model.enums.FeatureType;
 import model.Product;
 
 import java.util.List;

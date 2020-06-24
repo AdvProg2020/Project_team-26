@@ -3,6 +3,7 @@ package controller.account;
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
 import model.*;
+import model.enums.Role;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;

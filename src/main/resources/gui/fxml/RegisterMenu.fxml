@@ -84,9 +84,9 @@
                               <Image url="@../pic/icons8-password-30.png" />
                            </image>
                         </ImageView>
-                        <ChoiceBox id="roleChoice" fx:id="roleChoice" layoutX="116.0" layoutY="287.0" onInputMethodTextChanged="#completeTheMenu" prefWidth="150.0" />
+                        <ChoiceBox id="roleChoice" fx:id="roleChoice" layoutX="116.0" layoutY="287.0" prefWidth="150.0" />
                         <Label layoutX="73.0" layoutY="291.0" text="Role" />
-                        <Label id="errorLabel" fx:id="errorLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="106.0" prefHeight="17.0" prefWidth="286.0" textAlignment="CENTER" textFill="RED" />
+                        <Label id="errorLabel" fx:id="errorLabelRegister" alignment="CENTER" contentDisplay="CENTER" layoutX="151.0" layoutY="106.0" prefHeight="17.0" prefWidth="286.0" textAlignment="CENTER" textFill="RED" />
                      </children>
                   </AnchorPane>
                </center>
@@ -122,9 +122,10 @@
                               <Image url="@../pic/icons8-password-30.png" />
                            </image>
                         </ImageView>
-                        <Button fx:id="loginButton" layoutX="246.0" layoutY="279.0" mnemonicParsing="false" onMouseClicked="#login" style="-fx-background-color: #3287a8;" text="Login" textFill="WHITE" />
+                        <Button fx:id="loginButton" layoutX="246.0" layoutY="279.0" mnemonicParsing="false" style="-fx-background-color: #3287a8;" text="Login" textFill="WHITE" />
                         <Label layoutX="207.0" layoutY="338.0" text="Don't have an account?" />
                         <Hyperlink fx:id="loginHyperLink" layoutX="227.0" layoutY="355.0" onMouseClicked="#redirectToRegister" text="Register Here!" />
+                        <Label fx:id="errorLabelLogin" alignment="CENTER" layoutX="122.0" layoutY="103.0" prefHeight="17.0" prefWidth="295.0" textAlignment="CENTER" textFill="RED" />
                      </children>
                   </AnchorPane>
                </right>

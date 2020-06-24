@@ -1,6 +1,7 @@
 package controller.account;
 
 import model.*;
+import model.enums.Role;
 
 public class Account {
     private String password;

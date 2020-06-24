@@ -1,6 +1,7 @@
 package model;
 
 import exception.InvalidTokenException;
+import model.enums.Role;
 import repository.UserRepository;
 
 import java.util.HashMap;

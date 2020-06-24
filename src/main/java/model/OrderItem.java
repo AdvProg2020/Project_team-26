@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.ShipmentState;
+
 import javax.persistence.*;
 
 @Entity

@@ -3,12 +3,11 @@ package controller.order;
 import controller.interfaces.order.IOrderController;
 import exception.*;
 import model.*;
+import model.enums.Role;
 import repository.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class OrderController implements IOrderController {
     OrderRepository orderRepository;

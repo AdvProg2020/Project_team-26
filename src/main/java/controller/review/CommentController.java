@@ -5,6 +5,7 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
 import model.*;
+import model.enums.Role;
 import repository.CommentRepository;
 import repository.ProductRepository;
 import repository.RepositoryContainer;

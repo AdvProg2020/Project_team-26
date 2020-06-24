@@ -1,10 +1,8 @@
 package view.gui.customer;
 
-import controller.discount.PromoController;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
 import controller.interfaces.order.IOrderController;
-import controller.order.OrderController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
@@ -14,12 +12,10 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import model.Customer;
-import model.Role;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
-import view.gui.Manager;
 import view.gui.PersonalInfoController;
 
 import java.io.IOException;

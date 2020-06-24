@@ -3,7 +3,7 @@ package view.cli.main;
 import controller.account.AuthenticationController;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
-import model.Role;
+import model.enums.Role;
 
 import view.cli.ControllerContainer;
 import view.cli.View;

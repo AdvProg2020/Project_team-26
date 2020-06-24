@@ -5,7 +5,7 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
 import model.Admin;
-import model.Role;
+import model.enums.Role;
 import model.Session;
 import model.User;
 import repository.RepositoryContainer;

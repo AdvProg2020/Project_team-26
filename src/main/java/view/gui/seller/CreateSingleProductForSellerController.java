@@ -15,12 +15,12 @@ import javafx.stage.Stage;
 import model.*;
 import model.Product;
 import model.ProductSeller;
+import model.enums.FeatureType;
 import view.cli.ControllerContainer;
 import view.gui.*;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;

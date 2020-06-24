@@ -6,7 +6,7 @@ import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
 import model.Product;
-import model.Role;
+import model.enums.Role;
 import view.cli.main.AuthenticationView;
 import view.cli.main.MainPageView;
 import view.cli.products.single.SingleProductView;

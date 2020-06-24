@@ -14,6 +14,7 @@ import javafx.scene.text.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
+import model.enums.FeatureType;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;

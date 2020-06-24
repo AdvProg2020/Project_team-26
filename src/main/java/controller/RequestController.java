@@ -5,6 +5,7 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
 import model.*;
+import model.enums.Role;
 import repository.*;
 
 import java.util.List;

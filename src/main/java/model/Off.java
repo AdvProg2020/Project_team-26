@@ -1,5 +1,8 @@
 package model;
 
+import model.enums.RequestType;
+import model.enums.Status;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;

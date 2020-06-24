@@ -6,6 +6,8 @@ import exception.NoAccessException;
 import exception.*;
 import exception.ObjectAlreadyExistException;
 import model.*;
+import model.enums.FeatureType;
+import model.enums.Role;
 import repository.CategoryRepository;
 import repository.Pageable;
 import repository.ProductRepository;

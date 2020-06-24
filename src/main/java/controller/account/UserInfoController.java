@@ -2,7 +2,7 @@ package controller.account;
 
 import controller.interfaces.account.IUserInfoController;
 import exception.*;
-import model.Role;
+import model.enums.Role;
 import model.Seller;
 import model.Session;
 import model.User;

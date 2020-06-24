@@ -1,18 +1,13 @@
 package model;
 
-import controller.account.Account;
 import exception.NoAccessException;
 import exception.NotEnoughCreditException;
+import model.enums.Role;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Semaphore;
-
-import static javax.persistence.CascadeType.*;
 
 @Entity
 @Table(name = "user")

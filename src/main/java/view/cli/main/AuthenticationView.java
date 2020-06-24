@@ -4,7 +4,7 @@ import controller.account.Account;
 import controller.account.AuthenticationController;
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
-import model.Role;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 import view.cli.View;
 import view.cli.ViewManager;

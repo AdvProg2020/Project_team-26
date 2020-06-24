@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import model.Role;
+import model.enums.Role;
 
 import java.io.IOException;
 

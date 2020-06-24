@@ -1,5 +1,7 @@
 package model;
 
+import model.enums.CommentState;
+
 import javax.persistence.*;
 
 @Entity
