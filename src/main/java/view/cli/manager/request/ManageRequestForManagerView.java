@@ -47,7 +47,7 @@ public class ManageRequestForManagerView extends View {
         }
     }
 
-    protected void showAllOff() {
+    /*protected void showAllOff() {
         try {
             requestController.getAllOffRequests(requestSort.getFieldNameForSort(), requestSort.isAscending(),
                     manager.getToken()).forEach(i -> manager.inputOutput.println("id : " + i.getId() + " type : " +
@@ -105,7 +105,7 @@ public class ManageRequestForManagerView extends View {
 
     protected void detailTheOffRequest(Matcher matcher) {
         try {
-            OffRequest offRequest = requestController.getOffRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
+            OffRequest offRequest = requestController.getAllRequests(Integer.parseInt(matcher.group(1)), manager.getToken());
             showSingleOffRequest(offRequest);
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
@@ -132,7 +132,7 @@ public class ManageRequestForManagerView extends View {
         }
     }
 
-    private void showSingleProductSellerRequest(ProductSellerRequest productSellerRequest) {
+    private void showSingleProductSellerRequest(Request productSellerRequest) {
         switch (productSellerRequest.getRequestType()) {
             case ADD:
                 showDeleteOrAddProductSellerRequest(productSellerRequest, "add");
@@ -229,7 +229,7 @@ public class ManageRequestForManagerView extends View {
 
     protected void detailTheProductSellerRequest(Matcher matcher) {
         try {
-            ProductSellerRequest productSellerRequest = requestController.getProductSellerRequestById(Integer.parseInt(matcher.group(1)), manager.getToken());
+            Request productSellerRequest = requestController.getAllRequests("date",true,0,10, manager.getToken());
             showSingleProductSellerRequest(productSellerRequest);
         } catch (NotLoggedINException e) {
             manager.inputOutput.println(e.getMessage());
@@ -326,7 +326,7 @@ public class ManageRequestForManagerView extends View {
 
     protected void sorting() {
         requestSort.run();
-    }
+    }*/
 
     protected void help() {
         List<String> commandList = new ArrayList<>();

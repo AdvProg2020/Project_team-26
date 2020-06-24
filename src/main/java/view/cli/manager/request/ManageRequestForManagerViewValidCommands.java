@@ -4,7 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public enum ManageRequestForManagerViewValidCommands {
-    ShowAllOff("show\\s+offs\\s+request") {
+   /* ShowAllOff("show\\s+offs\\s+request") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
             page.showAllOff();
@@ -76,7 +76,7 @@ public enum ManageRequestForManagerViewValidCommands {
         public void goToFunction(ManageRequestForManagerView page) {
             page.logOut();
         }
-    },
+    },*/
     Help("help") {
         @Override
         public void goToFunction(ManageRequestForManagerView page) {
