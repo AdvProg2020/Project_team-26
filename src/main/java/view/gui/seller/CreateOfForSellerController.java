@@ -64,18 +64,14 @@ public class CreateOfForSellerController implements InitializableController, Rel
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, true, Constants.manager.getToken());
                 updateVBox(off.getItems().get(off.getItems().size() - 1));
             } else {
-                //todo red the box
+                Constants.manager.showErrorPopUp("please fill the price by Long");
                 return;
             }
-        } catch (NoObjectIdException e) {
-            e.printStackTrace();
+        } catch (NoObjectIdException | NoAccessException | ObjectAlreadyExistException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidIdException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (ObjectAlreadyExistException e) {
             e.printStackTrace();
         } catch (NotLoggedINException e) {
             e.printStackTrace();
@@ -92,14 +88,14 @@ public class CreateOfForSellerController implements InitializableController, Rel
     }
 
     @FXML
-    public void updateButtonClicked() {
+    public void updateButtonClicked() throws IOException {
         try {
             this.off.setStartDate(Constants.manager.getDateFromDatePicker(startDate));
             this.off.setEndDate(Constants.manager.getDateFromDatePicker(endDate));
             offController.createNewOff(off, Constants.manager.getToken());
             // todo call the main to vanish this
         } catch (NoAccessException e) {
-            e.printStackTrace();
+           Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
             e.printStackTrace();
         } catch (NotLoggedINException e) {

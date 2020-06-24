@@ -1,5 +1,7 @@
 package view.gui;
 
+import controller.interfaces.account.IShowUserController;
+import exception.InvalidTokenException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -12,6 +14,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
+import model.User;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
@@ -42,7 +45,7 @@ public class Manager {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
         Parent parent = loader.load();
         InitializableController controller = loader.getController();
-        controller.initialize(id);
+        controller.initialize(id);//TODO handle kon
         showNode(parent);
     }
 
@@ -122,17 +125,29 @@ public class Manager {
         }
     }
 
-    public void openAccountPage(){
-
-
+    public void openAccountPage() throws IOException {
+        try {
+            User user = ((IShowUserController) controllerContainer.getController(ControllerContainer.Controller.ShowUserController)).getUserByToken(getToken());
+            if (user.getRole() == Role.SELLER) {
+                openPage("SellerButtons", user.getId());
+            } else if (user.getRole() == Role.CUSTOMER) {
+                openPage("CustomersButton", user.getId());
+            } else if (user.getRole() == Role.ADMIN) {
+                //TODO aria fill here plz
+            } else {
+                //TODO open main page here
+            }
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void openCart() {
-        //TODO set cart and toolbar up
+    public void openCart() throws IOException {
+        openPage("Cart",0);
     }
 
     public void openSingleProductPage() {
-        //todo
+        //todo pooya i dont know how it is
     }
 
 

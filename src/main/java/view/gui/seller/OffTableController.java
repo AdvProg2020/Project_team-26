@@ -69,15 +69,13 @@ public class OffTableController implements InitializableController {
     }
 
 
-    public void deleteOffAndReloadBox(int offId) {
+    public void deleteOffAndReloadBox(int offId) throws IOException {
         personalInfoController.clearBox();
         try {
             offController.removeAOff(offId, Constants.manager.getToken());
             reloadTable();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
+        } catch (NoAccessException | InvalidIdException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
             e.printStackTrace();
         } catch (NotLoggedINException e) {

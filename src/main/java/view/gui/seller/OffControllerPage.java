@@ -94,16 +94,12 @@ public class OffControllerPage implements InitializableController, Reloadable {
                 setEditable(false);
                 updateButton.setText("Edit");
                 reloadPage();
-            } catch (NoAccessException e) {
-                e.printStackTrace();
+            } catch (NoAccessException | InvalidIdException | DateTimeException | IllegalArgumentException e) {
+                Constants.manager.showErrorPopUp(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
-            } catch (InvalidIdException e) {
                 e.printStackTrace();
             } catch (NotLoggedINException e) {
                 e.printStackTrace();
-            } catch (DateTimeException | IllegalArgumentException e) {
-                //todo red the date picker
             }
         }
     }
@@ -123,7 +119,7 @@ public class OffControllerPage implements InitializableController, Reloadable {
     @FXML
     public void addProductButtonclicked() throws IOException {
         if (productName.getText().equals("") || priceInOff.getText().equals("")) {
-            //todo red the field
+            Constants.manager.showErrorPopUp("dont leave the fields empty");
             return;
         }
         try {
@@ -135,18 +131,12 @@ public class OffControllerPage implements InitializableController, Reloadable {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, false, Constants.manager.getToken());
                 reload();
             } else {
-                //todo red the box
+                Constants.manager.showErrorPopUp("enter Integer");
                 return;
             }
-        } catch (NoObjectIdException e) {
-            e.printStackTrace();
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
+        } catch (NoObjectIdException | InvalidIdException | NoAccessException | ObjectAlreadyExistException e) {
+          Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (ObjectAlreadyExistException e) {
             e.printStackTrace();
         } catch (NotLoggedINException e) {
             e.printStackTrace();
@@ -163,7 +153,7 @@ public class OffControllerPage implements InitializableController, Reloadable {
             off = offController.getOff(offId, Constants.manager.getToken());
             reloadPage();
         } catch (InvalidIdException e) {
-            e.printStackTrace();
+            e.printStackTrace();//TODO
         }
 
     }

@@ -72,17 +72,16 @@ public class OrderTableController implements InitializableController {
                         e.printStackTrace();
                     }
                 });
-            } catch (NoAccessException e) {//todo
-                e.printStackTrace();
-            } catch (InvalidIdException e) {
-                e.printStackTrace();
-            } catch (NoObjectIdException e) {
-                e.printStackTrace();
+            } catch (NoAccessException | InvalidIdException | NoObjectIdException e) {
+                try {
+                    Constants.manager.showErrorPopUp(e.getMessage());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                e.printStackTrace();//TODO
             }
         });
-
     }
 
     private void loadFxmlOfSingleOrder(OrderItem item) throws IOException {

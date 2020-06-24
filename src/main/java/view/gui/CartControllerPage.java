@@ -31,28 +31,19 @@ public class CartControllerPage implements InitializableController {
 
 
     @Override
-    public void initialize(int id) throws IOException {
+    public void initialize(int id) throws IOException, InvalidTokenException {
         cartController = (ICartController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CartController);
-        try {
-            cart = cartController.getCart(Constants.manager.getToken());
-            totalPriceText.setText("total price");//todo
+        cart = cartController.getCart(Constants.manager.getToken());
+        totalPriceText.setText("total price");//todo
+        loadCart(cart);
            /* totalPriceLabel.textProperty().bind(
             }cartController.getTotalPrice(cart, Constants.manager.getToken()))//todo*/
-        } catch (InvalidTokenException e) {
-            e.printStackTrace();//todo
-        }
-
-
     }
 
-    private void loadCart(Cart cart) {
-        try {
-            cart = cartController.getCart(Constants.manager.getToken());
-            totalPriceText.setText("total price");//todo
-            //totalPriceLabel.textProperty().bind(cart.)//todo
-        } catch (InvalidTokenException e) {
-            e.printStackTrace();//todo
-        }
+    private void loadCart(Cart cart) throws IOException {
+        totalPriceText.setText("total price");//todo
+        //totalPriceLabel.textProperty().bind(cart.)//todo
+        loadProducts(cart);
     }
 
     private void loadProducts(Cart cart) throws IOException {

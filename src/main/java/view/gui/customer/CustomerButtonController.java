@@ -1,6 +1,7 @@
 package view.gui.customer;
 
 import controller.discount.PromoController;
+import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
 import controller.interfaces.order.IOrderController;
 import controller.order.OrderController;
@@ -13,9 +14,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import model.Customer;
+import model.Role;
+import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
+import view.gui.Manager;
 import view.gui.PersonalInfoController;
 
 import java.io.IOException;
@@ -25,6 +29,7 @@ public class CustomerButtonController implements InitializableController {
     private PersonalInfoController personalInfoController;
     private IOrderController orderController;
     private IPromoController promoController;
+    private IShowUserController showUserController;
     private Customer customer;
     @FXML
     private Button promo;
@@ -34,56 +39,62 @@ public class CustomerButtonController implements InitializableController {
     private HBox box;
 
     @Override
-    public void initialize(int id) throws IOException {
+    public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException {
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
+        showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.PromoController);
+        User user = showUserController.getUserById(id, Constants.manager.getToken());
+        this.customer = (Customer) user;
         this.userId = id;
         orders.setOnMouseClicked(e -> {
-            orderHandle();
+            try {
+                orderHandle();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         promo.setOnMouseClicked(e -> {
-            promoHandle();
+            try {
+                promoHandle();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
-    private void orderHandle() {
+    private void orderHandle() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/TableOfOrders.fxml"));
             OrderTableController orderTableControllerForCustomer = (OrderTableController) loader.getController();
             orderTableControllerForCustomer.initialize(userId);
             orderTableControllerForCustomer.load(orderController.getOrdersWithFilter("date", true, 0, 50, Constants.manager.getToken()), personalInfoController);
             personalInfoController.setNodeForTableScrollPane(loader.load());
-        } catch (IOException ex) {
-            //todo end task
         } catch (InvalidTokenException ex) {
-            ex.printStackTrace();
+            ex.printStackTrace();//TODO log in
         } catch (NoAccessException ex) {
-            ex.printStackTrace();
+            Constants.manager.showErrorPopUp(ex.getMessage());
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            //Todo logIn
         }
     }
 
-    private void promoHandle() {
+    private void promoHandle() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/promoCodesForCustomer.fxml"));
             PromoCodesForCustomer promoCodesForCustomer = (PromoCodesForCustomer) loader.getController();
             promoCodesForCustomer.initialize(userId);
             promoCodesForCustomer.load(promoController.getAllPromoCodeForCustomer("maxValidUse", true, 0, 50, Constants.manager.getToken()));
             personalInfoController.updateAllBox(loader.load());
-        } catch (IOException ex) {
-            //todo end task
         } catch (InvalidTokenException ex) {
             ex.printStackTrace();
         } catch (NoAccessException ex) {
-            ex.printStackTrace();
+            Constants.manager.showErrorPopUp(ex.getMessage());
         } catch (NotLoggedINException ex) {
             ex.printStackTrace();
         }
     }
 
-    public void load(Customer customer) throws IOException {
-        this.customer = customer;
+    public void load() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);

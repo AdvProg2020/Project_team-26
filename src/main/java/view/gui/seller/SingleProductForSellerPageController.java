@@ -68,7 +68,7 @@ public class SingleProductForSellerPageController implements InitializableContro
 
     }
 
-    public void load(Product product, ProductSeller productSeller) {
+    public void load(Product product, ProductSeller productSeller) throws IOException {
         this.productSeller = productSeller;
         this.product = product;
         // productImage //todo
@@ -112,7 +112,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         descriptionTextArea.setEditable(type);
     }
 
-    private void setBuyersTableView() {
+    private void setBuyersTableView() throws IOException {
         List<Customer> users = null;
         try {
             users = orderController.getProductBuyerByProductId(product.getId(), Constants.manager.getToken());
@@ -125,16 +125,14 @@ public class SingleProductForSellerPageController implements InitializableContro
             e.printStackTrace();
         } catch (NotLoggedINException e) {
             e.printStackTrace();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
+        } catch (InvalidIdException | NoAccessException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         }
     }
 
 
     @FXML
-    public void productSellerInfoEditButtonClicked() {
+    public void productSellerInfoEditButtonClicked() throws IOException {
         if (productSellerInfoEditButton.getText().equals("Edit seller")) {
             setEditableForProductSeller(true);
             productSellerInfoEditButton.setText("Update seller");
@@ -147,20 +145,16 @@ public class SingleProductForSellerPageController implements InitializableContro
                 productController.editProductSeller(product.getId(), productSeller, Constants.manager.getToken());
                 productSellerInfoEditButton.setText("Edit seller");
                 setEditableForProductSeller(false);
-            } catch (InvalidIdException e) {
-                e.printStackTrace();
+            } catch (InvalidIdException | NotSellerException | NoAccessException e) {
+                Constants.manager.showErrorPopUp(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
-            } catch (NotSellerException e) {
-                e.printStackTrace();
-            } catch (NoAccessException e) {
                 e.printStackTrace();
             }
         }
     }
 
     @FXML
-    public void productInfoEditButtonClicked() {
+    public void productInfoEditButtonClicked() throws IOException {
         if (productInfoEditButton.getText().equals("Edit product")) {
             setEditableForProduct(true);
             productInfoEditButton.setText("Update product");
@@ -173,11 +167,9 @@ public class SingleProductForSellerPageController implements InitializableContro
             productInfoEditButton.setText("Edit product");
             try {
                 productController.editProduct(product.getId(), product, Constants.manager.getToken());
-            } catch (InvalidIdException e) {
-                e.printStackTrace();
+            } catch (InvalidIdException | NoAccessException e) {
+                Constants.manager.showErrorPopUp(e.getMessage());
             } catch (NotSellerException e) {
-                e.printStackTrace();
-            } catch (NoAccessException e) {
                 e.printStackTrace();
             } catch (InvalidTokenException e) {
                 e.printStackTrace();

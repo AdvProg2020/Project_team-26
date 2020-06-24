@@ -64,13 +64,9 @@ public class ProductTableForSellerController implements InitializableController 
             singleProductForSellerPageController.initialize(productSeller.getId());
             singleProductForSellerPageController.load(product, productSeller);
             personalInfoController.updateAllBox(loader.load());
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
-        } catch (NoObjectIdException e) {
-            e.printStackTrace();
+        } catch (InvalidIdException | NoObjectIdException | NoAccessException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (NotLoggedINException e) {
             e.printStackTrace();
@@ -89,24 +85,22 @@ public class ProductTableForSellerController implements InitializableController 
             try {
                 loadSingleProduct(productForTableObservableList.get(productForTableObservableList.size() - 1));
             } catch (IOException ex) {
-                //todo
+                //TODO end program
             }
         });
     }
 
     @FXML
-    public void searchIconClicked() {
+    public void searchIconClicked() throws IOException {
         HashMap<String, String> filter = new HashMap<>();
         filter.put("name", searchTextField.getText());
         try {
             List<Product> productList = productController.getAllProductWithFilterForSellerId(filter, "price", true, 0, 50, Constants
                     .manager.getToken());
             load(productList, this.personalInfoController);
-        } catch (NotLoggedINException e) {
-            e.printStackTrace();
+        } catch (NotLoggedINException | NoAccessException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
             e.printStackTrace();
         }
     }

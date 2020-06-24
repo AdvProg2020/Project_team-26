@@ -46,7 +46,6 @@ public class OffItemPageController implements InitializableController {
         price.setText("" + offItem.getProductSeller().getPrice());
         priceInOff.setText("" + offItem.getPriceInOff());
         priceInOff.setEditable(false);
-       // editButton.setText("Edit");
         deleteButton.setText("Delete");
     }
 
@@ -55,12 +54,8 @@ public class OffItemPageController implements InitializableController {
         try {
             offController.removeProductFromOff(off, offItem.getProductSeller().getProduct().getId(), isForAdd, Constants.manager.getToken());
             offControllerPage.reload();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (ObjectAlreadyExistException e) {
-            e.printStackTrace();
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
+        } catch (NoAccessException | ObjectAlreadyExistException | InvalidIdException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
             e.printStackTrace();
         } catch (NotLoggedINException e) {

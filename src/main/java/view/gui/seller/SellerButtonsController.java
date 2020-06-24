@@ -1,5 +1,6 @@
 package view.gui.seller;
 
+import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IOffController;
 import controller.interfaces.order.IOrderController;
 import controller.interfaces.product.IProductController;
@@ -12,6 +13,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import model.Seller;
+import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
@@ -27,6 +29,7 @@ public class SellerButtonsController implements InitializableController {
     private IOffController offController;
     private IProductController productController;
     private IOrderController orderController;
+    private IShowUserController showUserController;
     private int userId;
     private PersonalInfoController personalInfoController;
     private Seller seller;
@@ -44,10 +47,13 @@ public class SellerButtonsController implements InitializableController {
     private HBox box;
 
     @Override
-    public void initialize(int id) throws IOException {
+    public void initialize(int id) throws IOException, NoAccessException, InvalidTokenException {
         offController = (IOffController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OffController);
         productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
+        showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
+        User user = showUserController.getUserById(id, Constants.manager.getToken());
+        this.seller = (Seller) user;
         this.userId = id;
         createOff.setOnMouseClicked(e -> {
             try {
@@ -86,8 +92,7 @@ public class SellerButtonsController implements InitializableController {
         });
     }
 
-    public void load(Seller seller) throws IOException {
-        this.seller = seller;
+    public void load() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
@@ -117,7 +122,7 @@ public class SellerButtonsController implements InitializableController {
             orderTableController.load(orderController.getOrderHistoryForSeller("startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (NoAccessException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {//todo
             e.printStackTrace();
         } catch (NotLoggedINException e) {
@@ -133,7 +138,7 @@ public class SellerButtonsController implements InitializableController {
             offTableController.load(offController.getAllOfForSellerWithFilter("startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (NoAccessException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {//todo
             e.printStackTrace();
         } catch (NotLoggedINException e) {
@@ -149,7 +154,7 @@ public class SellerButtonsController implements InitializableController {
             productTableForSellerController.load(productController.getAllProductWithFilterForSellerId((Map<String, String>) new HashMap<>().put("deafult", "sd")/*todo saljf*/, "startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (NoAccessException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {//todo
             e.printStackTrace();
         } catch (NotLoggedINException e) {

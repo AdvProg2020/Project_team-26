@@ -72,6 +72,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
         nameTextField.setText("");
         priceTextField.setText("");
         amountTextField.setText("");
+        FXMLLoader loader =
+                categoryBox.getChildren().addAll()
     }
 
     @FXML
@@ -148,16 +150,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
     }
 
     @Override
-    public void reloadItems() {
+    public void reload() throws IOException {
 
-    }
-
-    @Override
-    public void reloadItems(Object object) throws IOException {
-        if (object instanceof Category) {
-            category = (Category) object;
-            load(category);
-        }
 
     }
 
