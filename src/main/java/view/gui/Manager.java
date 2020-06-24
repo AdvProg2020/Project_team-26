@@ -223,10 +223,10 @@ public class Manager {
 
     public void showErrorPopUp(String errorMessage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
+        Stage windows = new Stage(loader.load());
         ErrorPageController controller = loader.getController();
         Button okButton = controller.getButton();
         controller.load(errorMessage);
-        Stage windows = new Stage(loader.load());
         okButton.setOnMouseClicked(e -> windows.close());
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);

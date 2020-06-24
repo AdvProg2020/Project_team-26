@@ -8,13 +8,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import model.Product;
-import org.controlsfx.control.RangeSlider;
 import view.cli.ControllerContainer;
 import view.gui.CategoryListController;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
-import view.gui.interfaces.*;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -33,7 +31,7 @@ public class AllProductsController implements InitializableController, Reloadabl
     @FXML
     private CheckBox offCheckBox;
     @FXML
-    private ComboBox<String> sortFieldComBowBox;
+    private ComboBox<String> sortFieldComboBox;
     @FXML
     private ComboBox<String> sortDirectionComboBox;
     private GridPane mainGrid;
@@ -45,8 +43,8 @@ public class AllProductsController implements InitializableController, Reloadabl
     public void initialize(int id) throws IOException {
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().
                 getController(ControllerContainer.Controller.CategoryController);
-        sortFieldComBowBox.setPromptText("Choose Sorting");
-        sortFieldComBowBox.getItems().addAll("Name", "Average Rate", "Most Sold");
+        sortFieldComboBox.setPromptText("Choose Sorting");
+        sortFieldComboBox.getItems().addAll("Name", "Average Rate", "Most Sold");
         sortDirectionComboBox.getItems().addAll("Ascending", "Descending");
         sortDirectionComboBox.setValue("Ascending");
         categoryListController.setReloadable(this);
@@ -114,7 +112,9 @@ public class AllProductsController implements InitializableController, Reloadabl
     }
 
     private String extractSortField() {
-        switch (sortDirectionComboBox.getValue()) {
+        if(sortFieldComboBox.getValue() == null)
+            return null;
+        switch (sortFieldComboBox.getValue()) {
             case "Name":
                 return "name";
             case "Average Rate":
