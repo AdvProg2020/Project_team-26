@@ -97,6 +97,11 @@ public class OrderController implements IOrderController {
         }
     }
 
+    @Override
+    public List<Order> getOrderHistoryForSeller(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        return null;
+    }
+
     private Order getSingleCustomerOrder(Customer customer, Order wantedOrder) throws NoAccessException {
         if (!wantedOrder.getCustomer().getUsername().equals(customer.getUsername())) {
             throw new NoAccessException("You are not allowed to do that.");

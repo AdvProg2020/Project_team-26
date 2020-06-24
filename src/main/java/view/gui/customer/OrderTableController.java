@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class OrderTableControllerForCustomer implements InitializableController {
+public class OrderTableController implements InitializableController {
     private IOrderController orderController;
     private PersonalInfoController personalInfoController;
     private int id;
@@ -44,11 +44,11 @@ public class OrderTableControllerForCustomer implements InitializableController 
         personalInfoController = parentController;
         ArrayList<Orders> ordersArrayList = new ArrayList<>();
         orders.forEach(i -> ordersArrayList.add(new Orders(i.getId(), i.getAddress(), i.getCustomer().getFullName(), i.getDate(), i.getTotalPrice(), i.getPaidAmount())));
-        ObservableList<OrderTableControllerForCustomer.Orders> observableList = FXCollections.observableList(ordersArrayList);
+        ObservableList<OrderTableController.Orders> observableList = FXCollections.observableList(ordersArrayList);
         loadColumn(observableList);
     }
 
-    private void loadColumn(ObservableList<OrderTableControllerForCustomer.Orders> observableList) {
+    private void loadColumn(ObservableList<OrderTableController.Orders> observableList) {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -56,12 +56,12 @@ public class OrderTableControllerForCustomer implements InitializableController 
         tableView.setItems(observableList);
         tableView.setEditable(false);
         tableView.setOnMouseClicked((e) -> {
-            ObservableList<OrderTableControllerForCustomer.Orders> listOfSelected = tableView.getSelectionModel().getSelectedItems();
+            ObservableList<OrderTableController.Orders> listOfSelected = tableView.getSelectionModel().getSelectedItems();
             loadDetailOfOrder(listOfSelected);
         });
     }
 
-    private void loadDetailOfOrder(ObservableList<OrderTableControllerForCustomer.Orders> observableList) {
+    private void loadDetailOfOrder(ObservableList<OrderTableController.Orders> observableList) {
         personalInfoController.clearBox();
         observableList.forEach(i -> {
             try {

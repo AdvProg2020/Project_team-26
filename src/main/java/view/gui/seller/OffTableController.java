@@ -15,9 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import view.gui.Constants;
 import view.gui.InitializableController;
-import view.gui.OrderItemController;
 import view.gui.PersonalInfoController;
-import view.gui.customer.OrderTableControllerForCustomer;
 
 import java.io.IOException;
 import java.util.*;
