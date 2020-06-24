@@ -28,6 +28,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
     private IProductController productController;
     private ICategoryController categoryController;
     private ArrayList<FeatureBox> featureBoxList;
+    private CategoryListController categoryListController;
     @FXML
     private ImageView productImage;
     @FXML
@@ -70,8 +71,12 @@ public class CreateSingleProductForSellerController implements InitializableCont
         nameTextField.setText("");
         priceTextField.setText("");
         amountTextField.setText("");
-        FXMLLoader loader =
-                categoryBox.getChildren().addAll()
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
+        this.categoryListController = (CategoryListController) loader.getController();
+        categoryListController.initialize(1);
+        categoryListController.setReloadable(this::reload);
+        categoryBox.getChildren().removeAll();
+        categoryBox.getChildren().addAll((Node) loader.load());
     }
 
     @FXML
@@ -91,11 +96,13 @@ public class CreateSingleProductForSellerController implements InitializableCont
     private void loadCategoryBoxes(Category category) throws IOException {
         categoryBox.getChildren().removeAll();
         featuresBox.getChildren().removeAll();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategotyForAdding.fxml"));
-        CreateCategoryForAddingController createCategoryForAddingController = (CreateCategoryForAddingController) loader.getController();
-        createCategoryForAddingController.initialize(category.getId());
-        createCategoryForAddingController.load(category, this);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
+        this.categoryListController = (CategoryListController) loader.getController();
+        categoryListController.initialize(category.getId());
+        categoryListController.setReloadable(this::reload);
+        categoryBox.getChildren().removeAll();
         categoryBox.getChildren().addAll((Collection<? extends Node>) loader.load());//todo check here
+        featuresBox.getChildren().removeAll();
         category.getFeatures().forEach(i -> featureBoxList.add(new FeatureBox(i, i.getFeatureName(), i.getFeatureType())));
         featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
     }
@@ -149,8 +156,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
 
     @Override
     public void reload() throws IOException {
-
-
+        loadCategoryBoxes(categoryListController.getCategory());
     }
 
     private class FeatureBox {

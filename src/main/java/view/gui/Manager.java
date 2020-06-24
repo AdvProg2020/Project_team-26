@@ -2,6 +2,7 @@ package view.gui;
 
 import controller.interfaces.account.IShowUserController;
 import exception.InvalidTokenException;
+import exception.NoAccessException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -46,7 +47,13 @@ public class Manager {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
         Parent parent = loader.load();
         InitializableController controller = loader.getController();
-        controller.initialize(id);//TODO handle kon
+        try {
+            controller.initialize(id);//TODO handle kon
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        }
         showNode(parent);
     }
 
