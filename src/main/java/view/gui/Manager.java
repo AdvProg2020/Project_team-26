@@ -124,6 +124,27 @@ public class Manager {
         }
     }
 
+    public void openSellerPage() {
+        //TODO set seller buttons left and personal page center and toolbar top
+    }
+
+    public void openManagerPage() {
+    //TODO set manager page base on aria design
+    }
+
+    public void openCustomerPage() {
+    //TODO set Customer buttons left and personal page center and toolbar top
+    }
+
+    public void openCart() {
+   //TODO set cart and toolbar up
+    }
+
+    public void openSingleProductPage() {
+        //TODO set Customer buttons left and personal page center and toolbar top
+    }
+    //todo
+
     public void setTokenFromController(String error) {
         //todo
     }
