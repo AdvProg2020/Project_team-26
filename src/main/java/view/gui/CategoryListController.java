@@ -42,6 +42,7 @@ public class CategoryListController implements InitializableController {
     public void load(Category category) throws InvalidIdException {
         List<Category> categories = new ArrayList<>();
         categories.addAll(categoryController.getSubCategories(category.getId(), Constants.manager.getToken()));
+        categories.removeIf(c -> c.getId() == category.getId());
         ObservableList<Category> categoryObservableList = FXCollections.observableList(category.getSubCategory());
         categoryList.setItems(categoryObservableList);
         currentCategory.setText(category.getName());
@@ -50,8 +51,8 @@ public class CategoryListController implements InitializableController {
     public void goToParent() {
         try {
             load(category.getParent());
-            reloadable.reload();
             category = category.getParent();
+            reloadable.reload();
         } catch (InvalidIdException | IOException invalidIdException) {
             invalidIdException.printStackTrace();
         }

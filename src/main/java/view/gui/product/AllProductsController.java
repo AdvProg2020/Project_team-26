@@ -36,8 +36,9 @@ public class AllProductsController implements InitializableController, Reloadabl
     private ComboBox<String> sortFieldComBowBox;
     @FXML
     private ComboBox<String> sortDirectionComboBox;
-    @FXML
     private GridPane mainGrid;
+    @FXML
+    private ScrollPane mainScrollPane;
     @FXML
     private CategoryListController categoryListController;
 
@@ -78,7 +79,8 @@ public class AllProductsController implements InitializableController, Reloadabl
     }
 
     private void updateGrid(List<Product> products) throws IOException {
-        mainGrid.getChildren().removeAll();
+        mainGrid = new GridPane();
+        mainScrollPane.setContent(mainGrid);
         for (int i = 0; i < products.size(); i++) {
             Product product = products.get(i);
             int column = i % Constants.productGridColumnCount;

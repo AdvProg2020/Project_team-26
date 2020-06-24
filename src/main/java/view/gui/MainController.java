@@ -3,6 +3,7 @@ package view.gui;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.Role;
@@ -13,6 +14,8 @@ public class MainController {
 
     @FXML
     private BorderPane mainPane;
+    @FXML
+    private ScrollPane mainScrollPane;
     @FXML
     private HBox topBox;
     @FXML
@@ -33,7 +36,7 @@ public class MainController {
     }
 
     public void setCenter(Node node) {
-        mainPane.setCenter(node);
+        mainScrollPane.setContent(node);
     }
 
     public void reload() {

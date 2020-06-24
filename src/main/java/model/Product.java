@@ -1,6 +1,7 @@
 package model;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -47,7 +48,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private List<Comment> comments;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "category_feature_id")
     @Column(name = "value")

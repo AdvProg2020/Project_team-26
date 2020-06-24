@@ -27,12 +27,11 @@ import view.cli.ControllerContainer;
 import view.gui.comment.CommentController;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
-import view.gui.interfaces.*;
 
-import javax.xml.catalog.CatalogFeatures;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class SingleProductController implements InitializableController {
@@ -72,13 +71,22 @@ public class SingleProductController implements InitializableController {
                         getController(ControllerContainer.Controller.ProductController);
         try {
             product = productController.getProductById(id, Constants.manager.getToken());
-            Image image = new Image(new ByteArrayInputStream(product.getImage()));
-            productImage.setImage(image);
+            try {
+                if (product.getImage() != null) {
+                    Image image = new Image(new ByteArrayInputStream(product.getImage()));
+                    productImage.setImage(image);
+                }
+            } catch (Exception e) {
+                Constants.manager.showErrorPopUp("There was no image for this product.\nDefault image is shown.");
+            }
             nameText.setText(product.getName());
             brandText.setText(product.getBrand());
-            rateText.setText(product.getAverageRate() + " / 5");
+            if (product.getAverageRate() != null)
+                rateText.setText(product.getAverageRate() + " / 5");
+            else
+                rateText.setText("Not Rated");
             descriptionText.setText(product.getDescription());
-            fillTable(product.getCategoryFeatures());
+            loadCategoryFeatures(product.getCategoryFeatures());
             loadSellers(product);
             loadComments(product);
         } catch (InvalidIdException invalidIdException) {
@@ -88,29 +96,29 @@ public class SingleProductController implements InitializableController {
         }
     }
 
-    private void fillTable(Map<CategoryFeature, String> map) {
-        ArrayList<Features> features = new ArrayList<>();
+    private void loadCategoryFeatures(Map<CategoryFeature, String> map) {
+        List<Features> features = new ArrayList<>();
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         featureColumn.setCellValueFactory(new PropertyValueFactory<>("feature"));
-        map.entrySet().forEach(i -> features.add(new Features(i.getKey().getFeatureName(), i.getValue())));
+        map.forEach((key, value) -> features.add(new Features(key.getFeatureName(), value)));
         featuresTable.setItems(FXCollections.observableList(features));
     }
 
     private void loadSellers(Product product) throws IOException {
         for (ProductSeller seller : product.getSellerList()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductSeller.fxml"));
+            Parent sellerElement = loader.load();
             ProductSellerController productSellerController = loader.getController();
             productSellerController.load(seller);
-            Parent sellerElement = loader.load();
             mainBox.getChildren().add(sellerElement);
         }
     }
 
     private void loadComments(Product product) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/Comment.fxml"));
+        Node comments = loader.load();
         CommentController commentController = loader.getController();
         commentController.load(product);
-        Node comments = loader.load();
         mainBox.getChildren().add(comments);
     }
 

@@ -56,7 +56,7 @@
             <Font size="14.0" />
          </font>
       </Text>
-      <CheckBox fx:id="hasBoughtCheckBox" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <CheckBox fx:id="hasBoughtCheckBox" disable="true" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
    </children>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

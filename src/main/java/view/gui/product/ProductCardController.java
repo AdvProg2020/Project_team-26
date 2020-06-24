@@ -1,10 +1,14 @@
 package view.gui.product;
 
 import javafx.fxml.FXML;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import model.Product;
 import view.gui.Constants;
 import view.gui.interfaces.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class ProductCardController {
@@ -17,6 +21,8 @@ public class ProductCardController {
     private Text brandText;
     @FXML
     private Text descriptionText;
+    @FXML
+    private ImageView productImage;
 
     private Product product;
 
@@ -27,6 +33,14 @@ public class ProductCardController {
             nameText.setText(product.getName());
             brandText.setText(product.getBrand());
             descriptionText.setText(product.getDescription());
+            try {
+                if(product.getImage() != null) {
+                    Image image = new Image(new ByteArrayInputStream(product.getImage()));
+                    productImage.setImage(image);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
