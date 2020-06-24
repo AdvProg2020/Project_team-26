@@ -1,11 +1,16 @@
 package view.gui.product;
 
+import controller.interfaces.review.IRatingController;
 import controller.product.ProductController;
 import exception.InvalidIdException;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
+import exception.NotBoughtTheProductException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -22,6 +27,8 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class SingleProductController implements InitializableController {
+    private IRatingController ratingController;
+    private Product product;
 
     @FXML
     private VBox mainBox;
@@ -35,6 +42,13 @@ public class SingleProductController implements InitializableController {
     private Text rateText;
     @FXML
     private TextArea descriptionText;
+    @FXML
+    private Slider rateSlider;
+
+    public SingleProductController() {
+        ratingController = (IRatingController) Constants.manager.getControllerContainer().
+                getController(ControllerContainer.Controller.RatingController);
+    }
 
     @Override
     public void initialize(int id) throws IOException {
@@ -42,7 +56,7 @@ public class SingleProductController implements InitializableController {
                 (ProductController) Constants.manager.getControllerContainer().
                         getController(ControllerContainer.Controller.ProductController);
         try {
-            Product product = productController.getProductById(id, Constants.manager.getToken());
+            product = productController.getProductById(id, Constants.manager.getToken());
             Image image = new Image(new ByteArrayInputStream(product.getImage()));
 
             productImage.setImage(image);
@@ -76,5 +90,16 @@ public class SingleProductController implements InitializableController {
         commentController.load(product);
         Node comments = loader.load();
         mainBox.getChildren().add(comments);
+    }
+
+    public void rate() throws IOException {
+        try {
+            ratingController.rate(rateSlider.getValue(), product.getId(), Constants.manager.getToken());
+        } catch (NotBoughtTheProductException | NoAccessException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
+        } catch (InvalidTokenException e) {
+            Constants.manager.setTokenFromController();
+            Constants.manager.showErrorPopUp("Your token was invalid.");
+        }
     }
 }
