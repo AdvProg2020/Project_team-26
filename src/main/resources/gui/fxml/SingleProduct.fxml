@@ -153,10 +153,10 @@
                         <TextArea fx:id="descriptionText" prefHeight="302.0" prefWidth="328.0" />
                      </children>
                   </VBox>
-                  <TableView prefHeight="346.0" prefWidth="266.0">
+                  <TableView fx:id="featuresTable" prefHeight="346.0" prefWidth="266.0">
                      <columns>
-                        <TableColumn prefWidth="123.19995272159576" text="Name" />
-                        <TableColumn maxWidth="164.0000228881836" minWidth="-1.0" prefWidth="142.40002288818357" text="Feature" />
+                        <TableColumn fx:id="nameColumn" prefWidth="123.19995272159576" text="Name" />
+                        <TableColumn fx:id="featureColumn" maxWidth="164.0000228881836" minWidth="-1.0" prefWidth="142.40002288818357" text="Feature" />
                      </columns>
                   </TableView>
                </children>

@@ -19,7 +19,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Constants.manager.start(primaryStage);
-        Constants.manager.openPage("AllProduct", 0);
+        Constants.manager.openPage("AllProducts", 0);
     }
 
     public  void setRootForScene(String fxml) throws IOException {
