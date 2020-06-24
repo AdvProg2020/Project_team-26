@@ -102,4 +102,8 @@ public class SingleProductController implements InitializableController {
             Constants.manager.showErrorPopUp("Your token was invalid.");
         }
     }
+
+    public void addToCompareList() {
+        Constants.manager.addToCompareList(product.getId());
+    }
 }
