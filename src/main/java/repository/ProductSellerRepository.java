@@ -13,13 +13,5 @@ public interface ProductSellerRepository extends Repository<ProductSeller> {
 
     void deleteRequest(int id);
 
-    void acceptRequest(int requestId);
-
-    void rejectRequest(int requestId);
-
-    ProductSellerRequest getProductSellerRequestById(int requestId);
-
-    List<ProductSellerRequest> getAllRequests(String sortField, boolean isAscending);
-
     ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId);
 }

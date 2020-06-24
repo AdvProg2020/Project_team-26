@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MySQLOffRepository
-    extends MySQLRepository<Off> implements OffRepository {
+        extends MySQLRepository<Off> implements OffRepository {
 
     RequestRepository requestRepository;
 
@@ -58,74 +58,6 @@ public class MySQLOffRepository
         request.setOff(off);
         requestRepository.save(request);
     }
-
-    //*****************************
-    // Not useful anymore
-    @Override
-    public void acceptRequest(int requestId) {
-
-    }
-
-    @Override
-    public void rejectRequest(int requestId) {
-        OffRequest request = getOffRequestById(requestId);
-        request.setRequestStatus(RequestStatus.REJECTED);
-        persistRequest(request);
-    }
-
-    @Override
-    public OffRequest getOffRequestById(int requestId) {
-        EntityManager em = EntityManagerProvider.getEntityManager();
-
-        try {
-            return em.find(OffRequest.class, requestId);
-        } catch (Exception e) {
-            return null;
-        }
-    }
-
-    private void persistRequest(OffRequest offRequest) {
-        EntityManager em = entityManagerFactory.createEntityManager();
-        EntityTransaction et = null;
-        try {
-            et = em.getTransaction();
-            et.begin();
-            em.persist(offRequest);
-            et.commit();
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-            if (et != null) {
-                et.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
-    public List<OffRequest> getAllRequests(String sortField, boolean isAscending) {
-        EntityManager em = EntityManagerProvider.getEntityManager();
-
-        try {
-            CriteriaBuilder cb = em.getCriteriaBuilder();
-            CriteriaQuery<OffRequest> cq = cb.createQuery(OffRequest.class);
-            Root<OffRequest> root = cq.from(OffRequest.class);
-
-            if(isAscending) {
-                cq.orderBy(cb.asc(root.get(sortField)));
-            } else {
-                cq.orderBy(cb.desc(root.get(sortField)));
-            }
-            cq.select(root);
-            TypedQuery<OffRequest> typedQuery = em.createQuery(cq);
-
-            return typedQuery.getResultList();
-        } catch (NoResultException e) {
-            return new ArrayList<>();
-        }
-    }
-    //*****************************
 
     @Override
     public List<Off> getAllOffForSellerWithFilter(String sortField, boolean isAscending, int SellerId) {
