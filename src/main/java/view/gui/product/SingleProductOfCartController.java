@@ -22,7 +22,6 @@ import java.io.IOException;
 public class SingleProductOfCartController implements InitializableController {
     private ICartController cartController;
     private ProductSeller productSeller;
-    private Reloadable reloadable;
     private int amount;
     private Cart cart;
     private int cartId;
@@ -49,7 +48,6 @@ public class SingleProductOfCartController implements InitializableController {
     }
 
     public void load(ProductSeller productSeller, int amount) {
-        this.reloadable = reloadable;
         //todo add cart
         this.productSeller = productSeller;
         this.amount = amount;
