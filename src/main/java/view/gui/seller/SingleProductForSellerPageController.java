@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.*;
 import model.*;
+import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
 
@@ -22,8 +23,8 @@ public class SingleProductForSellerPageController implements InitializableContro
     private int productId;
     private Product product;
     private ProductSeller productSeller;
-    IProductController productController;
-    IOrderController orderController;
+    private IProductController productController;
+    private IOrderController orderController;
     @FXML
     private ImageView productImage;
     @FXML
@@ -61,6 +62,8 @@ public class SingleProductForSellerPageController implements InitializableContro
 
     @Override
     public void initialize(int id) throws IOException {
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
+        orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         productId = id;
 
     }

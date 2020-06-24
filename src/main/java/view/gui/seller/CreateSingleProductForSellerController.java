@@ -2,6 +2,8 @@ package view.gui.seller;
 
 import controller.interfaces.category.ICategoryController;
 import controller.interfaces.product.IProductController;
+import controller.product.CategoryController;
+import controller.product.ProductController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,6 +15,7 @@ import javafx.scene.layout.VBox;
 import model.*;
 import model.Product;
 import model.ProductSeller;
+import view.cli.ControllerContainer;
 import view.gui.*;
 
 import java.io.IOException;
@@ -21,7 +24,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
-public class CreateSingleProductForSellerController implements InitializableController, ParentPageController {
+public class CreateSingleProductForSellerController implements InitializableController, Reloadable {
     private int userId;
     private Category category;
     private IProductController productController;
@@ -52,6 +55,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
 
     @Override
     public void initialize(int id) throws IOException {
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
+        categoryController = (ICategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
         featureBoxList = new ArrayList<>();
         this.userId = id;
         productImage.setImage(null);
@@ -94,8 +99,9 @@ public class CreateSingleProductForSellerController implements InitializableCont
         category.getFeatures().forEach(i -> featureBoxList.add(new FeatureBox(i, i.getFeatureName(), i.getFeatureType())));
         featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
     }
+
     @FXML
-    public void uploadPhotoClicked(){
+    public void uploadPhotoClicked() {
         //todo ....
     }
 

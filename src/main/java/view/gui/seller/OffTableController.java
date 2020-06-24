@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
+import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
 import view.gui.PersonalInfoController;
@@ -23,6 +24,7 @@ import java.util.*;
 public class OffTableController implements InitializableController {
     private PersonalInfoController personalInfoController;
     private IOffController offController;
+    private int userId;
     @FXML
     private TableView offTableView;
     @FXML
@@ -34,7 +36,8 @@ public class OffTableController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
-        //todo
+        offController = (IOffController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OffController);
+        this.userId = id;
     }
 
     private void loadSingleOff(Off off) throws IOException {

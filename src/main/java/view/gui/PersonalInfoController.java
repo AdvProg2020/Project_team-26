@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Role;
 import model.User;
+import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -70,6 +71,7 @@ public class PersonalInfoController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
+        userInfoController = (IUserInfoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.UserInfoController);
         this.id = id;
         editButton.setText("Edit");
         cancelButton.setText("Cancel");
@@ -232,6 +234,7 @@ public class PersonalInfoController implements InitializableController {
         tableScrollPane.getChildrenUnmodifiable().removeAll();
         tableScrollPane.getChildrenUnmodifiable().add(newTableView);
     }
+
     public void setNodeForTableScrollPane(Node node) {
         tableScrollPane.getChildrenUnmodifiable().removeAll();
         tableScrollPane.getChildrenUnmodifiable().add(node);
