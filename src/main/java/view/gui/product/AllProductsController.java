@@ -15,6 +15,7 @@ import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 import view.gui.interfaces.*;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +41,7 @@ public class AllProductsController implements InitializableController, Reloadabl
     @FXML
     private CategoryListController categoryListController;
 
-    public void initialize(int id) {
+    public void initialize(int id) throws IOException {
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().
                 getController(ControllerContainer.Controller.CategoryController);
         sortFieldComBowBox.setPromptText("Choose Sorting");
@@ -48,6 +49,8 @@ public class AllProductsController implements InitializableController, Reloadabl
         sortDirectionComboBox.getItems().addAll("Ascending", "Descending");
         sortDirectionComboBox.setValue("Ascending");
         categoryListController.setReloadable(this);
+        categoryListController.initialize(1);
+        reload();
     }
 
     @Override
@@ -78,14 +81,15 @@ public class AllProductsController implements InitializableController, Reloadabl
         mainGrid.getChildren().removeAll();
         for (int i = 0; i < products.size(); i++) {
             Product product = products.get(i);
-            int column = ((i + 1) % Constants.productGridColumnCount) - 1;
+            int column = i % Constants.productGridColumnCount;
             int row = i / Constants.productGridColumnCount;
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductCard.fxml"));
+            Parent element = loader.load();
+
             ProductCardController productCardController = loader.getController();
             productCardController.load(product);
 
-            Parent element = loader.load();
             mainGrid.setConstraints(element, column, row);
             mainGrid.getChildren().add(element);
         }
@@ -93,13 +97,13 @@ public class AllProductsController implements InitializableController, Reloadabl
 
     private Map<String, String> extractFilter() {
         Map<String, String> filter = new HashMap<>();
-        if(nameField.getText() != null && !nameField.getText().equals("")) {
+        if (nameField.getText() != null && !nameField.getText().equals("")) {
             filter.put("product name", nameField.getText());
         }
-        if(brandField.getText() != null && !brandField.getText().equals("")) {
+        if (brandField.getText() != null && !brandField.getText().equals("")) {
             filter.put("brand", brandField.getText());
         }
-        if(descriptionField.getText() != null && !descriptionField.getText().equals("")) {
+        if (descriptionField.getText() != null && !descriptionField.getText().equals("")) {
             filter.put("description", descriptionField.getText());
         }
         // TODO: add price to filter

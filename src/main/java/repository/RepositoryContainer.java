@@ -26,8 +26,8 @@ public class RepositoryContainer {
 
     public void initializeSQLRep() {
         map.put("RequestRepository", new MySQLRequestRepository());
-        map.put("ProductRepository", new MySQLProductRepository());
         map.put("CategoryRepository", new MySQLCategoryRepository());
+        map.put("ProductRepository", new MySQLProductRepository());
         map.put("UserRepository", new MySQLUserRepository());
         map.put("CommentRepository", new MySQLCommentRepository());
         map.put("RatingRepository", new MySQLRateRepository());
@@ -41,8 +41,8 @@ public class RepositoryContainer {
     }
 
     public void initializeFakeRep() {
-        map.put("ProductRepository", new FakeProductRepository());
         map.put("CategoryRepository", new FakeCategoryRepository());
+        map.put("ProductRepository", new FakeProductRepository());
         map.put("UserRepository", new FakeUserRepository());
         map.put("CommentRepository", new FakeCommentRepository());
         map.put("RatingRepository", new FakeRateRepository());

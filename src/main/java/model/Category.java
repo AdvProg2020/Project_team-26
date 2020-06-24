@@ -114,7 +114,7 @@ public class Category {
     public boolean equals(Object obj) {
         if (obj == null)
             return false;
-        if ((obj instanceof Category))
+        if (!(obj instanceof Category))
             return false;
         Category category = (Category) obj;
         if (category.getId() == this.getId())
