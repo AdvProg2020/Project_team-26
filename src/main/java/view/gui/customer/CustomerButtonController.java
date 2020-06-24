@@ -9,7 +9,9 @@ import exception.NoAccessException;
 import exception.NotLoggedINException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import model.Customer;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
@@ -28,6 +30,8 @@ public class CustomerButtonController implements InitializableController {
     private Button promo;
     @FXML
     private Button orders;
+    @FXML
+    private HBox box;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -78,8 +82,12 @@ public class CustomerButtonController implements InitializableController {
         }
     }
 
-    public void load(PersonalInfoController personalInfoController, Customer customer) {
+    public void load(Customer customer) throws IOException {
         this.customer = customer;
-        this.personalInfoController = personalInfoController;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
+        this.personalInfoController = (PersonalInfoController) loader.getController();
+        personalInfoController.initialize(userId);
+        personalInfoController.load(customer);
+        box.getChildren().addAll((Node) loader.load());
     }
 }
