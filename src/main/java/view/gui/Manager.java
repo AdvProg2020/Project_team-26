@@ -5,9 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -47,9 +45,11 @@ public class Manager {
     }
 
     public void back() throws IOException {
-        pages.remove(pages.size() - 1);
-        Pair<String, Integer> page = pages.remove(pages.size() - 1);
-        openPage(page.getKey(), page.getValue());
+        if(pages.size() > 1) {
+            pages.remove(pages.size() - 1);
+            Pair<String, Integer> page = pages.remove(pages.size() - 1);
+            openPage(page.getKey(), page.getValue());
+        }
     }
 
     private void showNode(Node node) {
