@@ -5,12 +5,14 @@ import exception.InvalidIdException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Product;
+import model.ProductSeller;
 import view.cli.ControllerContainer;
 import view.gui.comment.CommentController;
 import view.gui.Constants;
@@ -49,12 +51,22 @@ public class SingleProductController implements InitializableController {
             rateText.setText(product.getAverageRate() + " / 5");
             descriptionText.setText(product.getDescription());
 
-            // TODO: load product seller
+            loadSellers(product);
             loadComments(product);
         } catch (InvalidIdException invalidIdException) {
             invalidIdException.printStackTrace();
+            Constants.manager.showErrorPopUp("There is no product with this id.");
             Constants.manager.back();
-            // TODO: show proper error
+        }
+    }
+
+    private void loadSellers(Product product) throws IOException {
+        for (ProductSeller seller : product.getSellerList()) {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductSeller.fxml"));
+            ProductSellerController productSellerController = loader.getController();
+            productSellerController.load(seller);
+            Parent sellerElement = loader.load();
+            mainBox.getChildren().add(sellerElement);
         }
     }
 
