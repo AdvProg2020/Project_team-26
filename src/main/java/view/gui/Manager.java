@@ -1,5 +1,6 @@
 package view.gui;
 
+import controller.SessionController;
 import controller.interfaces.account.IShowUserController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -14,6 +15,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
+import model.Session;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.admin.AdminRegistryController;
@@ -165,7 +167,7 @@ public class Manager {
     }
 
     public void setTokenFromController() {
-        //todo
+        this.token = ((SessionController)controllerContainer.getController(ControllerContainer.Controller.SessionController)).createToken();
     }
 
     public void showCompareStage() throws IOException {
