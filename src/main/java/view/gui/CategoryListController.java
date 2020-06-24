@@ -31,37 +31,31 @@ public class CategoryListController implements InitializableController {
         try {
             category = categoryController.getCategory(id, Constants.manager.getToken());
             load(category);
-            categoryList.setOnMouseClicked(e -> {
-                try {
-                    click();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            });
+            categoryList.setOnMouseClicked(e -> click());
         } catch (InvalidIdException invalidIdException) {
             invalidIdException.printStackTrace();
         }
     }
 
     public void load(Category category) throws InvalidIdException {
-        currentCategory.setText(category.getName());
         List<Category> categories = new ArrayList<>();
         categories.addAll(categoryController.getSubCategories(category.getId(), Constants.manager.getToken()));
         ObservableList<Category> categoryObservableList = FXCollections.observableList(category.getSubCategory());
         categoryList.setItems(categoryObservableList);
+        currentCategory.setText(category.getName());
     }
 
-    public void goToParent() throws IOException {
-        category = category.getParent();
+    public void goToParent() {
         try {
-            load(category);
+            load(category.getParent());
             reloadable.reload();
+            category = category.getParent();
         } catch (InvalidIdException invalidIdException) {
             invalidIdException.printStackTrace();
         }
     }
 
-    private void click() throws IOException {
+    private void click() {
         if (categoryList.getItems() != null) {
             Category selectedCategory = (Category) categoryList.getSelectionModel().getSelectedItem();
             try {

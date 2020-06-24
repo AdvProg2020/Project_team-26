@@ -66,6 +66,7 @@ public class Product {
         this.description = description;
         sellerList = new ArrayList<>();
         categoryFeatures = new HashMap<>();
+        comments = new ArrayList<>();
     }
 
     public int getId() {

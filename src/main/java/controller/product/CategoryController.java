@@ -190,22 +190,10 @@ public class CategoryController implements ICategoryController {
 
     @Override
     public Category getCategoryByName(String name, String token) throws InvalidIdException, InvalidIdException {
-        if(!checkCategoryExistByName(name)) {
+        if (!checkCategoryExistByName(name)) {
             throw new InvalidIdException("The specified category does not exist.");
         } else {
             return categoryRepository.getByName(name);
-        }
-    }
-
-    @Override
-    public List<Product> getAllProductWithFilter(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
-        Pageable page = createPage(sortField,isAscending,startIndex,endIndex);
-        Category category = categoryRepository.getById(id);
-        if(category == null) {
-            throw new InvalidIdException("No such category exists");
-        } else {
-            filter.put("category", "" + id);
-            return productRepository.getAllSortedAndFiltered(filter,page);
         }
     }
 
@@ -216,6 +204,30 @@ public class CategoryController implements ICategoryController {
         return category.getProducts();
     }
 
+    @Override
+    public List<Product> getAllProducts(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
+        Pageable page = createPage(sortField, isAscending, startIndex, endIndex);
+        Category category = categoryRepository.getById(id);
+        if (category == null) {
+            throw new InvalidIdException("No such category exists");
+        } else {
+            filter.put("category", "" + id);
+            return productRepository.getAllSortedAndFiltered(filter, page);
+        }
+    }
+
+    @Override
+    public List<Product> getAllProductsInOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
+        Pageable page = createPage(sortField, isAscending, startIndex, endIndex);
+        Category category = categoryRepository.getById(id);
+        if (category == null) {
+            throw new InvalidIdException("No such category exists");
+        } else {
+            filter.put("category", "" + id);
+            return productRepository.getAllSortedAndFilteredInOff(filter, page);
+        }
+    }
+
     public Category getByName(String name) throws InvalidIdException {
         Category category = categoryRepository.getByName(name);
         if (category == null)
@@ -224,10 +236,10 @@ public class CategoryController implements ICategoryController {
     }
 
     private Pageable createPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if(isAscending) {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
+        if (isAscending) {
+            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.ASCENDING);
         } else {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
+            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.DESCENDING);
         }
     }
 }
