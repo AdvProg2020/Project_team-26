@@ -1,6 +1,7 @@
 package view.gui;
 
 import controller.interfaces.account.IShowUserController;
+import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import javafx.fxml.FXMLLoader;
@@ -58,12 +59,14 @@ public class Manager {
             Constants.manager.showErrorPopUp("Your token was invalid.");
         } catch (NoAccessException e) {
             e.printStackTrace();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
         }
         showNode(parent);
     }
 
     public void back() throws IOException {
-        if(pages.size() > 1) {
+        if (pages.size() > 1) {
             pages.remove(pages.size() - 1);
             Pair<String, Integer> page = pages.remove(pages.size() - 1);
             openPage(page.getKey(), page.getValue());
@@ -148,7 +151,7 @@ public class Manager {
             } else if (user.getRole() == Role.CUSTOMER) {
                 openPage("CustomersButton", user.getId());
             } else if (user.getRole() == Role.ADMIN) {
-                openPage("AdminOptionMenu",user.getId());
+                openPage("AdminOptionMenu", user.getId());
             } else {
                 //TODO open main page here
             }
@@ -158,16 +161,39 @@ public class Manager {
     }
 
     public void openCart() throws IOException {
-        openPage("Cart",0);
+        openPage("Cart", 0);
     }
 
     public void setTokenFromController() {
         //todo
     }
 
-    public void showCompareStage() {
+    public void showCompareStage() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ComparePane.fxml"));
+        Stage windows = new Stage(loader.load());
+        ComparePane controller = loader.getController();
+        Button exit = controller.getExitButton();
+        addProductToComparePane(controller);
+        exit.setOnMouseClicked(e -> windows.close());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
+
         //TODO get list then load the compare pane
         //TODO then add the compareProduct with loading it by function andToBox in compare pane controller
+    }
+
+    private void addProductToComparePane(ComparePane controller) {
+        compareList.forEach(i -> {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CompareProduct.fxml"));
+            CompareController compareController = loader.getController();
+            try {
+                compareController.initialize(i);
+                controller.addToBox(loader.load());
+            } catch (IOException | InvalidIdException e) {
+                e.printStackTrace();//todo
+            }
+        });
     }
 
     public void setAuthenticationStageManager(AuthenticationStageManager authenticationStageManager) {

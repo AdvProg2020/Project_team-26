@@ -2,6 +2,7 @@ package view.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import view.gui.interfaces.InitializableController;
@@ -13,6 +14,12 @@ public class ComparePane implements InitializableController {
     private ScrollPane scrollPaneForCompare;
     @FXML
     private HBox box;
+    @FXML
+    private Button exitButton;
+
+    public Button getExitButton(){
+        return exitButton;
+    }
 
     public void addToBox(Node node) {
         box.getChildren().addAll(node);

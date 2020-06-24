@@ -34,31 +34,27 @@ public class CompareController implements InitializableController {
     int productId;
 
     @Override
-    public void initialize(int id) throws IOException {
+    public void initialize(int id) throws IOException, InvalidIdException {
         Product product = null;
-        try {
-            product = productController.getProductById(id, Constants.manager.getToken());
-            productImage.setImage(productImage.getImage());
-            name.setText(product.getName());
-            brand.setText(product.getBrand());
-            description.setText(product.getDescription());
-            rate.setText("" + product.getAverageRate() + "/5");
-            price.setText("" + product.getMinimumPrice());
-            name.setEditable(false);
-            brand.setEditable(false);
-            description.setEditable(false);
-            rate.setEditable(false);
-            price.setEditable(false);
-            product.getCategoryFeatures().entrySet().forEach(f -> {
-                HBox hBox = new HBox();
-                Label label = new Label(f.getKey().getFeatureName());
-                TextField text = new TextField(f.getValue());
-                text.setEditable(false);
-                hBox.getChildren().addAll(label, text);
-                box.getChildren().add(hBox);
-            });
-        } catch (InvalidIdException e) {
-            e.printStackTrace();//todo
-        }
+        product = productController.getProductById(id, Constants.manager.getToken());
+        productImage.setImage(productImage.getImage());
+        name.setText(product.getName());
+        brand.setText(product.getBrand());
+        description.setText(product.getDescription());
+        rate.setText("" + product.getAverageRate() + "/5");
+        price.setText("" + product.getMinimumPrice());
+        name.setEditable(false);
+        brand.setEditable(false);
+        description.setEditable(false);
+        rate.setEditable(false);
+        price.setEditable(false);
+        product.getCategoryFeatures().entrySet().forEach(f -> {
+            HBox hBox = new HBox();
+            Label label = new Label(f.getKey().getFeatureName());
+            TextField text = new TextField(f.getValue());
+            text.setEditable(false);
+            hBox.getChildren().addAll(label, text);
+            box.getChildren().add(hBox);
+        });
     }
 }
