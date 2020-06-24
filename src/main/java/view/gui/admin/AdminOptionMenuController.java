@@ -8,7 +8,9 @@ import exception.NoAccessException;
 import exception.NotLoggedINException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
 import model.Admin;
 import view.cli.ControllerContainer;
 import view.gui.CategoryListController;
@@ -32,6 +34,8 @@ public class AdminOptionMenuController implements InitializableController {
     private Button requestsButton;
     @FXML
     private Button personalPage;
+    @FXML
+    private HBox hbox;
 
     private int userId;
     private Admin admin;
@@ -103,6 +107,8 @@ public class AdminOptionMenuController implements InitializableController {
             CategoryListController categoryListController = (CategoryListController) loader.getController();
             categoryListController.initialize(1);
             categoryListController.load(categoryController.getCategory(1,Constants.manager.getToken()));
+            hbox.getChildren().
+            hbox.getChildren().addAll((Node)loader.load());
     }
 
     private void handlePromo() throws NoAccessException, InvalidTokenException {
