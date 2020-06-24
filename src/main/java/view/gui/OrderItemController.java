@@ -32,7 +32,6 @@ public class OrderItemController implements InitializableController {
     @Override
     public void initialize(int id) throws IOException {
         this.orderItemId = id;
-
     }
 
     public void load(OrderItem orderItem) {

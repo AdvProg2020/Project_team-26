@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import model.Seller;
+import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
 import view.gui.PersonalInfoController;
@@ -39,6 +40,9 @@ public class SellerButtonsController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
+        offController = (IOffController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OffController);
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
+        orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         this.userId = id;
         createOff.setOnMouseClicked(e -> {
             try {

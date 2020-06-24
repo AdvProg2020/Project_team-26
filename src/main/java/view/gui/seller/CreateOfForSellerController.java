@@ -1,7 +1,9 @@
 package view.gui.seller;
 
+import controller.discount.OffController;
 import controller.interfaces.discount.IOffController;
 import controller.interfaces.product.IProductController;
+import controller.product.ProductController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,6 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import model.*;
+import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.InitializableController;
 import view.gui.Reloadable;
@@ -38,6 +41,8 @@ public class CreateOfForSellerController implements InitializableController, Rel
 
     @Override
     public void initialize(int id) throws IOException {
+        offController = (IOffController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OffController);
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         startDate.setPromptText("start date");
         endDate.setPromptText("end date");
         updateButton.setText("Submit off");
@@ -105,7 +110,7 @@ public class CreateOfForSellerController implements InitializableController, Rel
     @Override
     public void reload() throws IOException {
         itemsVBox.getChildren().removeAll();
-        off.getItems().forEach(i-> {
+        off.getItems().forEach(i -> {
             try {
                 updateVBox(i);
             } catch (IOException e) {
