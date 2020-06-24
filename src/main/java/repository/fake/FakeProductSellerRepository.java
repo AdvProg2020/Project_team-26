@@ -47,26 +47,6 @@ public class FakeProductSellerRepository implements ProductSellerRepository {
     }
 
     @Override
-    public void acceptRequest(int requestId) {
-
-    }
-
-    @Override
-    public void rejectRequest(int requestId) {
-
-    }
-
-    @Override
-    public ProductSellerRequest getProductSellerRequestById(int requestId) {
-        return null;
-    }
-
-    @Override
-    public List<ProductSellerRequest> getAllRequests(String sortField, boolean isAscending) {
-        return null;
-    }
-
-    @Override
     public ProductSeller getProductSellerByIdAndSellerId(int productId, int sellerId) {
         return null;
     }
