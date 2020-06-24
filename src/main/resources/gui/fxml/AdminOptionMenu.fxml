@@ -28,7 +28,7 @@
             <Font size="18.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="100.0" />
+            <Insets bottom="50.0" />
          </VBox.margin>
       </Button>
       <Button fx:id="requestsButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Requests">
@@ -36,7 +36,12 @@
             <Font size="18.0" />
          </font>
          <VBox.margin>
-            <Insets bottom="100.0" />
+            <Insets bottom="50.0" />
+         </VBox.margin>
+      </Button>
+      <Button fx:id="personalPage" mnemonicParsing="false" prefHeight="36.0" prefWidth="140.0" text="Personal Page">
+         <VBox.margin>
+            <Insets bottom="30.0" />
          </VBox.margin>
       </Button>
       <Button fx:id="newManagerButton" mnemonicParsing="false" prefHeight="47.0" prefWidth="140.0" text="Add a New Manager" wrapText="true" />
