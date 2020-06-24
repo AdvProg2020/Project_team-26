@@ -232,6 +232,10 @@ public class PersonalInfoController implements InitializableController {
         tableScrollPane.getChildrenUnmodifiable().removeAll();
         tableScrollPane.getChildrenUnmodifiable().add(newTableView);
     }
+    public void setNodeForTableScrollPane(Node node) {
+        tableScrollPane.getChildrenUnmodifiable().removeAll();
+        tableScrollPane.getChildrenUnmodifiable().add(node);
+    }
 
     public void addSingleItemToBox(Node node) {
         detailVBox.getChildren().add(node);

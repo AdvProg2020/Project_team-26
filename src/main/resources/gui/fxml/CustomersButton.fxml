@@ -5,15 +5,14 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="120.0" spacing="40.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="483.0" prefWidth="120.0" spacing="40.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.customer.CustomerButtonController">
    <children>
       <ImageView fitHeight="125.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../pic/AdminProfilePicture.png" />
          </image>
       </ImageView>
-      <Button fx:id="ordersButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="96.0" text="Orders" />
-      <Button fx:id="promoButton" mnemonicParsing="false" prefHeight="45.0" prefWidth="95.0" text="Promo" />
+      <Button fx:id="orders" mnemonicParsing="false" prefHeight="45.0" prefWidth="96.0" text="Orders" />
+      <Button fx:id="promo" mnemonicParsing="false" prefHeight="45.0" prefWidth="95.0" text="Promo" />
    </children>
 </VBox>

@@ -40,10 +40,9 @@ public class OrderTableControllerForCustomer implements InitializableController 
         this.id = id;
     }
 
-    public void load(PersonalInfoController parentController, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+    public void load(List<Order> orders, PersonalInfoController parentController) {
         personalInfoController = parentController;
         ArrayList<Orders> ordersArrayList = new ArrayList<>();
-        List<Order> orders = orderController.getOrdersWithFilter("date", true, 0, 50, Constants.manager.getToken());
         orders.forEach(i -> ordersArrayList.add(new Orders(i.getId(), i.getAddress(), i.getCustomer().getFullName(), i.getDate(), i.getTotalPrice(), i.getPaidAmount())));
         ObservableList<OrderTableControllerForCustomer.Orders> observableList = FXCollections.observableList(ordersArrayList);
         loadColumn(observableList);
