@@ -13,7 +13,7 @@ import javafx.scene.text.*;
 import model.*;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 import java.util.ArrayList;

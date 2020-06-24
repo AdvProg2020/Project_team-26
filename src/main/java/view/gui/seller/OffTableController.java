@@ -15,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 import view.gui.PersonalInfoController;
 
 import java.io.IOException;

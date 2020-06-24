@@ -2,16 +2,14 @@ package view.gui;
 
 import controller.interfaces.account.IUserInfoController;
 import exception.*;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Role;
 import model.User;
 import view.cli.ControllerContainer;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 import java.util.HashMap;

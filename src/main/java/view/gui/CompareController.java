@@ -1,6 +1,5 @@
 package view.gui;
 
-import controller.interfaces.category.ICategoryController;
 import controller.interfaces.product.IProductController;
 import exception.InvalidIdException;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Product;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 

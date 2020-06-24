@@ -12,7 +12,7 @@ import javafx.scene.control.Button;
 import model.Seller;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 import view.gui.PersonalInfoController;
 import view.gui.customer.OrderTableController;
 

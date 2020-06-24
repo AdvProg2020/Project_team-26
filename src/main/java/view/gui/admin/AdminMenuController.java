@@ -1,7 +1,5 @@
-package view.gui;
+package view.gui.admin;
 
-import controller.account.AuthenticationController;
-import controller.account.ShowUserController;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.account.IUserInfoController;
 import exception.*;
@@ -15,6 +13,8 @@ import javafx.scene.control.TextField;
 import model.Admin;
 import model.User;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 import java.util.HashMap;

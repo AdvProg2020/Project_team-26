@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.authentication;
 
 import controller.account.Account;
 import controller.interfaces.account.IAuthenticationController;
@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.Role;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
 
 public class FirstAdminRegister {
 

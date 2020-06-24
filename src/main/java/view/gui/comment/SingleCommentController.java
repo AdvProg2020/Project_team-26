@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.comment;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
