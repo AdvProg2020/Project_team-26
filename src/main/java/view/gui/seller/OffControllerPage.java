@@ -59,7 +59,11 @@ public class OffControllerPage implements InitializableController, Reloadable {
         setEditable(false);
         loadOffItems(off);
         deleteButton.setOnMouseClicked(e -> {
-            offTableController.deleteOffAndReloadBox(offId);
+            try {
+                offTableController.deleteOffAndReloadBox(offId);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
