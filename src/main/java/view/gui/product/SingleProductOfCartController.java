@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
 import model.Cart;
@@ -17,6 +18,8 @@ import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.*;
 import view.gui.interfaces.*;
+
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class SingleProductOfCartController implements InitializableController {
@@ -51,7 +54,7 @@ public class SingleProductOfCartController implements InitializableController {
         //todo add cart
         this.productSeller = productSeller;
         this.amount = amount;
-        // productImage.setImage(productSeller.getProduct().getImage());TODO
+        productImage.setImage(new Image(new ByteArrayInputStream(productSeller.getProduct().getImage())));
         priceText.setText("" + productSeller.getPrice());
         priceOffText.setText("" + productSeller.getPriceInOff());
         totalPrice.setText("" + amount * (productSeller.getPriceInOff() == productSeller.getPrice() ? productSeller.getPrice() : productSeller.getPriceInOff()));
@@ -59,7 +62,7 @@ public class SingleProductOfCartController implements InitializableController {
         amountTextField.setEditable(false);
     }
 
-    public void updateButtonClicked() {
+    public void updateButtonClicked() throws IOException {
         if (editButtonClick.getText().equals("Edit")) {
             amountTextField.setEditable(true);
             editButtonClick.setText("Update");
@@ -69,12 +72,11 @@ public class SingleProductOfCartController implements InitializableController {
                     cartController.addOrChangeProduct(productSeller.getId(), Integer.parseInt(amountTextField.getText()), Constants.manager.getToken());
                     amountTextField.setEditable(false);
                     editButtonClick.setText("Edit");
-                } catch (InvalidIdException e) {
-                    e.printStackTrace();
-                } catch (NotEnoughProductsException e) {
-                    //todo change label to red
+                } catch (InvalidIdException | NotEnoughProductsException e) {
+                    Constants.manager.showErrorPopUp(e.getMessage());
                 } catch (InvalidTokenException e) {
-                    e.printStackTrace();//todo
+                    Constants.manager.showErrorPopUp(e.getMessage());
+                    Constants.manager.setTokenFromController();
                 }
             }
         }
