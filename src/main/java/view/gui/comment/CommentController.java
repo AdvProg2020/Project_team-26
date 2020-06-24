@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.comment;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +8,6 @@ import model.Comment;
 import model.Product;
 
 import java.io.IOException;
-import java.util.List;
 
 public class CommentController {
 

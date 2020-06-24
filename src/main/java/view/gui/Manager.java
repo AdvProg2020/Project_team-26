@@ -7,15 +7,16 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
 import model.User;
 import view.cli.ControllerContainer;
+import view.gui.authentication.AuthenticationStageManager;
+import view.gui.authentication.RegisterMenuController;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -50,9 +51,11 @@ public class Manager {
     }
 
     public void back() throws IOException {
-        pages.remove(pages.size() - 1);
-        Pair<String, Integer> page = pages.remove(pages.size() - 1);
-        openPage(page.getKey(), page.getValue());
+        if(pages.size() > 1) {
+            pages.remove(pages.size() - 1);
+            Pair<String, Integer> page = pages.remove(pages.size() - 1);
+            openPage(page.getKey(), page.getValue());
+        }
     }
 
     private void showNode(Node node) {
@@ -189,11 +192,21 @@ public class Manager {
         return date;
     }
 
+    public void showLoginMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
+        RegisterMenuController controller = loader.getController();
+        Stage windows = new Stage(loader.load());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
+    }
+
+
     public void showErrorPopUp(String errorMessage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
         ErrorPageController controller = loader.getController();
         Button okButton = controller.getButton();
-        controller.setText(errorMessage);
+        controller.load(errorMessage);
         Stage windows = new Stage(loader.load());
         okButton.setOnMouseClicked(e -> windows.close());
         windows.initModality(Modality.APPLICATION_MODAL);

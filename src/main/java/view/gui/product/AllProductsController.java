@@ -1,16 +1,19 @@
-package view.gui;
+package view.gui.product;
 
 import controller.interfaces.category.ICategoryController;
 import exception.InvalidIdException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import model.Product;
 import org.controlsfx.control.RangeSlider;
 import view.cli.ControllerContainer;
+import view.gui.CategoryListController;
+import view.gui.Constants;
+import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 import java.util.HashMap;

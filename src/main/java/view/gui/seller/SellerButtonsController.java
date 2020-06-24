@@ -16,7 +16,7 @@ import model.Seller;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 import view.gui.PersonalInfoController;
 import view.gui.customer.OrderTableController;
 

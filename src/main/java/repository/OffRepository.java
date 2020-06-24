@@ -15,13 +15,5 @@ public interface OffRepository extends Repository<Off> {
 
     void deleteRequest(int id);
 
-    void acceptRequest(int requestId);
-
-    void rejectRequest(int requestId);
-
-    OffRequest getOffRequestById(int requestId);
-
-    List<OffRequest> getAllRequests(String sortField, boolean isAscending);
-
     List<Off> getAllOffForSellerWithFilter(String sortField, boolean isAscending, int SellerId);
 }

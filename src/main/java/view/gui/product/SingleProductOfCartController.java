@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.product;
 
 import controller.interfaces.cart.ICartController;
 import exception.InvalidIdException;
@@ -13,6 +13,8 @@ import javafx.scene.text.Text;
 import model.Cart;
 import model.ProductSeller;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 

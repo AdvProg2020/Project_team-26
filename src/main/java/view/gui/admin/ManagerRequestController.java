@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.admin;
 
 import controller.RequestController;
 import controller.account.AuthenticationController;
@@ -16,6 +16,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Request;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
 
 import java.io.IOException;
 import java.util.ArrayList;

@@ -11,7 +11,7 @@ import model.Order;
 import model.OrderItem;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 import view.gui.*;
 
 import java.io.IOException;

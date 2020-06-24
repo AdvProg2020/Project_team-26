@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.admin;
 
 import controller.RequestController;
 import controller.interfaces.discount.IPromoController;
@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Promo;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

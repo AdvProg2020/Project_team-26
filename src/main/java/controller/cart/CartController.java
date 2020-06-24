@@ -88,7 +88,6 @@ public class CartController implements ICartController {
     @Override
     public void checkout(String token)
             throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughProductsException, NotEnoughCreditException {
-        // TODO: check if max discount is considered
         Session session = Session.getSession(token);
         User loggedInUser = session.getLoggedInUser();
 
@@ -102,11 +101,12 @@ public class CartController implements ICartController {
 
         Customer customer = (Customer) loggedInUser;
         Order order = createOrder(session.getCart(), customer);
-        customer.pay(order.getPaidAmount());
+        customer.pay(order.calculatePaidAmount() - order.calculateDiscount());
         customer.addOrder(order);
+        order.setDiscount();
         orderRepository.save(order);
         userRepository.save(customer);
-        if (order.getPaidAmount() > 500000) {
+        if (order.calculatePaidAmount() > 500000) {
             creatRandomPromo(order, customer);
         }
     }
@@ -127,7 +127,7 @@ public class CartController implements ICartController {
         try {
             endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
             promo.setEndDate(endDate);
-            promo.setPromoCode("randomForBuy" + year + order.getPaidAmount());
+            promo.setPromoCode("randomForBuy" + year + order.calculatePaidAmount());
             promoRepository.save(promo);
             userRepository.save(customer);
         } catch (ParseException e) {
@@ -142,7 +142,6 @@ public class CartController implements ICartController {
                 throw new NotEnoughProductsException("There is not enough products anymore.", productSeller);
             }
 
-            // TODO: process offs for paid price (Done)
             OrderItem orderItem = new OrderItem(productSeller.getProduct(),
                     cart.getProducts().get(productSeller),
                     productSeller.getSeller(),

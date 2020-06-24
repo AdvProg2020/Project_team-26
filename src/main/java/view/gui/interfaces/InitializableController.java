@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.interfaces;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;

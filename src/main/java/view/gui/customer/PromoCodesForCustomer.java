@@ -6,10 +6,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Customer;
 import model.Promo;
-import model.User;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 import java.util.*;

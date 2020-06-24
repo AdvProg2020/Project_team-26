@@ -10,8 +10,8 @@ import model.Off;
 import model.OffItem;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
-import view.gui.Reloadable;
+import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 

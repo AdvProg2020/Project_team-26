@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.authentication;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

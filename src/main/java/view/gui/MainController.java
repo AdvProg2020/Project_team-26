@@ -26,6 +26,10 @@ public class MainController {
     @FXML
     private Button logoutButton;
 
+    public void setLeft(Node node) {
+        mainPane.setLeft(node);
+    }
+
     public void setCenter(Node node) {
         mainPane.setCenter(node);
     }

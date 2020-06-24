@@ -52,7 +52,7 @@ public class OrdersIView extends View {
         try {
             orderController.getOrdersWithFilter(orderSort.getFieldNameForSort(), orderSort.isAscending(),0,0, manager.getToken()).forEach(order ->
                     manager.inputOutput.println("the order ID is " + order.getId() + " at " + order.getDate().toString() +
-                            " with total price " + order.getTotalPrice()));
+                            " with total price " + order.calculateTotalPrice()));
         } catch (NoAccessException e) {
             manager.inputOutput.println(e.getMessage());
         } catch (InvalidTokenException e) {
@@ -89,7 +89,7 @@ public class OrdersIView extends View {
             try {
                 Order order = orderController.getASingleOrder(Integer.parseInt(matcher.group(1)), manager.getToken());
                 manager.inputOutput.println("the order ID is " + order.getId() + " at " + order.getDate().toString() +
-                        " with total price " + order.getTotalPrice());
+                        " with total price " + order.calculateTotalPrice());
                 order.getItems().forEach(orderItem -> manager.inputOutput.println("you have bough "
                         + orderItem.getProduct().getName()
                         + " with id : " + orderItem.getProductId() + "\nwith total paid bill : "

@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Entity
 @Table(name = "product")
-@SecondaryTable(name = "product_rate", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_id"))
+@SecondaryTable(name = "product_additional", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_id"))
 public class Product {
 
     @Id
@@ -27,8 +27,11 @@ public class Product {
     @Column(name = "description", nullable = false)
     private String description;
 
-    @Column(name = "average_rate", table = "product_rate", insertable = false, updatable = false)
+    @Column(name = "average_rate", table = "product_additional", insertable = false, updatable = false)
     private Double averageRate;
+
+    @Column(name = "amount", table = "product_additional", insertable = false, updatable = false)
+    private int amountBought;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -98,10 +101,6 @@ public class Product {
         return category;
     }
 
-//    public Map<CategoryFeature, Object> getCategoryFeatures() {
-//        return categoryFeatures;
-//    }
-
     public String getDescription() {
         return description;
     }
@@ -112,6 +111,10 @@ public class Product {
 
     public Double getAverageRate() {
         return averageRate;
+    }
+
+    public int getAmountBought() {
+        return amountBought;
     }
 
     public List<Comment> getComments() {
@@ -160,7 +163,7 @@ public class Product {
 
     public ProductRequest createRequest(RequestType requestType) {
         ProductRequest productRequest = new ProductRequest(name, brand, description, category, requestType);
-        if(requestType == RequestType.ADD) {
+        if (requestType == RequestType.ADD) {
             for (ProductSeller seller : sellerList) {
                 productRequest.addSeller(seller.createProductSellerRequest(requestType));
             }

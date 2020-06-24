@@ -11,8 +11,7 @@ public class ErrorPageController {
     @FXML
     private Button okButton;
 
-
-    public void setText(String errorMessage) {
+    public void load(String errorMessage) {
         this.errorMessage.setText(errorMessage);
     }
 
