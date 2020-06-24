@@ -123,10 +123,11 @@ public class SellerButtonsController implements InitializableController {
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
-        } catch (InvalidTokenException e) {//todo
-            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
     }
 
@@ -139,10 +140,11 @@ public class SellerButtonsController implements InitializableController {
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
-        } catch (InvalidTokenException e) {//todo
-            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
     }
 
@@ -155,10 +157,11 @@ public class SellerButtonsController implements InitializableController {
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
-        } catch (InvalidTokenException e) {//todo
-            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
 
     }

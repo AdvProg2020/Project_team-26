@@ -95,6 +95,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
         Stage stage = new Stage();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
         this.imageFile = fileChooser.showOpenDialog(stage);
+
     }
 
     @FXML
@@ -142,17 +143,17 @@ public class CreateSingleProductForSellerController implements InitializableCont
             } catch (ObjectAlreadyExistException e) {
                 try {
                     productController.addSeller(((Product) e.getObject()).getId(), newProductSeller, Constants.manager.getToken());
-                } catch (NotSellerException ex) {
-                    ex.printStackTrace();
-                } catch (NoAccessException ex) {
-                    ex.printStackTrace();
+                } catch (NotSellerException | NoAccessException ex) {
+                    Constants.manager.showErrorPopUp(e.getMessage());
                 } catch (InvalidTokenException ex) {
-                    ex.printStackTrace();
+                    Constants.manager.showErrorPopUp(e.getMessage());
+                    Constants.manager.setTokenFromController();
                 }
             } catch (NotSellerException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
             }
 
         }//todo message please fill all

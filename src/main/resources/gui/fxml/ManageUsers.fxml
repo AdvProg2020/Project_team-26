@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.admin.ManageUsersController">
    <children>
       <VBox prefHeight="720.0" prefWidth="568.0">
          <children>
@@ -20,7 +20,7 @@
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField style="-fx-background-color: transparent;">
+                  <TextField fx:id="usernameText" style="-fx-background-color: transparent;">
                      <HBox.margin>
                         <Insets left="25.0" top="30.0" />
                      </HBox.margin>
@@ -30,7 +30,7 @@
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField style="-fx-background-color: transparent;">
+                  <TextField fx:id="firstNameText" style="-fx-background-color: transparent;">
                      <HBox.margin>
                         <Insets left="25.0" top="30.0" />
                      </HBox.margin>
@@ -44,7 +44,7 @@
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField style="-fx-background-color: transparent;">
+                  <TextField fx:id="emailText" style="-fx-background-color: transparent;">
                      <HBox.margin>
                         <Insets left="25.0" top="30.0" />
                      </HBox.margin>
@@ -54,7 +54,7 @@
                         <Insets left="40.0" top="35.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField style="-fx-background-color: transparent;">
+                  <TextField fx:id="lastNameText" style="-fx-background-color: transparent;">
                      <HBox.margin>
                         <Insets left="25.0" top="30.0" />
                      </HBox.margin>
@@ -68,7 +68,7 @@
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField style="-fx-background-color: transparent;">
+                  <TextField fx:id="phoneNumberText" style="-fx-background-color: transparent;">
                      <HBox.margin>
                         <Insets left="25.0" top="30.0" />
                      </HBox.margin>
@@ -79,10 +79,10 @@
       </VBox>
       <ScrollPane prefHeight="720.0" prefWidth="457.0">
          <content>
-            <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
+            <TableView fx:id="userTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity">
               <columns>
-                <TableColumn prefWidth="224.0" text="C1" />
-                <TableColumn prefWidth="223.0" text="C2" />
+                <TableColumn fx:id="usernameCol" prefWidth="224.0" text="Username" />
+                <TableColumn fx:id="roleCol" prefWidth="223.0" text="Role" />
               </columns>
             </TableView>
          </content>

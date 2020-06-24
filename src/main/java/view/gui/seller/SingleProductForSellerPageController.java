@@ -8,15 +8,22 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.*;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.*;
 import model.enums.FeatureType;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,6 +67,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     private TableColumn<String, Feature> featureType;
     @FXML
     private TableColumn<String, Feature> featureDescription;
+    private File imageFile;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -72,7 +80,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     public void load(Product product, ProductSeller productSeller) throws IOException {
         this.productSeller = productSeller;
         this.product = product;
-        // productImage //todo
+        productImage.setImage(new Image(new ByteArrayInputStream(product.getImage())));
         categoryText.setText(product.getCategory().getName());
         productRateSlider.setValue(product.getAverageRate());
         productRateSlider.setValueChanging(false);
@@ -90,13 +98,14 @@ public class SingleProductForSellerPageController implements InitializableContro
         categoryFeatures.setItems(FXCollections.observableList(features));
     }
 
-    private void initPrimitiveFields() {
+    private void initPrimitiveFields() throws IOException {
         productInfoEditButton.setText("Edit product");
         productSellerInfoEditButton.setText("Edit seller");
         nameTextField.setText(product.getName());
         brandTextField.setText(product.getBrand());
         amountTextField.setText("" + productSeller.getRemainingItems());
         descriptionTextArea.setText(product.getDescription());
+        productImage.setImage(new Image(new ByteArrayInputStream(product.getImage())));
         setEditableForProduct(false);
         setEditableForProductSeller(false);
 
@@ -149,7 +158,8 @@ public class SingleProductForSellerPageController implements InitializableContro
             } catch (InvalidIdException | NotSellerException | NoAccessException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
             }
         }
     }
@@ -164,16 +174,16 @@ public class SingleProductForSellerPageController implements InitializableContro
             product.setDescription(descriptionTextArea.getText());
             product.setBrand(brandTextField.getText());
             product.setName(nameTextField.getText());
+            product.setImage(Files.readAllBytes(imageFile.toPath()));
             setEditableForProduct(false);
             productInfoEditButton.setText("Edit product");
             try {
                 productController.editProduct(product.getId(), product, Constants.manager.getToken());
-            } catch (InvalidIdException | NoAccessException e) {
+            } catch (InvalidIdException | NoAccessException | NotSellerException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
-            } catch (NotSellerException e) {
-                e.printStackTrace();
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
             } finally {
                 //todo reload changes
             }
@@ -181,14 +191,21 @@ public class SingleProductForSellerPageController implements InitializableContro
     }
 
     @FXML
-    public void cancleButtonClicked() {
+    public void cancleButtonClicked() throws IOException {
         initPrimitiveFields();
     }
 
 
     @FXML
-    public void uploadButtonClicked() {
-        //todo set image
+    public void uploadButtonClicked() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = new Stage();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
+        this.imageFile = fileChooser.showOpenDialog(stage);
+        if (imageFile == null) {
+            Constants.manager.showErrorPopUp("you should choose photo");
+        }
+        productImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
     }
 
     private class Buyers {

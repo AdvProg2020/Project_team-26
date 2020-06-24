@@ -78,25 +78,27 @@ public class OffTableController implements InitializableController {
         } catch (NoAccessException | InvalidIdException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
 
 
     }
 
-    public void reloadTable() {
+    public void reloadTable() throws IOException {
         List<Off> offs = null;
         try {
             offs = offController.getAllOfForSellerWithFilter("date", true, 0, 100, Constants.manager.getToken());
             load(offs, this.personalInfoController);
         } catch (NoAccessException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
 
     }

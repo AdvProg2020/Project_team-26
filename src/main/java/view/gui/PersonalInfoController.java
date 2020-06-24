@@ -89,7 +89,11 @@ public class PersonalInfoController implements InitializableController {
                 }
         );
         changePasswordButton.setOnMouseClicked(e -> {
-            handleChangePasswordButton();
+            try {
+                handleChangePasswordButton();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
@@ -109,7 +113,7 @@ public class PersonalInfoController implements InitializableController {
         }
     }
 
-    private void handleChangePasswordButton() {
+    private void handleChangePasswordButton() throws IOException {
         if (changePasswordButton.getText().matches("Change Password")) {
             changePasswordButton.setText("Old Password");
             password.setEditable(true);
@@ -120,7 +124,7 @@ public class PersonalInfoController implements InitializableController {
         } else if (changePasswordButton.getText().matches("Change")) {
             newPassword = password.getText();
             if (!oldPassword.matches(newPassword)) {
-                //todo red
+                Constants.manager.showErrorPopUp("passwords dont match");
                 return;
             }
             password.setText("");
@@ -128,18 +132,19 @@ public class PersonalInfoController implements InitializableController {
         } else {
             confirmPassword = password.getText();
             if (!confirmPassword.matches(newPassword)) {
-                //todo red
+                Constants.manager.showErrorPopUp("confirm doesnt match");
                 return;
             }
             try {
                 userInfoController.changePassword(oldPassword, newPassword, Constants.manager.getToken());
                 initPasswordButton();
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
             } catch (NoAccessException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
             } catch (NotLoggedINException e) {
-                e.printStackTrace();
+                Constants.manager.showLoginMenu();
             }
 
         }
