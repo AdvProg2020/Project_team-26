@@ -16,6 +16,7 @@ import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
+import java.time.DateTimeException;
 
 public class CreateOfForSellerController implements InitializableController, Reloadable {
     private IOffController offController;
@@ -51,6 +52,13 @@ public class CreateOfForSellerController implements InitializableController, Rel
         this.off = new Off();
     }
 
+    private void setEditable(boolean type) {
+        startDate.setEditable(type);
+        endDate.setEditable(type);
+        productName.setEditable(type);
+        priceInOff.setEditable(type);
+    }
+
     @FXML
     public void addProductButtonclicked() throws IOException {
         try {
@@ -65,16 +73,16 @@ public class CreateOfForSellerController implements InitializableController, Rel
                 Constants.manager.showErrorPopUp("please fill the price by Long");
                 return;
             }
-        } catch (NoObjectIdException | NoAccessException | ObjectAlreadyExistException e) {
+            setEditable(false);
+        } catch (NoObjectIdException | NoAccessException | ObjectAlreadyExistException | InvalidIdException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
-        //todo reload page
+
     }
 
     private void updateVBox(OffItem item) throws IOException {
@@ -91,13 +99,14 @@ public class CreateOfForSellerController implements InitializableController, Rel
             this.off.setStartDate(Constants.manager.getDateFromDatePicker(startDate));
             this.off.setEndDate(Constants.manager.getDateFromDatePicker(endDate));
             offController.createNewOff(off, Constants.manager.getToken());
-            // todo call the main to vanish this
-        } catch (NoAccessException e) {
-           Constants.manager.showErrorPopUp(e.getMessage());
+
+        } catch (NoAccessException | DateTimeException | IllegalArgumentException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
     }
 

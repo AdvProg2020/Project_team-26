@@ -57,9 +57,10 @@ public class OffItemPageController implements InitializableController {
         } catch (NoAccessException | ObjectAlreadyExistException | InvalidIdException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
     }
 }

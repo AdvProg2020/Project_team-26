@@ -79,7 +79,13 @@ public class OrderTableController implements InitializableController {
                     ex.printStackTrace();
                 }
             } catch (InvalidTokenException e) {
-                e.printStackTrace();//TODO
+                try {
+                    Constants.manager.showErrorPopUp(e.getMessage());
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                Constants.manager.setTokenFromController();
+
             }
         });
     }
