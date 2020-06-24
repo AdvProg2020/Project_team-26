@@ -59,6 +59,10 @@ public class AdminMenuController implements InitializableController {
         }
     }
 
+    public void load() {
+
+    }
+
     @FXML
     private void editInfo() {
         usernameText.setEditable(true);

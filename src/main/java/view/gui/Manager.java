@@ -147,7 +147,7 @@ public class Manager {
             } else if (user.getRole() == Role.CUSTOMER) {
                 openPage("CustomersButton", user.getId());
             } else if (user.getRole() == Role.ADMIN) {
-                //TODO aria fill here plz
+                openPage("AdminOptionMenu",user.getId());
             } else {
                 //TODO open main page here
             }

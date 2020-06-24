@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerRequestController {
+public class ManagerRequestController implements InitializableController{
 
 
     @FXML
@@ -42,7 +42,7 @@ public class ManagerRequestController {
 
     }
 
-    private void load() throws InvalidTokenException, NoAccessException, NotLoggedINException {
+    public void load() throws InvalidTokenException, NoAccessException, NotLoggedINException {
         requestController = (IRequestController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.RequestController);
         allRequests = requestController.getAllRequests(null,true,0,0,Constants.manager.getToken());
         requestTable.setItems(FXCollections.observableList(allRequests));
@@ -50,7 +50,10 @@ public class ManagerRequestController {
         cols.get(0).setCellValueFactory(new PropertyValueFactory<Request,Integer>("id"));
         cols.get(1).setCellValueFactory(new PropertyValueFactory<Request,String>("username"));
         cols.get(1).setCellValueFactory(new PropertyValueFactory<Request,String>("requestType"));
-
     }
 
+    @Override
+    public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException {
+
+    }
 }

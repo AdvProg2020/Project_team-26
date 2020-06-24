@@ -10,6 +10,8 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.*;
 import model.Product;
 import model.ProductSeller;
@@ -18,7 +20,10 @@ import view.gui.*;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -51,6 +56,9 @@ public class CreateSingleProductForSellerController implements InitializableCont
     private VBox categoryBox;
     @FXML
     private VBox featuresBox;
+    @FXML
+    private Button imageChooserButton;
+    private File imageFile;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -77,6 +85,16 @@ public class CreateSingleProductForSellerController implements InitializableCont
         categoryListController.setReloadable(this::reload);
         categoryBox.getChildren().removeAll();
         categoryBox.getChildren().addAll((Node) loader.load());
+        imageChooserButton.setOnMouseClicked(e -> {
+            setFile();
+        });
+    }
+
+    private void setFile() {
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = new Stage();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
+        this.imageFile = fileChooser.showOpenDialog(stage);
     }
 
     @FXML
@@ -108,15 +126,12 @@ public class CreateSingleProductForSellerController implements InitializableCont
     }
 
     @FXML
-    public void uploadPhotoClicked() {
-        //todo ....
-    }
-
-    @FXML
-    public void saveButtonClicked() {
+    public void saveButtonClicked() throws IOException {
+        category = categoryListController.getCategory();
         if (isEveryThingOk()) {
             Product newProduct = new Product(nameTextField.getText(), brandTextField.getText(), descriptionField.getText());
             newProduct.setCategory(this.category);
+            newProduct.setImage(Files.readAllBytes(imageFile.toPath()));
             ProductSeller newProductSeller = new ProductSeller();
             featureBoxList.forEach(i -> newProduct.getCategoryFeatures().put(i.getCategoryFeature(), i.getValue()));
             newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
@@ -151,7 +166,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 !nameTextField.getText().isBlank() && !priceTextField.getText().isBlank() && !amountTextField.getText().isBlank() &&
                 !descriptionField.getText().isEmpty() && !brandTextField.getText().isEmpty() &&
                 !nameTextField.getText().isBlank() && Constants.manager.checkIsLong(priceTextField.getText()) &&
-                Constants.manager.checkInputIsInt(amountTextField.getText()) && (category != null);
+                Constants.manager.checkInputIsInt(amountTextField.getText()) && (category != null) && (imageFile != null);
     }
 
     @Override
