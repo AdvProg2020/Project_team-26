@@ -1,6 +1,8 @@
 package view.gui;
 
+import controller.SessionController;
 import controller.interfaces.account.IShowUserController;
+import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +11,12 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import model.Role;
+import model.enums.Role;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.admin.AdminRegistryController;
@@ -169,7 +173,9 @@ public class Manager {
 
     public void showCompareStage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ComparePane.fxml"));
-        Stage windows = new Stage(loader.load());
+        BorderPane borderPane = new BorderPane((Node)loader.load());
+        Stage windows = new Stage();
+        windows.setScene(new Scene(borderPane));
         ComparePane controller = loader.getController();
         Button exit = controller.getExitButton();
         addProductToComparePane(controller);
@@ -177,9 +183,6 @@ public class Manager {
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
         windows.show();
-
-        //TODO get list then load the compare pane
-        //TODO then add the compareProduct with loading it by function andToBox in compare pane controller
     }
 
     private void addProductToComparePane(ComparePane controller) {
