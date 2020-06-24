@@ -207,6 +207,9 @@ public class Manager {
         windows.show();
     }
 
+    public void showRegisterMenu() {
+        // TODO: load login/register stage with register open
+    }
 
     public void showErrorPopUp(String errorMessage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));

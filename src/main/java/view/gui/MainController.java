@@ -7,6 +7,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.Role;
 
+import java.io.IOException;
+
 public class MainController {
 
     @FXML
@@ -48,5 +50,29 @@ public class MainController {
             topBox.getChildren().addAll(loginButton, registerButton);
             cartButton.setVisible(true);
         }
+    }
+
+    public void openHome() throws IOException {
+        Constants.manager.openPage("AllProducts", 0);
+    }
+
+    public void openCart() throws IOException {
+        Constants.manager.openCart();
+    }
+
+    public void openLogin() throws IOException {
+        Constants.manager.showLoginMenu();
+    }
+
+    public void openRegister() {
+        Constants.manager.showRegisterMenu();
+    }
+
+    public void openAccount() throws IOException {
+        Constants.manager.openAccountPage();
+    }
+
+    public void logout() {
+        // TODO: logout
     }
 }
