@@ -122,7 +122,7 @@ public class RegisterMenuController implements InitializableController {
                 Constants.manager.setLoggedIn(true);
                 return;
             } catch (InvalidTokenException e) {
-                Constants.manager.setTokenFromController(e.getMessage() + "\nnew token will be set try again");
+                Constants.manager.setTokenFromController();
                 return;
             } catch (InvalidFormatException e) {
                 errorLabel.setText(e.getMessage());
