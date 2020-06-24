@@ -1,9 +1,7 @@
 package view.gui.customer;
 
-import controller.discount.PromoController;
 import controller.interfaces.discount.IPromoController;
 import controller.interfaces.order.IOrderController;
-import controller.order.OrderController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotLoggedINException;
@@ -13,7 +11,7 @@ import javafx.scene.control.Button;
 import model.Customer;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 import view.gui.PersonalInfoController;
 
 import java.io.IOException;

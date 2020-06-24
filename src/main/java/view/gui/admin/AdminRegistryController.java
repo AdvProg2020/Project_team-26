@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.admin;
 
 import controller.account.Account;
 import controller.account.AuthenticationController;
@@ -11,6 +11,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.Role;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 

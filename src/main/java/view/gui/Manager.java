@@ -11,6 +11,9 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.Role;
 import view.cli.ControllerContainer;
+import view.gui.authentication.AuthenticationStageManager;
+import view.gui.authentication.RegisterMenuController;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -182,11 +185,21 @@ public class Manager {
         return date;
     }
 
+    public void showLoginMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
+        RegisterMenuController controller = loader.getController();
+        Stage windows = new Stage(loader.load());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
+    }
+
+
     public void showErrorPopUp(String errorMessage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
         ErrorPageController controller = loader.getController();
         Button okButton = controller.getButton();
-        controller.setText(errorMessage);
+        controller.load(errorMessage);
         Stage windows = new Stage(loader.load());
         okButton.setOnMouseClicked(e -> windows.close());
         windows.initModality(Modality.APPLICATION_MODAL);

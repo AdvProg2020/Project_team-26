@@ -2,8 +2,6 @@ package view.gui.seller;
 
 import controller.interfaces.category.ICategoryController;
 import controller.interfaces.product.IProductController;
-import controller.product.CategoryController;
-import controller.product.ProductController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,12 +15,12 @@ import model.Product;
 import model.ProductSeller;
 import view.cli.ControllerContainer;
 import view.gui.*;
+import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
 
 public class CreateSingleProductForSellerController implements InitializableController, Reloadable {
     private int userId;

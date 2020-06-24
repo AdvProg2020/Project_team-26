@@ -1,8 +1,9 @@
-package view.gui;
+package view.gui.product;
 
 import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import model.Product;
+import view.gui.Constants;
 
 import java.io.IOException;
 

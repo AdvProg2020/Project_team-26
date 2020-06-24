@@ -16,6 +16,7 @@ import javafx.scene.image.ImageView;
 import model.*;
 import view.cli.ControllerContainer;
 import view.gui.*;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
 import java.util.*;

@@ -9,6 +9,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.*;
 import view.cli.*;
+import view.gui.interfaces.InitializableController;
+import view.gui.product.SingleProductOfCartController;
 
 import java.io.IOException;
 import java.util.*;

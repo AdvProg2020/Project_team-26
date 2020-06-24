@@ -1,10 +1,9 @@
-package view.gui;
+package view.gui.authentication;
 
 import controller.account.Account;
 import controller.account.AuthenticationController;
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,6 +12,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import model.Role;
 import view.cli.ControllerContainer;
+import view.gui.Constants;
+import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 
@@ -54,6 +56,7 @@ public class RegisterMenuController implements InitializableController {
     private Button registerButton;
     private TextField textField;
     private IAuthenticationController controller;
+    private Reloadable reloadable;
 
 
     private void initialize() {

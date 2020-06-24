@@ -6,10 +6,9 @@ import javafx.scene.text.Text;
 import model.OrderItem;
 import model.ShipmentState;
 import model.Status;
+import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
-
-import static model.Status.DEACTIVE;
 
 public class OrderItemController implements InitializableController {
     private int orderItemId;

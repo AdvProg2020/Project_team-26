@@ -12,9 +12,8 @@ import javafx.scene.layout.VBox;
 import model.*;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
-import view.gui.*;
-import view.gui.Reloadable;
+import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 import java.time.DateTimeException;

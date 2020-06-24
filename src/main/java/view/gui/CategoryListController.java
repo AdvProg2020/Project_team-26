@@ -10,6 +10,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import model.Category;
 import view.cli.ControllerContainer;
+import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 import java.util.ArrayList;

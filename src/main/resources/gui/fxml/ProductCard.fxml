@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" onMouseClicked="#open" prefHeight="360.0" prefWidth="180.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.ProductCardController">
+<VBox alignment="TOP_CENTER" onMouseClicked="#open" prefHeight="360.0" prefWidth="180.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.product.ProductCardController">
     <children>
         <ImageView fx:id="productImage" fitHeight="120.0" fitWidth="160.0" pickOnBounds="true" preserveRatio="true">
             <image>

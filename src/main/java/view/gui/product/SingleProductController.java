@@ -1,4 +1,4 @@
-package view.gui;
+package view.gui.product;
 
 import controller.product.ProductController;
 import exception.InvalidIdException;
@@ -12,6 +12,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.Product;
 import view.cli.ControllerContainer;
+import view.gui.comment.CommentController;
+import view.gui.Constants;
+import view.gui.interfaces.InitializableController;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

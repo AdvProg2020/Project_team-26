@@ -1,9 +1,7 @@
 package view.gui.seller;
 
-import controller.discount.OffController;
 import controller.interfaces.discount.IOffController;
 import controller.interfaces.product.IProductController;
-import controller.product.ProductController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,8 +12,8 @@ import javafx.scene.layout.VBox;
 import model.*;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
-import view.gui.Reloadable;
+import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 
