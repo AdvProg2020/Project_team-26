@@ -24,12 +24,12 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField HBox.hgrow="ALWAYS">
+                        <TextField fx:id="titleField" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </TextField>
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="80.0" text="Submit" HBox.hgrow="ALWAYS">
+                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#submit" prefHeight="38.0" prefWidth="80.0" text="Submit" HBox.hgrow="ALWAYS">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -44,7 +44,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <TextArea prefHeight="138.0" prefWidth="600.0" wrapText="true" VBox.vgrow="ALWAYS">
+                  <TextArea fx:id="descriptionField" prefHeight="138.0" prefWidth="600.0" wrapText="true" VBox.vgrow="ALWAYS">
                      <font>
                         <Font size="14.0" />
                      </font>

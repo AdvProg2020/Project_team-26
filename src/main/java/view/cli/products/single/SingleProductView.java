@@ -157,7 +157,7 @@ public class SingleProductView extends View {
         manager.inputOutput.println("enter text");
         String text = manager.inputOutput.nextLine();
         try {
-            commentController.addAComment(text, title, product.getId(), manager.getToken());
+            commentController.addComment(text, title, product.getId(), manager.getToken());
         } catch (NoAccessException | InvalidTokenException e) {
             manager.inputOutput.println(e.getMessage());
         }

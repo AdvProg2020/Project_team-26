@@ -32,6 +32,7 @@ public class Manager {
 
     private ControllerContainer controllerContainer;
     private String token;
+    private User loggedInUser;
     private boolean isLoggedIn;
     private Role role;
     private List<Pair<String, Integer>> pages;
@@ -161,7 +162,7 @@ public class Manager {
     }
 
 
-    public void setTokenFromController(String error) {
+    public void setTokenFromController() {
         //todo
     }
 
