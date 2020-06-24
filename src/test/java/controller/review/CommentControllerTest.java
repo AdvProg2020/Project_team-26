@@ -38,22 +38,22 @@ public class CommentControllerTest {
         /** Exception Tests **/
 
         Exception ex = Assertions.assertThrows(NoAccessException.class, () ->
-                commentController.addAComment("BAD", "New Comment", 0, token));
+                commentController.addComment("BAD", "New Comment", 0, token));
         Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
         ex = Assertions.assertThrows(NoAccessException.class, () ->
-                commentController.addAComment("Good", "New Comment", 0, token));
+                commentController.addComment("Good", "New Comment", 0, token));
         Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
         authenticationController.login("aria", "aria", token);
         ex = Assertions.assertThrows(NoAccessException.class, () ->
-                commentController.addAComment("Good", "New Comment", 0, token));
+                commentController.addComment("Good", "New Comment", 0, token));
         Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
         /** Exception ends **/
 
         authenticationController.login("test8", "test8", token);
-        commentController.addAComment("Good", "New Comment", 6, token);
+        commentController.addComment("Good", "New Comment", 6, token);
     }
 
     @Test

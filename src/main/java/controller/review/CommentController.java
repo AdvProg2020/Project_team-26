@@ -19,7 +19,8 @@ public class CommentController implements ICommentController {
         this.commentRepository = (CommentRepository) repositoryContainer.getRepository("CommentRepository");
     }
 
-    public void addAComment(String comment, String title, int productId, String token) throws NoAccessException, InvalidTokenException {
+    @Override
+    public void addComment(String comment, String title, int productId, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null || user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");

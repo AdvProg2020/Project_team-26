@@ -16,12 +16,12 @@
    <children>
       <VBox prefHeight="586.0" prefWidth="167.0" spacing="25.0">
          <children>
-            <TextField fx:id="nameField" prefHeight="37.0" prefWidth="149.0" promptText="Name">
+            <TextField fx:id="nameField" onAction="#reload" prefHeight="37.0" prefWidth="149.0" promptText="Name">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </TextField>
-            <TextField fx:id="brandField" promptText="Brand">
+            <TextField fx:id="brandField" onAction="#reload" promptText="Brand">
                <VBox.margin>
                   <Insets />
                </VBox.margin>
@@ -29,16 +29,16 @@
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </TextField>
-            <TextField fx:id="descriptionField" layoutX="10.0" layoutY="72.0" promptText="Description">
+            <TextField fx:id="descriptionField" layoutX="10.0" layoutY="72.0" onAction="#reload" promptText="Description">
                <padding>
                   <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                </padding>
             </TextField>
-            <CheckBox fx:id="offCheckBox" mnemonicParsing="false" text="Show Offs" />
+            <CheckBox fx:id="offCheckBox" mnemonicParsing="false" onAction="#reload" text="Show Offs" />
             <Label text="price" />
-            <ComboBox fx:id="sortDirectionComboBox" prefHeight="39.0" prefWidth="241.0" />
-            <ComboBox fx:id="sortFieldComBowBox" prefHeight="39.0" prefWidth="243.0" />
-            <fx:include source="CategoryList.fxml" fx:id="categoryList"/>
+            <ComboBox fx:id="sortDirectionComboBox" onAction="#reload" prefHeight="39.0" prefWidth="241.0" />
+            <ComboBox fx:id="sortFieldComBowBox" onAction="#reload" prefHeight="39.0" prefWidth="243.0" />
+            <fx:include fx:id="categoryList" source="CategoryList.fxml" />
          </children>
       </VBox>
       <ScrollPane prefHeight="500.0" prefWidth="800.0">

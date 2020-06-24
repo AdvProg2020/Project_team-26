@@ -32,14 +32,17 @@ public class Manager {
 
     private ControllerContainer controllerContainer;
     private String token;
+    private User loggedInUser;
     private boolean isLoggedIn;
     private Role role;
     private List<Pair<String, Integer>> pages;
     private MainController controller;
     private AuthenticationStageManager authenticationStageManager;
+    private List<Integer> compareList;
 
     public Manager() {
         pages = new ArrayList<>();
+        compareList = new ArrayList<>();
     }
 
     public void openPage(String pageName, int id) throws IOException {
@@ -50,7 +53,8 @@ public class Manager {
         try {
             controller.initialize(id);//TODO handle kon
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.setTokenFromController();
+            Constants.manager.showErrorPopUp("Your token was invalid.");
         } catch (NoAccessException e) {
             e.printStackTrace();
         }
@@ -156,12 +160,7 @@ public class Manager {
         openPage("Cart",0);
     }
 
-    public void openSingleProductPage() {
-        //todo pooya i dont know how it is
-    }
-
-
-    public void setTokenFromController(String error) {
+    public void setTokenFromController() {
         //todo
     }
 
@@ -219,5 +218,9 @@ public class Manager {
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
         windows.show();
+    }
+
+    public void addToCompareList(int productId) {
+        compareList.add(productId);
     }
 }
