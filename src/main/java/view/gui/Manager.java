@@ -15,6 +15,7 @@ import javafx.util.Pair;
 import model.Role;
 import model.User;
 import view.cli.ControllerContainer;
+import view.gui.admin.AdminRegistryController;
 import view.gui.authentication.AuthenticationStageManager;
 import view.gui.authentication.RegisterMenuController;
 import view.gui.interfaces.InitializableController;
@@ -209,6 +210,15 @@ public class Manager {
 
     public void showRegisterMenu() {
         // TODO: load login/register stage with register open
+    }
+
+    public void showAdminRegistryMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/AdminRegistryMenu.fxml"));
+        AdminRegistryController controller = loader.getController();
+        Stage windows = new Stage(loader.load());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
     }
 
     public void showErrorPopUp(String errorMessage) throws IOException {
