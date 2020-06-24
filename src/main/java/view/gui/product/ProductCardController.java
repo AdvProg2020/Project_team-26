@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.text.Text;
 import model.Product;
 import view.gui.Constants;
-
+import view.gui.interfaces.*;
 import java.io.IOException;
 
 public class ProductCardController {

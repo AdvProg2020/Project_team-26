@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Request;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-
+import view.gui.interfaces.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

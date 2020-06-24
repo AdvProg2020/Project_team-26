@@ -15,7 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.Promo;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-
+import view.gui.interfaces.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;

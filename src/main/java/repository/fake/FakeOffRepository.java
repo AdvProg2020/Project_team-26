@@ -34,21 +34,6 @@ public class FakeOffRepository implements OffRepository {
     }
 
     @Override
-    public void acceptRequest(int requestId) {
-
-    }
-
-    @Override
-    public void rejectRequest(int requestId) {
-
-    }
-
-    @Override
-    public OffRequest getOffRequestById(int requestId) {
-        return null;
-    }
-
-    @Override
     public void editRequest(Off off) {
 
     }
@@ -56,11 +41,6 @@ public class FakeOffRepository implements OffRepository {
     @Override
     public void deleteRequest(int id) {
 
-    }
-
-    @Override
-    public List<OffRequest> getAllRequests(String sortField, boolean isAscending) {
-        return null;
     }
 
     @Override

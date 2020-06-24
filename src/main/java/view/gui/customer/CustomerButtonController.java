@@ -18,7 +18,7 @@ import model.Role;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.InitializableController;
+import view.gui.interfaces.InitializableController;
 import view.gui.Manager;
 import view.gui.PersonalInfoController;
 
