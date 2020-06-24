@@ -50,7 +50,7 @@ public class CategoryListController implements InitializableController {
             load(category.getParent());
             reloadable.reload();
             category = category.getParent();
-        } catch (InvalidIdException invalidIdException) {
+        } catch (InvalidIdException | IOException invalidIdException) {
             invalidIdException.printStackTrace();
         }
     }
@@ -61,10 +61,11 @@ public class CategoryListController implements InitializableController {
             try {
                 load(selectedCategory);
                 category = selectedCategory;
-            } catch (InvalidIdException invalidIdException) {
+                reloadable.reload();
+            } catch (InvalidIdException | IOException invalidIdException) {
                 invalidIdException.printStackTrace();
             }
-            reloadable.reload();
+
         }
     }
 

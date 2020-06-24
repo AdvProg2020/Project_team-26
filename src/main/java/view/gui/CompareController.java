@@ -26,6 +26,8 @@ public class CompareController implements InitializableController {
     @FXML
     private TextField rate;
     @FXML
+    private TextField price;
+    @FXML
     private VBox box;
 
     IProductController productController;
@@ -41,10 +43,12 @@ public class CompareController implements InitializableController {
             brand.setText(product.getBrand());
             description.setText(product.getDescription());
             rate.setText("" + product.getAverageRate() + "/5");
+            price.setText("" + product.getMinimumPrice());
             name.setEditable(false);
             brand.setEditable(false);
             description.setEditable(false);
             rate.setEditable(false);
+            price.setEditable(false);
             product.getCategoryFeatures().entrySet().forEach(f -> {
                 HBox hBox = new HBox();
                 Label label = new Label(f.getKey().getFeatureName());
