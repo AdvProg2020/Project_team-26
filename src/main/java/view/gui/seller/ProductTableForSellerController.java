@@ -68,9 +68,10 @@ public class ProductTableForSellerController implements InitializableController 
         } catch (InvalidIdException | NoObjectIdException | NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
     }
 
@@ -102,7 +103,8 @@ public class ProductTableForSellerController implements InitializableController 
         } catch (NotLoggedINException | NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         }
     }
 

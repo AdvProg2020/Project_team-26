@@ -70,11 +70,12 @@ public class CustomerButtonController implements InitializableController {
             orderTableControllerForCustomer.load(orderController.getOrdersWithFilter("date", true, 0, 50, Constants.manager.getToken()), personalInfoController);
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (InvalidTokenException ex) {
-            ex.printStackTrace();//TODO log in
+            Constants.manager.showErrorPopUp(ex.getMessage());
+           Constants.manager.setTokenFromController();
         } catch (NoAccessException ex) {
             Constants.manager.showErrorPopUp(ex.getMessage());
         } catch (NotLoggedINException e) {
-            //Todo logIn
+            Constants.manager.showLoginMenu();
         }
     }
 
@@ -86,11 +87,12 @@ public class CustomerButtonController implements InitializableController {
             promoCodesForCustomer.load(promoController.getAllPromoCodeForCustomer("maxValidUse", true, 0, 50, Constants.manager.getToken()));
             personalInfoController.updateAllBox(loader.load());
         } catch (InvalidTokenException ex) {
-            ex.printStackTrace();
+            Constants.manager.showErrorPopUp(ex.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NoAccessException ex) {
             Constants.manager.showErrorPopUp(ex.getMessage());
         } catch (NotLoggedINException ex) {
-            ex.printStackTrace();
+            Constants.manager.showLoginMenu();
         }
     }
 

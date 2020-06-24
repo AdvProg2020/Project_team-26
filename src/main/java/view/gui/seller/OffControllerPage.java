@@ -100,9 +100,10 @@ public class OffControllerPage implements InitializableController, Reloadable {
             } catch (NoAccessException | InvalidIdException | DateTimeException | IllegalArgumentException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
             } catch (NotLoggedINException e) {
-                e.printStackTrace();
+                Constants.manager.showLoginMenu();
             }
         }
     }
@@ -113,7 +114,7 @@ public class OffControllerPage implements InitializableController, Reloadable {
             off = offController.getOff(offId, Constants.manager.getToken());
             loadOffPage(off, this.offTableController);
         } catch (InvalidIdException e) {
-            //reload main page todo call mainPage
+            Constants.manager.showErrorPopUp("the off just deleted by manager");
         }
 
 
@@ -138,11 +139,12 @@ public class OffControllerPage implements InitializableController, Reloadable {
                 return;
             }
         } catch (NoObjectIdException | InvalidIdException | NoAccessException | ObjectAlreadyExistException e) {
-          Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+           Constants.manager.showLoginMenu();
         } finally {
             priceInOff.setText("");
             productName.setText("");

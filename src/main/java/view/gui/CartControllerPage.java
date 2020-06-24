@@ -60,26 +60,17 @@ public class CartControllerPage implements InitializableController {
     }
 
     @FXML
-    public void purchaseButtonClicked() {
+    public void purchaseButtonClicked() throws IOException {
         try {
             cartController.setAddress(addressTextField.getText(), Constants.manager.getToken());
             cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
             cartController.checkout(Constants.manager.getToken());
             //todo load main page
         } catch (InvalidTokenException e) {
-            e.printStackTrace();//todo
-        } catch (InvalidPromoCodeException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
-            e.printStackTrace();//todo access exception
-        } catch (PromoNotAvailableException e) {
-            e.printStackTrace();//todo red label
-        } catch (NotLoggedINException e) {
-            e.printStackTrace();
-        } catch (NotEnoughCreditException e) {
-            e.printStackTrace();//todo
-        } catch (NotEnoughProductsException e) {
-            e.printStackTrace();//todo tell
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.showLoginMenu();
+        } catch (InvalidPromoCodeException | NoAccessException | PromoNotAvailableException | NotLoggedINException | NotEnoughCreditException | NotEnoughProductsException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         }
         //todo load the purchase page here
     }
