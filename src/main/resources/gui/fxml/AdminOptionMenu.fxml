@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<HBox fx:id="hbox" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.admin.AdminOptionMenuController">
+<HBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.admin.AdminOptionMenuController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="596.0" prefWidth="140.0">
          <children>
@@ -51,5 +50,6 @@
             <Button fx:id="newManagerButton" mnemonicParsing="false" prefHeight="47.0" prefWidth="140.0" text="Add a New Manager" wrapText="true" />
          </children>
       </VBox>
+      <HBox fx:id="hbox" prefHeight="100.0" prefWidth="200.0" />
    </children>
 </HBox>
