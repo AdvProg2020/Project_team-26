@@ -2,12 +2,13 @@ package repository.fake;
 
 import controller.account.Account;
 import model.*;
+import model.enums.Role;
+import model.enums.ShipmentState;
 import repository.Pageable;
 import repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 public class FakeUserRepository implements UserRepository {
@@ -39,7 +40,7 @@ public class FakeUserRepository implements UserRepository {
             if(user instanceof Customer) {
                 Order order = new Order((Customer) user, new Promo("BigRetard",(Customer)user)," ");
                 OrderItem orderItem = new OrderItem(fakeProductRepository.getById(1),2,(Seller) getById(6),200,
-                        190,ShipmentState.WAITING_TO_SEND);
+                        190, ShipmentState.WAITING_TO_SEND);
                 order.addItem(orderItem);
                 ((Customer) user).addOrder(order);
             }

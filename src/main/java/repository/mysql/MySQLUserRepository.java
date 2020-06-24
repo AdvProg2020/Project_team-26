@@ -1,6 +1,7 @@
 package repository.mysql;
 
 import model.*;
+import model.enums.Role;
 import repository.UserRepository;
 import repository.mysql.utils.EntityManagerProvider;
 

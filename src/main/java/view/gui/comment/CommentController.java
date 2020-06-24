@@ -12,13 +12,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import model.Comment;
 import model.Product;
-import model.Role;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 
 import java.io.IOException;
-import java.util.ConcurrentModificationException;
-import java.util.zip.CheckedOutputStream;
 
 public class CommentController {
     private ICommentController commentController;

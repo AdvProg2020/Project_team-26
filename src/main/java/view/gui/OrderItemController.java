@@ -4,8 +4,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
 import model.OrderItem;
-import model.ShipmentState;
-import model.Status;
+import model.enums.ShipmentState;
+import model.enums.Status;
 import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;

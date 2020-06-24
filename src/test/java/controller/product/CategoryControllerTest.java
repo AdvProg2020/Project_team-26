@@ -3,6 +3,7 @@ package controller.product;
 import controller.account.AuthenticationController;
 import exception.*;
 import model.*;
+import model.enums.FeatureType;
 import repository.CategoryRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;

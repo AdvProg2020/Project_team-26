@@ -5,7 +5,7 @@ import exception.*;
 import controller.interfaces.product.IProductController;
 import model.Category;
 import model.CategoryFeature;
-import model.FeatureType;
+import model.enums.FeatureType;
 import model.Product;
 import view.cli.ControllerContainer;
 import view.cli.View;

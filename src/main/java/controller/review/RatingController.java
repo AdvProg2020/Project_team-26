@@ -3,6 +3,7 @@ package controller.review;
 import controller.interfaces.review.IRatingController;
 import exception.*;
 import model.*;
+import model.enums.Role;
 import repository.ProductRepository;
 import repository.RateRepository;
 import repository.RepositoryContainer;

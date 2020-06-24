@@ -3,6 +3,7 @@ package controller.discount;
 import controller.interfaces.discount.IOffController;
 import exception.*;
 import model.*;
+import model.enums.Role;
 import repository.*;
 
 import java.util.List;

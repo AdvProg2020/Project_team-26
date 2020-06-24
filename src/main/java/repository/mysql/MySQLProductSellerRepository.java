@@ -1,21 +1,21 @@
 package repository.mysql;
 
 import model.*;
+import model.enums.RequestStatus;
+import model.enums.RequestType;
+import model.enums.Status;
 import repository.ProductSellerRepository;
 import repository.RequestRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 public class MySQLProductSellerRepository
         extends MySQLRepository<ProductSeller> implements ProductSellerRepository {

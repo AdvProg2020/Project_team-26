@@ -1,6 +1,6 @@
 package model;
 
-import org.hibernate.annotations.ColumnDefault;
+import model.enums.FeatureType;
 
 import javax.persistence.*;
 

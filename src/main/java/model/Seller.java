@@ -1,5 +1,6 @@
 package model;
 
+import model.enums.Role;
 import repository.Pageable;
 
 import javax.persistence.Entity;

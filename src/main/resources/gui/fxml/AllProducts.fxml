@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox spacing="15.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.product.AllProductsController">
+<HBox prefWidth="1500.0" spacing="15.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.product.AllProductsController">
    <children>
-      <VBox prefHeight="586.0" prefWidth="167.0" spacing="25.0">
+      <VBox minWidth="170.0" prefHeight="586.0" prefWidth="170.0" spacing="25.0">
          <children>
             <TextField fx:id="nameField" onAction="#reload" prefHeight="37.0" prefWidth="149.0" promptText="Name">
                <padding>
@@ -38,7 +38,7 @@
             <fx:include fx:id="categoryList" source="CategoryList.fxml" />
          </children>
       </VBox>
-      <ScrollPane fx:id="mainScrollPane" prefHeight="500.0" prefWidth="1200.0" />
+      <ScrollPane fx:id="mainScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="500.0" prefWidth="1500.0" />
    </children>
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />

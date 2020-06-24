@@ -1,9 +1,8 @@
 package controller;
 
-import antlr.ASdebug.ASDebugStream;
 import controller.account.AuthenticationController;
 import exception.*;
-import model.Role;
+import model.enums.Role;
 import model.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

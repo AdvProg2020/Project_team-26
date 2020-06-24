@@ -1,7 +1,7 @@
 package controller.account;
 
 import exception.*;
-import model.Role;
+import model.enums.Role;
 import model.Session;
 import repository.RepositoryContainer;
 import repository.UserRepository;

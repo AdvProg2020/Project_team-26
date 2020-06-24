@@ -1,21 +1,14 @@
 package view.cli.manager.request;
 
 import controller.interfaces.request.IRequestController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
-import model.*;
-import model.RequestType;
 import view.cli.ControllerContainer;
 import view.cli.View;
 import view.cli.ViewManager;
 import view.cli.filterAndSort.RequestSort;
-import view.cli.main.MainPageView;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
-import java.util.regex.Matcher;
 
 public class ManageRequestForManagerView extends View {
     private EnumSet<ManageRequestForManagerViewValidCommands> validCommands;

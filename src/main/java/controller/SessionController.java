@@ -3,7 +3,7 @@ package controller;
 import controller.interfaces.session.ISessionController;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
-import model.Role;
+import model.enums.Role;
 import model.Session;
 import model.User;
 import repository.RepositoryContainer;

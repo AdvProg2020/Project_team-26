@@ -3,6 +3,7 @@ package controller.discount;
 import controller.interfaces.discount.IPromoController;
 import exception.*;
 import model.*;
+import model.enums.Role;
 import repository.Pageable;
 import repository.PromoRepository;
 import repository.RepositoryContainer;

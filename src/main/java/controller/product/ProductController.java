@@ -3,6 +3,7 @@ package controller.product;
 import controller.interfaces.product.IProductController;
 import exception.*;
 import model.*;
+import model.enums.Role;
 import repository.*;
 
 import java.util.List;

@@ -12,7 +12,7 @@ import javafx.scene.control.DatePicker;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import model.Role;
+import model.enums.Role;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.admin.AdminRegistryController;
