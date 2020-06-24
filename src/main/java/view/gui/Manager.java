@@ -9,6 +9,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -201,10 +203,14 @@ public class Manager {
 
     public void showLoginMenu() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
+        VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
-        Stage windows = new Stage(loader.load());
+        controller.initialize(2);
+        Stage windows = new Stage();
+        windows.setScene(new Scene(vBox));
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
+        controller.redirectToLogin();
         windows.show();
     }
 
@@ -223,10 +229,12 @@ public class Manager {
 
     public void showErrorPopUp(String errorMessage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
+        BorderPane borderPane = new BorderPane((Node)loader.load());
+        Stage windows = new Stage();
+        windows.setScene(new Scene(borderPane));
         ErrorPageController controller = loader.getController();
         Button okButton = controller.getButton();
         controller.load(errorMessage);
-        Stage windows = new Stage(loader.load());
         okButton.setOnMouseClicked(e -> windows.close());
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);

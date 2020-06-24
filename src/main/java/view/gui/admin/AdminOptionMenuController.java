@@ -133,8 +133,12 @@ public class AdminOptionMenuController implements InitializableController {
         hbox.getChildren().addAll((Node) loader.load());
     }
 
-    private void handleUser() {
+    private void handleUser() throws NoAccessException, InvalidTokenException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ManagerUsers.fxml"));
-
+        ManageUsersController manageUsersController = loader.getController();
+        manageUsersController.initialize(2);
+        manageUsersController.load();
+        hbox.getChildren().removeAll();
+        hbox.getChildren().addAll((Node) loader.load());
     }
 }
