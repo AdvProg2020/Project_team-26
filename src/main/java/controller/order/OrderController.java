@@ -99,7 +99,15 @@ public class OrderController implements IOrderController {
 
     @Override
     public List<Order> getOrderHistoryForSeller(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
-        return null;
+        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null) {
+            throw new NotLoggedINException("You must be Logged in.");
+        } else if (user.getRole() != Role.SELLER) {
+            throw new NoAccessException("Only Seller");
+        } else {
+            return orderRepository.getAllSellerOrders(user.getId(),page);
+        }
     }
 
     private Order getSingleCustomerOrder(Customer customer, Order wantedOrder) throws NoAccessException {
