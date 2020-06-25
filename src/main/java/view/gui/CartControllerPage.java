@@ -63,7 +63,8 @@ public class CartControllerPage implements InitializableController {
     public void purchaseButtonClicked() throws IOException {
         try {
             cartController.setAddress(addressTextField.getText(), Constants.manager.getToken());
-            cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
+            if (!promoTextField.getText().isBlank() && !promoTextField.getText().equals(""))
+                cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
             cartController.checkout(Constants.manager.getToken());
             //todo load main page
         } catch (InvalidTokenException e) {

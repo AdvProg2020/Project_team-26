@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -33,6 +34,9 @@
             </TextField>
             <CheckBox fx:id="offCheckBox" mnemonicParsing="false" onAction="#reload" text="Show Offs" />
             <Label text="price" />
+            <VBox fx:id="price" prefHeight="200.0" prefWidth="170.0" />
+            <Label layoutX="10.0" layoutY="241.0" prefHeight="17.0" prefWidth="35.0" text="rate" />
+            <Slider fx:id="rate" max="5.0" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" />
             <ComboBox fx:id="sortDirectionComboBox" onAction="#reload" prefHeight="39.0" prefWidth="241.0" />
             <ComboBox fx:id="sortFieldComboBox" onAction="#reload" prefHeight="39.0" prefWidth="243.0" />
             <fx:include fx:id="categoryList" source="CategoryList.fxml" />
