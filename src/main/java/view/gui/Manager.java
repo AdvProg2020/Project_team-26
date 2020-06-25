@@ -23,6 +23,7 @@ import view.gui.admin.AdminRegistryController;
 import view.gui.authentication.AuthenticationStageManager;
 import view.gui.authentication.RegisterMenuController;
 import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -228,10 +229,11 @@ public class Manager {
         return date;
     }
 
-    public void showLoginMenu() throws IOException {
+    public void showLoginMenu(Reloadable reloadable) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
+        controller.setReloadable(reloadable);
         controller.initialize(2);
         popUp.setScene(new Scene(vBox));
         popUp.initModality(Modality.APPLICATION_MODAL);
@@ -240,10 +242,11 @@ public class Manager {
         popUp.show();
     }
 
-    public void showRegisterMenu() throws IOException {
+    public void showRegisterMenu(Reloadable reloadable) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
+        controller.setReloadable(reloadable);
         controller.initialize(2);
         popUp.setScene(new Scene(vBox));
         popUp.initModality(Modality.APPLICATION_MODAL);

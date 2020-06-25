@@ -91,6 +91,7 @@ public class RegisterMenuController implements InitializableController {
             Account account = createAccount();
             try {
                 controller.register(account, Constants.manager.getToken());
+                redirectToLogin();
             } catch (NoAccessException e) {
                 errorLabelRegister.setText(e.getMessage());
             } catch (InvalidFormatException e) {
@@ -101,6 +102,8 @@ public class RegisterMenuController implements InitializableController {
                 errorLabelRegister.setText(e.getMessage());
             } catch (AlreadyLoggedInException e) {
                 errorLabelRegister.setText(e.getMessage());
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -115,6 +118,7 @@ public class RegisterMenuController implements InitializableController {
             try {
                 controller.login(username, password, Constants.manager.getToken());
                 Constants.manager.setLoggedIn(true);
+                reloadable.reload();
                 Constants.manager.closePopUp();
                 return;
             } catch (InvalidTokenException e) {
@@ -127,6 +131,8 @@ public class RegisterMenuController implements InitializableController {
                 errorLabelLogin.setText(e.getMessage());
             } catch (PasswordIsWrongException e) {
                 errorLabelLogin.setText("Your password is Wrong.");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -172,6 +178,10 @@ public class RegisterMenuController implements InitializableController {
         return (usernameText.getText().isEmpty() || passwordText.getText().isBlank() || firstNameText.getText().isBlank()
                 || lastNameText.getText().isBlank() || confirmPasswordText.getText().isBlank() || emailText.getText().isBlank()
                 || textField.getText().isBlank());
+    }
+
+    public void setReloadable(Reloadable reloadable) {
+        this.reloadable = reloadable;
     }
 
     private boolean itIsntANumber() {
