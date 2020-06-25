@@ -145,6 +145,10 @@ public class User {
         return credit;
     }
 
+    public void setCredit(long credit) {
+        this.credit = credit;
+    }
+
     public void pay(long amount) throws NotEnoughCreditException {
         if (amount > credit) {
             throw new NotEnoughCreditException("You don't have enough creadit to pay " + amount, credit);
