@@ -59,7 +59,7 @@ public class PersonalInfoController implements InitializableController {
     @FXML
     private Button editButton;
     @FXML
-    private ScrollPane tableScrollPane;
+    private VBox tableScrollPane;
     @FXML
     private ScrollPane detailScrollPane;
     @FXML
@@ -228,19 +228,25 @@ public class PersonalInfoController implements InitializableController {
         shopTextField.setEditable(type);
     }
 
+    public void updateAllBoxWithSingleNode(Node node) {
+        detailVBox.getChildren().removeAll(detailVBox.getChildren());
+        detailVBox.getChildren().addAll(node);
+    }
+
+
     public void updateAllBox(List<Node> nodes) {
-        detailVBox.getChildren().removeAll();
+        detailVBox.getChildren().removeAll(detailVBox.getChildren());
         detailVBox.getChildren().addAll(nodes);
     }
 
     public void setTableScrollPane(TableView newTableView) {
-        tableScrollPane.getChildrenUnmodifiable().removeAll();
-        tableScrollPane.getChildrenUnmodifiable().add(newTableView);
+        tableScrollPane.getChildren().removeAll(tableScrollPane.getChildren());
+        tableScrollPane.getChildren().add(newTableView);
     }
 
     public void setNodeForTableScrollPane(Node node) {
-        tableScrollPane.getChildrenUnmodifiable().removeAll();
-        tableScrollPane.getChildrenUnmodifiable().add(node);
+        tableScrollPane.getChildren().removeAll(tableScrollPane.getChildren());
+        tableScrollPane.getChildren().add(node);
     }
 
     public void addSingleItemToBox(Node node) {
@@ -251,7 +257,7 @@ public class PersonalInfoController implements InitializableController {
         detailVBox.getChildren().removeAll();
     }
 
-    public ScrollPane getTableScrollPane() {
+    public VBox getTableScrollPane() {
         return tableScrollPane;
     }
 

@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Order;
 import model.OrderItem;
+import model.Promo;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
@@ -49,10 +50,16 @@ public class OrderTableController implements InitializableController {
     }
 
     private void loadColumn(ObservableList<OrderTableController.Orders> observableList) {
-        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        ObservableList<TableColumn> cols = tableView.getColumns();
+        cols.get(0).setCellValueFactory(new PropertyValueFactory<Promo, Date>("startDate"));
+        cols.get(1).setCellValueFactory(new PropertyValueFactory<Promo,Date>("endDate"));
+        cols.get(2).setCellValueFactory(new PropertyValueFactory<Promo,String>("promoCode"));
+        cols.get(3).setCellValueFactory(new PropertyValueFactory<Promo,Double>("percent"));
+        cols.get(4).setCellValueFactory(new PropertyValueFactory<Promo,Long>("maxDiscount"));
+       /* priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         addressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
         dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
-        paidAmount.setCellValueFactory(new PropertyValueFactory<>("paidPrice"));
+        paidAmount.setCellValueFactory(new PropertyValueFactory<>("paidPrice"));*/
         tableView.setItems(observableList);
         tableView.setEditable(false);
         tableView.setOnMouseClicked((e) -> {
@@ -99,12 +106,12 @@ public class OrderTableController implements InitializableController {
     }
 
     private class Orders {
-        private int id;
-        private String address;
-        private String name;
-        private Date date;
-        private Long price;
-        private Long paidPrice;
+        public int id;
+        public String address;
+        public String name;
+        public Date date;
+        public Long price;
+        public Long paidPrice;
 
         protected Orders(int id, String address, String buyersName, Date date, Long price, Long paidPrice) {
             this.id = id;
