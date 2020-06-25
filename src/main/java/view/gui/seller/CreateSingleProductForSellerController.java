@@ -80,11 +80,12 @@ public class CreateSingleProductForSellerController implements InitializableCont
         priceTextField.setText("");
         amountTextField.setText("");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
+        Node node = loader.load();
         this.categoryListController = (CategoryListController) loader.getController();
         categoryListController.initialize(1);
         categoryListController.setReloadable(this::reload);
-        categoryBox.getChildren().removeAll();
-        categoryBox.getChildren().addAll((Node) loader.load());
+        categoryBox.getChildren().removeAll(categoryBox.getChildren());
+        categoryBox.getChildren().addAll(node);
         imageChooserButton.setOnMouseClicked(e -> {
             setFile();
         });
@@ -116,12 +117,13 @@ public class CreateSingleProductForSellerController implements InitializableCont
         categoryBox.getChildren().removeAll();
         featuresBox.getChildren().removeAll();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
+        Node node = loader.load();
         this.categoryListController = (CategoryListController) loader.getController();
         categoryListController.initialize(category.getId());
         categoryListController.setReloadable(this::reload);
-        categoryBox.getChildren().removeAll();
-        categoryBox.getChildren().addAll((Collection<? extends Node>) loader.load());//todo check here
-        featuresBox.getChildren().removeAll();
+        categoryBox.getChildren().removeAll(categoryBox.getChildren());
+        categoryBox.getChildren().addAll(node);//todo check here
+        featuresBox.getChildren().removeAll(featuresBox.getChildren());
         category.getFeatures().forEach(i -> featureBoxList.add(new FeatureBox(i, i.getFeatureName(), i.getFeatureType())));
         featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
     }

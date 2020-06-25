@@ -56,6 +56,7 @@ public class SellerButtonsController implements InitializableController {
         User user = showUserController.getUserById(id, Constants.manager.getToken());
         this.seller = (Seller) user;
         this.userId = id;
+        load();
         createOff.setOnMouseClicked(e -> {
             try {
                 createOffHandle();
@@ -95,8 +96,8 @@ public class SellerButtonsController implements InitializableController {
 
     public void load() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
-        this.personalInfoController = (PersonalInfoController) loader.getController();
         Node node = loader.load();
+        this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
         personalInfoController.load(seller);
         box.getChildren().addAll(node);
@@ -124,8 +125,8 @@ public class SellerButtonsController implements InitializableController {
         OrderTableController orderTableController = (OrderTableController) loader.getController();
         orderTableController.initialize(userId);
         try {
-            orderTableController.load(orderController.getOrderHistoryForSeller("startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
-            personalInfoController.setNodeForTableScrollPane(loader.load());
+            orderTableController.load(orderController.getOrderHistoryForSeller(null, true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
+            personalInfoController.setNodeForTableScrollPane(node);
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
@@ -142,7 +143,7 @@ public class SellerButtonsController implements InitializableController {
         OffTableController offTableController = (OffTableController) loader.getController();
         offTableController.initialize(userId);
         try {
-            offTableController.load(offController.getAllOfForSellerWithFilter("startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
+            offTableController.load(offController.getAllOfForSellerWithFilter(null, true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
             personalInfoController.setNodeForTableScrollPane(node);
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
