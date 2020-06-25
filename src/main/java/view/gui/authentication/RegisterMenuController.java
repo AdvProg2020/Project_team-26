@@ -115,14 +115,15 @@ public class RegisterMenuController implements InitializableController {
             try {
                 controller.login(username, password, Constants.manager.getToken());
                 Constants.manager.setLoggedIn(true);
+                Constants.manager.closePopUp();
                 return;
             } catch (InvalidTokenException e) {
                 Constants.manager.setTokenFromController();
+                errorLabelLogin.setText(e.getMessage());
                 return;
             } catch (InvalidFormatException e) {
                 errorLabelLogin.setText(e.getMessage());
             } catch (InvalidAuthenticationException e) {
-                System.out.println("nigga");
                 errorLabelLogin.setText(e.getMessage());
             } catch (PasswordIsWrongException e) {
                 errorLabelLogin.setText("Your password is Wrong.");

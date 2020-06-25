@@ -44,6 +44,7 @@ public class Manager {
     private MainController controller;
     private AuthenticationStageManager authenticationStageManager;
     private List<Integer> compareList;
+    private Stage popUp = new Stage();
 
     public Manager() {
         pages = new ArrayList<>();
@@ -232,16 +233,22 @@ public class Manager {
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
         controller.initialize(2);
-        Stage windows = new Stage();
-        windows.setScene(new Scene(vBox));
-        windows.initModality(Modality.APPLICATION_MODAL);
-        windows.setResizable(false);
+        popUp.setScene(new Scene(vBox));
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.setResizable(false);
         controller.redirectToLogin();
-        windows.show();
+        popUp.show();
     }
 
-    public void showRegisterMenu() {
-        // TODO: load login/register stage with register open
+    public void showRegisterMenu() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
+        VBox vBox = new VBox((Node)loader.load());
+        RegisterMenuController controller = loader.getController();
+        controller.initialize(2);
+        popUp.setScene(new Scene(vBox));
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.setResizable(false);
+        popUp.show();
     }
 
     public void showAdminRegistryMenu() throws IOException {
@@ -265,6 +272,10 @@ public class Manager {
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
         windows.show();
+    }
+
+    public void closePopUp() {
+        popUp.close();
     }
 
     public void addToCompareList(int productId) {

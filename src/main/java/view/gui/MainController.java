@@ -67,7 +67,7 @@ public class MainController {
         Constants.manager.showLoginMenu();
     }
 
-    public void openRegister() {
+    public void openRegister() throws IOException {
         Constants.manager.showRegisterMenu();
     }
 
