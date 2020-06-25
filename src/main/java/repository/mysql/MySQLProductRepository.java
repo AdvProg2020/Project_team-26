@@ -54,9 +54,12 @@ public class MySQLProductRepository
         product.setStatus(Status.DEACTIVE);
         Request request = new Request(requestedBy, new Date(), RequestType.ADD, RequestStatus.PENDING);
 //        save(product);
-        if(product.getSellerList().size() > 0) {
+        if (product.getSellerList().size() > 0) {
             request.setProductSeller(product.getSellerList().get(0));
-            product.getSellerList().forEach(productSeller -> productSeller.setStatus(Status.DEACTIVE));
+            product.getSellerList().forEach(productSeller -> {
+                productSeller.setStatus(Status.DEACTIVE);
+                productSeller.setProduct(product);
+            });
         }
         request.setProduct(product);
         requestRepository.save(request);
@@ -66,28 +69,28 @@ public class MySQLProductRepository
     public void editRequest(Product product, User requestedBy) {
         Product oldProduct = getById(product.getId());
 
-        if(oldProduct.getName() != product.getName()) {
+        if (oldProduct.getName() != product.getName()) {
             Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProduct(oldProduct);
             request.setForEdit("name", product.getName());
             requestRepository.save(request);
         }
 
-        if(oldProduct.getBrand() != product.getBrand()) {
+        if (oldProduct.getBrand() != product.getBrand()) {
             Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProduct(oldProduct);
             request.setForEdit("brand", product.getBrand());
             requestRepository.save(request);
         }
 
-        if(oldProduct.getDescription() != product.getDescription()) {
+        if (oldProduct.getDescription() != product.getDescription()) {
             Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProduct(oldProduct);
             request.setForEdit("description", product.getDescription());
             requestRepository.save(request);
         }
 
-        if(!oldProduct.getCategory().equals(product.getCategory())) {
+        if (!oldProduct.getCategory().equals(product.getCategory())) {
             Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProduct(oldProduct);
             request.setForEdit("category", "" + product.getCategory());
@@ -192,10 +195,10 @@ public class MySQLProductRepository
 
     private Predicate filter(Map<String, String> filter, CriteriaBuilder cb, Root<Product> root) {
         Predicate predicate = cb.equal(root.get("status"), Status.ACTIVE);
-        if(filter == null) {
+        if (filter == null) {
             return predicate;
         }
-        for(String key : filter.keySet()) {
+        for (String key : filter.keySet()) {
             String value = filter.get(key);
             String[] split = value.split("-");
             switch (key) {
@@ -226,7 +229,7 @@ public class MySQLProductRepository
     private Predicate getCategoryPredicate(CriteriaBuilder cb, Root<Product> root, Category category) {
         Predicate predicate = cb.equal(root.get("category"), category.getId());
         for (Category subCategory : category.getSubCategory()) {
-            if(category.equals(subCategory))
+            if (category.equals(subCategory))
                 continue;
             predicate = cb.or(predicate, getCategoryPredicate(cb, root, subCategory));
         }
