@@ -7,7 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Box;
 import model.Product;
+import org.controlsfx.control.RangeSlider;
 import view.cli.ControllerContainer;
 import view.gui.CategoryListController;
 import view.gui.Constants;
@@ -39,6 +42,10 @@ public class AllProductsController implements InitializableController, Reloadabl
     private ScrollPane mainScrollPane;
     @FXML
     private CategoryListController categoryListController;
+    @FXML
+    private Slider rate;
+    @FXML
+    private VBox price;
 
     public void initialize(int id) throws IOException {
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().
@@ -50,6 +57,13 @@ public class AllProductsController implements InitializableController, Reloadabl
         categoryListController.setReloadable(this);
         categoryListController.initialize(1);
         reload();
+       /* RangeSlider slider = new RangeSlider(0, 100000, 0, 100000);
+        //Setting the slider properties
+        slider.setShowTickLabels(true);
+        slider.setShowTickMarks(true);
+        slider.setMajorTickUnit(0.5);
+        slider.setBlockIncrement(0.5);
+        price.getChildren().addAll(slider);*/
     }
 
     @Override
@@ -106,13 +120,14 @@ public class AllProductsController implements InitializableController, Reloadabl
         if (descriptionField.getText() != null && !descriptionField.getText().equals("")) {
             filter.put("description", descriptionField.getText());
         }
-        // TODO: add price to filter
-        // TODO: add rate to filter
+        if (rate.getValue() >= 0.5)
+            filter.put("rate", "" + rate.getValue());
+        // TODO: add price to filter*/
         return filter;
     }
 
     private String extractSortField() {
-        if(sortFieldComboBox.getValue() == null)
+        if (sortFieldComboBox.getValue() == null)
             return null;
         switch (sortFieldComboBox.getValue()) {
             case "Name":

@@ -6,10 +6,8 @@ import exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Admin;
 import model.User;
 import view.cli.ControllerContainer;
@@ -36,6 +34,12 @@ public class AdminMenuController implements InitializableController {
     private TableView<Admin> managerTable;
     @FXML
     private Button editInfoButton;
+    @FXML
+    private TextField roleText;
+    @FXML
+    private Label errorLabel;
+    @FXML
+    private TableColumn managerCol;
 
     private IShowUserController controller;
     private IUserInfoController userController;
@@ -45,6 +49,7 @@ public class AdminMenuController implements InitializableController {
     public void initialize(int id) throws IOException {
         controller = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         userController = (IUserInfoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.UserInfoController);
+        editInfoButton.setOnMouseClicked(e -> editInfo());
         ObservableList<Admin> list = FXCollections.observableList(controller.getManagers(id));
         try {
             User admin = controller.getUserById(id,Constants.manager.getToken());
@@ -52,6 +57,10 @@ public class AdminMenuController implements InitializableController {
             emailText.setText(admin.getEmail());
             firstNameText.setText(admin.getFirstName());
             lastNameText.setText(admin.getLastName());
+            roleText.setText("Admin");
+            managerTable.setItems(list);
+            managerCol.setCellValueFactory(new PropertyValueFactory<Admin,String>("username"));
+
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
@@ -63,18 +72,14 @@ public class AdminMenuController implements InitializableController {
 
     }
 
-    @FXML
     private void editInfo() {
-        usernameText.setEditable(true);
-        emailText.setEditable(true);
-        firstNameText.setEditable(true);
-        lastNameText.setEditable(true);
-        passwordText.setEditable(true);
+        emailText.setDisable(false);
+        firstNameText.setDisable(false);
+        lastNameText.setDisable(false);
         editInfoButton.setText("Update");
         editInfoButton.setOnMouseClicked(e -> updateInfo());
     }
 
-    @FXML
     private void updateInfo() {
         Map<String,String> newInfo = new HashMap<>();
         newInfo.put("FirstName",firstNameText.getText());
@@ -82,17 +87,27 @@ public class AdminMenuController implements InitializableController {
         newInfo.put("Email",emailText.getText());
         try {
             userController.changeInfo(newInfo,Constants.manager.getToken());
+            if(!passwordText.getText().isBlank())
             userController.changePassword(passwordText.getText(),Constants.manager.getToken());
+            revertBack();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (InvalidAuthenticationException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (InvalidFormatException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (NoSuchField noSuchField) {
-            noSuchField.printStackTrace();
+            errorLabel.setText(noSuchField.getMessage());
         }
+    }
+
+    private void revertBack() {
+        emailText.setDisable(true);
+        firstNameText.setDisable(true);
+        lastNameText.setDisable(true);
+        editInfoButton.setText("Edit Info");
+        editInfoButton.setOnMouseClicked(e -> editInfo());
     }
 }

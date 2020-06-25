@@ -4,18 +4,20 @@ import controller.interfaces.cart.ICartController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import model.*;
 import view.cli.*;
 import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 import view.gui.product.SingleProductOfCartController;
 
 import java.io.IOException;
 import java.util.*;
 
-public class CartControllerPage implements InitializableController {
+public class CartControllerPage implements InitializableController, Reloadable {
     private Cart cart;
     private ICartController cartController;
     @FXML
@@ -43,27 +45,40 @@ public class CartControllerPage implements InitializableController {
     }
 
     private void loadCart(Cart cart) throws IOException {
-        totalPriceText.setText("total price");//todo
-        //totalPriceLabel.textProperty().bind(cart.)//todo
+        try {
+            totalPriceText.setText("" + cartController.getTotalPrice(this.cart, Constants.manager.getToken()));
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();//TODO
+        }
+
         loadProducts(cart);
     }
 
     private void loadProducts(Cart cart) throws IOException {
-        cartProductsVBox.getChildren().removeAll();
+        cartProductsVBox.getChildren().removeAll(cartProductsVBox.getChildren());
         Map<ProductSeller, Integer> products = cart.getProduct();
-        for (Map.Entry<ProductSeller, Integer> entry : products.entrySet()) {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductOfCart.fxml"));
-            SingleProductOfCartController singleProductOfCartController = (SingleProductOfCartController) loader.getController();
-            singleProductOfCartController.load(entry.getKey(), entry.getValue());
-            cartProductsVBox.getChildren().add(loader.load());
-        }
+        products.forEach((key, value) -> {
+            if (value > 0) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductOfCart.fxml"));
+                try {
+                    Node node = loader.load();
+                    SingleProductOfCartController singleProductOfCartController = (SingleProductOfCartController) loader.getController();
+                    singleProductOfCartController.initialize(key.getId());
+                    singleProductOfCartController.load(key, value, this::reload);
+                    cartProductsVBox.getChildren().add(node);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     @FXML
     public void purchaseButtonClicked() throws IOException {
         try {
             cartController.setAddress(addressTextField.getText(), Constants.manager.getToken());
-            cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
+            if (!promoTextField.getText().isBlank() && !promoTextField.getText().equals(""))
+                cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
             cartController.checkout(Constants.manager.getToken());
             //todo load main page
         } catch (InvalidTokenException e) {
@@ -73,5 +88,11 @@ public class CartControllerPage implements InitializableController {
             Constants.manager.showErrorPopUp(e.getMessage());
         }
         //todo load the purchase page here
+    }
+
+    @Override
+    public void reload() throws IOException {
+        cartProductsVBox.getChildren().removeAll(cartProductsVBox.getChildren());
+        loadCart(this.cart);
     }
 }

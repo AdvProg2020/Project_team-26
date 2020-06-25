@@ -23,7 +23,7 @@ public class CartController implements ICartController {
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        orderRepository = (OrderRepository)repositoryContainer.getRepository("OrderRepository");
+        orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
     }
 
     @Override
@@ -166,8 +166,11 @@ public class CartController implements ICartController {
 
     public long getTotalPrice(Cart cart, String token) throws InvalidTokenException {
         long totalPrice = 0;
-        for (ProductSeller productSeller : cart.getProducts().keySet()) {
-            totalPrice += productSeller.getPrice();
+      /*  cart.getProducts().forEach((key, value) -> {
+            totalPrice += key.getPriceInOff() * value;
+        });*/
+        for (Map.Entry<ProductSeller, Integer> productSeller : cart.getProducts().entrySet()) {
+            totalPrice += productSeller.getKey().getPriceInOff() * productSeller.getValue();
         }
         return totalPrice;
     }

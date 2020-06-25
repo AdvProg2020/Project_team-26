@@ -93,6 +93,10 @@ public class SingleProductController implements InitializableController {
             invalidIdException.printStackTrace();
             Constants.manager.showErrorPopUp("There is no product with this id.");
             Constants.manager.back();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
         }
     }
 
@@ -104,11 +108,12 @@ public class SingleProductController implements InitializableController {
         featuresTable.setItems(FXCollections.observableList(features));
     }
 
-    private void loadSellers(Product product) throws IOException {
+    private void loadSellers(Product product) throws IOException, NoAccessException, InvalidTokenException {
         for (ProductSeller seller : product.getSellerList()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductSeller.fxml"));
             Parent sellerElement = loader.load();
             ProductSellerController productSellerController = loader.getController();
+            productSellerController.initialize(seller.getId());
             productSellerController.load(seller);
             mainBox.getChildren().add(sellerElement);
         }

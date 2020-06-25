@@ -17,14 +17,16 @@ public class Cart {
 
     public boolean addItems(ProductSeller productSeller, int amount) {
         // TODO: when amount becomes 0 remove product from map
-        if(products.containsKey(productSeller)) {
-            int newAmount = products.get(productSeller) + amount;
-            if(newAmount <= productSeller.getRemainingItems() && newAmount >= 0) {
-                products.replace(productSeller, newAmount);
+        if (products.containsKey(productSeller)) {
+            if (amount <= productSeller.getRemainingItems() && amount >= 0) {
+                if (amount == 0) {
+                    products.remove(productSeller);
+                }
+                products.replace(productSeller, amount);
                 return true;
             }
         } else {
-            if(amount <= productSeller.getRemainingItems() && amount > 0) {
+            if (amount <= productSeller.getRemainingItems() && amount > 0) {
                 products.put(productSeller, amount);
                 return true;
             }
@@ -43,11 +45,13 @@ public class Cart {
     public Map<ProductSeller, Integer> getProducts() {
         return products;
     }
+
     public Map<ProductSeller, Integer> getProduct() {
         //todo
         return products;
     }
-    public long getTotalPrice(){
+
+    public long getTotalPrice() {
         //todo
         return 0;
     }

@@ -34,9 +34,8 @@
                      <content>
                         <TableView fx:id="requestTable" prefHeight="625.0" prefWidth="693.0">
                           <columns>
-                            <TableColumn prefWidth="214.0" text="Id" />
-                            <TableColumn prefWidth="224.0" text="Requested By" />
-                              <TableColumn prefWidth="254.0" text="Type" />
+                            <TableColumn prefWidth="369.0" text="Id" />
+                              <TableColumn prefWidth="317.0" text="Type" />
                           </columns>
                         </TableView>
                      </content>
@@ -45,7 +44,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="acceptButton" mnemonicParsing="false" onMouseClicked="#acceptRequest" text="Accept">
+                  <Button fx:id="acceptButton" mnemonicParsing="false" text="Accept">
                      <HBox.margin>
                         <Insets bottom="30.0" left="250.0" right="30.0" top="30.0" />
                      </HBox.margin>

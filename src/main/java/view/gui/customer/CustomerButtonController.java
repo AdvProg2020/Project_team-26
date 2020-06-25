@@ -42,6 +42,7 @@ public class CustomerButtonController implements InitializableController {
         User user = showUserController.getUserById(id, Constants.manager.getToken());
         this.customer = (Customer) user;
         this.userId = id;
+        load();
         orders.setOnMouseClicked(e -> {
             try {
                 orderHandle();
@@ -67,7 +68,7 @@ public class CustomerButtonController implements InitializableController {
             personalInfoController.setNodeForTableScrollPane(loader.load());
         } catch (InvalidTokenException ex) {
             Constants.manager.showErrorPopUp(ex.getMessage());
-           Constants.manager.setTokenFromController();
+            Constants.manager.setTokenFromController();
         } catch (NoAccessException ex) {
             Constants.manager.showErrorPopUp(ex.getMessage());
         } catch (NotLoggedINException e) {
@@ -94,9 +95,10 @@ public class CustomerButtonController implements InitializableController {
 
     public void load() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
+        Node node = loader.load();
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
         personalInfoController.load(customer);
-        box.getChildren().addAll((Node) loader.load());
+        box.getChildren().addAll(node);
     }
 }

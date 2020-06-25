@@ -43,6 +43,7 @@ public class SingleProductOfCartController implements InitializableController {
     private Button editButtonClick;
     @FXML
     private Label amountLabel;
+    private Reloadable reloadable;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -50,20 +51,22 @@ public class SingleProductOfCartController implements InitializableController {
         this.cartId = id;
     }
 
-    public void load(ProductSeller productSeller, int amount) {
+    public void load(ProductSeller productSeller, int amount, Reloadable reloadable) {
+        this.reloadable = reloadable;
         //todo add cart
         this.productSeller = productSeller;
         this.amount = amount;
-        productImage.setImage(new Image(new ByteArrayInputStream(productSeller.getProduct().getImage())));
+        if (productSeller.getProduct().getImage() != null)
+            productImage.setImage(new Image(new ByteArrayInputStream(productSeller.getProduct().getImage())));
         priceText.setText("" + productSeller.getPrice());
-        priceOffText.setText("" + productSeller.getPriceInOff());
-        totalPrice.setText("" + amount * (productSeller.getPriceInOff() == productSeller.getPrice() ? productSeller.getPrice() : productSeller.getPriceInOff()));
+        priceOffText.setText(productSeller.getSeller().getFullName());//TODO
+        totalPrice.setText("" + (amount * (productSeller.getPriceInOff() == productSeller.getPrice() ? productSeller.getPrice() : productSeller.getPriceInOff())));
         amountTextField.setText("" + amount);
         amountTextField.setEditable(false);
     }
 
     public void updateButtonClicked() throws IOException {
-        if (editButtonClick.getText().equals("Edit")) {
+        if (editButtonClick.getText().equals("edit")) {
             amountTextField.setEditable(true);
             editButtonClick.setText("Update");
         } else {
@@ -71,7 +74,8 @@ public class SingleProductOfCartController implements InitializableController {
                 try {
                     cartController.addOrChangeProduct(productSeller.getId(), Integer.parseInt(amountTextField.getText()), Constants.manager.getToken());
                     amountTextField.setEditable(false);
-                    editButtonClick.setText("Edit");
+                    editButtonClick.setText("edit");
+                    reloadable.reload();
                 } catch (InvalidIdException | NotEnoughProductsException e) {
                     Constants.manager.showErrorPopUp(e.getMessage());
                 } catch (InvalidTokenException e) {
