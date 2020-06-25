@@ -18,11 +18,12 @@ import model.Request;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.*;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerRequestController implements InitializableController{
+public class ManagerRequestController implements InitializableController {
 
 
     @FXML
@@ -37,23 +38,69 @@ public class ManagerRequestController implements InitializableController{
     private List<Request> allRequests = new ArrayList<>();
     private IRequestController requestController;
 
-    @FXML
-    private void acceptRequest() {
 
+    private void acceptRequest() throws InvalidTokenException, NoAccessException, NotLoggedINException {
+        Request request = (Request) requestTable.getSelectionModel().getSelectedItem();
+        if (request != null) {
+            requestController.acceptOffRequest(request.getId(), Constants.manager.getToken());
+            refreshTable();
+        }
+
+    }
+
+    private void rejectRequest() throws InvalidTokenException, NoAccessException, NotLoggedINException {
+        Request request = (Request) requestTable.getSelectionModel().getSelectedItem();
+        if (request != null) {
+            requestController.rejectOffRequest(request.getId(), Constants.manager.getToken());
+            refreshTable();
+        }
     }
 
     public void load() throws InvalidTokenException, NoAccessException, NotLoggedINException {
         requestController = (IRequestController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.RequestController);
+        allRequests = requestController.getAllRequests(null, true, 0, 0, Constants.manager.getToken());
+        refreshTable();
+    }
+
+    private void refreshTable() throws InvalidTokenException, NoAccessException, NotLoggedINException {
         allRequests = requestController.getAllRequests(null,true,0,0,Constants.manager.getToken());
         requestTable.setItems(FXCollections.observableList(allRequests));
         ObservableList<TableColumn> cols = requestTable.getColumns();
-        cols.get(0).setCellValueFactory(new PropertyValueFactory<Request,Integer>("id"));
-        cols.get(1).setCellValueFactory(new PropertyValueFactory<Request,String>("username"));
-        cols.get(2).setCellValueFactory(new PropertyValueFactory<Request,String>("requestType"));
+        cols.get(0).setCellValueFactory(new PropertyValueFactory<Request, Integer>("id"));
+        cols.get(1).setCellValueFactory(new PropertyValueFactory<Request, String>("requestType"));
     }
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException {
+        requestTable.setOnMouseClicked(e -> showDescription());
+        acceptButton.setOnMouseClicked(e -> {
+            try {
+                acceptRequest();
+            } catch (InvalidTokenException invalidTokenException) {
+                invalidTokenException.printStackTrace();
+            } catch (NoAccessException noAccessException) {
+                noAccessException.printStackTrace();
+            } catch (NotLoggedINException notLoggedINException) {
+                notLoggedINException.printStackTrace();
+            }
+        });
 
+        rejectButton.setOnMouseClicked(e -> {
+            try {
+                rejectRequest();
+            } catch (InvalidTokenException invalidTokenException) {
+                invalidTokenException.printStackTrace();
+            } catch (NoAccessException noAccessException) {
+                noAccessException.printStackTrace();
+            } catch (NotLoggedINException notLoggedINException) {
+                notLoggedINException.printStackTrace();
+            }
+        });
+    }
+
+    private void showDescription() {
+        Request request = (Request) requestTable.getSelectionModel().getSelectedItem();
+        requestDescription.setText(request.getFieldName() + "\n" + request.getRequestTime() + "\n" + request.getRequestedBy()
+                .getUsername());
     }
 }
