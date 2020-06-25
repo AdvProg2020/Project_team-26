@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -61,10 +62,11 @@ public class ProductTableForSellerController implements InitializableController 
             product = productController.getProductById(productForTable.getId(), Constants.manager.getToken());
             ProductSeller productSeller = productController.getProductSellerByIdAndSellerId(product.getId(), Constants.manager.getToken());
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SingleProductForSellerPage.fxml"));
+            Node node = loader.load();
             SingleProductForSellerPageController singleProductForSellerPageController = (SingleProductForSellerPageController) loader.getController();
             singleProductForSellerPageController.initialize(productSeller.getId());
             singleProductForSellerPageController.load(product, productSeller);
-            personalInfoController.updateAllBox(loader.load());
+            personalInfoController.updateAllBoxWithSingleNode(node);
         } catch (InvalidIdException | NoObjectIdException | NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
@@ -79,13 +81,14 @@ public class ProductTableForSellerController implements InitializableController 
         this.personalInfoController = personalInfoController;
         productList.forEach(i -> productForTables.add(new ProductForTable(i.getId(), i.getCategory().getId(), i.getName()
                 , i.getCategory().getName(), i.getMinimumPrice(), i.getBrand())));
-        tableView.getItems().removeAll();
+        tableView.getItems().removeAll(tableView.getItems());
         tableView.setItems(FXCollections.observableList(productForTables));
         tableView.setEditable(false);
         tableView.setOnMouseClicked(e -> {
             ObservableList<ProductForTable> productForTableObservableList = tableView.getSelectionModel().getSelectedItems();
             try {
-                loadSingleProduct(productForTableObservableList.get(productForTableObservableList.size() - 1));
+                if (tableView.getSelectionModel().getSelectedItems() != null)
+                    loadSingleProduct(productForTableObservableList.get(productForTableObservableList.size() - 1));
             } catch (IOException ex) {
                 //TODO end program
             }
@@ -108,7 +111,7 @@ public class ProductTableForSellerController implements InitializableController 
         }
     }
 
-    private class ProductForTable {
+    public class ProductForTable {
         private int id;
         private int categoryId;
         private String name;

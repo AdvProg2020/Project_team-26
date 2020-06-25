@@ -81,9 +81,12 @@ public class SingleProductForSellerPageController implements InitializableContro
     public void load(Product product, ProductSeller productSeller) throws IOException {
         this.productSeller = productSeller;
         this.product = product;
+        nameTextField.setText(product.getName());
+        brandTextField.setText(product.getBrand());
+        descriptionTextArea.setText(product.getDescription());
         productImage.setImage(new Image(new ByteArrayInputStream(product.getImage())));
         categoryText.setText(product.getCategory().getName());
-        productRateSlider.setValue(product.getAverageRate());
+        productRateSlider.setValue(product.getAverageRate() == null ? 0.0 : product.getAverageRate());
         productRateSlider.setValueChanging(false);
         setBuyersTableView();
         setFeaturesTable(product);
@@ -211,7 +214,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         productImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
     }
 
-    private class Buyers {
+    public class Buyers {
         int id;
         String userName;
         String name;
@@ -227,7 +230,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         }
     }
 
-    private class Feature {
+    public class Feature {
         private String name;
         private String featureType;
         private String description;
