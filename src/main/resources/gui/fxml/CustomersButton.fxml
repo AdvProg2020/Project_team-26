@@ -17,6 +17,7 @@
               </ImageView>
               <Button fx:id="orders" mnemonicParsing="false" onAction="#orderHandle" prefHeight="45.0" prefWidth="96.0" text="Orders" />
               <Button fx:id="promo" mnemonicParsing="false" onAction="#promoHandle" prefHeight="45.0" prefWidth="95.0" text="Promo" />
+            <Button mnemonicParsing="false" onAction="#cart" prefHeight="51.0" prefWidth="103.0" text="Cart" />
           </children>
       </VBox>
    </children>

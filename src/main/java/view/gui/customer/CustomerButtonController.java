@@ -47,7 +47,7 @@ public class CustomerButtonController implements InitializableController {
     }
 
     @FXML
-    private void orderHandle() throws IOException {
+    public void orderHandle() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/TableOfOrders.fxml"));
             Node node = loader.load();
@@ -66,7 +66,13 @@ public class CustomerButtonController implements InitializableController {
     }
 
     @FXML
-    private void promoHandle() throws IOException {
+    public void cart() throws IOException {
+        Constants.manager.openCart();
+    }
+
+
+    @FXML
+    public void promoHandle() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/promoCodesForCustomer.fxml"));
             Node node = loader.load();

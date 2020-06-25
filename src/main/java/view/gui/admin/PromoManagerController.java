@@ -83,7 +83,7 @@ public class PromoManagerController implements InitializableController {
 
 
     private void updateExistingPromo() {
-       //update nakonid felan.
+       //update nakonid felan.TODO
     }
 
     private void addAUser() {

@@ -40,8 +40,6 @@ public class CartControllerPage implements InitializableController, Reloadable {
         cart = cartController.getCart(Constants.manager.getToken());
         totalPriceText.setText("total price");//todo
         loadCart(cart);
-           /* totalPriceLabel.textProperty().bind(
-            }cartController.getTotalPrice(cart, Constants.manager.getToken()))//todo*/
     }
 
     private void loadCart(Cart cart) throws IOException {
@@ -80,14 +78,13 @@ public class CartControllerPage implements InitializableController, Reloadable {
             if (!promoTextField.getText().isBlank() && !promoTextField.getText().equals(""))
                 cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
             cartController.checkout(Constants.manager.getToken());
-            //todo load main page
+            Constants.manager.openPage("AllProducts", 0);
         } catch (InvalidTokenException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.showLoginMenu();
         } catch (InvalidPromoCodeException | NoAccessException | PromoNotAvailableException | NotLoggedINException | NotEnoughCreditException | NotEnoughProductsException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         }
-        //todo load the purchase page here
     }
 
     @Override

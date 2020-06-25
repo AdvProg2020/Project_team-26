@@ -80,8 +80,8 @@ public class OrderTableController implements InitializableController {
 
     private void loadFxmlOfSingleOrder(OrderItem item) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OrderItem.fxml"));
-        OrderItemController orderItemController = (OrderItemController) loader.getController();
         Node node = loader.load();
+        OrderItemController orderItemController = (OrderItemController) loader.getController();
         orderItemController.initialize(item.getId());
         orderItemController.load(item);
         personalInfoController.addSingleItemToBox(node);
