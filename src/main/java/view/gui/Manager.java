@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class Manager {
+public class Manager implements Reloadable {
 
     private ControllerContainer controllerContainer;
     private String token;
@@ -235,7 +235,7 @@ public class Manager {
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
         controller.initialize(2);
-        controller.setReloadable(() -> pouyaMethod());
+        controller.setReloadable(this);
         popUp.setScene(new Scene(vBox));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
@@ -249,7 +249,7 @@ public class Manager {
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
         controller.initialize(2);
-        controller.setReloadable(() -> pouyaMethod());
+        controller.setReloadable(this);
         popUp.setScene(new Scene(vBox));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
@@ -287,8 +287,15 @@ public class Manager {
         compareList.add(productId);
     }
 
-    public void pouyaMethod() {
-        //todo
+    @Override
+    public void reload() {
+        reloadTop();
+        Pair<String, Integer> page = pages.remove(pages.size() - 1);
+        try {
+            openPage(page.getKey(), page.getValue());
+        } catch (IOException ioException) {
+            ioException.printStackTrace();
+        }
     }
 
 
