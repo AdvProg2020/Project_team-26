@@ -78,6 +78,14 @@ public class Manager implements Reloadable {
         }
     }
 
+    public List<Pair<String, Integer>> getPages() {
+        return pages;
+    }
+
+    public List<Integer> getCompareList() {
+        return compareList;
+    }
+
     private void showNode(Node node) {
         controller.setCenter(node);
     }
@@ -173,7 +181,7 @@ public class Manager implements Reloadable {
         this.token = ((SessionController)controllerContainer.getController(ControllerContainer.Controller.SessionController)).createToken();
     }
 
-    public void showCompareStage() throws IOException {
+    public void showComparePage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ComparePane.fxml"));
         BorderPane borderPane = new BorderPane((Node)loader.load());
         Stage windows = new Stage();

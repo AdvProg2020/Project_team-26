@@ -7,6 +7,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.enums.Role;
+import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 
 import java.io.IOException;
 
@@ -30,6 +31,10 @@ public class MainController {
     private Button accountButton;
     @FXML
     private Button logoutButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button compareButton;
 
     public void setLeft(Node node) {
         mainPane.setLeft(node);
@@ -53,10 +58,28 @@ public class MainController {
             topBox.getChildren().addAll(loginButton, registerButton);
             cartButton.setVisible(true);
         }
+        if(Constants.manager.getPages().size() > 1) {
+            backButton.setDisable(false);
+        } else {
+            backButton.setDisable(true);
+        }
+        if(Constants.manager.getCompareList().size() >= 1) {
+            compareButton.setVisible(true);
+        } else {
+            compareButton.setVisible(false);
+        }
+    }
+
+    public void back() throws IOException {
+        Constants.manager.back();
     }
 
     public void openHome() throws IOException {
         Constants.manager.openPage("AllProducts", 0);
+    }
+
+    public void openCompare() throws IOException {
+        Constants.manager.showComparePage();
     }
 
     public void openCart() throws IOException {
