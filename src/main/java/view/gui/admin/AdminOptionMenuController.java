@@ -90,7 +90,11 @@ public class AdminOptionMenuController implements InitializableController {
         });
 
         newManagerButton.setOnMouseClicked(e -> {
-            newManagerRegistry();
+            try {
+                newManagerRegistry();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
         });
 
         usersButton.setOnMouseClicked(e -> {
@@ -107,8 +111,9 @@ public class AdminOptionMenuController implements InitializableController {
         handlePersonalPage();
     }
 
-    private void newManagerRegistry() {
-
+    private void newManagerRegistry() throws IOException {
+        System.out.println("nigga");
+        Constants.manager.showAdminRegistryMenu();
     }
 
     private void handleRequest() throws NoAccessException, InvalidTokenException, IOException, NotLoggedINException {
