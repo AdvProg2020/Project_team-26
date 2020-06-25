@@ -48,15 +48,15 @@ public class AdminRegistryController implements InitializableController {
             try {
                 controller.register(account,Constants.manager.getToken());
             } catch (NoAccessException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidFormatException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidAuthenticationException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (AlreadyLoggedInException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             }
         }
     }
@@ -76,6 +76,6 @@ public class AdminRegistryController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
-
+        submitButton.setOnMouseClicked(e -> register());
     }
 }
