@@ -43,7 +43,7 @@ public class Product {
     @Column(name = "image", columnDefinition = "mediumblob")
     private byte[] image;
 
-    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "product")
     private List<ProductSeller> sellerList;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)

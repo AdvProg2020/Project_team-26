@@ -31,11 +31,11 @@ public class Request {
     @Column(name = "request_status")
     private RequestStatus requestStatus;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_seller_id")
     private ProductSeller productSeller;
 
