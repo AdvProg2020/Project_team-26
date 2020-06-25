@@ -56,6 +56,10 @@ public class AdminOptionMenuController implements InitializableController {
                 handleCategory();
             } catch (IOException | InvalidIdException ioException) {
                 ioException.printStackTrace();
+            } catch (InvalidTokenException invalidTokenException) {
+                invalidTokenException.printStackTrace();
+            } catch (NoAccessException noAccessException) {
+                noAccessException.printStackTrace();
             }
         });
         promoButton.setOnMouseClicked(e -> {
@@ -136,12 +140,11 @@ public class AdminOptionMenuController implements InitializableController {
         hbox.getChildren().addAll(node);
     }
 
-    private void handleCategory() throws IOException, InvalidIdException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
+    private void handleCategory() throws IOException, InvalidIdException, NoAccessException, InvalidTokenException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryAdminOption.fxml"));
         Node node = loader.load();
-        CategoryListController categoryListController = (CategoryListController) loader.getController();
-        categoryListController.initialize(1);
-        categoryListController.load(categoryController.getCategory(1, Constants.manager.getToken()));
+        CategoryOptionController categoryOptionController = loader.getController();
+        categoryOptionController.initialize(1);
         hbox.getChildren().removeAll(hbox.getChildren());
         hbox.getChildren().addAll(node);
     }
