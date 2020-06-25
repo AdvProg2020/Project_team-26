@@ -2,6 +2,7 @@ package view.gui.product;
 
 import controller.interfaces.category.ICategoryController;
 import exception.InvalidIdException;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,6 +19,7 @@ import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,26 +70,36 @@ public class AllProductsController implements InitializableController, Reloadabl
 
     @Override
     public void reload() {
-        boolean isAscending = true;
-        if (sortDirectionComboBox.getValue().equals("Descending")) {
-            isAscending = false;
-        }
-        int categoryId = categoryListController.getCategory().getId();
-        try {
-            List<Product> products;
-            if (offCheckBox.isSelected()) {
-                products = categoryController.getAllProductsInOff(extractFilter(),
-                        extractSortField(), isAscending, 0, 0, categoryId, Constants.manager.getToken());
-            } else {
-                products = categoryController.getAllProducts(extractFilter(),
-                        extractSortField(), isAscending, 0, 0, categoryId, Constants.manager.getToken());
+        Task<List<Product>> task = new Task<>() {
+            @Override
+            protected List<Product> call() throws Exception {
+                boolean isAscending = true;
+                if (sortDirectionComboBox.getValue().equals("Descending")) {
+                    isAscending = false;
+                }
+                int categoryId = categoryListController.getCategory().getId();
+                try {
+                    if (offCheckBox.isSelected()) {
+                        return categoryController.getAllProductsInOff(extractFilter(),
+                                extractSortField(), isAscending, 0, 0, categoryId, Constants.manager.getToken());
+                    } else {
+                        return categoryController.getAllProducts(extractFilter(),
+                                extractSortField(), isAscending, 0, 0, categoryId, Constants.manager.getToken());
+                    }
+                } catch (InvalidIdException invalidIdException) {
+                    invalidIdException.printStackTrace();
+                    return new ArrayList<>();
+                }
             }
-            updateGrid(products);
-        } catch (InvalidIdException invalidIdException) {
-            invalidIdException.printStackTrace();
-        } catch (IOException ioException) {
-            ioException.printStackTrace();
-        }
+        };
+        task.setOnSucceeded(workerStateEvent -> {
+            try {
+                updateGrid(task.getValue());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        new Thread(task).start();
     }
 
     private void updateGrid(List<Product> products) throws IOException {

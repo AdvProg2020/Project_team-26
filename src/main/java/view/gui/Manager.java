@@ -59,6 +59,7 @@ public class Manager implements Reloadable {
         InitializableController controller = loader.getController();
         try {
             controller.initialize(id);//TODO handle kon
+            reloadTop();
         } catch (InvalidTokenException e) {
             Constants.manager.setTokenFromController();
             Constants.manager.showErrorPopUp("Your token was invalid.");
