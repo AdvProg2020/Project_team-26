@@ -235,6 +235,7 @@ public class Manager {
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
         controller.initialize(2);
+        controller.setReloadable(() -> pouyaMethod());
         popUp.setScene(new Scene(vBox));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
@@ -248,6 +249,7 @@ public class Manager {
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
         controller.initialize(2);
+        controller.setReloadable(() -> pouyaMethod());
         popUp.setScene(new Scene(vBox));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
@@ -283,6 +285,10 @@ public class Manager {
 
     public void addToCompareList(int productId) {
         compareList.add(productId);
+    }
+
+    public void pouyaMethod() {
+        //todo
     }
 
 
