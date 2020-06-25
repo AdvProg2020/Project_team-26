@@ -46,7 +46,7 @@ public class MySQLOrderRepository
             CriteriaBuilder cb = em.getCriteriaBuilder();
             CriteriaQuery<Order> cq = cb.createQuery(Order.class);
             Root<Order> root = cq.from(Order.class);
-            Join<Order, OrderItem> orderOrderItemJoin = root.join("items", JoinType.RIGHT);
+            Join<Order, OrderItem> orderOrderItemJoin = root.join("items");
 
             cq.select(root).where(cb.equal(orderOrderItemJoin.get("seller"), sellerId));
             TypedQuery<Order> typedQuery = getPagedQuery(em, cb, cq, root, pageable);

@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -21,6 +22,7 @@ import view.gui.*;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -87,15 +89,21 @@ public class CreateSingleProductForSellerController implements InitializableCont
         categoryBox.getChildren().removeAll(categoryBox.getChildren());
         categoryBox.getChildren().addAll(node);
         imageChooserButton.setOnMouseClicked(e -> {
-            setFile();
+            try {
+                setFile();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
-    private void setFile() {
+    private void setFile() throws IOException {
         FileChooser fileChooser = new FileChooser();
         Stage stage = new Stage();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
         this.imageFile = fileChooser.showOpenDialog(stage);
+        if (imageFile != null)
+            productImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
 
     }
 
