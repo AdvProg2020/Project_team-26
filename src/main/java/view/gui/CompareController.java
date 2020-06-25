@@ -6,12 +6,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import model.Product;
+import view.cli.ControllerContainer;
 import view.gui.interfaces.InitializableController;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 public class CompareController implements InitializableController {
@@ -35,9 +38,12 @@ public class CompareController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException, InvalidIdException {
+        this.productId = id;
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         Product product = null;
         product = productController.getProductById(id, Constants.manager.getToken());
-        productImage.setImage(productImage.getImage());
+        if (product.getImage() != null)
+            productImage.setImage(new Image(new ByteArrayInputStream(product.getImage())));
         name.setText(product.getName());
         brand.setText(product.getBrand());
         description.setText(product.getDescription());
@@ -48,10 +54,10 @@ public class CompareController implements InitializableController {
         description.setEditable(false);
         rate.setEditable(false);
         price.setEditable(false);
-        product.getCategoryFeatures().entrySet().forEach(f -> {
+        product.getCategoryFeatures().forEach((k, v) -> {
             HBox hBox = new HBox();
-            Label label = new Label(f.getKey().getFeatureName());
-            TextField text = new TextField(f.getValue());
+            Label label = new Label(k.getFeatureName());
+            TextField text = new TextField(v);
             text.setEditable(false);
             hBox.getChildren().addAll(label, text);
             box.getChildren().add(hBox);

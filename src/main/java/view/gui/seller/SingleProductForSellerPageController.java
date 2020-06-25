@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SingleProductForSellerPageController implements InitializableController {
@@ -129,6 +130,8 @@ public class SingleProductForSellerPageController implements InitializableContro
             List<Buyers> buyersList = new ArrayList<>();
             users.forEach(i -> buyersList.add(new Buyers(i.getId(), i.getUsername(), i.getFullName() == null ? "" : i.getFullName())));
             ObservableList<Buyers> observableList = FXCollections.observableList(buyersList);
+           /* ObservableList<TableColumn> cols = buyersTableView.getColumns();
+            cols.get(0).setCellValueFactory(new PropertyValueFactory<User, String>("userName"));*/
             buyersTableViewColumns.setCellValueFactory(new PropertyValueFactory<>("userName"));
             buyersTableView.setItems(observableList);
         } catch (InvalidTokenException e) {

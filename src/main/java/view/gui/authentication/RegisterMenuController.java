@@ -80,15 +80,15 @@ public class RegisterMenuController implements InitializableController {
     }
 
     public void register() {
+        Account account = createAccount();
         controller = (AuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
         if (isAnyEmpty()) {
             errorLabelRegister.setText("Please fill all the boxes");
-        } else if (itIsntANumber()) {
+        } else if (itIsntANumber() &&  account.getRole() == Role.CUSTOMER) {
             errorLabelRegister.setText("Please Enter a Number for your credit");
         } else if (!passwordText.getText().equals(confirmPasswordText.getText())) {
             errorLabelRegister.setText("Your passwords don't match");
         } else {
-            Account account = createAccount();
             try {
                 controller.register(account, Constants.manager.getToken());
                 redirectToLogin();

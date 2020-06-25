@@ -83,7 +83,7 @@ public class PromoManagerController implements InitializableController {
 
 
     private void updateExistingPromo() {
-       //update nakonid felan.
+       //update nakonid felan.TODO
     }
 
     private void addAUser() {
@@ -96,21 +96,29 @@ public class PromoManagerController implements InitializableController {
             try {
                 controller.addCustomer(promo.getId(), showController.getUserByName(usernameText.getText(), Constants.manager.getToken()
                 ).getId(), Constants.manager.getToken());
+                updateUsernameTable(promo);
             } catch (NoAccessException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidIdException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (ObjectAlreadyExistException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (NotLoggedINException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (NotCustomerException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             }
         }
 
+    }
+
+    private void updateUsernameTable(Promo promo) {
+        ObservableList<Customer> customers = FXCollections.observableList(promo.getCustomers());
+        usernameTable.setItems(customers);
+        ObservableList<TableColumn> cols = usernameTable.getColumns();
+        cols.get(0).setCellValueFactory(new PropertyValueFactory<Customer, String>("username"));
     }
 
     private void refreshTable() throws NotLoggedINException, NoAccessException, InvalidTokenException {

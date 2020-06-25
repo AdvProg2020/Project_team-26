@@ -270,12 +270,16 @@ public class Manager implements Reloadable {
     }
 
     public void showAdminRegistryMenu() throws IOException {
+        popUp = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/AdminRegistryMenu.fxml"));
+        Node node = loader.load();
         AdminRegistryController controller = loader.getController();
-        Stage windows = new Stage(loader.load());
-        windows.initModality(Modality.APPLICATION_MODAL);
-        windows.setResizable(false);
-        windows.show();
+        controller.initialize(2);
+        popUp= new Stage();
+        popUp.setScene(new Scene((Parent) node));
+        popUp.initModality(Modality.APPLICATION_MODAL);
+        popUp.setResizable(false);
+        popUp.show();
     }
 
     public void showErrorPopUp(String errorMessage) throws IOException {
@@ -300,6 +304,11 @@ public class Manager implements Reloadable {
         compareList.add(productId);
     }
 
+    public void logout() throws IOException {
+        setLoggedIn(false);
+        reload();
+    }
+
     @Override
     public void reload() {
         reloadTop();
@@ -310,6 +319,7 @@ public class Manager implements Reloadable {
             ioException.printStackTrace();
         }
     }
+
 
 
 }
