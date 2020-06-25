@@ -23,6 +23,7 @@ import view.gui.customer.OrderTableController;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class SellerButtonsController implements InitializableController {
@@ -95,27 +96,31 @@ public class SellerButtonsController implements InitializableController {
     public void load() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
         this.personalInfoController = (PersonalInfoController) loader.getController();
+        Node node = loader.load();
         personalInfoController.initialize(userId);
         personalInfoController.load(seller);
-        box.getChildren().addAll((Node) loader.load());
+        box.getChildren().addAll(node);
     }
 
     private void createOffHandle() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CreateOffForSeller.fxml"));
+        Node node = loader.load();
         CreateOfForSellerController createOfForSellerController = (CreateOfForSellerController) loader.getController();
         createOfForSellerController.initialize(userId);
-        personalInfoController.updateAllBox(loader.load());
+        personalInfoController.updateAllBoxWithSingleNode(node);
     }
 
     private void createProductHandle() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CreateSingleProductForSeller.fxml"));
+        Node node = loader.load();
         CreateSingleProductForSellerController createSingleProductForSellerController = (CreateSingleProductForSellerController) loader.getController();
         createSingleProductForSellerController.initialize(userId);
-        personalInfoController.updateAllBox(loader.load());
+        personalInfoController.updateAllBoxWithSingleNode(node);
     }
 
     private void historyHandle() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/TableOfOrders.fxml"));
+        Node node = loader.load();
         OrderTableController orderTableController = (OrderTableController) loader.getController();
         orderTableController.initialize(userId);
         try {
@@ -133,11 +138,12 @@ public class SellerButtonsController implements InitializableController {
 
     private void manageOffHandle() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffTable.fxml"));
+        Node node = loader.load();
         OffTableController offTableController = (OffTableController) loader.getController();
         offTableController.initialize(userId);
         try {
             offTableController.load(offController.getAllOfForSellerWithFilter("startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
-            personalInfoController.setNodeForTableScrollPane(loader.load());
+            personalInfoController.setNodeForTableScrollPane(node);
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
@@ -150,11 +156,12 @@ public class SellerButtonsController implements InitializableController {
 
     private void manageProductHandle() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductTableForSeller.fxml"));
+        Node node = loader.load();
         ProductTableForSellerController productTableForSellerController = (ProductTableForSellerController) loader.getController();
         productTableForSellerController.initialize(userId);
         try {
             productTableForSellerController.load(productController.getAllProductWithFilterForSellerId((Map<String, String>) new HashMap<>().put("deafult", "sd")/*todo saljf*/, "startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
-            personalInfoController.setNodeForTableScrollPane(loader.load());
+            personalInfoController.setNodeForTableScrollPane(node);
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {

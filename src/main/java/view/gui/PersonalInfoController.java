@@ -262,7 +262,7 @@ public class PersonalInfoController implements InitializableController {
     }
 
     public void clearBox() {
-        detailVBox.getChildren().removeAll();
+        detailVBox.getChildren().removeAll(detailVBox.getChildren());
     }
 
     public VBox getTableScrollPane() {
