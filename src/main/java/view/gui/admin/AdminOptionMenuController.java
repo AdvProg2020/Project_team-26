@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import model.Admin;
 import view.cli.ControllerContainer;
@@ -36,6 +37,7 @@ public class AdminOptionMenuController implements InitializableController {
     private Button personalPage;
     @FXML
     private HBox hbox;
+
 
     private int userId;
     private Admin admin;

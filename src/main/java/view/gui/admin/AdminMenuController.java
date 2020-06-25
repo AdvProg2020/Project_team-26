@@ -6,10 +6,7 @@ import exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Admin;
 import model.User;
 import view.cli.ControllerContainer;
@@ -38,6 +35,8 @@ public class AdminMenuController implements InitializableController {
     private Button editInfoButton;
     @FXML
     private TextField roleText;
+    @FXML
+    private Label errorLabel;
 
     private IShowUserController controller;
     private IUserInfoController userController;
@@ -83,16 +82,25 @@ public class AdminMenuController implements InitializableController {
         try {
             userController.changeInfo(newInfo,Constants.manager.getToken());
             userController.changePassword(passwordText.getText(),Constants.manager.getToken());
+            revertBack();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (InvalidAuthenticationException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (InvalidFormatException e) {
-            e.printStackTrace();
+            errorLabel.setText(e.getMessage());
         } catch (NoSuchField noSuchField) {
-            noSuchField.printStackTrace();
+            errorLabel.setText(noSuchField.getMessage());
         }
+    }
+
+    private void revertBack() {
+        emailText.setDisable(true);
+        firstNameText.setDisable(true);
+        lastNameText.setDisable(true);
+        editInfoButton.setText("Edit Info");
+        editInfoButton.setOnMouseClicked(e -> editInfo());
     }
 }
