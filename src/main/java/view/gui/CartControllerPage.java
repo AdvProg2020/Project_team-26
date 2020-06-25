@@ -93,6 +93,6 @@ public class CartControllerPage implements InitializableController, Reloadable {
     @Override
     public void reload() throws IOException {
         cartProductsVBox.getChildren().removeAll(cartProductsVBox.getChildren());
-        loadProducts(this.cart);
+        loadCart(this.cart);
     }
 }
