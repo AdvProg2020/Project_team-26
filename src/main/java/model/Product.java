@@ -33,7 +33,7 @@ public class Product {
     private Double averageRate;
 
     @Column(name = "amount", table = "product_additional", insertable = false, updatable = false)
-    private int amountBought;
+    private Integer amountBought;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
