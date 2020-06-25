@@ -18,6 +18,7 @@ import model.enums.FeatureType;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
+import view.gui.interfaces.Reloadable;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SingleProductForSellerPageController implements InitializableController {
+public class SingleProductForSellerPageController implements InitializableController, Reloadable {
     private int productId;
     private Product product;
     private ProductSeller productSeller;
@@ -75,6 +76,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         productId = id;
+        productSellerInfoEditButton.setText("Edit seller");
 
     }
 
@@ -133,8 +135,6 @@ public class SingleProductForSellerPageController implements InitializableContro
             List<Buyers> buyersList = new ArrayList<>();
             users.forEach(i -> buyersList.add(new Buyers(i.getId(), i.getUsername(), i.getFullName() == null ? "" : i.getFullName())));
             ObservableList<Buyers> observableList = FXCollections.observableList(buyersList);
-           /* ObservableList<TableColumn> cols = buyersTableView.getColumns();
-            cols.get(0).setCellValueFactory(new PropertyValueFactory<User, String>("userName"));*/
             buyersTableViewColumns.setCellValueFactory(new PropertyValueFactory<>("userName"));
             buyersTableView.setItems(observableList);
         } catch (InvalidTokenException e) {
@@ -154,11 +154,12 @@ public class SingleProductForSellerPageController implements InitializableContro
             productSellerInfoEditButton.setText("Update seller");
         } else if (!priceTextField.getText().equals("") && !amountTextField.getText().equals("")
                 && Constants.manager.checkIsLong(priceTextField.getText()) && Constants.manager.checkInputIsInt(amountTextField.getText())) {
-            ProductSeller productSeller = this.productSeller.clone();
-            productSeller.setPrice(Long.parseLong(priceTextField.getText()));
-            productSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
+            ProductSeller newProductSeller = this.productSeller.clone();
+            newProductSeller.setId(this.productSeller.getId());
+            newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
+            newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
             try {
-                productController.editProductSeller(product.getId(), productSeller, Constants.manager.getToken());
+                productController.editProductSeller(product.getId(), newProductSeller, Constants.manager.getToken());
                 productSellerInfoEditButton.setText("Edit seller");
                 setEditableForProductSeller(false);
             } catch (InvalidIdException | NotSellerException | NoAccessException e) {
@@ -179,8 +180,8 @@ public class SingleProductForSellerPageController implements InitializableContro
             Product product = productSeller.getProduct().clone();
             product.setDescription(descriptionTextArea.getText());
             product.setBrand(brandTextField.getText());
-            product.setName(nameTextField.getText());
-            product.setImage(Files.readAllBytes(imageFile.toPath()));
+            if (imageFile != null)
+                product.setImage(Files.readAllBytes(imageFile.toPath()));
             setEditableForProduct(false);
             productInfoEditButton.setText("Edit product");
             try {
@@ -212,6 +213,11 @@ public class SingleProductForSellerPageController implements InitializableContro
             Constants.manager.showErrorPopUp("you should choose photo");
         }
         productImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
+    }
+
+    @Override
+    public void reload() throws IOException {
+
     }
 
     public class Buyers {

@@ -116,6 +116,7 @@ public class SellerButtonsController implements InitializableController {
         Node node = loader.load();
         CreateSingleProductForSellerController createSingleProductForSellerController = (CreateSingleProductForSellerController) loader.getController();
         createSingleProductForSellerController.initialize(userId);
+        createSingleProductForSellerController.setPersonalInfoController(this.personalInfoController);
         personalInfoController.updateAllBoxWithSingleNode(node);
     }
 
@@ -161,7 +162,7 @@ public class SellerButtonsController implements InitializableController {
         ProductTableForSellerController productTableForSellerController = (ProductTableForSellerController) loader.getController();
         productTableForSellerController.initialize(userId);
         try {
-            productTableForSellerController.load(productController.getAllProductWithFilterForSellerId((Map<String, String>) new HashMap<>().put("deafult", "sd")/*todo saljf*/, "startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
+            productTableForSellerController.load(productController.getAllProductWithFilterForSellerId((Map<String, String>) new HashMap<>().put(null, "sd")/*todo saljf*/, "startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
             personalInfoController.setNodeForTableScrollPane(node);
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());

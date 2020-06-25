@@ -82,20 +82,20 @@ public class ProductController implements IProductController {
 
     @Override
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token) {
-        Pageable page = createAPage(fieldName,isAscending,startIndex,endIndex);
+        Pageable page = createAPage(fieldName, isAscending, startIndex, endIndex);
         return productRepository.getAllSortedAndFiltered(filter, page);
     }
 
     @Override
     public List<Product> getAllProductWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, InvalidTokenException, NoAccessException {
-        Pageable page = createAPage(fieldName,isAscending,startIndex,endIndex);
+        Pageable page = createAPage(fieldName, isAscending, startIndex, endIndex);
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You must be logged in to view all of your products");
         } else if (user.getRole() != Role.SELLER) {
             throw new NoAccessException("Only a seller can view his/her products");
         } else {
-            return productRepository.getAllProductsWithFilterForSeller(filter,page, user.getId());
+            return productRepository.getAllProductsWithFilterForSeller(filter, page, user.getId());
         }
     }
 
@@ -132,7 +132,7 @@ public class ProductController implements IProductController {
     }
 
     @Override
-    public void editProductSeller(int id, ProductSeller newProductSeller,String token) throws InvalidIdException, InvalidTokenException, NotSellerException, NoAccessException {
+    public void editProductSeller(int id, ProductSeller newProductSeller, String token) throws InvalidIdException, InvalidTokenException, NotSellerException, NoAccessException {
         ProductSeller productSeller = productSellerRepository.getById(id);
         if (productSeller == null)
             throw new InvalidIdException("There is no productSeller with this id to change");
@@ -141,14 +141,15 @@ public class ProductController implements IProductController {
             throw new NotSellerException("You must be seller to edit productSeller");
         if (!productSeller.getSeller().equals(productSeller))
             throw new NoAccessException("You can only change your own products");
+        newProductSeller.setId(productSeller.getId());
         productSellerRepository.editRequest(newProductSeller);
     }
 
     private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if(isAscending) {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
+        if (isAscending) {
+            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.ASCENDING);
         } else {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
+            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.DESCENDING);
         }
     }
 }

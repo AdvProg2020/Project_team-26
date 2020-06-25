@@ -64,7 +64,7 @@ public class ProductSellerController implements InitializableController {
                 } catch (InvalidIdException | NotEnoughProductsException e) {
                     Constants.manager.showErrorPopUp(e.getMessage());
                 } catch (InvalidTokenException e) {
-                    e.printStackTrace();
+                    Constants.manager.showErrorPopUp(e.getMessage());
                 }
             }
         } else {

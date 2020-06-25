@@ -61,6 +61,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
     @FXML
     private Button imageChooserButton;
     private File imageFile;
+    private PersonalInfoController personalInfoController;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -95,6 +96,10 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 ex.printStackTrace();
             }
         });
+    }
+
+    public void setPersonalInfoController(PersonalInfoController personalInfoController) {
+        this.personalInfoController = personalInfoController;
     }
 
     private void setFile() throws IOException {
@@ -150,6 +155,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
             newProduct.getSellerList().add(newProductSeller);
             try {
                 productController.createProduct(newProduct, Constants.manager.getToken());
+
             } catch (ObjectAlreadyExistException e) {
                 try {
                     productController.addSeller(((Product) e.getObject()).getId(), newProductSeller, Constants.manager.getToken());

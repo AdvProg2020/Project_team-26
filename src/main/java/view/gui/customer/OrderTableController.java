@@ -52,29 +52,13 @@ public class OrderTableController implements InitializableController {
     private void loadDetailOfOrder(ObservableList<Order> observableList) {
         personalInfoController.clearBox();
         observableList.forEach(i -> {
-            try {
-                orderController.getASingleOrder(i.getId(), Constants.manager.getToken()).getItems().forEach(j -> {
-                    try {
-                        loadFxmlOfSingleOrder(j);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                });
-            } catch (NoAccessException | InvalidIdException | NoObjectIdException e) {
+            i.getItems().forEach(j -> {
                 try {
-                    Constants.manager.showErrorPopUp(e.getMessage());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
+                    loadFxmlOfSingleOrder(j);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (InvalidTokenException e) {
-                try {
-                    Constants.manager.showErrorPopUp(e.getMessage());
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-                Constants.manager.setTokenFromController();
-
-            }
+            });
         });
     }
 
