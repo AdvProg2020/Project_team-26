@@ -65,6 +65,10 @@ public class RegisterMenuController implements InitializableController {
     private IAuthenticationController controller;
     private Reloadable reloadable;
 
+    public RegisterMenuController() {
+        controller = (AuthenticationController) Constants.manager.getControllerContainer().
+                getController(ControllerContainer.Controller.AuthenticationController);
+    }
 
     public void completeTheMenu() {
         switch (roleChoice.getValue()) {
@@ -81,7 +85,6 @@ public class RegisterMenuController implements InitializableController {
 
     public void register() {
         Account account = createAccount();
-        controller = (AuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
         if (isAnyEmpty()) {
             errorLabelRegister.setText("Please fill all the boxes");
         } else if (itIsntANumber() &&  account.getRole() == Role.CUSTOMER) {

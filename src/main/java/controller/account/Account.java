@@ -10,8 +10,8 @@ public class Account {
     private String username;
     private String firstName;
     private String lastName;
-    private String token;
     private String id;
+    private long credit;
 
     public Account() {
         this.username = new String();
@@ -19,7 +19,6 @@ public class Account {
         email = new String();
         firstName = new String();
         lastName = new String();
-        token = new String();
     }
 
     public Account(String username, String password, Role role) {
@@ -35,6 +34,14 @@ public class Account {
         this.email = email;
     }
 
+    public Account(String username, String password, Role role, String email, long credit) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.email = email;
+        this.credit = credit;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -45,10 +52,6 @@ public class Account {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 
     public String setPassword(String password) {
@@ -101,12 +104,14 @@ public class Account {
             Customer customer = new Customer(username, password, email, role);
             customer.changeFirstName(firstName);
             customer.changeLastName(lastName);
+            customer.setCredit(credit);
             return customer;
         }
         else if (role == Role.SELLER) {
             Seller seller = new Seller(username, password, email, role);
             seller.changeFirstName(firstName);
             seller.changeLastName(lastName);
+            seller.setCredit(credit);
             return seller;
         } else {
             Admin admin = new Admin(username,password,email,role);
