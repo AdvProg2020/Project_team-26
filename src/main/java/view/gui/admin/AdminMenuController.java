@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import model.Admin;
 import model.User;
 import view.cli.ControllerContainer;
@@ -37,6 +38,8 @@ public class AdminMenuController implements InitializableController {
     private TextField roleText;
     @FXML
     private Label errorLabel;
+    @FXML
+    private TableColumn managerCol;
 
     private IShowUserController controller;
     private IUserInfoController userController;
@@ -55,6 +58,9 @@ public class AdminMenuController implements InitializableController {
             firstNameText.setText(admin.getFirstName());
             lastNameText.setText(admin.getLastName());
             roleText.setText("Admin");
+            managerTable.setItems(list);
+            managerCol.setCellValueFactory(new PropertyValueFactory<Admin,String>("username"));
+
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
@@ -81,6 +87,7 @@ public class AdminMenuController implements InitializableController {
         newInfo.put("Email",emailText.getText());
         try {
             userController.changeInfo(newInfo,Constants.manager.getToken());
+            if(!passwordText.getText().isBlank())
             userController.changePassword(passwordText.getText(),Constants.manager.getToken());
             revertBack();
         } catch (NotLoggedINException e) {

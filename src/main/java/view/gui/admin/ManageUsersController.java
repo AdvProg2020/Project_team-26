@@ -30,8 +30,6 @@ public class ManageUsersController implements InitializableController {
     @FXML
     private TextField emailText;
     @FXML
-    private TextField phoneNumberText;
-    @FXML
     private TableView<User> userTable;
     @FXML
     private TableColumn usernameCol;
@@ -60,7 +58,6 @@ public class ManageUsersController implements InitializableController {
         firstNameText.setText(user.getFirstName());
         lastNameText.setText(user.getLastName());
         emailText.setText(user.getEmail());
-        phoneNumberText.setText("Hamood");
     }
 
     public void load() {

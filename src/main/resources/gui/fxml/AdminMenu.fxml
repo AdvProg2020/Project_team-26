@@ -117,7 +117,7 @@
                      <children>
                         <TableView fx:id="managerTable" editable="true" prefHeight="309.0" prefWidth="817.0">
                           <columns>
-                            <TableColumn prefWidth="813.0" text="Other Managers" />
+                            <TableColumn fx:id="managerCol" prefWidth="813.0" text="Other Managers" />
                           </columns>
                         </TableView>
                      </children>
