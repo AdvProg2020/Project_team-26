@@ -56,6 +56,7 @@ public class Manager implements Reloadable {
         InitializableController controller = loader.getController();
         try {
             controller.initialize(id);//TODO handle kon
+            reloadTop();
         } catch (InvalidTokenException e) {
             Constants.manager.setTokenFromController();
             Constants.manager.showErrorPopUp("Your token was invalid.");
@@ -299,6 +300,11 @@ public class Manager implements Reloadable {
         compareList.add(productId);
     }
 
+    public void logout() throws IOException {
+        setLoggedIn(false);
+        reload();
+    }
+
     @Override
     public void reload() {
         reloadTop();
@@ -309,6 +315,7 @@ public class Manager implements Reloadable {
             ioException.printStackTrace();
         }
     }
+
 
 
 }

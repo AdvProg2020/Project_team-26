@@ -98,7 +98,7 @@ public class MainController {
         Constants.manager.openAccountPage();
     }
 
-    public void logout() {
-        // TODO: logout
+    public void logout() throws IOException {
+        Constants.manager.logout();
     }
 }

@@ -140,6 +140,7 @@ public class SingleProductController implements InitializableController {
 
     public void addToCompareList() {
         Constants.manager.addToCompareList(product.getId());
+        Constants.manager.reloadTop();
     }
 
     private class Features {
