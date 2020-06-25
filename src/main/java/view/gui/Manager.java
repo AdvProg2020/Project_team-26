@@ -131,8 +131,8 @@ public class Manager implements Reloadable {
     public boolean checkInputIsInt(String input) {
         try {
             if (0 > Integer.parseInt(input))
-                return true;
-            return false;
+                return false;
+            return true;
         } catch (NumberFormatException e) {
             return false;
         }

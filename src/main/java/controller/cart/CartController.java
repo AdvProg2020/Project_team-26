@@ -23,7 +23,7 @@ public class CartController implements ICartController {
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        orderRepository = (OrderRepository)repositoryContainer.getRepository("OrderRepository");
+        orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
     }
 
     @Override

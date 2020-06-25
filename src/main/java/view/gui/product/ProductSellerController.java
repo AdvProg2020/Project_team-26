@@ -40,14 +40,7 @@ public class ProductSellerController implements InitializableController {
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException {
         cartController = (ICartController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CartController);
         amount.setEditable(true);
-        addToCart.setOnMouseClicked(e -> {
-            try {
-                handleAdd();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-
+        addToCart.setText("add To Cart");
     }
 
     public void load(ProductSeller productSeller) {
@@ -59,7 +52,9 @@ public class ProductSellerController implements InitializableController {
         amount.setText("1");
     }
 
+    @FXML
     private void handleAdd() throws IOException {
+        System.out.println(amount.getText());
         if (Constants.manager.checkInputIsInt(amount.getText())) {
             if (addToCart.getText().equals("add To Cart")) {
                 try {

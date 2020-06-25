@@ -57,13 +57,13 @@ public class AllProductsController implements InitializableController, Reloadabl
         categoryListController.setReloadable(this);
         categoryListController.initialize(1);
         reload();
-        RangeSlider slider = new RangeSlider(0, 100000, 0, 100000);
+       /* RangeSlider slider = new RangeSlider(0, 100000, 0, 100000);
         //Setting the slider properties
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
         slider.setMajorTickUnit(0.5);
         slider.setBlockIncrement(0.5);
-        price.getChildren().addAll(slider);
+        price.getChildren().addAll(slider);*/
     }
 
     @Override
