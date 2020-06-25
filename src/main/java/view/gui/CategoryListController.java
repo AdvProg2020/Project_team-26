@@ -69,6 +69,8 @@ public class CategoryListController implements InitializableController {
         if (categoryList.getItems() != null) {
             Category selectedCategory = (Category) categoryList.getSelectionModel().getSelectedItem();
             try {
+                if(selectedCategory == null)
+                    return;
                 load(selectedCategory);
                 category = selectedCategory;
                 reloadable.reload();

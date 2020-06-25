@@ -59,6 +59,7 @@ public class MySQLProductRepository
             product.getSellerList().forEach(productSeller -> {
                 productSeller.setStatus(Status.DEACTIVE);
                 productSeller.setProduct(product);
+                productSeller.setSeller((Seller) requestedBy);
             });
         }
         request.setProduct(product);
