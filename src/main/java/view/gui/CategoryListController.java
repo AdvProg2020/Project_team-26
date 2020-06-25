@@ -11,6 +11,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import model.Category;
 import view.cli.ControllerContainer;
+import view.gui.admin.CategoryOptionController;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class CategoryListController implements InitializableController {
     ICategoryController categoryController;
     Reloadable reloadable;
+    CategoryOptionController categoryOptionController;
     private Category category;
     @FXML
     private Label currentCategory;
@@ -68,6 +70,7 @@ public class CategoryListController implements InitializableController {
     private void click() {
         if (categoryList.getItems() != null) {
             Category selectedCategory = (Category) categoryList.getSelectionModel().getSelectedItem();
+            categoryOptionController.setTable(selectedCategory);
             try {
                 if(selectedCategory == null)
                     return;
@@ -79,6 +82,10 @@ public class CategoryListController implements InitializableController {
             }
 
         }
+    }
+
+    public void setCategoryOptionController(CategoryOptionController categoryOptionController) {
+        this.categoryOptionController = categoryOptionController;
     }
 
     public Category getCategory() {
