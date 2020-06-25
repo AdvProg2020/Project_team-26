@@ -149,8 +149,8 @@ public class Manager implements Reloadable {
     public boolean checkIsLong(String input) {
         try {
             if (0 > Long.parseLong(input))
-                return true;
-            return false;
+                return false;
+            return true;
         } catch (NumberFormatException e) {
             return false;
         }

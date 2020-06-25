@@ -66,6 +66,7 @@ public class PersonalInfoController implements InitializableController {
     private VBox detailVBox;
     @FXML
     private Button changePasswordButton;
+    private Role thisUserRole;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -82,7 +83,11 @@ public class PersonalInfoController implements InitializableController {
         setEditable(false);
         changePasswordButton.setText("Change Password");
         editButton.setOnMouseClicked(e -> {
-            handleEditButton();
+            try {
+                handleEditButton();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         cancelButton.setOnMouseClicked(e -> {
                     handleCancelButton();
@@ -99,6 +104,7 @@ public class PersonalInfoController implements InitializableController {
 
     public void load(User user) {
         this.user = user;
+        thisUserRole = user.getRole();
         role.setText(Role.getRoleType(user.getRole()));
         usernameTextField.setText(user.getUsername());
         firstName.setText(user.getFirstName());
@@ -123,10 +129,6 @@ public class PersonalInfoController implements InitializableController {
             changePasswordButton.setText("Change");
         } else if (changePasswordButton.getText().matches("Change")) {
             newPassword = password.getText();
-            if (!oldPassword.matches(newPassword)) {
-                Constants.manager.showErrorPopUp("passwords dont match");
-                return;
-            }
             password.setText("");
             changePasswordButton.setText("Confirm");
         } else {
@@ -160,22 +162,28 @@ public class PersonalInfoController implements InitializableController {
         password.setText("");
     }
 
-    private void handleEditButton() {
+    private void handleEditButton() throws IOException {
         if (editButton.getText().equals("Edit")) {
             setEditable(true);
             editButton.setText("Submit");
             cancelButton.setVisible(true);
         } else {
             HashMap<String, String> changedInfo = new HashMap<>();
-            /* changedInfo.put("",)//todo*/
             if (isEveryThingOk()) {
+                changedInfo.put("Username", usernameTextField.getText());
+                changedInfo.put("FirstName", firstName.getText());
+                changedInfo.put("LastName", lastName.getText());
+                changedInfo.put("Email", email.getText());
+                if (thisUserRole == Role.SELLER)
+                    changedInfo.put("Company Name", usernameTextField.getText());
+                changedInfo.put("Balance", balance.getText());
                 try {
                     userInfoController.changeInfo(changedInfo, Constants.manager.getToken());
                     setEditable(false);
                     editButton.setText("Edit");
                     cancelButton.setVisible(false);
                 } catch (NotLoggedINException e) {
-                    e.printStackTrace();//wating for pooya respond //todo
+                    Constants.manager.showLoginMenu();
                 } catch (InvalidTokenException e) {
                     e.printStackTrace();
                 } catch (InvalidAuthenticationException e) {
@@ -212,7 +220,7 @@ public class PersonalInfoController implements InitializableController {
             //todo red the label
             result = false;
         }
-        if (balance.getText().isBlank() || !Constants.manager.checkIsLong(balance.getText())) {
+        if (!Constants.manager.checkIsLong(balance.getText())) {
             //todo red the label
             result = false;
         }
