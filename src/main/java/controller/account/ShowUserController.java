@@ -25,11 +25,7 @@ public class ShowUserController implements IShowUserController {
 
     public ArrayList<User> getUsers(String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
-        if (user == null || user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            return (ArrayList<User>) userRepository.getAll();
-        }
+        return (ArrayList<User>) userRepository.getAll();
     }
 
     public User getUserByName(String username, String token) throws NoAccessException, InvalidTokenException {
@@ -69,7 +65,7 @@ public class ShowUserController implements IShowUserController {
         if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
         } else
-            userRepository.delete(getUserByName(username,token));
+            userRepository.delete(getUserByName(username, token));
     }
 
     public User getUserByToken(String token) throws InvalidTokenException {
