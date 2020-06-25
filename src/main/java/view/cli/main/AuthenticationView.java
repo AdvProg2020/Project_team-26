@@ -126,7 +126,6 @@ public class AuthenticationView extends View {
         account.setLastName(manager.inputOutput.nextLine());
         manager.inputOutput.println("enter email");
         account.setEmail(manager.inputOutput.nextLine());
-        account.setToken(manager.getToken());
         return account;
     }
 

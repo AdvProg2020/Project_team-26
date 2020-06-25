@@ -5,6 +5,7 @@ import controller.interfaces.product.IProductController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -87,10 +88,11 @@ public class CreateOfForSellerController implements InitializableController, Rel
 
     private void updateVBox(OffItem item) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
+        Node node = loader.load();
         OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
         offItemPageController.load(item, off, true, this);
         offItemPageController.initialize(item.getId());
-        itemsVBox.getChildren().add(loader.load());
+        itemsVBox.getChildren().add(node);
     }
 
     @FXML
@@ -99,7 +101,6 @@ public class CreateOfForSellerController implements InitializableController, Rel
             this.off.setStartDate(Constants.manager.getDateFromDatePicker(startDate));
             this.off.setEndDate(Constants.manager.getDateFromDatePicker(endDate));
             offController.createNewOff(off, Constants.manager.getToken());
-
         } catch (NoAccessException | DateTimeException | IllegalArgumentException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {

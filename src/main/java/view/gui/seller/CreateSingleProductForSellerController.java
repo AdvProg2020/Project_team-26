@@ -155,10 +155,11 @@ public class CreateSingleProductForSellerController implements InitializableCont
             newProduct.getSellerList().add(newProductSeller);
             try {
                 productController.createProduct(newProduct, Constants.manager.getToken());
-
+                this.personalInfoController.clearBox();
             } catch (ObjectAlreadyExistException e) {
                 try {
                     productController.addSeller(((Product) e.getObject()).getId(), newProductSeller, Constants.manager.getToken());
+                    this.personalInfoController.clearBox();
                 } catch (NotSellerException | NoAccessException ex) {
                     Constants.manager.showErrorPopUp(e.getMessage());
                 } catch (InvalidTokenException ex) {
@@ -191,7 +192,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
         loadCategoryBoxes(categoryListController.getCategory());
     }
 
-    private class FeatureBox {
+    public class FeatureBox {
         private HBox container;
         private Label name;
         private TextField description;
