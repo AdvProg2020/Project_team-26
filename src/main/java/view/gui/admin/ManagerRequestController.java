@@ -49,7 +49,7 @@ public class ManagerRequestController implements InitializableController{
         ObservableList<TableColumn> cols = requestTable.getColumns();
         cols.get(0).setCellValueFactory(new PropertyValueFactory<Request,Integer>("id"));
         cols.get(1).setCellValueFactory(new PropertyValueFactory<Request,String>("username"));
-        cols.get(1).setCellValueFactory(new PropertyValueFactory<Request,String>("requestType"));
+        cols.get(2).setCellValueFactory(new PropertyValueFactory<Request,String>("requestType"));
     }
 
     @Override
