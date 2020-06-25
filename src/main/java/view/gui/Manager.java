@@ -45,7 +45,7 @@ public class Manager {
     private MainController controller;
     private AuthenticationStageManager authenticationStageManager;
     private List<Integer> compareList;
-    private Stage popUp = new Stage();
+    private Stage popUp;
 
     public Manager() {
         pages = new ArrayList<>();
@@ -230,6 +230,7 @@ public class Manager {
     }
 
     public void showLoginMenu() throws IOException {
+        popUp = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
@@ -242,6 +243,7 @@ public class Manager {
     }
 
     public void showRegisterMenu() throws IOException {
+        popUp = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
         VBox vBox = new VBox((Node)loader.load());
         RegisterMenuController controller = loader.getController();
