@@ -26,10 +26,7 @@ import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
-import java.time.DateTimeException;
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -150,8 +147,8 @@ public class Manager implements Reloadable {
     public boolean checkIsLong(String input) {
         try {
             if (0 > Long.parseLong(input))
-                return true;
-            return false;
+                return false;
+            return true;
         } catch (NumberFormatException e) {
             return false;
         }
@@ -236,6 +233,13 @@ public class Manager implements Reloadable {
         if (date.getTime() < 0)
             throw new IllegalArgumentException("pick closer");
         return date;
+    }
+
+    public LocalDate getLocalDateFromDate(Date date) throws DateTimeException, IllegalArgumentException {
+        Instant instant = Instant.ofEpochMilli(date.getTime());
+        LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
+        LocalDate localDate = localDateTime.toLocalDate();
+        return localDate;
     }
 
     public void showLoginMenu() throws IOException {

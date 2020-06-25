@@ -19,6 +19,7 @@ import view.gui.interfaces.InitializableController;
 import view.gui.PersonalInfoController;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class CustomerButtonController implements InitializableController {
     private int userId;
@@ -43,29 +44,17 @@ public class CustomerButtonController implements InitializableController {
         this.customer = (Customer) user;
         this.userId = id;
         load();
-        orders.setOnMouseClicked(e -> {
-            try {
-                orderHandle();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-        promo.setOnMouseClicked(e -> {
-            try {
-                promoHandle();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
     }
 
+    @FXML
     private void orderHandle() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/TableOfOrders.fxml"));
+            Node node = loader.load();
             OrderTableController orderTableControllerForCustomer = (OrderTableController) loader.getController();
             orderTableControllerForCustomer.initialize(userId);
             orderTableControllerForCustomer.load(orderController.getOrdersWithFilter("date", true, 0, 50, Constants.manager.getToken()), personalInfoController);
-            personalInfoController.setNodeForTableScrollPane(loader.load());
+            personalInfoController.setNodeForTableScrollPane(node);
         } catch (InvalidTokenException ex) {
             Constants.manager.showErrorPopUp(ex.getMessage());
             Constants.manager.setTokenFromController();
@@ -76,13 +65,15 @@ public class CustomerButtonController implements InitializableController {
         }
     }
 
+    @FXML
     private void promoHandle() throws IOException {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/promoCodesForCustomer.fxml"));
+            Node node = loader.load();
             PromoCodesForCustomer promoCodesForCustomer = (PromoCodesForCustomer) loader.getController();
             promoCodesForCustomer.initialize(userId);
             promoCodesForCustomer.load(promoController.getAllPromoCodeForCustomer("maxValidUse", true, 0, 50, Constants.manager.getToken()));
-            personalInfoController.updateAllBox(loader.load());
+            personalInfoController.updateAllBoxWithSingleNode(node);
         } catch (InvalidTokenException ex) {
             Constants.manager.showErrorPopUp(ex.getMessage());
             Constants.manager.setTokenFromController();

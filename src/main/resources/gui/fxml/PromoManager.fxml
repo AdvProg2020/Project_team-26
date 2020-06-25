@@ -101,13 +101,14 @@
             </HBox>
             <HBox prefHeight="30.0" prefWidth="302.0">
                <children>
-                  <Button fx:id="addButton" mnemonicParsing="false" text="Add">
+                  <Button fx:id="addButtonUsername" mnemonicParsing="false" text="Add">
                      <HBox.margin>
                         <Insets left="140.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
+            <Label fx:id="errorLabel" alignment="CENTER" prefHeight="17.0" prefWidth="341.0" textFill="RED" />
          </children>
       </VBox>
       <ScrollPane prefHeight="720.0" prefWidth="689.0">

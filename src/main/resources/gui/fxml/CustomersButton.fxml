@@ -15,8 +15,8 @@
                       <Image url="@../pic/AdminProfilePicture.png" />
                   </image>
               </ImageView>
-              <Button fx:id="orders" mnemonicParsing="false" prefHeight="45.0" prefWidth="96.0" text="Orders" />
-              <Button fx:id="promo" mnemonicParsing="false" prefHeight="45.0" prefWidth="95.0" text="Promo" />
+              <Button fx:id="orders" mnemonicParsing="false" onAction="#orderHandle" prefHeight="45.0" prefWidth="96.0" text="Orders" />
+              <Button fx:id="promo" mnemonicParsing="false" onAction="#promoHandle" prefHeight="45.0" prefWidth="95.0" text="Promo" />
           </children>
       </VBox>
    </children>
