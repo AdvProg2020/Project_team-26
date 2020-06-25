@@ -49,6 +49,7 @@ public class MySQLRequestRepository
                 acceptOff(request);
                 break;
         }
+        save(request);
     }
 
     @Override
