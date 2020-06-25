@@ -83,7 +83,7 @@
                                     <Insets bottom="36.0" />
                                  </VBox.margin>
                               </TextField>
-                              <TextField disable="true">
+                              <TextField fx:id="roleText" disable="true">
                                  <VBox.margin>
                                     <Insets bottom="36.0" />
                                  </VBox.margin>
@@ -110,6 +110,7 @@
                               </Button>
                            </children>
                         </VBox>
+                        <Label fx:id="errorLabel" alignment="CENTER" prefHeight="28.0" prefWidth="261.0" textFill="RED" />
                      </children>
                   </HBox>
                   <HBox prefHeight="309.0" prefWidth="814.0">

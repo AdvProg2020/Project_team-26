@@ -32,6 +32,7 @@ public class UserInfoController implements IUserInfoController {
             throw new NotLoggedINException("You are not logged in.");
         } else {
             user.changePassword(oldPassword, newPassword);
+            userRepository.save(user);
         }
     }
 
@@ -41,6 +42,7 @@ public class UserInfoController implements IUserInfoController {
             throw new NotLoggedINException("You are not Logged In.");
         } else {
             user.changePassword(newPassword);
+            userRepository.save(user);
         }
     }
 
@@ -88,6 +90,7 @@ public class UserInfoController implements IUserInfoController {
             throw new InvalidFormatException("Email format is incorrect.", "Email");
         } else {
             user.changeEmail(value);
+            userRepository.save(user);
         }
     }
 
@@ -98,6 +101,7 @@ public class UserInfoController implements IUserInfoController {
         } else {
             user.changeLastName(value);
         }
+        userRepository.save(user);
     }
 
     private void changeCompanyName(String value, String token) throws NoSuchField, InvalidTokenException {
@@ -106,6 +110,7 @@ public class UserInfoController implements IUserInfoController {
             throw new NoSuchField("No Such Field exists.");
         } else {
             ((Seller) user).changeCompanyName(value);
+            userRepository.save(user);
         }
     }
 
