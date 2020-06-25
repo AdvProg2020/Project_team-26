@@ -38,14 +38,14 @@ public class CommentController {
     }
 
     public void load(Product product) throws IOException {
-        commentBox.getChildren().removeAll();
+        commentBox.getChildren().clear();
         this.product = product;
         Separator separator = null;
         for (Comment comment: product.getComments()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SingleComment.fxml"));
+            commentBox.getChildren().add(loader.load());
             SingleCommentController singleCommentController = (SingleCommentController) loader.getController();
             singleCommentController.load(comment);
-            commentBox.getChildren().add(loader.load());
             separator = new Separator();
             commentBox.getChildren().add(separator);
         }

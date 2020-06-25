@@ -18,20 +18,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        Constants.manager.setTokenFromController();
         Constants.manager.start(primaryStage);
         Constants.manager.openPage("AllProducts", 0);
-    }
-
-    public  void setRootForScene(String fxml) throws IOException {
-        windowOfApp.setResizable(true);
-        scene = new Scene(loadFXML(fxml));
-        windowOfApp.setResizable(false);
-        windowOfApp.setScene(scene);
-    }
-
-    private Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/gui/fxml/" + fxml + ".fxml"));
-        return fxmlLoader.load();
     }
 
     public static void main(String[] args) {
