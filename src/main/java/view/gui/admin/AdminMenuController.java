@@ -36,6 +36,8 @@ public class AdminMenuController implements InitializableController {
     private TableView<Admin> managerTable;
     @FXML
     private Button editInfoButton;
+    @FXML
+    private TextField roleText;
 
     private IShowUserController controller;
     private IUserInfoController userController;
@@ -45,6 +47,7 @@ public class AdminMenuController implements InitializableController {
     public void initialize(int id) throws IOException {
         controller = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         userController = (IUserInfoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.UserInfoController);
+        editInfoButton.setOnMouseClicked(e -> editInfo());
         ObservableList<Admin> list = FXCollections.observableList(controller.getManagers(id));
         try {
             User admin = controller.getUserById(id,Constants.manager.getToken());
@@ -52,6 +55,7 @@ public class AdminMenuController implements InitializableController {
             emailText.setText(admin.getEmail());
             firstNameText.setText(admin.getFirstName());
             lastNameText.setText(admin.getLastName());
+            roleText.setText("Admin");
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
@@ -63,18 +67,14 @@ public class AdminMenuController implements InitializableController {
 
     }
 
-    @FXML
     private void editInfo() {
-        usernameText.setEditable(true);
-        emailText.setEditable(true);
-        firstNameText.setEditable(true);
-        lastNameText.setEditable(true);
-        passwordText.setEditable(true);
+        emailText.setDisable(false);
+        firstNameText.setDisable(false);
+        lastNameText.setDisable(false);
         editInfoButton.setText("Update");
         editInfoButton.setOnMouseClicked(e -> updateInfo());
     }
 
-    @FXML
     private void updateInfo() {
         Map<String,String> newInfo = new HashMap<>();
         newInfo.put("FirstName",firstNameText.getText());

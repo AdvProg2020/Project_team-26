@@ -91,6 +91,18 @@ public class AdminOptionMenuController implements InitializableController {
             newManagerRegistry();
         });
 
+        usersButton.setOnMouseClicked(e -> {
+            try {
+                handleUser();
+            } catch (NoAccessException noAccessException) {
+                noAccessException.printStackTrace();
+            } catch (InvalidTokenException invalidTokenException) {
+                invalidTokenException.printStackTrace();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+        handlePersonalPage();
     }
 
     private void newManagerRegistry() {
@@ -99,46 +111,51 @@ public class AdminOptionMenuController implements InitializableController {
 
     private void handleRequest() throws NoAccessException, InvalidTokenException, IOException, NotLoggedINException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ManagerRequest.fxml"));
+        Node node = loader.load();
         ManagerRequestController managerRequestController = loader.getController();
         managerRequestController.initialize(2);
         managerRequestController.load();
-        hbox.getChildren().removeAll();
-        hbox.getChildren().addAll((Node) loader.load());
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 
     private void handlePersonalPage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/AdminMenu.fxml"));
+        Node node = loader.load();
         AdminMenuController adminMenuController = loader.getController();
         adminMenuController.initialize(admin.getId());
         adminMenuController.load();
-        hbox.getChildren().removeAll();
-        hbox.getChildren().addAll((Node) loader.load());
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 
     private void handleCategory() throws IOException, InvalidIdException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
+        Node node = loader.load();
         CategoryListController categoryListController = (CategoryListController) loader.getController();
         categoryListController.initialize(1);
         categoryListController.load(categoryController.getCategory(1, Constants.manager.getToken()));
-        hbox.getChildren().removeAll();
-        hbox.getChildren().addAll((Node) loader.load());
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 
     private void handlePromo() throws NoAccessException, InvalidTokenException, IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PromoManager.fxml"));
+        Node node = loader.load();
         PromoManagerController promoManagerController = (PromoManagerController) loader.getController();
         promoManagerController.initialize(1);
         promoManagerController.load();
-        hbox.getChildren().removeAll();
-        hbox.getChildren().addAll((Node) loader.load());
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 
     private void handleUser() throws NoAccessException, InvalidTokenException, IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ManagerUsers.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ManageUsers.fxml"));
+        Node node = loader.load();
         ManageUsersController manageUsersController = loader.getController();
         manageUsersController.initialize(2);
         manageUsersController.load();
-        hbox.getChildren().removeAll();
-        hbox.getChildren().addAll((Node) loader.load());
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 }

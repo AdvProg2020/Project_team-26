@@ -83,7 +83,7 @@
                                     <Insets bottom="36.0" />
                                  </VBox.margin>
                               </TextField>
-                              <TextField disable="true">
+                              <TextField fx:id="roleText" disable="true">
                                  <VBox.margin>
                                     <Insets bottom="36.0" />
                                  </VBox.margin>
