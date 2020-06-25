@@ -300,6 +300,11 @@ public class Manager implements Reloadable {
         compareList.add(productId);
     }
 
+    public void logout() throws IOException {
+        setLoggedIn(false);
+        reload();
+    }
+
     @Override
     public void reload() {
         reloadTop();
@@ -310,6 +315,7 @@ public class Manager implements Reloadable {
             ioException.printStackTrace();
         }
     }
+
 
 
 }
