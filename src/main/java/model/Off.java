@@ -110,6 +110,7 @@ public class Off {
     @Override
     public Off clone() {
         Off newOff = new Off();
+        newOff.setId(this.id);
         newOff.setSeller(seller);
         newOff.setItems(items);
         return newOff;
