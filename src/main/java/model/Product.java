@@ -204,7 +204,7 @@ public class Product {
     public String toString() {
         return "Id: " + id + "\n" +
                 "Name: " + name + "\n" +
-                "Brand" + brand + "\n" +
+                "Brand: " + brand + "\n" +
                 "Description: '" + description + "\n" +
                 "Category: " + category.getName() + "\n" +
                 "Category Features:\n" + categoryFeaturesToString();
