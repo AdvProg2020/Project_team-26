@@ -11,6 +11,8 @@ import repository.CommentRepository;
 import repository.ProductRepository;
 import repository.RepositoryContainer;
 
+import java.util.List;
+
 public class CommentController implements ICommentController {
 
     ProductRepository productRepository;
@@ -32,6 +34,41 @@ public class CommentController implements ICommentController {
             comment.setState(CommentState.WAITING_FOR_CONFIRMATION);
             commentRepository.save(comment);
         }
+    }
+
+    public void confirmComment(int id, String token) throws InvalidTokenException, NoAccessException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null || user.getRole() != Role.ADMIN) {
+            throw new NoAccessException("You are not allowed to do that.");
+        } else {
+            Comment comment = commentRepository.getById(id);
+            comment.setState(CommentState.CONFIRMED);
+            commentRepository.save(comment);
+        }
+    }
+
+    public void rejectComment(int id, String token) throws InvalidTokenException, NoAccessException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null || user.getRole() != Role.ADMIN) {
+            throw new NoAccessException("You are not allowed to do that.");
+        } else {
+            Comment comment = commentRepository.getById(id);
+            comment.setState(CommentState.NOT_CONFIRMED);
+            commentRepository.save(comment);
+        }
+    }
+
+    public List<Comment> getAllComments(String token) throws InvalidTokenException, NoAccessException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null || user.getRole() != Role.ADMIN) {
+            throw new NoAccessException("You are not allowed to do that.");
+        } else {
+            return commentRepository.getAll();
+        }
+    }
+
+    public List<Comment> getConfirmedCommentsForAProduct(int productId, String token) {
+        return commentRepository.getConfirmedComments(productId);
     }
 
     public void removeComment(int id, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {

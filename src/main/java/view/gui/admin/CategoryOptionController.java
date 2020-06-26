@@ -42,8 +42,6 @@ public class CategoryOptionController implements InitializableController {
     @FXML
     private Button addButton;
     @FXML
-    private Button removeButton;
-    @FXML
     private TextField categoryName;
     @FXML
     private HBox hbox;
@@ -68,7 +66,6 @@ public class CategoryOptionController implements InitializableController {
         controller.setCategoryOptionController(this);
         addCategory.setOnMouseClicked(e -> addCategory());
         addButton.setOnMouseClicked(e -> addCategoryFeature());
-        removeButton.setOnMouseClicked(e -> removeCategoryFeature());
         categoryTable.setOnMouseClicked(e -> fillDetails());
         List<FeatureType> types = new ArrayList<>();
         types.add(FeatureType.DOUBLE);
@@ -81,23 +78,6 @@ public class CategoryOptionController implements InitializableController {
         CategoryFeature categoryFeature = (CategoryFeature) categoryTable.getSelectionModel().getSelectedItem();
         categoryFeatureName.setText(categoryFeature.getFeatureName());
         typeChoice.setValue(categoryFeature.getFeatureType());
-    }
-
-    private void removeCategoryFeature() {
-        String categoryFeatureName = this.categoryFeatureName.getText();
-        if (categoryFeatureName.isBlank()) {
-            errorLabel.setText("Please enter a name.");
-        } else {
-            try {
-                categoryController.removeAttribute(controller.getCategory().getId(), categoryFeatureName, Constants.manager.getToken());
-            } catch (InvalidIdException e) {
-                errorLabel.setText(e.getMessage());
-            } catch (NoAccessException e) {
-                errorLabel.setText(e.getMessage());
-            } catch (InvalidTokenException e) {
-                errorLabel.setText(e.getMessage());
-            }
-        }
     }
 
     private void addCategoryFeature() {
