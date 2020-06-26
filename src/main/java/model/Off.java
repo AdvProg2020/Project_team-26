@@ -41,11 +41,6 @@ public class Off {
 
     }
 
-    public Off(String f) {
-        items = new ArrayList<OffItem>();
-
-    }
-
     public int getId() {
         return id;
     }

@@ -45,18 +45,18 @@ public class OffControllerTest {
     @Test
     public void createNewOffTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NotLoggedINException, NoAccessException {
         /** Exception Tests **/
-        Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> offController.createNewOff(new Off("pp"),token));
+        Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> offController.createNewOff(new Off(),token));
         Assertions.assertEquals(ex.getMessage(),"You must be logged in.");
 
         authenticationController.login("aria","aria",token);
-        ex = Assertions.assertThrows(NoAccessException.class, () -> offController.createNewOff(new Off("pp"),token));
+        ex = Assertions.assertThrows(NoAccessException.class, () -> offController.createNewOff(new Off(),token));
         Assertions.assertEquals(ex.getMessage(),"seller can create a off");
         authenticationController.logout(token);
 
         /**Exception Tests **/
 
         authenticationController.login("test4","test4",token);
-        offController.createNewOff(new Off("pp"),token);
+        offController.createNewOff(new Off(),token);
 
     }
 
@@ -90,7 +90,7 @@ public class OffControllerTest {
     public void editTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
 
         authenticationController.login("test4","test4",token);
-        Exception ex = Assertions.assertThrows(NoAccessException.class,() ->offController.edit(new Off("sd"),2,token));
+        Exception ex = Assertions.assertThrows(NoAccessException.class,() ->offController.edit(new Off(),2,token));
         Assertions.assertEquals(ex.getMessage(),"you can only change your off");
 
     }
