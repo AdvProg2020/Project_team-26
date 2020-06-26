@@ -57,6 +57,7 @@ public class Request {
     @Column(name = "new_value")
     private String newValue;
 
+
     public Request() {
     }
 
@@ -162,16 +163,16 @@ public class Request {
     }
 
     private String requestToString() {
-        if(type.equals("Product")) {
-            if(requestType == RequestType.ADD) {
+        if (type.equals("Product")) {
+            if (requestType == RequestType.ADD) {
                 return product + "\n\n" + productSeller;
-            } else if(requestType == RequestType.EDIT) {
+            } else if (requestType == RequestType.EDIT) {
                 return product + "\n\n" + changeToString();
             } else {
                 return product.toString();
             }
-        } else if(type.equals("ProductSeller")) {
-            if(requestType == RequestType.EDIT) {
+        } else if (type.equals("ProductSeller")) {
+            if (requestType == RequestType.EDIT) {
                 return productSeller + "\n\n" + changeToString();
             } else {
                 return productSeller.toString();

@@ -34,8 +34,11 @@
                      <content>
                         <TableView fx:id="requestTable" prefHeight="625.0" prefWidth="693.0">
                           <columns>
-                            <TableColumn prefWidth="369.0" text="Id" />
-                              <TableColumn prefWidth="317.0" text="Type" />
+                            <TableColumn prefWidth="37.0" text="Id" />
+                              <TableColumn prefWidth="88.0" text="Type" />
+                              <TableColumn fx:id="dateCol" prefWidth="120.0" text="Date" />
+                              <TableColumn fx:id="usernameCol" prefWidth="216.0" text="Requested By" />
+                              <TableColumn fx:id="requestedForCol" prefWidth="231.0" text="Requested For" />
                           </columns>
                         </TableView>
                      </content>

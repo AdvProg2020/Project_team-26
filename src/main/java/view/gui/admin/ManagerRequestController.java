@@ -15,12 +15,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Request;
+import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.*;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class ManagerRequestController implements InitializableController {
@@ -68,6 +70,9 @@ public class ManagerRequestController implements InitializableController {
         ObservableList<TableColumn> cols = requestTable.getColumns();
         cols.get(0).setCellValueFactory(new PropertyValueFactory<Request, Integer>("id"));
         cols.get(1).setCellValueFactory(new PropertyValueFactory<Request, String>("requestType"));
+        cols.get(2).setCellValueFactory(new PropertyValueFactory<Request, Date>("requestTime"));
+        cols.get(3).setCellValueFactory(new PropertyValueFactory<Request, String>("requestedBy"));
+        cols.get(4).setCellValueFactory(new PropertyValueFactory<Request,String >("type"));
     }
 
     @Override
