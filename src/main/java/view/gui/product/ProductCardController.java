@@ -22,6 +22,8 @@ public class ProductCardController {
     @FXML
     private Text descriptionText;
     @FXML
+    private Text priceText;
+    @FXML
     private ImageView productImage;
 
     private Product product;
@@ -40,6 +42,11 @@ public class ProductCardController {
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+            }
+            if(product.getPrice() != null) {
+                priceText.setText(product.getPrice() + " T");
+            } else {
+                priceText.setText("- T");
             }
         }
     }

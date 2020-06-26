@@ -34,6 +34,9 @@ public class Product {
     @Column(name = "amount", table = "product_additional", insertable = false, updatable = false)
     private Integer amountBought;
 
+    @Column(name = "price", table = "product_additional", insertable = false, updatable = false)
+    private Long price;
+
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
@@ -48,7 +51,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Comment> comments;
 
-    @ElementCollection(fetch = FetchType.EAGER)
+    @ElementCollection
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "category_feature_id")
     @Column(name = "value")
@@ -116,6 +119,10 @@ public class Product {
 
     public int getAmountBought() {
         return amountBought;
+    }
+
+    public Long getPrice() {
+        return price;
     }
 
     public Set<Comment> getComments() {
