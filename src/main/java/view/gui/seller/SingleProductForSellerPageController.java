@@ -232,6 +232,7 @@ public class SingleProductForSellerPageController implements InitializableContro
             productInfoEditButton.setText("Update product");
         } else {
             Product product = productSeller.getProduct().clone();
+            product.setName(nameTextField.getText());
             product.setDescription(descriptionTextArea.getText());
             product.setBrand(brandTextField.getText());
             if (imageFile != null)
