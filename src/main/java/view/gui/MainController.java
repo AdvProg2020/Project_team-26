@@ -100,13 +100,7 @@ public class MainController {
         Constants.manager.openAccountPage();
     }
 
-    public void logout() throws IOException {
-        try {
-            Constants.manager.logout();
-        } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        } catch (NotLoggedINException e) {
-            e.printStackTrace();
-        }
+    public void logout() throws IOException, NotLoggedINException, InvalidTokenException {
+        Constants.manager.logout();
     }
 }

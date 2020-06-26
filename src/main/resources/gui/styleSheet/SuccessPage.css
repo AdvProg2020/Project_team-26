@@ -1,5 +1,5 @@
 .root {
-    -fx-background: linear-gradient(#1f9c, #8fcc90);
+    -fx-background: linear-gradient(to Right,#1f9c, #8fcc90);
 }
 
 .button {

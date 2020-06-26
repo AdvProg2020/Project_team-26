@@ -92,4 +92,22 @@ public class MySQLUserRepository
             return null;
         }
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<User> cq = cb.createQuery(User.class);
+            Root<User> root = cq.from(User.class);
+
+            cq.select(root).where(cb.equal(root.get("email"), email));
+            TypedQuery<User> typedQuery = em.createQuery(cq);
+
+            return typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

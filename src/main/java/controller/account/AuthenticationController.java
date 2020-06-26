@@ -64,6 +64,7 @@ public class AuthenticationController implements IAuthenticationController {
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
         checkEmailFormat(account.getEmail());
+        checkEmailAvailability(account.getEmail());
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new AlreadyLoggedInException("You are logged in");
@@ -78,6 +79,13 @@ public class AuthenticationController implements IAuthenticationController {
                 case ADMIN:
                     registerAdmin(account, token);
             }
+        }
+    }
+
+    private void checkEmailAvailability(String email) throws InvalidAuthenticationException {
+        User user = userRepository.getUserByEmail(email);
+        if(user != null) {
+            throw new InvalidAuthenticationException("Email is taken.", "Email");
         }
     }
 

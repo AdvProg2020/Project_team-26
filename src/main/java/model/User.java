@@ -6,6 +6,7 @@ import model.enums.Role;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -170,5 +171,10 @@ public class User {
 
     public void changeCredit(Long newCredit) {
         this.credit = newCredit;
+    }
+
+    @Override
+    public String toString() {
+        return username;
     }
 }
