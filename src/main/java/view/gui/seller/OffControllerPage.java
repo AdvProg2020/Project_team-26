@@ -158,7 +158,7 @@ public class OffControllerPage implements InitializableController, Reloadable {
             off = offController.getOff(offId, Constants.manager.getToken());
             reloadPage();
         } catch (InvalidIdException e) {
-            e.printStackTrace();//TODO
+            e.printStackTrace();
         }
 
     }
