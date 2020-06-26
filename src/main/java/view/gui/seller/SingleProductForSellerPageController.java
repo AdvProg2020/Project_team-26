@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -71,6 +72,13 @@ public class SingleProductForSellerPageController implements InitializableContro
     private Button uploadPhoto;
     @FXML
     private TableColumn<String, Feature> featureDescription;
+    @FXML
+    private Button deleteButton;
+    @FXML
+    private VBox totalBox;
+    @FXML
+    private Button deleteSeller;
+
     private File imageFile;
 
     @Override
@@ -81,7 +89,40 @@ public class SingleProductForSellerPageController implements InitializableContro
         productSellerInfoEditButton.setText("Edit seller");
         productInfoEditButton.setText("Edit product");
         uploadPhoto.setVisible(false);
+        deleteButton.setOnAction(e -> {
+            deleteProduct();
+        });
+        deleteSeller.setOnAction(e -> {
+            deleteSeller();
+        });
 
+    }
+
+    private void deleteSeller() {
+        try {
+            productController.removeSeller(this.product.getId(), this.productSeller.getId(), Constants.manager.getToken());
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteProduct() {
+        try {
+            productController.removeProduct(productId, Constants.manager.getToken());
+            totalBox.getChildren().removeAll(totalBox.getChildren());
+        } catch (InvalidIdException | NoAccessException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        }
     }
 
     public void load(Product product, ProductSeller productSeller) throws IOException {

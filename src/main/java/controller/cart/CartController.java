@@ -5,10 +5,14 @@ import exception.*;
 import model.*;
 import model.enums.ShipmentState;
 import repository.*;
+import view.gui.Constants;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.Map;
+import java.util.Random;
 
 public class CartController implements ICartController {
 
@@ -106,9 +110,8 @@ public class CartController implements ICartController {
 
         changeSellerCredit(order);
         orderRepository.save(order);
-
         if (order.calculatePaidAmount() > 500000) {
-            creatRandomPromo(order, customer);
+            creatRandomPromo(customer);
         }
     }
 
@@ -119,26 +122,29 @@ public class CartController implements ICartController {
         }
     }
 
-    private void creatRandomPromo(Order order, Customer customer) {
+    private void creatRandomPromo(Customer customer) {
         Promo promo = new Promo();
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
-        promo.setMaxDiscount(100000);
-        promo.setPercent(15);
+        promo.setMaxDiscount(50000);
+        promo.setPercent(10);
         Date startDate = new Date();
         promo.setStartDate(startDate);
         Date endDate;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Random r = new Random();
-        int year = r.nextInt(2030 - 2022) + 2020;
+        int year = r.nextInt(2030 - 2022) + 2022;
         int month = r.nextInt(11 - 1) + 1;
         try {
             endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
             promo.setEndDate(endDate);
-            promo.setPromoCode("randomForBuy" + year + order.calculatePaidAmount());
-            promoRepository.save(promo);
-            userRepository.save(customer);
-        } catch (ParseException e) {
+            promo.setPromoCode(customer.getUsername().substring(0, (customer.getUsername().length() + 1) / 2) + new Date().getTime());
+            if (promoRepository.getByCode(promo.getPromoCode()) == null) {
+                promoRepository.save(promo);
+                Constants.manager.showSuccessPopUp("promo: " + promo.getPromoCode());
+            }
+        } catch (ParseException | IOException e) {
+            e.getStackTrace();
         }
     }
 

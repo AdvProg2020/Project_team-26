@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.SingleProductForSellerPageController">
+<VBox fx:id="totalBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="637.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.SingleProductForSellerPageController">
     <children>
         <HBox prefHeight="453.0" prefWidth="600.0">
             <children>
@@ -31,8 +31,8 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="335.0" spacing="20.0">
                                     <children>
-                                        <Label prefHeight="17.0" prefWidth="67.0" text="Category" />
-                                        <Text fx:id="categoryText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="178.80338887373637" />
+                                        <Label prefHeight="17.0" prefWidth="35.0" text="Category" />
+                                        <Text fx:id="categoryText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="131.47007588545512" />
                                     </children>
                                     <opaqueInsets>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -57,7 +57,8 @@
                                 <HBox alignment="CENTER_LEFT" prefHeight="52.0" prefWidth="309.0" spacing="20.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="61.0" text="Rate" />
-                                        <Slider fx:id="productRateSlider" max="5.0" prefHeight="22.0" prefWidth="139.0" showTickLabels="true" showTickMarks="true" />
+                                        <Slider fx:id="productRateSlider" max="5.0" prefHeight="37.0" prefWidth="99.0" showTickLabels="true" showTickMarks="true" />
+                              <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Delete" />
                                     </children>
                                     <opaqueInsets>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -75,8 +76,9 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="345.0" spacing="20.0">
                                     <children>
-                                        <Label prefHeight="17.0" prefWidth="67.0" text="State" />
-                                        <Text fx:id="categoryText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="178.80338887373637" />
+                                        <Label prefHeight="17.0" prefWidth="49.0" text="State" />
+                                        <Text fx:id="categoryText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="120.13670949141215" />
+                              <Button fx:id="deleteSeller" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="deleteSeller" />
                                     </children>
                                     <opaqueInsets>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />

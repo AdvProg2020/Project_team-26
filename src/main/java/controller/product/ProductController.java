@@ -79,6 +79,22 @@ public class ProductController implements IProductController {
         }
     }
 
+    @Override
+    public void removeSeller(int productId, int productSellerId, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
+        User user = Session.getSession(token).getLoggedInUser();//TODO
+        if (user == null) {//todo
+            throw new NotLoggedINException("You are not Logged in.");
+        } else if (user.getRole() == Role.CUSTOMER) {
+            throw new NoAccessException("You must be a seller|manager to remove a product");
+        } else if (productSellerRepository.getById(productSellerId) == null) {
+            throw new NoAccessException("You don't have this item for sale.");
+        } else if (!productRepository.getById(productId).hasSeller(user)) {
+            throw new NoAccessException("You don't have this item for sale.");
+        } else {
+            productSellerRepository.deleteRequest(productSellerId);
+        }
+    }
+
 
     @Override
     public List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token) {

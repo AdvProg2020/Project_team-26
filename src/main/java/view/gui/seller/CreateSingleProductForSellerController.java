@@ -160,18 +160,18 @@ public class CreateSingleProductForSellerController implements InitializableCont
         nameTextField.setText(product.getName());
         brandTextField.setText(product.getBrand());
         descriptionField.setText(descriptionField.getText());
-        categoryBox.getChildren().removeAll(categoryBox.getChildren());
+        /*categoryBox.getChildren().removeAll(categoryBox.getChildren());
         featuresBox.getChildren().removeAll(featuresBox.getChildren());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
         Node node = loader.load();
         this.categoryListController = (CategoryListController) loader.getController();
-        categoryListController.initialize(category.getId());
+        categoryListController.initialize(product.getCategory().getId());
         categoryListController.setReloadable(this::reload);
         categoryBox.getChildren().removeAll(categoryBox.getChildren());
         categoryBox.getChildren().addAll(node);//todo check here
         featuresBox.getChildren().removeAll(featuresBox.getChildren());
         product.getCategoryFeatures().forEach((k, v) -> featureBoxList.add(new FeatureBox(k, k.getFeatureName(), k.getFeatureType(), v)));
-        featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
+        featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));*/
     }
 
 
@@ -230,7 +230,9 @@ public class CreateSingleProductForSellerController implements InitializableCont
             newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
             newProductSeller.setProduct(this.newProductForAddingToSellers);
             try {
-                productController.addSeller(this.newProductForAddingToSellers.getId(),newProductSeller,Constants.manager.getToken());
+                productController.addSeller(this.newProductForAddingToSellers.getId(), newProductSeller, Constants.manager.getToken());
+                this.personalInfoController.clearBox();
+                Constants.manager.showSuccessPopUp("Your Product Created");
             } catch (NotSellerException e) {
                 e.printStackTrace();
             } catch (NoAccessException e) {

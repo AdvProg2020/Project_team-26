@@ -7,7 +7,9 @@ import model.enums.Role;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
+import view.gui.Constants;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,14 +31,16 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameFormat(username);
         checkUsernameAndPassword(username, password);
         userSession.login(userRepository.getUserByUsername(username));
-        if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
-            /*Random r = new Random();
-            if (r.nextInt(100) < 60)*/
-            creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
+        if (userSession.getLoggedInUser() != null) {
+            if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
+                Random r = new Random();
+                /* if (r.nextInt(200) < 50)*/
+                creatRandomPromo((Customer) userSession.getLoggedInUser());
+            }
         }
     }
 
-    private void creatRandomPromo(Customer customer, String token) {
+    private void creatRandomPromo(Customer customer) {
         Promo promo = new Promo();
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
@@ -47,15 +51,18 @@ public class AuthenticationController implements IAuthenticationController {
         Date endDate;
         SimpleDateFormat formatter = new SimpleDateFormat("dd-M-yyyy hh:mm:ss");
         Random r = new Random();
-        int year = r.nextInt(2030 - 2022) + 2020;
+        int year = r.nextInt(2030 - 2022) + 2022;
         int month = r.nextInt(11 - 1) + 1;
         try {
             endDate = formatter.parse("20-" + month + "-" + year + " 8:00:00");
             promo.setEndDate(endDate);
-            promo.setPromoCode(customer.getUsername() + new Date().getTime());
-            if (promoRepository.getByCode(promo.getPromoCode()) == null)
+            promo.setPromoCode(customer.getUsername().substring(0, (customer.getUsername().length() + 1) / 2) + new Date().getTime());
+            if (promoRepository.getByCode(promo.getPromoCode()) == null) {
                 promoRepository.save(promo);
-        } catch (ParseException e) {
+                Constants.manager.showSuccessPopUp("promo: " + promo.getPromoCode());
+            }
+        } catch (ParseException | IOException e) {
+            e.getStackTrace();
         }
     }
 
@@ -84,7 +91,7 @@ public class AuthenticationController implements IAuthenticationController {
 
     private void checkEmailAvailability(String email) throws InvalidAuthenticationException {
         User user = userRepository.getUserByEmail(email);
-        if(user != null) {
+        if (user != null) {
             throw new InvalidAuthenticationException("Email is taken.", "Email");
         }
     }
