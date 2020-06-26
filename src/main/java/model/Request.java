@@ -31,7 +31,7 @@ public class Request {
     @Column(name = "request_status")
     private RequestStatus requestStatus;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
