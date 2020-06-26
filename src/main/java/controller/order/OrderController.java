@@ -64,7 +64,7 @@ public class OrderController implements IOrderController {
             throw new NoAccessException("You must be a seller to view buyers of a product.");
         } else if (product == null) {
             throw new InvalidIdException("The specified product does not exist.");
-        } else if (!doesHeOwnTheProduct(product,(Seller)user)) {
+        } else if (productRepository.getProductBySellerId(productId, user.getId()) == null) {
             throw new NoAccessException("You don't own this product.");
         } else {
             return customerRepository.getAllProductBuyers(productId,null);
