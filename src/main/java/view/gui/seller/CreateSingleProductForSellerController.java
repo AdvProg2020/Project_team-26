@@ -62,6 +62,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
     private Button imageChooserButton;
     private File imageFile;
     private PersonalInfoController personalInfoController;
+    private Product newProductForAddingToSellers;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -96,6 +97,18 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 ex.printStackTrace();
             }
         });
+        saveButton.setText("check");
+        nameTextField.setPromptText("name");
+        setEditable(false);
+
+    }
+
+    public void setEditable(boolean type) {
+        brandTextField.setEditable(type);
+        descriptionField.setEditable(type);
+        priceTextField.setEditable(type);
+        amountTextField.setEditable(type);
+        imageChooserButton.setVisible(type);
     }
 
     public void setPersonalInfoController(PersonalInfoController personalInfoController) {
@@ -124,6 +137,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
 
     public void load(Category mainCategory) throws IOException {
         loadCategoryBoxes(mainCategory);
+
     }
 
     private void loadCategoryBoxes(Category category) throws IOException {
@@ -137,48 +151,87 @@ public class CreateSingleProductForSellerController implements InitializableCont
         categoryBox.getChildren().removeAll(categoryBox.getChildren());
         categoryBox.getChildren().addAll(node);//todo check here
         featuresBox.getChildren().removeAll(featuresBox.getChildren());
-        category.getFeatures().forEach(i -> featureBoxList.add(new FeatureBox(i, i.getFeatureName(), i.getFeatureType())));
+        category.getFeatures().forEach(i -> featureBoxList.add(new FeatureBox(i, i.getFeatureName(), i.getFeatureType(), null)));
         featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
     }
 
+    private void loadProduct(Product product) throws IOException {
+        productImage.setImage(new Image(new ByteArrayInputStream(product.getImage())));
+        nameTextField.setText(product.getName());
+        brandTextField.setText(product.getBrand());
+        descriptionField.setText(descriptionField.getText());
+        categoryBox.getChildren().removeAll(categoryBox.getChildren());
+        featuresBox.getChildren().removeAll(featuresBox.getChildren());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
+        Node node = loader.load();
+        this.categoryListController = (CategoryListController) loader.getController();
+        categoryListController.initialize(category.getId());
+        categoryListController.setReloadable(this::reload);
+        categoryBox.getChildren().removeAll(categoryBox.getChildren());
+        categoryBox.getChildren().addAll(node);//todo check here
+        featuresBox.getChildren().removeAll(featuresBox.getChildren());
+        product.getCategoryFeatures().forEach((k, v) -> featureBoxList.add(new FeatureBox(k, k.getFeatureName(), k.getFeatureType(), v)));
+        featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
+    }
+
+
     @FXML
     public void saveButtonClicked() throws IOException {
-        category = categoryListController.getCategory();
-        if (isEveryThingOk()) {
-            Product newProduct = new Product(nameTextField.getText(), brandTextField.getText(), descriptionField.getText());
-            newProduct.setCategory(this.category);
-            newProduct.setImage(Files.readAllBytes(imageFile.toPath()));
-            ProductSeller newProductSeller = new ProductSeller();
-            featureBoxList.forEach(i -> newProduct.getCategoryFeatures().put(i.getCategoryFeature(), i.getValue()));
-            newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
-            newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
-            newProduct.getSellerList().add(newProductSeller);
+        if (saveButton.getText().equals("Check")) {
             try {
-                productController.createProduct(newProduct, Constants.manager.getToken());
-                this.personalInfoController.clearBox();
-            } catch (ObjectAlreadyExistException e) {
+                this.newProductForAddingToSellers = productController.getProductByName(nameTextField.getText(), Constants.manager.getToken());
+                Constants.manager.showErrorPopUp("product exist if you want to add click add or cancel to cancel");
+                loadProduct(newProductForAddingToSellers);
+                setEditable(false);
+                nameTextField.setEditable(false);
+                priceTextField.setEditable(true);
+                amountTextField.setEditable(true);
+                saveButton.setText("Add");
+            } catch (NoObjectIdException e) {
+                setEditable(true);
+                nameTextField.setEditable(false);
+                saveButton.setText("Save");
+            }
+        } else if (saveButton.getText().equals("Save")) {
+            category = categoryListController.getCategory();
+            if (isEveryThingOk()) {
+                Product newProduct = new Product(nameTextField.getText(), brandTextField.getText(), descriptionField.getText());
+                newProduct.setCategory(this.category);
+                newProduct.setImage(Files.readAllBytes(imageFile.toPath()));
+                ProductSeller newProductSeller = new ProductSeller();
+                featureBoxList.forEach(i -> newProduct.getCategoryFeatures().put(i.getCategoryFeature(), i.getValue()));
+                newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
+                newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
+                newProduct.getSellerList().add(newProductSeller);
                 try {
-                    productController.addSeller(((Product) e.getObject()).getId(), newProductSeller, Constants.manager.getToken());
+                    productController.createProduct(newProduct, Constants.manager.getToken());
                     this.personalInfoController.clearBox();
-                } catch (NotSellerException | NoAccessException ex) {
+                    Constants.manager.showSuccessPopUp("Your Product Created");
+                } catch (ObjectAlreadyExistException e) {
+                    try {
+                        productController.addSeller(((Product) e.getObject()).getId(), newProductSeller, Constants.manager.getToken());
+                        this.personalInfoController.clearBox();
+                    } catch (NotSellerException | NoAccessException ex) {
+                        Constants.manager.showErrorPopUp(e.getMessage());
+                    } catch (InvalidTokenException ex) {
+                        Constants.manager.showErrorPopUp(e.getMessage());
+                        Constants.manager.setTokenFromController();
+                    }
+                } catch (NotSellerException e) {
                     Constants.manager.showErrorPopUp(e.getMessage());
-                } catch (InvalidTokenException ex) {
+                } catch (InvalidTokenException e) {
                     Constants.manager.showErrorPopUp(e.getMessage());
                     Constants.manager.setTokenFromController();
                 }
-            } catch (NotSellerException e) {
-                Constants.manager.showErrorPopUp(e.getMessage());
-            } catch (InvalidTokenException e) {
-                Constants.manager.showErrorPopUp(e.getMessage());
-                Constants.manager.setTokenFromController();
             }
+        } else if (saveButton.getText().equals("Add")) {
+
+
         }
-
-
     }
 
     private boolean isEveryThingOk() {
-        if (nameTextField.getText().isEmpty()|| nameTextField.getText().isBlank()){
+        if (nameTextField.getText().isEmpty() || nameTextField.getText().isBlank()) {
 
         }
         return !nameTextField.getText().isEmpty() && !priceTextField.getText().isEmpty() && !amountTextField.getText().isEmpty() &&
@@ -191,7 +244,10 @@ public class CreateSingleProductForSellerController implements InitializableCont
 
     @Override
     public void reload() throws IOException {
+        ProductSeller newProductSeller = new ProductSeller();
         loadCategoryBoxes(categoryListController.getCategory());
+        newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
+        newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
     }
 
     public class FeatureBox {
@@ -201,14 +257,18 @@ public class CreateSingleProductForSellerController implements InitializableCont
         private FeatureType type;
         private CategoryFeature categoryFeature;
 
-        public FeatureBox(CategoryFeature categoryFeature, String name, FeatureType featureType) {
+        public FeatureBox(CategoryFeature categoryFeature, String name, FeatureType featureType, String value) {
             this.categoryFeature = categoryFeature;
             this.name = new Label(name);
             this.type = featureType;
-            container = new HBox();
             description = new TextField("");
-            description.setPromptText(FeatureType.getType(featureType));
             description.setEditable(true);
+            if (value != null) {
+                description = new TextField(value);
+                description.setEditable(false);
+            }
+            container = new HBox();
+            description.setPromptText(FeatureType.getType(featureType));
             container.getChildren().addAll(this.name, description);
         }
 

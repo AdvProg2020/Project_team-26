@@ -68,6 +68,8 @@ public class SingleProductForSellerPageController implements InitializableContro
     @FXML
     private TableColumn<String, Feature> featureType;
     @FXML
+    private Button uploadPhoto;
+    @FXML
     private TableColumn<String, Feature> featureDescription;
     private File imageFile;
 
@@ -78,6 +80,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         productId = id;
         productSellerInfoEditButton.setText("Edit seller");
         productInfoEditButton.setText("Edit product");
+        uploadPhoto.setVisible(false);
 
     }
 
