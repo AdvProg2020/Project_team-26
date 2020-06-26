@@ -13,4 +13,6 @@ public interface UserRepository extends Repository<User> {
     boolean hasBoughtProduct(int customerId, int productId);
 
     List<Admin> getManagers(int id);
+
+    User getUserByEmail(String email);
 }

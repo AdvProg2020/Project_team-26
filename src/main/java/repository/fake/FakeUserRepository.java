@@ -83,6 +83,11 @@ public class FakeUserRepository implements UserRepository {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        return null;
+    }
+
+    @Override
     public List<User> getAll() {
         return allUsers;
     }
