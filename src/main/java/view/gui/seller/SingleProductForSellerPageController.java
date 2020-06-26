@@ -77,6 +77,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         productId = id;
         productSellerInfoEditButton.setText("Edit seller");
+        productInfoEditButton.setText("Edit product");
 
     }
 
@@ -90,6 +91,11 @@ public class SingleProductForSellerPageController implements InitializableContro
         categoryText.setText(product.getCategory().getName());
         productRateSlider.setValue(product.getAverageRate() == null ? 0.0 : product.getAverageRate());
         productRateSlider.setValueChanging(false);
+        productRateSlider.setDisable(false);
+        amountTextField.setText("" + productSeller.getRemainingItems());
+        priceTextField.setText("" + productSeller.getRemainingItems());
+        setEditableForProductSeller(false);
+        setEditableForProduct(false);
         setBuyersTableView();
         setFeaturesTable(product);
     }
@@ -114,6 +120,10 @@ public class SingleProductForSellerPageController implements InitializableContro
         productImage.setImage(new Image(new ByteArrayInputStream(product.getImage())));
         setEditableForProduct(false);
         setEditableForProductSeller(false);
+        amountTextField.setText("" + productSeller.getRemainingItems());
+        priceTextField.setText("" + productSeller.getRemainingItems());
+        setEditableForProductSeller(false);
+        setEditableForProduct(false);
 
     }
 
@@ -159,7 +169,7 @@ public class SingleProductForSellerPageController implements InitializableContro
             newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
             newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
             try {
-                productController.editProductSeller(product.getId(), newProductSeller, Constants.manager.getToken());
+                productController.editProductSeller(productSeller.getId(), newProductSeller, Constants.manager.getToken());
                 productSellerInfoEditButton.setText("Edit seller");
                 setEditableForProductSeller(false);
             } catch (InvalidIdException | NotSellerException | NoAccessException e) {

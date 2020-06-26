@@ -119,7 +119,7 @@ public class ProductSeller {
 
     @Override
     public ProductSeller clone() {
-        return new ProductSeller(this.id, this.product, this.remainingItems, this.price, this.priceInOff);
+        return new ProductSeller(this.id, this.product, this.remainingItems, this.price, priceInOff == null ? price : priceInOff);
 
     }
 }
