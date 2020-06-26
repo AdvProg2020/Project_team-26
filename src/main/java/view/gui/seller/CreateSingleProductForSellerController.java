@@ -97,7 +97,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 ex.printStackTrace();
             }
         });
-        saveButton.setText("check");
+        saveButton.setText("Check");
         nameTextField.setPromptText("name");
         setEditable(false);
 
