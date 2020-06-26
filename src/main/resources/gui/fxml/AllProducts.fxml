@@ -33,13 +33,12 @@
                </padding>
             </TextField>
             <CheckBox fx:id="offCheckBox" mnemonicParsing="false" onAction="#reload" text="Show Offs" />
-            <Label text="price" />
+            <Label text="Price" />
             <Slider fx:id="minPrice" blockIncrement="5.0" max="1000" prefHeight="25.0" prefWidth="170.0" showTickLabels="true" showTickMarks="true" />
             <Slider fx:id="maxPrice" max="1000" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" value="1000.0" />
             <VBox fx:id="price" prefHeight="200.0" prefWidth="170.0" />
-            <Label layoutX="10.0" layoutY="241.0" prefHeight="17.0" prefWidth="35.0" text="rate" />
-            <Slider fx:id="minRate" max="5.0" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" />
-            <Slider fx:id="maxRate" max="5.0" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" />
+            <Label layoutX="10.0" layoutY="241.0" prefHeight="17.0" prefWidth="35.0" text="Rate" />
+            <Slider fx:id="rateSlider" max="5.0" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" />
             <ComboBox fx:id="sortDirectionComboBox" onAction="#reload" prefHeight="39.0" prefWidth="241.0" />
             <ComboBox fx:id="sortFieldComboBox" onAction="#reload" prefHeight="39.0" prefWidth="243.0" />
             <fx:include fx:id="categoryList" source="CategoryList.fxml" />
