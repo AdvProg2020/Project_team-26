@@ -31,9 +31,7 @@ import view.gui.interfaces.Reloadable;
 
 import java.io.IOException;
 import java.time.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Manager implements Reloadable {
 
@@ -45,12 +43,12 @@ public class Manager implements Reloadable {
     private List<Pair<String, Integer>> pages;
     private MainController controller;
     private AuthenticationStageManager authenticationStageManager;
-    private List<Integer> compareList;
+    private Set<Integer> compareList;
     private Stage popUp;
 
     public Manager() {
         pages = new ArrayList<>();
-        compareList = new ArrayList<>();
+        compareList = new HashSet<>();
     }
 
     public void openPage(String pageName, int id) throws IOException {
@@ -85,7 +83,7 @@ public class Manager implements Reloadable {
         return pages;
     }
 
-    public List<Integer> getCompareList() {
+    public Set<Integer> getCompareList() {
         return compareList;
     }
 
@@ -197,13 +195,15 @@ public class Manager implements Reloadable {
         windows.setMaxHeight(600);
         exit.setOnMouseClicked(e -> {
             windows.close();
-            compareList = new ArrayList<>();
+            compareList = new HashSet<>();
+            reloadTop();
         });
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
         windows.setOnCloseRequest(e -> {
-            compareList = new ArrayList<>();
+            compareList = new HashSet<>();
             windows.close();
+            reloadTop();
         });
         windows.show();
     }
