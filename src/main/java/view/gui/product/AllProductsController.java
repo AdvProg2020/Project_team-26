@@ -59,7 +59,7 @@ public class AllProductsController implements InitializableController, Reloadabl
         categoryListController.setReloadable(this);
         categoryListController.initialize(1);
         reload();
-       /* RangeSlider slider = new RangeSlider(0, 100000, 0, 100000);
+        /*RangeSlider slider = new RangeSlider(0, 100000, 0, 100000);
         //Setting the slider properties
         slider.setShowTickLabels(true);
         slider.setShowTickMarks(true);
@@ -147,7 +147,7 @@ public class AllProductsController implements InitializableController, Reloadabl
             case "Average Rate":
                 return "averageRate";
             case "Most Sold":
-                return null;
+                return "amountBought";
         }
         return null;
     }
