@@ -39,7 +39,6 @@ public class OffController implements IOffController {
     @Override
     public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "seller can create a off");
-        System.out.println(newOff);
         offRepository.addRequest(newOff);
     }
 

@@ -1,10 +1,12 @@
 package view.gui;
 
 import controller.SessionController;
+import controller.account.AuthenticationController;
 import controller.interfaces.account.IShowUserController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
+import exception.NotLoggedINException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -330,7 +332,9 @@ public class Manager implements Reloadable {
         compareList.add(productId);
     }
 
-    public void logout() throws IOException {
+    public void logout() throws IOException, InvalidTokenException, NotLoggedINException {
+    AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
+    controller.logout(getToken());
         setLoggedIn(false);
         reload();
     }
