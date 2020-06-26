@@ -63,7 +63,7 @@ public abstract class MySQLRepository<T> implements Repository<T> {
 
     @Override
     public void save(T object) {
-        EntityManager em = entityManagerFactory.createEntityManager();
+        EntityManager em = EntityManagerProvider.getEntityManager();
         EntityTransaction et = null;
         try {
             et = em.getTransaction();

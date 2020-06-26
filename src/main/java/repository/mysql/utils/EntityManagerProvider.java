@@ -11,6 +11,10 @@ public class EntityManagerProvider {
             entityManager =
                     EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
         }
+        if(!entityManager.isOpen()) {
+            entityManager =
+                    EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
+        }
         return entityManager;
     }
 

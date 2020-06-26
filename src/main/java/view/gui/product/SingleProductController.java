@@ -1,5 +1,6 @@
 package view.gui.product;
 
+import controller.interfaces.product.IProductController;
 import controller.interfaces.review.IRatingController;
 import controller.product.ProductController;
 import exception.InvalidIdException;
@@ -35,6 +36,7 @@ import java.util.List;
 import java.util.Map;
 
 public class SingleProductController implements InitializableController {
+    private IProductController productController;
     private IRatingController ratingController;
     private Product product;
 
@@ -60,15 +62,14 @@ public class SingleProductController implements InitializableController {
     private TableColumn<String, Features> featureColumn;
 
     public SingleProductController() {
+        productController = (IProductController) Constants.manager.getControllerContainer().
+                        getController(ControllerContainer.Controller.ProductController);
         ratingController = (IRatingController) Constants.manager.getControllerContainer().
                 getController(ControllerContainer.Controller.RatingController);
     }
 
     @Override
-    public void initialize(int id) throws IOException {
-        ProductController productController =
-                (ProductController) Constants.manager.getControllerContainer().
-                        getController(ControllerContainer.Controller.ProductController);
+    public void initialize(int id) throws IOException, InvalidTokenException {
         try {
             product = productController.getProductById(id, Constants.manager.getToken());
             try {
@@ -93,8 +94,6 @@ public class SingleProductController implements InitializableController {
             invalidIdException.printStackTrace();
             Constants.manager.showErrorPopUp("There is no product with this id.");
             Constants.manager.back();
-        } catch (InvalidTokenException e) {
-            e.printStackTrace();
         } catch (NoAccessException e) {
             e.printStackTrace();
         }
@@ -130,6 +129,7 @@ public class SingleProductController implements InitializableController {
     public void rate() throws IOException {
         try {
             ratingController.rate(rateSlider.getValue(), product.getId(), Constants.manager.getToken());
+            Constants.manager.reload();
         } catch (NotBoughtTheProductException | NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {

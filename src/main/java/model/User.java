@@ -116,7 +116,6 @@ public class User {
     }
 
     public Map<String, String> getDetails() {
-
         Map<String, String> essentialDetails = new HashMap();
         essentialDetails.put("Username", this.username);
         essentialDetails.put("FirstName", details.get("firstname"));

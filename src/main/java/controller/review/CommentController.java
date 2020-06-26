@@ -5,6 +5,7 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NoObjectIdException;
 import model.*;
+import model.enums.CommentState;
 import model.enums.Role;
 import repository.CommentRepository;
 import repository.ProductRepository;
@@ -21,12 +22,15 @@ public class CommentController implements ICommentController {
     }
 
     @Override
-    public void addComment(String comment, String title, int productId, String token) throws NoAccessException, InvalidTokenException {
+    public void addComment(String description, String title, int productId, String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null || user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            commentRepository.save(new Comment((Customer) user, productRepository.getById(productId), comment, title));
+            Comment comment =
+                    new Comment((Customer) user, productRepository.getById(productId), description, title);
+            comment.setState(CommentState.WAITING_FOR_CONFIRMATION);
+            commentRepository.save(comment);
         }
     }
 
