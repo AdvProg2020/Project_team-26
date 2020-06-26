@@ -129,7 +129,6 @@ public abstract class MySQLRepository<T> implements Repository<T> {
             CriteriaQuery<T> cq = cb.createQuery(tClass);
             Root<T> root = cq.from(tClass);
 
-            //TODO: define most purchase for product and sort by that
             cq.select(root);
             applySort(sortField, isAscending, cb, cq, root);
             TypedQuery<T> typedQuery = em.createQuery(cq);
