@@ -164,8 +164,8 @@ public class PromoControllerTest {
     public void removeCustomerTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NotCustomerException, NoAccessException, NotLoggedINException, ObjectAlreadyExistException {
         /** Exception Tests **/
         authenticationController.login("aria", "aria", token);
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removeCustomer(22, 120, token));
-        Assertions.assertEquals(ex.getMessage(), "no customer exist By 120 id");
+        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> promoController.removeCustomer(22, 1200, token));
+        Assertions.assertEquals(ex.getMessage(), "no customer exist By 1200 id");
 
         ex = Assertions.assertThrows(NotCustomerException.class, () -> promoController.removeCustomer(22, 28, token));
         Assertions.assertEquals(ex.getMessage(), "You must choose a customer");

@@ -70,8 +70,8 @@ public class OffControllerTest {
                 offRepository.getById(2),200,300,20,false,token));
         Assertions.assertEquals(ex.getMessage(),"No Such product Exists");
         /** Exception Tests **/
-
-        offController.addProductToOff(offRepository.getById(2),11,300,20,false,token);
+       // offController.removeProductFromOff(offRepository.getById(2),11,true,token);
+        //offController.addProductToOff(offRepository.getById(2),11,300,20,false,token);
     }
 
 

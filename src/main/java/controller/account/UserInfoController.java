@@ -120,7 +120,6 @@ public class UserInfoController implements IUserInfoController {
         } else {
             user.changeLastName(value);
         }
-        userRepository.save(user);
     }
 
     private void changeCompanyName(String value, String token) throws NoSuchField, InvalidTokenException {
@@ -129,7 +128,6 @@ public class UserInfoController implements IUserInfoController {
             throw new NoSuchField("No Such Field exists.");
         } else {
             ((Seller) user).changeCompanyName(value);
-            userRepository.save(user);
         }
     }
 
@@ -156,6 +154,7 @@ public class UserInfoController implements IUserInfoController {
             for (Map.Entry<String, String> pair : values.entrySet()) {
                 changeInfo(pair.getKey(), pair.getValue(), token);
             }
+            userRepository.save(Session.getSession(token).getLoggedInUser());
         }
     }
 
