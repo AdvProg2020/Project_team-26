@@ -187,11 +187,18 @@ public class Manager implements Reloadable {
         addProductToComparePane(controller);
         Stage windows = new Stage();
         windows.setScene(new Scene(parent));
-        windows.setMinWidth(1200);
-        windows.setMinHeight(720);
-        exit.setOnMouseClicked(e -> windows.close());
+        windows.setMaxWidth(1000);
+        windows.setMaxHeight(600);
+        exit.setOnMouseClicked(e -> {
+            windows.close();
+            compareList = new ArrayList<>();
+        });
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
+        windows.setOnCloseRequest(e -> {
+            compareList = new ArrayList<>();
+            windows.close();
+        });
         windows.show();
     }
 
