@@ -182,14 +182,6 @@ public class CategoryControllerTest {
         Assertions.assertNotEquals(null,categoryController.getAttribute(1,token));
     }
 
-    @Test
-    public void remoteAttributeTest() throws InvalidIdException, InvalidTokenException, NoAccessException, InvalidFormatException, PasswordIsWrongException, InvalidAuthenticationException {
-
-        authenticationController.login("aria","aria",token);
-        categoryController.removeAttribute(1,"test",token);
-        Assertions.assertEquals(new ArrayList<>(),categoryController.getAttribute(1,token));
-    }
-
     private String createRandomName() {
         String randomName = "randomCategory";
         randomName += LocalTime.now();
