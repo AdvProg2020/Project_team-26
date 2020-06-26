@@ -31,10 +31,10 @@ public class ControllerContainer {
     public ControllerContainer(RepositoryContainer repositoryContainer) {
         map = new HashMap<>();
         repository = repositoryContainer;
-        initializeFake();
+        initialize();
     }
 
-    private void initializeFake() {
+    private void initialize() {
         map.put(Controller.AuthenticationController, new AuthenticationController(repository));
         map.put(Controller.SessionController, new SessionController(repository));
         map.put(Controller.ShowUserController, new ShowUserController(repository));

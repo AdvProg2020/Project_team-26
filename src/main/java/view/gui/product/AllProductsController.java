@@ -53,7 +53,7 @@ public class AllProductsController implements InitializableController, Reloadabl
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().
                 getController(ControllerContainer.Controller.CategoryController);
         sortFieldComboBox.setPromptText("Choose Sorting");
-        sortFieldComboBox.getItems().addAll("Name", "Average Rate", "Most Sold");
+        sortFieldComboBox.getItems().addAll("Name", "Price", "Average Rate", "Most Sold");
         sortDirectionComboBox.getItems().addAll("Ascending", "Descending");
         sortDirectionComboBox.setValue("Ascending");
         categoryListController.setReloadable(this);
@@ -144,6 +144,8 @@ public class AllProductsController implements InitializableController, Reloadabl
         switch (sortFieldComboBox.getValue()) {
             case "Name":
                 return "name";
+            case "Price":
+                return "price";
             case "Average Rate":
                 return "averageRate";
             case "Most Sold":
