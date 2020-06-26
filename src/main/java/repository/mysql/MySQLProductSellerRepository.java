@@ -58,14 +58,14 @@ public class MySQLProductSellerRepository
         ProductSeller oldProductSeller = getById(productSeller.getId());
 
         if(oldProductSeller.getPrice() != productSeller.getPrice()) {
-            Request request = new Request(productSeller.getSeller(), new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            Request request = new Request(oldProductSeller.getSeller(), new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProductSeller(oldProductSeller);
             request.setForEdit("price", "" + productSeller.getPrice());
             requestRepository.save(request);
         }
 
         if(oldProductSeller.getRemainingItems() != productSeller.getRemainingItems()) {
-            Request request = new Request(productSeller.getSeller(), new Date(), RequestType.EDIT, RequestStatus.PENDING);
+            Request request = new Request(oldProductSeller.getSeller(), new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProductSeller(oldProductSeller);
             request.setForEdit("remainingItems", "" + productSeller.getRemainingItems());
             requestRepository.save(request);
