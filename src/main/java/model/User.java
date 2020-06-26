@@ -31,6 +31,10 @@ public class User {
     @Column(name = "role", nullable = false)
     private Role role;
 
+    @Lob
+    @Column(name = "image", columnDefinition = "mediumblob")
+    private byte[] image;
+
     @Column(name = "credit", nullable = false)
     private long credit;
 
@@ -87,6 +91,14 @@ public class User {
 
     public Role getRole() {
         return role;
+    }
+
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public String getFirstName() {
