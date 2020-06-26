@@ -243,16 +243,36 @@ public class CreateSingleProductForSellerController implements InitializableCont
         }
     }
 
-    private boolean isEveryThingOk() {
+    private boolean isEveryThingOk() throws IOException {
         if (nameTextField.getText().isEmpty() || nameTextField.getText().isBlank()) {
-
+            Constants.manager.showErrorPopUp("name cant be empty");
+            return false;
         }
-        return !nameTextField.getText().isEmpty() && !priceTextField.getText().isEmpty() && !amountTextField.getText().isEmpty() &&
-                !descriptionField.getText().isEmpty() && !brandTextField.getText().isEmpty() &&
-                !nameTextField.getText().isBlank() && !priceTextField.getText().isBlank() && !amountTextField.getText().isBlank() &&
-                !descriptionField.getText().isEmpty() && !brandTextField.getText().isEmpty() &&
-                !nameTextField.getText().isBlank() && Constants.manager.checkIsLong(priceTextField.getText()) &&
-                Constants.manager.checkInputIsInt(amountTextField.getText()) && (category != null) && (imageFile != null);
+        if (priceTextField.getText().isEmpty() || priceTextField.getText().isBlank()) {
+            Constants.manager.showErrorPopUp("price cant be empty");
+            return false;
+        }
+        if (amountTextField.getText().isEmpty() || amountTextField.getText().isBlank()) {
+            Constants.manager.showErrorPopUp("amount cant be empty");
+            return false;
+        }
+        if (descriptionField.getText().isEmpty() || descriptionField.getText().isEmpty()) {
+            Constants.manager.showErrorPopUp("description cant be empty");
+            return false;
+        }
+        if (brandTextField.getText().isEmpty() || brandTextField.getText().isEmpty()) {
+            Constants.manager.showErrorPopUp("brand cant be empty");
+            return false;
+        }
+        if (category == null) {
+            Constants.manager.showErrorPopUp("category cant be empty");
+            return false;
+        }
+        if (imageFile == null){
+            Constants.manager.showErrorPopUp("image cant be empty");
+            return false;
+        }
+        return true;
     }
 
     @Override

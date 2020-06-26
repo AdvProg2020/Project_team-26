@@ -101,13 +101,11 @@ public class CartController implements ICartController {
         if (!session.isUserCustomer()) {
             throw new NoAccessException("You must be a customer to be able to buy.");
         }
-
         Customer customer = (Customer) loggedInUser;
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.calculatePaidAmount() - order.calculateDiscount());
         customer.addOrder(order);
         order.setDiscount();
-
         changeSellerCredit(order);
         orderRepository.save(order);
         if (order.calculatePaidAmount() > 500000) {
