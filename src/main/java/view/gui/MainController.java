@@ -84,6 +84,7 @@ public class MainController {
         colorPicker.getBackground();
         Background background = new Background(new BackgroundFill(Paint.valueOf(toHexString(colorPicker.getValue())), null, null));
         mainPane.setBackground(background);
+        mainScrollPane.setBackground(background);
     }
 
     public void back() throws IOException {
