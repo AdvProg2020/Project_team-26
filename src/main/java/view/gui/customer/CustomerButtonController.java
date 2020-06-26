@@ -48,6 +48,7 @@ public class CustomerButtonController implements InitializableController {
         if (user.getRole() != Role.CUSTOMER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be customer");
         this.userId = id;
+        this.customer = (Customer) user;
         load();
     }
 

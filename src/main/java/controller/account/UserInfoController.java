@@ -84,7 +84,7 @@ public class UserInfoController implements IUserInfoController {
     }
 
     public void changeBalance(Long newCredit, String token) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
-            User user = Session.getSession(token).getLoggedInUser();
+        User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
         } else {
