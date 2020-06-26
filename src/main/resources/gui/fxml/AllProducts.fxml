@@ -34,8 +34,8 @@
             </TextField>
             <CheckBox fx:id="offCheckBox" mnemonicParsing="false" onAction="#reload" text="Show Offs" />
             <Label text="Price" />
-            <Slider fx:id="minPrice" blockIncrement="5.0" max="1000" prefHeight="25.0" prefWidth="170.0" showTickLabels="true" showTickMarks="true" />
-            <Slider fx:id="maxPrice" max="1000" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" value="1000.0" />
+            <Slider fx:id="minPrice" blockIncrement="5.0" max="1800" prefHeight="25.0" prefWidth="170.0" showTickLabels="true" showTickMarks="true" />
+            <Slider fx:id="maxPrice" max="1800" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" value="1000.0" />
             <VBox fx:id="price" prefHeight="200.0" prefWidth="170.0" />
             <Label layoutX="10.0" layoutY="241.0" prefHeight="17.0" prefWidth="35.0" text="Rate" />
             <Slider fx:id="rateSlider" max="5.0" prefHeight="14.0" prefWidth="137.0" showTickLabels="true" showTickMarks="true" />
