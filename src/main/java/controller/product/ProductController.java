@@ -72,7 +72,7 @@ public class ProductController implements IProductController {
             throw new NotLoggedINException("You are not Logged in.");
         } else if (user.getRole() == Role.CUSTOMER) {
             throw new NoAccessException("You must be a seller|manager to remove a product");
-        } else if (!productRepository.getById(id).hasSeller(user)) {
+        } else if (productRepository.getProductBySellerId(id, user.getId()) == null) {
             throw new NoAccessException("You don't have this item for sale.");
         } else {
             productRepository.deleteRequest(id, user);
