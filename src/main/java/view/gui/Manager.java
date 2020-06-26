@@ -296,6 +296,20 @@ public class Manager implements Reloadable {
         windows.show();
     }
 
+    public void showSuccessPopUp(String message) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SuccessPage.fxml"));
+        BorderPane borderPane = new BorderPane((Node)loader.load());
+        Stage windows = new Stage();
+        windows.setScene(new Scene(borderPane));
+        ErrorPageController controller = loader.getController();
+        Button okButton = controller.getButton();
+        controller.load(message);
+        okButton.setOnMouseClicked(e -> windows.close());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
+    }
+
     public void closePopUp() {
         popUp.close();
     }
