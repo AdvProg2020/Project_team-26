@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import repository.RepositoryContainer;
+import repository.UserRepository;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.Manager;
