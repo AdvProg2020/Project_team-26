@@ -139,7 +139,7 @@ public class ProductController implements IProductController {
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to edit product");
-        if (!product.hasSeller(user))
+        if (productRepository.getProductBySellerId(id, user.getId()) == null)
             throw new NoAccessException("You can only change your own products");
         newProduct.setId(id);
         productRepository.editRequest(newProduct, user);
