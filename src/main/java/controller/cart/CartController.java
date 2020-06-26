@@ -81,7 +81,7 @@ public class CartController implements ICartController {
             throw new PromoNotAvailableException("This promo is not for you.");
         }
 
-        long usedCount = customer.getOrders().stream().filter(order -> order.getUsedPromo().equals(promo)).count();
+        long usedCount = customer.getOrders().stream().filter(order -> promo.equals(order.getUsedPromo())).count();
         if (usedCount >= promo.getMaxValidUse()) {
             throw new PromoNotAvailableException("You have used this promo before.");
         }
