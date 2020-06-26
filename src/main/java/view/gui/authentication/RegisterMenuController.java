@@ -204,6 +204,10 @@ public class RegisterMenuController implements InitializableController {
         Account account = new Account(usernameText.getText(), passwordText.getText(), Role.getRole(roleChoice.getValue()), emailText.getText());
         account.setFirstName(firstNameText.getText());
         account.setLastName(lastNameText.getText());
+        switch (roleChoice.getValue()) {
+            case "Customer":
+                account.setCredit(Long.parseLong(textField.getText()));
+        }
         return account;
     }
 
