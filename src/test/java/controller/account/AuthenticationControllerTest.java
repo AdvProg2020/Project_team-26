@@ -31,7 +31,7 @@ public class AuthenticationControllerTest {
     public void registerTest() throws InvalidTokenException, InvalidFormatException, NoAccessException, InvalidAuthenticationException, PasswordIsWrongException, AuthenticationException, AlreadyLoggedInException {
         /**Exception Tests**/
         Exception ex = assertThrows(NoAccessException.class, () -> authenticationController.register(
-                new Account("AryaRezaei","1234",Role.ADMIN,"a@yahoo.com"),token));
+                new Account("AryaRezaei","1234",Role.ADMIN,getRandomEmail()),token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
         ex = assertThrows(InvalidFormatException.class, () -> authenticationController.register(
@@ -80,6 +80,7 @@ public class AuthenticationControllerTest {
         randomName += LocalTime.now();
         return randomName;
     }
+
 
     private String getRandomEmail() {
         String email = "";

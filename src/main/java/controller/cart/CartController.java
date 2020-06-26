@@ -107,8 +107,9 @@ public class CartController implements ICartController {
         customer.pay(order.calculatePaidAmount() - order.calculateDiscount());
         customer.addOrder(order);
         order.setDiscount();
+
+        changeSellerCredit(order);
         orderRepository.save(order);
-        userRepository.save(customer);
         if (order.calculatePaidAmount() > 500000) {
             creatRandomPromo(customer);
         }

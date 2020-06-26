@@ -35,31 +35,6 @@ public class ShowUserControllerTest {
         Exception ex = assertThrows(NoAccessException.class, () -> showUserController.getUserInfo(token));
         Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
-        ex = assertThrows(NoAccessException.class, () -> showUserController.getUsers(token));
-        Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
-
-        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserById(12,token));
-        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
-
-        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserByName("Test",token));
-        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
-
-        /**Exception Tests After Login**/
-
-        authenticationController.login("test7","test7",token);
-        ex = assertThrows(NoAccessException.class, () -> showUserController.delete("test1",token));
-        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
-
-        ex = assertThrows(NoAccessException.class, () -> showUserController.getUsers(token));
-        Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
-
-        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserByName("Test",token));
-        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
-
-        ex = assertThrows(NoAccessException.class, () -> showUserController.getUserById(12,token));
-        Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
-
-        authenticationController.logout(token);
         /** Normal Tests**/
 
         authenticationController.login("aria","aria",token);

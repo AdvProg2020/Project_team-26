@@ -21,6 +21,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.Category;
 import model.CategoryFeature;
 import model.Product;
 import model.ProductSeller;
@@ -55,6 +56,8 @@ public class SingleProductController implements InitializableController {
     @FXML
     private Slider rateSlider;
     @FXML
+    private Text categoryText;
+    @FXML
     private TableView featuresTable;
     @FXML
     private TableColumn<String, Features> nameColumn;
@@ -87,6 +90,7 @@ public class SingleProductController implements InitializableController {
             else
                 rateText.setText("Not Rated");
             descriptionText.setText(product.getDescription());
+            categoryText.setText(getCategoryAddress(product.getCategory()));
             loadCategoryFeatures(product.getCategoryFeatures());
             loadSellers(product);
             loadComments(product);
@@ -159,5 +163,12 @@ public class SingleProductController implements InitializableController {
         public String getFeature() {
             return feature;
         }
+    }
+
+    private String getCategoryAddress(Category category) {
+        if(category.getParent().equals(category)) {
+            return category.getName();
+        }
+        return getCategoryAddress(category.getParent()) + " -> " + category.getName();
     }
 }
