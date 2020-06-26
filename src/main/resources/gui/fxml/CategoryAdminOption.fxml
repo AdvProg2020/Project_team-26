@@ -38,10 +38,9 @@
                <children>
                   <Button fx:id="addButton" mnemonicParsing="false" text="Add">
                      <HBox.margin>
-                        <Insets right="80.0" />
+                        <Insets />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="removeButton" mnemonicParsing="false" text="Remove" />
                </children>
             </HBox>
          </children>

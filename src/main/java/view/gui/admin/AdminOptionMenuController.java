@@ -34,6 +34,8 @@ public class AdminOptionMenuController implements InitializableController {
     @FXML
     private Button requestsButton;
     @FXML
+    private Button commentButton;
+    @FXML
     private Button personalPage;
     @FXML
     private HBox hbox;
@@ -112,11 +114,34 @@ public class AdminOptionMenuController implements InitializableController {
                 ioException.printStackTrace();
             }
         });
+
+        commentButton.setOnMouseClicked(e -> {
+            try {
+                handleComments();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            } catch (NoAccessException noAccessException) {
+                noAccessException.printStackTrace();
+            } catch (InvalidTokenException invalidTokenException) {
+                invalidTokenException.printStackTrace();
+            } catch (InvalidIdException invalidIdException) {
+                invalidIdException.printStackTrace();
+            }
+        });
+
         handlePersonalPage();
     }
 
+    private void handleComments() throws IOException, NoAccessException, InvalidTokenException, InvalidIdException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ManagerComment.fxml"));
+        Node node = loader.load();
+        ManagerCommentController managerCommentController = loader.getController();
+        managerCommentController.initialize(2);
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
+    }
+
     private void newManagerRegistry() throws IOException {
-        System.out.println("nigga");
         Constants.manager.showAdminRegistryMenu();
     }
 
