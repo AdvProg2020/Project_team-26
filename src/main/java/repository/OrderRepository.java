@@ -2,6 +2,7 @@ package repository;
 
 import model.Order;
 import model.Seller;
+import model.User;
 
 import java.util.List;
 
