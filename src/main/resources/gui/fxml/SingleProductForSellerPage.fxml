@@ -159,7 +159,7 @@
                             <children>
                         <VBox alignment="CENTER" prefHeight="70.0" prefWidth="144.0">
                            <children>
-                                      <Button fx:id="productInfoEditButton" mnemonicParsing="false" onAction="#productSellerInfoEditButtonClicked" prefHeight="25.0" prefWidth="134.0" text="edit seller info">
+                                      <Button fx:id="productInfoEditButton" mnemonicParsing="false" onAction="#productInfoEditButtonClicked" prefHeight="25.0" prefWidth="134.0" text="Edit product">
                                  <padding>
                                     <Insets bottom="5.0" />
                                  </padding>
@@ -167,7 +167,7 @@
                                     <Insets bottom="5.0" />
                                  </VBox.margin>
                               </Button>
-                              <Button fx:id="productSellerInfoEditButton" mnemonicParsing="false" onAction="#productInfoEditButtonClicked" prefHeight="25.0" prefWidth="131.0" text="edit product info " />
+                              <Button fx:id="productSellerInfoEditButton" mnemonicParsing="false" onAction="#productSellerInfoEditButtonClicked" prefHeight="25.0" prefWidth="131.0" text="Edit seller" />
                            </children>
                         </VBox>
                         <VBox alignment="CENTER_RIGHT" prefHeight="70.0" prefWidth="105.0">

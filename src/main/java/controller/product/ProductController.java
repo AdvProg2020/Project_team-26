@@ -14,11 +14,13 @@ public class ProductController implements IProductController {
     ProductRepository productRepository;
     ProductSellerRepository productSellerRepository;
     CategoryRepository categoryRepository;
+    UserRepository userRepository;
 
     public ProductController(RepositoryContainer repositoryContainer) {
         this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
         this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
         categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
+        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
     @Override
@@ -139,7 +141,7 @@ public class ProductController implements IProductController {
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to edit productSeller");
-        if (!productSeller.getSeller().equals(productSeller))
+        if (productSeller.getSeller().getId() != (user.getId()))
             throw new NoAccessException("You can only change your own products");
         newProductSeller.setId(productSeller.getId());
         productSellerRepository.editRequest(newProductSeller);
