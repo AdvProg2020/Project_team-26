@@ -39,6 +39,7 @@ public class OffController implements IOffController {
     @Override
     public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "seller can create a off");
+        newOff.setSeller((Seller) Session.getSession(token).getLoggedInUser());
         offRepository.addRequest(newOff);
     }
 
@@ -62,8 +63,10 @@ public class OffController implements IOffController {
             offItem = new OffItem(productSeller, priceInOff);
         }
         offItems.add(offItem);
-        if (!isFirstTime)
+        if (!isFirstTime) {
+            off.setSeller((Seller) Session.getSession(token).getLoggedInUser());
             offRepository.addRequest(off);
+        }
 
     }
 
@@ -141,6 +144,7 @@ public class OffController implements IOffController {
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
         if (!seller.getAllOffs(new Pageable()).contains(off))
             throw new NoAccessException("you can only change your off");
+        off.setSeller((Seller) Session.getSession(token).getLoggedInUser());
         offRepository.addRequest(off);
     }
 }
