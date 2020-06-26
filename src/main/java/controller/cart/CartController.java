@@ -77,7 +77,7 @@ public class CartController implements ICartController {
         }
 
         Customer customer = (Customer) userRepository.getById(loggedInUser.getId());
-        if (!customer.getAvailablePromos().stream().anyMatch(userPromo -> userPromo.equals(promo))) {
+        if (!customer.getAvailablePromos().stream().anyMatch(usedPromo -> promo.equals(usedPromo))) {
             throw new PromoNotAvailableException("This promo is not for you.");
         }
 
