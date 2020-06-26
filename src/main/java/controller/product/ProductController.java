@@ -133,13 +133,11 @@ public class ProductController implements IProductController {
 
     @Override
     public void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException {
-        Product product = productRepository.getById(id);
-        if (product == null)
-            throw new InvalidIdException("There is no product with this id to change");
         User user = Session.getSession(token).getLoggedInUser();
+        Product product = productRepository.getProductBySellerId(id, user.getId());
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to edit product");
-        if (productRepository.getProductBySellerId(id, user.getId()) == null)
+        if (product == null)
             throw new NoAccessException("You can only change your own products");
         newProduct.setId(id);
         productRepository.editRequest(newProduct, user);

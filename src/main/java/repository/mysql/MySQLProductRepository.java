@@ -87,21 +87,21 @@ public class MySQLProductRepository
     public void editRequest(Product product, User requestedBy) {
         Product oldProduct = getById(product.getId());
 
-        if (oldProduct.getName().equals(product.getName())) {
+        if (!oldProduct.getName().equals(product.getName())) {
             Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProduct(oldProduct);
             request.setForEdit("name", product.getName());
             requestRepository.save(request);
         }
 
-        if (oldProduct.getBrand().equals(product.getBrand())) {
+        if (!oldProduct.getBrand().equals(product.getBrand())) {
             Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProduct(oldProduct);
             request.setForEdit("brand", product.getBrand());
             requestRepository.save(request);
         }
 
-        if (oldProduct.getDescription().equals(product.getDescription())) {
+        if (!oldProduct.getDescription().equals(product.getDescription())) {
             Request request = new Request(requestedBy, new Date(), RequestType.EDIT, RequestStatus.PENDING);
             request.setProduct(oldProduct);
             request.setForEdit("description", product.getDescription());
