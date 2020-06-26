@@ -164,4 +164,8 @@ public class AuthenticationController implements IAuthenticationController {
         }
     }
 
+    public boolean doWeHaveAManager() {
+        return userRepository.doWeHaveAManager();
+    }
+
 }

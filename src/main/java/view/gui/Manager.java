@@ -17,9 +17,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Pair;
 import model.enums.Role;
 import model.User;
+import repository.UserRepository;
 import view.cli.ControllerContainer;
 import view.gui.admin.AdminRegistryController;
 import view.gui.authentication.AuthenticationStageManager;
@@ -52,6 +54,9 @@ public class Manager implements Reloadable {
     }
 
     public void openPage(String pageName, int id) throws IOException {
+        if(!((AuthenticationController)controllerContainer.getController(ControllerContainer.Controller.AuthenticationController)).doWeHaveAManager()) {
+            showAdminRegistryMenu();
+        }
         pages.add(new Pair<>(pageName, id));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
         Parent parent = loader.load();
@@ -293,6 +298,7 @@ public class Manager implements Reloadable {
         popUp.setScene(new Scene((Parent) node));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
+        popUp.initStyle(StageStyle.UNDECORATED);
         popUp.show();
     }
 
