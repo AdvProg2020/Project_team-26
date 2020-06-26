@@ -199,4 +199,23 @@ public class Product {
     public Map<CategoryFeature, String> getCategoryFeatures() {
         return categoryFeatures;
     }
+
+    @Override
+    public String toString() {
+        return "Id: " + id + "\n" +
+                "Name: " + name + "\n" +
+                "Brand" + brand + "\n" +
+                "Description: '" + description + "\n" +
+                "Category: " + category.getName() + "\n" +
+                "Category Features:\n" + categoryFeaturesToString();
+    }
+
+    private String categoryFeaturesToString() {
+        String result = "";
+        for (CategoryFeature key : categoryFeatures.keySet()) {
+            String value = categoryFeatures.get(key);
+            result += "    " + key.getFeatureName() + ": " + value + "\n";
+        }
+        return result.trim();
+    }
 }

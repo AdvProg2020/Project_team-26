@@ -148,4 +148,41 @@ public class Request {
     public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
+
+    @Override
+    public String toString() {
+        return "Request Id: " + id + "\n" +
+                "Requested By: " + requestedBy.getFullName() + "\n" +
+                "With Username: " + requestedBy.getUsername() + "\n" +
+                "Date: " + requestTime + "\n" +
+                "Request Type: " + requestType + "\n" +
+                "Change Type: " + type + "\n\n" + requestToString();
+
+
+    }
+
+    private String requestToString() {
+        if(type.equals("Product")) {
+            if(requestType == RequestType.ADD) {
+                return product + "\n\n" + productSeller;
+            } else if(requestType == RequestType.EDIT) {
+                return product + "\n\n" + changeToString();
+            } else {
+                return product.toString();
+            }
+        } else if(type.equals("ProductSeller")) {
+            if(requestType == RequestType.EDIT) {
+                return productSeller + "\n\n" + changeToString();
+            } else {
+                return productSeller.toString();
+            }
+        } else {
+            return off.toString();
+        }
+    }
+
+    private String changeToString() {
+        return "Changed Field: " + fieldName + "\n" +
+                "New Value: " + newValue;
+    }
 }

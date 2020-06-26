@@ -62,7 +62,7 @@ public class Off {
         return seller;
     }
 
-    public Status getStatus(){
+    public Status getStatus() {
         return status;
     }
 
@@ -113,10 +113,28 @@ public class Off {
     }
 
     @Override
-    public Off clone()  {
+    public Off clone() {
         Off newOff = new Off();
         newOff.setSeller(seller);
         newOff.setItems(items);
         return newOff;
+    }
+
+    @Override
+    public String toString() {
+        return "Id: " + id + "\n" +
+                "Seller: " + seller.getFullName() + "\n" +
+                "With Username: " + seller.getUsername() + "\n" +
+                "Start Date: " + startDate + "\n" +
+                "End Date: " + endDate + "\n" + itemsToString();
+    }
+
+    private String itemsToString() {
+        String result = "";
+        for (OffItem item : items) {
+            result += "    Product Name: " + item.getProductSeller().getProduct().getName() +
+                    "    Price In Off: " + item.getPriceInOff();
+        }
+        return result;
     }
 }
