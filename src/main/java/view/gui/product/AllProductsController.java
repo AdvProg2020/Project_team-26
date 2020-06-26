@@ -48,6 +48,15 @@ public class AllProductsController implements InitializableController, Reloadabl
     private Slider rate;
     @FXML
     private VBox price;
+    @FXML
+    private Slider minRate;
+    @FXML
+    private Slider maxRate;
+    @FXML
+    private Slider maxPrice;
+    @FXML
+    private Slider minPrice;
+
 
     public void initialize(int id) throws IOException {
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().
@@ -59,13 +68,6 @@ public class AllProductsController implements InitializableController, Reloadabl
         categoryListController.setReloadable(this);
         categoryListController.initialize(1);
         reload();
-        /*RangeSlider slider = new RangeSlider(0, 100000, 0, 100000);
-        //Setting the slider properties
-        slider.setShowTickLabels(true);
-        slider.setShowTickMarks(true);
-        slider.setMajorTickUnit(0.5);
-        slider.setBlockIncrement(0.5);
-        price.getChildren().addAll(slider);*/
     }
 
     @Override
@@ -132,10 +134,23 @@ public class AllProductsController implements InitializableController, Reloadabl
         if (descriptionField.getText() != null && !descriptionField.getText().equals("")) {
             filter.put("description", descriptionField.getText());
         }
-        if (rate.getValue() >= 0.5)
-            filter.put("rate", "" + rate.getValue());
-        // TODO: add price to filter*/
+        filter.put("rate", makeRate());
+        filter.put("price", makePrice());
         return filter;
+    }
+
+    private String makeRate() {
+        if (minRate.getValue() > maxRate.getValue()) {
+            return maxRate.getValue() + "-" + minRate.getValue();
+        }
+        return minRate.getValue() + "-" + maxRate.getValue();
+    }
+
+    private String makePrice() {
+        if (minPrice.getValue() > maxPrice.getValue()) {
+            return maxPrice.getValue() + "-" + minPrice.getValue();
+        }
+        return minPrice.getValue() + "-" + maxPrice.getValue();
     }
 
     private String extractSortField() {
