@@ -64,11 +64,11 @@ public class MySQLRequestRepository
         switch (request.getRequestType()) {
             case ADD:
                 product.setStatus(Status.ACTIVE);
-                productRepository.save(product);
                 product.getSellerList().forEach(productSeller -> {
                     productSeller.setStatus(Status.ACTIVE);
                     productSellerRepository.save(productSeller);
                 });
+                productRepository.save(product);
                 break;
             case EDIT:
                 acceptEditProduct(product, request.getFieldName(), request.getNewValue());
