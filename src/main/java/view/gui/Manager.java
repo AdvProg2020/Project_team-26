@@ -54,9 +54,6 @@ public class Manager implements Reloadable {
     }
 
     public void openPage(String pageName, int id) throws IOException {
-        if(!((AuthenticationController)controllerContainer.getController(ControllerContainer.Controller.AuthenticationController)).doWeHaveAManager()) {
-            showAdminRegistryMenu();
-        }
         pages.add(new Pair<>(pageName, id));
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
         Parent parent = loader.load();
