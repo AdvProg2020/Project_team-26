@@ -2,7 +2,9 @@ package view.gui.authentication;
 
 import controller.account.Account;
 import controller.account.AuthenticationController;
+import controller.account.UserInfoController;
 import controller.interfaces.account.IAuthenticationController;
+import controller.interfaces.account.IShowUserController;
 import exception.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -23,7 +25,7 @@ import java.io.IOException;
 
 public class RegisterMenuController implements InitializableController {
 
-    private final ObservableList<String> roles = FXCollections.observableArrayList("Manager", "Customer", "Seller");
+    private final ObservableList<String> roles = FXCollections.observableArrayList("Customer", "Seller");
 
     @FXML
     private TextField usernameText;
@@ -63,6 +65,7 @@ public class RegisterMenuController implements InitializableController {
     private Button registerButton;
     private TextField textField;
     private IAuthenticationController controller;
+    private IShowUserController showUserController;
     private Reloadable reloadable;
 
     public RegisterMenuController() {
@@ -112,7 +115,6 @@ public class RegisterMenuController implements InitializableController {
     }
 
     public void login() {
-        controller = (AuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
         String username = usernameTextLogin.getText();
         String password = passwordTextLogin.getText();
         if (username.isBlank() || password.isBlank()) {
@@ -121,7 +123,9 @@ public class RegisterMenuController implements InitializableController {
             try {
                 controller.login(username, password, Constants.manager.getToken());
                 Constants.manager.setLoggedIn(true);
+                Constants.manager.setRole(showUserController.getUserByName(username,Constants.manager.getToken()).getRole());
                 reloadable.reload();
+                Constants.manager.showSuccessPopUp("You have logged in.");
                 Constants.manager.closePopUp();
                 return;
             } catch (InvalidTokenException e) {
@@ -135,6 +139,8 @@ public class RegisterMenuController implements InitializableController {
             } catch (PasswordIsWrongException e) {
                 errorLabelLogin.setText("Your password is Wrong.");
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
                 e.printStackTrace();
             }
         }
@@ -204,6 +210,8 @@ public class RegisterMenuController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
+        controller = (AuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
+        showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         roleChoice.setItems(roles);
         registerButton = new Button("Register");
         registerButton.setLayoutX(255);
