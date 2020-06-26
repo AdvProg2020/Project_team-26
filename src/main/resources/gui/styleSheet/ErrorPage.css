@@ -1,4 +1,4 @@
-.root{
+.root {
     -fx-background: linear-gradient(#e66465, #9198e5);
 }
 
@@ -19,8 +19,8 @@
 .button:hover {
     -fx-background-color: #f1f1f1;
 }
+
 .label {
     -fx-font-size: 36;
     -fx-color: white;
 }
-

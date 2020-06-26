@@ -13,10 +13,7 @@ import repository.mysql.utils.EntityManagerProvider;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Root;
+import javax.persistence.criteria.*;
 import java.util.List;
 
 public class MySQLCommentRepository extends MySQLRepository<Comment> implements CommentRepository {
@@ -35,7 +32,10 @@ public class MySQLCommentRepository extends MySQLRepository<Comment> implements 
             Root<Comment> root = cq.from(Comment.class);
 
             cq.select(root);
-            cq.where(cb.and(cb.equal(root.get("state"), CommentState.CONFIRMED)));
+            Predicate confirmedPredicate = cb.equal(root.get("state"), CommentState.CONFIRMED);
+            Predicate productPredicate = cb.equal(root.get("product"), productId);
+            cq.where(cb.and(confirmedPredicate, productPredicate));
+            cq.distinct(true);
             TypedQuery<Comment> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
 
             return typedQuery.getResultList();

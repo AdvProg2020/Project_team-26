@@ -21,7 +21,7 @@
       </AnchorPane>
    </bottom>
    <center>
-      <Label stylesheets="@../../../../../../../Desktop/css/src/sample/ErrorPage.css" text="Success" BorderPane.alignment="CENTER">
+      <Label text="Success" BorderPane.alignment="CENTER">
          <font>
             <Font size="18.0" />
          </font></Label>

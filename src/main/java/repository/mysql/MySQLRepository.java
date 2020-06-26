@@ -41,7 +41,8 @@ public abstract class MySQLRepository<T> implements Repository<T> {
             CriteriaQuery<T> cq = cb.createQuery(tClass);
             Root<T> root = cq.from(tClass);
 
-            CriteriaQuery<T> select = cq.select(root);
+            cq.select(root);
+            cq.distinct(true);
             TypedQuery<T> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
 
             return typedQuery.getResultList();
