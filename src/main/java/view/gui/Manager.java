@@ -333,10 +333,11 @@ public class Manager implements Reloadable {
     }
 
     public void logout() throws IOException, InvalidTokenException, NotLoggedINException {
-    AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
-    controller.logout(getToken());
+        AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
+        controller.logout(getToken());
         setLoggedIn(false);
-        reload();
+        reloadTop();
+        openPage("AllProducts", 0);
     }
 
     @Override
