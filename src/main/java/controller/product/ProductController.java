@@ -88,7 +88,7 @@ public class ProductController implements IProductController {
             throw new NoAccessException("You must be a seller|manager to remove a product");
         } else if (productSellerRepository.getById(productSellerId) == null) {
             throw new NoAccessException("You don't have this item for sale.");
-        } else if (!productRepository.getById(productId).hasSeller(user)) {
+        } else if (productRepository.getProductBySellerId(productId, user.getId()) == null) {
             throw new NoAccessException("You don't have this item for sale.");
         } else {
             productSellerRepository.deleteRequest(productSellerId);
