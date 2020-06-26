@@ -56,6 +56,7 @@ public class Manager implements Reloadable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
         Parent parent = loader.load();
         InitializableController controller = loader.getController();
+        showNode(parent);
         try {
             controller.initialize(id);//TODO handle kon
             reloadTop();
@@ -68,7 +69,6 @@ public class Manager implements Reloadable {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.openPage("AllProducts", 0);
         }
-        showNode(parent);
     }
 
     public void back() throws IOException {
