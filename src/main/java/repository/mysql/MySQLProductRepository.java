@@ -11,6 +11,7 @@ import repository.RequestRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
@@ -61,9 +62,24 @@ public class MySQLProductRepository
                 productSeller.setSeller((Seller) requestedBy);
             });
         }
-        save(product);
         request.setProduct(product);
-        requestRepository.save(request);
+        EntityManager em = EntityManagerProvider.getEntityManager();
+        EntityTransaction et = null;
+        try {
+            et = em.getTransaction();
+            et.begin();
+            em.persist(product);
+            em.persist(request);
+            et.commit();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
