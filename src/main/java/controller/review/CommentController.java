@@ -68,7 +68,7 @@ public class CommentController implements ICommentController {
     }
 
     public List<Comment> getConfirmedCommentsForAProduct(int productId, String token) {
-        return commentRepository.getConfirmedComments(productId);
+        return commentRepository.getConfirmedComments(productId,null);
     }
 
     public void removeComment(int id, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {
