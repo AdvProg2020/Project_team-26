@@ -225,8 +225,19 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 }
             }
         } else if (saveButton.getText().equals("Add")) {
-
-
+            ProductSeller newProductSeller = new ProductSeller();
+            newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
+            newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
+            newProductSeller.setProduct(this.newProductForAddingToSellers);
+            try {
+                productController.addSeller(this.newProductForAddingToSellers.getId(),newProductSeller,Constants.manager.getToken());
+            } catch (NotSellerException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.printStackTrace();
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -244,10 +255,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
 
     @Override
     public void reload() throws IOException {
-        ProductSeller newProductSeller = new ProductSeller();
         loadCategoryBoxes(categoryListController.getCategory());
-        newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
-        newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
     }
 
     public class FeatureBox {

@@ -39,15 +39,13 @@ public class ProductController implements IProductController {
     }
 
     @Override
-    public void addSeller(int id, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException {
-
+    public void addSeller(int productId, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException {
         if (productSeller == null)
             throw new NullPointerException();
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to add seller");
-        if (!productSeller.getSeller().equals(user))
-            throw new NoAccessException("You can only add yourself as seller");
+        productSeller.setSeller((Seller) user);
         productSellerRepository.addRequest(productSeller);
     }
 
