@@ -120,6 +120,7 @@ public class PersonalInfoController implements InitializableController {
         lastName.setText(user.getLastName());
         email.setText(user.getEmail());
         balance.setText("" + user.getCredit());
+        balance.setEditable(false);
         shopTextField.setText("");
         if (user.getRole() == Role.SELLER) {
             shopTextField.setText(user.getCompanyName());
@@ -209,7 +210,6 @@ public class PersonalInfoController implements InitializableController {
                 if (thisUserRole == Role.SELLER)
                     changedInfo.put("Company Name", usernameTextField.getText());
                 try {
-                    userInfoController.changeBalance(Long.parseLong(balance.getText()), Constants.manager.getToken());
                     userInfoController.changeInfo(changedInfo, Constants.manager.getToken());
                     setEditable(false);
                     editButton.setText("Edit");
@@ -252,10 +252,6 @@ public class PersonalInfoController implements InitializableController {
             //todo red the label
             result = false;
         }
-        if (!Constants.manager.checkIsLong(balance.getText())) {
-            //todo red the label
-            result = false;
-        }
         return result;
     }
 
@@ -264,7 +260,6 @@ public class PersonalInfoController implements InitializableController {
         firstName.setEditable(type);
         lastName.setEditable(type);
         email.setEditable(type);
-        balance.setEditable(type);
         shopTextField.setEditable(type);
     }
 

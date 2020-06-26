@@ -79,8 +79,10 @@ public class MainController {
 
     @FXML
     public void changeColor() {
+       /* new Background(new BackgroundFill(Color.rgb(10, 10, 20), CornerRadii.EMPTY, Insets.EMPTY)*/
         colorPicker.getBackground();
         mainPane.setBackground(colorPicker.getBackground());
+        topBox.setBackground(colorPicker.getBackground());
     }
 
     public void back() throws IOException {
