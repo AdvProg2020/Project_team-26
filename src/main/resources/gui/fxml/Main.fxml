@@ -14,44 +14,44 @@
          <children>
             <Button fx:id="backButton" mnemonicParsing="false" onAction="#back" text="Back">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
             <Button fx:id="homeButton" mnemonicParsing="false" onAction="#openHome" text="Home">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
             <Region HBox.hgrow="ALWAYS" />
             <Button fx:id="compareButton" layoutX="838.0" layoutY="30.0" mnemonicParsing="false" onAction="#openCompare" text="Compare">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
             <Button fx:id="cartButton" layoutX="30.0" layoutY="30.0" mnemonicParsing="false" onAction="#openCart" text="Cart">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
             <Region prefWidth="50.0" />
             <Button fx:id="loginButton" layoutX="1212.0" layoutY="30.0" mnemonicParsing="false" onAction="#openLogin" text="Login">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
             <Button fx:id="registerButton" layoutX="1200.0" layoutY="30.0" mnemonicParsing="false" onAction="#openRegister" text="Register">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
             <Button fx:id="accountButton" layoutX="1200.0" layoutY="30.0" mnemonicParsing="false" onAction="#openAccount" text="Account">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
             <Button fx:id="logoutButton" layoutX="1200.0" layoutY="30.0" mnemonicParsing="false" onAction="#logout" text="Logout">
                <font>
-                  <Font size="14.0" />
+                  <Font name="Californian FB Italic" size="14.0" />
                </font>
             </Button>
          </children>

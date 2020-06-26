@@ -31,7 +31,7 @@
                      <children>
                         <Label prefHeight="43.0" prefWidth="62.0" text="About: ">
                            <font>
-                              <Font size="18.0" />
+                              <Font name="Cambria" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets right="20.0" />
@@ -41,32 +41,32 @@
                            <children>
                               <Label prefHeight="61.0" prefWidth="98.0" text="Username: ">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="Cambria" size="14.0" />
                                  </font>
                               </Label>
                               <Label prefHeight="61.0" prefWidth="98.0" text="Email:">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="Cambria" size="14.0" />
                                  </font>
                               </Label>
                               <Label prefHeight="61.0" prefWidth="98.0" text="Role:">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="Cambria" size="14.0" />
                                  </font>
                               </Label>
                               <Label prefHeight="61.0" prefWidth="98.0" text="First Name:">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="Cambria" size="14.0" />
                                  </font>
                               </Label>
                               <Label prefHeight="61.0" prefWidth="98.0" text="Last Name:">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="Cambria" size="14.0" />
                                  </font>
                               </Label>
                               <Label prefHeight="61.0" prefWidth="98.0" text="Password:">
                                  <font>
-                                    <Font size="14.0" />
+                                    <Font name="Cambria" size="14.0" />
                                  </font>
                               </Label>
                            </children>
@@ -107,11 +107,17 @@
                                  <VBox.margin>
                                     <Insets top="50.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="Cambria" size="12.0" />
+                                 </font>
                               </Button>
                               <Button mnemonicParsing="false" onAction="#uploadPhoto" prefHeight="44.0" prefWidth="101.0" text="Upload Photo">
                                  <VBox.margin>
                                     <Insets top="30.0" />
                                  </VBox.margin>
+                                 <font>
+                                    <Font name="Bookshelf Symbol 7" size="12.0" />
+                                 </font>
                               </Button>
                            </children>
                         </VBox>

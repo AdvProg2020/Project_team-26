@@ -11,13 +11,16 @@
    <children>
       <Label fx:id="currentCategory" text="Category Name:">
          <font>
-            <Font size="15.0" />
+            <Font name="DejaVu Serif Bold" size="15.0" />
          </font>
          <VBox.margin>
             <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
          </VBox.margin>
       </Label>
-      <Button fx:id="goToParentButton" mnemonicParsing="false" onAction="#goToParent" prefHeight="26.0" prefWidth="249.0" text="Go To Parent Category" />
+      <Button fx:id="goToParentButton" mnemonicParsing="false" onAction="#goToParent" prefHeight="26.0" prefWidth="249.0" text="Go To Parent Category">
+         <font>
+            <Font name="Castellar" size="12.0" />
+         </font></Button>
       <ListView fx:id="categoryList" minWidth="100.0" />
    </children>
 </VBox>
