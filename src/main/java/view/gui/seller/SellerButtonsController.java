@@ -164,6 +164,7 @@ public class SellerButtonsController implements InitializableController {
         try {
             productTableForSellerController.load(productController.getAllProductWithFilterForSellerId((Map<String, String>) new HashMap<>().put(null, "sd")/*todo saljf*/, "startDate", true, 0, 50, Constants.manager.getToken()), this.personalInfoController);
             personalInfoController.setNodeForTableScrollPane(node);
+
         } catch (NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {

@@ -155,10 +155,11 @@ public class CreateSingleProductForSellerController implements InitializableCont
             newProduct.getSellerList().add(newProductSeller);
             try {
                 productController.createProduct(newProduct, Constants.manager.getToken());
-
+                this.personalInfoController.clearBox();
             } catch (ObjectAlreadyExistException e) {
                 try {
                     productController.addSeller(((Product) e.getObject()).getId(), newProductSeller, Constants.manager.getToken());
+                    this.personalInfoController.clearBox();
                 } catch (NotSellerException | NoAccessException ex) {
                     Constants.manager.showErrorPopUp(e.getMessage());
                 } catch (InvalidTokenException ex) {
@@ -171,13 +172,15 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 Constants.manager.showErrorPopUp(e.getMessage());
                 Constants.manager.setTokenFromController();
             }
-
-        }//todo message please fill all
+        }
 
 
     }
 
     private boolean isEveryThingOk() {
+        if (nameTextField.getText().isEmpty()|| nameTextField.getText().isBlank()){
+
+        }
         return !nameTextField.getText().isEmpty() && !priceTextField.getText().isEmpty() && !amountTextField.getText().isEmpty() &&
                 !descriptionField.getText().isEmpty() && !brandTextField.getText().isEmpty() &&
                 !nameTextField.getText().isBlank() && !priceTextField.getText().isBlank() && !amountTextField.getText().isBlank() &&
@@ -191,7 +194,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
         loadCategoryBoxes(categoryListController.getCategory());
     }
 
-    private class FeatureBox {
+    public class FeatureBox {
         private HBox container;
         private Label name;
         private TextField description;

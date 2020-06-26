@@ -22,7 +22,7 @@ public class UserInfoController implements IUserInfoController {
 
     public UserInfoController(RepositoryContainer repositoryContainer) {
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        allFields = Arrays.asList("Username", "FirstName", "LastName", "Email", "Company Name");
+        allFields = Arrays.asList("Username", "FirstName", "LastName", "Email", "Company Name","Balance");
     }
 
 
