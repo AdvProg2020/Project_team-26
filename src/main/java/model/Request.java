@@ -35,7 +35,7 @@ public class Request {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "product_seller_id")
     private ProductSeller productSeller;
 
