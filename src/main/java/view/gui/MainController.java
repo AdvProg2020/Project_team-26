@@ -1,5 +1,7 @@
 package view.gui;
 
+import exception.InvalidTokenException;
+import exception.NotLoggedINException;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -98,7 +100,7 @@ public class MainController {
         Constants.manager.openAccountPage();
     }
 
-    public void logout() throws IOException {
+    public void logout() throws IOException, NotLoggedINException, InvalidTokenException {
         Constants.manager.logout();
     }
 }
