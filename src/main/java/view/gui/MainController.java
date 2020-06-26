@@ -5,7 +5,10 @@ import exception.NotLoggedINException;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import model.enums.Role;
@@ -37,6 +40,8 @@ public class MainController {
     private Button backButton;
     @FXML
     private Button compareButton;
+    @FXML
+    private ColorPicker colorPicker;
 
     public void setLeft(Node node) {
         mainPane.setLeft(node);
@@ -60,16 +65,22 @@ public class MainController {
             topBox.getChildren().addAll(loginButton, registerButton);
             cartButton.setVisible(true);
         }
-        if(Constants.manager.getPages().size() > 1) {
+        if (Constants.manager.getPages().size() > 1) {
             backButton.setDisable(false);
         } else {
             backButton.setDisable(true);
         }
-        if(Constants.manager.getCompareList().size() >= 1) {
+        if (Constants.manager.getCompareList().size() >= 1) {
             compareButton.setVisible(true);
         } else {
             compareButton.setVisible(false);
         }
+    }
+
+    @FXML
+    public void changeColor() {
+        colorPicker.getBackground();
+        mainPane.setBackground(colorPicker.getBackground());
     }
 
     public void back() throws IOException {
