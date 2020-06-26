@@ -172,13 +172,15 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 Constants.manager.showErrorPopUp(e.getMessage());
                 Constants.manager.setTokenFromController();
             }
-
-        }//todo message please fill all
+        }
 
 
     }
 
     private boolean isEveryThingOk() {
+        if (nameTextField.getText().isEmpty()|| nameTextField.getText().isBlank()){
+
+        }
         return !nameTextField.getText().isEmpty() && !priceTextField.getText().isEmpty() && !amountTextField.getText().isEmpty() &&
                 !descriptionField.getText().isEmpty() && !brandTextField.getText().isEmpty() &&
                 !nameTextField.getText().isBlank() && !priceTextField.getText().isBlank() && !amountTextField.getText().isBlank() &&
