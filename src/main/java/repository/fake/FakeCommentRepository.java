@@ -75,7 +75,7 @@ public class FakeCommentRepository implements CommentRepository {
 
 
     @Override
-    public List<Comment> getConfirmedComments(int productId) {
+    public List<Comment> getConfirmedComments(int productId, Pageable pageable) {
         return null;
     }
 }
