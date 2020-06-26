@@ -3,12 +3,11 @@ package model;
 import model.enums.RequestType;
 import model.enums.Status;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Entity
 @Table(name = "product")
@@ -47,7 +46,7 @@ public class Product {
     private List<ProductSeller> sellerList;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
-    private List<Comment> comments;
+    private Set<Comment> comments;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
@@ -71,7 +70,7 @@ public class Product {
         this.description = description;
         sellerList = new ArrayList<>();
         categoryFeatures = new HashMap<>();
-        comments = new ArrayList<>();
+        comments = new HashSet<>();
     }
 
     public int getId() {
@@ -119,7 +118,7 @@ public class Product {
         return amountBought;
     }
 
-    public List<Comment> getComments() {
+    public Set<Comment> getComments() {
         return comments;
     }
 
