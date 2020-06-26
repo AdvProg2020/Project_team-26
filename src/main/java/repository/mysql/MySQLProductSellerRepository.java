@@ -9,6 +9,7 @@ import repository.RequestRepository;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -31,9 +32,25 @@ public class MySQLProductSellerRepository
     public void addRequest(ProductSeller productSeller) {
         productSeller.setStatus(Status.DEACTIVE);
         Request request = new Request(productSeller.getSeller(), new Date(), RequestType.ADD, RequestStatus.PENDING);
-        save(productSeller);
         request.setProductSeller(productSeller);
-        requestRepository.save(request);
+
+        EntityManager em = EntityManagerProvider.getEntityManager();
+        EntityTransaction et = null;
+        try {
+            et = em.getTransaction();
+            et.begin();
+            em.persist(productSeller);
+            em.persist(request);
+            et.commit();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override

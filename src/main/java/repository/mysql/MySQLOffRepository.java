@@ -6,7 +6,10 @@ import model.enums.RequestType;
 import model.enums.Status;
 import repository.OffRepository;
 import repository.RequestRepository;
+import repository.mysql.utils.EntityManagerProvider;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import java.util.Date;
 import java.util.List;
 
@@ -24,9 +27,26 @@ public class MySQLOffRepository
     public void addRequest(Off off) {
         off.setStatus(Status.DEACTIVE);
         Request request = new Request(off.getSeller(), new Date(), RequestType.ADD, RequestStatus.PENDING);
-        save(off);
+        off.getItems().forEach(offItem -> offItem.setOff(off));
         request.setOff(off);
-        requestRepository.save(request);
+
+        EntityManager em = EntityManagerProvider.getEntityManager();
+        EntityTransaction et = null;
+        try {
+            et = em.getTransaction();
+            et.begin();
+            em.persist(off);
+            em.persist(request);
+            et.commit();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override

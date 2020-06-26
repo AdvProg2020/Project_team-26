@@ -60,5 +60,7 @@ public class OffItem {
         this.priceInOff = priceInOff;
     }
 
-
+    public void setOff(Off off) {
+        this.off = off;
+    }
 }

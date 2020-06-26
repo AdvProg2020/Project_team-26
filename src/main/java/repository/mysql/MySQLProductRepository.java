@@ -63,6 +63,7 @@ public class MySQLProductRepository
             });
         }
         request.setProduct(product);
+
         EntityManager em = EntityManagerProvider.getEntityManager();
         EntityTransaction et = null;
         try {
