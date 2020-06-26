@@ -71,11 +71,6 @@ public class OrderController implements IOrderController {
         }
     }
 
-    private boolean doesHeOwnTheProduct(Product product, Seller seller) {
-        return product.getSellerList().stream().anyMatch(e -> e.getSeller().equals(seller));
-    }
-
-
     public Order getASingleOrder(int id, String token) throws NoAccessException, NoObjectIdException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {

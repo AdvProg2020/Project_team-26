@@ -11,6 +11,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import model.enums.Role;
 import net.bytebuddy.matcher.CollectionOneToOneMatcher;
 
@@ -80,7 +82,8 @@ public class MainController {
     @FXML
     public void changeColor() {
         colorPicker.getBackground();
-        mainPane.setBackground(colorPicker.getBackground());
+        Background background = new Background(new BackgroundFill(Paint.valueOf(toHexString(colorPicker.getValue())), null, null));
+        mainPane.setBackground(background);
     }
 
     public void back() throws IOException {
@@ -113,5 +116,14 @@ public class MainController {
 
     public void logout() throws IOException, NotLoggedINException, InvalidTokenException {
         Constants.manager.logout();
+    }
+
+    private String toHexString(Color color) {
+        int r = ((int) Math.round(color.getRed()     * 255)) << 24;
+        int g = ((int) Math.round(color.getGreen()   * 255)) << 16;
+        int b = ((int) Math.round(color.getBlue()    * 255)) << 8;
+        int a = ((int) Math.round(color.getOpacity() * 255));
+
+        return String.format("#%08X", (r + g + b + a));
     }
 }
