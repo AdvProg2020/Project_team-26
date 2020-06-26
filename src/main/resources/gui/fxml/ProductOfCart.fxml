@@ -7,6 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.product.SingleProductOfCartController">
@@ -26,7 +27,10 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Label prefHeight="43.0" prefWidth="80.0" text="Price" />
+                                <Label prefHeight="43.0" prefWidth="80.0" text="Price">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -40,7 +44,10 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Label prefHeight="43.0" prefWidth="80.0" text="Off" />
+                                <Label prefHeight="43.0" prefWidth="80.0" text="SelleName">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -58,7 +65,10 @@
                     <children>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <Label fx:id="amountLabel" prefHeight="43.0" prefWidth="80.0" text="Amount" />
+                                <Label fx:id="amountLabel" prefHeight="43.0" prefWidth="80.0" text="Amount">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
                             </children>
                         </HBox>
                         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -74,7 +84,10 @@
                             <children>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                     <children>
-                                        <Label prefHeight="43.0" prefWidth="80.0" text="Total price" />
+                                        <Label prefHeight="43.0" prefWidth="80.0" text="Total price">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Label>
                                     </children>
                                 </HBox>
                                 <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">

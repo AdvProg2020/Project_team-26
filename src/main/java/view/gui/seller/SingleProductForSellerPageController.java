@@ -211,8 +211,8 @@ public class SingleProductForSellerPageController implements InitializableContro
         this.imageFile = fileChooser.showOpenDialog(stage);
         if (imageFile == null) {
             Constants.manager.showErrorPopUp("you should choose photo");
-        }
-        productImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
+        } else
+            productImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
     }
 
     @Override

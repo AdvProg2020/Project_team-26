@@ -10,9 +10,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import model.Customer;
 import model.User;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
@@ -29,6 +31,8 @@ public class CustomerButtonController implements InitializableController {
     private IShowUserController showUserController;
     private Customer customer;
     @FXML
+    private ImageView profileImageView;
+    @FXML
     private Button promo;
     @FXML
     private Button orders;
@@ -41,7 +45,8 @@ public class CustomerButtonController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.PromoController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        this.customer = (Customer) user;
+        if (user.getRole() != Role.CUSTOMER || !Constants.manager.isLoggedIn())
+            throw new NoAccessException("must be customer");
         this.userId = id;
         load();
     }
@@ -95,7 +100,7 @@ public class CustomerButtonController implements InitializableController {
         Node node = loader.load();
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
-        personalInfoController.load(customer);
+        personalInfoController.load(customer, profileImageView);
         box.getChildren().addAll(node);
     }
 }

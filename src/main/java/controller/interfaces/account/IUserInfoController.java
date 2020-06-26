@@ -1,6 +1,7 @@
 package controller.interfaces.account;
 
 import exception.*;
+import model.User;
 
 import java.util.List;
 import java.util.Map;
@@ -19,5 +20,9 @@ public interface IUserInfoController {
 
     String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField;
 
-    public void changeInfo(Map<String,String> values, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField;
+    void changeImage(byte[] image, String token) throws InvalidTokenException, NotLoggedINException;
+
+    public void changeInfo(Map<String, String> values, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField;
+
+    public void changeBalance(Long newCredit, String token) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException;
 }

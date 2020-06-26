@@ -5,13 +5,20 @@ import exception.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.enums.Role;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.interfaces.InitializableController;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.List;
 
@@ -23,7 +30,6 @@ public class PersonalInfoController implements InitializableController {
     private String oldPassword = "";
     private String confirmPassword = "";
     //todo hashmap for labels
-
     @FXML
     private Label usernameLabel;
     @FXML
@@ -67,6 +73,8 @@ public class PersonalInfoController implements InitializableController {
     @FXML
     private Button changePasswordButton;
     private Role thisUserRole;
+    private File imageFile;
+    private ImageView profileImage;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -102,7 +110,8 @@ public class PersonalInfoController implements InitializableController {
         });
     }
 
-    public void load(User user) {
+    public void load(User user, ImageView profileImage) {
+        this.profileImage = profileImage;
         this.user = user;
         thisUserRole = user.getRole();
         role.setText(Role.getRoleType(user.getRole()));
@@ -117,6 +126,8 @@ public class PersonalInfoController implements InitializableController {
             shopTextField.setVisible(true);
             shopLabel.setVisible(true);
         }
+        if (user.getImage() != null)
+            profileImage.setImage(new Image(new ByteArrayInputStream(user.getImage())));
     }
 
     private void handleChangePasswordButton() throws IOException {
@@ -162,6 +173,28 @@ public class PersonalInfoController implements InitializableController {
         password.setText("");
     }
 
+    @FXML
+    public void changePhoto() throws IOException {
+        setFile();
+    }
+
+    private void setFile() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = new Stage();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
+        this.imageFile = fileChooser.showOpenDialog(stage);
+        if (imageFile != null) {
+            profileImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
+            try {
+                userInfoController.changeImage(Files.readAllBytes(imageFile.toPath()), Constants.manager.getToken());
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void handleEditButton() throws IOException {
         if (editButton.getText().equals("Edit")) {
             setEditable(true);
@@ -170,14 +203,13 @@ public class PersonalInfoController implements InitializableController {
         } else {
             HashMap<String, String> changedInfo = new HashMap<>();
             if (isEveryThingOk()) {
-                changedInfo.put("Username", usernameTextField.getText());
                 changedInfo.put("FirstName", firstName.getText());
                 changedInfo.put("LastName", lastName.getText());
                 changedInfo.put("Email", email.getText());
                 if (thisUserRole == Role.SELLER)
                     changedInfo.put("Company Name", usernameTextField.getText());
-                changedInfo.put("Balance", balance.getText());
                 try {
+                    userInfoController.changeBalance(Long.parseLong(balance.getText()), Constants.manager.getToken());
                     userInfoController.changeInfo(changedInfo, Constants.manager.getToken());
                     setEditable(false);
                     editButton.setText("Edit");
@@ -200,7 +232,7 @@ public class PersonalInfoController implements InitializableController {
 
     private void handleCancelButton() {
         setEditable(false);
-        load(this.user);
+        load(this.user, this.profileImage);
         editButton.setText("Edit");
         cancelButton.setVisible(false);
         initPasswordButton();

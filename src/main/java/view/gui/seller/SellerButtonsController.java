@@ -11,9 +11,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import model.Seller;
 import model.User;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
@@ -35,6 +37,8 @@ public class SellerButtonsController implements InitializableController {
     private PersonalInfoController personalInfoController;
     private Seller seller;
     @FXML
+    private ImageView profileImageView;
+    @FXML
     private Button createOff;
     @FXML
     private Button createProduct;
@@ -55,6 +59,8 @@ public class SellerButtonsController implements InitializableController {
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
         this.seller = (Seller) user;
+        if (user.getRole() != Role.SELLER || !Constants.manager.isLoggedIn())
+            throw new NoAccessException("must be seller");
         this.userId = id;
         load();
         createOff.setOnMouseClicked(e -> {
@@ -99,7 +105,7 @@ public class SellerButtonsController implements InitializableController {
         Node node = loader.load();
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
-        personalInfoController.load(seller);
+        personalInfoController.load(seller, profileImageView);
         box.getChildren().addAll(node);
     }
 

@@ -22,7 +22,7 @@ public class UserInfoController implements IUserInfoController {
 
     public UserInfoController(RepositoryContainer repositoryContainer) {
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        allFields = Arrays.asList("Username", "FirstName", "LastName", "Email", "Company Name","Balance");
+        allFields = Arrays.asList("Username", "FirstName", "LastName", "Email", "Company Name", "Balance");
     }
 
 
@@ -38,13 +38,23 @@ public class UserInfoController implements IUserInfoController {
 
     public void changePassword(String newPassword, String token) throws InvalidTokenException, NotLoggedINException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
+        if (user == null) {
             throw new NotLoggedINException("You are not Logged In.");
         } else {
             user.changePassword(newPassword);
             userRepository.save(user);
         }
     }
+
+    public void changeImage(byte[] image, String token) throws InvalidTokenException, NotLoggedINException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
+            throw new NotLoggedINException("You are not logged in.");
+        }
+        user.setImage(image);
+        userRepository.save(user);
+    }
+
 
     public void changeInfo(String key, String value, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
         User user = Session.getSession(token).getLoggedInUser();
@@ -70,6 +80,15 @@ public class UserInfoController implements IUserInfoController {
                 default:
                     throw new NoSuchField("No Such Field exists");
             }
+        }
+    }
+
+    public void changeBalance(Long newCredit, String token) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
+            User user = Session.getSession(token).getLoggedInUser();
+        if (user == null) {
+            throw new NotLoggedINException("You are not logged in.");
+        } else {
+            user.changeCredit((newCredit));
         }
     }
 
@@ -134,8 +153,8 @@ public class UserInfoController implements IUserInfoController {
                     .collect(Collectors.toList()));
             throw noSuchField;
         } else {
-            for (Map.Entry<String, String> pair: values.entrySet()) {
-                changeInfo(pair.getKey(),pair.getValue(),token);
+            for (Map.Entry<String, String> pair : values.entrySet()) {
+                changeInfo(pair.getKey(), pair.getValue(), token);
             }
         }
     }
