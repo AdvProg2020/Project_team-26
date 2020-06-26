@@ -76,7 +76,7 @@ public class CartController implements ICartController {
             throw new PromoNotAvailableException("This promo is not available now.");
         }
 
-        Customer customer = (Customer) loggedInUser;
+        Customer customer = (Customer) userRepository.getById(loggedInUser.getId());
         if (!customer.getAvailablePromos().stream().anyMatch(userPromo -> userPromo.equals(promo))) {
             throw new PromoNotAvailableException("This promo is not for you.");
         }
