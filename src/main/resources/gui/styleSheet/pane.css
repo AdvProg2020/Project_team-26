@@ -1,0 +1,141 @@
+.whiteSpot:hover {
+    -fx-background-color: #a56c00;
+}
+
+.whiteSpot {
+
+    -fx-background-color: #edb879;
+}
+
+.whiteSpotS {
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+
+
+    -fx-background-color: #edb879;
+}
+
+.whiteSpotS:hover {
+    -fx-font-size: 14px;
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+
+
+    -fx-background-color: #edb879;
+}
+
+.blackSpot:hover {
+    -fx-background-color: #305cc6;
+
+}
+
+.blackSpot {
+    -fx-background-color: #44bcd8;
+}
+
+.blackSpotS {
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+
+    -fx-background-color: #44bcd8;
+}
+
+.blackSpotS:hover {
+    -fx-font-size: 14px;
+}
+
+.menuPane {
+    -fx-background-color: #9FE933;
+}
+
+.blackRemainig {
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+    -fx-background-color: #6e6e6e;
+}
+
+.blackRemainig:hover {
+    -fx-font-size: 14px;
+}
+
+.whiteRemainig {
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+    -fx-background-color: #f9f1f1;
+}
+
+.whiteRemainig:hover {
+    -fx-font-size: 14px;
+}
+
+.forfeit {
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+    -fx-background-color: #DFA200;
+}
+
+.forfeit {
+    -fx-font-size: 14px;
+}
+
+.turnRemaining {
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+
+    -fx-background-color: #DFA200;
+}
+
+.turnRemaining:hover {
+    -fx-font-size: 14px;
+}
+
+.changeButton {
+    -fx-background-color: linear-gradient(#ffd65b, #e68400),
+    linear-gradient(#ffef84, #f2ba44),
+    linear-gradient(#ffea6a, #efaa22),
+    linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+    linear-gradient(from 0% 0% to 15% 50%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0, 1, 2, 3, 0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+}
+
+.buttonS {
+    -fx-background-color: linear-gradient(#ffd65b, #e68400),
+    linear-gradient(#ffef84, #f2ba44),
+    linear-gradient(#ffea6a, #efaa22),
+    linear-gradient(#ffe657 0%, #f8c202 50%, #eea10b 100%),
+    linear-gradient(from 0% 0% to 15% 50%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0));
+    -fx-background-radius: 30;
+    -fx-background-insets: 0, 1, 2, 3, 0;
+    -fx-text-fill: #654b00;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+
+}
+
+.infoButton {
+    -fx-background-radius: 30;
+    -fx-background-insets: 0, 1, 2, 3, 0;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+}
+
+.simple {
+    -fx-background-radius: 30;
+    -fx-padding: 10 20 10 20;
+}
+.passwordButton{
+    -fx-background-color: linear-gradient(#68613C, #504B2D);
+    -fx-background-radius: 30;
+    -fx-background-insets: 0, 1, 2, 3, 0;
+    -fx-text-fill: #000000;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+    -fx-padding: 10 20 10 20;
+
+}
