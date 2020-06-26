@@ -31,14 +31,16 @@ public class AuthenticationController implements IAuthenticationController {
         checkUsernameFormat(username);
         checkUsernameAndPassword(username, password);
         userSession.login(userRepository.getUserByUsername(username));
-        if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
-            Random r = new Random();
-            /* if (r.nextInt(200) < 50)*/
-            creatRandomPromo((Customer) userSession.getLoggedInUser(), token);
+        if (userSession.getLoggedInUser() != null) {
+            if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
+                Random r = new Random();
+                /* if (r.nextInt(200) < 50)*/
+                creatRandomPromo((Customer) userSession.getLoggedInUser());
+            }
         }
     }
 
-    private void creatRandomPromo(Customer customer, String token) {
+    private void creatRandomPromo(Customer customer) {
         Promo promo = new Promo();
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
