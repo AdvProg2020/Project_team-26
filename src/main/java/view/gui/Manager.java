@@ -284,12 +284,26 @@ public class Manager implements Reloadable {
 
     public void showErrorPopUp(String errorMessage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ErrorPage.fxml"));
-        BorderPane borderPane = new BorderPane((Node)loader.load());
+        Parent parent = loader.load();
         Stage windows = new Stage();
-        windows.setScene(new Scene(borderPane));
+        windows.setScene(new Scene(parent));
         ErrorPageController controller = loader.getController();
         Button okButton = controller.getButton();
         controller.load(errorMessage);
+        okButton.setOnMouseClicked(e -> windows.close());
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
+    }
+
+    public void showSuccessPopUp(String message) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SuccessPage.fxml"));
+        Parent parent = loader.load();
+        Stage windows = new Stage();
+        windows.setScene(new Scene(parent));
+        SuccessPageController controller = loader.getController();
+        Button okButton = controller.getButton();
+        controller.load(message);
         okButton.setOnMouseClicked(e -> windows.close());
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
