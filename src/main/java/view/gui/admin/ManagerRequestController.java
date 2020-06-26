@@ -100,7 +100,6 @@ public class ManagerRequestController implements InitializableController {
 
     private void showDescription() {
         Request request = (Request) requestTable.getSelectionModel().getSelectedItem();
-        requestDescription.setText(request.getFieldName() + "\n" + request.getRequestTime() + "\n" + request.getRequestedBy()
-                .getUsername());
+        requestDescription.setText(request.toString());
     }
 }
