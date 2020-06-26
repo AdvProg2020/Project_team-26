@@ -119,15 +119,13 @@ public class ProductController implements IProductController {
     public ProductSeller getProductSellerByIdAndSellerId(int productId, String token) throws InvalidIdException, InvalidTokenException, NotLoggedINException, NoAccessException, NoObjectIdException {
         Session session = Session.getSession(token);
         User user = Session.getSession(token).getLoggedInUser();
-        Product product = productRepository.getById(productId);
+        Product product = productRepository.getProductBySellerId(productId, user.getId());
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
         } else if (user.getRole() != Role.SELLER) {
             throw new NoAccessException("You must be a seller to do this.");
         } else if (product == null) {
             throw new NoObjectIdException("The specified Object does not Exist.");
-        } else if (!product.hasSeller((Seller) user)) {
-            throw new NoAccessException("This Product is not for you.");
         } else {
             return productSellerRepository.getProductSellerByIdAndSellerId(productId, session.getLoggedInUser().getId());
         }

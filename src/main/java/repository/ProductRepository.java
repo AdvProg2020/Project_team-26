@@ -15,6 +15,8 @@ public interface ProductRepository extends Repository<Product> {
 
     void deleteRequest(int id, User requestedBy);
 
+    Product getProductBySellerId(int productId, int sellerId);
+
     List<Product> getAllSortedAndFiltered(Map<String, String> filter, Pageable pageable);
 
     List<Product> getAllSortedAndFilteredInOff(Map<String, String> filter, Pageable pageable);

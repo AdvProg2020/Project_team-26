@@ -126,6 +126,30 @@ public class MySQLProductRepository
     }
 
     @Override
+    public Product getProductBySellerId(int productId, int sellerId) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+            Root<Product> root = cq.from(Product.class);
+            Fetch<Product, ProductSeller> sellerFetch = root.fetch("sellerList");
+            Join<Product, ProductSeller> sellerJoin = (Join) sellerFetch;
+
+            cq.select(root);
+            Predicate productPredicate = cb.equal(root.get("id"), productId);
+            Predicate sellerPredicate = cb.equal(sellerJoin.get("seller"), sellerId);
+            cq.where(cb.and(productPredicate, sellerPredicate));
+
+            TypedQuery<Product> typedQuery = em.createQuery(cq);
+
+            return typedQuery.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<Product> getAllSortedAndFiltered(Map<String, String> filter, Pageable pageable) {
         EntityManager em = EntityManagerProvider.getEntityManager();
 
