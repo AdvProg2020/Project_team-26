@@ -60,18 +60,6 @@
             </VBox>
          </items>
       </SplitPane>
-      <HBox>
-         <children>
-            <Button mnemonicParsing="false" text="Button" />
-            <Button mnemonicParsing="false" text="Button" />
-            <Button layoutX="10.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="114.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="166.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="218.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="270.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-            <Button layoutX="322.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-         </children>
-      </HBox>
    </children>
    <padding>
       <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
