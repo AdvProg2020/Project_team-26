@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.OffControllerPage">
+<VBox fx:id="allBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.OffControllerPage">
     <children>
         <HBox prefHeight="144.0" prefWidth="600.0">
             <children>
@@ -47,7 +47,7 @@
                                 <Insets left="20.0" right="20.0" top="20.0" />
                             </padding>
                         </HBox>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="105.0" text="Delete">
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteThisOff" prefHeight="37.0" prefWidth="105.0" text="Delete">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>

@@ -42,6 +42,8 @@ public class OffControllerPage implements InitializableController, Reloadable {
     private TextField priceInOff;
     @FXML
     private VBox offVBox;
+    @FXML
+    private VBox allBox;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -144,7 +146,7 @@ public class OffControllerPage implements InitializableController, Reloadable {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-           Constants.manager.showLoginMenu();
+            Constants.manager.showLoginMenu();
         } finally {
             priceInOff.setText("");
             productName.setText("");
@@ -159,6 +161,21 @@ public class OffControllerPage implements InitializableController, Reloadable {
             reloadPage();
         } catch (InvalidIdException e) {
             e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void deleteThisOff() throws IOException {
+        try {
+            offController.removeAOff(this.offId, Constants.manager.getToken());
+            allBox.getChildren().removeAll(allBox.getChildren());
+        } catch (NoAccessException | InvalidIdException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
+        } catch (NotLoggedINException e) {
+            Constants.manager.showLoginMenu();
         }
 
     }
