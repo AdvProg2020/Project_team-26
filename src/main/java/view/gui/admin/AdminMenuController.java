@@ -8,16 +8,25 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import model.Admin;
 import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
+
 import view.gui.interfaces.*;
+
 public class AdminMenuController implements InitializableController {
 
     @FXML
@@ -39,10 +48,13 @@ public class AdminMenuController implements InitializableController {
     @FXML
     private Label errorLabel;
     @FXML
+    private ImageView profileImage;
+    @FXML
     private TableColumn managerCol;
 
     private IShowUserController controller;
     private IUserInfoController userController;
+    private File imageFile;
 
 
     @Override
@@ -52,15 +64,14 @@ public class AdminMenuController implements InitializableController {
         editInfoButton.setOnMouseClicked(e -> editInfo());
         ObservableList<Admin> list = FXCollections.observableList(controller.getManagers(id));
         try {
-            User admin = controller.getUserById(id,Constants.manager.getToken());
+            User admin = controller.getUserById(id, Constants.manager.getToken());
             usernameText.setText(admin.getUsername());
             emailText.setText(admin.getEmail());
             firstNameText.setText(admin.getFirstName());
             lastNameText.setText(admin.getLastName());
             roleText.setText("Admin");
             managerTable.setItems(list);
-            managerCol.setCellValueFactory(new PropertyValueFactory<Admin,String>("username"));
-
+            managerCol.setCellValueFactory(new PropertyValueFactory<Admin, String>("username"));
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
@@ -72,6 +83,29 @@ public class AdminMenuController implements InitializableController {
 
     }
 
+    @FXML
+    public void uploadPhoto() throws IOException {
+        setFile();
+
+    }
+
+    private void setFile() throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = new Stage();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
+        this.imageFile = fileChooser.showOpenDialog(stage);
+        if (imageFile != null) {
+            profileImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
+            try {
+                userController.changeImage(Files.readAllBytes(imageFile.toPath()), Constants.manager.getToken());
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private void editInfo() {
         emailText.setDisable(false);
         firstNameText.setDisable(false);
@@ -81,14 +115,14 @@ public class AdminMenuController implements InitializableController {
     }
 
     private void updateInfo() {
-        Map<String,String> newInfo = new HashMap<>();
-        newInfo.put("FirstName",firstNameText.getText());
-        newInfo.put("LastName",lastNameText.getText());
-        newInfo.put("Email",emailText.getText());
+        Map<String, String> newInfo = new HashMap<>();
+        newInfo.put("FirstName", firstNameText.getText());
+        newInfo.put("LastName", lastNameText.getText());
+        newInfo.put("Email", emailText.getText());
         try {
-            userController.changeInfo(newInfo,Constants.manager.getToken());
-            if(!passwordText.getText().isBlank())
-            userController.changePassword(passwordText.getText(),Constants.manager.getToken());
+            userController.changeInfo(newInfo, Constants.manager.getToken());
+            if (!passwordText.getText().isBlank())
+                userController.changePassword(passwordText.getText(), Constants.manager.getToken());
             revertBack();
         } catch (NotLoggedINException e) {
             errorLabel.setText(e.getMessage());

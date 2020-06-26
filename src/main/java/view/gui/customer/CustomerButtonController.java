@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import model.Customer;
 import model.User;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
@@ -44,7 +45,8 @@ public class CustomerButtonController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.PromoController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        this.customer = (Customer) user;
+        if (user.getRole() != Role.CUSTOMER || !Constants.manager.isLoggedIn())
+            throw new NoAccessException("must be customer");
         this.userId = id;
         load();
     }

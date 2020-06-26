@@ -61,9 +61,10 @@ public class Manager implements Reloadable {
             Constants.manager.setTokenFromController();
             Constants.manager.showErrorPopUp("Your token was invalid.");
         } catch (NoAccessException e) {
-            e.printStackTrace();
+            Constants.manager.openPage("AllProducts", 0);
         } catch (InvalidIdException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.openPage("AllProducts", 0);
         }
         showNode(parent);
     }
@@ -125,6 +126,7 @@ public class Manager implements Reloadable {
     public void setLoggedIn(boolean loggedIn) {
         isLoggedIn = loggedIn;
     }
+
 
     public Role getRole() {
         return role;
