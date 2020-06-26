@@ -17,6 +17,7 @@ import view.cli.ControllerContainer;
 import view.gui.Constants;
 
 import java.io.IOException;
+import java.util.List;
 
 public class CommentController {
     private ICommentController commentController;
@@ -40,8 +41,9 @@ public class CommentController {
     public void load(Product product) throws IOException {
         commentBox.getChildren().clear();
         this.product = product;
+        List<Comment> commentList = commentController.getConfirmedComments(product.getId(), Constants.manager.getToken());
         Separator separator = null;
-        for (Comment comment: product.getComments()) {
+        for (Comment comment: commentList) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SingleComment.fxml"));
             commentBox.getChildren().add(loader.load());
             SingleCommentController singleCommentController = (SingleCommentController) loader.getController();

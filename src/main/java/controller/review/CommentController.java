@@ -67,7 +67,8 @@ public class CommentController implements ICommentController {
         }
     }
 
-    public List<Comment> getConfirmedCommentsForAProduct(int productId, String token) {
+    @Override
+    public List<Comment> getConfirmedComments(int productId, String token) {
         return commentRepository.getConfirmedComments(productId,null);
     }
 
