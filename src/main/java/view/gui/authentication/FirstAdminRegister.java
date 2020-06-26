@@ -8,11 +8,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import model.enums.Role;
+import view.Main;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
+import view.gui.interfaces.InitializableController;
 
-public class FirstAdminRegister {
+import java.io.IOException;
+
+public class FirstAdminRegister implements InitializableController {
 
     @FXML
     private TextField usernameText;
@@ -32,6 +37,8 @@ public class FirstAdminRegister {
     private Label errorLabel;
 
     private IAuthenticationController controller;
+    Stage primaryStage;
+    Main main;
 
 
     private void register() {
@@ -49,15 +56,20 @@ public class FirstAdminRegister {
             try {
                 Account adminAccount = createAccount(username,email,firstName,lastName,password);
                 controller.register(adminAccount,Constants.manager.getToken());
+                main.start(primaryStage);
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (AlreadyLoggedInException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidFormatException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (InvalidAuthenticationException e) {
-                e.printStackTrace();
+                errorLabel.setText(e.getMessage());
             } catch (NoAccessException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (IOException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
@@ -77,5 +89,15 @@ public class FirstAdminRegister {
     private boolean isAnyBlank() {
         return (usernameText.getText().isBlank() || emailText.getText().isBlank() || firstNameText.getText().isBlank()
         || lastNameText.getText().isBlank() || passwordText.getText().isBlank() || confirmText.getText().isBlank());
+    }
+
+    @Override
+    public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
+        registerButton.setOnMouseClicked(e -> register());
+    }
+
+    public void load(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+        main = new Main();
     }
 }
