@@ -188,7 +188,7 @@ public class MySQLProductRepository
             Join<Product, ProductSeller> productSellerJoin = root.join("sellerList");
 
             cq.select(root);
-            cq.where(cb.and(cb.equal(productSellerJoin.get("seller"), sellerId), filter(filter, cb, root)));
+            cq.where(cb.and(cb.equal(productSellerJoin.get("seller"), sellerId), filter(filter, cb, root, cb.conjunction())));
             TypedQuery<Product> typedQuery = getPagedQuery(em, cb, cq, root, pageable);
 
             return typedQuery.getResultList();
@@ -210,8 +210,7 @@ public class MySQLProductRepository
 //        return result;
     }
 
-    private Predicate filter(Map<String, String> filter, CriteriaBuilder cb, Root<Product> root) {
-        Predicate predicate = cb.equal(root.get("status"), Status.ACTIVE);
+    private Predicate filter(Map<String, String> filter, CriteriaBuilder cb, Root<Product> root, Predicate predicate) {
         if (filter == null) {
             return predicate;
         }
@@ -241,6 +240,10 @@ public class MySQLProductRepository
             }
         }
         return predicate;
+    }
+
+    private Predicate filter(Map<String, String> filter, CriteriaBuilder cb, Root<Product> root) {
+        return filter(filter, cb, root, cb.equal(root.get("status"), Status.ACTIVE));
     }
 
     private Predicate getCategoryPredicate(CriteriaBuilder cb, Root<Product> root, Category category) {
