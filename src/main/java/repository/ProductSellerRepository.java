@@ -6,7 +6,6 @@ import model.ProductSellerRequest;
 import java.util.List;
 
 public interface ProductSellerRepository extends Repository<ProductSeller> {
-
     void addRequest(ProductSeller productSeller);
 
     void editRequest(ProductSeller productSeller);
