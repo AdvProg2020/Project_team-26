@@ -185,7 +185,13 @@ public class PersonalInfoController implements InitializableController {
         this.imageFile = fileChooser.showOpenDialog(stage);
         if (imageFile != null) {
             profileImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
-            userInfoController.changeImage(Files.readAllBytes(imageFile.toPath()), Constants.manager.getToken());
+            try {
+                userInfoController.changeImage(Files.readAllBytes(imageFile.toPath()), Constants.manager.getToken());
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -197,14 +203,13 @@ public class PersonalInfoController implements InitializableController {
         } else {
             HashMap<String, String> changedInfo = new HashMap<>();
             if (isEveryThingOk()) {
-                changedInfo.put("Username", usernameTextField.getText());
                 changedInfo.put("FirstName", firstName.getText());
                 changedInfo.put("LastName", lastName.getText());
                 changedInfo.put("Email", email.getText());
                 if (thisUserRole == Role.SELLER)
                     changedInfo.put("Company Name", usernameTextField.getText());
-                changedInfo.put("Balance", balance.getText());
                 try {
+                    userInfoController.changeBalance(Long.parseLong(balance.getText()), Constants.manager.getToken());
                     userInfoController.changeInfo(changedInfo, Constants.manager.getToken());
                     setEditable(false);
                     editButton.setText("Edit");

@@ -162,7 +162,7 @@ public class Manager implements Reloadable {
             } else if (user.getRole() == Role.CUSTOMER) {
                 openPage("CustomersButton", user.getId());
             } else if (user.getRole() == Role.ADMIN) {
-                openPage("AdminOptionMenu",user.getId());
+                openPage("AdminOptionMenu", user.getId());
             } else {
                 //TODO open main page here
             }
@@ -172,21 +172,23 @@ public class Manager implements Reloadable {
     }
 
     public void openCart() throws IOException {
-        openPage("Cart",0);
+        openPage("Cart", 0);
     }
 
     public void setTokenFromController() {
-        this.token = ((SessionController)controllerContainer.getController(ControllerContainer.Controller.SessionController)).createToken();
+        this.token = ((SessionController) controllerContainer.getController(ControllerContainer.Controller.SessionController)).createToken();
     }
 
     public void showComparePage() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ComparePane.fxml"));
-        BorderPane borderPane = new BorderPane((Node)loader.load());
-        Stage windows = new Stage();
-        windows.setScene(new Scene(borderPane));
+        Parent parent = loader.load();
         ComparePane controller = loader.getController();
         Button exit = controller.getExitButton();
         addProductToComparePane(controller);
+        Stage windows = new Stage();
+        windows.setScene(new Scene(parent));
+        windows.setMinWidth(1200);
+        windows.setMinHeight(720);
         exit.setOnMouseClicked(e -> windows.close());
         windows.initModality(Modality.APPLICATION_MODAL);
         windows.setResizable(false);
@@ -196,10 +198,11 @@ public class Manager implements Reloadable {
     private void addProductToComparePane(ComparePane controller) {
         compareList.forEach(i -> {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CompareProduct.fxml"));
-            CompareController compareController = loader.getController();
             try {
+                Node node = loader.load();
+                CompareController compareController = loader.getController();
                 compareController.initialize(i);
-                controller.addToBox(loader.load());
+                controller.addToBox(node);
             } catch (IOException | InvalidIdException e) {
                 e.printStackTrace();//todo
             }
@@ -245,7 +248,7 @@ public class Manager implements Reloadable {
     public void showLoginMenu() throws IOException {
         popUp = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
-        VBox vBox = new VBox((Node)loader.load());
+        VBox vBox = new VBox((Node) loader.load());
         RegisterMenuController controller = loader.getController();
         controller.initialize(2);
         controller.setReloadable(this);
@@ -259,7 +262,7 @@ public class Manager implements Reloadable {
     public void showRegisterMenu() throws IOException {
         popUp = new Stage();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/RegisterMenu.fxml"));
-        VBox vBox = new VBox((Node)loader.load());
+        VBox vBox = new VBox((Node) loader.load());
         RegisterMenuController controller = loader.getController();
         controller.initialize(2);
         controller.setReloadable(this);
@@ -275,7 +278,7 @@ public class Manager implements Reloadable {
         Node node = loader.load();
         AdminRegistryController controller = loader.getController();
         controller.initialize(2);
-        popUp= new Stage();
+        popUp = new Stage();
         popUp.setScene(new Scene((Parent) node));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
@@ -333,7 +336,6 @@ public class Manager implements Reloadable {
             ioException.printStackTrace();
         }
     }
-
 
 
 }
