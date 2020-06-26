@@ -31,13 +31,13 @@ public class MySQLOrderRepository
             et.begin();
             if (getId(order) == 0) {
                 em.persist(order);
-                em.persist(order.getCustomer());
+                em.merge(order.getCustomer());
                 savedUsers.add(order.getCustomer());
 
                 for (OrderItem item : order.getItems()) {
                     if(!savedUsers.contains(item.getSeller())) {
                         savedUsers.add(item.getSeller());
-                        em.persist(item.getSeller());
+                        em.merge(item.getSeller());
                     }
                 }
             }

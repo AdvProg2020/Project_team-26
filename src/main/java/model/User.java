@@ -39,7 +39,7 @@ public class User {
     @Column(name = "credit", nullable = false)
     private long credit;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
     @MapKeyColumn(name = "`key`")
     @Column(name = "value")
