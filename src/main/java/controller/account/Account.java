@@ -83,6 +83,10 @@ public class Account {
         this.email = email;
     }
 
+    public void setCredit(long credit) {
+        this.credit = credit;
+    }
+
     public String getLastName() {
         return lastName;
     }
