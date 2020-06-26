@@ -39,24 +39,20 @@ public class AllProductsController implements InitializableController, Reloadabl
     private ComboBox<String> sortFieldComboBox;
     @FXML
     private ComboBox<String> sortDirectionComboBox;
-    private GridPane mainGrid;
     @FXML
     private ScrollPane mainScrollPane;
     @FXML
     private CategoryListController categoryListController;
     @FXML
-    private Slider rate;
+    private Slider rateSlider;
     @FXML
     private VBox price;
-    @FXML
-    private Slider minRate;
-    @FXML
-    private Slider maxRate;
     @FXML
     private Slider maxPrice;
     @FXML
     private Slider minPrice;
 
+    private GridPane mainGrid;
 
     public void initialize(int id) throws IOException {
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().
@@ -68,6 +64,10 @@ public class AllProductsController implements InitializableController, Reloadabl
         categoryListController.setReloadable(this);
         categoryListController.initialize(1);
         reload();
+
+        rateSlider.valueProperty().addListener((observable) -> reload());
+        minPrice.valueProperty().addListener((observable) -> reload());
+        maxPrice.valueProperty().addListener((observable) -> reload());
     }
 
     @Override
@@ -134,23 +134,17 @@ public class AllProductsController implements InitializableController, Reloadabl
         if (descriptionField.getText() != null && !descriptionField.getText().equals("")) {
             filter.put("description", descriptionField.getText());
         }
-        filter.put("rate", makeRate());
-        filter.put("price", makePrice());
+        if(rateSlider.getValue() > 0) {
+            filter.put("rate", rateSlider.getValue() + "-10");
+        }
+        if(minPrice.getValue() != minPrice.getMin() && maxPrice.getValue() != maxPrice.getMax()) {
+            filter.put("price", makePrice());
+        }
         return filter;
     }
 
-    private String makeRate() {
-        if (minRate.getValue() > maxRate.getValue()) {
-            return maxRate.getValue() + "-" + minRate.getValue();
-        }
-        return minRate.getValue() + "-" + maxRate.getValue();
-    }
-
     private String makePrice() {
-        if (minPrice.getValue() > maxPrice.getValue()) {
-            return maxPrice.getValue() + "-" + minPrice.getValue();
-        }
-        return minPrice.getValue() + "-" + maxPrice.getValue();
+        return (long) minPrice.getValue() + "-" + (long) maxPrice.getValue();
     }
 
     private String extractSortField() {
