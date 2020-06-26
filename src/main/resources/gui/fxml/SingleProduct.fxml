@@ -20,8 +20,9 @@
          <children>
             <HBox spacing="20.0">
                <children>
-                  <VBox spacing="20.0">
+                  <VBox spacing="15.0">
                      <children>
+                        <Text fx:id="categoryText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="320.0" />
                         <ImageView fx:id="productImage" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@../pic/background.jpg" />
@@ -125,6 +126,9 @@
                            </children>
                         </VBox>
                      </children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
                   </VBox>
                   <VBox spacing="20.0">
                      <children>

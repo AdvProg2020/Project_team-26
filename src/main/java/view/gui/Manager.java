@@ -61,6 +61,7 @@ public class Manager implements Reloadable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/" + pageName + ".fxml"));
         Parent parent = loader.load();
         InitializableController controller = loader.getController();
+        showNode(parent);
         try {
             controller.initialize(id);//TODO handle kon
             reloadTop();
@@ -73,7 +74,6 @@ public class Manager implements Reloadable {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.openPage("AllProducts", 0);
         }
-        showNode(parent);
     }
 
     public void back() throws IOException {
@@ -339,10 +339,11 @@ public class Manager implements Reloadable {
     }
 
     public void logout() throws IOException, InvalidTokenException, NotLoggedINException {
-    AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
-    controller.logout(getToken());
+        AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
+        controller.logout(getToken());
         setLoggedIn(false);
-        reload();
+        reloadTop();
+        openPage("AllProducts", 0);
     }
 
     @Override

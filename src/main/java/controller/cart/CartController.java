@@ -8,9 +8,7 @@ import repository.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class CartController implements ICartController {
 
@@ -105,10 +103,19 @@ public class CartController implements ICartController {
         customer.pay(order.calculatePaidAmount() - order.calculateDiscount());
         customer.addOrder(order);
         order.setDiscount();
+
+        changeSellerCredit(order);
         orderRepository.save(order);
-        userRepository.save(customer);
+
         if (order.calculatePaidAmount() > 500000) {
             creatRandomPromo(order, customer);
+        }
+    }
+
+    public void changeSellerCredit(Order order) {
+        for (OrderItem item : order.getItems()) {
+            long money = item.getPaidPrice() * item.getAmount();
+            item.getSeller().setCredit(item.getSeller().getCredit() + money);
         }
     }
 

@@ -1,23 +1,58 @@
 package repository.mysql;
 
+import model.*;
 import model.Order;
-import model.OrderItem;
-import model.Product;
-import model.Seller;
 import repository.OrderRepository;
 import repository.Pageable;
 import repository.mysql.utils.EntityManagerProvider;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MySQLOrderRepository
     extends MySQLRepository<Order> implements OrderRepository {
     public MySQLOrderRepository() {
         super(Order.class);
+    }
+
+    @Override
+    public void save(Order order) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+        EntityTransaction et = null;
+        try {
+            Set<User> savedUsers = new HashSet<>();
+            et = em.getTransaction();
+            et.begin();
+            if (getId(order) == 0) {
+                em.persist(order);
+                em.merge(order.getCustomer());
+                savedUsers.add(order.getCustomer());
+
+                for (OrderItem item : order.getItems()) {
+                    if(!savedUsers.contains(item.getSeller())) {
+                        savedUsers.add(item.getSeller());
+                        em.merge(item.getSeller());
+                    }
+                }
+            }
+            else
+                em.merge(order);
+            et.commit();
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+            if (et != null) {
+                et.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
