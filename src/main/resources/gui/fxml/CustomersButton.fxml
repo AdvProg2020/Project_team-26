@@ -15,9 +15,9 @@
                       <Image url="@../pic/AdminProfilePicture.png" />
                   </image>
               </ImageView>
-              <Button fx:id="orders" mnemonicParsing="false" onAction="#orderHandle" prefHeight="45.0" prefWidth="96.0" styleClass="buttonS" stylesheets="@../styleSheet/pane.css" text="Orders" />
-              <Button fx:id="promo" mnemonicParsing="false" onAction="#promoHandle" prefHeight="45.0" prefWidth="95.0" styleClass="buttonS" stylesheets="@../styleSheet/pane.css" text="Promo" />
-            <Button mnemonicParsing="false" onAction="#cart" prefHeight="51.0" prefWidth="103.0" styleClass="buttonS" stylesheets="@../styleSheet/pane.css" text="Cart" />
+              <Button fx:id="orders" mnemonicParsing="false" onAction="#orderHandle" prefHeight="45.0" prefWidth="96.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Orders" />
+              <Button fx:id="promo" mnemonicParsing="false" onAction="#promoHandle" prefHeight="45.0" prefWidth="95.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Promo" />
+            <Button mnemonicParsing="false" onAction="#cart" prefHeight="51.0" prefWidth="103.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Cart" />
           </children>
       </VBox>
    </children>

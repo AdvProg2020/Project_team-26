@@ -47,11 +47,12 @@ public class OffItemPageController implements InitializableController {
         priceInOff.setText("" + offItem.getPriceInOff());
         priceInOff.setEditable(false);
         deleteButton.setText("Delete");
+        deleteButton.setVisible(false);
     }
 
     @FXML
     public void deleteButtonClicked() throws IOException {
-        try {
+      /*  try {
             offController.removeProductFromOff(off, offItem.getProductSeller().getProduct().getId(), isForAdd, Constants.manager.getToken());
             offControllerPage.reload();
         } catch (NoAccessException | ObjectAlreadyExistException | InvalidIdException e) {
@@ -61,6 +62,6 @@ public class OffItemPageController implements InitializableController {
             Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
             Constants.manager.showLoginMenu();
-        }
+        }*/
     }
 }

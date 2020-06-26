@@ -8,6 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.admin.ManageUsersController">
    <children>
@@ -19,6 +20,9 @@
                      <HBox.margin>
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Label>
                   <TextField fx:id="usernameText" style="-fx-background-color: transparent;">
                      <HBox.margin>
@@ -29,6 +33,9 @@
                      <HBox.margin>
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Label>
                   <TextField fx:id="firstNameText" style="-fx-background-color: transparent;">
                      <HBox.margin>
@@ -43,16 +50,22 @@
                      <HBox.margin>
                         <Insets left="15.0" top="35.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Label>
                   <TextField fx:id="emailText" style="-fx-background-color: transparent;">
                      <HBox.margin>
                         <Insets left="25.0" top="30.0" />
                      </HBox.margin>
                   </TextField>
-                  <Label prefHeight="14.0" prefWidth="59.0" text="Last Name:">
+                  <Label prefHeight="18.0" prefWidth="67.0" text="Last Name:">
                      <HBox.margin>
                         <Insets left="40.0" top="35.0" />
                      </HBox.margin>
+                     <font>
+                        <Font name="Comic Sans MS" size="12.0" />
+                     </font>
                   </Label>
                   <TextField fx:id="lastNameText" style="-fx-background-color: transparent;">
                      <HBox.margin>

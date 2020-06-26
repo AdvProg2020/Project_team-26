@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1021.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.admin.CategoryOptionController">
    <children>
@@ -40,6 +41,9 @@
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
+                     <font>
+                        <Font name="Arial Black" size="12.0" />
+                     </font>
                   </Button>
                </children>
             </HBox>
@@ -58,8 +62,11 @@
             </HBox>
             <Button fx:id="addCategory" mnemonicParsing="false" text="Add">
                <VBox.margin>
-                  <Insets left="80.0" top="30.0" />
+                  <Insets left="90.0" top="30.0" />
                </VBox.margin>
+               <font>
+                  <Font name="Arial Black" size="12.0" />
+               </font>
             </Button>
             <Label fx:id="errorLabel" prefHeight="28.0" prefWidth="204.0" textFill="RED">
                <VBox.margin>

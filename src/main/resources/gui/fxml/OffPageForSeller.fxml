@@ -8,8 +8,9 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.OffControllerPage">
+<VBox fx:id="allBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="499.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.OffControllerPage">
     <children>
         <HBox prefHeight="144.0" prefWidth="600.0">
             <children>
@@ -19,13 +20,19 @@
                             <children>
                                 <VBox alignment="TOP_CENTER" prefHeight="71.0" prefWidth="200.0">
                                     <children>
-                                        <Label prefHeight="39.0" prefWidth="63.0" text="Start date" />
+                                        <Label prefHeight="39.0" prefWidth="63.0" text="Start date">
+                                 <font>
+                                    <Font name="Corbel" size="12.0" />
+                                 </font></Label>
                                         <DatePicker fx:id="startDate" />
                                     </children>
                                 </VBox>
                                 <VBox alignment="TOP_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="71.0" prefWidth="200.0">
                                     <children>
-                                        <Label prefHeight="39.0" prefWidth="63.0" text="End date" />
+                                        <Label prefHeight="39.0" prefWidth="63.0" text="End date">
+                                 <font>
+                                    <Font name="Corbel" size="12.0" />
+                                 </font></Label>
                                         <DatePicker fx:id="endDate" />
                                     </children>
                                 </VBox>
@@ -41,16 +48,22 @@
                                     <padding>
                                         <Insets left="20.0" right="20.0" />
                                     </padding>
+                           <font>
+                              <Font name="Corbel" size="12.0" />
+                           </font>
                                 </Button>
                             </children>
                             <padding>
                                 <Insets left="20.0" right="20.0" top="20.0" />
                             </padding>
                         </HBox>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="37.0" prefWidth="105.0" text="Delete">
+                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteThisOff" prefHeight="37.0" prefWidth="105.0" text="Delete">
                      <VBox.margin>
                         <Insets top="20.0" />
                      </VBox.margin>
+                     <font>
+                        <Font name="Corbel" size="12.0" />
+                     </font>
                   </Button>
                     </children>
                 </VBox>
@@ -67,7 +80,10 @@
                                 <Insets bottom="10.0" left="40.0" right="40.0" top="5.0" />
                             </VBox.margin>
                         </TextField>
-                        <Button fx:id="addProductButton" mnemonicParsing="false" onAction="#addProductButtonclicked" prefHeight="31.0" prefWidth="91.0" text="Add product" />
+                        <Button fx:id="addProductButton" mnemonicParsing="false" onAction="#addProductButtonclicked" prefHeight="31.0" prefWidth="91.0" text="Add product">
+                     <font>
+                        <Font name="Corbel" size="12.0" />
+                     </font></Button>
                     </children>
                 </VBox>
             </children>
