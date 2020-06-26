@@ -143,7 +143,7 @@ public class SingleProductController implements InitializableController {
         Constants.manager.reloadTop();
     }
 
-    private class Features {
+    public class Features {
         private String name;
         private String feature;
 

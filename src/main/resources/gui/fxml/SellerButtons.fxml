@@ -10,7 +10,7 @@
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="79.0" spacing="50.0">
           <children>
-              <ImageView fitHeight="121.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+              <ImageView fx:id="profileImageView" fitHeight="121.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                       <Image url="@../pic/AdminProfilePicture.png" />
                   </image>

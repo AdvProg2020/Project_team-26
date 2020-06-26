@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import model.Seller;
 import model.User;
@@ -34,6 +35,8 @@ public class SellerButtonsController implements InitializableController {
     private int userId;
     private PersonalInfoController personalInfoController;
     private Seller seller;
+    @FXML
+    private ImageView profileImageView;
     @FXML
     private Button createOff;
     @FXML
@@ -99,7 +102,7 @@ public class SellerButtonsController implements InitializableController {
         Node node = loader.load();
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
-        personalInfoController.load(seller);
+        personalInfoController.load(seller,profileImageView);
         box.getChildren().addAll(node);
     }
 

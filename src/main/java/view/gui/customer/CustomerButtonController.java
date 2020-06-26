@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import model.Customer;
 import model.User;
@@ -28,6 +29,8 @@ public class CustomerButtonController implements InitializableController {
     private IPromoController promoController;
     private IShowUserController showUserController;
     private Customer customer;
+    @FXML
+    private ImageView profileImageView;
     @FXML
     private Button promo;
     @FXML
@@ -95,7 +98,7 @@ public class CustomerButtonController implements InitializableController {
         Node node = loader.load();
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
-        personalInfoController.load(customer);
+        personalInfoController.load(customer, profileImageView);
         box.getChildren().addAll(node);
     }
 }

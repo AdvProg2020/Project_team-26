@@ -45,6 +45,10 @@ public class UserInfoController implements IUserInfoController {
             userRepository.save(user);
         }
     }
+    public void changeImage(byte[] image,String token){
+        //TODO
+    }
+
 
     public void changeInfo(String key, String value, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
         User user = Session.getSession(token).getLoggedInUser();

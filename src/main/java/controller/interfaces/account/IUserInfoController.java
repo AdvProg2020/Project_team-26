@@ -19,5 +19,7 @@ public interface IUserInfoController {
 
     String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField;
 
+    void changeImage(byte[] image,String token);
+
     public void changeInfo(Map<String,String> values, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField;
 }
