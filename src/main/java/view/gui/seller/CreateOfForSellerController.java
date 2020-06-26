@@ -67,13 +67,13 @@ public class CreateOfForSellerController implements InitializableController, Rel
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), true, Constants.manager.getToken());
                 updateVBox(off.getItems().get(off.getItems().size() - 1));
-                Constants.manager.showSuccessPopUp("off created");
+                Constants.manager.showSuccessPopUp("product added");
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, true, Constants.manager.getToken());
                 updateVBox(off.getItems().get(off.getItems().size() - 1));
-                Constants.manager.showSuccessPopUp("off created");
+                Constants.manager.showSuccessPopUp("product added");
             } else {
-                Constants.manager.showErrorPopUp("please fill the price by Long");
+                Constants.manager.showErrorPopUp("please fill the price by Long or --%");
                 return;
             }
             setEditable(false);

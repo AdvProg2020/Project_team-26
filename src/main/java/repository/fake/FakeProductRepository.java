@@ -54,6 +54,12 @@ public class FakeProductRepository implements ProductRepository {
     public void deleteRequest(int id, User requestedBy) {
 
     }
+
+    @Override
+    public Product getProductBySellerId(int productId, int sellerId) {
+        return null;
+    }
+
     @Override
     public List<Product> getAll() {
         return allProducts;
