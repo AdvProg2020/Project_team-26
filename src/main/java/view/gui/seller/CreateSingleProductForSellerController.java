@@ -90,6 +90,9 @@ public class CreateSingleProductForSellerController implements InitializableCont
         categoryListController.setReloadable(this::reload);
         categoryBox.getChildren().removeAll(categoryBox.getChildren());
         categoryBox.getChildren().addAll(node);
+        saveButton.setText("Check");
+        nameTextField.setPromptText("name");
+        setEditable(false);
         imageChooserButton.setOnMouseClicked(e -> {
             try {
                 setFile();
@@ -97,9 +100,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 ex.printStackTrace();
             }
         });
-        saveButton.setText("Check");
-        nameTextField.setPromptText("name");
-        setEditable(false);
+
 
     }
 
@@ -130,6 +131,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
         initialize(this.userId);
         try {
             load(categoryController.getCategory(1, Constants.manager.getToken()));
+
         } catch (InvalidIdException e) {
             e.printStackTrace();
         }
@@ -268,7 +270,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
             Constants.manager.showErrorPopUp("category cant be empty");
             return false;
         }
-        if (imageFile == null){
+        if (imageFile == null) {
             Constants.manager.showErrorPopUp("image cant be empty");
             return false;
         }

@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryOptionController implements InitializableController {
+public class CategoryOptionController implements InitializableController, Reloadable {
 
     @FXML
     private TableView categoryTable;
@@ -52,7 +52,6 @@ public class CategoryOptionController implements InitializableController {
 
     private CategoryListController controller;
     private ICategoryController categoryController;
-    private Reloadable reloadable;
 
 
     @Override
@@ -72,6 +71,7 @@ public class CategoryOptionController implements InitializableController {
         types.add(FeatureType.STRING);
         types.add(FeatureType.INTEGER);
         typeChoice.setItems(FXCollections.observableList(types));
+        controller.setReloadable(this::reload);
     }
 
     private void fillDetails() {
@@ -127,10 +127,20 @@ public class CategoryOptionController implements InitializableController {
     }
 
     public void setTable(Category category) {
+        if (category == null)
+            return;
         System.out.println(category + " " + "nigga");
         List<CategoryFeature> list = category.getFeatures();
         categoryTable.setItems(FXCollections.observableList(list));
         featureCol.setCellValueFactory(new PropertyValueFactory<CategoryFeature, String>("featureName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<CategoryFeature, String>("featureType"));
+    }
+
+    @Override
+    public void reload() throws IOException {
+      /*  if (controller.getCategory() == null)
+            return;
+        setTable(controller.getCategory());*/
+
     }
 }
