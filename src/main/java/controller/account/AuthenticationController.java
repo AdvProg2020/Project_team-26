@@ -35,12 +35,12 @@ public class AuthenticationController implements IAuthenticationController {
             if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
                 Random r = new Random();
                 /* if (r.nextInt(200) < 50)*/
-                creatRandomPromo((Customer) userSession.getLoggedInUser());
+               // creatRandomPromo((Customer) userSession.getLoggedInUser());
             }
         }
     }
 
-    private void creatRandomPromo(Customer customer) {
+   /* private void creatRandomPromo(Customer customer) {
         Promo promo = new Promo();
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
@@ -64,7 +64,7 @@ public class AuthenticationController implements IAuthenticationController {
         } catch (ParseException | IOException e) {
             e.getStackTrace();
         }
-    }
+    }*/
 
     public void register(Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);

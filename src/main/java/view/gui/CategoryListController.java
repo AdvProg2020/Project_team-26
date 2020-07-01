@@ -70,6 +70,8 @@ public class CategoryListController implements InitializableController {
     private void click() {
         if (categoryList.getItems() != null) {
             Category selectedCategory = (Category) categoryList.getSelectionModel().getSelectedItem();
+            if(selectedCategory == null)
+                return;
             if(categoryOptionController != null)
             categoryOptionController.setTable(selectedCategory);
             try {

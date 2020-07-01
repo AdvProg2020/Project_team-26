@@ -9,6 +9,8 @@ import org.junit.jupiter.api.*;
 
 import javax.naming.AuthenticationException;
 
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ShowUserControllerTest {
@@ -37,22 +39,26 @@ public class ShowUserControllerTest {
 
         /** Normal Tests**/
 
-        authenticationController.login("aria","aria",token);
-        showUserController.delete("test2",token);
-        //Assertions.assertEquals(userRepository.getUserByUsername("test2"),);
-
+        String randomName = getRandomName();
+        authenticationController.login("arya","arya",token);
         Assertions.assertEquals(showUserController.getUsers(token),userRepository.getAll());
     }
 
     @Test
     public void getUserByTokenTest() throws InvalidTokenException, InvalidFormatException, PasswordIsWrongException, InvalidAuthenticationException {
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
         Assertions.assertNotEquals(null,showUserController.getUserByToken(token));
     }
 
     @Test
     public void getManagersTest() {
         Assertions.assertNotEquals(showUserController.getManagers(28),null);
+    }
+
+    private String getRandomName() {
+        String randomName = "randomName";
+        randomName += LocalTime.now();
+        return randomName;
     }
 
 

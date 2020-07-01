@@ -71,6 +71,20 @@
                   </TextField>
                </children>
             </HBox>
+            <HBox prefHeight="51.0" prefWidth="269.0">
+               <children>
+                  <Label text="Maximum Off">
+                     <HBox.margin>
+                        <Insets left="10.0" right="25.0" top="15.0" />
+                     </HBox.margin>
+                  </Label>
+                  <TextField fx:id="maximumOff">
+                     <HBox.margin>
+                        <Insets left="18.0" top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+               </children>
+            </HBox>
             <HBox prefHeight="75.0" prefWidth="302.0">
                <children>
                   <Button fx:id="addButton" mnemonicParsing="false" text="Add">
