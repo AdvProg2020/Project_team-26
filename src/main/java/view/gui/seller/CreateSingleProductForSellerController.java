@@ -60,6 +60,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
     private VBox featuresBox;
     @FXML
     private Button imageChooserButton;
+    @FXML
+    private Label errorLabel;
     private File imageFile;
     private PersonalInfoController personalInfoController;
     private Product newProductForAddingToSellers;
@@ -93,6 +95,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
         saveButton.setText("Check");
         nameTextField.setPromptText("name");
         setEditable(false);
+        errorLabel.setText("");
         imageChooserButton.setOnMouseClicked(e -> {
             try {
                 setFile();
@@ -131,7 +134,6 @@ public class CreateSingleProductForSellerController implements InitializableCont
         initialize(this.userId);
         try {
             load(categoryController.getCategory(1, Constants.manager.getToken()));
-
         } catch (InvalidIdException e) {
             e.printStackTrace();
         }
@@ -143,16 +145,17 @@ public class CreateSingleProductForSellerController implements InitializableCont
     }
 
     private void loadCategoryBoxes(Category category) throws IOException {
-        categoryBox.getChildren().removeAll();
-        featuresBox.getChildren().removeAll();
+        categoryBox.getChildren().removeAll(categoryBox.getChildren());
+        featuresBox.getChildren().removeAll(featuresBox.getChildren());
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
         Node node = loader.load();
         this.categoryListController = (CategoryListController) loader.getController();
         categoryListController.initialize(category.getId());
         categoryListController.setReloadable(this::reload);
         categoryBox.getChildren().removeAll(categoryBox.getChildren());
-        categoryBox.getChildren().addAll(node);//todo check here
+        categoryBox.getChildren().addAll(node);
         featuresBox.getChildren().removeAll(featuresBox.getChildren());
+        featureBoxList = new ArrayList<>();
         category.getFeatures().forEach(i -> featureBoxList.add(new FeatureBox(i, i.getFeatureName(), i.getFeatureType(), null)));
         featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));
     }
@@ -162,18 +165,6 @@ public class CreateSingleProductForSellerController implements InitializableCont
         nameTextField.setText(product.getName());
         brandTextField.setText(product.getBrand());
         descriptionField.setText(descriptionField.getText());
-        /*categoryBox.getChildren().removeAll(categoryBox.getChildren());
-        featuresBox.getChildren().removeAll(featuresBox.getChildren());
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CategoryList.fxml"));
-        Node node = loader.load();
-        this.categoryListController = (CategoryListController) loader.getController();
-        categoryListController.initialize(product.getCategory().getId());
-        categoryListController.setReloadable(this::reload);
-        categoryBox.getChildren().removeAll(categoryBox.getChildren());
-        categoryBox.getChildren().addAll(node);//todo check here
-        featuresBox.getChildren().removeAll(featuresBox.getChildren());
-        product.getCategoryFeatures().forEach((k, v) -> featureBoxList.add(new FeatureBox(k, k.getFeatureName(), k.getFeatureType(), v)));
-        featureBoxList.forEach(i -> featuresBox.getChildren().add(i.getContainer()));*/
     }
 
 
@@ -247,31 +238,39 @@ public class CreateSingleProductForSellerController implements InitializableCont
 
     private boolean isEveryThingOk() throws IOException {
         if (nameTextField.getText().isEmpty() || nameTextField.getText().isBlank()) {
-            Constants.manager.showErrorPopUp("name cant be empty");
+            errorLabel.setText("empty name");
             return false;
         }
         if (priceTextField.getText().isEmpty() || priceTextField.getText().isBlank()) {
-            Constants.manager.showErrorPopUp("price cant be empty");
+            errorLabel.setText("empty price");
             return false;
         }
         if (amountTextField.getText().isEmpty() || amountTextField.getText().isBlank()) {
-            Constants.manager.showErrorPopUp("amount cant be empty");
+            errorLabel.setText("empty amount");
             return false;
         }
         if (descriptionField.getText().isEmpty() || descriptionField.getText().isEmpty()) {
-            Constants.manager.showErrorPopUp("description cant be empty");
+            errorLabel.setText("empty description");
             return false;
         }
         if (brandTextField.getText().isEmpty() || brandTextField.getText().isEmpty()) {
-            Constants.manager.showErrorPopUp("brand cant be empty");
+            errorLabel.setText("empty brand");
             return false;
         }
         if (category == null) {
-            Constants.manager.showErrorPopUp("category cant be empty");
+            errorLabel.setText("empty category");
             return false;
         }
         if (imageFile == null) {
-            Constants.manager.showErrorPopUp("image cant be empty");
+            errorLabel.setText("empty image");
+            return false;
+        }
+        if (!Constants.manager.checkInputIsInt(amountTextField.getText())) {
+            errorLabel.setText("invalid amount");
+            return false;
+        }
+        if (!Constants.manager.checkInputIsInt(priceTextField.getText())) {
+            errorLabel.setText("invalid price");
             return false;
         }
         return true;
