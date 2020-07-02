@@ -218,6 +218,14 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 }
             }
         } else if (saveButton.getText().equals("Add")) {
+            if (!Constants.manager.checkInputIsInt(amountTextField.getText())) {
+                errorLabel.setText("invalid amount");
+                return;
+            }
+            if (!Constants.manager.checkInputIsInt(priceTextField.getText())) {
+                errorLabel.setText("invalid price");
+                return;
+            }
             ProductSeller newProductSeller = new ProductSeller();
             newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
             newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
@@ -226,12 +234,11 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 productController.addSeller(this.newProductForAddingToSellers.getId(), newProductSeller, Constants.manager.getToken());
                 this.personalInfoController.clearBox();
                 Constants.manager.showSuccessPopUp("Your Product Created");
-            } catch (NotSellerException e) {
-                e.printStackTrace();
-            } catch (NoAccessException e) {
-                e.printStackTrace();
-            } catch (InvalidTokenException e) {
-                e.printStackTrace();
+            } catch (NotSellerException | NoAccessException e) {
+                Constants.manager.showErrorPopUp(e.getMessage());
+            }  catch (InvalidTokenException e) {
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
             }
         }
     }
