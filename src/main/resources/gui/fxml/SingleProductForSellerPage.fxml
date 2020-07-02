@@ -31,7 +31,7 @@
                             <children>
                                 <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="335.0" spacing="20.0">
                                     <children>
-                                        <Label prefHeight="17.0" prefWidth="35.0" text="Category" />
+                                        <Label prefHeight="18.0" prefWidth="61.0" text="Category" />
                                         <Text fx:id="categoryText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="131.47007588545512" />
                                     </children>
                                     <opaqueInsets>
@@ -77,7 +77,7 @@
                                 <HBox alignment="CENTER_LEFT" prefHeight="37.0" prefWidth="345.0" spacing="20.0">
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="49.0" text="State" />
-                                        <Text fx:id="categoryText1" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="120.13670949141215" />
+                                        <Text fx:id="stateText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="120.13670949141215" />
                               <Button fx:id="deleteSeller" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="deleteSeller" />
                                     </children>
                                     <opaqueInsets>

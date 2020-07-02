@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import model.*;
 import model.enums.FeatureType;
+import model.enums.Status;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
@@ -36,6 +37,8 @@ public class SingleProductForSellerPageController implements InitializableContro
     private ProductSeller productSeller;
     private IProductController productController;
     private IOrderController orderController;
+    @FXML
+    private Text stateText;
     @FXML
     private ImageView productImage;
     @FXML
@@ -138,6 +141,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         productRateSlider.setDisable(false);
         amountTextField.setText("" + productSeller.getRemainingItems());
         priceTextField.setText("" + productSeller.getRemainingItems());
+        stateText.setText(product.getStatus() == Status.DEACTIVE ? "DEACTIVE":"ACTIVE");
         setEditableForProductSeller(false);
         setEditableForProduct(false);
         setBuyersTableView();
