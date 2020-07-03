@@ -110,6 +110,7 @@ public class SellerButtonsController implements InitializableController {
     }
 
     private void createOffHandle() throws IOException {
+        personalInfoController.clearBox();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CreateOffForSeller.fxml"));
         Node node = loader.load();
         CreateOfForSellerController createOfForSellerController = (CreateOfForSellerController) loader.getController();
@@ -118,6 +119,7 @@ public class SellerButtonsController implements InitializableController {
     }
 
     private void createProductHandle() throws IOException {
+        personalInfoController.clearBox();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CreateSingleProductForSeller.fxml"));
         Node node = loader.load();
         CreateSingleProductForSellerController createSingleProductForSellerController = (CreateSingleProductForSellerController) loader.getController();
@@ -127,6 +129,7 @@ public class SellerButtonsController implements InitializableController {
     }
 
     private void historyHandle() throws IOException {
+        personalInfoController.clearBox();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/TableOfOrders.fxml"));
         Node node = loader.load();
         OrderTableController orderTableController = (OrderTableController) loader.getController();
@@ -145,6 +148,7 @@ public class SellerButtonsController implements InitializableController {
     }
 
     private void manageOffHandle() throws IOException {
+        personalInfoController.clearBox();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffTable.fxml"));
         Node node = loader.load();
         OffTableController offTableController = (OffTableController) loader.getController();
@@ -163,6 +167,7 @@ public class SellerButtonsController implements InitializableController {
     }
 
     private void manageProductHandle() throws IOException {
+        personalInfoController.clearBox();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductTableForSeller.fxml"));
         Node node = loader.load();
         ProductTableForSellerController productTableForSellerController = (ProductTableForSellerController) loader.getController();

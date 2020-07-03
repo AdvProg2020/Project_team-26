@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Seller;
 import model.enums.Role;
 import model.User;
 import view.cli.ControllerContainer;
@@ -123,7 +124,7 @@ public class PersonalInfoController implements InitializableController {
         balance.setEditable(false);
         shopTextField.setText("");
         if (user.getRole() == Role.SELLER) {
-            shopTextField.setText(user.getCompanyName());
+            shopTextField.setText(((Seller)user).getCompanyName());
             shopTextField.setVisible(true);
             shopLabel.setVisible(true);
         }

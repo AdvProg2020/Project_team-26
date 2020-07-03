@@ -180,6 +180,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 priceTextField.setEditable(true);
                 amountTextField.setEditable(true);
                 saveButton.setText("Add");
+                categoryBox.getChildren().removeAll(categoryBox.getChildren());
+                featuresBox.getChildren().removeAll(featuresBox.getChildren());
             } catch (NoObjectIdException e) {
                 setEditable(true);
                 nameTextField.setEditable(false);
