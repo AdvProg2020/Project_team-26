@@ -93,39 +93,50 @@ public class SingleProductForSellerPageController implements InitializableContro
         productInfoEditButton.setText("Edit product");
         uploadPhoto.setVisible(false);
         deleteButton.setOnAction(e -> {
-            deleteProduct();
+            try {
+                deleteProduct();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         deleteSeller.setOnAction(e -> {
-            deleteSeller();
+            try {
+                deleteSeller();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
 
     }
 
-    private void deleteSeller() {
+    private void deleteSeller() throws IOException {
         try {
             productController.removeSeller(this.product.getId(), this.productSeller.getId(), Constants.manager.getToken());
-        } catch (InvalidIdException e) {
-            e.printStackTrace();
+        } catch (InvalidIdException | NoAccessException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.showLoginMenu();
         }
     }
 
-    private void deleteProduct() {
+    private void deleteProduct() throws IOException {
         try {
             productController.removeProduct(productId, Constants.manager.getToken());
             totalBox.getChildren().removeAll(totalBox.getChildren());
         } catch (InvalidIdException | NoAccessException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.showLoginMenu();
         }
+
     }
 
     public void load(Product product, ProductSeller productSeller) throws IOException {
@@ -141,7 +152,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         productRateSlider.setDisable(false);
         amountTextField.setText("" + productSeller.getRemainingItems());
         priceTextField.setText("" + productSeller.getPrice());
-        stateText.setText(product.getStatus() == Status.DEACTIVE ? "DEACTIVE":"ACTIVE");
+        stateText.setText(product.getStatus() == Status.DEACTIVE ? "DEACTIVE" : "ACTIVE");
         setEditableForProductSeller(false);
         setEditableForProduct(false);
         setBuyersTableView();
@@ -196,9 +207,10 @@ public class SingleProductForSellerPageController implements InitializableContro
             buyersTableViewColumns.setCellValueFactory(new PropertyValueFactory<>("userName"));
             buyersTableView.setItems(observableList);
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showErrorPopUp(e.getMessage());
+            Constants.manager.showLoginMenu();
         } catch (InvalidIdException | NoAccessException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
         }
@@ -241,10 +253,10 @@ public class SingleProductForSellerPageController implements InitializableContro
             product.setBrand(brandTextField.getText());
             if (imageFile != null)
                 product.setImage(Files.readAllBytes(imageFile.toPath()));
-            setEditableForProduct(false);
-            productInfoEditButton.setText("Edit product");
             try {
                 productController.editProduct(product.getId(), product, Constants.manager.getToken());
+                 setEditableForProduct(false);
+                 productInfoEditButton.setText("Edit product");
             } catch (InvalidIdException | NoAccessException | NotSellerException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
             } catch (InvalidTokenException e) {

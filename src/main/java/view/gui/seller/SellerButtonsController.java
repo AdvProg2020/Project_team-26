@@ -167,7 +167,6 @@ public class SellerButtonsController implements InitializableController {
     }
 
     private void manageProductHandle() throws IOException {
-        personalInfoController.clearBox();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductTableForSeller.fxml"));
         Node node = loader.load();
         ProductTableForSellerController productTableForSellerController = (ProductTableForSellerController) loader.getController();
