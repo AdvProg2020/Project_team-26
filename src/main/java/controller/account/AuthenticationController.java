@@ -152,6 +152,8 @@ public class AuthenticationController implements IAuthenticationController {
     }
 
     private void registerSeller(Account account, String token) {
+        User test = createNewUser(account);
+        System.out.println(test.getCompanyName());
         userRepository.save(createNewUser(account));
     }
 
