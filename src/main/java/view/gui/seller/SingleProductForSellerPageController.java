@@ -180,7 +180,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         setEditableForProduct(false);
         setEditableForProductSeller(false);
         amountTextField.setText("" + productSeller.getRemainingItems());
-        priceTextField.setText("" + productSeller.getRemainingItems());
+        priceTextField.setText("" + productSeller.getPrice());
         setEditableForProductSeller(false);
         setEditableForProduct(false);
 
