@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -43,10 +44,11 @@ public class OffTableController implements InitializableController {
 
     private void loadSingleOff(Off off) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffPageForSeller.fxml"));
+        Node node =  loader.load();
         OffControllerPage offControllerPage = (OffControllerPage) loader.getController();
         offControllerPage.initialize(off.getId());
         offControllerPage.loadOffPage(off, this);
-        personalInfoController.updateAllBox(loader.load());
+        personalInfoController.updateAllBoxWithSingleNode(node);
     }
 
     public void load(List<Off> offList, PersonalInfoController personalInfoController) {
