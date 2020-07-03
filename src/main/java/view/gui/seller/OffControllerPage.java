@@ -94,10 +94,13 @@ public class OffControllerPage implements InitializableController, Reloadable {
             updateButton.setText("Update");
         } else {
             try {
+                if (off == null)
+                    return;
                 Off newOff = off.clone();
                 newOff.setStartDate(Constants.manager.getDateFromDatePicker(startDate));
                 newOff.setEndDate(Constants.manager.getDateFromDatePicker(endDate));
                 offController.edit(newOff, offId, Constants.manager.getToken());
+                Constants.manager.showSuccessPopUp("off updated");
                 setEditable(false);
                 updateButton.setText("Edit");
                 reloadPage();
@@ -134,9 +137,11 @@ public class OffControllerPage implements InitializableController, Reloadable {
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), false, Constants.manager.getToken());
+                Constants.manager.showSuccessPopUp("product added");
                 reload();
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, false, Constants.manager.getToken());
+                Constants.manager.showSuccessPopUp("product added");
                 reload();
             } else {
                 Constants.manager.showErrorPopUp("enter Integer");

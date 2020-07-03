@@ -235,7 +235,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
             try {
                 productController.addSeller(this.newProductForAddingToSellers.getId(), newProductSeller, Constants.manager.getToken());
                 this.personalInfoController.clearBox();
-                Constants.manager.showSuccessPopUp("Your Product Created");
+                Constants.manager.showSuccessPopUp("you are added to product");
             } catch (NotSellerException | NoAccessException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
             }  catch (InvalidTokenException e) {
