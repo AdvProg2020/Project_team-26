@@ -108,23 +108,26 @@ public class Account {
         this.companyName = companyName;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
     public User makeUser() {
         if (role == Role.CUSTOMER) {
-            Customer customer = new Customer(username, password, email, role);
+            User customer = new Customer(username, password, email, role);
             customer.changeFirstName(firstName);
             customer.changeLastName(lastName);
             customer.setCredit(credit);
             return customer;
-        }
-        else if (role == Role.SELLER) {
-            Seller seller = new Seller(username, password, email, role);
+        } else if (role == Role.SELLER) {
+            User seller = new Seller(username, password, email, role);
             seller.changeFirstName(firstName);
             seller.changeLastName(lastName);
             seller.setCredit(credit);
             seller.setCompanyName(companyName);
             return seller;
         } else {
-            Admin admin = new Admin(username,password,email,role);
+            User admin = new Admin(username, password, email, role);
             admin.changeFirstName(firstName);
             admin.changeLastName(lastName);
             return admin;

@@ -111,8 +111,9 @@ public class User {
     }
 
     public String getCompanyName() {
-        if (role == Role.SELLER)
+        if (role == Role.SELLER) {
             return details.get("Company Name");
+        }
         return null;
     }
 
@@ -155,6 +156,10 @@ public class User {
 
     public long getCredit() {
         return credit;
+    }
+
+    public void setCompanyName(String companyName) {
+        details.put("Company Name", companyName);
     }
 
     public void setCredit(long credit) {
