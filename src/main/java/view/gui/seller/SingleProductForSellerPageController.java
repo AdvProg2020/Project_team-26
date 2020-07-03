@@ -140,7 +140,7 @@ public class SingleProductForSellerPageController implements InitializableContro
         productRateSlider.setValueChanging(false);
         productRateSlider.setDisable(false);
         amountTextField.setText("" + productSeller.getRemainingItems());
-        priceTextField.setText("" + productSeller.getRemainingItems());
+        priceTextField.setText("" + productSeller.getPrice());
         stateText.setText(product.getStatus() == Status.DEACTIVE ? "DEACTIVE":"ACTIVE");
         setEditableForProductSeller(false);
         setEditableForProduct(false);

@@ -19,10 +19,12 @@ public class AuthenticationController implements IAuthenticationController {
 
     UserRepository userRepository;
     PromoRepository promoRepository;
+    Random randomNumberForPromo;
 
     public AuthenticationController(RepositoryContainer repositoryContainer) {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
         this.promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
+        randomNumberForPromo = new Random();
     }
 
     public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
@@ -33,8 +35,7 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByUsername(username));
         if (userSession.getLoggedInUser() != null) {
             if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
-                Random r = new Random();
-                /* if (r.nextInt(200) < 50)*/
+                 if (randomNumberForPromo.nextInt(200) < 50)
                 creatRandomPromo((Customer) userSession.getLoggedInUser());
             }
         }
