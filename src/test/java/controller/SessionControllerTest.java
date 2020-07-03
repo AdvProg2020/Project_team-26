@@ -33,14 +33,14 @@ public class SessionControllerTest {
 
     @Test
     public void getUser() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException {
-        authenticationController.login("aria", "aria", token);
+        authenticationController.login("arya", "arya", token);
         Assertions.assertEquals(sessionController.getUser(token).getRole(), Role.ADMIN);
     }
 
     @Test
     public void isUserLoggedIn() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException {
         Assertions.assertEquals(sessionController.isUserLoggedIn(token), false);
-        authenticationController.login("test1", "test1", token);
+        authenticationController.login("arya", "arya", token);
         Assertions.assertEquals(sessionController.isUserLoggedIn(token), true);
     }
 
@@ -51,7 +51,7 @@ public class SessionControllerTest {
         Assertions.assertEquals(ex.getMessage(),"you are not login to have a role.");
         /** Exception Tests **/
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
         Assertions.assertEquals(sessionController.getUserRole(token),Role.ADMIN);
     }
 }

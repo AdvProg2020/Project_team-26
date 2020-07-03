@@ -50,26 +50,26 @@ public class CartControllerTest {
                 "as", token));
         Assertions.assertEquals(ex.getMessage(), "You must login before using promo code.");
 
-        authenticationController.login("aria", "aria", token);
+        authenticationController.login("arya", "arya", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> cartController.usePromoCode("as", token));
         Assertions.assertEquals(ex.getMessage(), "You must be a customer to use promo code.");
         authenticationController.logout(token);
 
-        authenticationController.login("test9", "test9", token);
-        ex = Assertions.assertThrows(InvalidPromoCodeException.class, () -> cartController.usePromoCode("asd",
+        authenticationController.login("customer", "1234", token);
+        ex = Assertions.assertThrows(InvalidPromoCodeException.class, () -> cartController.usePromoCode("randomPromoIMade",
                 token));
         Assertions.assertEquals(ex.getMessage(), "There is no promo with this code.");
 
-        ex = Assertions.assertThrows(PromoNotAvailableException.class, () -> cartController.usePromoCode("randomForLogin2030a1",
+        ex = Assertions.assertThrows(PromoNotAvailableException.class, () -> cartController.usePromoCode("promo1",
                 token));
         Assertions.assertEquals(ex.getMessage(), "This promo is not for you.");
         authenticationController.logout(token);
 
         /** Exception Tests **/
 
-        authenticationController.login("test5", "test5", token);
-        cartController.usePromoCode("randomForLogin2026a1", token);
-        Assertions.assertEquals(cartController.getCart(token).getUsedPromo().getPromoCode(), "randomForLogin2026a1");
+        authenticationController.login("customer", "1234", token);
+        cartController.usePromoCode("promo2", token);
+        Assertions.assertEquals(cartController.getCart(token).getUsedPromo().getPromoCode(), "promo2");
 
     }
 
@@ -92,10 +92,10 @@ public class CartControllerTest {
         /** Exception Tests **/
 
 
-        cartController.addOrChangeProduct(6, 1, token);
-        Assertions.assertEquals(cartController.getAmountInCartBySellerId(6, token), 1);
+        cartController.addOrChangeProduct(1, 1, token);
+        Assertions.assertEquals(cartController.getAmountInCartBySellerId(1, token), 1);
 
-        Assertions.assertEquals(cartController.getTotalPrice(cartController.getCart(token), token), 3456);
+        Assertions.assertEquals(cartController.getTotalPrice(cartController.getCart(token), token), 20);
 
     }
 
@@ -107,20 +107,20 @@ public class CartControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> cartController.checkout(token));
         Assertions.assertEquals(ex.getMessage(), "You must login before using promo code.");
 
-        authenticationController.login("test1", "test1", token);
+        authenticationController.login("arya", "arya", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> cartController.checkout(token));
         Assertions.assertEquals(ex.getMessage(),"You must be a customer to be able to buy.");
         authenticationController.logout(token);
 
-        authenticationController.login("test8","test8",token);
-        cartController.addOrChangeProduct(6,1,token);
+        authenticationController.login("randomName18:52:21.241303600","124",token);
+        cartController.addOrChangeProduct(1,1,token);
         ex = Assertions.assertThrows(NotEnoughCreditException.class,() -> cartController.checkout(token));
-        Assertions.assertEquals(ex.getMessage(),"You don't have enough creadit to pay 3456");
+        Assertions.assertEquals(ex.getMessage(),"You don't have enough creadit to pay 20");
         authenticationController.logout(token);
         /** Exception Tests **/
 
-        authenticationController.login("test14","test14",token);
-        cartController.addOrChangeProduct(23,1,token);
+        authenticationController.login("customer","1234",token);
+        cartController.addOrChangeProduct(1,1,token);
         cartController.checkout(token);
 
 

@@ -45,7 +45,7 @@ public class CategoryListController implements InitializableController {
     }
 
     public void load(Category category) throws InvalidIdException {
-        if (category.getId() == 1)
+        if(category.getId() == 1)
             goToParentButton.setDisable(true);
         else
             goToParentButton.setDisable(false);
@@ -70,10 +70,12 @@ public class CategoryListController implements InitializableController {
     private void click() {
         if (categoryList.getItems() != null) {
             Category selectedCategory = (Category) categoryList.getSelectionModel().getSelectedItem();
-            if (categoryOptionController != null)
-                categoryOptionController.setTable(selectedCategory);
+            if(selectedCategory == null)
+                return;
+            if(categoryOptionController != null)
+            categoryOptionController.setTable(selectedCategory);
             try {
-                if (selectedCategory == null)
+                if(selectedCategory == null)
                     return;
                 load(selectedCategory);
                 category = selectedCategory;

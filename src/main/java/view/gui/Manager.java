@@ -307,7 +307,6 @@ public class Manager implements Reloadable {
         popUp.setScene(new Scene((Parent) node));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
-        popUp.initStyle(StageStyle.UNDECORATED);
         popUp.show();
     }
 

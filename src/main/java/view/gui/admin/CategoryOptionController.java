@@ -7,6 +7,7 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.ObjectAlreadyExistException;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import model.Category;
 import model.CategoryFeature;
+import model.Product;
 import model.enums.FeatureType;
 import view.cli.ControllerContainer;
 import view.gui.CategoryListController;
@@ -27,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryOptionController implements InitializableController, Reloadable {
+public class CategoryOptionController implements InitializableController,Reloadable {
 
     @FXML
     private TableView categoryTable;
@@ -63,6 +65,7 @@ public class CategoryOptionController implements InitializableController, Reload
         controller.initialize(1);
         controller.load(categoryController.getCategory(1, Constants.manager.getToken()));
         controller.setCategoryOptionController(this);
+        controller.setReloadable(this);
         addCategory.setOnMouseClicked(e -> addCategory());
         addButton.setOnMouseClicked(e -> addCategoryFeature());
         categoryTable.setOnMouseClicked(e -> fillDetails());
@@ -71,7 +74,6 @@ public class CategoryOptionController implements InitializableController, Reload
         types.add(FeatureType.STRING);
         types.add(FeatureType.INTEGER);
         typeChoice.setItems(FXCollections.observableList(types));
-        controller.setReloadable(this::reload);
     }
 
     private void fillDetails() {
@@ -127,20 +129,15 @@ public class CategoryOptionController implements InitializableController, Reload
     }
 
     public void setTable(Category category) {
-        if (category == null)
-            return;
-        System.out.println(category + " " + "nigga");
         List<CategoryFeature> list = category.getFeatures();
         categoryTable.setItems(FXCollections.observableList(list));
         featureCol.setCellValueFactory(new PropertyValueFactory<CategoryFeature, String>("featureName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<CategoryFeature, String>("featureType"));
     }
 
+
     @Override
     public void reload() throws IOException {
-      /*  if (controller.getCategory() == null)
-            return;
-        setTable(controller.getCategory());*/
 
     }
 }

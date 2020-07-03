@@ -105,6 +105,8 @@ public class ManagerRequestController implements InitializableController {
 
     private void showDescription() {
         Request request = (Request) requestTable.getSelectionModel().getSelectedItem();
+        if(request == null)
+            return;
         requestDescription.setText(request.toString());
     }
 }

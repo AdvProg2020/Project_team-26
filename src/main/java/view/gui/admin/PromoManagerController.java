@@ -48,6 +48,8 @@ public class PromoManagerController implements InitializableController {
     private Label errorLabel;
     @FXML
     private Button addButtonUsername;
+    @FXML
+    private TextField maximumOff;
 
     private List<Promo> allPromos = new ArrayList<>();
     private IPromoController controller;
@@ -142,16 +144,19 @@ public class PromoManagerController implements InitializableController {
         Date start = Constants.manager.getDateFromDatePicker(startDate);
         Date end = Constants.manager.getDateFromDatePicker(endDate);
         String code = codeText.getText();
-        double percent = Double.parseDouble(offPercent.getText());
         if (!end.after(start)) {
             errorLabel.setText("Wrong date");
+            return;
         } else if (code.isBlank() || offPercent.getText().isBlank()) {
             errorLabel.setText("Something's wrong. I can feel it.");
+            return;
         }
         try {
             Promo promoCode = new Promo(code, null);
             promoCode.setStartDate(start);
             promoCode.setEndDate(end);
+            promoCode.setPercent(Double.parseDouble(offPercent.getText()));
+            promoCode.setMaxDiscount(Long.parseLong(maximumOff.getText()));
             controller.createPromoCode(promoCode, Constants.manager.getToken());
             refreshTable();
         } catch (ObjectAlreadyExistException e) {

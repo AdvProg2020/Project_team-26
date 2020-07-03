@@ -207,6 +207,9 @@ public class RegisterMenuController implements InitializableController {
         switch (roleChoice.getValue()) {
             case "Customer":
                 account.setCredit(Long.parseLong(textField.getText()));
+                break;
+            case "Seller":
+                account.setCompanyName(textField.getText());
         }
         return account;
     }

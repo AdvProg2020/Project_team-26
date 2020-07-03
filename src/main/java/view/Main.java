@@ -31,6 +31,7 @@ public class Main extends Application {
             controller.initialize(2);
             controller.load(primaryStage);
             primaryStage.setScene(new Scene((Parent) node));
+            primaryStage.setResizable(false);
             primaryStage.show();
         } else {
             Constants.manager.start(primaryStage);

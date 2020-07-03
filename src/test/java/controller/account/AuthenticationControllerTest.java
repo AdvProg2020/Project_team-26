@@ -44,22 +44,31 @@ public class AuthenticationControllerTest {
 
         ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.register(
                 new Account("test1","1234",Role.CUSTOMER,"niga@yahoo.com"),token));
+        Assertions.assertEquals(ex.getMessage(),"Email is taken.");
+
+        ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.register(
+                new Account("test1","1234",Role.CUSTOMER,"niga5@yahoo.com"),token));
         Assertions.assertEquals(ex.getMessage(),"Username is already taken.");
 
         ex = assertThrows(NotLoggedINException.class, () -> authenticationController.logout(token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in.");
         /**End of Exception Tests**/
 
-        authenticationController.register(new Account(getRandomName(),"1234",Role.SELLER,getRandomEmail()),token);
-        Assertions.assertEquals("Arya200",userRepository.getUserByUsername("Arya200").getUsername());
-        authenticationController.register(new Account(getRandomName(),"124",Role.CUSTOMER,getRandomEmail()),token);
-        Assertions.assertEquals("Tataloo",userRepository.getUserByUsername("Tataloo").getUsername());
+        String randomName = getRandomName();
+
+        authenticationController.register(new Account(randomName,"1234",Role.SELLER,getRandomEmail()),token);
+        Assertions.assertEquals(randomName,userRepository.getUserByUsername(randomName).getUsername());
+        randomName = getRandomName();
+        authenticationController.register(new Account(randomName,"124",Role.CUSTOMER,getRandomEmail()),token);
+        Assertions.assertEquals(randomName,userRepository.getUserByUsername(randomName).getUsername());
 
         /** Logging in and then doing stuff**/
 
-        authenticationController.login("aria","aria",token);
-        authenticationController.register(new Account(getRandomName(),"admin",Role.ADMIN,getRandomEmail()),token);
-        Assertions.assertEquals("Admin",userRepository.getUserByUsername("Admin").getUsername());
+        randomName = getRandomName();
+
+        authenticationController.login("arya","arya",token);
+        authenticationController.register(new Account(randomName,"admin",Role.ADMIN,getRandomEmail()),token);
+        Assertions.assertEquals(randomName,userRepository.getUserByUsername(randomName).getUsername());
 
     }
 
@@ -67,7 +76,7 @@ public class AuthenticationControllerTest {
     public void loginTest() {
         /** Exception Tests**/
         Exception ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.login(
-                "test1","password2",token));
+                "arya","password2",token));
         Assertions.assertEquals(ex.getMessage(),"Password is wrong");
         ex = assertThrows(InvalidAuthenticationException.class, () -> authenticationController.login(
                 "mamad","password",token));

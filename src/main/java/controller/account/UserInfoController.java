@@ -80,6 +80,7 @@ public class UserInfoController implements IUserInfoController {
                 default:
                     throw new NoSuchField("No Such Field exists");
             }
+            userRepository.save(user);
         }
     }
 

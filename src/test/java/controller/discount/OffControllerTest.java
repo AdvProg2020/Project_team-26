@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import repository.*;
 
 import javax.print.DocFlavor;
+import java.lang.invoke.TypeDescriptor;
+import java.util.Date;
 
 public class OffControllerTest {
 
@@ -48,15 +50,19 @@ public class OffControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> offController.createNewOff(new Off(),token));
         Assertions.assertEquals(ex.getMessage(),"You must be logged in.");
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> offController.createNewOff(new Off(),token));
         Assertions.assertEquals(ex.getMessage(),"seller can create a off");
         authenticationController.logout(token);
 
         /**Exception Tests **/
 
-        authenticationController.login("test4","test4",token);
-        offController.createNewOff(new Off(),token);
+        Off off = new Off();
+        off.setStartDate(new Date(120,2,2));
+        off.setEndDate(new Date(124,2,2));
+
+        authenticationController.login("seller","1234",token);
+        offController.createNewOff(off,token);
 
     }
 
@@ -65,7 +71,7 @@ public class OffControllerTest {
     public void addProductToOffTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, ObjectAlreadyExistException, NoAccessException, NotLoggedINException, InvalidIdException {
 
         /**Exception Tests **/
-        authenticationController.login("test2","test2",token);
+        authenticationController.login("seller","1234",token);
         Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> offController.addProductToOff(
                 offRepository.getById(2),200,300,20,false,token));
         Assertions.assertEquals(ex.getMessage(),"No Such product Exists");
@@ -89,25 +95,11 @@ public class OffControllerTest {
     @Test
     public void editTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
 
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("seller2","1234",token);
         Exception ex = Assertions.assertThrows(NoAccessException.class,() ->offController.edit(new Off(),2,token));
         Assertions.assertEquals(ex.getMessage(),"you can only change your off");
 
     }
-
-
-    @Test
-    public void removeProductFromOffTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
-
-        /** Exception Tests **/
-        authenticationController.login("test4","test4",token);
-        Exception ex = Assertions.assertThrows(ObjectAlreadyExistException.class, () -> offController.removeProductFromOff(
-                offRepository.getById(2),2,false,token));
-        /** Exception Tests **/
-        offController.removeAOff(2,token);
-    }
-
-
 
 
 }
