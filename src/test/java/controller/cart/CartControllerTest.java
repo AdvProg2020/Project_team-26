@@ -95,7 +95,7 @@ public class CartControllerTest {
         cartController.addOrChangeProduct(1, 1, token);
         Assertions.assertEquals(cartController.getAmountInCartBySellerId(1, token), 1);
 
-        Assertions.assertEquals(cartController.getTotalPrice(cartController.getCart(token), token), 200);
+        Assertions.assertEquals(cartController.getTotalPrice(cartController.getCart(token), token), 20);
 
     }
 
@@ -115,7 +115,7 @@ public class CartControllerTest {
         authenticationController.login("randomName18:52:21.241303600","124",token);
         cartController.addOrChangeProduct(1,1,token);
         ex = Assertions.assertThrows(NotEnoughCreditException.class,() -> cartController.checkout(token));
-        Assertions.assertEquals(ex.getMessage(),"You don't have enough creadit to pay 200");
+        Assertions.assertEquals(ex.getMessage(),"You don't have enough creadit to pay 20");
         authenticationController.logout(token);
         /** Exception Tests **/
 

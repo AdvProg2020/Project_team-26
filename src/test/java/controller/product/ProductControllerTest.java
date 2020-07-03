@@ -147,7 +147,7 @@ class ProductControllerTest {
 
         /** Exception Tests **/
 
-        authenticationController.login("seller","1234",token);
+        authenticationController.login("seller2","1234",token);
         productController.removeProduct(1,token);
         ProductSeller productSeller = new ProductSeller();
         productSeller.setSeller((Seller) Session.getSession(token).getLoggedInUser());

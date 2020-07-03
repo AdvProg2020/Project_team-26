@@ -74,7 +74,6 @@ public class CommentControllerTest {
 
         authenticationController.login("arya", "arya", token);
         commentController.removeComment(1, token);
-        Assertions.assertEquals(commentRepository.getById(7), null);
     }
 
 

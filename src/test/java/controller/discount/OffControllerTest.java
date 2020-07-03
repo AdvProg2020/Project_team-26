@@ -102,18 +102,4 @@ public class OffControllerTest {
     }
 
 
-    @Test
-    public void removeProductFromOffTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, InvalidIdException, NoAccessException, NotLoggedINException {
-
-        /** Exception Tests **/
-        authenticationController.login("seller","1234",token);
-        Exception ex = Assertions.assertThrows(InvalidIdException.class, () -> offController.removeProductFromOff(
-                offRepository.getById(2),2,false,token));
-        /** Exception Tests **/
-        offController.removeAOff(2,token);
-    }
-
-
-
-
 }

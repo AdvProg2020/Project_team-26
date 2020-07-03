@@ -11,6 +11,7 @@ public class Account {
     private String firstName;
     private String lastName;
     private String id;
+    private String companyName;
     private long credit;
 
     public Account() {
@@ -103,6 +104,10 @@ public class Account {
         this.role = role;
     }
 
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     public User makeUser() {
         if (role == Role.CUSTOMER) {
             Customer customer = new Customer(username, password, email, role);
@@ -116,6 +121,7 @@ public class Account {
             seller.changeFirstName(firstName);
             seller.changeLastName(lastName);
             seller.setCredit(credit);
+            seller.setCompanyName(companyName);
             return seller;
         } else {
             Admin admin = new Admin(username,password,email,role);
@@ -124,5 +130,6 @@ public class Account {
             return admin;
         }
     }
+
 
 }
