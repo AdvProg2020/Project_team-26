@@ -49,7 +49,7 @@ public class CreateOfForSellerController implements InitializableController, Rel
         addProductButton.setText("Add Product");
         productName.setText("enter name");
         priceInOff.setPromptText("enter [--%] or [d]");
-        itemsVBox.getChildren().removeAll();
+        itemsVBox.getChildren().removeAll(itemsVBox.getChildren());
         this.off = new Off();
     }
 
@@ -115,7 +115,7 @@ public class CreateOfForSellerController implements InitializableController, Rel
 
     @Override
     public void reload() throws IOException {
-        itemsVBox.getChildren().removeAll();
+        itemsVBox.getChildren().removeAll(itemsVBox.getChildren());
         off.getItems().forEach(i -> {
             try {
                 updateVBox(i);

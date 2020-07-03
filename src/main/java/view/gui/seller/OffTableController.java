@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -43,10 +44,11 @@ public class OffTableController implements InitializableController {
 
     private void loadSingleOff(Off off) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffPageForSeller.fxml"));
+        Node node = loader.load();
         OffControllerPage offControllerPage = (OffControllerPage) loader.getController();
         offControllerPage.initialize(off.getId());
         offControllerPage.loadOffPage(off, this);
-        personalInfoController.updateAllBox(loader.load());
+        personalInfoController.updateAllBoxWithSingleNode(node);
     }
 
     public void load(List<Off> offList, PersonalInfoController personalInfoController) {
@@ -58,15 +60,21 @@ public class OffTableController implements InitializableController {
         startDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
-        offTableView.setItems(observableList);
         offTableView.setOnMouseClicked(e -> {
             ObservableList<Off> objects = offTableView.getSelectionModel().getSelectedItems();
+            if (objects == null || objects.size() == 0)
+                return;
             try {
                 loadSingleOff(objects.get(objects.size() - 1));
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
         });
+        if (observableList == null)
+            return;
+        if (observableList.size() == 0)
+            return;
+        offTableView.setItems(observableList);
     }
 
 

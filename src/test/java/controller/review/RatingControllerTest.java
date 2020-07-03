@@ -46,28 +46,28 @@ public class RatingControllerTest {
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
 
-        authenticationController.login("test5","test5",token);
+        authenticationController.login("test1","1234",token);
         ex = Assertions.assertThrows(NotBoughtTheProductException.class, () -> ratingController.rate(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You have not bought this product");
         authenticationController.logout(token);
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> ratingController.rate(5.0,
                 2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
         authenticationController.logout(token);
 
         /** Exception Tests **/
 
-        authenticationController.login("test8","test8",token);
-        cartController.addOrChangeProduct(18,1,token);
-        cartController.setAddress("retard abad",token);
+        authenticationController.login("customer","1234",token);
+        cartController.addOrChangeProduct(1,1,token);
+        cartController.setAddress("home",token);
         cartController.checkout(token);
-        ratingController.rate(5.0,14,token);
+        ratingController.rate(5.0,1,token);
     }
 
 }

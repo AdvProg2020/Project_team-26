@@ -234,12 +234,24 @@ public class Manager implements Reloadable {
     }
 
     public boolean checkIsPercent(String input) {
-        if (input.matches("\\d+(?:\\.\\d+)%$")) {
-            if (input.split("%")[0].length() <= 2)
-                return true;
-            return false;
+        String[] split = input.split("%");
+        if (checkIsDouble(split[0])) {
+            if (Double.parseDouble(split[0]) >= 100) {
+                return false;
+            }
+            return true;
         }
         return false;
+    }
+
+    public boolean checkIsDouble(String input) {
+        try {
+            if (0 > Double.parseDouble(input))
+                return false;
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
 
     public Date getDateFromDatePicker(DatePicker datePicker) throws DateTimeException, IllegalArgumentException {
@@ -295,7 +307,6 @@ public class Manager implements Reloadable {
         popUp.setScene(new Scene((Parent) node));
         popUp.initModality(Modality.APPLICATION_MODAL);
         popUp.setResizable(false);
-        popUp.initStyle(StageStyle.UNDECORATED);
         popUp.show();
     }
 

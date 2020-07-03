@@ -7,6 +7,7 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.ObjectAlreadyExistException;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import model.Category;
 import model.CategoryFeature;
+import model.Product;
 import model.enums.FeatureType;
 import view.cli.ControllerContainer;
 import view.gui.CategoryListController;
@@ -27,7 +29,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CategoryOptionController implements InitializableController {
+public class CategoryOptionController implements InitializableController,Reloadable {
 
     @FXML
     private TableView categoryTable;
@@ -52,7 +54,6 @@ public class CategoryOptionController implements InitializableController {
 
     private CategoryListController controller;
     private ICategoryController categoryController;
-    private Reloadable reloadable;
 
 
     @Override
@@ -64,6 +65,7 @@ public class CategoryOptionController implements InitializableController {
         controller.initialize(1);
         controller.load(categoryController.getCategory(1, Constants.manager.getToken()));
         controller.setCategoryOptionController(this);
+        controller.setReloadable(this);
         addCategory.setOnMouseClicked(e -> addCategory());
         addButton.setOnMouseClicked(e -> addCategoryFeature());
         categoryTable.setOnMouseClicked(e -> fillDetails());
@@ -127,10 +129,15 @@ public class CategoryOptionController implements InitializableController {
     }
 
     public void setTable(Category category) {
-        System.out.println(category + " " + "nigga");
         List<CategoryFeature> list = category.getFeatures();
         categoryTable.setItems(FXCollections.observableList(list));
         featureCol.setCellValueFactory(new PropertyValueFactory<CategoryFeature, String>("featureName"));
         typeCol.setCellValueFactory(new PropertyValueFactory<CategoryFeature, String>("featureType"));
+    }
+
+
+    @Override
+    public void reload() throws IOException {
+
     }
 }

@@ -23,14 +23,6 @@ public class Seller extends User {
         allOffs = new ArrayList<>();
     }
 
-    public void setCompanyName(String companyName) {
-        getDetails().put("Company Name", companyName);
-    }
-
-    public String getCompanyName() {
-        return getDetails().get("Company Name");
-    }
-
     public void setAllOffs(List<Off> allOffs) {
         this.allOffs = allOffs;
     }

@@ -45,25 +45,25 @@ public class OrderControllerTest {
     @Test
     public void getASingleOrderTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NoObjectIdException, NotLoggedINException {
 
-        authenticationController.login("test5", "test5", token);
+        authenticationController.login("customer", "1234", token);
         Exception ex = Assertions.assertThrows(NoObjectIdException.class, () -> orderController.getASingleOrder(100, token));
         Assertions.assertEquals(ex.getMessage(), "Object does not exist.");
         authenticationController.logout(token);
 
-        authenticationController.login("test10","test10",token);
+        authenticationController.login("customer","1234",token);
         Assertions.assertNotEquals(null,orderController.getASingleOrder(1,token));
     }
 
     @Test
     public void getOrdersTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException {
 
-        authenticationController.login("test5", "test5", token);
+        authenticationController.login("customer", "1234", token);
         orderController.getOrders(token);
     }
 
     @Test
     public void getOrdersWithFiltersTest() throws InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, PasswordIsWrongException, NoAccessException, NotLoggedINException {
-        authenticationController.login("test5", "test5", token);
+        authenticationController.login("test1", "1234", token);
         Assertions.assertEquals(orderController.getOrdersWithFilter(null, true, 0, 0, token), new ArrayList<>());
     }
 
@@ -75,14 +75,14 @@ public class OrderControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> orderController.getOrdersWithFilter(null, true, 0, 0, token));
         Assertions.assertEquals(ex.getMessage(), "You must be logged in");
 
-        authenticationController.login("aria", "aria", token);
+        authenticationController.login("arya", "arya", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> orderController.getOrdersWithFilter(null, true, 0, 0, token));
         Assertions.assertEquals(ex.getMessage(), "You must be a customer to gte Orders");
         authenticationController.logout(token);
 
         /** Exception Tests **/
 
-        authenticationController.login("test5", "test5", token);
+        authenticationController.login("test1", "1234", token);
         Assertions.assertEquals(new ArrayList<>(), orderController.getOrdersWithFilter(null, true, 0, 0, token));
 
     }
@@ -95,23 +95,23 @@ public class OrderControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class, () -> orderController.getProductBuyerByProductId(2, token));
         Assertions.assertEquals(ex.getMessage(), "You must be Logged in to do this.");
 
-        authenticationController.login("aria", "aria", token);
+        authenticationController.login("arya", "arya", token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> orderController.getProductBuyerByProductId(12, token));
         Assertions.assertEquals(ex.getMessage(), "You must be a seller to view buyers of a product.");
         authenticationController.logout(token);
 
-        authenticationController.login("test4", "test4", token);
+        authenticationController.login("seller", "1234", token);
         ex = Assertions.assertThrows(InvalidIdException.class, () -> orderController.getProductBuyerByProductId(2000,token));
         Assertions.assertEquals(ex.getMessage(),"The specified product does not exist.");
 
-        ex = Assertions.assertThrows(NoAccessException.class, () -> orderController.getProductBuyerByProductId(8,token));
+        ex = Assertions.assertThrows(NoAccessException.class, () -> orderController.getProductBuyerByProductId(1,token));
         Assertions.assertEquals(ex.getMessage(),"You don't own this product.");
         authenticationController.logout(token);
 
         /** Exception Tests **/
 
-        authenticationController.login("test3","test3",token);
-        Assertions.assertNotEquals(null,orderController.getProductBuyerByProductId(14,token));
+        authenticationController.login("seller2","1234",token);
+        Assertions.assertNotEquals(null,orderController.getProductBuyerByProductId(1,token));
 
     }
 

@@ -5,6 +5,7 @@ import controller.interfaces.product.IProductController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -56,8 +57,8 @@ public class OffControllerPage implements InitializableController, Reloadable {
 
     public void loadOffPage(Off off, OffTableController offTableController) throws IOException {
         this.offTableController = offTableController;
-        startDate.setValue(LocalDate.from(off.getStartDate().toInstant()));
-        endDate.setValue(LocalDate.from(off.getEndDate().toInstant()));
+       /* startDate.setValue(LocalDate.from(off.getStartDate().toInstant()));
+        endDate.setValue(LocalDate.from(off.getEndDate().toInstant()));*/
         setEditable(false);
         loadOffItems(off);
         deleteButton.setOnMouseClicked(e -> {
@@ -78,10 +79,11 @@ public class OffControllerPage implements InitializableController, Reloadable {
         offVBox.getChildren().removeAll();
         for (OffItem item : off.getItems()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
+            Node node = loader.load();
             OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
             offItemPageController.load(item, off, false, this);
             offItemPageController.initialize(item.getId());
-            offVBox.getChildren().add(loader.load());
+            offVBox.getChildren().add(node);
         }
     }
 
@@ -92,10 +94,13 @@ public class OffControllerPage implements InitializableController, Reloadable {
             updateButton.setText("Update");
         } else {
             try {
+                if (off == null)
+                    return;
                 Off newOff = off.clone();
                 newOff.setStartDate(Constants.manager.getDateFromDatePicker(startDate));
                 newOff.setEndDate(Constants.manager.getDateFromDatePicker(endDate));
                 offController.edit(newOff, offId, Constants.manager.getToken());
+                Constants.manager.showSuccessPopUp("off updated");
                 setEditable(false);
                 updateButton.setText("Edit");
                 reloadPage();
@@ -132,9 +137,11 @@ public class OffControllerPage implements InitializableController, Reloadable {
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), false, Constants.manager.getToken());
+                Constants.manager.showSuccessPopUp("product added");
                 reload();
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, false, Constants.manager.getToken());
+                Constants.manager.showSuccessPopUp("product added");
                 reload();
             } else {
                 Constants.manager.showErrorPopUp("enter Integer");

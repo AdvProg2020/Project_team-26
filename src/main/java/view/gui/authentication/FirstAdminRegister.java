@@ -56,6 +56,7 @@ public class FirstAdminRegister implements InitializableController {
             try {
                 Account adminAccount = createAccount(username,email,firstName,lastName,password);
                 controller.register(adminAccount,Constants.manager.getToken());
+                primaryStage.setResizable(true);
                 main.start(primaryStage);
             } catch (InvalidTokenException e) {
                 errorLabel.setText(e.getMessage());

@@ -60,6 +60,7 @@ public class PromoController implements IPromoController {
         checkAccessOfUser(token, "only the manager can create promo code");
         if (promoRepository.getByCode(promo.getPromoCode()) != null)
             throw new ObjectAlreadyExistException("the promo with code " + promo.getPromoCode() + " already exist", promo);
+        promo.setMaxValidUse(25);
         promoRepository.save(promo);
         return promo.getId();
     }

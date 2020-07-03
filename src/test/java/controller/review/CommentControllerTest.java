@@ -45,15 +45,15 @@ public class CommentControllerTest {
                 commentController.addComment("Good", "New Comment", 0, token));
         Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
-        authenticationController.login("aria", "aria", token);
+        authenticationController.login("arya", "arya", token);
         ex = Assertions.assertThrows(NoAccessException.class, () ->
                 commentController.addComment("Good", "New Comment", 0, token));
         Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
         /** Exception ends **/
 
-        authenticationController.login("test8", "test8", token);
-        commentController.addComment("Good", "New Comment", 6, token);
+        authenticationController.login("customer", "1234", token);
+        commentController.addComment("Good", "New Comment", 1, token);
     }
 
     @Test
@@ -61,20 +61,19 @@ public class CommentControllerTest {
 
         /** Exceptions **/
 
-        Exception ex = Assertions.assertThrows(NoAccessException.class, () -> commentController.removeComment(7, token));
+        Exception ex = Assertions.assertThrows(NoAccessException.class, () -> commentController.removeComment(1, token));
         Assertions.assertEquals(ex.getMessage(), "You are not allowed to do that.");
 
-        authenticationController.login("test4","test4",token);
-        ex = Assertions.assertThrows(NoAccessException.class, () -> commentController.removeComment(6,token));
+        authenticationController.login("test1","1234",token);
+        ex = Assertions.assertThrows(NoAccessException.class, () -> commentController.removeComment(1,token));
         Assertions.assertEquals(ex.getMessage(),"You are not allowed to do that.");
-        Assertions.assertEquals(commentRepository.getById(1).getText(),"garage");
+        Assertions.assertEquals(commentRepository.getById(1).getText(),"Good");
 
         /** End of Exceptions**/
         authenticationController.logout(token);
 
-        authenticationController.login("aria", "aria", token);
-        commentController.removeComment(7, token);
-        Assertions.assertEquals(commentRepository.getById(7), null);
+        authenticationController.login("arya", "arya", token);
+        commentController.removeComment(1, token);
     }
 
 

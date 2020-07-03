@@ -36,7 +36,7 @@ public class RequestControllerTest {
         userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
         userInfoController = new UserInfoController(repositoryContainer);
         requestController = new RequestController(repositoryContainer);
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
     }
 
 
@@ -49,14 +49,14 @@ public class RequestControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> requestController.acceptOffRequest(2,token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in");
 
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("seller","1234",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> requestController.acceptOffRequest(2,token));
         Assertions.assertEquals(ex.getMessage(),"You must be an Admin to do this.");
         authenticationController.logout(token);
         /** Exception Tests **/
 
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
         requestController.acceptOffRequest(1,token);
 
     }
@@ -70,14 +70,14 @@ public class RequestControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> requestController.rejectOffRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in");
 
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("customer","1234",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> requestController.rejectOffRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You must be an Admin to do this.");
         authenticationController.logout(token);
         /** Exception Tests **/
 
-        authenticationController.login("aria","aria",token);
-        requestController.rejectOffRequest(2,token);
+        authenticationController.login("arya","arya",token);
+        requestController.rejectOffRequest(1,token);
     }
 
     @Test
@@ -88,14 +88,14 @@ public class RequestControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> requestController.acceptProductRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in");
 
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("customer","1234",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> requestController.acceptProductRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You must be an Admin to do this.");
         authenticationController.logout(token);
         /** Exception Tests **/
 
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
 
         requestController.acceptProductRequest(2,token);
     }
@@ -110,16 +110,16 @@ public class RequestControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> requestController.rejectProductRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in");
 
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("customer","1234",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> requestController.rejectProductRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You must be an Admin to do this.");
         authenticationController.logout(token);
         /** Exception Tests **/
 
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
 
-        requestController.rejectProductRequest(2,token);
+        requestController.rejectProductRequest(1,token);
     }
 
     @Test
@@ -131,16 +131,16 @@ public class RequestControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> requestController.acceptProductSellerRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in");
 
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("customer","1234",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> requestController.acceptProductSellerRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You must be an Admin to do this.");
         authenticationController.logout(token);
         /** Exception Tests **/
 
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
 
-        requestController.acceptProductSellerRequest(2,token);
+        requestController.acceptProductSellerRequest(1,token);
     }
 
     @Test
@@ -152,16 +152,16 @@ public class RequestControllerTest {
         Exception ex = Assertions.assertThrows(NotLoggedINException.class,() -> requestController.rejectProductSellerRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You are not logged in");
 
-        authenticationController.login("test4","test4",token);
+        authenticationController.login("customer","1234",token);
         ex = Assertions.assertThrows(NoAccessException.class, () -> requestController.rejectProductSellerRequest(1,token));
         Assertions.assertEquals(ex.getMessage(),"You must be an Admin to do this.");
         authenticationController.logout(token);
         /** Exception Tests **/
 
 
-        authenticationController.login("aria","aria",token);
+        authenticationController.login("arya","arya",token);
 
-        requestController.rejectProductSellerRequest(2,token);
+        requestController.rejectProductSellerRequest(1,token);
     }
 
 

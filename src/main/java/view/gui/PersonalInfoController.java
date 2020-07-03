@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Seller;
 import model.enums.Role;
 import model.User;
 import view.cli.ControllerContainer;
@@ -123,7 +124,7 @@ public class PersonalInfoController implements InitializableController {
         balance.setEditable(false);
         shopTextField.setText("");
         if (user.getRole() == Role.SELLER) {
-            shopTextField.setText(user.getCompanyName());
+            shopTextField.setText(((Seller) user).getCompanyName());
             shopTextField.setVisible(true);
             shopLabel.setVisible(true);
         }
@@ -191,7 +192,7 @@ public class PersonalInfoController implements InitializableController {
             } catch (InvalidTokenException e) {
                 e.printStackTrace();
             } catch (NotLoggedINException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
             }
         }
     }
@@ -208,7 +209,7 @@ public class PersonalInfoController implements InitializableController {
                 changedInfo.put("LastName", lastName.getText());
                 changedInfo.put("Email", email.getText());
                 if (thisUserRole == Role.SELLER)
-                    changedInfo.put("Company Name", usernameTextField.getText());
+                    changedInfo.put("Company Name", shopTextField.getText());
                 try {
                     userInfoController.changeInfo(changedInfo, Constants.manager.getToken());
                     setEditable(false);
@@ -217,13 +218,10 @@ public class PersonalInfoController implements InitializableController {
                 } catch (NotLoggedINException e) {
                     Constants.manager.showLoginMenu();
                 } catch (InvalidTokenException e) {
-                    e.printStackTrace();
-                } catch (InvalidAuthenticationException e) {
-                    e.printStackTrace();
-                } catch (InvalidFormatException e) {
-                    e.printStackTrace();
-                } catch (NoSuchField noSuchField) {
-                    noSuchField.printStackTrace();
+                    Constants.manager.showErrorPopUp(e.getMessage());
+                    Constants.manager.setTokenFromController();
+                } catch (InvalidFormatException | NoSuchField | InvalidAuthenticationException e) {
+                    Constants.manager.showErrorPopUp(e.getMessage());
                 }
             }
 
@@ -238,18 +236,18 @@ public class PersonalInfoController implements InitializableController {
         initPasswordButton();
     }
 
-    private boolean isEveryThingOk() {
+    private boolean isEveryThingOk() throws IOException {
         boolean result = true;
         if (firstName.getText().isBlank()) {
-            //todo red the label
+            Constants.manager.showErrorPopUp("first name shouldn't be empty");
             result = false;
         }
         if (lastName.getText().isBlank()) {
-            //todo red the label
+            Constants.manager.showErrorPopUp("last name shouldn't be empty");
             result = false;
         }
         if (email.getText().isBlank() || !email.getText().matches("^\\S+@\\S+.(?i)com(?-i)")) {
-            //todo red the label
+            Constants.manager.showErrorPopUp("invalid email format");
             result = false;
         }
         return result;
