@@ -5,6 +5,7 @@ import controller.interfaces.product.IProductController;
 import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
@@ -56,8 +57,8 @@ public class OffControllerPage implements InitializableController, Reloadable {
 
     public void loadOffPage(Off off, OffTableController offTableController) throws IOException {
         this.offTableController = offTableController;
-        startDate.setValue(LocalDate.from(off.getStartDate().toInstant()));
-        endDate.setValue(LocalDate.from(off.getEndDate().toInstant()));
+       /* startDate.setValue(LocalDate.from(off.getStartDate().toInstant()));
+        endDate.setValue(LocalDate.from(off.getEndDate().toInstant()));*/
         setEditable(false);
         loadOffItems(off);
         deleteButton.setOnMouseClicked(e -> {
@@ -78,10 +79,11 @@ public class OffControllerPage implements InitializableController, Reloadable {
         offVBox.getChildren().removeAll();
         for (OffItem item : off.getItems()) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
+            Node node = loader.load();
             OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
             offItemPageController.load(item, off, false, this);
             offItemPageController.initialize(item.getId());
-            offVBox.getChildren().add(loader.load());
+            offVBox.getChildren().add(node);
         }
     }
 
