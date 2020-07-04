@@ -6,17 +6,26 @@ import repository.CategoryRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import repository.ProductRepository;
+import repository.RepositoryContainer;
 import repository.mysql.MySQLCategoryRepository;
+import repository.mysql.MySQLProductRepository;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 
 class MySQLCategoryRepositoryTest {
 
     CategoryRepository categoryRepository;
+    ProductRepository productRepository;
 
     @BeforeEach
     void setup() {
-        categoryRepository = new MySQLCategoryRepository();
+        RepositoryContainer container = new RepositoryContainer("sql");
+        categoryRepository = (CategoryRepository) container.getRepository("CategoryRepository");
+        productRepository = (ProductRepository) container.getRepository("ProductRepository");
     }
 
     @Test
@@ -125,5 +134,13 @@ class MySQLCategoryRepositoryTest {
         categories = categoryRepository.getAll();
         category = categories.get(3);
         Assertions.assertEquals((parentId % 3) + 1, category.getParent().getId());
+    }
+
+    @Test
+    public void editPhoto() throws IOException {
+        File file = new File("C:/Users/pouya/Desktop/photo_2020-07-03_17-06-03.jpg");
+        Product product = productRepository.getById(1);
+        product.setImage(Files.readAllBytes(file.toPath()));
+        productRepository.save(product);
     }
 }
