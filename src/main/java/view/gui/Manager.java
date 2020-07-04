@@ -2,7 +2,9 @@ package view.gui;
 
 import controller.SessionController;
 import controller.account.AuthenticationController;
+import controller.discount.PromoController;
 import controller.interfaces.account.IShowUserController;
+import controller.interfaces.discount.IPromoController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -362,6 +364,22 @@ public class Manager implements Reloadable {
             openPage(page.getKey(), page.getValue());
         } catch (IOException ioException) {
             ioException.printStackTrace();
+        }
+    }
+
+    public void showRandomPromoIfUserGet() throws IOException {
+        IPromoController promoController = (PromoController) Constants.manager.getControllerContainer().
+                getController(ControllerContainer.Controller.PromoController);
+        String promo = null;
+        try {
+            promo = promoController.getRandomPromoForUserSet(Constants.manager.getToken());
+            if (promo == null)
+                return;
+            if (promo.equals(""))
+                return;
+            Constants.manager.showSuccessPopUp("promo: " + promo);
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
         }
     }
 

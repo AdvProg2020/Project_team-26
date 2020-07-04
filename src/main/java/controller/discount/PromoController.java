@@ -2,6 +2,7 @@ package controller.discount;
 
 import controller.interfaces.discount.IPromoController;
 import exception.*;
+import javafx.util.Pair;
 import model.*;
 import model.enums.Role;
 import repository.Pageable;
@@ -41,7 +42,7 @@ public class PromoController implements IPromoController {
 
     @Override
     public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
+        Pageable page = createAPage(sortField, isAscending, startIndex, endIndex);
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("you are not logged in");
@@ -74,11 +75,11 @@ public class PromoController implements IPromoController {
         }
     }
 
-    private Pageable createAPage(String sortField,boolean isAscending, int startIndex, int endIndex){
-        if(isAscending) {
-            return new Pageable(startIndex,endIndex,sortField, Pageable.Direction.ASCENDING);
-        }else {
-            return new Pageable(startIndex,endIndex,sortField, Pageable.Direction.DESCENDING);
+    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
+        if (isAscending) {
+            return new Pageable(startIndex, endIndex, sortField, Pageable.Direction.ASCENDING);
+        } else {
+            return new Pageable(startIndex, endIndex, sortField, Pageable.Direction.DESCENDING);
         }
     }
 
@@ -170,5 +171,20 @@ public class PromoController implements IPromoController {
             promo.setEndDate(date);
         }
         promoRepository.save(promo);
+    }
+
+    public String getRandomPromoForUserSet(String token) throws InvalidTokenException {
+        Session session = Session.getSession(token);
+        if (session.getLoggedInUser() == null)
+            return null;
+        if (session.getLoggedInUser().getRole() != Role.CUSTOMER)
+            return null;
+        Pair<Boolean, String> promo = session.getPromoCodeForUser();
+        if (promo.getKey() == false)
+            return null;
+        if (promo.getValue() == "")
+            return null;
+        session.setPromoCodeForUser(new Pair<>(false, ""));
+        return promo.getValue();
     }
 }

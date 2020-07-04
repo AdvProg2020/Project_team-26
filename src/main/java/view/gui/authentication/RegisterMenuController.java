@@ -3,8 +3,10 @@ package view.gui.authentication;
 import controller.account.Account;
 import controller.account.AuthenticationController;
 import controller.account.UserInfoController;
+import controller.discount.PromoController;
 import controller.interfaces.account.IAuthenticationController;
 import controller.interfaces.account.IShowUserController;
+import controller.interfaces.discount.IPromoController;
 import exception.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.value.ChangeListener;
@@ -90,7 +92,7 @@ public class RegisterMenuController implements InitializableController {
         Account account = createAccount();
         if (isAnyEmpty()) {
             errorLabelRegister.setText("Please fill all the boxes");
-        } else if (itIsntANumber() &&  account.getRole() == Role.CUSTOMER) {
+        } else if (itIsntANumber() && account.getRole() == Role.CUSTOMER) {
             errorLabelRegister.setText("Please Enter a Number for your credit");
         } else if (!passwordText.getText().equals(confirmPasswordText.getText())) {
             errorLabelRegister.setText("Your passwords don't match");
@@ -123,9 +125,10 @@ public class RegisterMenuController implements InitializableController {
             try {
                 controller.login(username, password, Constants.manager.getToken());
                 Constants.manager.setLoggedIn(true);
-                Constants.manager.setRole(showUserController.getUserByName(username,Constants.manager.getToken()).getRole());
+                Constants.manager.setRole(showUserController.getUserByName(username, Constants.manager.getToken()).getRole());
                 reloadable.reload();
                 Constants.manager.showSuccessPopUp("You have logged in.");
+                Constants.manager.showRandomPromoIfUserGet();
                 Constants.manager.closePopUp();
                 return;
             } catch (InvalidTokenException e) {

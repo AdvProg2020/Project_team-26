@@ -2,6 +2,7 @@ package controller.account;
 
 import controller.interfaces.account.IAuthenticationController;
 import exception.*;
+import javafx.util.Pair;
 import model.*;
 import model.enums.Role;
 import repository.PromoRepository;
@@ -35,13 +36,15 @@ public class AuthenticationController implements IAuthenticationController {
         userSession.login(userRepository.getUserByUsername(username));
         if (userSession.getLoggedInUser() != null) {
             if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
-                 if (randomNumberForPromo.nextInt(200) < 50)
-                creatRandomPromo((Customer) userSession.getLoggedInUser());
+                if (randomNumberForPromo.nextInt(200) < 50)
+                    creatRandomPromo((Customer) userSession.getLoggedInUser(),userSession);
+            } else {
+                userSession.setPromoCodeForUser(new Pair<>(false, ""));
             }
         }
     }
 
-    private void creatRandomPromo(Customer customer) {
+    private void creatRandomPromo(Customer customer, Session userSession) {
         Promo promo = new Promo();
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
@@ -60,9 +63,9 @@ public class AuthenticationController implements IAuthenticationController {
             promo.setPromoCode(customer.getUsername().substring(0, (customer.getUsername().length() + 1) / 2) + new Date().getTime());
             if (promoRepository.getByCode(promo.getPromoCode()) == null) {
                 promoRepository.save(promo);
-                Constants.manager.showSuccessPopUp("promo: " + promo.getPromoCode());
+                userSession.setPromoCodeForUser(new Pair<>(true, promo.getPromoCode()));
             }
-        } catch (ParseException | IOException e) {
+        } catch (ParseException e) {
             e.getStackTrace();
         }
     }

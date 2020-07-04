@@ -11,7 +11,7 @@ public interface IPromoController {
 
     Promo getPromoCodeTemplateById(int codeId, String token) throws InvalidIdException, NotLoggedINException;
 
-    List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending,int startIndex,int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
+    List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException;
 
     int createPromoCode(Promo promo, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException;
 
@@ -21,10 +21,11 @@ public interface IPromoController {
 
     void setTime(int promoId, Date date, String type, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException;
 
-    void removeCustomer(int promoId, int customerId,String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException, NotCustomerException;
+    void removeCustomer(int promoId, int customerId, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException, NotCustomerException;
 
     void setPercent(int promoId, double percent, String token) throws InvalidIdException, NoAccessException, InvalidFormatException, InvalidTokenException, InvalidDiscountPercentException, NotLoggedINException;
 
     void setMaxDiscount(int promoId, long maxDiscount, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException;
 
+    String getRandomPromoForUserSet(String token) throws InvalidTokenException;
 }
