@@ -6,20 +6,25 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Server" />
         <module name="Project_team-26" />
         <module name="group26" />
         <module name="Project" />
+        <module name="Client" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Client" target="1.5" />
       <module name="group26" target="13" />
       <module name="Project" target="14" />
       <module name="Project_team-26" target="14" />
+      <module name="Server" target="14" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="Project" options="--add-exports javafx.controls/com.sun.javafx.scene.control.behavior=Project" />
+      <module name="Project" options="" />
+      <module name="Server" options="-parameters" />
     </option>
   </component>
 </project>
