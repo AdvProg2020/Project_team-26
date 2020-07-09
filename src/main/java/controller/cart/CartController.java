@@ -2,6 +2,7 @@ package controller.cart;
 
 import controller.interfaces.cart.ICartController;
 import exception.*;
+import javafx.util.Pair;
 import model.*;
 import model.enums.ShipmentState;
 import repository.*;
@@ -109,7 +110,7 @@ public class CartController implements ICartController {
         order.calculatePaidAmount();
         orderRepository.save(order);
         if (order.calculatePaidAmount() > 2000) {
-            creatRandomPromo(customer);
+            creatRandomPromo(customer,session);
         }
     }
 
@@ -120,7 +121,7 @@ public class CartController implements ICartController {
         }
     }
 
-    private void creatRandomPromo(Customer customer) {
+    private void creatRandomPromo(Customer customer , Session userSession) {
         Promo promo = new Promo();
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
@@ -139,9 +140,9 @@ public class CartController implements ICartController {
             promo.setPromoCode(customer.getUsername().substring(0, (customer.getUsername().length() + 1) / 2) + new Date().getTime());
             if (promoRepository.getByCode(promo.getPromoCode()) == null) {
                 promoRepository.save(promo);
-                Constants.manager.showSuccessPopUp("promo: " + promo.getPromoCode());
+                userSession.setPromoCodeForUser(new Pair<>(true, promo.getPromoCode()));
             }
-        } catch (ParseException | IOException e) {
+        } catch (ParseException e) {
             e.getStackTrace();
         }
     }

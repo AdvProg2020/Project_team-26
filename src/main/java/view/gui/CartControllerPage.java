@@ -78,6 +78,7 @@ public class CartControllerPage implements InitializableController, Reloadable {
             if (!promoTextField.getText().isBlank() && !promoTextField.getText().equals(""))
                 cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
             cartController.checkout(Constants.manager.getToken());
+            Constants.manager.showRandomPromoIfUserGet();
             Constants.manager.openPage("AllProducts", 0);
         } catch (InvalidTokenException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
