@@ -30,7 +30,10 @@
                         </ImageView>
                         <HBox prefHeight="32.0" prefWidth="182.0" spacing="90.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#addToCompareList" prefHeight="25.0" prefWidth="126.0" text="Add to Compare List" />
+                              <Button mnemonicParsing="false" onAction="#addToCompareList" prefHeight="25.0" prefWidth="126.0" text="Add to Compare List">
+                                 <HBox.margin>
+                                    <Insets left="90.0" />
+                                 </HBox.margin></Button>
                            </children>
                         </HBox>
                      </children>
@@ -118,7 +121,10 @@
                                  <children>
                                     <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#rate" prefHeight="26.0" prefWidth="62.0" text="Rate" />
+                                          <Button mnemonicParsing="false" onAction="#rate" prefHeight="26.0" prefWidth="62.0" text="Rate">
+                                             <HBox.margin>
+                                                <Insets left="83.0" />
+                                             </HBox.margin></Button>
                                        </children>
                                     </HBox>
                                  </children>
