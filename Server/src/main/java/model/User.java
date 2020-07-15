@@ -1,20 +1,15 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import exception.NoAccessException;
 import exception.NotEnoughCreditException;
 import model.enums.Role;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import exception.InvalidTokenException;
-import exception.NotLoggedINException;
-import model.enums.Role;
-import model.Session;
-import model.User;
 @Entity
 @Table(name = "user")
 public class User {
@@ -34,6 +29,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)
+    @JsonProperty("role")
     private Role role;
 
     @Lob
