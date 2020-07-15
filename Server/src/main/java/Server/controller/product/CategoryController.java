@@ -1,8 +1,9 @@
-package controller.product;
+package Server.controller.product;
 
-import controller.interfaces.cart.ICartController;
-import controller.interfaces.category.ICategoryController;
+import exception.InvalidTokenException;
+import exception.NoAccessException;
 import exception.*;
+import exception.ObjectAlreadyExistException;
 import model.*;
 import model.enums.FeatureType;
 import model.enums.Role;
@@ -14,7 +15,7 @@ import repository.RepositoryContainer;
 import java.util.List;
 import java.util.Map;
 
-public class CategoryController implements ICategoryController {
+public class CategoryController {
     CategoryRepository categoryRepository;
     ProductRepository productRepository;
 

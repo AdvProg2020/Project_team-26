@@ -34,7 +34,7 @@ public class CategoryListController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
-        categoryController = (CategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
+        categoryController = (ICategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
         try {
             category = categoryController.getCategory(id, Constants.manager.getToken());
             load(category);

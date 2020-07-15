@@ -19,7 +19,7 @@ public class AuthenticationView extends View {
     public AuthenticationView(ViewManager manager, String command) {
         super(manager);
         super.input = command;
-        control = (AuthenticationController) manager.getController(ControllerContainer.Controller.AuthenticationController);
+        control = (IAuthenticationController) manager.getController(ControllerContainer.Controller.AuthenticationController);
     }
 
     @Override

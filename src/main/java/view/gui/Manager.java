@@ -365,11 +365,11 @@ public class Manager implements Reloadable {
     }
 
     public void showRandomPromoIfUserGet() throws IOException {
-        IPromoController promoController = (PromoController) Constants.manager.getControllerContainer().
+     /*   IPromoController promoController = (IPromoController) Constants.manager.getControllerContainer().
                 getController(ControllerContainer.Controller.PromoController);
         String promo = null;
         try {
-            promo = promoController.getRandomPromoForUserSet(Constants.manager.getToken());
+            promo = promoController.get(Constants.manager.getToken());
             if (promo == null)
                 return;
             if (promo.equals(""))
@@ -377,7 +377,7 @@ public class Manager implements Reloadable {
             Constants.manager.showSuccessPopUp("promo: " + promo);
         } catch (InvalidTokenException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
 

@@ -67,7 +67,7 @@ public class RegisterMenuController implements InitializableController {
     private Reloadable reloadable;
 
     public RegisterMenuController() {
-        controller = (AuthenticationController) Constants.manager.getControllerContainer().
+        controller = (IAuthenticationController) Constants.manager.getControllerContainer().
                 getController(ControllerContainer.Controller.AuthenticationController);
     }
 
@@ -218,7 +218,7 @@ public class RegisterMenuController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
-        controller = (AuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
+        controller = (IAuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         roleChoice.setItems(roles);
         registerButton = new Button("Register");

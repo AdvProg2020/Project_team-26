@@ -1,5 +1,6 @@
 package view.gui.seller;
 
+import controller.interfaces.product.IProductController;
 import controller.product.ProductController;
 import exception.*;
 import javafx.collections.FXCollections;
@@ -45,7 +46,7 @@ public class ProductTableForSellerController implements InitializableController 
 
     @Override
     public void initialize(int id) throws IOException {
-        productController = (ProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         sortComBowBox.getItems().addAll("mostSold", "price");
         productForTables = new ArrayList<>();
         searchTextField.setPromptText("Name");

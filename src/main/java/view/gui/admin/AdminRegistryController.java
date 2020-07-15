@@ -38,7 +38,7 @@ public class AdminRegistryController implements InitializableController {
     private IAuthenticationController controller;
 
     public void register() {
-        controller = (AuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
+        controller = (IAuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
         if(isAnyEmpty()) {
             errorLabel.setText("Please fill all the boxes");
         }  else if (!passwordText.getText().equals(confirmText.getText())) {
