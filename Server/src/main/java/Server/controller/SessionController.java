@@ -13,6 +13,7 @@ import repository.RepositoryContainer;
 
 import javax.servlet.http.HttpSession;
 import javax.swing.*;
+
 @RestController
 public class SessionController {
     public SessionController() {
@@ -20,7 +21,7 @@ public class SessionController {
     }
 
     @GetMapping("/session/hasUserLoggedIn/{token}")
-    public Boolean isUserLoggedIn(@PathVariable("token")String token) throws InvalidTokenException {
+    public Boolean isUserLoggedIn(@PathVariable("token") String token) throws InvalidTokenException {
         Session session = Session.getSession(token);
         if (session.getLoggedInUser() == null)
             return false;
@@ -32,16 +33,20 @@ public class SessionController {
         String token = Session.addSession();
         return token;
     }
+
     @GetMapping("/session/getUserRole/{token}")
-    public Role getUserRole(@PathVariable("token")String token) throws NotLoggedINException, InvalidTokenException {
+    public Role getUserRole(@PathVariable("token") String token) throws NotLoggedINException, InvalidTokenException {
         Session session = Session.getSession(token);
         User user = session.getLoggedInUser();
         if (user == null)
             throw new NotLoggedINException("you are not login to have a role.");
-        return user.getRole();
+       return Role.CUSTOMER;
+        //return user.getRole();
     }
+
     @GetMapping("/session/getLoggedInUser/{token}")
-    public User getUser(@PathVariable("token")String token) throws InvalidTokenException {
+    public User getUser(@PathVariable("token") String token) throws InvalidTokenException {
+        System.out.println("asjhf");
         Session session = Session.getSession(token);
         User user = session.getLoggedInUser();
         return user;
