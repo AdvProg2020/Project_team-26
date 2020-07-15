@@ -3,7 +3,6 @@ package controller.cart;
 import controller.account.AuthenticationController;
 import controller.discount.PromoController;
 import exception.*;
-import model.Customer;
 import model.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

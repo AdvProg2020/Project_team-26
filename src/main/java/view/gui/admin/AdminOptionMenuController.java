@@ -10,15 +10,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import model.Admin;
 import view.cli.ControllerContainer;
-import view.gui.CategoryListController;
 import view.gui.Constants;
 import view.gui.interfaces.*;
 
-import javax.crypto.Cipher;
 import java.io.IOException;
 
 public class AdminOptionMenuController implements InitializableController {

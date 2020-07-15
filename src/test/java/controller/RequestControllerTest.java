@@ -5,17 +5,12 @@ import controller.account.AuthenticationController;
 import controller.account.ShowUserController;
 import controller.account.UserInfoController;
 import exception.*;
-import model.OffRequest;
-import model.ProductRequest;
-import model.ProductSellerRequest;
 import model.Session;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.RepositoryContainer;
 import repository.UserRepository;
-
-import java.util.List;
 
 public class RequestControllerTest {
 

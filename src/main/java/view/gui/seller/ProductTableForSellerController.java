@@ -1,6 +1,5 @@
 package view.gui.seller;
 
-import controller.interfaces.product.*;
 import controller.product.ProductController;
 import exception.*;
 import javafx.collections.FXCollections;

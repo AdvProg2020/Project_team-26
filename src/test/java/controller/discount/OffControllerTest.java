@@ -1,7 +1,5 @@
 package controller.discount;
 
-import antlr.ASdebug.ASDebugStream;
-import com.sun.xml.bind.v2.TODO;
 import controller.account.AuthenticationController;
 import controller.cart.CartController;
 import exception.*;
@@ -12,8 +10,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import repository.*;
 
-import javax.print.DocFlavor;
-import java.lang.invoke.TypeDescriptor;
 import java.util.Date;
 
 public class OffControllerTest {

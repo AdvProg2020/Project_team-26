@@ -22,13 +22,11 @@ import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 import view.gui.interfaces.Reloadable;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class SingleProductForSellerPageController implements InitializableController, Reloadable {

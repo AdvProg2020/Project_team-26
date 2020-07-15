@@ -6,7 +6,6 @@ import java.util.Map;
 
 public class Cart {
 
-    // TODO: define hash for product seller
     private Map<ProductSeller, Integer> products;
     private Promo usedPromo;
     private String address;
@@ -16,7 +15,6 @@ public class Cart {
     }
 
     public boolean addItems(ProductSeller productSeller, int amount) {
-        // TODO: when amount becomes 0 remove product from map
         if (products.containsKey(productSeller)) {
             if (amount <= productSeller.getRemainingItems() && amount >= 0) {
                 if (amount == 0) {

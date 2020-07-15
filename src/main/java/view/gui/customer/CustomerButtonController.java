@@ -21,7 +21,6 @@ import view.gui.interfaces.InitializableController;
 import view.gui.PersonalInfoController;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class CustomerButtonController implements InitializableController {
     private int userId;

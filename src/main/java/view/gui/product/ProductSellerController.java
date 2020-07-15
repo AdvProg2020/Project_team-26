@@ -7,7 +7,6 @@ import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotEnoughProductsException;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -17,8 +16,6 @@ import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
 
 public class ProductSellerController implements InitializableController {
     ICartController cartController;

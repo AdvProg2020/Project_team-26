@@ -1,7 +1,6 @@
 package view.gui.customer;
 
 import controller.interfaces.order.IOrderController;
-import exception.*;
 import javafx.collections.*;
 import javafx.collections.ObservableList;
 import javafx.fxml.*;
@@ -10,14 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Order;
 import model.OrderItem;
-import model.Promo;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.InitializableController;
 import view.gui.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 

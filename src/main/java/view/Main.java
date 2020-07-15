@@ -2,20 +2,15 @@ package view;
 
 import controller.account.AuthenticationController;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import repository.RepositoryContainer;
-import repository.UserRepository;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
-import view.gui.Manager;
 import view.gui.authentication.FirstAdminRegister;
-
-import java.io.IOException;
 
 public class Main extends Application {
     private static Scene scene;

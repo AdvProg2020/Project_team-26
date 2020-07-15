@@ -2,7 +2,6 @@ package controller.account;
 
 import exception.*;
 import model.Session;
-import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 import org.junit.jupiter.api.*;

@@ -1,14 +1,10 @@
 package controller.discount;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare;
 import controller.account.AuthenticationController;
 import controller.cart.CartController;
 import exception.*;
-import model.Customer;
 import model.Promo;
 import model.Session;
-import org.hibernate.boot.model.source.internal.hbm.AbstractPluralAssociationElementSourceImpl;
-import org.hibernate.exception.spi.AbstractSQLExceptionConversionDelegate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

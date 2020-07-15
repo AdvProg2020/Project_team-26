@@ -1,7 +1,6 @@
 package view.gui.seller;
 
 import controller.interfaces.discount.IOffController;
-import exception.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;

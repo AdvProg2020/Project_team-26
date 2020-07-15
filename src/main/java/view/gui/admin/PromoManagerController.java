@@ -8,7 +8,6 @@ import controller.interfaces.request.IRequestController;
 import exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,7 +17,6 @@ import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.*;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

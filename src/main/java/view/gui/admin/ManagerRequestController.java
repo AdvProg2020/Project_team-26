@@ -15,7 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Request;
-import model.User;
 import view.cli.ControllerContainer;
 import view.gui.Constants;
 import view.gui.interfaces.*;
