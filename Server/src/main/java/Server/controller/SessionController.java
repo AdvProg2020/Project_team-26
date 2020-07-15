@@ -20,7 +20,7 @@ public class SessionController {
 
     }
 
-    @GetMapping("/session/hasUserLoggedIn/{token}")
+    @GetMapping("/session/hasUserLoggedIn/{token}")//TODO handle exception
     public Boolean isUserLoggedIn(@PathVariable("token") String token) throws InvalidTokenException {
         Session session = Session.getSession(token);
         if (session.getLoggedInUser() == null)
@@ -34,18 +34,17 @@ public class SessionController {
         return token;
     }
 
-    @GetMapping("/session/getUserRole/{token}")
+    @GetMapping("/session/getUserRole/{token}")//TODO handle exception
     public Role getUserRole(@PathVariable("token") String token) throws NotLoggedINException, InvalidTokenException {
         Session session = Session.getSession(token);
         User user = session.getLoggedInUser();
         if (user == null)
             throw new NotLoggedINException("you are not login to have a role.");
-       return Role.CUSTOMER;
-        //return user.getRole();
+        return user.getRole();
     }
 
     @GetMapping("/session/getLoggedInUser/{token}")
-    public User getUser(@PathVariable("token") String token) throws InvalidTokenException {
+    public User getUser(@PathVariable("token") String token) throws InvalidTokenException {//TODO handle exception
         System.out.println("asjhf");
         Session session = Session.getSession(token);
         User user = session.getLoggedInUser();
