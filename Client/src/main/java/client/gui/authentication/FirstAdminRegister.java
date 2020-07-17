@@ -45,7 +45,6 @@ public class FirstAdminRegister implements InitializableController {
 
     Stage primaryStage;
     Main main;
-    private final String registerAddress = Constants.manager.getHostPort()+"/register";
 
 
     private void register() {
@@ -64,7 +63,7 @@ public class FirstAdminRegister implements InitializableController {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("account", adminAccount);
                 jsonObject.put("token", Constants.manager.getToken());
-                Constants.manager.postRegisterLoginRequest(jsonObject,registerAddress,false);
+                Constants.manager.postRegisterLoginRequest(jsonObject,Constants.registerAddress,false);
                 primaryStage.setResizable(true);
                 main.start(primaryStage);
             } catch (HttpClientErrorException e) {

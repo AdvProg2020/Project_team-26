@@ -65,9 +65,6 @@ public class RegisterMenuController implements InitializableController {
     private Button registerButton;
     private TextField textField;
     private Reloadable reloadable;
-    private final String registerAddress = Constants.manager.getHostPort() + "/register";
-    private final String loginAddress = Constants.manager.getHostPort() + "/login";
-    private final String getUserByNameAddress = Constants.manager.getHostPort() + "/getUserByName";
 
 
     public RegisterMenuController() {
@@ -99,7 +96,7 @@ public class RegisterMenuController implements InitializableController {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("account", account);
                 jsonObject.put("token", Constants.manager.getToken());
-                Constants.manager.postRegisterLoginRequest(jsonObject,registerAddress,false);
+                Constants.manager.postRegisterLoginRequest(jsonObject,Constants.registerAddress,false);
                 redirectToLogin();
             } catch (HttpClientErrorException e) {
                 errorLabelRegister.setText(e.getMessage());//TODO
@@ -120,7 +117,7 @@ public class RegisterMenuController implements InitializableController {
                 jsonObject.put("username", username);
                 jsonObject.put("password", password);
                 jsonObject.put("token", Constants.manager.getToken());
-                Constants.manager.postRegisterLoginRequest(jsonObject,loginAddress,false);
+                Constants.manager.postRegisterLoginRequest(jsonObject,Constants.loginAddress,false);
                 Constants.manager.setLoggedIn(true);
                 //TODO change the return type to role in server
                 jsonObject.remove("password");
@@ -128,7 +125,7 @@ public class RegisterMenuController implements InitializableController {
                 httpHeaders.setContentType(MediaType.APPLICATION_JSON);
                 HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
                 RestTemplate restTemplate = new RestTemplate();
-                ResponseEntity<User> responseEntity = restTemplate.postForEntity(getUserByNameAddress, httpEntity, User.class);
+                ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByNameAddress, httpEntity, User.class);
                 Constants.manager.setRole(((User)responseEntity.getBody()).getRole());
                 reloadable.reload();
                 Constants.manager.showSuccessPopUp("You have logged in.");
