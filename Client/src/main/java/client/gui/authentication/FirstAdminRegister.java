@@ -64,12 +64,7 @@ public class FirstAdminRegister implements InitializableController {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("account", adminAccount);
                 jsonObject.put("token", Constants.manager.getToken());
-                HttpHeaders httpHeaders = new HttpHeaders();
-                httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-                HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                ResponseEntity<String> responseEntity = restTemplate.postForEntity(registerAddress, httpEntity, String.class);
-               // responseEntity.getBody();
+                Constants.manager.postRegisterLoginRequest(jsonObject,registerAddress,false);
                 primaryStage.setResizable(true);
                 main.start(primaryStage);
             } catch (HttpClientErrorException e) {

@@ -4,6 +4,7 @@ import client.gui.Account;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
+import client.model.User;
 import client.model.enums.Role;
 import exception.*;
 import javafx.collections.FXCollections;
@@ -64,8 +65,9 @@ public class RegisterMenuController implements InitializableController {
     private Button registerButton;
     private TextField textField;
     private Reloadable reloadable;
-    private final String registerAddress = Constants.manager.getHostPort()+"/register";
-    private final String loginAddress = Constants.manager.getHostPort()+"/login";
+    private final String registerAddress = Constants.manager.getHostPort() + "/register";
+    private final String loginAddress = Constants.manager.getHostPort() + "/login";
+    private final String getUserByNameAddress = Constants.manager.getHostPort() + "/getUserByName";
 
 
     public RegisterMenuController() {
@@ -97,13 +99,9 @@ public class RegisterMenuController implements InitializableController {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("account", account);
                 jsonObject.put("token", Constants.manager.getToken());
-                HttpHeaders httpHeaders = new HttpHeaders();
-                httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-                HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-                RestTemplate restTemplate = new RestTemplate();
-                ResponseEntity<String> responseEntity = restTemplate.postForEntity(registerAddress, httpEntity, String.class);
+                Constants.manager.postRegisterLoginRequest(jsonObject,registerAddress,false);
                 redirectToLogin();
-            } catch (HttpClientErrorException  e) {
+            } catch (HttpClientErrorException e) {
                 errorLabelRegister.setText(e.getMessage());//TODO
             } catch (IOException e) {
                 e.printStackTrace();
@@ -122,34 +120,25 @@ public class RegisterMenuController implements InitializableController {
                 jsonObject.put("username", username);
                 jsonObject.put("password", password);
                 jsonObject.put("token", Constants.manager.getToken());
+                Constants.manager.postRegisterLoginRequest(jsonObject,loginAddress,false);
+                Constants.manager.setLoggedIn(true);
+                //TODO change the return type to role in server
+                jsonObject.remove("password");
                 HttpHeaders httpHeaders = new HttpHeaders();
                 httpHeaders.setContentType(MediaType.APPLICATION_JSON);
                 HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
                 RestTemplate restTemplate = new RestTemplate();
-                ResponseEntity<String> responseEntity = restTemplate.postForEntity(loginAddress, httpEntity, String.class);
-                // responseEntity.getBody();
-                Constants.manager.setLoggedIn(true);
-                //TODO change the return type to role in server
-                Constants.manager.setRole(showUserController.getUserByName(username, Constants.manager.getToken()).getRole());
+                ResponseEntity<User> responseEntity = restTemplate.postForEntity(getUserByNameAddress, httpEntity, User.class);
+                Constants.manager.setRole(((User)responseEntity.getBody()).getRole());
                 reloadable.reload();
                 Constants.manager.showSuccessPopUp("You have logged in.");
                 Constants.manager.showRandomPromoIfUserGet();
                 Constants.manager.closePopUp();
                 return;
-            } catch (InvalidTokenException e) {
-                Constants.manager.setTokenFromController();
-                errorLabelLogin.setText(e.getMessage());
-                return;
-            } catch (InvalidFormatException e) {
-                errorLabelLogin.setText(e.getMessage());
-            } catch (InvalidAuthenticationException e) {
-                errorLabelLogin.setText(e.getMessage());
-            } catch (PasswordIsWrongException e) {
-                errorLabelLogin.setText("Your password is Wrong.");
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (NoAccessException e) {
-                e.printStackTrace();
+            } catch (HttpClientErrorException e){
+                //TODO
             }
         }
     }
