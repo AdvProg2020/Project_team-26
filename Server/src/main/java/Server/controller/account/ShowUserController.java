@@ -48,7 +48,7 @@ public class ShowUserController {
         }
     }
 
-    @PostMapping("/getUserByName")
+    @PostMapping("/getUserById")
     public User getUserById(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
         int id = (Integer) info.get("id");
         String token = (String) info.get("token");
