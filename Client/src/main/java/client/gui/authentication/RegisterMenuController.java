@@ -1,18 +1,24 @@
 package client.gui.authentication;
 
+import client.gui.Account;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
+import client.model.User;
 import client.model.enums.Role;
-import controller.account.Account;
-import controller.interfaces.account.IAuthenticationController;
-import controller.interfaces.account.IShowUserController;
 import exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
@@ -58,13 +64,10 @@ public class RegisterMenuController implements InitializableController {
 
     private Button registerButton;
     private TextField textField;
-    private IAuthenticationController controller;
-    private IShowUserController showUserController;
     private Reloadable reloadable;
 
+
     public RegisterMenuController() {
-        controller = (IAuthenticationController) Constants.manager.getControllerContainer().
-                getController(ControllerContainer.Controller.AuthenticationController);
     }
 
     public void completeTheMenu() {
@@ -90,18 +93,13 @@ public class RegisterMenuController implements InitializableController {
             errorLabelRegister.setText("Your passwords don't match");
         } else {
             try {
-                controller.register(account, Constants.manager.getToken());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("account", account);
+                jsonObject.put("token", Constants.manager.getToken());
+                Constants.manager.postRegisterLoginRequest(jsonObject,Constants.registerAddress,false);
                 redirectToLogin();
-            } catch (NoAccessException e) {
-                errorLabelRegister.setText(e.getMessage());
-            } catch (InvalidFormatException e) {
-                errorLabelRegister.setText(e.getMessage());
-            } catch (InvalidTokenException e) {
-                errorLabelRegister.setText(e.getMessage());
-            } catch (InvalidAuthenticationException e) {
-                errorLabelRegister.setText(e.getMessage());
-            } catch (AlreadyLoggedInException e) {
-                errorLabelRegister.setText(e.getMessage());
+            } catch (HttpClientErrorException e) {
+                errorLabelRegister.setText(e.getMessage());//TODO
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -115,28 +113,29 @@ public class RegisterMenuController implements InitializableController {
             errorLabelLogin.setText("Please Fill all of the boxes.");
         } else {
             try {
-                controller.login(username, password, Constants.manager.getToken());
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("username", username);
+                jsonObject.put("password", password);
+                jsonObject.put("token", Constants.manager.getToken());
+                Constants.manager.postRegisterLoginRequest(jsonObject,Constants.loginAddress,false);
                 Constants.manager.setLoggedIn(true);
-                Constants.manager.setRole(showUserController.getUserByName(username, Constants.manager.getToken()).getRole());
+                //TODO change the return type to role in server
+                jsonObject.remove("password");
+                HttpHeaders httpHeaders = new HttpHeaders();
+                httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+                HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+                RestTemplate restTemplate = new RestTemplate();
+                ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByNameAddress, httpEntity, User.class);
+                Constants.manager.setRole(((User)responseEntity.getBody()).getRole());
                 reloadable.reload();
                 Constants.manager.showSuccessPopUp("You have logged in.");
                 Constants.manager.showRandomPromoIfUserGet();
                 Constants.manager.closePopUp();
                 return;
-            } catch (InvalidTokenException e) {
-                Constants.manager.setTokenFromController();
-                errorLabelLogin.setText(e.getMessage());
-                return;
-            } catch (InvalidFormatException e) {
-                errorLabelLogin.setText(e.getMessage());
-            } catch (InvalidAuthenticationException e) {
-                errorLabelLogin.setText(e.getMessage());
-            } catch (PasswordIsWrongException e) {
-                errorLabelLogin.setText("Your password is Wrong.");
             } catch (IOException e) {
                 e.printStackTrace();
-            } catch (NoAccessException e) {
-                e.printStackTrace();
+            } catch (HttpClientErrorException e){
+                //TODO
             }
         }
     }
@@ -214,8 +213,6 @@ public class RegisterMenuController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
-        controller = (IAuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
-        showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         roleChoice.setItems(roles);
         registerButton = new Button("Register");
         registerButton.setLayoutX(255);

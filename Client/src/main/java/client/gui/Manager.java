@@ -24,6 +24,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
@@ -42,10 +49,26 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
+    private final String hostPort = "http://localhost:8080";
 
     public Manager() {
         pages = new ArrayList<>();
         compareList = new HashSet<>();
+    }
+
+    public String getHostPort() {
+        return hostPort;
+    }
+    public String postRegisterLoginRequest(JSONObject jsonObject , String address , boolean haveTHisFunctionOutput) throws HttpClientErrorException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
+        if (haveTHisFunctionOutput) {
+            return responseEntity.getBody();
+        }
+        return "success";
     }
 
     public void openPage(String pageName, int id) throws IOException {
