@@ -42,10 +42,15 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
+    private final String hostPort = "http://localhost:8080";
 
     public Manager() {
         pages = new ArrayList<>();
         compareList = new HashSet<>();
+    }
+
+    public String getHostPort() {
+        return hostPort;
     }
 
     public void openPage(String pageName, int id) throws IOException {

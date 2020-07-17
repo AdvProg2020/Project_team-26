@@ -1,14 +1,14 @@
 package client.gui;
 
-import model.Admin;
-import model.Customer;
-import model.Seller;
-import model.User;
-import model.enums.Role;
+import client.model.Admin;
+import client.model.Customer;
+import client.model.Seller;
+import client.model.User;
+import client.model.enums.Role;
 
 public class Account {
     private String password;
-    private Role role;
+    private client.model.enums.Role role;
     private String email;
     private String username;
     private String firstName;
@@ -103,7 +103,7 @@ public class Account {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(client.model.enums.Role role) {
         this.role = role;
     }
 
