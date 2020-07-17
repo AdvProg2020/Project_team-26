@@ -4,6 +4,9 @@ import exception.*;
 import javafx.util.Pair;
 import model.*;
 import model.enums.ShipmentState;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import repository.*;
 
 import java.text.ParseException;
@@ -12,12 +15,18 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Random;
 
+@RestController
 public class CartController {
 
     private ProductSellerRepository productSellerRepository;
     private PromoRepository promoRepository;
     private UserRepository userRepository;
     private OrderRepository orderRepository;
+
+    public CartController() {
+
+    }
+
 
     public CartController(RepositoryContainer repositoryContainer) {
         productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
@@ -26,7 +35,8 @@ public class CartController {
         orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
     }
 
-    public void addOrChangeProduct(int productSellerId, int amount, String token)
+    @PostMapping("/cart/addOrChangeProduct")
+    public void addOrChangeProduct(@RequestBody int productSellerId, @RequestBody int amount, @RequestBody String token)
             throws InvalidIdException, NotEnoughProductsException, InvalidTokenException {
         Session session = Session.getSession(token);
         ProductSeller productSeller = productSellerRepository.getById(productSellerId);
@@ -39,17 +49,20 @@ public class CartController {
         }
     }
 
-    public Cart getCart(String token) throws InvalidTokenException {
+    @PostMapping("/cart/getCart")
+    public Cart getCart(@RequestBody String token) throws InvalidTokenException {
         Session session = Session.getSession(token);
         return session.getCart();
     }
 
-    public void setAddress(String address, String token) throws InvalidTokenException {
+    @PostMapping("/cart/setAddress")
+    public void setAddress(@RequestBody String address, @RequestBody String token) throws InvalidTokenException {
         Session session = Session.getSession(token);
         session.getCart().setAddress(address);
     }
 
-    public void usePromoCode(String promoCode, String token) throws InvalidTokenException, InvalidPromoCodeException, PromoNotAvailableException, NotLoggedINException, NoAccessException {
+    @PostMapping("/cart/usePromoCode")
+    public void usePromoCode(@RequestBody String promoCode, @RequestBody String token) throws InvalidTokenException, InvalidPromoCodeException, PromoNotAvailableException, NotLoggedINException, NoAccessException {
         Session session = Session.getSession(token);
         User loggedInUser = session.getLoggedInUser();
 
@@ -82,7 +95,8 @@ public class CartController {
         session.getCart().setUsedPromo(promo);
     }
 
-    public void checkout(String token)
+    @PostMapping("/cart/checkout")
+    public void checkout(@RequestBody String token)
             throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughProductsException, NotEnoughCreditException {
         Session session = Session.getSession(token);
         User loggedInUser = session.getLoggedInUser();
@@ -102,18 +116,19 @@ public class CartController {
         order.calculatePaidAmount();
         orderRepository.save(order);
         if (order.calculatePaidAmount() > 2000) {
-            creatRandomPromo(customer,session);
+            creatRandomPromo(customer, session);
         }
     }
 
-    public void changeSellerCredit(Order order) {
+    @PostMapping("/cart/changeSellerCredit")
+    public void changeSellerCredit(@RequestBody Order order) {
         for (OrderItem item : order.getItems()) {
             long money = item.getPaidPrice() * item.getAmount();
             item.getSeller().setCredit(item.getSeller().getCredit() + money);
         }
     }
 
-    private void creatRandomPromo(Customer customer , Session userSession) {
+    private void creatRandomPromo(Customer customer, Session userSession) {
         Promo promo = new Promo();
         promo.getCustomers().add(customer);
         promo.setMaxValidUse(1);
@@ -167,7 +182,8 @@ public class CartController {
         }
     }
 
-    public long getTotalPrice(Cart cart, String token) throws InvalidTokenException {
+    @PostMapping("/cart/getTotalPrice")
+    public long getTotalPrice(@RequestBody Cart cart,@RequestBody String token) throws InvalidTokenException {
         long totalPrice = 0;
       /*  cart.getProducts().forEach((key, value) -> {
             totalPrice += key.getPriceInOff() * value;
@@ -178,6 +194,7 @@ public class CartController {
         return totalPrice;
     }
 
+    @PostMapping("/cart/getAmountInCartBySellerId")
     public int getAmountInCartBySellerId(int productSelleId, String token) throws InvalidTokenException, NoSuchObjectException {
         Session session = Session.getSession(token);
         for (ProductSeller productSeller : session.getCart().getProducts().keySet()) {
