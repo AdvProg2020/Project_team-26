@@ -48,21 +48,17 @@ public class AdminOptionMenuController implements InitializableController {
 
     private int userId;
     private Admin admin;
-    private IShowUserController showUserController;
-    private ICategoryController categoryController;
-
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException {
-        showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
-        categoryController = (ICategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
         this.userId = id;
         try {
-            User admin = Constants.manager.getUserFromServer("" + id, Constants.getUserByIdAddress, "byId");
-        }catch (HttpClientErrorException e){
+            User admin = (Admin) Constants.manager.getUserFromServer("" + id, Constants.getUserByIdAddress, "byId");
+            this.admin = (Admin) admin;
+        } catch (HttpClientErrorException e) {
             //TODO
         }
-        this.admin = (Admin)admin;
+
         categoryButton.setOnMouseClicked(e -> {
             try {
                 handleCategory();

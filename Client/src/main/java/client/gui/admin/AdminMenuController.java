@@ -66,15 +66,7 @@ public class AdminMenuController implements InitializableController {
         try {
             Admin[] responseObject = restTemplate.getForObject(Constants.getManagersAddress + id, Admin[].class);
             ObservableList<Admin> list = (ObservableList<Admin>) FXCollections.observableList(Arrays.asList(responseObject));
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("id", id);
-            jsonObject.put("token", Constants.manager.getToken());
-            HttpHeaders httpHeaders = new HttpHeaders();
-            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-            restTemplate = new RestTemplate();
-            ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByIdAddress, httpEntity, User.class);
-            User admin = responseEntity.getBody();
+            User admin = Constants.manager.getUserFromServer(""+id,Constants.getUserByIdAddress,"byId");
             usernameText.setText(admin.getUsername());
             emailText.setText(admin.getEmail());
             firstNameText.setText(admin.getFirstName());
