@@ -35,7 +35,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody String username, @RequestBody String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
+    public void login(@RequestBody String username, @RequestBody String password,@RequestBody String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(password);
         checkUsernameFormat(username);
@@ -78,7 +78,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody Server.controller.account.Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
+    public void register(@RequestBody Server.controller.account.Account account,@RequestBody String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
@@ -108,8 +108,8 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/logout")
-    public void logout(String token) throws NotLoggedINException, InvalidTokenException {
+    @PostMapping("/logout")
+    public void logout(@RequestBody String token) throws NotLoggedINException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if (userSession.getLoggedInUser() == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -184,6 +184,7 @@ public class AuthenticationController {
         }
     }
 
+    @GetMapping("/doWeHaveAManager")
     public boolean doWeHaveAManager() {
         return userRepository.doWeHaveAManager();
     }
