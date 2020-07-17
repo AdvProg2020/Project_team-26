@@ -3,15 +3,23 @@ package Server.controller.discount;
 import exception.*;
 import model.*;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import repository.*;
 
 import java.util.List;
 import java.util.Map;
 
+@RestController
 public class OffController {
     ProductRepository productRepository;
     private OffRepository offRepository;
     private ProductSellerRepository productSellerRepository;
+
+    public OffController() {
+
+    }
 
     public OffController(RepositoryContainer repositoryContainer) {
         productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
@@ -35,13 +43,15 @@ public class OffController {
         return off;
     }
 
-    public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/off/createNewOff")
+    public void createNewOff(@RequestBody Off newOff, @RequestBody String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "seller can create a off");
         newOff.setSeller((Seller) Session.getSession(token).getLoggedInUser());
         offRepository.addRequest(newOff);
     }
 
-    public void addProductToOff(Off off, int productId, long priceInOff, double percent, boolean isFirstTime, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/off/addProductToOff")
+    public void addProductToOff(@RequestBody Off off,@RequestBody int productId,@RequestBody long priceInOff,@RequestBody double percent,@RequestBody boolean isFirstTime,@RequestBody String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "Only Seller Can Add Product");
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
         ProductSeller productSeller = productSellerRepository.getProductSellerByIdAndSellerId(productId, seller.getId());
@@ -132,8 +142,8 @@ public class OffController {
         checkAccessOfUser(token, "only seller");
         Off off = getOffByIdWithCheck(id);
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
-       // if (!seller.getAllOffs(new Pageable()).contains(off)) // TODO
-         //   throw new NoAccessException("you can only change your off");
+        // if (!seller.getAllOffs(new Pageable()).contains(off)) // TODO
+        //   throw new NoAccessException("you can only change your off");
         off.setSeller((Seller) Session.getSession(token).getLoggedInUser());
         offRepository.addRequest(off);
     }
