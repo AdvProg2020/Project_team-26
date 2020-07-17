@@ -77,9 +77,13 @@ public class Manager implements Reloadable {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForEntity(address, httpEntity,Object.class);
     }
-    public User getUserByIdFromServer(int id,String address) throws HttpClientErrorException{
+    public User getUserFromServer(String id,String address , String type) throws HttpClientErrorException{
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
+        if(type.equals("byName")){
+            jsonObject.put("username",id);
+        }else {
+            jsonObject.put("id",Integer.parseInt(id));
+        }
         jsonObject.put("token", Constants.manager.getToken());
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);

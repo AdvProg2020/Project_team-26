@@ -20,6 +20,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import view.cli.ControllerContainer;
 
@@ -56,15 +57,11 @@ public class AdminOptionMenuController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
         this.userId = id;
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("token", Constants.manager.getToken());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByIdAddress, httpEntity, User.class);
-        User admin = responseEntity.getBody();
+        try {
+            User admin = Constants.manager.getUserFromServer("" + id, Constants.getUserByIdAddress, "byId");
+        }catch (HttpClientErrorException e){
+            //TODO
+        }
         this.admin = (Admin)admin;
         categoryButton.setOnMouseClicked(e -> {
             try {
