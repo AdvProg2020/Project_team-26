@@ -64,11 +64,11 @@ public class AdminMenuController implements InitializableController {
         editInfoButton.setOnMouseClicked(e -> editInfo());
         RestTemplate restTemplate = new RestTemplate();
         try {
-            Admin[] responseObject = restTemplate.getForObject(Constants.getManagersAddress+id, Admin[].class);
+            Admin[] responseObject = restTemplate.getForObject(Constants.getManagersAddress + id, Admin[].class);
             ObservableList<Admin> list = (ObservableList<Admin>) FXCollections.observableList(Arrays.asList(responseObject));
-            JSONObject jsonObject =  new JSONObject();
-            jsonObject.put("id",id);
-            jsonObject.put("token",Constants.manager.getToken());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("id", id);
+            jsonObject.put("token", Constants.manager.getToken());
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
@@ -82,7 +82,7 @@ public class AdminMenuController implements InitializableController {
             roleText.setText("Admin");
             managerTable.setItems(list);
             managerCol.setCellValueFactory(new PropertyValueFactory<Admin, String>("username"));
-        } catch (HttpClientErrorException e){
+        } catch (HttpClientErrorException e) {
             //todo
         }
     }
@@ -106,7 +106,7 @@ public class AdminMenuController implements InitializableController {
             profileImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
             try {//TODO prodile pic what to do
                 //userController.changeImage(Files.readAllBytes(imageFile.toPath()), Constants.manager.getToken());
-            }catch (HttpClientErrorException e){
+            } catch (HttpClientErrorException e) {
                 //TODO
             }
         }
@@ -126,21 +126,18 @@ public class AdminMenuController implements InitializableController {
         newInfo.put("LastName", lastNameText.getText());
         newInfo.put("Email", emailText.getText());
         try {
-            userController.changeInfo(newInfo, Constants.manager.getToken());
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("newInfo", newInfo);
+            jsonObject.put("token", Constants.manager.getToken());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changeInfoAddress);
             if (!passwordText.getText().isBlank()) {
-                userController.changePassword(passwordText.getText(), Constants.manager.getToken());
+                jsonObject.remove("newInfo");
+                jsonObject.put("newPassword", passwordText.getText());
+                Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changePasswordAddress);
             }
             revertBack();
-        } catch (NotLoggedINException e) {
-            errorLabel.setText(e.getMessage());
-        } catch (InvalidTokenException e) {
-            errorLabel.setText(e.getMessage());
-        } catch (InvalidAuthenticationException e) {
-            errorLabel.setText(e.getMessage());
-        } catch (InvalidFormatException e) {
-            errorLabel.setText(e.getMessage());
-        } catch (NoSuchField noSuchField) {
-            errorLabel.setText(noSuchField.getMessage());
+        } catch (HttpClientErrorException e){
+            //TODO
         }
     }
 

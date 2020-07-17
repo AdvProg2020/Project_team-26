@@ -70,6 +70,13 @@ public class Manager implements Reloadable {
         }
         return "success";
     }
+    public void postRequestWithVoidReturnType(JSONObject jsonObject , String address) throws HttpClientErrorException{
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForEntity(address, httpEntity, Object.class);
+    }
 
     public void openPage(String pageName, int id) throws IOException {
         pages.add(new Pair<>(pageName, id));
