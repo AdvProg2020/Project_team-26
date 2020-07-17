@@ -38,7 +38,7 @@ public class CartController {
         orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
     }
 
-    @PostMapping("/controller/method/cart/addOrChangeProduct")
+    @PostMapping("/controller/method/cart/add-or-change-product")
     public void addOrChangeProduct(@RequestBody Map info)
             throws InvalidIdException, NotEnoughProductsException, InvalidTokenException {
         int productSellerId = (Integer) info.get("producetSellerId");
@@ -54,14 +54,14 @@ public class CartController {
         }
     }
 
-    @PostMapping("/controller/method/cart/getCart")
+    @PostMapping("/controller/method/cart/get-cart")
     public Cart getCart(@RequestBody Map info) throws InvalidTokenException {
         String token = (String) info.get("token");
         Session session = Session.getSession(token);
         return session.getCart();
     }
 
-    @PostMapping("/controller/method/cart/setAddress")
+    @PostMapping("/controller/method/cart/set-address")
     public void setAddress(@RequestBody Map info) throws InvalidTokenException {
         String address = (String) info.get("address");
         String token = (String) info.get("token");
@@ -69,7 +69,7 @@ public class CartController {
         session.getCart().setAddress(address);
     }
 
-    @PostMapping("/controller/method/cart/usePromoCode")
+    @PostMapping("/controller/method/cart/use-promo-code")
     public void usePromoCode(@RequestBody Map info) throws InvalidTokenException, InvalidPromoCodeException, PromoNotAvailableException, NotLoggedINException, NoAccessException {
         String promoCode = (String) info.get("promoCode");
         String token = (String) info.get("token");
@@ -133,7 +133,7 @@ public class CartController {
         }
     }
 
-    @PostMapping("/controller/method/cart/changeSellerCredit")
+    @PostMapping("/controller/method/cart/change-seller-credit")
     public void changeSellerCredit(@RequestBody Map info) {
         Order order = (Order) info.get("order");
         for (OrderItem item : order.getItems()) {
@@ -196,7 +196,7 @@ public class CartController {
         }
     }
 
-    @PostMapping("/controller/method/cart/getTotalPrice")
+    @PostMapping("/controller/method/cart/get-total-price")
     public long getTotalPrice(@RequestBody Map info) throws InvalidTokenException {
         Cart cart = (Cart) info.get("cart");
         String token = (String) info.get("token");
@@ -210,7 +210,7 @@ public class CartController {
         return totalPrice;
     }
 
-    @PostMapping("/controller/method/cart/getAmountInCartBySellerId")
+    @PostMapping("/controller/method/cart/get-amount-in-cart-by-seller-id")
     public int getAmountInCartBySellerId(@RequestBody Map info) throws InvalidTokenException, NoSuchObjectException {
         int productSelleId = (Integer) info.get("productSellerId");
         String token = (String) info.get("token");

@@ -191,7 +191,7 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/controller/method/doWeHaveAManager")
+    @GetMapping("/controller/method/do-we-have-a-manager")
     public boolean doWeHaveAManager() {
         return userRepository.doWeHaveAManager();
     }

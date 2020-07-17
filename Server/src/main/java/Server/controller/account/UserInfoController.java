@@ -30,7 +30,7 @@ public class UserInfoController {
     }
 
 
-    @PostMapping("/controller/method/user/changePassword")
+    @PostMapping("/controller/method/user/change-password")
     public void changePasswordWithOldPassword(@RequestBody Map newInfo) throws InvalidTokenException, NoAccessException, NotLoggedINException {
         String oldPassword = (String) newInfo.get("oldPassword");
         String newPassword = (String) newInfo.get("newPassword");
@@ -44,7 +44,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/changePasswordOldWay")
+    @PostMapping("/controller/method/change-password-old-way")
     public void changePassword(@RequestBody Map oldInfo) throws InvalidTokenException, NotLoggedINException {
         String newPassword = (String) oldInfo.get("newPassword");
         String token = (String) oldInfo.get("token");
@@ -57,7 +57,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/changeImage")
+    @PostMapping("/controller/method/change-image")
     public void changeImage(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException {
         byte[] image = (byte[]) info.get("image");
         String token = (String) info.get("token");
@@ -70,7 +70,7 @@ public class UserInfoController {
         userRepository.save(user);
     }
 
-    @PostMapping("/controller/method/changeInfo")
+    @PostMapping("/controller/method/change-info")
     public void changeInfo(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
         String key = (String) info.get("key");
         String value = (String) info.get("value");
@@ -102,7 +102,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/changeBalance")
+    @PostMapping("/controller/method/change-balance")
     public void changeBalance(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
         Long newCredit = (Long) info.get("newCredit");
         String token = (String) info.get("token");
@@ -153,7 +153,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/user/getCompanyName")
+    @PostMapping("/controller/method/user/get-company-name")
     public String getCompanyName(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException, NoSuchField {
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
@@ -166,7 +166,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/user/changeInfo")
+    @PostMapping("/controller/method/user/change-multiple-info")
     public void changeMultipleInfo(@RequestBody Map info) throws InvalidTokenException, NoSuchField, InvalidFormatException, InvalidAuthenticationException, NotLoggedINException {
         Map<String, String> values = (Map<String, String>) info.get("values");
         String token = (String) info.get("token");
@@ -187,7 +187,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/user/getBalance")
+    @PostMapping("/controller/method/user/get-balance")
     public String getBalance(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException {
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
@@ -198,7 +198,7 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/user/getRole")
+    @PostMapping("/controller/method/user/get-role")
     public String getRole(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException {
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
