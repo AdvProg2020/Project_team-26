@@ -5,8 +5,6 @@ import client.gui.authentication.AuthenticationStageManager;
 import client.gui.authentication.RegisterMenuController;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import client.model.User;
-import client.model.enums.Role;
 import controller.SessionController;
 import controller.account.AuthenticationController;
 import controller.interfaces.account.IShowUserController;
@@ -24,13 +22,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
-import net.minidev.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
+import model.User;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
@@ -58,39 +51,6 @@ public class Manager implements Reloadable {
 
     public String getHostPort() {
         return hostPort;
-    }
-    public String postRegisterLoginRequest(JSONObject jsonObject , String address , boolean haveTHisFunctionOutput) throws HttpClientErrorException {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
-        if (haveTHisFunctionOutput) {
-            return responseEntity.getBody();
-        }
-        return "success";
-    }
-    public void postRequestWithVoidReturnType(JSONObject jsonObject , String address) throws HttpClientErrorException{
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity(address, httpEntity,Object.class);
-    }
-    public User getUserFromServer(String id,String address , String type) throws HttpClientErrorException{
-        JSONObject jsonObject = new JSONObject();
-        if(type.equals("byName")){
-            jsonObject.put("username",id);
-        }else {
-            jsonObject.put("id",Integer.parseInt(id));
-        }
-        jsonObject.put("token", Constants.manager.getToken());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> responseEntity = restTemplate.postForEntity(address, httpEntity, User.class);
-        return responseEntity.getBody();
     }
 
     public void openPage(String pageName, int id) throws IOException {

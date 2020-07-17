@@ -3,8 +3,6 @@ package client.gui.product;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import client.model.Cart;
-import client.model.ProductSeller;
 import controller.interfaces.cart.ICartController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -16,6 +14,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import model.Cart;
+import model.ProductSeller;
 import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;

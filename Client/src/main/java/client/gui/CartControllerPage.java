@@ -3,8 +3,6 @@ package client.gui;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
 import client.gui.product.SingleProductOfCartController;
-import client.model.Cart;
-import client.model.ProductSeller;
 import controller.interfaces.cart.ICartController;
 import exception.*;
 import javafx.fxml.FXML;
@@ -15,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import model.Cart;
+import model.ProductSeller;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

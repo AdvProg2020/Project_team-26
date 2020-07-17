@@ -2,8 +2,6 @@ package client.gui.admin;
 
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import client.model.Comment;
-import client.model.enums.CommentState;
 import controller.review.CommentController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -15,6 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Comment;
+import model.enums.CommentState;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

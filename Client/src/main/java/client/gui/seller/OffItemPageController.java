@@ -3,13 +3,13 @@ package client.gui.seller;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import client.model.Off;
-import client.model.OffItem;
 import controller.interfaces.discount.IOffController;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
+import model.Off;
+import model.OffItem;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

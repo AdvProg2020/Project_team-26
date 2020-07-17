@@ -1,9 +1,6 @@
 package client.gui;
 
 import client.gui.interfaces.InitializableController;
-import client.model.Seller;
-import client.model.User;
-import client.model.enums.Role;
 import controller.interfaces.account.IUserInfoController;
 import exception.*;
 import javafx.fxml.FXML;
@@ -14,6 +11,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.Seller;
+import model.User;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;

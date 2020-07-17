@@ -3,8 +3,6 @@ package client.gui.seller;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
-import client.model.Product;
-import client.model.ProductSeller;
 import controller.interfaces.product.IProductController;
 import exception.*;
 import javafx.collections.FXCollections;
@@ -18,6 +16,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import model.Product;
+import model.ProductSeller;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

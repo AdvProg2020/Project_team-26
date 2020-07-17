@@ -3,7 +3,6 @@ package client.gui;
 import client.gui.admin.CategoryOptionController;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import client.model.Category;
 import controller.interfaces.category.ICategoryController;
 import exception.InvalidIdException;
 import javafx.collections.FXCollections;
@@ -12,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import model.Category;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

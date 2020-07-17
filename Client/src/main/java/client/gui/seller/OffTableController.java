@@ -3,8 +3,6 @@ package client.gui.seller;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
-import client.model.Off;
-import client.model.enums.Status;
 import controller.interfaces.discount.IOffController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -18,6 +16,8 @@ import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Off;
+import model.enums.Status;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

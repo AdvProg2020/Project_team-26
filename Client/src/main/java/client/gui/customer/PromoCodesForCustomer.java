@@ -1,13 +1,13 @@
 package client.gui.customer;
 
 import client.gui.interfaces.InitializableController;
-import client.model.Promo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Promo;
 
 import java.io.IOException;
 import java.util.Date;

@@ -2,8 +2,6 @@ package client.gui.admin;
 
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import client.model.Customer;
-import client.model.Promo;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.discount.IPromoController;
 import exception.*;
@@ -12,6 +10,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Customer;
+import model.Promo;
 import view.cli.ControllerContainer;
 
 import java.util.ArrayList;

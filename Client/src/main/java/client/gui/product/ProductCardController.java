@@ -1,11 +1,11 @@
 package client.gui.product;
 
 import client.gui.Constants;
-import client.model.Product;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
+import model.Product;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

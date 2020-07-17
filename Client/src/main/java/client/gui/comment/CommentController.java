@@ -1,9 +1,6 @@
 package client.gui.comment;
 
 import client.gui.Constants;
-import client.model.Comment;
-import client.model.Product;
-import client.model.enums.Role;
 import controller.interfaces.review.ICommentController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -14,6 +11,9 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
+import model.Comment;
+import model.Product;
+import model.enums.Role;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

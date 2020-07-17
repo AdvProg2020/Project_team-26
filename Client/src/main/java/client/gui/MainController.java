@@ -1,6 +1,5 @@
 package client.gui;
 
-import client.model.enums.Role;
 import exception.InvalidTokenException;
 import exception.NotLoggedINException;
 import javafx.fxml.FXML;
@@ -14,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import model.enums.Role;
 
 import java.io.IOException;
 

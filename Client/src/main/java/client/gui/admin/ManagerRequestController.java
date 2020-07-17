@@ -2,7 +2,6 @@ package client.gui.admin;
 
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import client.model.Request;
 import controller.interfaces.request.IRequestController;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
@@ -15,6 +14,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Request;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;

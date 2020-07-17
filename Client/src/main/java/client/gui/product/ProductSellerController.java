@@ -2,7 +2,6 @@ package client.gui.product;
 
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import client.model.ProductSeller;
 import controller.interfaces.cart.ICartController;
 import exception.InvalidIdException;
 import exception.InvalidTokenException;
@@ -12,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import model.ProductSeller;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
