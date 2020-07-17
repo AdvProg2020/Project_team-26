@@ -13,6 +13,7 @@ import repository.RepositoryContainer;
 import repository.UserRepository;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -29,8 +30,11 @@ public class UserInfoController {
     }
 
 
-    @PostMapping("/changePassword")
-    public void changePassword(@RequestBody String oldPassword, @RequestBody String newPassword, @RequestBody String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+    @PostMapping("/user/changePassword")
+    public void changePasswordWithOldPassword(@RequestBody Map newInfo) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+        String oldPassword = (String) newInfo.get("oldPassword");
+        String newPassword = (String) newInfo.get("newPassword");
+        String token = (String) newInfo.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -40,8 +44,10 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/changePassword")
-    public void changePassword(@RequestBody String newPassword, @RequestBody String token) throws InvalidTokenException, NotLoggedINException {
+    @PostMapping("/changePasswordOldWay")
+    public void changePassword(@RequestBody Map oldInfo) throws InvalidTokenException, NotLoggedINException {
+        String newPassword = (String) oldInfo.get("newPassword");
+        String token = (String) oldInfo.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not Logged In.");
@@ -52,7 +58,10 @@ public class UserInfoController {
     }
 
     @PostMapping("/changeImage")
-    public void changeImage(@RequestBody byte[] image,@RequestBody String token) throws InvalidTokenException, NotLoggedINException {
+    public void changeImage(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException {
+        byte[] image = (byte[]) info.get("image");
+        String token = (String) info.get("token");
+
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -62,7 +71,10 @@ public class UserInfoController {
     }
 
     @PostMapping("/changeInfo")
-    public void changeInfo(@RequestBody String key, @RequestBody String value, @RequestBody String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
+    public void changeInfo(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
+        String key = (String) info.get("key");
+        String value = (String) info.get("value");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -91,7 +103,9 @@ public class UserInfoController {
     }
 
     @PostMapping("/changeBalance")
-    public void changeBalance(@RequestBody Long newCredit, @RequestBody String token) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
+    public void changeBalance(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
+        Long newCredit = (Long) info.get("newCredit");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -139,8 +153,9 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/getCompanyName")
-    public String getCompanyName(@RequestBody String token) throws InvalidTokenException, NotLoggedINException, NoSuchField {
+    @PostMapping("/user/getCompanyName")
+    public String getCompanyName(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException, NoSuchField {
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not Logged in.");
@@ -151,23 +166,30 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/changeInfo")
-    public void changeInfo(@RequestBody Map<String, String> values, @RequestBody String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
+    @PostMapping("/user/changeInfo")
+    public void changeMultipleInfo(@RequestBody Map info) throws InvalidTokenException, NoSuchField, InvalidFormatException, InvalidAuthenticationException, NotLoggedINException {
+        Map<String, String> values = (Map<String, String>) info.get("values");
+        String token = (String) info.get("token");
         if (values.keySet().stream().anyMatch(n -> !allFields.contains(n))) {
             NoSuchField noSuchField = new NoSuchField("One or more fields is wrong");
             noSuchField.addAFields(values.keySet().stream().filter(field -> !allFields.contains(field))
                     .collect(Collectors.toList()));
             throw noSuchField;
         } else {
+            Map<String, String> userInfo = new HashMap<>();
             for (Map.Entry<String, String> pair : values.entrySet()) {
-                changeInfo(pair.getKey(), pair.getValue(), token);
+                userInfo.put("key", pair.getKey());
+                userInfo.put("value", pair.getValue());
+                userInfo.put("token", token);
+                changeInfo(userInfo);
             }
             userRepository.save(Session.getSession(token).getLoggedInUser());
         }
     }
 
-    @PostMapping("/getBalance")
-    public String getBalance(@RequestBody String token) throws NotLoggedINException, InvalidTokenException {
+    @PostMapping("/user/getBalance")
+    public String getBalance(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException {
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -176,8 +198,9 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/getRole")
-    public String getRole(@RequestBody String token) throws NotLoggedINException, InvalidTokenException {
+    @PostMapping("/user/getRole")
+    public String getRole(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException {
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in");
