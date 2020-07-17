@@ -15,4 +15,7 @@ public class Constants {
     public static  String deleteUserAddress = Constants.manager.getHostPort() + "/getManagers/";
     public static  String getUserByTokenAddress = Constants.manager.getHostPort() + "/getUserByToken";
     public static  String changeInfoAddress = Constants.manager.getHostPort() + "/getUserByToken";
+    public static  String doWeHaveManagerAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
+    public static  String logoutAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
+
 }
