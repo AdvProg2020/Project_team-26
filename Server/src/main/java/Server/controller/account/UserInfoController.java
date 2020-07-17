@@ -5,6 +5,10 @@ import model.enums.Role;
 import model.Seller;
 import model.Session;
 import model.User;
+import org.hibernate.annotations.GeneratorType;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
@@ -25,7 +29,8 @@ public class UserInfoController {
     }
 
 
-    public void changePassword(String oldPassword, String newPassword, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+    @PostMapping("/changePassword")
+    public void changePassword(@RequestBody String oldPassword, @RequestBody String newPassword, @RequestBody String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -35,7 +40,8 @@ public class UserInfoController {
         }
     }
 
-    public void changePassword(String newPassword, String token) throws InvalidTokenException, NotLoggedINException {
+    @PostMapping("/changePassword")
+    public void changePassword(@RequestBody String newPassword, @RequestBody String token) throws InvalidTokenException, NotLoggedINException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not Logged In.");
@@ -45,7 +51,8 @@ public class UserInfoController {
         }
     }
 
-    public void changeImage(byte[] image, String token) throws InvalidTokenException, NotLoggedINException {
+    @PostMapping("/changeImage")
+    public void changeImage(@RequestBody byte[] image,@RequestBody String token) throws InvalidTokenException, NotLoggedINException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -54,8 +61,8 @@ public class UserInfoController {
         userRepository.save(user);
     }
 
-
-    public void changeInfo(String key, String value, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
+    @PostMapping("/changeInfo")
+    public void changeInfo(@RequestBody String key, @RequestBody String value, @RequestBody String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -83,7 +90,8 @@ public class UserInfoController {
         }
     }
 
-    public void changeBalance(Long newCredit, String token) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
+    @PostMapping("/changeBalance")
+    public void changeBalance(@RequestBody Long newCredit, @RequestBody String token) throws InvalidTokenException, NotLoggedINException, InvalidAuthenticationException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -131,7 +139,8 @@ public class UserInfoController {
         }
     }
 
-    public String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField {
+    @PostMapping("/getCompanyName")
+    public String getCompanyName(@RequestBody String token) throws InvalidTokenException, NotLoggedINException, NoSuchField {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not Logged in.");
@@ -142,7 +151,8 @@ public class UserInfoController {
         }
     }
 
-    public void changeInfo(Map<String, String> values, String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
+    @PostMapping("/changeInfo")
+    public void changeInfo(@RequestBody Map<String, String> values, @RequestBody String token) throws NotLoggedINException, InvalidTokenException, InvalidAuthenticationException, InvalidFormatException, NoSuchField {
         if (values.keySet().stream().anyMatch(n -> !allFields.contains(n))) {
             NoSuchField noSuchField = new NoSuchField("One or more fields is wrong");
             noSuchField.addAFields(values.keySet().stream().filter(field -> !allFields.contains(field))
@@ -156,7 +166,8 @@ public class UserInfoController {
         }
     }
 
-    public String getBalance(String token) throws NotLoggedINException, InvalidTokenException {
+    @PostMapping("/getBalance")
+    public String getBalance(@RequestBody String token) throws NotLoggedINException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -165,7 +176,8 @@ public class UserInfoController {
         }
     }
 
-    public String getRole(String token) throws NotLoggedINException, InvalidTokenException {
+    @PostMapping("/getRole")
+    public String getRole(@RequestBody String token) throws NotLoggedINException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in");
