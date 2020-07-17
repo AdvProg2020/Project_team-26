@@ -15,7 +15,7 @@ public class Session {
 
     public static Session getSession(String token) throws InvalidTokenException {
         if(!sessionList.containsKey(token)) {
-            throw new InvalidTokenException("You're token is invalid. Get a new token.");
+            throw new InvalidTokenException("Your token is invalid. Get a new token.");
         }
         return sessionList.get(token);
     }

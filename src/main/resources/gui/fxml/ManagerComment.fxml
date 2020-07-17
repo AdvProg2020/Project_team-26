@@ -16,7 +16,7 @@
             <TableView fx:id="commentTable" prefHeight="365.0" prefWidth="1071.0">
               <columns>
                 <TableColumn fx:id="idCol" prefWidth="78.0" text="Comment Id" />
-                <TableColumn fx:id="messageCol" prefWidth="830.0" text="Message" />
+                <TableColumn fx:id="messageCol" prefWidth="830.0" text="ohno.Message" />
                   <TableColumn fx:id="statusCol" prefWidth="112.0" text="Status" />
               </columns>
             </TableView>

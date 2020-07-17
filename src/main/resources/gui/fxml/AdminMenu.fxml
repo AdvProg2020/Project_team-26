@@ -141,7 +141,7 @@
          <children>
             <ImageView fitHeight="30.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../pic/Main Menu.png" />
+                  <Image url="@../pic/ohno.Main Menu.png" />
                </image>
             </ImageView>
          </children>
