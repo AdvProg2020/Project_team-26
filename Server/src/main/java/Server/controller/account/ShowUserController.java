@@ -30,13 +30,13 @@ public class ShowUserController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    @PostMapping("/getUsers")
+    @PostMapping("/controller/method/getUsers")
     public ArrayList<User> getUsers(@RequestBody Map info){
         String token = (String) info.get("token");
         return (ArrayList<User>) userRepository.getAll();
     }
 
-    @PostMapping("/getUserByName")
+    @PostMapping("/controller/method/getUserByName")
     public User getUserByName(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
         String username = (String) info.get("username");
         String token = (String) info.get("token");
@@ -48,7 +48,7 @@ public class ShowUserController {
         }
     }
 
-    @PostMapping("/getUserById")
+    @PostMapping("/controller/method/getUserById")
     public User getUserById(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
         int id = (Integer) info.get("id");
         String token = (String) info.get("token");
@@ -60,7 +60,7 @@ public class ShowUserController {
         }
     }
 
-    @PostMapping("/getUserInfo")
+    @PostMapping("/controller/method/getUserInfo")
     public Map<String, String> getUserInfo(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
@@ -71,12 +71,12 @@ public class ShowUserController {
         }
     }
 
-    @RequestMapping("/getManagers/{id}")
+    @RequestMapping("/controller/method/getManagers/{id}")
     public List<Admin> getManagers(@PathVariable("id") int id) {
         return userRepository.getManagers(id);
     }
 
-    @PostMapping("/user/delete")
+    @PostMapping("/controller/method/user/delete")
     public void delete(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NoObjectIdException {
         String username = (String)info.get("username");
         String token = (String) info.get("token");
@@ -91,7 +91,7 @@ public class ShowUserController {
         }
     }
 
-    @PostMapping("/getUserByToken")
+    @PostMapping("/controller/method/getUserByToken")
     public User getUserByToken(@RequestBody Map info) throws InvalidTokenException {
         String token = (String) info.get("token");
         return Session.getSession(token).getLoggedInUser();

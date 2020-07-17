@@ -35,7 +35,7 @@ public class AuthenticationController {
         randomNumberForPromo = new Random();
     }
 
-    @PostMapping("/login")
+    @PostMapping("/controller/method/login")
     public void login(@RequestBody Map info) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
         String username = (String) info.get("username");
         String password = (String) info.get("password");
@@ -81,7 +81,7 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/register")
+    @PostMapping("/controller/method/register")
     public void register(@RequestBody Map info) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         Account account = (Account)info.get("account");
         String token = (String) info.get("token");
@@ -114,7 +114,7 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/logout")
+    @PostMapping("/controller/method/logout")
     public void logout(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException {
         String token = (String)info.get("token");
         Session userSession = Session.getSession(token);
@@ -191,7 +191,7 @@ public class AuthenticationController {
         }
     }
 
-    @GetMapping("/doWeHaveAManager")
+    @GetMapping("/controller/method/doWeHaveAManager")
     public boolean doWeHaveAManager() {
         return userRepository.doWeHaveAManager();
     }
