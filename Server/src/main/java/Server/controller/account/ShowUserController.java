@@ -12,6 +12,7 @@ import repository.RepositoryContainer;
 import repository.UserRepository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -30,13 +31,15 @@ public class ShowUserController {
     }
 
     @PostMapping("/getUsers")
-    public ArrayList<User> getUsers(@RequestBody String token) throws NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
+    public ArrayList<User> getUsers(@RequestBody Map info){
+        String token = (String) info.get("token");
         return (ArrayList<User>) userRepository.getAll();
     }
 
     @PostMapping("/getUserByName")
-    public User getUserByName(@RequestBody String username,@RequestBody String token) throws NoAccessException, InvalidTokenException {
+    public User getUserByName(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
+        String username = (String) info.get("username");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -45,8 +48,10 @@ public class ShowUserController {
         }
     }
 
-    @PostMapping("/getUserByName/{id}")
-    public User getUserById(@PathVariable("id") int id, @RequestBody String token) throws NoAccessException, InvalidTokenException {
+    @PostMapping("/getUserByName")
+    public User getUserById(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -56,7 +61,8 @@ public class ShowUserController {
     }
 
     @PostMapping("/getUserInfo")
-    public Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException {
+    public Map<String, String> getUserInfo(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -70,16 +76,24 @@ public class ShowUserController {
         return userRepository.getManagers(id);
     }
 
-    public void delete(String username, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {
+    @PostMapping("/user/delete")
+    public void delete(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NoObjectIdException {
+        String username = (String)info.get("username");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
-        } else
-            userRepository.delete(getUserByName(username, token));
+        } else {
+            Map<String,Object> userInfo = new HashMap<>();
+            info.put("username",username);
+            info.put("token",token);
+            userRepository.delete(getUserByName(userInfo));
+        }
     }
 
     @PostMapping("/getUserByToken")
-    public User getUserByToken(@RequestBody String token) throws InvalidTokenException {
+    public User getUserByToken(@RequestBody Map info) throws InvalidTokenException {
+        String token = (String) info.get("token");
         return Session.getSession(token).getLoggedInUser();
     }
 

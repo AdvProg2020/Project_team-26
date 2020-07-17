@@ -15,6 +15,7 @@ import repository.UserRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -24,7 +25,7 @@ public class AuthenticationController {
     PromoRepository promoRepository;
     Random randomNumberForPromo;
 
-    public  AuthenticationController() {
+    public AuthenticationController() {
 
     }
 
@@ -35,7 +36,10 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public void login(@RequestBody String username, @RequestBody String password,@RequestBody String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
+    public void login(@RequestBody Map info) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
+        String username = (String) info.get("username");
+        String password = (String) info.get("password");
+        String token = (String) info.get("token");
         Session userSession = Session.getSession(token);
         checkPasswordFormat(password);
         checkUsernameFormat(username);
@@ -44,7 +48,7 @@ public class AuthenticationController {
         if (userSession.getLoggedInUser() != null) {
             if (userSession.getLoggedInUser().getRole() == Role.CUSTOMER) {
                 if (randomNumberForPromo.nextInt(200) < 50)
-                    creatRandomPromo((Customer) userSession.getLoggedInUser(),userSession);
+                    creatRandomPromo((Customer) userSession.getLoggedInUser(), userSession);
             } else {
                 userSession.setPromoCodeForUser(new Pair<>(false, ""));
             }
@@ -78,7 +82,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody Server.controller.account.Account account,@RequestBody String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
+    public void register(@RequestBody Map info) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
+        Account account = (Account)info.get("account");
+        String token = (String) info.get("token");
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
@@ -109,7 +115,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/logout")
-    public void logout(@RequestBody String token) throws NotLoggedINException, InvalidTokenException {
+    public void logout(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException {
+        String token = (String)info.get("token");
         Session userSession = Session.getSession(token);
         if (userSession.getLoggedInUser() == null) {
             throw new NotLoggedINException("You are not logged in.");
