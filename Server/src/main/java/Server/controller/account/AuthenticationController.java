@@ -4,6 +4,10 @@ import exception.*;
 import javafx.util.Pair;
 import model.*;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import repository.PromoRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
@@ -13,11 +17,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
+@RestController
 public class AuthenticationController {
 
     UserRepository userRepository;
     PromoRepository promoRepository;
     Random randomNumberForPromo;
+
+    public  AuthenticationController() {
+
+    }
 
     public AuthenticationController(RepositoryContainer repositoryContainer) {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
@@ -25,7 +34,8 @@ public class AuthenticationController {
         randomNumberForPromo = new Random();
     }
 
-    public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
+    @PostMapping("/login")
+    public void login(@RequestBody String username, @RequestBody String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(password);
         checkUsernameFormat(username);
@@ -67,7 +77,8 @@ public class AuthenticationController {
         }
     }
 
-    public void register(Server.controller.account.Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
+    @PostMapping("/register")
+    public void register(@RequestBody Server.controller.account.Account account, String token) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
@@ -97,6 +108,7 @@ public class AuthenticationController {
         }
     }
 
+    @GetMapping("/logout")
     public void logout(String token) throws NotLoggedINException, InvalidTokenException {
         Session userSession = Session.getSession(token);
         if (userSession.getLoggedInUser() == null) {
@@ -127,7 +139,7 @@ public class AuthenticationController {
         }
     }
 
-    public void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
+    private void checkUsernameAvailability(String username) throws InvalidAuthenticationException {
         if (userRepository.getUserByUsername(username) != null) {
             throw new InvalidAuthenticationException("Username is already taken.", "Username");
         }

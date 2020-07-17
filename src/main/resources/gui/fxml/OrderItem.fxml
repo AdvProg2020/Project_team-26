@@ -32,7 +32,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="84.0" prefWidth="222.0" spacing="30.0">
                <children>
-                  <Label prefHeight="17.0" prefWidth="87.0" text="Main price" />
+                  <Label prefHeight="17.0" prefWidth="87.0" text="ohno.Main price" />
                   <Text fx:id="price" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="66.80334234237671" />
                </children>
             </HBox>
