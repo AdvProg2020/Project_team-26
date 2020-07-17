@@ -2,8 +2,8 @@ package client.gui.admin;
 
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.account.IUserInfoController;
+import client.controller.interfaces.account.*;
+import client.model.*;
 import exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,9 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Admin;
-import model.User;
-import view.cli.ControllerContainer;
+import client.ControllerContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

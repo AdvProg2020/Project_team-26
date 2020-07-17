@@ -1,8 +1,8 @@
 package client.controller.account;
 
 
+import client.exception.*;
 import client.gui.Constants;
-import exception.*;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +19,7 @@ public class AuthenticationController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", username);
         jsonObject.put("password", password);
-        jsonObject.put("token", Constants.manager.getToken());
+        jsonObject.put("token", token);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);

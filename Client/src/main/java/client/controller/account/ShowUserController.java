@@ -1,73 +1,133 @@
 package client.controller.account;
 
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NoObjectIdException;
-import model.Admin;
-import model.Session;
-import model.User;
-import model.enums.Role;
-import repository.RepositoryContainer;
-import repository.UserRepository;
+import client.exception.*;
+import client.gui.Constants;
+import client.model.*;
+import client.model.enums.Role;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class ShowUserController {
 
-    UserRepository userRepository;
-
-    public ShowUserController(RepositoryContainer repositoryContainer) {
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-    }
 
     public ArrayList<User> getUsers(String token) throws NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        return (ArrayList<User>) userRepository.getAll();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<User[]> responseEntity = restTemplate.postForEntity(Constants.getAllUsersAddress, httpEntity, User[].class);
+            return (ArrayList<User>) Arrays.asList(responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("jzfo");
+        }
+        //TODO handle excepton
     }
 
     public User getUserByName(String username, String token) throws NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            return userRepository.getUserByUsername(username);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", username);
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByNameAddress, httpEntity, User.class);
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+//TODO
+            throw new NoAccessException("jzfo");
         }
     }
 
     public User getUserById(int id, String token) throws NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            return userRepository.getById(id);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByIdAddress, httpEntity, User.class);
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+//TODO
+            throw new NoAccessException("jzfo");
         }
     }
 
     public Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            return user.getDetails();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<Map> responseEntity = restTemplate.postForEntity(Constants.getUserInfoAddress, httpEntity, Map.class);
+            return (Map<String, String>) responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+//TODO
+            throw new NoAccessException("jzfo");
         }
     }
 
     public List<Admin> getManagers(int id) {
-        return userRepository.getManagers(id);
+        //TODO
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            Admin[] admins = restTemplate.getForObject(Constants.getManagersAddress + id, Admin[].class);
+            return Arrays.asList(admins);
+        } catch (HttpClientErrorException e) {
+            //TODO
+        }
+        return new ArrayList<>();
     }
 
     public void delete(String username, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else
-            userRepository.delete(getUserByName(username, token));
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", username);
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            restTemplate.postForLocation(Constants.deleteUserAddress, httpEntity);
+        } catch (HttpClientErrorException e) {
+//TODO
+            throw new NoAccessException("jzfo");
+        }
     }
 
     public User getUserByToken(String token) throws InvalidTokenException {
-        return Session.getSession(token).getLoggedInUser();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByTokenAddress, httpEntity, User.class);
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+//TODO
+            throw new InvalidTokenException("jhf");
+        }
     }
 
 }
