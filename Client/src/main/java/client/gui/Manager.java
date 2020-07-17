@@ -75,7 +75,18 @@ public class Manager implements Reloadable {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity(address, httpEntity, Object.class);
+        restTemplate.postForEntity(address, httpEntity,Object.class);
+    }
+    public User getUserByIdFromServer(int id,String address) throws HttpClientErrorException{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("token", Constants.manager.getToken());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<User> responseEntity = restTemplate.postForEntity(address, httpEntity, User.class);
+        return responseEntity.getBody();
     }
 
     public void openPage(String pageName, int id) throws IOException {

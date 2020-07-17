@@ -3,6 +3,7 @@ package client.gui.admin;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.model.Admin;
+import client.model.User;
 import controller.interfaces.account.IShowUserController;
 import controller.interfaces.category.ICategoryController;
 import exception.InvalidIdException;
@@ -14,6 +15,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
@@ -49,7 +56,16 @@ public class AdminOptionMenuController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
         this.userId = id;
-        this.admin = (Admin) showUserController.getUserById(id, Constants.manager.getToken());
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("token", Constants.manager.getToken());
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getUserByIdAddress, httpEntity, User.class);
+        User admin = responseEntity.getBody();
+        this.admin = (Admin)admin;
         categoryButton.setOnMouseClicked(e -> {
             try {
                 handleCategory();

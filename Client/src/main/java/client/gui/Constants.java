@@ -14,7 +14,7 @@ public class Constants {
     public static  String changeImageِAddress = Constants.manager.getHostPort() + "/getManagers/";
     public static  String deleteUserAddress = Constants.manager.getHostPort() + "/getManagers/";
     public static  String getUserByTokenAddress = Constants.manager.getHostPort() + "/getUserByToken";
-    public static  String changeInfoAddress = Constants.manager.getHostPort() + "/getUserByToken"
+    public static  String changeInfoAddress = Constants.manager.getHostPort() + "/getUserByToken";
 
 
 }
