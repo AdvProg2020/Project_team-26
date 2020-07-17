@@ -8,6 +8,7 @@ import model.Session;
 import model.User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import repository.RepositoryContainer;
 
@@ -20,8 +21,8 @@ public class SessionController {
 
     }
 
-    @GetMapping("/session/hasUserLoggedIn/{token}")//TODO handle exception
-    public Boolean isUserLoggedIn(@PathVariable("token") String token) throws InvalidTokenException {
+    @GetMapping("/session/hasUserLoggedIn")//TODO handle exception
+    public Boolean isUserLoggedIn(@RequestBody String token) throws InvalidTokenException {
         Session session = Session.getSession(token);
         if (session.getLoggedInUser() == null)
             return false;
@@ -34,8 +35,8 @@ public class SessionController {
         return token;
     }
 
-    @GetMapping("/session/getUserRole/{token}")//TODO handle exception
-    public Role getUserRole(@PathVariable("token") String token) throws NotLoggedINException, InvalidTokenException {
+    @GetMapping("/session/getUserRole")//TODO handle exception
+    public Role getUserRole(@RequestBody String token) throws NotLoggedINException, InvalidTokenException {
         Session session = Session.getSession(token);
         User user = session.getLoggedInUser();
         if (user == null)
@@ -43,9 +44,8 @@ public class SessionController {
         return user.getRole();
     }
 
-    @GetMapping("/session/getLoggedInUser/{token}")
-    public User getUser(@PathVariable("token") String token) throws InvalidTokenException {//TODO handle exception
-        System.out.println("asjhf");
+    @GetMapping("/session/getLoggedInUser")
+    public User getUser(@RequestBody String token) throws InvalidTokenException {//TODO handle exception
         Session session = Session.getSession(token);
         User user = session.getLoggedInUser();
         return user;
