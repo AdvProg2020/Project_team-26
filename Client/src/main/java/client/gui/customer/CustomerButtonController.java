@@ -1,24 +1,24 @@
 package client.gui.customer;
 
+
+import client.ControllerContainer;
+import client.connectionController.interfaces.account.*;
+import client.connectionController.interfaces.discount.IPromoController;
+import client.connectionController.interfaces.order.*;
+import client.exception.*;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.discount.IPromoController;
-import controller.interfaces.order.IOrderController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
+import client.model.Customer;
+import client.model.*;
+import client.model.enums.Role;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import model.Customer;
-import model.User;
-import model.enums.Role;
-import view.cli.ControllerContainer;
+
 
 import java.io.IOException;
 

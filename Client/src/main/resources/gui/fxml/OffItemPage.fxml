@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="91.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="view.gui.seller.OffItemPageController">
+fx:controller="client.gui.seller.OffItemPageController">
    <children>
       <VBox alignment="TOP_CENTER" prefHeight="194.0" prefWidth="297.0">
          <children>

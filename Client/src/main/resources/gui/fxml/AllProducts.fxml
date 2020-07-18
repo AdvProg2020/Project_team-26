@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox prefWidth="1500.0" spacing="15.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.product.AllProductsController">
+<HBox prefWidth="1500.0" spacing="15.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.product.AllProductsController">
    <children>
       <VBox minWidth="170.0" prefHeight="952.0" prefWidth="170.0" spacing="15.0">
          <children>
