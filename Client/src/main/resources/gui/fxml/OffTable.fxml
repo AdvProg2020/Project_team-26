@@ -3,7 +3,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 
-<TableView fx:id="offTableView" prefHeight="337.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.OffTableController">
+<TableView fx:id="offTableView" prefHeight="337.0" prefWidth="515.0" stylesheets="@../styleSheet/tableView.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.seller.OffTableController">
    <columns>
       <TableColumn fx:id="startDate" prefWidth="173.3333078622818" text="start date" />
       <TableColumn fx:id="endDate" prefWidth="188.6667022705078" text="end date" />

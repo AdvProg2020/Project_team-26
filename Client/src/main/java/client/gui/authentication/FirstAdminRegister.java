@@ -5,6 +5,7 @@ import client.connectionController.account.Account;
 import client.connectionController.interfaces.account.IAuthenticationController;
 import client.exception.*;
 import client.gui.Constants;
+import client.gui.Main;
 import client.gui.interfaces.InitializableController;
 import client.model.enums.Role;
 import javafx.fxml.FXML;

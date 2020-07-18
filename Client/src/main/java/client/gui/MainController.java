@@ -1,7 +1,7 @@
 package client.gui;
 
-import exception.InvalidTokenException;
-import exception.NotLoggedINException;
+import client.exception.*;
+import client.model.enums.Role;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -13,7 +13,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import model.enums.Role;
 
 import java.io.IOException;
 

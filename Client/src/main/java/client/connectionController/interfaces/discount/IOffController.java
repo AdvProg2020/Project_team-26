@@ -1,6 +1,8 @@
 package client.connectionController.interfaces.discount;
 
 
+
+import client.exception.InvalidIdException;
 import client.exception.*;
 import client.model.Off;
 import client.model.Product;

@@ -1,8 +1,8 @@
 package client.connectionController.interfaces.cart;
 
-import exception.*;
-import model.Cart;
 
+import client.exception.*;
+import client.model.Cart;
 
 public interface ICartController {
 

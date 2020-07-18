@@ -3,6 +3,7 @@ package client.gui;
 
 import client.ControllerContainer;
 import client.connectionController.interfaces.category.*;
+import client.exception.*;
 import client.gui.admin.CategoryOptionController;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.*;

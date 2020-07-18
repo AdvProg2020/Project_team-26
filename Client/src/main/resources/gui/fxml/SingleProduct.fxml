@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<ScrollPane prefHeight="672.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.product.SingleProductController">
+<ScrollPane prefHeight="672.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.product.SingleProductController">
    <content>
       <VBox fx:id="mainBox" prefHeight="664.0" prefWidth="1265.0" spacing="50.0">
          <children>

@@ -1,16 +1,15 @@
 package client.gui.seller;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.discount.IOffController;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import controller.interfaces.discount.IOffController;
+import client.model.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
-import model.Off;
-import model.OffItem;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 
