@@ -71,7 +71,7 @@ public class ProductController implements IProductController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            return getProductFromServer(jsonObject, Constants.getGetProductByIdAddress());
+            return getProductFromServer(jsonObject, Constants.getProductControllerGetProductByIdAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidIdException("ksamd");
         }
@@ -164,7 +164,7 @@ public class ProductController implements IProductController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControlerEditProductAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }
@@ -176,7 +176,7 @@ public class ProductController implements IProductController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControlerEditProductSellerAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductSellerAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }

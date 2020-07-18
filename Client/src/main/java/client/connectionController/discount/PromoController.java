@@ -21,10 +21,8 @@ import java.util.List;
 public class PromoController implements IPromoController {
 
     public String getRandomPromoForUserSet(String token) throws InvalidTokenException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("token", token);
         try {
-            return Constants.manager.getStringValueFromServerByAddress(jsonObject,addresss);
+            return Constants.manager.getStringValueFromServerByAddress(token,Constants.getPromoControllerGetRandomPromoForUserSetAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }
@@ -35,7 +33,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("codeId", codeId);
         jsonObject.put("token", token);
         try {
-            return getPromoFromServer(jsonObject,addresss);
+            return getPromoFromServer(jsonObject,Constants.getPromoControllerGetPromoCodeTemplateByCodeAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidIdException("ksamd");
         }
@@ -54,7 +52,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("codeId", codeId);
         jsonObject.put("token", token);
         try {
-          return getPromoFromServer(jsonObject,addresss);
+          return getPromoFromServer(jsonObject,Constants.getPromoControllerGetPromoCodeTemplateByIdAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidIdException("ksamd");
         }
@@ -72,7 +70,7 @@ public class PromoController implements IPromoController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Promo[]> responseEntity  = (restTemplate.postForEntity(address, httpEntity,Promo[].class));
+            ResponseEntity<Promo[]> responseEntity  = (restTemplate.postForEntity(Constants.getPromoControllerGetAllPromoCodeForCustomerAddress(), httpEntity,Promo[].class));
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
@@ -88,7 +86,7 @@ public class PromoController implements IPromoController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Integer> responseEntity  = (restTemplate.postForEntity(address, httpEntity,Integer.class));
+            ResponseEntity<Integer> responseEntity  = (restTemplate.postForEntity(Constants.getPromoControllerCreatePromoCodeAddress(), httpEntity,Integer.class));
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
@@ -100,7 +98,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("promoCodeId", promoCodeId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerRemovePromoCodeAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }
@@ -112,7 +110,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("customerId", customerId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerAddCustomerAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }
@@ -125,7 +123,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("customerId", customerId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerRemoveCustomerAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }
@@ -137,7 +135,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("percent", percent);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerSetPercentAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }
@@ -149,7 +147,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("maxDiscount", maxDiscount);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerSetMaxDiscountAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }
@@ -163,7 +161,7 @@ public class PromoController implements IPromoController {
         jsonObject.put("type", type);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerSetTimeAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidTokenException("ksamd");
         }

@@ -97,7 +97,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("parentId", parentId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerRemoveCategoryAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerRemoveACategoryAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidIdException("ksamd");
         }
@@ -155,7 +155,7 @@ public class CategoryController implements ICategoryController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<CategoryFeature[]> responseEntity = restTemplate.postForEntity(Constants.getCategoryControllerGetAttributeAddress, httpEntity, CategoryFeature[].class);
+            ResponseEntity<CategoryFeature[]> responseEntity = restTemplate.postForEntity(Constants.getCategoryControllerGetAttributeAddress(), httpEntity, CategoryFeature[].class);
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
             throw new InvalidIdException(";jsfd");
@@ -179,7 +179,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            return getCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetSubCategoriesAddress());
+            return getCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetCategoryByNameAddress());
         } catch (HttpClientErrorException e) {
             throw new InvalidIdException("ksamd");
         }
