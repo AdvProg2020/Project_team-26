@@ -219,4 +219,93 @@ public class Constants {
         return manager.getHostPort() + "/controller/method/promo/get-random-promo-for-user-set";
     }
 
+    /**
+     * OrderController Methods.
+     */
+
+    public static String getOrderControllerGetOrdersAddress() {
+        return manager.getHostPort() + "/controller/method/order/get-orders";
+    }
+
+    public static String getOrderControllerGetOrdersWithFilterAddress() {
+        return manager.getHostPort() + "/controller/method/order/get-orders-with-filters";
+    }
+
+    public static String getOrderControllerGetProductBuyerByProductIdAddress() {
+        return manager.getHostPort() + "/controller/method/order/get-product-buyer-by-product-id";
+    }
+
+    public static String getOrderControllerGetASingleOrderAddress() {
+        return manager.getHostPort() + "/controller/method/order/get-a-single-order";
+    }
+
+    public static String getOrderControllerGetOrderHistoryForSellerAddress() {
+        return manager.getHostPort() + "/controller/method/order/get-order-history-for-seller";
+    }
+
+    /**
+     * CategoryController Methods.
+     */
+
+    public static String getCategoryControllerAddCategoryAddress() {
+        return manager.getHostPort() + "/controller/method/category/add-category";
+    }
+
+    public static String getCategoryControllerAddAttributeAddress() {
+        return manager.getHostPort() + "/controller/method/category/add-attribute";
+    }
+
+    public static String getCategoryControllerRemoveAttributeAddress() {
+        return manager.getHostPort() + "/controller/method/category/remove-attribute";
+    }
+
+    public static String getCategoryControllerRemoveACategoryAddress() {
+        return manager.getHostPort() + "/controller/method/category/remove-a-category";
+    }
+
+    public static String getCategoryControllerAddProductAddress() {
+        return manager.getHostPort() + "/controller/method/category/add-product";
+    }
+
+    public static String getCategoryControllerRemoveProductAddress() {
+        return manager.getHostPort() + "/controller/method/category/remove-product";
+    }
+
+    public static String getCategoryControllerGetAllCategoriesAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-all-categories";
+    }
+
+    public static String getCategoryControllerGetAttributeAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-attribute";
+    }
+
+    public static String getCategoryControllerGetCategoryAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-category";
+    }
+
+    public static String getCategoryControllerGetCategoryByNameAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-category";
+    }
+
+    public static String getCategoryControllerGetProductsAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-products";
+    }
+
+    public static String getCategoryControllerGetAllProductsAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-all-products";
+    }
+
+    public static String getCategoryControllerGetAllProductsInOffAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-all-products-in-off";
+    }
+
+    public static String getCategoryControllerGetByNameAddress() {
+        return manager.getHostPort() + "/controller/method/category/get-by-name";
+    }
+
+    /**
+     * ProductController Methods.
+     */
+
+
 }
