@@ -9,15 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderController {
-    OrderRepository orderRepository;
-    ProductRepository productRepository;
-    CustomerRepository customerRepository;
-
-    public OrderController(RepositoryContainer repositoryContainer) {
-        this.orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.customerRepository = (CustomerRepository) repositoryContainer.getRepository("CustomerRepository");
-    }
 
     public List<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
@@ -113,14 +104,6 @@ public class OrderController {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
             return orderRepository.getById(wantedOrder.getId());
-        }
-    }
-
-    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if(isAscending) {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
-        } else {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
         }
     }
 }

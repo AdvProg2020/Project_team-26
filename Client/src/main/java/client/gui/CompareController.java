@@ -1,8 +1,9 @@
 package client.gui;
 
+import client.connectionController.interfaces.product.IProductController;
+import client.exception.*;
 import client.gui.interfaces.InitializableController;
-import controller.interfaces.product.IProductController;
-import exception.InvalidIdException;
+import client.model.Product;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -11,7 +12,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import model.Product;
 import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;

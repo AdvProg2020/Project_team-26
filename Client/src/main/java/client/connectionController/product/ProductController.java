@@ -10,18 +10,6 @@ import java.util.Map;
 
 public class ProductController {
 
-    ProductRepository productRepository;
-    ProductSellerRepository productSellerRepository;
-    CategoryRepository categoryRepository;
-    UserRepository userRepository;
-
-    public ProductController(RepositoryContainer repositoryContainer) {
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
-        categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-    }
-
     public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
         if (product == null)
