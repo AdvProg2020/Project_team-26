@@ -218,4 +218,19 @@ public class Constants {
 
     public static String getGetAllProductsInOffAddress() {
     }
+
+    public static String getOffControllerCreateNewOffAddress() {
+    }
+
+    public static String getOffControllerAddProductToOffAddress() {
+    }
+
+    public static String getOffControllerRemoveProductFromOffAddress() {
+    }
+
+    public static String getOffControllerRemoveAOffAddress() {
+    }
+
+    public static String getOffControllerEditAddress() {
+    }
 }
