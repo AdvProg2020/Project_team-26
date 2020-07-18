@@ -28,4 +28,10 @@ public class Constants {
     public static String getOrdersAddress;
     public static String getOrderHistoryForSellerAddress;
     public static String getASingleOrderAddress;
+    public static String getAllCommentsAdress;
+    public static String getConfirmedCommentsAddresss;
+    public static String removeCommentAddress;
+    public static String rejectCommentAddress;
+    public static String confirmCommentAddress;
+    public static String addCommentAddress;
 }

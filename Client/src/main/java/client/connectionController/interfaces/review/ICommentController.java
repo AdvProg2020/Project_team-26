@@ -1,9 +1,7 @@
 package client.connectionController.interfaces.review;
 
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NoObjectIdException;
-import model.Comment;
+import client.exception.*;
+import client.model.*;
 
 import java.util.List;
 
@@ -13,5 +11,5 @@ public interface ICommentController {
 
     void removeComment(int id, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException;
 
-    List<Comment> getConfirmedComments(int productId, String token);
+    List<Comment> getConfirmedComments(int productId, String token) throws InvalidIdException;
 }

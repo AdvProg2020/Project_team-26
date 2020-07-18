@@ -1,87 +1,99 @@
 package client.connectionController.review;
 
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NoObjectIdException;
-import model.Comment;
-import model.Customer;
-import model.Session;
-import model.User;
-import model.enums.CommentState;
-import model.enums.Role;
-import repository.CommentRepository;
-import repository.ProductRepository;
-import repository.RepositoryContainer;
 
+import client.connectionController.interfaces.review.ICommentController;
+import client.exception.*;
+import client.gui.Constants;
+import client.model.*;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
 import java.util.List;
 
-public class CommentController {
-
-    ProductRepository productRepository;
-    CommentRepository commentRepository;
-
-    public CommentController(RepositoryContainer repositoryContainer) {
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.commentRepository = (CommentRepository) repositoryContainer.getRepository("CommentRepository");
-    }
+public class CommentController implements ICommentController {
 
     public void addComment(String description, String title, int productId, String token) throws NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null || user.getRole() != Role.CUSTOMER) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            Comment comment =
-                    new Comment((Customer) user, productRepository.getById(productId), description, title);
-            comment.setState(CommentState.WAITING_FOR_CONFIRMATION);
-            commentRepository.save(comment);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("description", description);
+        jsonObject.put("title", title);
+        jsonObject.put("productId", productId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.addCommentAddress);
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 
     public void confirmComment(int id, String token) throws InvalidTokenException, NoAccessException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null || user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            Comment comment = commentRepository.getById(id);
-            comment.setState(CommentState.CONFIRMED);
-            commentRepository.save(comment);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.confirmCommentAddress);
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
+
     }
 
     public void rejectComment(int id, String token) throws InvalidTokenException, NoAccessException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null || user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            Comment comment = commentRepository.getById(id);
-            comment.setState(CommentState.NOT_CONFIRMED);
-            commentRepository.save(comment);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.rejectCommentAddress);
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
+
     }
 
     public List<Comment> getAllComments(String token) throws InvalidTokenException, NoAccessException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null || user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            return commentRepository.getAll();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        try {
+            return getCommentListFromServer(jsonObject, Constants.getAllCommentsAdress);
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("lkcsa");
+        }
+
+    }
+
+    public List<Comment> getConfirmedComments(int productId, String token) throws InvalidIdException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        jsonObject.put("productId", productId);
+        try {
+            return getCommentListFromServer(jsonObject, Constants.getConfirmedCommentsAddresss);
+        } catch (HttpClientErrorException e) {
+            throw new InvalidIdException("lsad");
         }
     }
 
-    public List<Comment> getConfirmedComments(int productId, String token) {
-        return commentRepository.getConfirmedComments(productId,null);
+    private List<Comment> getCommentListFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Comment[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Comment[].class);
+        return Arrays.asList(responseEntity.getBody());
     }
 
     public void removeComment(int id, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null || user.getRole() == Role.SELLER) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else if (user.getRole() == Role.ADMIN) {
-            commentRepository.delete(id);
-        } else if (!commentRepository.getById(id).getCustomer().equals((Customer) user)) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else {
-            commentRepository.delete(id);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.removeCommentAddress);
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 
