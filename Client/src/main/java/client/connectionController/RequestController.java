@@ -25,7 +25,7 @@ public class RequestController implements IRequestController {
         jsonObject.put("requestId", requestId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAcceptOffRequestِAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerAcceptOffRequestAddress());
         } catch (HttpClientErrorException e) {
             System.err.println(e.getStackTrace());
         } catch (UnknownHttpStatusCodeException e) {
@@ -39,7 +39,7 @@ public class RequestController implements IRequestController {
         jsonObject.put("requestId", requestId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectOffRequestِAdd());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerRejectOffRequestAddress());
         } catch (HttpClientErrorException e) {
 
         } catch (UnknownHttpStatusCodeException e) {
@@ -52,7 +52,7 @@ public class RequestController implements IRequestController {
         jsonObject.put("requestId", requestId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAcceptProductRequest());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerAcceptProductRequestAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
@@ -63,7 +63,7 @@ public class RequestController implements IRequestController {
         jsonObject.put("requestId", requestId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectProductRequest());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerRejectProductRequestAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
@@ -74,7 +74,7 @@ public class RequestController implements IRequestController {
         jsonObject.put("requestId", requestId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAcceptProductSellerRequest());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerAcceptProductSellerRequestAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
@@ -85,7 +85,7 @@ public class RequestController implements IRequestController {
         jsonObject.put("requestId", requestId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectProductSellerRequest());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerRejectProductSellerRequestAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
@@ -103,7 +103,7 @@ public class RequestController implements IRequestController {
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<Request[]> responseEntity = restTemplate.postForEntity(Constants.getGetAllRequests(), httpEntity, Request[].class);
+            ResponseEntity<Request[]> responseEntity = restTemplate.postForEntity(Constants.getRequestControllerGetAllRequestsAddress(), httpEntity, Request[].class);
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
 //TODO

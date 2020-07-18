@@ -28,7 +28,7 @@ public class SessionController implements ISessionController {
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(Constants.getIsUserLoggedInAddress(), httpEntity, Boolean.class);
+            ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(Constants.getSessionControllerIsUserLoggedInAddress(), httpEntity, Boolean.class);
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
 //TODO
@@ -41,7 +41,7 @@ public class SessionController implements ISessionController {
     public String createToken() {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            return restTemplate.getForObject(Constants.getCreateTokenAddress(), String.class);
+            return restTemplate.getForObject(Constants.getSessionControllerCreateTokenAddress(), String.class);
         } catch (HttpClientErrorException e) {
 //TODO
             return "null";
@@ -56,7 +56,7 @@ public class SessionController implements ISessionController {
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<Role> responseEntity = restTemplate.postForEntity(Constants.getGetUserRoleAddress(), httpEntity, Role.class);
+            ResponseEntity<Role> responseEntity = restTemplate.postForEntity(Constants.getSessionControllerGetUserRoleAddress(), httpEntity, Role.class);
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
 //TODO
@@ -73,7 +73,7 @@ public class SessionController implements ISessionController {
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         try {
-            ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getGetUserByTokenAddress(), httpEntity, User.class);
+            ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getSessionControllerGetUserAddress(), httpEntity, User.class);
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
 //TODO

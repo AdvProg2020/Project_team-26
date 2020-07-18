@@ -17,7 +17,7 @@ public class RatingController implements IRatingController {
         jsonObject.put("productId", productId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRateAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRatingControllerRateAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
