@@ -6,64 +6,93 @@ import client.gui.Constants;
 import client.model.*;
 import client.model.enums.*;
 import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 public class PromoController implements IPromoController {
 
     public String getRandomPromoForUserSet(String token) throws InvalidTokenException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null)
-            return null;
-        if (session.getLoggedInUser().getRole() != Role.CUSTOMER)
-            return null;
-        Pair<Boolean, String> promo = session.getPromoCodeForUser();
-        if (promo.getKey() == false)
-            return null;
-        if (promo.getValue() == "")
-            return null;
-        session.setPromoCodeForUser(new Pair<>(false, ""));
-        return promo.getValue();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        try {
+            return Constants.manager.getStringValueFromServerByAddress(jsonObject,addresss);
+        } catch (HttpClientErrorException e) {
+            throw new InvalidTokenException("ksamd");
+        }
     }
 
     public Promo getPromoCodeTemplateByCode(String codeId, String token) throws InvalidIdException, NotLoggedINException {
-        Promo promo = promoRepository.getByCode(codeId);
-        if (promo == null)
-            throw new InvalidIdException("there is no promo by " + codeId);
-        return promo;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("codeId", codeId);
+        jsonObject.put("token", token);
+        try {
+            return getPromoFromServer(jsonObject,addresss);
+        } catch (HttpClientErrorException e) {
+            throw new InvalidIdException("ksamd");
+        }
+    }
+    private Promo getPromoFromServer(JSONObject jsonObject , String address){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Promo> responseEntity  = (restTemplate.postForEntity(address, httpEntity,Promo.class));
+        return responseEntity.getBody();
     }
 
     public Promo getPromoCodeTemplateById(int codeId, String token) throws InvalidIdException, NotLoggedINException {
-        Promo promo = promoRepository.getById(codeId);
-        if (promo == null)
-            throw new InvalidIdException("there is no promo by " + codeId);
-        return promo;
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("codeId", codeId);
+        jsonObject.put("token", token);
+        try {
+          return getPromoFromServer(jsonObject,addresss);
+        } catch (HttpClientErrorException e) {
+            throw new InvalidIdException("ksamd");
+        }
     }
 
     public List<Promo> getAllPromoCodeForCustomer(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Pageable page = createAPage(sortField, isAscending, startIndex, endIndex);
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null) {
-            throw new NotLoggedINException("you are not logged in");
-        } else if (user.getRole() == Role.SELLER) {
-            throw new NoAccessException("only customer");
-        }
-        if (user.getRole() == Role.CUSTOMER) {
-            return ((Customer) user).getAvailablePromos();
-        } else {
-            return promoRepository.getAll(page);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sortField", sortField);
+        jsonObject.put("isAscending", isAscending);
+        jsonObject.put("startIndex", startIndex);
+        jsonObject.put("endIndex", endIndex);
+        jsonObject.put("token", token);
+        try {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Promo[]> responseEntity  = (restTemplate.postForEntity(address, httpEntity,Promo[].class));
+            return Arrays.asList(responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
+            throw new InvalidTokenException("ksamd");
         }
     }
 
     public int createPromoCode(Promo promo, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException {
-        checkAccessOfUser(token, "only the manager can create promo code");
-        if (promoRepository.getByCode(promo.getPromoCode()) != null)
-            throw new ObjectAlreadyExistException("the promo with code " + promo.getPromoCode() + " already exist", promo);
-        promo.setMaxValidUse(25);
-        promoRepository.save(promo);
-        return promo.getId();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("promo", promo);
+        jsonObject.put("token", token);
+        try {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Integer> responseEntity  = (restTemplate.postForEntity(address, httpEntity,Integer.class));
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+            throw new InvalidTokenException("ksamd");
+        }
     }
 
     public void removePromoCode(int promoCodeId, String token) throws NotLoggedINException, NoAccessException, InvalidIdException, InvalidTokenException, NoObjectIdException {
