@@ -30,11 +30,11 @@ public class UserInfoController {
     }
 
 
-    @PostMapping("/controller/method/user/change-password")
-    public void changePasswordWithOldPassword(@RequestBody Map newInfo) throws InvalidTokenException, NoAccessException, NotLoggedINException {
-        String oldPassword = (String) newInfo.get("oldPassword");
-        String newPassword = (String) newInfo.get("newPassword");
-        String token = (String) newInfo.get("token");
+    @PostMapping("/controller/method/user/change-password-old-way")
+    public void changePasswordWithOldPassword(@RequestBody Map oldInfo) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+        String oldPassword = (String) oldInfo.get("oldPassword");
+        String newPassword = (String) oldInfo.get("newPassword");
+        String token = (String) oldInfo.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
@@ -44,10 +44,10 @@ public class UserInfoController {
         }
     }
 
-    @PostMapping("/controller/method/change-password-old-way")
-    public void changePassword(@RequestBody Map oldInfo) throws InvalidTokenException, NotLoggedINException {
-        String newPassword = (String) oldInfo.get("newPassword");
-        String token = (String) oldInfo.get("token");
+    @PostMapping("/controller/method/change-password")
+    public void changePassword(@RequestBody Map newInfo) throws InvalidTokenException, NotLoggedINException {
+        String newPassword = (String) newInfo.get("newPassword");
+        String token = (String) newInfo.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not Logged In.");
