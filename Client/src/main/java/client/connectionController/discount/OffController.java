@@ -5,8 +5,14 @@ import client.exception.*;
 import client.gui.Constants;
 import client.model.*;
 import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +47,7 @@ public class OffController implements IOffController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("off", off);
         jsonObject.put("productId", productId);
-        jsonObject.put("isForAdd",isForAdd);
+        jsonObject.put("isForAdd", isForAdd);
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerRemoveProductFromOffAddress());
@@ -62,15 +68,61 @@ public class OffController implements IOffController {
     }
 
     public List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, String token) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sortField", sortField);
+        jsonObject.put("isAscending", isAscending);
+        jsonObject.put("startIndex", startIndex);
+        jsonObject.put("endIndex", endIndex);
+        jsonObject.put("filter", filter);
+        jsonObject.put("token", token);
+        // Constants.manager.<Product>getItemFromServer(jsonObject,address,Product.class);
+        try {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Product[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Product[].class);
+            return Arrays.asList(responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
 
+        }
     }
 
     public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("sortField", sortField);
+        jsonObject.put("isAscending", isAscending);
+        jsonObject.put("startIndex", startIndex);
+        jsonObject.put("endIndex", endIndex);
+        jsonObject.put("token", token);
+        // Constants.manager.<Product>getItemFromServer(jsonObject,address,Product.class);
+        try {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Off[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Off[].class);
+            return Arrays.asList(responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
 
+        }
     }
 
     public Off getOff(int id, String token) throws InvalidIdException {
-        return getOffByIdWithCheck(id);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("id", id);
+        jsonObject.put("token", token);
+        // Constants.manager.<Product>getItemFromServer(jsonObject,address,Product.class);
+        try {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+            HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<Off> responseEntity = restTemplate.postForEntity(address, httpEntity, Off.class);
+            return responseEntity.getBody();
+        } catch (HttpClientErrorException e) {
+
+        }
     }
 
     public void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, InvalidIdException, NotLoggedINException {

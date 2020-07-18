@@ -22,7 +22,7 @@ public class AuthenticationController implements IAuthenticationController {
         jsonObject.put("password", password);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getLoginAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getAuthenticationControllerLoginAddress());
         } catch (HttpClientErrorException e) {
 
         }
@@ -34,7 +34,7 @@ public class AuthenticationController implements IAuthenticationController {
         jsonObject.put("account", account);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getRegisterAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getAuthenticationControllerRegister());
         } catch (HttpClientErrorException e) {
 
         }
@@ -45,7 +45,7 @@ public class AuthenticationController implements IAuthenticationController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getLogoutAddress());
+            Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getAuthenticationControllerLogoutAddress());
         } catch (HttpClientErrorException e) {
 
         }
@@ -55,7 +55,7 @@ public class AuthenticationController implements IAuthenticationController {
     public boolean doWeHaveAManager() {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            Boolean responseEntity = restTemplate.getForObject(Constants.getDoWeHaveManagerAddress(), Boolean.class);
+            Boolean responseEntity = restTemplate.getForObject(Constants.getAuthenticationControllerDoWeHaveAManagerAddress(), Boolean.class);
             return responseEntity;
         } catch (HttpClientErrorException e) {
 //TODO

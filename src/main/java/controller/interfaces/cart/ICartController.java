@@ -1,6 +1,9 @@
 package controller.interfaces.cart;
 
 
+import exception.*;
+import model.Cart;
+
 public interface ICartController {
 
     void addOrChangeProduct(int productSellerId, int amount, String token) throws InvalidIdException, NotEnoughProductsException, InvalidTokenException;
