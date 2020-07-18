@@ -7,6 +7,7 @@ import exception.ObjectAlreadyExistException;
 import model.*;
 import model.enums.FeatureType;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.*;
 import repository.CategoryRepository;
 import repository.Pageable;
 import repository.ProductRepository;
@@ -15,16 +16,25 @@ import repository.RepositoryContainer;
 import java.util.List;
 import java.util.Map;
 
+@RestController
 public class CategoryController {
     CategoryRepository categoryRepository;
     ProductRepository productRepository;
+
+    public CategoryController() {
+
+    }
 
     public CategoryController(RepositoryContainer repositoryContainer) {
         this.categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
         this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
     }
 
-    public void addCategory(int patternId, Category newCategory, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/category/add-category")
+    public void addCategory(@RequestBody Map info) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
+        int patternId = (Integer) info.get("patternId");
+        Category newCategory = (Category) info.get("newCategory");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only manager can add category");
         if (checkCategoryExistByName(newCategory.getName()))
             throw new ObjectAlreadyExistException("the category name should be uniq and this name is already taken", newCategory);
@@ -61,7 +71,12 @@ public class CategoryController {
             throw new NoAccessException(message);
     }
 
-    public void addAttribute(int id, String attributeName, FeatureType featureType, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/category/add-attribute")
+    public void addAttribute(@RequestBody Map info) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        String attributeName = (String) info.get("attributeName");
+        FeatureType featureType = (FeatureType) info.get("featureType");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only manager can change or add attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = new CategoryFeature(attributeName, featureType);
@@ -78,7 +93,11 @@ public class CategoryController {
         throw new InvalidIdException("there is no attribute with name" + name);
     }
 
-    public void removeAttribute(int id, String attributeName, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/category/remove-attribute")
+    public void removeAttribute(@RequestBody Map info) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        String attributeName = (String) info.get("attributeName");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only manager can remove attribute");
         Category category = getCategoryByIdWithCheck(id);
         CategoryFeature categoryFeature = getCategoryFeature(category, attributeName);
@@ -86,8 +105,11 @@ public class CategoryController {
         categoryRepository.save(category);
     }
 
-
-    public void removeACategory(int id, int parentId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException, NoObjectIdException {
+    @PostMapping("/controller/method/category/remove-a-category")
+    public void removeACategory(@RequestBody Map info) throws InvalidIdException, NoAccessException, InvalidTokenException, NoObjectIdException {
+        int id = (Integer) info.get("id");
+        int parentId = (Integer) info.get("parentId");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only manager can remove the Category.");
         Category parentCategory = checkParentCategory(parentId);
         Category category = getCategoryByIdWithCheck(id);
@@ -117,7 +139,11 @@ public class CategoryController {
         throw new InvalidIdException("the parent are not valid they are not this category parent");
     }
 
-    public void addProduct(int id, int productId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/category/add-product")
+    public void addProduct(@RequestBody Map info) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        int productId = (Integer) info.get("productId");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only manager can add product to category");
         Category category = getCategoryByIdWithCheck(id);
         Product product = productRepository.getById(productId);
@@ -130,7 +156,11 @@ public class CategoryController {
         categoryRepository.save(category);
     }
 
-    public void removeProduct(int id, int productId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/category/remove-product")
+    public void removeProduct(@RequestBody Map info) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        int productId = (Integer) info.get("productId");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only manager can remove product");
         Category category = getCategoryByIdWithCheck(id);
         Product product = productRepository.getById(productId);
@@ -151,7 +181,8 @@ public class CategoryController {
         return false;
     }
 
-    public List<Category> getAllCategories(int id, String token) throws InvalidIdException {
+    @RequestMapping("/controller/method/category/get-all-categories/{id}")
+    public List<Category> getAllCategories(@PathVariable("id") int id) throws InvalidIdException {
         if (id == 0) {
             return categoryRepository.getAll();
         }
@@ -163,23 +194,29 @@ public class CategoryController {
 
     }
 
-    public List<CategoryFeature> getAttribute(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/category/get-attribute")
+    public List<CategoryFeature> getAttribute(@RequestBody Map info) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
         return category.getFeatures();
     }
 
-    public Category getCategory(int id, String token) throws InvalidIdException {
+    @RequestMapping("/controller/method/category/get-category/{id}")
+    public Category getCategory(@PathVariable("id") int id) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category;
     }
 
-    public List<Category> getSubCategories(int id, String token) throws InvalidIdException {
+    @RequestMapping("/controller/method/category/get-category/{id}")
+    public List<Category> getSubCategories(@PathVariable("id") int id) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category.getSubCategory();
     }
 
-    public Category getCategoryByName(String name, String token) throws InvalidIdException, InvalidIdException {
+    @RequestMapping("/controller/method/category/get-category/{name}")
+    public Category getCategoryByName(@PathVariable("name") String name) throws InvalidIdException, InvalidIdException {
         if (!checkCategoryExistByName(name)) {
             throw new InvalidIdException("The specified category does not exist.");
         } else {
@@ -187,13 +224,24 @@ public class CategoryController {
         }
     }
 
-    public List<Product> getProducts(int id, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/category/get-products")
+    public List<Product> getProducts(@RequestBody Map info) throws InvalidIdException, NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "you are not manager.");
         Category category = getCategoryByIdWithCheck(id);
         return category.getProducts();
     }
 
-    public List<Product> getAllProducts(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
+    @PostMapping("/controller/method/category/get-all-products")
+    public List<Product> getAllProducts(@RequestBody Map info) throws InvalidIdException {
+        Map<String,String> filter = (Map<String, String>) info.get("filter");
+        String sortField = (String) info.get("sortField");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         Pageable page = createPage(sortField, isAscending, startIndex, endIndex);
         Category category = categoryRepository.getById(id);
         if (category == null) {
@@ -204,7 +252,15 @@ public class CategoryController {
         }
     }
 
-    public List<Product> getAllProductsInOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
+    @PostMapping("/controller/method/category/get-all-products-in-off")
+    public List<Product> getAllProductsInOff(@RequestBody Map info) throws InvalidIdException {
+        Map<String,String> filter = (Map<String, String>) info.get("filter");
+        String sortField = (String) info.get("sortField");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         Pageable page = createPage(sortField, isAscending, startIndex, endIndex);
         Category category = categoryRepository.getById(id);
         if (category == null) {
@@ -215,7 +271,8 @@ public class CategoryController {
         }
     }
 
-    public Category getByName(String name) throws InvalidIdException {
+    @RequestMapping("/controller/method/category/get-by-name/{name}")
+    public Category getByName(@PathVariable("name") String name) throws InvalidIdException {
         Category category = categoryRepository.getByName(name);
         if (category == null)
             throw new InvalidIdException("no such name exist.");
