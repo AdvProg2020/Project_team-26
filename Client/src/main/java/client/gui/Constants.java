@@ -202,4 +202,10 @@ public class Constants {
     public static String getGetUserRoleAddress() {return Constants.manager.getHostPort() + "/";
 
     }
+
+    public static String getGetProductByIdAddress() {
+    }
+
+    public static String getGetProductSellerByIdAndSellerIdAddress() {
+    }
 }

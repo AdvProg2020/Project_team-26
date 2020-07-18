@@ -139,14 +139,22 @@ public class Manager implements Reloadable {
         this.controllerContainer = controllerContainer;
     }
 
-    public <T> T getItemFromServer(JSONObject jsonObject , String address){
+    public <T> T getItemFromServer(JSONObject jsonObject, String address, Class tClass) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<T> responseEntity = restTemplate.postForEntity(address, httpEntity, ((T)Object).class);
+        ResponseEntity<T> responseEntity = restTemplate.postForEntity(address, httpEntity, tClass);
         return responseEntity.getBody();
+    }
 
+    public <T> List<T> getListItemsFromServer(JSONObject jsonObject, String address, Class tClass) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<T[]> responseEntity = restTemplate.postForEntity(address, httpEntity, tClass);
+        return Arrays.asList(responseEntity.getBody());
     }
 
     public String getToken() {

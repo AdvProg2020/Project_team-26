@@ -1,8 +1,10 @@
 package client.connectionController.interfaces.product;
 
 
+
 import client.exception.*;
-import client.model.*;
+import client.model.Product;
+import client.model.ProductSeller;
 
 import java.util.List;
 import java.util.Map;
