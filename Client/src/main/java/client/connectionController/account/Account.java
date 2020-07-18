@@ -1,10 +1,9 @@
 package client.connectionController.account;
 
-import model.Admin;
-import model.Customer;
-import model.Seller;
-import model.User;
-import model.enums.Role;
+
+
+import client.model.*;
+import client.model.enums.Role;
 
 public class Account {
     private String password;

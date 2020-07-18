@@ -1,26 +1,18 @@
 package client.connectionController.product;
 
 import client.connectionController.interfaces.category.ICategoryController;
-import exception.*;
-import model.*;
-import model.enums.FeatureType;
-import model.enums.Role;
-import repository.CategoryRepository;
-import repository.Pageable;
-import repository.ProductRepository;
-import repository.RepositoryContainer;
+import client.exception.InvalidIdException;
+import client.exception.*;
+import client.model.Category;
+import client.model.Product;
+import client.model.enums.FeatureType;
+
 
 import java.util.List;
 import java.util.Map;
 
 public class CategoryController implements ICategoryController {
-    CategoryRepository categoryRepository;
-    ProductRepository productRepository;
 
-    public CategoryController(RepositoryContainer repositoryContainer) {
-        this.categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-    }
 
     public void addCategory(int patternId, Category newCategory, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
         checkAccessOfUser(token, "only manager can add category");
@@ -218,13 +210,5 @@ public class CategoryController implements ICategoryController {
         if (category == null)
             throw new InvalidIdException("no such name exist.");
         return category;
-    }
-
-    private Pageable createPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if (isAscending) {
-            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.ASCENDING);
-        } else {
-            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.DESCENDING);
-        }
     }
 }

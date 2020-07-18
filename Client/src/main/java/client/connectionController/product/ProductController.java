@@ -1,14 +1,32 @@
 package client.connectionController.product;
 
-import exception.*;
-import model.*;
-import model.enums.Role;
-import repository.*;
 
+import client.exception.*;
+import client.model.Order;
+import client.model.Product;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class ProductController {
+
+    private Product getProductFromServer(JSONObject jsonObject , String address) throws HttpClientErrorException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Product> responseEntity = restTemplate.postForEntity(address, httpEntity, Product.class);
+        return responseEntity.getBody();
+
+    }
 
     public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         User user = Session.getSession(token).getLoggedInUser();
@@ -133,11 +151,4 @@ public class ProductController {
         productSellerRepository.editRequest(newProductSeller);
     }
 
-    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if (isAscending) {
-            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.ASCENDING);
-        } else {
-            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.DESCENDING);
-        }
-    }
 }

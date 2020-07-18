@@ -85,7 +85,7 @@ public class Manager implements Reloadable {
         restTemplate.postForLocation(address, httpEntity);
     }
 
-    public String getStringValueFromServerByAddress(String address,String token) throws HttpClientErrorException {
+    public String getStringValueFromServerByAddress(String address, String token) throws HttpClientErrorException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -137,6 +137,16 @@ public class Manager implements Reloadable {
 
     public void setControllerContainer(ControllerContainer controllerContainer) {
         this.controllerContainer = controllerContainer;
+    }
+
+    public <T> T getItemFromServer(JSONObject jsonObject , String address){
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<T> responseEntity = restTemplate.postForEntity(address, httpEntity, ((T)Object).class);
+        return responseEntity.getBody();
+
     }
 
     public String getToken() {

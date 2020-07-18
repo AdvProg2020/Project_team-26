@@ -1,18 +1,18 @@
 package client.gui;
 
+
+import client.ControllerContainer;
+import client.connectionController.interfaces.category.*;
 import client.gui.admin.CategoryOptionController;
 import client.gui.interfaces.InitializableController;
-import client.gui.interfaces.Reloadable;
-import controller.interfaces.category.ICategoryController;
-import exception.InvalidIdException;
+import client.gui.interfaces.*;
+import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import model.Category;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;

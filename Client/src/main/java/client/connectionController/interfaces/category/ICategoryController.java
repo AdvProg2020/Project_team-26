@@ -1,10 +1,10 @@
 package client.connectionController.interfaces.category;
 
-import exception.*;
-import model.Category;
-import model.CategoryFeature;
-import model.Product;
-import model.enums.FeatureType;
+import client.exception.*;
+import client.model.Category;
+import client.model.CategoryFeature;
+import client.model.Product;
+import client.model.enums.FeatureType;
 
 import java.util.List;
 import java.util.Map;
