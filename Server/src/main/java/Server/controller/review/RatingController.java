@@ -3,16 +3,27 @@ package Server.controller.review;
 import exception.*;
 import model.*;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import repository.ProductRepository;
 import repository.RateRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
+import java.util.Map;
+
+@RestController
 public class RatingController {
 
     RateRepository rateRepository;
     UserRepository userRepository;
     ProductRepository productRepository;
+
+    public RatingController() {
+
+    }
+
 
     public RatingController(RepositoryContainer repositoryContainer) {
         this.rateRepository = (RateRepository) repositoryContainer.getRepository("RatingRepository");
@@ -20,7 +31,11 @@ public class RatingController {
         this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
     }
 
-    public void rate(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException {
+    @PostMapping("/controller/method/rate/rate")
+    public void rate(@RequestBody Map info) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException {
+        double rating = (Double) info.get("rating");
+        int productId = (Integer) info.get("productId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null || user.getRole() != Role.CUSTOMER) {
             throw new NoAccessException("You are not allowed to do that.");
