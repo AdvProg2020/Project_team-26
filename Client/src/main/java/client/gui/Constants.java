@@ -99,4 +99,124 @@ public class Constants {
         return manager.getHostPort() + "/controller/method/user/get-role";
     }
 
+    /**
+     * CartController Methods.
+     */
+
+    public static String getCartControllerAddOrChangeProductAddress() {
+        return manager.getHostPort() + "/controller/method/cart/add-or-change-product";
+    }
+
+    public static String getCartControllerGetCartAddress() {
+        return manager.getHostPort() + "/controller/method/cart/get-cart";
+    }
+
+    public static String getCartControllerSetAddressAddress() {
+        return manager.getHostPort() + "/controller/method/cart/set-address";
+    }
+
+    public static String getCartControllerUsePromoCodeAddress() {
+        return manager.getHostPort() + "/controller/method/cart/use-promo-code";
+    }
+
+    public static String getCartControllerCheckoutAddress() {
+        return manager.getHostPort() + "/controller/method/cart/checkout";
+    }
+
+    public static String getCartControllerChangeSellerCreditAddress() {
+        return manager.getHostPort() + "/controller/method/cart/change-seller-credit";
+    }
+
+    public static String getCartControllerGetTotalPriceAddress() {
+        return manager.getHostPort() + "/controller/method/cart/get-total-price";
+    }
+
+    public static String getCartControllerGetAmountInCarBySellerIdAddress() {
+        return manager.getHostPort() + "/controller/method/cart/get-amount-in-cart-by-seller-id";
+    }
+
+    /**
+     * OffController Methods.
+     */
+
+    public static String getOffControllerCreateNewOffAddress() {
+        return manager.getHostPort() + "/controller/method/off/create-new-off";
+    }
+
+    public static String getOffControllerAddProductToOffAddress() {
+        return manager.getHostPort() + "/controller/method/off/add-product-to-off";
+    }
+
+    public static String getOffControllerRemoveProductFromOffAddress() {
+        return manager.getHostPort() + "/controller/method/off/remove-product-from-off";
+    }
+
+    public static String getOffControllerRemoveAOffAddress() {
+        return manager.getHostPort() + "/controller/method/off/remove-a-off";
+    }
+
+    public static String getOffControllerGetAllProductsWithOffAddress() {
+        return manager.getHostPort() + "/controller/method/off/get-all-products-with-off";
+    }
+
+    public static String getOffControllerGetAllOfForSellerWithFilterAddress() {
+        return manager.getHostPort() + "/controller/method/off/get-all-off-for-seller-with-filter";
+    }
+
+    public static String getOffControllerGetOffAddress() {
+        return manager.getHostPort() + "/controller/method/off/get-off";
+    }
+
+    public static String getOffControllerEditAddress() {
+        return manager.getHostPort() + "/controller/method/off/edit";
+    }
+
+    /**
+     * PromoController Methods.
+     */
+
+    public static String getPromoControllerGetPromoCodeTemplateByCodeAddress() {
+        return manager.getHostPort() + "/controller/method/promo/get-promo-code-template-by-code";
+    }
+
+    public static String getPromoControllerGetPromoCodeTemplateByIdAddress() {
+        return manager.getHostPort() + "/controller/method/promo/get-promo-code-template-by-id";
+    }
+
+    public static String getPromoControllerGetAllPromoCodeForCustomerAddress() {
+        return manager.getHostPort() + "/controller/method/promo/get-all-promo-code-for-customer";
+    }
+
+    public static String getPromoControllerCreatePromoCodeAddress() {
+        return manager.getHostPort() + "/controller/method/promo/create-promo-code";
+    }
+
+    public static String getPromoControllerRemovePromoCodeAddress() {
+        return manager.getHostPort() + "/controller/method/promo/remove-promo-code";
+    }
+
+    public static String getPromoControllerAddCustomerAddress() {
+        return manager.getHostPort() + "/controller/method/promo/add-customer";
+    }
+
+    public static String getPromoControllerRemoveCustomerAddress() {
+        return manager.getHostPort() + "/controller/method/promo/remove-customer";
+    }
+
+    public static String getPromoControllerSetPercentAddress() {
+        return manager.getHostPort() + "/controller/method/promo/set-percent";
+    }
+
+    public static String getPromoControllerSetMaxDiscountAddress() {
+        return manager.getHostPort() + "/controller/method/promo/set-max-discount";
+    }
+
+    public static String getPromoControllerSetTimeAddress() {
+        return manager.getHostPort() + "/controller/method/promo/set-time";
+    }
+
+    public static String getPromoControllerGetRandomPromoForUserSetAddress() {
+        return manager.getHostPort() + "/controller/method/promo/get-random-promo-for-user-set";
+    }
+
 }

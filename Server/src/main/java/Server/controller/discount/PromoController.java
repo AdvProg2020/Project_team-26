@@ -112,7 +112,7 @@ public class PromoController {
         promoRepository.delete(promo);
     }
 
-    @PostMapping("/controller/method/promo/add-customerr")
+    @PostMapping("/controller/method/promo/add-customer")
     public void addCustomer(@RequestBody Map info) throws NoAccessException, InvalidIdException, ObjectAlreadyExistException, InvalidTokenException, NotLoggedINException, NotCustomerException {
         int promoId = (Integer) info.get("promoId");
         int customerId = (Integer) info.get("customerId");
