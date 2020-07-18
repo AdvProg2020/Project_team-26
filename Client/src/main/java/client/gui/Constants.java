@@ -193,4 +193,13 @@ public class Constants {
     public static String getGetAllRequests() {
         return Constants.manager.getHostPort() + "/";
     }
+
+    public static String getIsUserLoggedInAddress() {return Constants.manager.getHostPort() + "/";}
+
+    public static String getCreateTokenAddress() {return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getGetUserRoleAddress() {return Constants.manager.getHostPort() + "/";
+
+    }
 }

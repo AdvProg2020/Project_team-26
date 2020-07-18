@@ -1,9 +1,10 @@
 package client.connectionController.interfaces.session;
 
-import exception.InvalidTokenException;
-import exception.NotLoggedINException;
-import model.User;
-import model.enums.Role;
+
+import client.exception.InvalidTokenException;
+import client.exception.NotLoggedINException;
+import client.model.User;
+import client.model.enums.Role;
 
 public interface ISessionController {
     boolean isUserLoggedIn(String token) throws InvalidTokenException;
