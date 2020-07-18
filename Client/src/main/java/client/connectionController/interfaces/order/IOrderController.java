@@ -1,8 +1,7 @@
 package client.connectionController.interfaces.order;
 
-import exception.*;
-import model.Customer;
-import model.Order;
+import client.exception.*;
+import client.model.*;
 
 import java.util.List;
 

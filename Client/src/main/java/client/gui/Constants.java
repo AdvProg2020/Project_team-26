@@ -24,9 +24,8 @@ public class Constants {
     public static String getCompanyNameAddress = Constants.manager.getHostPort() + "/getUserByToken";
     public static String getBalanceAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
     public static String getRoleAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String getAllUsersAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String getUserInfoAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String changeBalanceAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-
-
+    public static String getOrdersWithFilterAddress;
+    public static String getOrdersAddress;
+    public static String getOrderHistoryForSellerAddress;
+    public static String getASingleOrderAddress;
 }
