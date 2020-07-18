@@ -1,9 +1,9 @@
 package client.gui;
 
 import client.gui.interfaces.InitializableController;
-import client.model.OrderItem;
-import client.model.enums.ShipmentState;
-import client.model.enums.Status;
+import client.model.*;
+import client.model.enums.*;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;

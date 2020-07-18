@@ -1,11 +1,14 @@
 package client.gui.seller;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.order.IOrderController;
+import client.connectionController.interfaces.product.IProductController;
+import client.exception.*;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import controller.interfaces.order.IOrderController;
-import controller.interfaces.product.IProductController;
-import exception.*;
+import client.model.*;
+import client.model.enums.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -17,12 +20,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import model.Customer;
-import model.Product;
-import model.ProductSeller;
-import model.enums.FeatureType;
-import model.enums.Status;
-import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

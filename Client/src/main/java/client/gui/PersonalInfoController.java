@@ -1,12 +1,12 @@
 package client.gui;
 
-import client.ControllerContainer;
-import client.exception.*;
+
+import client.connectionController.interfaces.account.IUserInfoController;
 import client.gui.interfaces.InitializableController;
 import client.model.*;
-import client.model.User;
-import client.model.enums.Role;
-import controller.interfaces.account.IUserInfoController;
+import client.model.enums.*;
+import client.ControllerContainer;
+import client.exception.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;

@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.ControllerContainer;
 import client.connectionController.interfaces.product.IProductController;
 import client.exception.*;
 import client.gui.interfaces.InitializableController;
@@ -12,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
