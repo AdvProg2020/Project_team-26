@@ -104,12 +104,4 @@ public class RequestController {
         }
     }
 
-
-    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if(isAscending) {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.ASCENDING);
-        } else {
-            return new Pageable(startIndex,endIndex - startIndex,sortField, Pageable.Direction.DESCENDING);
-        }
-    }
 }

@@ -30,7 +30,7 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("newPassword", newPassword);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changePasswordWithOldAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getChangePasswordWithOldAddress());
         } catch (HttpClientErrorException e) {
 //TODO
             throw new client.exception.NoAccessException("jzfo");
@@ -42,7 +42,7 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("newPassword", newPassword);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changePasswordAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getChangePasswordAddress());
         } catch (HttpClientErrorException e) {
 //TODO
             throw new NotLoggedINException("jzfo");
@@ -54,7 +54,7 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("image", image);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changeImageِAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getChangeImageِAddress());
         } catch (HttpClientErrorException e) {
 //TODO
             throw new NotLoggedINException("jzfo");
@@ -68,7 +68,7 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("value", value);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changeInfoAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getChangeInfoAddress());
         } catch (HttpClientErrorException e) {
 //TODO
             throw new NotLoggedINException("jzfo");
@@ -80,7 +80,7 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("newCredit", newCredit);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changeBalanceAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getChangeBalanceAddress());
         } catch (HttpClientErrorException e) {
 //TODO
             throw new NotLoggedINException("jzfo");
@@ -89,7 +89,7 @@ public class UserInfoController implements IUserInfoController {
 
     public String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField {
         try {
-            return Constants.manager.getStringValueFromServerByAddress(Constants.getCompanyNameAddress, token);
+            return Constants.manager.getStringValueFromServerByAddress(Constants.getGetCompanyNameAddress(), token);
         } catch (HttpClientErrorException e) {
 //TODO
             throw new InvalidTokenException("jhf");
@@ -101,7 +101,7 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("values", values);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changeInfoByMapAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getChangeInfoByMapAddress());
         } catch (HttpClientErrorException e) {
 //TODO
             throw new NotLoggedINException("jzfo");
@@ -110,7 +110,7 @@ public class UserInfoController implements IUserInfoController {
 
     public String getBalance(String token) throws NotLoggedINException, InvalidTokenException {
         try {
-            return Constants.manager.getStringValueFromServerByAddress(Constants.getBalanceAddress, token);
+            return Constants.manager.getStringValueFromServerByAddress(Constants.getGetBalanceAddress(), token);
         } catch (HttpClientErrorException e) {
 //TODO
             throw new InvalidTokenException("jhf");
@@ -119,7 +119,7 @@ public class UserInfoController implements IUserInfoController {
 
     public String getRole(String token) throws NotLoggedINException, InvalidTokenException {
         try {
-            return Constants.manager.getStringValueFromServerByAddress(Constants.getRoleAddress, token);
+            return Constants.manager.getStringValueFromServerByAddress(Constants.getGetRoleAddress(), token);
         } catch (HttpClientErrorException e) {
 //TODO
             throw new InvalidTokenException("jhf");

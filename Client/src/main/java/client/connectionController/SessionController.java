@@ -1,16 +1,6 @@
 package client.connectionController;
-
-import exception.InvalidTokenException;
-import exception.NotLoggedINException;
-import model.Session;
-import model.User;
-import model.enums.Role;
-import repository.RepositoryContainer;
-
 public class SessionController {
-    public SessionController(RepositoryContainer repositoryContainer) {
 
-    }
 
     public Boolean isUserLoggedIn(String token) throws InvalidTokenException {
         Session session = Session.getSession(token);

@@ -25,7 +25,7 @@ public class CommentController implements ICommentController {
         jsonObject.put("productId", productId);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.addCommentAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAddCommentAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
@@ -36,7 +36,7 @@ public class CommentController implements ICommentController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.confirmCommentAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getConfirmCommentAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
@@ -48,7 +48,7 @@ public class CommentController implements ICommentController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.rejectCommentAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectCommentAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }
@@ -59,7 +59,7 @@ public class CommentController implements ICommentController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         try {
-            return getCommentListFromServer(jsonObject, Constants.getAllCommentsAdress);
+            return getCommentListFromServer(jsonObject, Constants.getGetAllCommentsAdress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("lkcsa");
         }
@@ -71,7 +71,7 @@ public class CommentController implements ICommentController {
         jsonObject.put("token", token);
         jsonObject.put("productId", productId);
         try {
-            return getCommentListFromServer(jsonObject, Constants.getConfirmedCommentsAddresss);
+            return getCommentListFromServer(jsonObject, Constants.getGetConfirmedCommentsAddresss());
         } catch (HttpClientErrorException e) {
             throw new InvalidIdException("lsad");
         }
@@ -91,7 +91,7 @@ public class CommentController implements ICommentController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.removeCommentAddress);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRemoveCommentAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("ksamd");
         }

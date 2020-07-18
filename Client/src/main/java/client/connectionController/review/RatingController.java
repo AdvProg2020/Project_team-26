@@ -1,44 +1,25 @@
 package client.connectionController.review;
 
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotBoughtTheProductException;
-import model.Customer;
-import model.Rate;
-import model.Session;
-import model.User;
-import model.enums.Role;
-import repository.ProductRepository;
-import repository.RateRepository;
-import repository.RepositoryContainer;
-import repository.UserRepository;
 
-public class RatingController {
+import client.connectionController.interfaces.review.IRatingController;
+import client.exception.*;
+import client.gui.Constants;
+import client.model.*;
+import client.model.enums.Role;
+import net.minidev.json.JSONObject;
+import org.springframework.web.client.HttpClientErrorException;
 
-    RateRepository rateRepository;
-    UserRepository userRepository;
-    ProductRepository productRepository;
-
-    public RatingController(RepositoryContainer repositoryContainer) {
-        this.rateRepository = (RateRepository) repositoryContainer.getRepository("RatingRepository");
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-    }
+public class RatingController implements IRatingController {
 
     public void rate(double rating, int productId, String token) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if (user == null || user.getRole() != Role.CUSTOMER) {
-            throw new NoAccessException("You are not allowed to do that.");
-        } else if (!userRepository.hasBoughtProduct(user.getId(), productId)) {
-            throw new NotBoughtTheProductException("You have not bought this product");
-        } else {
-            Rate previousRate = rateRepository.getCustomerRate(user.getId(), productId);
-            if(previousRate == null) {
-                rateRepository.save(new Rate((Customer) user, rating, productRepository.getById(productId)));
-            } else {
-                previousRate.setScore(rating);
-                rateRepository.save(previousRate);
-            }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("rating", rating);
+        jsonObject.put("productId", productId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRateAddress());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 }

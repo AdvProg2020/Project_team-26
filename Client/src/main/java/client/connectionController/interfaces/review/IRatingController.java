@@ -1,8 +1,7 @@
 package client.connectionController.interfaces.review;
 
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotBoughtTheProductException;
+
+import client.exception.*;
 
 public interface IRatingController {
 

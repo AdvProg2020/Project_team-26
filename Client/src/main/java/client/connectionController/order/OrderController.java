@@ -26,7 +26,7 @@ public class OrderController implements IOrderController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         try {
-            return getListFromServer(jsonObject, Constants.getOrdersAddress);
+            return getListFromServer(jsonObject, Constants.getGetOrdersAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("lkcsa");
         }
@@ -41,7 +41,7 @@ public class OrderController implements IOrderController {
         jsonObject.put("startIndex", startIndex);
         jsonObject.put("endIndex", endIndex);
         try {
-            return getListFromServer(jsonObject, Constants.getOrdersWithFilterAddress);
+            return getListFromServer(jsonObject, Constants.getGetOrdersWithFilterAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("lkcsa");
         }
@@ -57,7 +57,7 @@ public class OrderController implements IOrderController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Customer[]> responseEntity = restTemplate.postForEntity(Constants.getASingleOrderAddress, httpEntity, Customer[].class);
+            ResponseEntity<Customer[]> responseEntity = restTemplate.postForEntity(Constants.getGetProductBuyerByProductId(), httpEntity, Customer[].class);
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("lkcsa");
@@ -74,7 +74,7 @@ public class OrderController implements IOrderController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Order> responseEntity = restTemplate.postForEntity(Constants.getASingleOrderAddress, httpEntity, Order.class);
+            ResponseEntity<Order> responseEntity = restTemplate.postForEntity(Constants.getGetASingleOrderAddress(), httpEntity, Order.class);
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("lkcsa");
@@ -90,7 +90,7 @@ public class OrderController implements IOrderController {
         jsonObject.put("startIndex", startIndex);
         jsonObject.put("endIndex", endIndex);
         try {
-            return getListFromServer(jsonObject, Constants.getOrderHistoryForSellerAddress);
+            return getListFromServer(jsonObject, Constants.getGetOrderHistoryForSellerAddress());
         } catch (HttpClientErrorException e) {
             throw new NoAccessException("lkcsa");
         }
