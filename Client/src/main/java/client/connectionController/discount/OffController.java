@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -81,10 +82,10 @@ public class OffController implements IOffController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Product[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Product[].class);
+            ResponseEntity<Product[]> responseEntity = restTemplate.postForEntity(Constants.getOffControllerGetAllProductsWithOffAddress(), httpEntity, Product[].class);
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
-
+            return new ArrayList<>();
         }
     }
 
@@ -101,10 +102,10 @@ public class OffController implements IOffController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Off[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Off[].class);
+            ResponseEntity<Off[]> responseEntity = restTemplate.postForEntity(Constants.getOffControllerGetAllOfForSellerWithFilterAddress(), httpEntity, Off[].class);
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
-
+            throw new NoAccessException("Sfdf");
         }
     }
 
@@ -118,10 +119,10 @@ public class OffController implements IOffController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Off> responseEntity = restTemplate.postForEntity(address, httpEntity, Off.class);
+            ResponseEntity<Off> responseEntity = restTemplate.postForEntity(Constants.getOffControllerGetOffAddress(), httpEntity, Off.class);
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
-
+            throw new InvalidIdException("sdf");
         }
     }
 
