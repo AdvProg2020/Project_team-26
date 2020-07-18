@@ -1,8 +1,9 @@
 package client.connectionController.interfaces.discount;
 
-import exception.*;
-import model.Off;
-import model.Product;
+
+import client.exception.*;
+import client.model.Off;
+import client.model.Product;
 
 import java.util.List;
 import java.util.Map;

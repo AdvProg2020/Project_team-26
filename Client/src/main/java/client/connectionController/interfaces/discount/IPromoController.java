@@ -1,7 +1,9 @@
 package client.connectionController.interfaces.discount;
 
-import exception.*;
-import model.Promo;
+
+
+import client.exception.*;
+import client.model.Promo;
 
 import java.util.Date;
 import java.util.List;

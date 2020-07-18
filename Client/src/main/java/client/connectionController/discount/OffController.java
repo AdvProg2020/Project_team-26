@@ -1,13 +1,15 @@
 package client.connectionController.discount;
 
 
+import client.connectionController.interfaces.discount.IOffController;
 import client.exception.*;
 import client.model.*;
+import client.model.enums.Role;
 
 import java.util.List;
 import java.util.Map;
 
-public class OffController {
+public class OffController implements IOffController {
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         Session session = Session.getSession(token);
         if (session.getLoggedInUser() == null) {

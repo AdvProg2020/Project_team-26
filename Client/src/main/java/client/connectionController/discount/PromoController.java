@@ -1,6 +1,7 @@
 package client.connectionController.discount;
 
 
+import client.connectionController.interfaces.discount.IPromoController;
 import client.exception.*;
 import client.model.*;
 import client.model.enums.Role;
@@ -8,7 +9,7 @@ import client.model.enums.Role;
 import java.util.Date;
 import java.util.List;
 
-public class PromoController {
+public class PromoController implements IPromoController {
 
     public Promo getPromoCodeTemplateByCode(String codeId, String token) throws InvalidIdException, NotLoggedINException {
         Promo promo = promoRepository.getByCode(codeId);
