@@ -1,28 +1,14 @@
 package client.connectionController.discount;
 
-import exception.*;
-import javafx.util.Pair;
-import model.Customer;
-import model.Promo;
-import model.Session;
-import model.User;
-import model.enums.Role;
-import repository.Pageable;
-import repository.PromoRepository;
-import repository.RepositoryContainer;
-import repository.UserRepository;
+
+import client.exception.*;
+import client.model.*;
+import client.model.enums.Role;
 
 import java.util.Date;
 import java.util.List;
 
 public class PromoController {
-    PromoRepository promoRepository;
-    UserRepository userRepository;
-
-    public PromoController(RepositoryContainer repositoryContainer) {
-        promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
-        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-    }
 
     public Promo getPromoCodeTemplateByCode(String codeId, String token) throws InvalidIdException, NotLoggedINException {
         Promo promo = promoRepository.getByCode(codeId);

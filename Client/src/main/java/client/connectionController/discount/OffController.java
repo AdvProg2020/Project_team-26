@@ -1,25 +1,13 @@
 package client.connectionController.discount;
 
-import exception.*;
-import model.*;
-import model.enums.Role;
-import repository.*;
+
+import client.exception.*;
+import client.model.*;
 
 import java.util.List;
 import java.util.Map;
 
 public class OffController {
-    ProductRepository productRepository;
-    private OffRepository offRepository;
-    private ProductSellerRepository productSellerRepository;
-
-    public OffController(RepositoryContainer repositoryContainer) {
-        productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        offRepository = (OffRepository) repositoryContainer.getRepository("OffRepository");
-        productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
-    }
-
-
     private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         Session session = Session.getSession(token);
         if (session.getLoggedInUser() == null) {

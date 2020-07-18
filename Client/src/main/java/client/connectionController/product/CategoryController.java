@@ -4,14 +4,42 @@ import client.connectionController.interfaces.category.ICategoryController;
 import client.exception.InvalidIdException;
 import client.exception.*;
 import client.model.Category;
+import client.model.CategoryFeature;
 import client.model.Product;
 import client.model.enums.FeatureType;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class CategoryController implements ICategoryController {
+    private Category getCategoryFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+        // Constants.manager.<Category>getItemFromServer(jsonObject,address,Category.class);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Category> responseEntity = restTemplate.postForEntity(address, httpEntity, Category.class);
+        return responseEntity.getBody();
+    }
+
+    private List<Product> getProductOfCategoryListFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+        //Constants.manager.<Product>getListItemsFromServer(jsonObject,address,Product[].class);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<Product[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Product[].class);
+        return Arrays.asList(responseEntity.getBody());
+    }
 
 
     public void addCategory(int patternId, Category newCategory, String token) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
