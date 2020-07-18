@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+
+<TableView fx:id="tableView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="690.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.customer.PromoCodesForCustomer">
+    <columns>
+        <TableColumn prefWidth="92.66667687892914" text="Start Date" />
+        <TableColumn prefWidth="107.33332061767578" text="End Date" />
+        <TableColumn prefWidth="281.3333282470703" text="Code" />
+        <TableColumn prefWidth="52.000030517578125" text="\%" />
+        <TableColumn minWidth="0.0" prefWidth="70.66668701171875" text="max" />
+      <TableColumn prefWidth="84.0" text="valid use" />
+    </columns>
+</TableView>
