@@ -3,15 +3,26 @@ package Server.controller.order;
 import exception.*;
 import model.*;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import repository.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+@RestController
 public class OrderController {
     OrderRepository orderRepository;
     ProductRepository productRepository;
     CustomerRepository customerRepository;
+
+    public OrderController() {
+
+    }
+
 
     public OrderController(RepositoryContainer repositoryContainer) {
         this.orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
@@ -19,7 +30,10 @@ public class OrderController {
         this.customerRepository = (CustomerRepository) repositoryContainer.getRepository("CustomerRepository");
     }
 
-    public List<Order> getOrders(String token) throws NoAccessException, InvalidTokenException {
+
+    @PostMapping("/controller/method/order/get-orders")
+    public List<Order> getOrders(@RequestBody Map info) throws NoAccessException, InvalidTokenException {
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -34,7 +48,13 @@ public class OrderController {
         }
     }
 
-    public List<Order> getOrdersWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/controller/method/order/get-orders-with-filters")
+    public List<Order> getOrdersWithFilter(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        String sortField = (String) info.get("sortField");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        String token = (String) info.get("token");
         Pageable page =  createAPage(sortField,isAscending,startIndex,endIndex);
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
@@ -52,7 +72,10 @@ public class OrderController {
         }
     }
 
-    public List<Customer> getProductBuyerByProductId(int productId, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, InvalidIdException {
+    @PostMapping("/controller/method/order/get-product-buyer-by-product-id")
+    public List<Customer> getProductBuyerByProductId(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException, NoAccessException, InvalidIdException {
+        int productId = (Integer) info.get("productId");
+        String token = (String) info.get("token");
         Product product = productRepository.getById(productId);
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
@@ -68,7 +91,10 @@ public class OrderController {
         }
     }
 
-    public Order getASingleOrder(int id, String token) throws NoAccessException, NoObjectIdException, InvalidTokenException {
+    @PostMapping("/controller/method/order/get-a-single-order")
+    public Order getASingleOrder(@RequestBody Map info) throws NoAccessException, NoObjectIdException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NoAccessException("You are not allowed to do that.");
@@ -88,7 +114,13 @@ public class OrderController {
         }
     }
 
-    public List<Order> getOrderHistoryForSeller(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/controller/method/order/get-order-history-for-seller")
+    public List<Order> getOrderHistoryForSeller(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        String sortField = (String) info.get("sortField");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        String token = (String) info.get("token");
         Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
