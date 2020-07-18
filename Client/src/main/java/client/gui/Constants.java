@@ -307,5 +307,85 @@ public class Constants {
      * ProductController Methods.
      */
 
+    public static String getProductControllerCreateProductAddress() {
+        return manager.getHostPort() + "/controller/method/product/create-product";
+    }
+
+    public static String getProductControllerAddSellerAddress() {
+        return manager.getHostPort() + "/controller/method/product/add-seller";
+    }
+
+    public static String getProductControllerGetProductByIdAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-product-by-id";
+    }
+
+    public static String getProductControllerGetProductByNameAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-product-by-name";
+    }
+
+    public static String getProductControllerRemoveProductAddress() {
+        return manager.getHostPort() + "/controller/method/product/remove-product";
+    }
+
+    public static String getProductControllerRemoveSellerAddress() {
+        return manager.getHostPort() + "/controller/method/product/remove-seller";
+    }
+
+    public static String getProductControllerGetAllProductWithFilterAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-all-products-with-filter";
+    }
+
+    public static String getProductControllerGetAllProductWithFilterForSellerIdAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-all-products-with-filter-for-seller-id";
+    }
+
+    public static String getProductControllerGetProductSellerByIdAndSellerIdAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-product-seller-by-id-and-seller-id";
+    }
+
+    public static String getProductControllerEditProductAddress() {
+        return manager.getHostPort() + "/controller/method/product/edit-product";
+    }
+
+    public static String getProductControllerEditProductSellerAddress() {
+        return manager.getHostPort() + "/controller/method/product/edit-product-seller";
+    }
+
+    /**
+     * CommentController Methods.
+     */
+
+    public static String getCommentControllerAddCommentAddress() {
+        return manager.getHostPort() + "/controller/method/comment/add-comment";
+    }
+
+    public static String getCommentControllerConfirmCommentAddress() {
+        return manager.getHostPort() + "/controller/method/comment/confirm-comment";
+    }
+
+    public static String getCommentControllerRejectCommentAddress() {
+        return manager.getHostPort() + "/controller/method/comment/reject-comment";
+    }
+
+    public static String getCommentControllerGetAllCommentsAddress() {
+        return manager.getHostPort() + "/controller/method/comment/get-all-comments";
+    }
+
+    public static String getCommentControllerGetConfirmedCommentsAddress() {
+        return manager.getHostPort() + "/controller/method/comment/get-confirmed-comments";
+    }
+
+    public static String getCommentControllerRemoveCommentAddress() {
+        return manager.getHostPort() + "/controller/method/comment/remove-comment";
+    }
+
+    /**
+     * RatingController Methods.
+     */
+
+    public static String getRatingControllerRateAddress() {
+        return manager.getHostPort() + "/controller/method/rate/rate";
+    }
+
 
 }
