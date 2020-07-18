@@ -6,216 +6,97 @@ public class Constants {
 
     public static final Manager manager = new Manager();
     public static final int productGridColumnCount = 5;
-    public static String getGetAllCategoriesAddress;
-  /*  public static String registerAddress = Constants.manager.getHostPort() + "/register";
-    public static String loginAddress = Constants.manager.getHostPort() + "/login";
-    public static String getUserByNameAddress = Constants.manager.getHostPort() + "/getUserByName";
-    public static String getUserByIdAddress = Constants.manager.getHostPort() + "/getUserById";
-    public static String getManagersAddress = Constants.manager.getHostPort() + "/getManagers/";
-    public static String changePasswordAddress = Constants.manager.getHostPort() + "/getManagers/";
-    public static String changePasswordWithOldAddress = Constants.manager.getHostPort() + "/getManagers/";
-    public static String changeImageِAddress = Constants.manager.getHostPort() + "/getManagers/";
-    public static String deleteUserAddress = Constants.manager.getHostPort() + "/getManagers/";
-    public static String getUserByTokenAddress = Constants.manager.getHostPort() + "/getUserByToken";
-    public static String changeInfoAddress = Constants.manager.getHostPort() + "/getUserByToken";
-    public static String changeInfoByMapAddress = Constants.manager.getHostPort() + "/getUserByToken";
-    public static String doWeHaveManagerAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String logoutAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String getAllUsersAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String getUserInfoAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String changeBalanceAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String getCompanyNameAddress = Constants.manager.getHostPort() + "/getUserByToken";
-    public static String getBalanceAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String getRoleAddress = Constants.manager.getHostPort() + "/controller/method/do-we-have-a-manager";
-    public static String getOrdersWithFilterAddress;
-    public static String getOrdersAddress;
-    public static String getOrderHistoryForSellerAddress;
-    public static String getASingleOrderAddress;
-    public static String getAllCommentsAdress;
-    public static String getConfirmedCommentsAddresss;
-    public static String removeCommentAddress;
-    public static String rejectCommentAddress;
-    public static String confirmCommentAddress;
-    public static String addCommentAddress;
-    public static String rateAddress;*/
 
-    public static String getGetProductBuyerByProductId() {
-        return Constants.manager.getHostPort() + "/";
+    /**
+     * AuthenticationController Methods.
+     */
+
+    public static String getAuthenticationControllerLoginAddress() {
+        return manager.getHostPort() + "/controller/method/login";
     }
 
-    public static String getRegisterAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getAuthenticationControllerRegister() {
+        return manager.getHostPort() + "/controller/method/register";
     }
 
-    public static String getLoginAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getAuthenticationControllerLogoutAddress() {
+        return manager.getHostPort() + "/controller/method/logout";
     }
 
-    public static String getGetUserByNameAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getAuthenticationControllerDoWeHaveAManagerAddress() {
+        return manager.getHostPort() + "/controller/method/do-we-have-a-manager";
     }
 
-    public static String getGetUserByIdAddress() {
-        return Constants.manager.getHostPort() + "/";
+    /**
+     * ShowUserController Methods.
+     */
+
+    public static String getShowUserControllerGetUsersAddress() {
+        return manager.getHostPort() + "/controller/method/get-users";
     }
 
-    public static String getGetManagersAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getShowUserControllerGetUserByNameAddress() {
+        return manager.getHostPort() + "/controller/method/get-user-by-name";
     }
 
-    public static String getChangePasswordAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getShowUserControllerGetUserByIdAddress() {
+        return manager.getHostPort() + "/controller/method/get-user-by-id";
     }
 
-    public static String getChangePasswordWithOldAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getShowUserControllerGetUserInfoAddress() {
+        return manager.getHostPort() + "/controller/method/get-user-info";
     }
 
-    public static String getChangeImageِAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getShowUserControllerGetManagersAddress() {
+        return manager.getHostPort() + "/controller/method/get-managers";
     }
 
-    public static String getDeleteUserAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getShowUserControllerDeleteAddress() {
+        return manager.getHostPort() + "/controller/method/user/delete";
     }
 
-    public static String getGetUserByTokenAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getShowUserControllerGetUserByTokenAddress() {
+        return manager.getHostPort() + "/controller/method/get-user-by-token";
     }
 
-    public static String getChangeInfoAddress() {
-        return Constants.manager.getHostPort() + "/";
+    /**
+     * UserInfoController Methods.
+     */
+
+    public static String getUserInfoControllerChangePasswordWithOldPasswordAddress() {
+        return manager.getHostPort() + "/controller/method/user/change-password-old-way";
     }
 
-    public static String getChangeInfoByMapAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerChangePasswordAddress() {
+        return manager.getHostPort() + "/controller/method/change-password";
     }
 
-    public static String getDoWeHaveManagerAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerChangeImageAddress() {
+        return manager.getHostPort() + "/controller/method/change-image";
     }
 
-    public static String getLogoutAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerChangeInfoAddress() {
+        return manager.getHostPort() + "/controller/method/change-info";
     }
 
-    public static String getGetAllUsersAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerChangeBalanceAddress() {
+        return manager.getHostPort() + "/controller/method/change-balance";
     }
 
-    public static String getGetUserInfoAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerGetCompanyNameAddress() {
+        return manager.getHostPort() + "/controller/method/user/get-company-name";
     }
 
-    public static String getChangeBalanceAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerChangeMultipleInfoAddress() {
+        return manager.getHostPort() + "/controller/method/user/change-multiple-info";
     }
 
-    public static String getGetCompanyNameAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerGetBalanceAddress() {
+        return manager.getHostPort() + "/controller/method/user/get-balance";
     }
 
-    public static String getGetBalanceAddress() {
-        return Constants.manager.getHostPort() + "/";
+    public static String getUserInfoControllerGetRoleAddress() {
+        return manager.getHostPort() + "/controller/method/user/get-role";
     }
 
-    public static String getGetRoleAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetOrdersWithFilterAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetOrdersAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetOrderHistoryForSellerAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetASingleOrderAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetAllCommentsAdress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetConfirmedCommentsAddresss() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getRemoveCommentAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getRejectCommentAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getConfirmCommentAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getAddCommentAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getRateAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getAcceptOffRequestِAddress() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getRejectOffRequestِAdd() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getAcceptProductRequest() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getRejectProductRequest() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getAcceptProductSellerRequest() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getRejectProductSellerRequest() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetAllRequests() {
-        return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getIsUserLoggedInAddress() {return Constants.manager.getHostPort() + "/";}
-
-    public static String getCreateTokenAddress() {return Constants.manager.getHostPort() + "/";
-    }
-
-    public static String getGetUserRoleAddress() {return Constants.manager.getHostPort() + "/";
-
-    }
-
-    public static String getGetProductByIdAddress() {
-    }
-
-    public static String getGetProductSellerByIdAndSellerIdAddress() {
-    }
-
-    public static String getGetAllCategoriesAddress() {
-    }
-
-    public static String getGetSubCategoriesAddress() {
-    }
-
-    public static String getGetAllProductsInOffAddress() {
-    }
 }

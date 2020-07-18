@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,9 @@ public class RequestController implements IRequestController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAcceptOffRequestِAddress());
         } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
-            e.getStatusCode().
+            System.err.println(e.getStackTrace());
+        } catch (UnknownHttpStatusCodeException e) {
+            //todo
         }
 
     }
@@ -40,6 +42,8 @@ public class RequestController implements IRequestController {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectOffRequestِAdd());
         } catch (HttpClientErrorException e) {
 
+        } catch (UnknownHttpStatusCodeException e) {
+            //todo
         }
     }
 
