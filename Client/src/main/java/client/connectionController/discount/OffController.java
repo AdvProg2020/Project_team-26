@@ -10,20 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class OffController implements IOffController {
-    private void checkAccessOfUser(String token, String message) throws NoAccessException, InvalidTokenException, NotLoggedINException {
-        Session session = Session.getSession(token);
-        if (session.getLoggedInUser() == null) {
-            throw new NotLoggedINException("You must be logged in.");
-        } else if (!(session.getLoggedInUser().getRole() == Role.SELLER))
-            throw new NoAccessException(message);
-    }
 
-    private Off getOffByIdWithCheck(int id) throws InvalidIdException {
-        Off off = offRepository.getById(id);
-        if (off == null)
-            throw new InvalidIdException("the off with " + id + " doesn't exist");
-        return off;
-    }
 
     public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "seller can create a off");
@@ -57,22 +44,6 @@ public class OffController implements IOffController {
 
     }
 
-    private OffItem getOffItem(List<OffItem> offItems, int productId) {
-        for (OffItem offItem : offItems) {
-            if (offItem.getProductSeller().getProduct().getId() == productId)
-                return offItem;
-        }
-        return null;
-    }
-
-    private ProductSeller getProductSeller(int seller, List<ProductSeller> productSellers) {
-        for (ProductSeller productSeller : productSellers) {
-            if (productSeller.getSeller().getId() == seller)
-                return productSeller;
-        }
-        return null;
-    }
-
     public void removeProductFromOff(Off off, int productId, boolean isForAdd, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
         checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
@@ -104,14 +75,6 @@ public class OffController implements IOffController {
         checkAccessOfUser(token, "only seller");
         Pageable page = createAPage(sortField, isAscending, startIndex, endIndex);
         return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs(page);
-    }
-
-    private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
-        if (isAscending) {
-            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.ASCENDING);
-        } else {
-            return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.DESCENDING);
-        }
     }
 
     public Off getOff(int id, String token) throws InvalidIdException {
