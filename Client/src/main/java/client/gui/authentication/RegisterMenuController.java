@@ -1,19 +1,20 @@
 package client.gui.authentication;
 
-import client.gui.Constants;
+import client.ControllerContainer;
+import client.connectionController.account.Account;
+import client.connectionController.interfaces.account.IAuthenticationController;
+import client.connectionController.interfaces.account.IShowUserController;
+import client.exception.*;
+import client.gui.*;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import controller.account.Account;
-import controller.interfaces.account.IAuthenticationController;
-import controller.interfaces.account.IShowUserController;
-import exception.*;
+import client.model.enums.*;
+import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
-import model.enums.Role;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 
