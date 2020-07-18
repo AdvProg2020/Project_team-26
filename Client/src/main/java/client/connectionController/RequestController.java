@@ -1,106 +1,108 @@
 package client.connectionController;
 
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
-import model.Request;
-import model.Session;
-import model.User;
-import model.enums.Role;
-import repository.*;
 
+import client.connectionController.interfaces.request.IRequestController;
+import client.exception.*;
+import client.gui.Constants;
+import client.model.Request;
+import client.model.User;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.Arrays;
 import java.util.List;
 
-public class RequestController {
-
-    private OffRepository offRepository;
-    private ProductSellerRepository productSellerRepository;
-    private ProductRepository productRepository;
-    private RequestRepository requestRepository;
-
-    public RequestController(RepositoryContainer repositoryContainer){
-        this.offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
-        this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.requestRepository = (RequestRepository) repositoryContainer.getRepository("RequestRepository");
-    }
+public class RequestController implements IRequestController {
 
     public void acceptOffRequest(int requestId, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            requestRepository.accept(requestId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("requestId", requestId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAcceptOffRequestِAddress());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
 
     }
 
     public void rejectOffRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            requestRepository.reject(requestId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("requestId", requestId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectOffRequestِAdd());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 
     public void acceptProductRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            requestRepository.accept(requestId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("requestId", requestId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAcceptProductRequest());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 
     public void rejectProductRequest(int requestId, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            requestRepository.reject(requestId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("requestId", requestId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectProductRequest());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 
     public void acceptProductSellerRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            requestRepository.accept(requestId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("requestId", requestId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAcceptProductSellerRequest());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 
     public void rejectProductSellerRequest(int requestId, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            requestRepository.reject(requestId);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("requestId", requestId);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectProductSellerRequest());
+        } catch (HttpClientErrorException e) {
+            throw new NoAccessException("ksamd");
         }
     }
 
     public List<Request> getAllRequests(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,0,0);
-        User user = Session.getSession(token).getLoggedInUser();
-        if(user == null) {
-            throw new NotLoggedINException("You are not logged in");
-        } else if (user.getRole() != Role.ADMIN) {
-            throw new NoAccessException("You must be an Admin to do this.");
-        } else {
-            return requestRepository.getAllPending(page);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        jsonObject.put("sortField", sortField);
+        jsonObject.put("isAscending", isAscending);
+        jsonObject.put("startIndex", startIndex);
+        jsonObject.put("endIndex", endIndex);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            ResponseEntity<Request[]> responseEntity = restTemplate.postForEntity(Constants.getGetAllRequests(), httpEntity, Request[].class);
+            return Arrays.asList(responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
+//TODO
+            throw new InvalidTokenException("jhf");
         }
     }
 

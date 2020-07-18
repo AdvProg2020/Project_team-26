@@ -1,9 +1,9 @@
 package client.connectionController.interfaces.request;
 
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
-import model.Request;
+
+import client.exception.InvalidTokenException;
+import client.exception.*;
+import client.model.Request;
 
 import java.util.List;
 

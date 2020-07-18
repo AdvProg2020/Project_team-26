@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.ControllerContainer;
 import client.connectionController.SessionController;
 import client.connectionController.account.AuthenticationController;
 import client.connectionController.interfaces.account.IShowUserController;
@@ -28,7 +29,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.time.*;

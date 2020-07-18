@@ -39,7 +39,7 @@ public class Constants {
     public static String rateAddress;*/
 
     public static String getGetProductBuyerByProductId() {
-        return getProductBuyerByProductId;
+        return Constants.manager.getHostPort() + "/";
     }
 
     public static String getRegisterAddress() {
@@ -163,6 +163,34 @@ public class Constants {
     }
 
     public static String getRateAddress() {
+        return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getAcceptOffRequestِAddress() {
+        return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getRejectOffRequestِAdd() {
+        return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getAcceptProductRequest() {
+        return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getRejectProductRequest() {
+        return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getAcceptProductSellerRequest() {
+        return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getRejectProductSellerRequest() {
+        return Constants.manager.getHostPort() + "/";
+    }
+
+    public static String getGetAllRequests() {
         return Constants.manager.getHostPort() + "/";
     }
 }

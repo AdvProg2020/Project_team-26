@@ -1,24 +1,19 @@
 package client.gui.admin;
-
+import client.connectionController.interfaces.account.*;
+import client.connectionController.interfaces.category.ICategoryController;
+import client.exception.*;
 import client.gui.CategoryListController;
 import client.gui.Constants;
-import client.gui.interfaces.InitializableController;
-import client.gui.interfaces.Reloadable;
-import controller.interfaces.category.ICategoryController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.ObjectAlreadyExistException;
+import client.gui.interfaces.*;
+import client.model.*;
+import client.ControllerContainer;
+import client.model.enums.FeatureType;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import model.Category;
-import model.CategoryFeature;
-import model.enums.FeatureType;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;

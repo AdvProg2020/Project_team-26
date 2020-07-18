@@ -9,8 +9,8 @@ public class ControllerContainer {
         RequestController, CommentController, RatingController;
     }
 
-    private Map<view.cli.ControllerContainer.Controller, Object> map;
-    public Object getController(view.cli.ControllerContainer.Controller controller) {
+    private Map<ControllerContainer.Controller, Object> map;
+    public Object getController(ControllerContainer.Controller controller) {
         return map.get(controller);
     }
 

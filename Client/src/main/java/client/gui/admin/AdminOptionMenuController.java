@@ -1,20 +1,16 @@
 package client.gui.admin;
-
+import client.connectionController.interfaces.account.*;
+import client.connectionController.interfaces.category.ICategoryController;
+import client.exception.*;
 import client.gui.Constants;
-import client.gui.interfaces.InitializableController;
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.category.ICategoryController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
+import client.gui.interfaces.*;
+import client.model.*;
+import client.ControllerContainer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import model.Admin;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 
