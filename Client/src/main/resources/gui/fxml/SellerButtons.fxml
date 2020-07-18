@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.gui.seller.SellerButtonsController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="79.0" spacing="50.0">
+          <children>
+              <ImageView fx:id="profileImageView" fitHeight="121.0" fitWidth="105.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                      <Image url="@../pic/AdminProfilePicture.png" />
+                  </image>
+              </ImageView>
+              <Button fx:id="createOff" mnemonicParsing="false" prefHeight="41.0" prefWidth="108.0" text="Create Off" />
+              <Button fx:id="createProduct" mnemonicParsing="false" prefHeight="43.0" prefWidth="111.0" text="Create Product" />
+              <Button fx:id="history" mnemonicParsing="false" prefHeight="45.0" prefWidth="106.0" text="History" />
+              <Button fx:id="manageOff" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Manage Offs" />
+              <Button fx:id="manageProduct" mnemonicParsing="false" prefHeight="44.0" prefWidth="110.0" text="Manage Product" />
+          </children>
+      </VBox>
+   </children>
+</HBox>
