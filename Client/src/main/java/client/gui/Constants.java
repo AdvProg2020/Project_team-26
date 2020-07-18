@@ -387,5 +387,57 @@ public class Constants {
         return manager.getHostPort() + "/controller/method/rate/rate";
     }
 
+    /**
+     * RequestController Methods.
+     */
+
+    public static String getRequestControllerAcceptOffRequestAddress() {
+        return manager.getHostPort() + "/controller/method/request/accept-off-request";
+    }
+
+    public static String getRequestControllerRejectOffRequestAddress() {
+        return manager.getHostPort() + "/controller/method/request/reject-off-request";
+    }
+
+    public static String getRequestControllerAcceptProductRequestAddress() {
+        return manager.getHostPort() + "/controller/method/request/accept-product-request";
+    }
+
+    public static String getRequestControllerRejectProductRequestAddress() {
+        return manager.getHostPort() + "/controller/method/request/reject-product-request";
+    }
+
+    public static String getRequestControllerAcceptProductSellerRequestAddress() {
+        return manager.getHostPort() + "/controller/method/request/accept-product-seller-request";
+    }
+
+    public static String getRequestControllerRejectProductSellerRequestAddress() {
+        return manager.getHostPort() + "/controller/method/request/reject-product-seller-request";
+    }
+
+    public static String getRequestControllerGetAllRequestsAddress() {
+        return manager.getHostPort() + "/controller/method/request/get-all-requests";
+    }
+
+    /**
+     * SessionController Methods.
+     */
+
+    public static String getSessionControllerIsUserLoggedInAddress() {
+        return manager.getHostPort() + "/controller/method/session/hasUserLoggedIn";
+    }
+
+    public static String getSessionControllerCreateTokenAddress() {
+        return manager.getHostPort() + "/controller/method/session/getNewToken";
+    }
+
+    public static String getSessionControllerGetUserRoleAddress() {
+        return manager.getHostPort() + "/controller/method/session/getUserRole";
+    }
+
+    public static String getSessionControllerGetUserAddress() {
+        return manager.getHostPort() + "/controller/method/session/getLoggedInUser";
+    }
+
 
 }
