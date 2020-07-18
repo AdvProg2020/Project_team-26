@@ -1,9 +1,9 @@
 package client.gui.comment;
 
+import client.model.Comment;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.text.Text;
-import model.Comment;
 
 public class SingleCommentController {
 
