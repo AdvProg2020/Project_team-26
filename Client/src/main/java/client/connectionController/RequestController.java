@@ -38,7 +38,7 @@ public class RequestController implements IRequestController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRejectOffRequestِAdd());
         } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+
         }
     }
 

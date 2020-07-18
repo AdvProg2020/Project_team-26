@@ -92,7 +92,6 @@ public class Manager implements Reloadable {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
-
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
         return responseEntity.getBody();
     }
