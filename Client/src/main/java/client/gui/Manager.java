@@ -24,6 +24,13 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import model.User;
 import model.enums.Role;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 import view.cli.ControllerContainer;
 
 import java.io.IOException;
@@ -71,6 +78,26 @@ public class Manager implements Reloadable {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.openPage("AllProducts", 0);
         }
+    }
+
+    public void postRequestWithVoidReturnType(JSONObject jsonObject, String address) throws HttpClientErrorException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForLocation(address, httpEntity);
+    }
+
+    public String getStringValueFromServerByAddress(String address,String token) throws HttpClientErrorException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
+        return responseEntity.getBody();
     }
 
     public void back() throws IOException {

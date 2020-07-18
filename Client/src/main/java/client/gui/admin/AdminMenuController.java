@@ -2,7 +2,7 @@ package client.gui.admin;
 
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import client.controller.interfaces.account.*;
+import client.connectionController.interfaces.account.*;
 import client.model.*;
 import exception.*;
 import javafx.collections.FXCollections;
