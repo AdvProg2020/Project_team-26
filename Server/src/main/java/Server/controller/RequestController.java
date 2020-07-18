@@ -5,16 +5,27 @@ import exception.NoAccessException;
 import exception.NotLoggedINException;
 import model.*;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.Mapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 import repository.*;
 
 import java.util.List;
+import java.util.Map;
 
+@RestController
 public class RequestController {
 
     private OffRepository offRepository;
     private ProductSellerRepository productSellerRepository;
     private ProductRepository productRepository;
     private RequestRepository requestRepository;
+
+    public RequestController() {
+
+    }
+
 
     public RequestController(RepositoryContainer repositoryContainer){
         this.offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
@@ -23,7 +34,10 @@ public class RequestController {
         this.requestRepository = (RequestRepository) repositoryContainer.getRepository("RequestRepository");
     }
 
-    public void acceptOffRequest(int requestId, String token) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+    @PostMapping("/controller/method/request/accept-off-request")
+    public void acceptOffRequest(@RequestBody Map info) throws InvalidTokenException, NoAccessException, NotLoggedINException {
+        int requestId = (Integer) info.get("requestId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -35,7 +49,10 @@ public class RequestController {
 
     }
 
-    public void rejectOffRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/request/reject-off-request")
+    public void rejectOffRequest(@RequestBody Map info) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+        int requestId = (Integer) info.get("requestId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -46,7 +63,10 @@ public class RequestController {
         }
     }
 
-    public void acceptProductRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/request/accept-product-request")
+    public void acceptProductRequest(@RequestBody Map info) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+        int requestId = (Integer) info.get("requestId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -57,7 +77,10 @@ public class RequestController {
         }
     }
 
-    public void rejectProductRequest(int requestId, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
+    @PostMapping("/controller/method/request/reject-product-request")
+    public void rejectProductRequest(@RequestBody Map info) throws NoAccessException, NotLoggedINException, InvalidTokenException {
+        int requestId = (Integer) info.get("requestId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -67,8 +90,10 @@ public class RequestController {
             requestRepository.reject(requestId);
         }
     }
-
-    public void acceptProductSellerRequest(int requestId, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/request/accept-product-seller-request")
+    public void acceptProductSellerRequest(@RequestBody Map info) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+        int requestId = (Integer) info.get("requestId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -79,7 +104,10 @@ public class RequestController {
         }
     }
 
-    public void rejectProductSellerRequest(int requestId, String token) throws NoAccessException, NotLoggedINException, InvalidTokenException {
+    @PostMapping("/controller/method/request/reject-product-seller-request")
+    public void rejectProductSellerRequest(@RequestBody Map info) throws NoAccessException, NotLoggedINException, InvalidTokenException {
+        int requestId = (Integer) info.get("requestId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
@@ -90,8 +118,14 @@ public class RequestController {
         }
     }
 
-    public List<Request> getAllRequests(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, NoAccessException, InvalidTokenException {
-        Pageable page = createAPage(sortField,isAscending,0,0);
+    @PostMapping("/controller/method/request/get-all-requests")
+    public List<Request> getAllRequests(@RequestBody Map info) throws NotLoggedINException, NoAccessException, InvalidTokenException {
+        String sortField = (String) info.get("sortField");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        String token = (String) info.get("token");
+        Pageable page = createAPage(sortField,isAscending,startIndex,endIndex);
         User user = Session.getSession(token).getLoggedInUser();
         if(user == null) {
             throw new NotLoggedINException("You are not logged in");
