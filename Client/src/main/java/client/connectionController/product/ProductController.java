@@ -4,10 +4,7 @@ package client.connectionController.product;
 import client.connectionController.interfaces.product.IProductController;
 import client.exception.*;
 import client.gui.Constants;
-import client.model.Order;
-import client.model.Product;
-import client.model.ProductSeller;
-import client.model.Request;
+import client.model.*;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -81,24 +78,22 @@ public class ProductController implements IProductController {
     }
 
     public Product getProductById(int id, String token) throws InvalidIdException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("token", token);
         try {
-            return getProductFromServer(jsonObject, Constants.getProductControllerGetProductByIdAddress());
+            RestTemplate restTemplate = new RestTemplate();
+            Product product = restTemplate.getForObject(Constants.getProductControllerGetProductByIdAddress() + "/" + id, Product.class);
+            return product;
         } catch (HttpClientErrorException e) {
-            throw  InvalidIdException.getHttpException(e.getResponseBodyAsString());
+            throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
 
     public Product getProductByName(String name, String token) throws NoObjectIdException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("name", name);
-        jsonObject.put("token", token);
         try {
-            return getProductFromServer(jsonObject, Constants.getProductControllerGetProductByNameAddress());
+            RestTemplate restTemplate = new RestTemplate();
+            Product product = restTemplate.getForObject(Constants.getProductControllerGetProductByNameAddress() + "/" + name, Product.class);
+            return product;
         } catch (HttpClientErrorException e) {
-            throw  NoObjectIdException.getHttpException(e.getResponseBodyAsString());
+            throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
 

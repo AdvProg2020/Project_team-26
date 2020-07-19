@@ -209,13 +209,13 @@ public class CategoryController {
         return category;
     }
 
-    @RequestMapping("/controller/method/category/get-category/{id}")
+    @RequestMapping("/controller/method/category/get-sub-category/{id}")
     public List<Category> getSubCategories(@PathVariable("id") int id) throws InvalidIdException {
         Category category = getCategoryByIdWithCheck(id);
         return category.getSubCategory();
     }
 
-    @RequestMapping("/controller/method/category/get-category/{name}")
+    @RequestMapping("/controller/method/category/get-name-category/{name}")
     public Category getCategoryByName(@PathVariable("name") String name) throws InvalidIdException, InvalidIdException {
         if (!checkCategoryExistByName(name)) {
             throw new InvalidIdException("The specified category does not exist.");

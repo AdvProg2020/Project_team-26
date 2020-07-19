@@ -244,6 +244,9 @@ public class Constants {
     /**
      * CategoryController Methods.
      */
+    public static String getCategoryControllerGetSubCategories() {
+        return manager.getHostPort() + "/controller/method/category/get-sub-category";
+    }
 
     public static String getCategoryControllerAddCategoryAddress() {
         return manager.getHostPort() + "/controller/method/category/add-category";
@@ -282,7 +285,7 @@ public class Constants {
     }
 
     public static String getCategoryControllerGetCategoryByNameAddress() {
-        return manager.getHostPort() + "/controller/method/category/get-category";
+        return manager.getHostPort() + "/controller/method/category/get-name-category";
     }
 
     public static String getCategoryControllerGetProductsAddress() {
@@ -436,6 +439,7 @@ public class Constants {
     public static String getSessionControllerGetUserAddress() {
         return manager.getHostPort() + "/controller/method/session/getLoggedInUser";
     }
+
 
 
 }

@@ -147,7 +147,7 @@ public class OffController implements IOffController {
     }
 
     public Off getOff(int id, String token) throws InvalidIdException {
-        JSONObject jsonObject = new JSONObject();
+      /*  JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         // Constants.manager.<Product>getItemFromServer(jsonObject,address,Product.class);
@@ -165,6 +165,13 @@ public class OffController implements IOffController {
                 default:
                     return null;
             }
+        }*/
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            Off off = restTemplate.getForObject(Constants.getOffControllerGetOffAddress() + "/" + id, Off.class);
+            return off;
+        } catch (HttpClientErrorException e) {
+          throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
 
