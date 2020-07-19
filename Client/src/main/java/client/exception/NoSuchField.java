@@ -1,5 +1,9 @@
 package client.exception;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,5 +20,10 @@ public class NoSuchField extends Exception {
 
     public List<String> getWrongFields() {
         return wrongFields;
+    }
+
+    public static NoSuchField getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        return objectMapper.readValue(e.getResponseBodyAsString(),NoSuchField.class);
     }
 }

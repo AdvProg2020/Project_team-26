@@ -1,7 +1,5 @@
 package client.gui;
 
-import java.net.URI;
-
 public class Constants {
 
     public static final Manager manager = new Manager();
