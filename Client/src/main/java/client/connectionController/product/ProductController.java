@@ -50,7 +50,14 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerCreateProductAddress());
         } catch (HttpClientErrorException e) {
-            throw new NotSellerException("ksamd");
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotSellerException :
+                    throw NotSellerException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case ObjectAlreadyExistException:
+                    throw ObjectAlreadyExistException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -62,7 +69,14 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerAddSellerAddress());
         } catch (HttpClientErrorException e) {
-            throw new NotSellerException("ksamd");
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotSellerException :
+                    throw NotSellerException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -73,7 +87,7 @@ public class ProductController implements IProductController {
         try {
             return getProductFromServer(jsonObject, Constants.getProductControllerGetProductByIdAddress());
         } catch (HttpClientErrorException e) {
-            throw new InvalidIdException("ksamd");
+            throw  InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
 
@@ -84,7 +98,7 @@ public class ProductController implements IProductController {
         try {
             return getProductFromServer(jsonObject, Constants.getProductControllerGetProductByNameAddress());
         } catch (HttpClientErrorException e) {
-            throw new NoObjectIdException("ksamd");
+            throw  NoObjectIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
 
@@ -95,7 +109,16 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerRemoveProductAddress());
         } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotLoggedInException :
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException :
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -107,7 +130,16 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerRemoveSellerAddress());
         } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotLoggedInException :
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException :
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -137,7 +169,14 @@ public class ProductController implements IProductController {
         try {
             return getProductListFromServer(jsonObject, Constants.getProductControllerGetAllProductWithFilterForSellerIdAddress());
         } catch (HttpClientErrorException e) {
-            return new ArrayList<>();
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotLoggedInException :
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -153,8 +192,18 @@ public class ProductController implements IProductController {
             ResponseEntity<ProductSeller> responseEntity = restTemplate.postForEntity(Constants.getProductControllerGetProductSellerByIdAndSellerIdAddress(), httpEntity, ProductSeller.class);
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotLoggedInException :
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException :
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case NoObjectIdException :
+                    throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -166,7 +215,16 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductAddress());
         } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotSellerException :
+                    throw NotSellerException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException :
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -178,7 +236,16 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductSellerAddress());
         } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
+                case NotSellerException :
+                    throw NotSellerException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException :
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException :
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 

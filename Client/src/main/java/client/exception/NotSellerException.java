@@ -11,7 +11,7 @@ public class NotSellerException extends Exception {
         super(message);
     }
 
-    public static NotSellerException getHttpException(String errorMessage) throws IOException {
+    public static NotSellerException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(errorMessage, NotSellerException.class);
