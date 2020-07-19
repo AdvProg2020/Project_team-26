@@ -11,7 +11,7 @@ public class PromoNotAvailableException extends Exception {
         super(message);
     }
 
-    public static PromoNotAvailableException getHttpException(String errorMessage) throws IOException {
+    public static PromoNotAvailableException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(errorMessage, PromoNotAvailableException.class);

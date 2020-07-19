@@ -11,7 +11,7 @@ public class NoSuchObjectException extends Exception {
     }
 
 
-    public static NoSuchObjectException getHttpException(String errorMessage) throws IOException {
+    public static NoSuchObjectException getHttpException(String errorMessage)  {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(errorMessage, NoSuchObjectException.class);

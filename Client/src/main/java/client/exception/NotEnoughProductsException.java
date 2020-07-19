@@ -19,7 +19,7 @@ public class NotEnoughProductsException extends Exception {
         return productSeller;
     }
 
-    public static NotEnoughProductsException getHttpException(String errorMessage) throws IOException {
+    public static NotEnoughProductsException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(errorMessage, NotEnoughProductsException.class);
