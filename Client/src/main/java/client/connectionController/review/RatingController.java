@@ -8,6 +8,7 @@ import client.model.*;
 import client.model.enums.Role;
 import net.minidev.json.JSONObject;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 public class RatingController implements IRatingController {
 
@@ -18,8 +19,15 @@ public class RatingController implements IRatingController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRatingControllerRateAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotBoughtTheProductException:
+                    throw NotBoughtTheProductException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 }
