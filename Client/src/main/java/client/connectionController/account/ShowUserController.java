@@ -11,7 +11,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
+import java.lang.invoke.SwitchPoint;
+import java.security.UnrecoverableKeyException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -30,10 +33,16 @@ public class ShowUserController implements IShowUserController {
         try {
             ResponseEntity<User[]> responseEntity = restTemplate.postForEntity(Constants.getShowUserControllerGetUsersAddress(), httpEntity, User[].class);
             return (ArrayList<User>) Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
-        //TODO handle excepton
     }
 
     public User getUserByName(String username, String token) throws NoAccessException, InvalidTokenException {
@@ -47,9 +56,15 @@ public class ShowUserController implements IShowUserController {
         try {
             ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getShowUserControllerGetUserByNameAddress(), httpEntity, User.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NoAccessException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
@@ -64,9 +79,15 @@ public class ShowUserController implements IShowUserController {
         try {
             ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getShowUserControllerGetUserByIdAddress(), httpEntity, User.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NoAccessException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
@@ -80,33 +101,45 @@ public class ShowUserController implements IShowUserController {
         try {
             ResponseEntity<Map> responseEntity = restTemplate.postForEntity(Constants.getShowUserControllerGetUserInfoAddress(), httpEntity, Map.class);
             return (Map<String, String>) responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NoAccessException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
     public List<Admin> getManagers(int id) {
-        //TODO
         try {
             RestTemplate restTemplate = new RestTemplate();
-            Admin[] admins = restTemplate.getForObject(Constants.getShowUserControllerGetManagersAddress() + id, Admin[].class);
+            Admin[] admins = restTemplate.getForObject(Constants.getShowUserControllerGetManagersAddress() + "/" + id, Admin[].class);
             return Arrays.asList(admins);
         } catch (HttpClientErrorException e) {
-            //TODO
+            System.out.println(e.getStackTrace());
+            return null;
         }
-        return new ArrayList<>();
     }
 
-    public void delete(String username, String token) throws NoAccessException, InvalidTokenException, NoObjectIdException {
+    public void delete(String username, String token) throws
+            NoAccessException, InvalidTokenException, NoObjectIdException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", username);
         jsonObject.put("token", token);
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getShowUserControllerDeleteAddress());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NoAccessException("jzfo");
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getShowUserControllerDeleteAddress());
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoObjectIdException:
+                    throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -120,9 +153,13 @@ public class ShowUserController implements IShowUserController {
         try {
             ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getShowUserControllerGetUserByTokenAddress(), httpEntity, User.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
