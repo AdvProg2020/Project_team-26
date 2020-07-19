@@ -87,12 +87,11 @@ public class CommentController implements ICommentController {
     }
 
     public List<Comment> getConfirmedComments(int productId, String token) throws InvalidIdException {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("token", token);
-        jsonObject.put("productId", productId);
         try {
-            return getCommentListFromServer(jsonObject, Constants.getCommentControllerGetConfirmedCommentsAddress());
-        } catch (UnknownHttpStatusCodeException e) {
+            RestTemplate restTemplate = new RestTemplate();
+            Comment comments[] = restTemplate.getForObject(Constants.getCommentControllerGetConfirmedCommentsAddress() + "/" + productId, Comment[].class);
+            return Arrays.asList(comments);
+        } catch (HttpClientErrorException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
