@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,8 +27,13 @@ public class OffController implements IOffController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerCreateNewOffAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
 
     }
@@ -39,8 +45,19 @@ public class OffController implements IOffController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case ObjectAlreadyExistException:
+                    throw ObjectAlreadyExistException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -52,8 +69,19 @@ public class OffController implements IOffController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerRemoveProductFromOffAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case ObjectAlreadyExistException:
+                    throw ObjectAlreadyExistException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -63,8 +91,17 @@ public class OffController implements IOffController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerRemoveAOffAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -84,7 +121,7 @@ public class OffController implements IOffController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Product[]> responseEntity = restTemplate.postForEntity(Constants.getOffControllerGetAllProductsWithOffAddress(), httpEntity, Product[].class);
             return Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             return new ArrayList<>();
         }
     }
@@ -121,8 +158,13 @@ public class OffController implements IOffController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Off> responseEntity = restTemplate.postForEntity(Constants.getOffControllerGetOffAddress(), httpEntity, Off.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-            throw new InvalidIdException("sdf");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
@@ -133,8 +175,17 @@ public class OffController implements IOffController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerEditAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 }

@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -23,8 +24,13 @@ public class PromoController implements IPromoController {
     public String getRandomPromoForUserSet(String token) throws InvalidTokenException {
         try {
             return Constants.manager.getStringValueFromServerByAddress(token,Constants.getPromoControllerGetRandomPromoForUserSetAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
@@ -34,8 +40,15 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
             return getPromoFromServer(jsonObject,Constants.getPromoControllerGetPromoCodeTemplateByCodeAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidIdException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
     private Promo getPromoFromServer(JSONObject jsonObject , String address){
@@ -53,8 +66,15 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
           return getPromoFromServer(jsonObject,Constants.getPromoControllerGetPromoCodeTemplateByIdAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidIdException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
@@ -72,8 +92,17 @@ public class PromoController implements IPromoController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Promo[]> responseEntity  = (restTemplate.postForEntity(Constants.getPromoControllerGetAllPromoCodeForCustomerAddress(), httpEntity,Promo[].class));
             return Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
@@ -88,8 +117,19 @@ public class PromoController implements IPromoController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Integer> responseEntity  = (restTemplate.postForEntity(Constants.getPromoControllerCreatePromoCodeAddress(), httpEntity,Integer.class));
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case ObjectAlreadyExistException:
+                    throw ObjectAlreadyExistException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return 0;
+            }
         }
     }
 
@@ -99,8 +139,19 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerRemovePromoCodeAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoObjectIdException:
+                    throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -111,8 +162,21 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerAddCustomerAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case ObjectAlreadyExistException:
+                    throw ObjectAlreadyExistException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NotCustomerException:
+                    throw NotCustomerException.getHttpException(e.getResponseBodyAsString());
+            }
         }
 
     }
@@ -124,8 +188,19 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerRemoveCustomerAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NotCustomerException:
+                    throw NotCustomerException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -136,8 +211,19 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerSetPercentAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case InvalidDiscountException:
+                    throw InvalidDiscountPercentException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -148,8 +234,17 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerSetMaxDiscountAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -162,8 +257,17 @@ public class PromoController implements IPromoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getPromoControllerSetTimeAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidIdException:
+                    throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 }
