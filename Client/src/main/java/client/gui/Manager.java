@@ -36,7 +36,6 @@ public class Manager implements Reloadable {
     private ControllerContainer controllerContainer;
     private String token;
     private User loggedInUser;
-    private Map<Integer, ExceptionEnum> exceptionMap;
     private boolean isLoggedIn;
     private Role role;
     private List<Pair<String, Integer>> pages;
@@ -49,12 +48,8 @@ public class Manager implements Reloadable {
     public Manager() {
         pages = new ArrayList<>();
         compareList = new HashSet<>();
-        initializeExceptionMap();
     }
 
-    private void initializeExceptionMap() {
-        exceptionMap.put("dododoldd",'pdpdppdpdd');
-    }
 
     public String getHostPort() {
         return hostPort;
