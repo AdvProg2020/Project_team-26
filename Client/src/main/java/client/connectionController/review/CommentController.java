@@ -81,7 +81,6 @@ public class CommentController implements ICommentController {
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
                 default:
-                    InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
             }
         }
