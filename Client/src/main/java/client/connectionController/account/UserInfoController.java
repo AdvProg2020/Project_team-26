@@ -13,9 +13,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
+import javax.swing.text.html.HTML;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -31,9 +33,15 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getUserInfoControllerChangePasswordWithOldPasswordAddress());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new client.exception.NoAccessException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -43,9 +51,13 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getUserInfoControllerChangePasswordAddress());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NotLoggedINException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -55,9 +67,13 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getUserInfoControllerChangeImageAddress());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NotLoggedINException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -69,9 +85,19 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getUserInfoControllerChangeInfoAddress());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NotLoggedINException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case InvalidAuthenticationException:
+                    throw InvalidAuthenticationException.getHttpException(e.getResponseBodyAsString());
+                case InvalidFormatException:
+                    throw InvalidFormatException.getHttpException(e.getResponseBodyAsString());
+                case NoSuchField:
+                    throw NoSuchField.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -81,18 +107,32 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getUserInfoControllerChangeBalanceAddress());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NotLoggedINException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidAuthenticationException:
+                    throw InvalidAuthenticationException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
     public String getCompanyName(String token) throws InvalidTokenException, NotLoggedINException, NoSuchField {
         try {
             return Constants.manager.getStringValueFromServerByAddress(Constants.getUserInfoControllerGetCompanyNameAddress(), token);
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoSuchField:
+                    throw NoSuchField.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
@@ -102,27 +142,49 @@ public class UserInfoController implements IUserInfoController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getUserInfoControllerChangeMultipleInfoAddress());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NotLoggedINException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case InvalidAuthenticationException:
+                    throw InvalidAuthenticationException.getHttpException(e.getResponseBodyAsString());
+                case InvalidFormatException:
+                    throw InvalidFormatException.getHttpException(e.getResponseBodyAsString());
+                case NoSuchField:
+                    throw NoSuchField.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
     public String getBalance(String token) throws NotLoggedINException, InvalidTokenException {
         try {
             return Constants.manager.getStringValueFromServerByAddress(Constants.getUserInfoControllerGetBalanceAddress(), token);
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 
     public String getRole(String token) throws NotLoggedINException, InvalidTokenException {
         try {
             return Constants.manager.getStringValueFromServerByAddress(Constants.getUserInfoControllerGetRoleAddress(), token);
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    return null;
+            }
         }
     }
 }
