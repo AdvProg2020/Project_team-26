@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -26,8 +27,13 @@ public class CommentController implements ICommentController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCommentControllerAddCommentAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -37,8 +43,13 @@ public class CommentController implements ICommentController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCommentControllerConfirmCommentAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
 
     }
@@ -49,8 +60,13 @@ public class CommentController implements ICommentController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCommentControllerRejectCommentAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
 
     }
@@ -60,10 +76,15 @@ public class CommentController implements ICommentController {
         jsonObject.put("token", token);
         try {
             return getCommentListFromServer(jsonObject, Constants.getCommentControllerGetAllCommentsAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("lkcsa");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
-
     }
 
     public List<Comment> getConfirmedComments(int productId, String token) throws InvalidIdException {
@@ -72,8 +93,8 @@ public class CommentController implements ICommentController {
         jsonObject.put("productId", productId);
         try {
             return getCommentListFromServer(jsonObject, Constants.getCommentControllerGetConfirmedCommentsAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidIdException("lsad");
+        } catch (UnknownHttpStatusCodeException e) {
+            throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
 
@@ -92,8 +113,15 @@ public class CommentController implements ICommentController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCommentControllerRemoveCommentAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case NoObjectIdException:
+                    throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
