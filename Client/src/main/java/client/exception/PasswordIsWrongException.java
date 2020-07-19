@@ -11,7 +11,7 @@ public class PasswordIsWrongException extends Exception {
         super(message);
     }
 
-    public static PasswordIsWrongException getHttpException(String errorMessage) throws IOException {
+    public static PasswordIsWrongException getHttpException(String errorMessage){
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(errorMessage, PasswordIsWrongException.class);
