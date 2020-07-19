@@ -18,8 +18,13 @@ public class NotEnoughCreditException extends Exception {
         return currentCredit;
     }
 
-    public static NotEnoughCreditException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NotEnoughCreditException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NotEnoughCreditException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NotEnoughCreditException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

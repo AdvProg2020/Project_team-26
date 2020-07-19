@@ -18,8 +18,13 @@ public class InvalidFormatException extends Exception {
         return this.fieldName;
     }
 
-    public static InvalidFormatException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static InvalidFormatException getHttpException(String errorMessage){
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),InvalidFormatException.class);
+        try {
+            return objectMapper.readValue(errorMessage,InvalidFormatException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

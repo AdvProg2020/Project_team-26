@@ -10,8 +10,13 @@ public class NotLoggedINException extends Exception {
         super(message);
     }
 
-    public static NotLoggedINException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NotLoggedINException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NotLoggedINException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NotLoggedINException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

@@ -11,8 +11,13 @@ public class InvalidTokenException extends Exception {
         super(message);
     }
 
-    public static InvalidTokenException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static InvalidTokenException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),InvalidTokenException.class);
+        try {
+            return objectMapper.readValue(errorMessage, InvalidTokenException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

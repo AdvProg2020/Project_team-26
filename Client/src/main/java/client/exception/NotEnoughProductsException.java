@@ -19,8 +19,13 @@ public class NotEnoughProductsException extends Exception {
         return productSeller;
     }
 
-    public static NotEnoughProductsException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NotEnoughProductsException getHttpException(String errorMessage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NotEnoughProductsException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NotEnoughProductsException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

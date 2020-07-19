@@ -8,7 +8,7 @@ import java.io.IOException;
 public class InvalidAuthenticationException extends Exception {
     private String field;
 
-    public InvalidAuthenticationException(String message , String field) {
+    public InvalidAuthenticationException(String message, String field) {
         super(message);
         this.field = field;
     }
@@ -17,8 +17,13 @@ public class InvalidAuthenticationException extends Exception {
         return field;
     }
 
-    public static InvalidAuthenticationException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static InvalidAuthenticationException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),InvalidAuthenticationException.class);
+        try {
+            return objectMapper.readValue(errorMessage, InvalidAuthenticationException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

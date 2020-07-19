@@ -12,8 +12,13 @@ public class WrongFieldException extends Exception{
         this.fieldName = fieldName;
     }
 
-    public static WrongFieldException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static WrongFieldException getHttpException(String errorMessage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),WrongFieldException.class);
+        try {
+            return objectMapper.readValue(errorMessage,WrongFieldException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

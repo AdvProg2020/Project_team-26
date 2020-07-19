@@ -11,8 +11,13 @@ public class InvalidDiscountPercentException extends Exception {
         super(message);
     }
 
-    public static InvalidDiscountPercentException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static InvalidDiscountPercentException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),InvalidDiscountPercentException.class);
+        try {
+            return objectMapper.readValue(errorMessage, InvalidDiscountPercentException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

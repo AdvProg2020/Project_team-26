@@ -5,13 +5,18 @@ import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.io.IOException;
 
-public class InvalidDateException extends Exception{
+public class InvalidDateException extends Exception {
     public InvalidDateException(String message) {
         super(message);
     }
 
-    public static InvalidDateException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static InvalidDateException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),InvalidDateException.class);
+        try {
+            return objectMapper.readValue(errorMessage, InvalidDateException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

@@ -11,8 +11,13 @@ public class NoSuchObjectException extends Exception {
     }
 
 
-    public static NoSuchObjectException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NoSuchObjectException getHttpException(String errorMessage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NoSuchObjectException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NoSuchObjectException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

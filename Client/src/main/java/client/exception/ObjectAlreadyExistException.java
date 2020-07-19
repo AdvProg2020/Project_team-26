@@ -18,8 +18,13 @@ public class ObjectAlreadyExistException extends Exception {
         return object;
     }
 
-    public static ObjectAlreadyExistException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static ObjectAlreadyExistException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),ObjectAlreadyExistException.class);
+        try {
+            return objectMapper.readValue(errorMessage,ObjectAlreadyExistException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

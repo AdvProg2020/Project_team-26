@@ -11,8 +11,13 @@ public class NotSellerException extends Exception {
         super(message);
     }
 
-    public static NotSellerException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NotSellerException getHttpException(String errorMessage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NotSellerException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NotSellerException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

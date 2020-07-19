@@ -11,8 +11,14 @@ public class AlreadyLoggedInException extends Exception {
         super(message);
     }
 
-    public static AlreadyLoggedInException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static AlreadyLoggedInException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),AlreadyLoggedInException.class);
+        try {
+            return objectMapper.readValue(errorMessage,AlreadyLoggedInException.class);
+        }
+        catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

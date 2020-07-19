@@ -11,8 +11,13 @@ public class NoObjectIdException extends Exception {
         super(message);
     }
 
-    public static NoObjectIdException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NoObjectIdException getHttpException(String errorMessage)  {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NoObjectIdException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NoObjectIdException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

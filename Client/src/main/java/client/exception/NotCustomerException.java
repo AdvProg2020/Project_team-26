@@ -11,8 +11,13 @@ public class NotCustomerException extends Exception {
         super(message);
     }
 
-    public static NotCustomerException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NotCustomerException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NotCustomerException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NotCustomerException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

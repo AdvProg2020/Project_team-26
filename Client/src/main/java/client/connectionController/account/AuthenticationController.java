@@ -36,7 +36,10 @@ public class AuthenticationController implements IAuthenticationController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject,Constants.getAuthenticationControllerRegister());
         } catch (HttpClientErrorException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidFormatException:
 
+            }
         }
         //TODO handle excepton
     }

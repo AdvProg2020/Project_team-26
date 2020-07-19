@@ -11,8 +11,13 @@ public class InvalidPromoCodeException extends Exception {
         super(message);
     }
 
-    public static InvalidPromoCodeException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static InvalidPromoCodeException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),InvalidPromoCodeException.class);
+        try {
+            return objectMapper.readValue(errorMessage, InvalidPromoCodeException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

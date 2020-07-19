@@ -22,8 +22,13 @@ public class NoSuchField extends Exception {
         return wrongFields;
     }
 
-    public static NoSuchField getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NoSuchField getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NoSuchField.class);
+        try {
+            return objectMapper.readValue(errorMessage, NoSuchField.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

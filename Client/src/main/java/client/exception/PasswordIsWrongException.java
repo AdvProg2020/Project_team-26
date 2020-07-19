@@ -11,8 +11,13 @@ public class PasswordIsWrongException extends Exception {
         super(message);
     }
 
-    public static PasswordIsWrongException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static PasswordIsWrongException getHttpException(String errorMessage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),PasswordIsWrongException.class);
+        try {
+            return objectMapper.readValue(errorMessage, PasswordIsWrongException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

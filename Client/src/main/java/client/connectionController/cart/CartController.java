@@ -14,8 +14,10 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 import repository.*;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -36,8 +38,19 @@ public class CartController implements ICartController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCartControllerAddOrChangeProductAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            try {
+                switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                    case InvalidIdException:
+                        throw InvalidIdException.getHttpException(e);
+                    case NotEnoughProductsException:
+                        throw NotEnoughProductsException.getHttpException(e);
+                    case InvalidTokenException:
+                        throw InvalidTokenException.getHttpException(e);
+                }
+            } catch (IOException e1) {
+                System.out.println(e1.getStackTrace());
+            }
         }
     }
 
@@ -51,9 +64,15 @@ public class CartController implements ICartController {
         try {
             ResponseEntity<Cart> responseEntity = restTemplate.postForEntity(Constants.getCartControllerGetCartAddress(), httpEntity, Cart.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+        } catch (UnknownHttpStatusCodeException e) {
+            try {
+                switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                    case InvalidIdException:
+                        throw InvalidTokenException.getHttpException(e);
+                }
+            } catch (IOException e1) {
+                System.out.println(e1.getStackTrace());
+            }
         }
     }
 
@@ -63,7 +82,7 @@ public class CartController implements ICartController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCartControllerSetAddressAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw new InvalidTokenException("ksamd");
         }
     }

@@ -11,8 +11,13 @@ public class NoAccessException extends Exception {
         super(message);
     }
 
-    public static NoAccessException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NoAccessException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NoAccessException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NoAccessException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

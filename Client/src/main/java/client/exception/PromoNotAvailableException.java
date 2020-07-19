@@ -11,8 +11,13 @@ public class PromoNotAvailableException extends Exception {
         super(message);
     }
 
-    public static PromoNotAvailableException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static PromoNotAvailableException getHttpException(String errorMessage) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),PromoNotAvailableException.class);
+        try {
+            return objectMapper.readValue(errorMessage, PromoNotAvailableException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }

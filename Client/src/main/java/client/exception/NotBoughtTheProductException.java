@@ -11,8 +11,13 @@ public class NotBoughtTheProductException extends Exception {
         super(message);
     }
 
-    public static NotBoughtTheProductException getHttpException(UnknownHttpStatusCodeException e) throws IOException {
+    public static NotBoughtTheProductException getHttpException(String errorMessage)  {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(e.getResponseBodyAsString(),NotBoughtTheProductException.class);
+        try {
+            return objectMapper.readValue(errorMessage, NotBoughtTheProductException.class);
+        } catch (IOException e) {
+            System.out.println(e.getStackTrace());
+            return null;
+        }
     }
 }
