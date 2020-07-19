@@ -1,6 +1,7 @@
 package client.connectionController;
 
 import client.connectionController.interfaces.session.ISessionController;
+import client.exception.HttpExceptionEquivalent;
 import client.exception.InvalidTokenException;
 import client.exception.NoAccessException;
 import client.exception.NotLoggedINException;
@@ -14,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.Map;
 
@@ -30,22 +32,15 @@ public class SessionController implements ISessionController {
         try {
             ResponseEntity<Boolean> responseEntity = restTemplate.postForEntity(Constants.getSessionControllerIsUserLoggedInAddress(), httpEntity, Boolean.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+        } catch (UnknownHttpStatusCodeException e) {
+            throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
         }
-
     }
 
 
     public String createToken() {
         RestTemplate restTemplate = new RestTemplate();
-        try {
-            return restTemplate.getForObject(Constants.getSessionControllerCreateTokenAddress(), String.class);
-        } catch (HttpClientErrorException e) {
-//TODO
-            return "null";
-        }
+        return restTemplate.getForObject(Constants.getSessionControllerCreateTokenAddress(), String.class);
     }
 
     public Role getUserRole(String token) throws NotLoggedINException, InvalidTokenException {
@@ -58,9 +53,13 @@ public class SessionController implements ISessionController {
         try {
             ResponseEntity<Role> responseEntity = restTemplate.postForEntity(Constants.getSessionControllerGetUserRoleAddress(), httpEntity, Role.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new NotLoggedINException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
 
     }
@@ -75,9 +74,8 @@ public class SessionController implements ISessionController {
         try {
             ResponseEntity<User> responseEntity = restTemplate.postForEntity(Constants.getSessionControllerGetUserAddress(), httpEntity, User.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jzfo");
+        } catch (UnknownHttpStatusCodeException e) {
+            throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
         }
 
     }

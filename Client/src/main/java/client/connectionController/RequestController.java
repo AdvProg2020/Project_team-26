@@ -26,10 +26,15 @@ public class RequestController implements IRequestController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerAcceptOffRequestAddress());
-        } catch (HttpClientErrorException e) {
-            System.err.println(e.getStackTrace());
         } catch (UnknownHttpStatusCodeException e) {
-            //todo
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
 
     }
@@ -40,10 +45,15 @@ public class RequestController implements IRequestController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerRejectOffRequestAddress());
-        } catch (HttpClientErrorException e) {
-
         } catch (UnknownHttpStatusCodeException e) {
-            //todo
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -53,8 +63,15 @@ public class RequestController implements IRequestController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerAcceptProductRequestAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -64,8 +81,15 @@ public class RequestController implements IRequestController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerRejectProductRequestAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -75,8 +99,15 @@ public class RequestController implements IRequestController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerAcceptProductSellerRequestAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -86,8 +117,15 @@ public class RequestController implements IRequestController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getRequestControllerRejectProductSellerRequestAddress());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -105,9 +143,15 @@ public class RequestController implements IRequestController {
         try {
             ResponseEntity<Request[]> responseEntity = restTemplate.postForEntity(Constants.getRequestControllerGetAllRequestsAddress(), httpEntity, Request[].class);
             return Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
-//TODO
-            throw new InvalidTokenException("jhf");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
