@@ -1,27 +1,23 @@
 package client.gui.seller;
 
+import client.connectionController.interfaces.account.IShowUserController;
+import client.connectionController.interfaces.discount.*;
+import client.connectionController.interfaces.order.IOrderController;
+import client.connectionController.interfaces.product.IProductController;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.customer.OrderTableController;
 import client.gui.interfaces.InitializableController;
-import client.model.Seller;
-import client.model.User;
-import client.model.enums.Role;
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.discount.IOffController;
-import controller.interfaces.order.IOrderController;
-import controller.interfaces.product.IProductController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
+import client.model.*;
+import client.model.enums.*;
+import client.ControllerContainer;
+import client.exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import view.cli.ControllerContainer;
-
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

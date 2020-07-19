@@ -1,12 +1,11 @@
 package client.gui.comment;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.review.ICommentController;
+import client.exception.*;
 import client.gui.Constants;
-import client.model.Comment;
-import client.model.Product;
+import client.model.*;
 import client.model.enums.Role;
-import controller.interfaces.review.ICommentController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -14,7 +13,6 @@ import javafx.scene.control.Separator;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,7 +39,10 @@ public class CommentController {
     public void load(Product product) throws IOException {
         commentBox.getChildren().clear();
         this.product = product;
-        List<Comment> commentList = commentController.getConfirmedComments(product.getId(), Constants.manager.getToken());
+        List<Comment> commentList = null;
+        try {
+            commentList = commentController.getConfirmedComments(product.getId(), Constants.manager.getToken());
+
         Separator separator = null;
         for (Comment comment: commentList) {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SingleComment.fxml"));
@@ -59,6 +60,9 @@ public class CommentController {
             titleField.setPromptText("Login as customer to enter comment");
             descriptionField.setPromptText("Login as customer to enter comment");
             submitButton.setDisable(true);
+        }
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
         }
     }
 

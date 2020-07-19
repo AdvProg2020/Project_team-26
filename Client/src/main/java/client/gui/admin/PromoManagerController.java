@@ -1,18 +1,18 @@
 package client.gui.admin;
 
-import client.gui.Constants;
-import client.gui.interfaces.InitializableController;
-import client.model.Customer;
-import client.model.Promo;
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.discount.IPromoController;
-import exception.*;
+
+import client.connectionController.interfaces.discount.IPromoController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import view.cli.ControllerContainer;
+import client.connectionController.interfaces.account.*;
+import client.exception.*;
+import client.gui.Constants;
+import client.gui.interfaces.*;
+import client.model.*;
+import client.ControllerContainer;
 
 import java.util.ArrayList;
 import java.util.Date;

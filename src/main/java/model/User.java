@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import exception.NoAccessException;
 import exception.NotEnoughCreditException;
 import model.enums.Role;
@@ -60,6 +62,20 @@ public class User {
         this.email = email;
         this.role = role;
         details = new HashMap<>();
+    }
+
+    @JsonCreator
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password,@JsonProperty("email") String email,
+               @JsonProperty("role") Role role,@JsonProperty("image") byte[] image,@JsonProperty("id") int id,
+               @JsonProperty("credit") long credit,@JsonProperty("details") Map<String,String> details) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.image = image;
+        this.id = id;
+        this.credit = credit;
+        this.details = details;
     }
 
     public String getFullName() {

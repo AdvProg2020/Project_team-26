@@ -1,18 +1,15 @@
 package client.gui.product;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.cart.ICartController;
+import client.exception.*;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.model.ProductSeller;
-import controller.interfaces.cart.ICartController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotEnoughProductsException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_CENTER" prefHeight="360.0" prefWidth="180.0" spacing="10.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.product.ProductCardController">
+    <children>
+        <ImageView id="image" fx:id="productImage" fitHeight="120.0" fitWidth="160.0" onMouseClicked="#open" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../pic/background.jpg" />
+            </image>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+        </ImageView>
+      <HBox>
+         <children>
+            <Text fx:id="rateText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+         </children>
+      </HBox>
+        <VBox prefHeight="192.0" prefWidth="160.0" spacing="10.0">
+         <children>
+            <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Name" />
+            <Text fx:id="brandText" layoutX="79.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Brand" />
+            <Text fx:id="priceText" layoutX="10.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price" />
+            <Text fx:id="descriptionText" layoutX="79.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Short description Short description Short description Short description Short description" wrappingWidth="160.0" />
+         </children>
+         <padding>
+            <Insets top="10.0" />
+         </padding>
+        </VBox>
+    </children>
+   <padding>
+      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+   </padding>
+</VBox>

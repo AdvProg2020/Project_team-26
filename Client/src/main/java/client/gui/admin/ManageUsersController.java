@@ -1,18 +1,17 @@
 package client.gui.admin;
-
+import client.ControllerContainer;
+import client.connectionController.interfaces.account.IShowUserController;
+import client.exception.InvalidTokenException;
+import client.exception.NoAccessException;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import client.model.User;
-import controller.interfaces.account.IShowUserController;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
+import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;

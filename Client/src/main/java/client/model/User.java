@@ -1,6 +1,8 @@
 package client.model;
 
 import client.model.enums.Role;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import exception.NoAccessException;
 import exception.NotEnoughCreditException;
 import org.hibernate.annotations.Cascade;
@@ -42,6 +44,7 @@ public class User {
     @MapKeyColumn(name = "`key`")
     @Column(name = "value")
     @CollectionTable(name = "user_details", joinColumns = @JoinColumn(name = "user_id"))
+    @JsonProperty("details")
     private Map<String, String> details;
 
     public User() {
@@ -54,6 +57,15 @@ public class User {
         this.email = email;
         this.role = role;
         details = new HashMap<>();
+    }
+
+    @JsonCreator
+    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("role") Role role, @JsonProperty("details") Map<String, String> details) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.details = details;
     }
 
     public String getFullName() {

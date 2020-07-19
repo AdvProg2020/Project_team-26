@@ -1,14 +1,12 @@
 package client.gui.seller;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.discount.*;
+import client.connectionController.interfaces.product.IProductController;
+import client.exception.*;
 import client.gui.Constants;
-import client.gui.interfaces.InitializableController;
-import client.gui.interfaces.Reloadable;
-import client.model.Off;
-import client.model.OffItem;
-import client.model.Product;
-import controller.interfaces.discount.IOffController;
-import controller.interfaces.product.IProductController;
-import exception.*;
+import client.gui.interfaces.*;
+import client.model.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -16,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.time.DateTimeException;
@@ -84,7 +81,7 @@ public class CreateOfForSellerController implements InitializableController, Rel
         } catch (InvalidTokenException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.setTokenFromController();
-        } catch (NotLoggedINException e) {
+        } catch (client.exception.NotLoggedINException e) {
             Constants.manager.showLoginMenu();
         }
 

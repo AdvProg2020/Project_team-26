@@ -1,8 +1,7 @@
 package client.gui.interfaces;
 
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
+
+import client.exception.*;
 
 import java.io.IOException;
 

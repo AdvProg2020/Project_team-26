@@ -1,19 +1,17 @@
 package client.gui;
 
+import client.ControllerContainer;
+import client.connectionController.SessionController;
+import client.connectionController.account.AuthenticationController;
+import client.connectionController.interfaces.account.IShowUserController;
+import client.exception.*;
 import client.gui.admin.AdminRegistryController;
 import client.gui.authentication.AuthenticationStageManager;
 import client.gui.authentication.RegisterMenuController;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import client.model.User;
+import client.model.*;
 import client.model.enums.Role;
-import controller.SessionController;
-import controller.account.AuthenticationController;
-import controller.interfaces.account.IShowUserController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -25,13 +23,9 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import net.minidev.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.time.*;
@@ -56,41 +50,9 @@ public class Manager implements Reloadable {
         compareList = new HashSet<>();
     }
 
+
     public String getHostPort() {
         return hostPort;
-    }
-    public String postRegisterLoginRequest(JSONObject jsonObject , String address , boolean haveTHisFunctionOutput) throws HttpClientErrorException {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
-        if (haveTHisFunctionOutput) {
-            return responseEntity.getBody();
-        }
-        return "success";
-    }
-    public void postRequestWithVoidReturnType(JSONObject jsonObject , String address) throws HttpClientErrorException{
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.postForEntity(address, httpEntity,Object.class);
-    }
-    public User getUserFromServer(String id,String address , String type) throws HttpClientErrorException{
-        JSONObject jsonObject = new JSONObject();
-        if(type.equals("byName")){
-            jsonObject.put("username",id);
-        }else {
-            jsonObject.put("id",Integer.parseInt(id));
-        }
-        jsonObject.put("token", Constants.manager.getToken());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<User> responseEntity = restTemplate.postForEntity(address, httpEntity, User.class);
-        return responseEntity.getBody();
     }
 
     public void openPage(String pageName, int id) throws IOException {
@@ -111,6 +73,25 @@ public class Manager implements Reloadable {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.openPage("AllProducts", 0);
         }
+    }
+
+    public void postRequestWithVoidReturnType(JSONObject jsonObject, String address) throws HttpClientErrorException {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.postForLocation(address, httpEntity);
+    }
+
+    public String getStringValueFromServerByAddress(String address, String token) throws HttpClientErrorException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
+        return responseEntity.getBody();
     }
 
     public void back() throws IOException {
@@ -153,6 +134,24 @@ public class Manager implements Reloadable {
 
     public void setControllerContainer(ControllerContainer controllerContainer) {
         this.controllerContainer = controllerContainer;
+    }
+
+    public <T> T getItemFromServer(JSONObject jsonObject, String address, Class tClass) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<T> responseEntity = restTemplate.postForEntity(address, httpEntity, tClass);
+        return responseEntity.getBody();
+    }
+
+    public <T> List<T> getListItemsFromServer(JSONObject jsonObject, String address, Class tClass) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<T[]> responseEntity = restTemplate.postForEntity(address, httpEntity, tClass);
+        return Arrays.asList(responseEntity.getBody());
     }
 
     public String getToken() {

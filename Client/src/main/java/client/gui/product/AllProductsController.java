@@ -1,12 +1,13 @@
 package client.gui.product;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.category.ICategoryController;
+import client.exception.*;
 import client.gui.CategoryListController;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
 import client.model.Product;
-import controller.interfaces.category.ICategoryController;
-import exception.InvalidIdException;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -14,7 +15,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;

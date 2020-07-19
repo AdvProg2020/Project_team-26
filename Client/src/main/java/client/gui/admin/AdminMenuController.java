@@ -1,10 +1,11 @@
 package client.gui.admin;
 
+
+import client.connectionController.interfaces.account.*;
+import client.exception.*;
 import client.gui.Constants;
-import client.gui.interfaces.InitializableController;
-import client.model.Admin;
-import client.model.User;
-import exception.*;
+import client.gui.interfaces.*;
+import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,20 +15,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import net.minidev.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
-import view.cli.ControllerContainer;
+import client.ControllerContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,17 +49,19 @@ public class AdminMenuController implements InitializableController {
     @FXML
     private TableColumn managerCol;
 
+    private IShowUserController controller;
+    private IUserInfoController userController;
     private File imageFile;
 
 
     @Override
     public void initialize(int id) throws IOException {
+        controller = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
+        userController = (IUserInfoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.UserInfoController);
         editInfoButton.setOnMouseClicked(e -> editInfo());
-        RestTemplate restTemplate = new RestTemplate();
+        ObservableList<Admin> list = FXCollections.observableList(controller.getManagers(id));
         try {
-            Admin[] responseObject = restTemplate.getForObject(Constants.getManagersAddress + id, Admin[].class);
-            ObservableList<Admin> list = (ObservableList<Admin>) FXCollections.observableList(Arrays.asList(responseObject));
-            User admin = Constants.manager.getUserFromServer(""+id,Constants.getUserByIdAddress,"byId");
+            User admin = controller.getUserById(id, Constants.manager.getToken());
             usernameText.setText(admin.getUsername());
             emailText.setText(admin.getEmail());
             firstNameText.setText(admin.getFirstName());
@@ -74,8 +69,10 @@ public class AdminMenuController implements InitializableController {
             roleText.setText("Admin");
             managerTable.setItems(list);
             managerCol.setCellValueFactory(new PropertyValueFactory<Admin, String>("username"));
-        } catch (HttpClientErrorException e) {
-            //todo
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
         }
     }
 
@@ -96,10 +93,12 @@ public class AdminMenuController implements InitializableController {
         this.imageFile = fileChooser.showOpenDialog(stage);
         if (imageFile != null) {
             profileImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
-            try {//TODO prodile pic what to do
-                //userController.changeImage(Files.readAllBytes(imageFile.toPath()), Constants.manager.getToken());
-            } catch (HttpClientErrorException e) {
-                //TODO
+            try {
+                userController.changeImage(Files.readAllBytes(imageFile.toPath()), Constants.manager.getToken());
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
             }
         }
     }
@@ -118,18 +117,20 @@ public class AdminMenuController implements InitializableController {
         newInfo.put("LastName", lastNameText.getText());
         newInfo.put("Email", emailText.getText());
         try {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("newInfo", newInfo);
-            jsonObject.put("token", Constants.manager.getToken());
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changeInfoAddress);
-            if (!passwordText.getText().isBlank()) {
-                jsonObject.remove("newInfo");
-                jsonObject.put("newPassword", passwordText.getText());
-                Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.changePasswordAddress);
-            }
+            userController.changeInfo(newInfo, Constants.manager.getToken());
+            if (!passwordText.getText().isBlank())
+                userController.changePassword(passwordText.getText(), Constants.manager.getToken());
             revertBack();
-        } catch (HttpClientErrorException e){
-            //TODO
+        } catch (NotLoggedINException e) {
+            errorLabel.setText(e.getMessage());
+        } catch (InvalidTokenException e) {
+            errorLabel.setText(e.getMessage());
+        } catch (InvalidAuthenticationException e) {
+            errorLabel.setText(e.getMessage());
+        } catch (InvalidFormatException e) {
+            errorLabel.setText(e.getMessage());
+        } catch (NoSuchField noSuchField) {
+            errorLabel.setText(noSuchField.getMessage());
         }
     }
 

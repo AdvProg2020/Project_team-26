@@ -1,28 +1,16 @@
 package client.gui.admin;
-
+import client.connectionController.interfaces.account.*;
+import client.connectionController.interfaces.category.ICategoryController;
+import client.exception.*;
 import client.gui.Constants;
-import client.gui.interfaces.InitializableController;
-import client.model.Admin;
-import client.model.User;
-import controller.interfaces.account.IShowUserController;
-import controller.interfaces.category.ICategoryController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
+import client.gui.interfaces.*;
+import client.model.*;
+import client.ControllerContainer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
-import net.minidev.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 
@@ -48,17 +36,16 @@ public class AdminOptionMenuController implements InitializableController {
 
     private int userId;
     private Admin admin;
+    private IShowUserController showUserController;
+    private ICategoryController categoryController;
+
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException {
+        showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
+        categoryController = (ICategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
         this.userId = id;
-        try {
-            User admin = (Admin) Constants.manager.getUserFromServer("" + id, Constants.getUserByIdAddress, "byId");
-            this.admin = (Admin) admin;
-        } catch (HttpClientErrorException e) {
-            //TODO
-        }
-
+        this.admin = (Admin) showUserController.getUserById(id, Constants.manager.getToken());
         categoryButton.setOnMouseClicked(e -> {
             try {
                 handleCategory();

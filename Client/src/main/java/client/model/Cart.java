@@ -1,16 +1,29 @@
 package client.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
 
+    @JsonProperty("products")
     private Map<ProductSeller, Integer> products;
+    @JsonProperty("usedPromo")
     private Promo usedPromo;
+
     private String address;
 
     public Cart() {
         products = new HashMap<>();
+    }
+
+    @JsonCreator
+    public Cart(@JsonProperty("products") Map<ProductSeller, Integer> products, @JsonProperty("usedPromo") Promo usedPromo, @JsonProperty("address") String address) {
+        this.usedPromo = usedPromo;
+        this.address = address;
+        this.products = products;
     }
 
     public boolean addItems(ProductSeller productSeller, int amount) {

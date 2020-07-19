@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<ScrollPane prefHeight="672.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.product.SingleProductController">
+   <content>
+      <VBox fx:id="mainBox" prefHeight="664.0" prefWidth="1265.0" spacing="50.0">
+         <children>
+            <HBox spacing="20.0">
+               <children>
+                  <VBox spacing="15.0">
+                     <children>
+                        <Text fx:id="categoryText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="320.0" />
+                        <ImageView fx:id="productImage" fitHeight="240.0" fitWidth="320.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pic/background.jpg" />
+                           </image>
+                        </ImageView>
+                        <HBox prefHeight="32.0" prefWidth="182.0" spacing="90.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#addToCompareList" prefHeight="25.0" prefWidth="126.0" text="Add to Compare List">
+                                 <HBox.margin>
+                                    <Insets left="90.0" />
+                                 </HBox.margin></Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="345.0" prefWidth="227.0">
+                     <children>
+                        <HBox prefHeight="73.0" prefWidth="227.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="65.32552909851074">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="73.0" prefWidth="254.0">
+                                 <children>
+                                    <Text fx:id="nameText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="227.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Brand" wrappingWidth="63.18713188171387">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="70.0" prefWidth="261.0">
+                                 <children>
+                                    <Text fx:id="brandText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="55.0" prefHeight="70.0" prefWidth="227.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Rate" wrappingWidth="63.18713188171387">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER" prefHeight="70.0" prefWidth="261.0">
+                                 <children>
+                                    <Text fx:id="rateText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <VBox prefHeight="96.0" prefWidth="227.0">
+                           <children>
+                              <VBox alignment="CENTER" prefHeight="53.0" prefWidth="227.0">
+                                 <children>
+                                    <Slider fx:id="rateSlider" blockIncrement="1.0" majorTickUnit="1.0" max="5.0" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true">
+                                       <VBox.margin>
+                                          <Insets left="10.0" right="10.0" />
+                                       </VBox.margin>
+                                    </Slider>
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_RIGHT" prefHeight="43.0" prefWidth="141.0">
+                                 <children>
+                                    <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+                                       <children>
+                                          <Button mnemonicParsing="false" onAction="#rate" prefHeight="26.0" prefWidth="62.0" text="Rate">
+                                             <HBox.margin>
+                                                <Insets left="83.0" />
+                                             </HBox.margin></Button>
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets top="5.0" />
+                     </padding>
+                  </VBox>
+                  <VBox spacing="20.0">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description" wrappingWidth="155.46997451782227">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Text>
+                        <TextArea fx:id="descriptionText" prefHeight="302.0" prefWidth="328.0" />
+                     </children>
+                  </VBox>
+                  <TableView fx:id="featuresTable" prefHeight="346.0" prefWidth="266.0">
+                     <columns>
+                        <TableColumn fx:id="nameColumn" prefWidth="123.19995272159576" text="Name" />
+                        <TableColumn fx:id="featureColumn" maxWidth="164.0000228881836" minWidth="-1.0" prefWidth="142.40002288818357" text="Feature" />
+                     </columns>
+                  </TableView>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+         </padding>
+      </VBox>
+   </content>
+</ScrollPane>

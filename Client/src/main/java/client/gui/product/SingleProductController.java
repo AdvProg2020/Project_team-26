@@ -1,18 +1,14 @@
 package client.gui.product;
 
+
+import client.ControllerContainer;
+import client.connectionController.interfaces.product.IProductController;
+import client.connectionController.interfaces.review.IRatingController;
+import client.exception.*;
 import client.gui.Constants;
 import client.gui.comment.CommentController;
 import client.gui.interfaces.InitializableController;
-import client.model.Category;
-import client.model.CategoryFeature;
-import client.model.Product;
-import client.model.ProductSeller;
-import controller.interfaces.product.IProductController;
-import controller.interfaces.review.IRatingController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotBoughtTheProductException;
+import client.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,7 +23,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

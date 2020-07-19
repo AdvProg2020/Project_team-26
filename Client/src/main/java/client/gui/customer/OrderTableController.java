@@ -1,12 +1,13 @@
 package client.gui.customer;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.order.IOrderController;
 import client.gui.Constants;
 import client.gui.OrderItemController;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
 import client.model.Order;
 import client.model.OrderItem;
-import controller.interfaces.order.IOrderController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.Date;

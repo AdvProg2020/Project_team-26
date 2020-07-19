@@ -1,18 +1,17 @@
 package client.gui.seller;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.category.ICategoryController;
+import client.connectionController.interfaces.product.IProductController;
+import client.exception.*;
 import client.gui.CategoryListController;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
 import client.model.Category;
-import client.model.CategoryFeature;
-import client.model.Product;
-import client.model.ProductSeller;
+import client.model.*;
 import client.model.enums.FeatureType;
-import controller.interfaces.category.ICategoryController;
-import controller.interfaces.product.IProductController;
-import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,7 +22,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

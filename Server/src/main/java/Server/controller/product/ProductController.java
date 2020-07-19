@@ -3,17 +3,24 @@ package Server.controller.product;
 import exception.*;
 import model.*;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.*;
 import repository.*;
 
 import java.util.List;
 import java.util.Map;
 
+@RestController
 public class ProductController {
 
     ProductRepository productRepository;
     ProductSellerRepository productSellerRepository;
     CategoryRepository categoryRepository;
     UserRepository userRepository;
+
+    public ProductController() {
+
+    }
+
 
     public ProductController(RepositoryContainer repositoryContainer) {
         this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
@@ -22,7 +29,10 @@ public class ProductController {
         this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
     }
 
-    public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+    @PostMapping("/controller/method/product/create-product")
+    public void createProduct(@RequestBody Map info) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+        Product product = (Product) info.get("product");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (product == null)
             throw new NullPointerException();
@@ -36,7 +46,11 @@ public class ProductController {
         productRepository.addRequest(product, user);
     }
 
-    public void addSeller(int productId, ProductSeller productSeller, String token) throws NotSellerException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/product/add-seller")
+    public void addSeller(@RequestBody Map info) throws NotSellerException, NoAccessException, InvalidTokenException {
+        int productId = (Integer) info.get("productId");
+        ProductSeller productSeller = (ProductSeller) info.get("productSeller");
+        String token = (String) info.get("token");
         if (productSeller == null)
             throw new NullPointerException();
         User user = Session.getSession(token).getLoggedInUser();
@@ -46,21 +60,26 @@ public class ProductController {
         productSellerRepository.addRequest(productSeller);
     }
 
-    public Product getProductById(int id, String token) throws InvalidIdException {
+    @RequestMapping("/controller/method/product/get-product-by-id/{id}")
+    public Product getProductById(@PathVariable("id") int id) throws InvalidIdException {
         Product product = productRepository.getById(id);
         if (product == null)
             throw new InvalidIdException("There is no product with this id");
         return product;
     }
 
-    public Product getProductByName(String name, String token) throws NoObjectIdException {
+    @RequestMapping("/controller/method/product/get-product-by-name/{name}")
+    public Product getProductByName(@PathVariable("name") String name) throws NoObjectIdException {
         Product product = productRepository.getByName(name);
         if (product == null)
             throw new NoObjectIdException("There is no product with this name");
         return product;
     }
 
-    public void removeProduct(int id, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
+    @PostMapping("/controller/method/product/remove-product")
+    public void removeProduct(@RequestBody Map info) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {//todo
             throw new NotLoggedINException("You are not Logged in.");
@@ -73,7 +92,11 @@ public class ProductController {
         }
     }
 
-    public void removeSeller(int productId, int productSellerId, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
+    @PostMapping("/controller/method/product/remove-seller")
+    public void removeSeller(@RequestBody Map info) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException {
+        int productId = (Integer) info.get("productId");
+        int productSellerId = (Integer) info.get("productSellerId");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();//TODO
         if (user == null) {//todo
             throw new NotLoggedINException("You are not Logged in.");
@@ -88,12 +111,26 @@ public class ProductController {
         }
     }
 
-    public List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token) {
+    @PostMapping("/controller/method/product/get-all-products-with-filter")
+    public List<Product> getAllProductWithFilter(@RequestBody Map info) {
+        Map<String, String> filter = (Map<String, String>) info.get("filter");
+        String fieldName = (String) info.get("fieldName");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        String token = (String) info.get("token");
         Pageable page = createAPage(fieldName, isAscending, startIndex, endIndex);
         return productRepository.getAllSortedAndFiltered(filter, page);
     }
 
-    public List<Product> getAllProductWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, InvalidTokenException, NoAccessException {
+    @PostMapping("/controller/method/product/get-all-products-with-filter-for-seller-id")
+    public List<Product> getAllProductWithFilterForSellerId(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException, NoAccessException {
+        Map<String, String> filter = (Map<String, String>) info.get("filter");
+        String fieldName = (String) info.get("fieldName");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        String token = (String) info.get("token");
         Pageable page = createAPage(fieldName, isAscending, startIndex, endIndex);
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
@@ -105,7 +142,10 @@ public class ProductController {
         }
     }
 
-    public ProductSeller getProductSellerByIdAndSellerId(int productId, String token) throws InvalidIdException, InvalidTokenException, NotLoggedINException, NoAccessException, NoObjectIdException {
+    @PostMapping("/controller/method/product/get-product-seller-by-id-and-seller-id")
+    public ProductSeller getProductSellerByIdAndSellerId(@RequestBody Map info) throws InvalidIdException, InvalidTokenException, NotLoggedINException, NoAccessException, NoObjectIdException {
+        int productId = (Integer) info.get("productId");
+        String token = (String) info.get("token");
         Session session = Session.getSession(token);
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
@@ -121,7 +161,11 @@ public class ProductController {
         }
     }
 
-    public void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException {
+    @PostMapping("/controller/method/product/edit-product")
+    public void editProduct(@RequestBody Map info) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException {
+        int id = (Integer) info.get("id");
+        Product newProduct = (Product) info.get("newProduct");
+        String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         Product product = productRepository.getProductBySellerId(id, user.getId());
         if (user.getRole() != Role.SELLER)
@@ -132,7 +176,11 @@ public class ProductController {
         productRepository.editRequest(newProduct, user);
     }
 
-    public void editProductSeller(int id, ProductSeller newProductSeller, String token) throws InvalidIdException, InvalidTokenException, NotSellerException, NoAccessException {
+    @PostMapping("/controller/method/product/edit-product-seller")
+    public void editProductSeller(@RequestBody Map info) throws InvalidIdException, InvalidTokenException, NotSellerException, NoAccessException {
+        int id = (Integer) info.get("id");
+        ProductSeller newProductSeller = (ProductSeller) info.get("newProductSeller");
+        String token = (String) info.get("token");
         ProductSeller productSeller = productSellerRepository.getById(id);
         if (productSeller == null)
             throw new InvalidIdException("There is no productSeller with this id to change");

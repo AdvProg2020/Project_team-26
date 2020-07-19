@@ -1,15 +1,13 @@
 package client.gui.seller;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.discount.IOffController;
+import client.exception.*;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
-import client.model.Off;
-import client.model.enums.Status;
-import controller.interfaces.discount.IOffController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
-import exception.NotLoggedINException;
+import client.model.*;
+import client.model.enums.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +16,6 @@ import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.Date;

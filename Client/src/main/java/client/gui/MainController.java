@@ -1,8 +1,7 @@
 package client.gui;
 
+import client.exception.*;
 import client.model.enums.Role;
-import exception.InvalidTokenException;
-import exception.NotLoggedINException;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;

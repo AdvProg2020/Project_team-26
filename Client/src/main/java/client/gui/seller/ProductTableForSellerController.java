@@ -1,12 +1,13 @@
 package client.gui.seller;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.product.IProductController;
+import client.exception.*;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
-import client.model.Product;
+import client.model.*;
 import client.model.ProductSeller;
-import controller.interfaces.product.IProductController;
-import exception.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -18,7 +19,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.ArrayList;

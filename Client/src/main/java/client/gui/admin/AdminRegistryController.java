@@ -1,19 +1,16 @@
 package client.gui.admin;
-
-import client.gui.Account;
+import client.ControllerContainer;
+import client.connectionController.account.Account;
+import client.connectionController.interfaces.account.IAuthenticationController;
+import client.exception.*;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.model.enums.Role;
-import controller.interfaces.account.IAuthenticationController;
-import exception.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import net.minidev.json.JSONObject;
-import org.springframework.web.client.HttpClientErrorException;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 
@@ -36,7 +33,10 @@ public class AdminRegistryController implements InitializableController {
     @FXML
     private PasswordField confirmText;
 
+    private IAuthenticationController controller;
+
     public void register() {
+        controller = (IAuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
         if(isAnyEmpty()) {
             errorLabel.setText("Please fill all the boxes");
         }  else if (!passwordText.getText().equals(confirmText.getText())) {
@@ -44,12 +44,17 @@ public class AdminRegistryController implements InitializableController {
         } else {
             Account account = createAccount();
             try {
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("account", account);
-                jsonObject.put("token", Constants.manager.getToken());
-                Constants.manager.postRegisterLoginRequest(jsonObject,Constants.registerAddress,false);
-            } catch (HttpClientErrorException e ){
-                //TODO
+                controller.register(account, Constants.manager.getToken());
+            } catch (NoAccessException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (InvalidFormatException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (InvalidTokenException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (InvalidAuthenticationException e) {
+                errorLabel.setText(e.getMessage());
+            } catch (AlreadyLoggedInException e) {
+                errorLabel.setText(e.getMessage());
             }
         }
     }

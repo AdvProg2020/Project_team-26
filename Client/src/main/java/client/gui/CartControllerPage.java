@@ -1,12 +1,13 @@
 package client.gui;
 
+import client.ControllerContainer;
+import client.connectionController.interfaces.cart.ICartController;
+import client.exception.*;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
 import client.gui.product.SingleProductOfCartController;
 import client.model.Cart;
 import client.model.ProductSeller;
-import controller.interfaces.cart.ICartController;
-import exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -15,7 +16,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.Map;

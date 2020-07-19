@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="68.0" prefWidth="622.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.product.SingleProductOfCartController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="78.0" prefWidth="97.0">
+            <children>
+                <ImageView fx:id="productImage" fitHeight="61.0" fitWidth="96.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@../pic/background.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </VBox>
+        <VBox alignment="CENTER" prefHeight="84.0" prefWidth="240.0">
+            <children>
+                <HBox layoutX="10.0" layoutY="10.0" prefHeight="58.0" prefWidth="196.0">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label prefHeight="43.0" prefWidth="80.0" text="Price">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Text fx:id="priceText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="116.13670873641968" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+                <HBox layoutX="10.0" layoutY="95.0" prefHeight="69.0" prefWidth="196.0">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label prefHeight="43.0" prefWidth="80.0" text="SelleName">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Text fx:id="priceOffText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="118.13670873641968" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+        <VBox alignment="CENTER" prefHeight="84.0" prefWidth="182.0">
+            <children>
+                <HBox prefHeight="57.0" prefWidth="196.0">
+                    <children>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label fx:id="amountLabel" prefHeight="43.0" prefWidth="80.0" text="Amount">
+                           <font>
+                              <Font size="15.0" />
+                           </font></Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <TextField fx:id="amountTextField" promptText="5" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+                <VBox alignment="CENTER" prefHeight="56.0" prefWidth="92.0">
+                    <children>
+                        <HBox prefHeight="77.0" prefWidth="214.0">
+                            <children>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Label prefHeight="43.0" prefWidth="80.0" text="Total price">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font></Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+                                    <children>
+                                        <Text fx:id="totalPrice" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="86.80339741706848" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
+            <children>
+                <Button fx:id="editButtonClick" mnemonicParsing="false" onAction="#updateButtonClicked" text="edit" />
+            </children>
+        </VBox>
+    </children>
+</HBox>

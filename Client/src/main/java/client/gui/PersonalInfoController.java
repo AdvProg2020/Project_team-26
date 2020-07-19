@@ -1,11 +1,12 @@
 package client.gui;
 
+
+import client.connectionController.interfaces.account.IUserInfoController;
 import client.gui.interfaces.InitializableController;
-import client.model.Seller;
-import client.model.User;
-import client.model.enums.Role;
-import controller.interfaces.account.IUserInfoController;
-import exception.*;
+import client.model.*;
+import client.model.enums.*;
+import client.ControllerContainer;
+import client.exception.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -14,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import view.cli.ControllerContainer;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;

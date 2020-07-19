@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.authentication.FirstAdminRegister">
+   <children>
+      <Label layoutX="207.0" layoutY="84.0" text="First Admin registration">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="usernameText" layoutX="122.0" layoutY="148.0" promptText="Username" />
+      <TextField fx:id="emailText" layoutX="330.0" layoutY="148.0" promptText="Email" />
+      <TextField fx:id="firstNameText" layoutX="122.0" layoutY="186.0" promptText="First Name" />
+      <TextField fx:id="lastNameText" layoutX="330.0" layoutY="186.0" promptText="Last Name" />
+      <PasswordField fx:id="passwordText" layoutX="122.0" layoutY="227.0" promptText="Password" />
+      <PasswordField fx:id="confirmText" layoutX="330.0" layoutY="227.0" promptText="Confirm Password" />
+      <Button fx:id="registerButton" layoutX="264.0" layoutY="286.0" mnemonicParsing="false" text="Register">
+         <font>
+            <Font name="Arial Black" size="12.0" />
+         </font></Button>
+      <Label fx:id="errorLabel" alignment="CENTER" layoutX="178.0" layoutY="105.0" prefHeight="17.0" prefWidth="244.0" textFill="#f50101" />
+   </children>
+</AnchorPane>

@@ -3,9 +3,7 @@ package Server.controller.discount;
 import exception.*;
 import model.*;
 import model.enums.Role;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import repository.*;
 
 import java.util.List;
@@ -43,15 +41,23 @@ public class OffController {
         return off;
     }
 
-    @PostMapping("/off/createNewOff")
-    public void createNewOff(@RequestBody Off newOff, @RequestBody String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/controller/method/off/create-new-off")
+    public void createNewOff(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        Off newOff = (Off) info.get("newOff");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "seller can create a off");
         newOff.setSeller((Seller) Session.getSession(token).getLoggedInUser());
         offRepository.addRequest(newOff);
     }
 
-    @PostMapping("/off/addProductToOff")
-    public void addProductToOff(@RequestBody Off off,@RequestBody int productId,@RequestBody long priceInOff,@RequestBody double percent,@RequestBody boolean isFirstTime,@RequestBody String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/controller/method/off/add-product-to-off")
+    public void addProductToOff(@RequestBody Map info) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+        Off off = (Off) info.get("off");
+        int productId = (Integer) info.get("productId");
+        long priceInOff = (Long) info.get("priceInOff");
+        double percent = (Double) info.get("percent");
+        boolean isFirstTime = (Boolean) info.get("isFirstTime");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "Only Seller Can Add Product");
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();
         ProductSeller productSeller = productSellerRepository.getProductSellerByIdAndSellerId(productId, seller.getId());
@@ -92,8 +98,12 @@ public class OffController {
         }
         return null;
     }
-
-    public void removeProductFromOff(Off off, int productId, boolean isForAdd, String token) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/controller/method/off/remove-product-from-off")
+    public void removeProductFromOff(@RequestBody Map info) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+        Off off = (Off) info.get("off");
+        int productId = (Integer) info.get("productId");
+        boolean isForAdd = (Boolean) info.get("isForAdd");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only seller can add product");
         Product product = productRepository.getById(productId);
         if (product == null)
@@ -109,18 +119,34 @@ public class OffController {
             offRepository.deleteRequest(off.getId());
     }
 
-    public void removeAOff(int id, String token) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/controller/method/off/remove-a-off")
+    public void removeAOff(@RequestBody Map info) throws NoAccessException, InvalidIdException, InvalidTokenException, NotLoggedINException {
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only seller can remove off");
         getOffByIdWithCheck(id);
         offRepository.deleteRequest(id);
     }
 
-    public List<Product> getAllProductWithOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, String token) {
+    @PostMapping("/controller/method/off/get-all-products-with-off")
+    public List<Product> getAllProductWithOff(@RequestBody Map info) {
+        Map<String,String> filter = (Map<String, String>) info.get("filter");
+        String sortField = (String) info.get("sortField");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        String token = (String) info.get("token");
         Pageable page = createAPage(sortField, isAscending, startIndex, endIndex);
         return productRepository.getAllSortedAndFiltered(filter, page);
     }
 
-    public List<Off> getAllOfForSellerWithFilter(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+    @PostMapping("/controller/method/off/get-all-off-for-seller-with-filter")
+    public List<Off> getAllOfForSellerWithFilter(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NotLoggedINException {
+        String sortField = (String) info.get("sortField");
+        boolean isAscending = (Boolean) info.get("isAscending");
+        int startIndex = (Integer) info.get("startIndex");
+        int endIndex = (Integer) info.get("endIndex");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only seller");
         Pageable page = createAPage(sortField, isAscending, startIndex, endIndex);
         return ((Seller) Session.getSession(token).getLoggedInUser()).getAllOffs(page);
@@ -134,11 +160,15 @@ public class OffController {
         }
     }
 
-    public Off getOff(int id, String token) throws InvalidIdException {
+    @GetMapping("/controller/method/off/get-off/{id}")
+    public Off getOff(@PathVariable("id") int id) throws InvalidIdException {
         return getOffByIdWithCheck(id);
     }
-
-    public void edit(Off newOff, int id, String token) throws NoAccessException, InvalidTokenException, InvalidIdException, NotLoggedINException {
+    @PostMapping("/controller/method/off/edit")
+    public void edit(@RequestBody Map info) throws NoAccessException, InvalidTokenException, InvalidIdException, NotLoggedINException {
+        Off newOff = (Off) info.get("newOff");
+        int id = (Integer) info.get("id");
+        String token = (String) info.get("token");
         checkAccessOfUser(token, "only seller");
         Off off = getOffByIdWithCheck(id);
         Seller seller = (Seller) Session.getSession(token).getLoggedInUser();

@@ -1,9 +1,8 @@
 package controller.interfaces.cart;
 
+
 import exception.*;
 import model.Cart;
-
-
 
 public interface ICartController {
 

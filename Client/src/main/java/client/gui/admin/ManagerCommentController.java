@@ -1,13 +1,12 @@
 package client.gui.admin;
-
+import client.connectionController.interfaces.account.*;
+import client.connectionController.review.CommentController;
+import client.exception.*;
 import client.gui.Constants;
-import client.gui.interfaces.InitializableController;
-import client.model.Comment;
+import client.gui.interfaces.*;
+import client.model.*;
+import client.ControllerContainer;
 import client.model.enums.CommentState;
-import controller.review.CommentController;
-import exception.InvalidIdException;
-import exception.InvalidTokenException;
-import exception.NoAccessException;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import view.cli.ControllerContainer;
 
 import java.io.IOException;
 import java.util.List;
