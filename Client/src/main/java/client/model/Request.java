@@ -2,61 +2,26 @@ package client.model;
 
 import client.model.enums.RequestStatus;
 import client.model.enums.RequestType;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "request")
 public class Request {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "request_id")
     private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
     private User requestedBy;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "request_time")
     private Date requestTime;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "request_type")
     private RequestType requestType;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "request_status")
     private RequestStatus requestStatus;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "product_seller_id")
     private ProductSeller productSeller;
-
-    @ManyToOne
-    @JoinColumn(name = "off_id")
     private Off off;
-
-    @ManyToOne
-    @JoinColumn(name = "off_details_id")
     private OffItem offItem;
-
-    @Column(name = "type")
     private String type;
-
     //Only for edit
-    @Column(name = "field_name")
     private String fieldName;
-
-    @Column(name = "new_value")
     private String newValue;
-
 
     public Request() {
     }
@@ -68,6 +33,34 @@ public class Request {
         this.requestType = requestType;
         this.requestStatus = requestStatus;
     }
+
+    public Request(@JsonProperty("id") int id, @JsonProperty("requestedBy") User requestedBy,
+                   @JsonProperty("requestTime") Date requestTime,
+                   @JsonProperty("requestType") RequestType requestType,
+                   @JsonProperty("requestStatus") RequestStatus requestStatus,
+                   @JsonProperty("product") Product product,
+                   @JsonProperty("productSeller") ProductSeller productSeller,
+                   @JsonProperty("off") Off off,
+                   @JsonProperty("offItem") OffItem offItem,
+                   @JsonProperty("type") String type,
+                   @JsonProperty("fieldName") String fieldName,
+                   @JsonProperty("newValue") String newValue) {
+        this.id = id;
+        this.requestedBy = requestedBy;
+        this.requestTime = requestTime;
+        this.requestType = requestType;
+        this.requestStatus = requestStatus;
+        this.product = product;
+        this.productSeller = productSeller;
+        this.off = off;
+        this.offItem = offItem;
+        this.type = type;
+        this.fieldName = fieldName;
+        this.newValue = newValue;
+    }
+
+    @JsonCreator
+
 
     public void setForEdit(String fieldName, String newValue) {
         this.fieldName = fieldName;

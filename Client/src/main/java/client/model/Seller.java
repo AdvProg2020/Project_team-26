@@ -8,10 +8,8 @@ import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
 public class Seller extends User {
 
-    @OneToMany(mappedBy = "seller")
     private List<Off> allOffs;
 
     public Seller() {
