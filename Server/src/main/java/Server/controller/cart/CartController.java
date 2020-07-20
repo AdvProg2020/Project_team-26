@@ -27,15 +27,10 @@ public class CartController {
     private OrderRepository orderRepository;
 
     public CartController() {
-
-    }
-
-
-    public CartController(RepositoryContainer repositoryContainer) {
-        productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
-        promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
-        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
+        productSellerRepository = (ProductSellerRepository) RepositoryContainer.getInstance().getRepository("ProductSellerRepository");
+        promoRepository = (PromoRepository) RepositoryContainer.getInstance().getRepository("PromoRepository");
+        userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
+        orderRepository = (OrderRepository) RepositoryContainer.getInstance().getRepository("OrderRepository");
     }
 
     @PostMapping("/controller/method/cart/add-or-change-product")

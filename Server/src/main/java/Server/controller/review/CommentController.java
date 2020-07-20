@@ -21,13 +21,10 @@ public class CommentController {
     CommentRepository commentRepository;
 
     public CommentController() {
-
+        this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
+        this.commentRepository = (CommentRepository) RepositoryContainer.getInstance().getRepository("CommentRepository");
     }
 
-    public CommentController(RepositoryContainer repositoryContainer) {
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.commentRepository = (CommentRepository) repositoryContainer.getRepository("CommentRepository");
-    }
 
     @PostMapping("/controller/method/comment/add-comment")
     public void addComment(@RequestBody Map info) throws NoAccessException, InvalidTokenException {

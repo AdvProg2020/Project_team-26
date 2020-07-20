@@ -23,11 +23,7 @@ public class ShowUserController {
 
 
     public ShowUserController() {
-
-    }
-
-    public ShowUserController(RepositoryContainer repositoryContainer) {
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
     }
 
     @PostMapping("/controller/method/get-users")

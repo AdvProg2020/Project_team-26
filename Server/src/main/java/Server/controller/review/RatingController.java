@@ -21,15 +21,11 @@ public class RatingController {
     ProductRepository productRepository;
 
     public RatingController() {
-
+        this.rateRepository = (RateRepository) RepositoryContainer.getInstance().getRepository("RatingRepository");
+        this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
+        this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
     }
 
-
-    public RatingController(RepositoryContainer repositoryContainer) {
-        this.rateRepository = (RateRepository) repositoryContainer.getRepository("RatingRepository");
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-    }
 
     @PostMapping("/controller/method/rate/rate")
     public void rate(@RequestBody Map info) throws NoAccessException, NotBoughtTheProductException, InvalidTokenException {

@@ -22,12 +22,8 @@ public class CategoryController {
     ProductRepository productRepository;
 
     public CategoryController() {
-
-    }
-
-    public CategoryController(RepositoryContainer repositoryContainer) {
-        this.categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
+        this.categoryRepository = (CategoryRepository) RepositoryContainer.getInstance().getRepository("CategoryRepository");
+        this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
     }
 
     @PostMapping("/controller/method/category/add-category")

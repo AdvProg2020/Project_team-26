@@ -22,12 +22,10 @@ public class PromoController {
     UserRepository userRepository;
 
     public PromoController () {
+        promoRepository = (PromoRepository) RepositoryContainer.getInstance().getRepository("PromoRepository");
+        userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
+    }
 
-    }
-    public PromoController(RepositoryContainer repositoryContainer) {
-        promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
-        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-    }
     @PostMapping("/controller/method/promo/get-promo-code-template-by-code")
     public Promo getPromoCodeTemplateByCode(@RequestBody Map info) throws InvalidIdException, NotLoggedINException {
         String codeId = (String) info.get("codeId");

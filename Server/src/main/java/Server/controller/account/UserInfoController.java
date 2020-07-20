@@ -9,6 +9,8 @@ import org.hibernate.annotations.GeneratorType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import repository.Repository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
@@ -18,17 +20,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@RestController
 public class UserInfoController {
 
     private UserRepository userRepository;
     private List<String> allFields;
 
 
-    public UserInfoController(RepositoryContainer repositoryContainer) {
-        userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+    public UserInfoController() {
+        userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
         allFields = Arrays.asList("Username", "FirstName", "LastName", "Email", "Company Name", "Balance");
     }
-
 
     @PostMapping("/controller/method/user/change-password-old-way")
     public void changePasswordWithOldPassword(@RequestBody Map oldInfo) throws InvalidTokenException, NoAccessException, NotLoggedINException {

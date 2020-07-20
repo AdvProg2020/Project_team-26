@@ -26,12 +26,8 @@ public class AuthenticationController {
     Random randomNumberForPromo;
 
     public AuthenticationController() {
-
-    }
-
-    public AuthenticationController(RepositoryContainer repositoryContainer) {
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
-        this.promoRepository = (PromoRepository) repositoryContainer.getRepository("PromoRepository");
+        this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
+        this.promoRepository = (PromoRepository) RepositoryContainer.getInstance().getRepository("PromoRepository");
         randomNumberForPromo = new Random();
     }
 
@@ -83,7 +79,7 @@ public class AuthenticationController {
 
     @PostMapping("/controller/method/register")
     public void register(@RequestBody Map info) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
-        Account account = (Account)info.get("account");
+        Account account = (Account) info.get("account");
         String token = (String) info.get("token");
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
@@ -116,7 +112,7 @@ public class AuthenticationController {
 
     @PostMapping("/controller/method/logout")
     public void logout(@RequestBody Map info) throws NotLoggedINException, InvalidTokenException {
-        String token = (String)info.get("token");
+        String token = (String) info.get("token");
         Session userSession = Session.getSession(token);
         if (userSession.getLoggedInUser() == null) {
             throw new NotLoggedINException("You are not logged in.");

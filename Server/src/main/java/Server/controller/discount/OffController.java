@@ -16,13 +16,9 @@ public class OffController {
     private ProductSellerRepository productSellerRepository;
 
     public OffController() {
-
-    }
-
-    public OffController(RepositoryContainer repositoryContainer) {
-        productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        offRepository = (OffRepository) repositoryContainer.getRepository("OffRepository");
-        productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
+        productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
+        offRepository = (OffRepository) RepositoryContainer.getInstance().getRepository("OffRepository");
+        productSellerRepository = (ProductSellerRepository) RepositoryContainer.getInstance().getRepository("ProductSellerRepository");
     }
 
 

@@ -19,15 +19,11 @@ public class OrderController {
     CustomerRepository customerRepository;
 
     public OrderController() {
-
+        this.orderRepository = (OrderRepository) RepositoryContainer.getInstance().getRepository("OrderRepository");
+        this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
+        this.customerRepository = (CustomerRepository) RepositoryContainer.getInstance().getRepository("CustomerRepository");
     }
 
-
-    public OrderController(RepositoryContainer repositoryContainer) {
-        this.orderRepository = (OrderRepository) repositoryContainer.getRepository("OrderRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.customerRepository = (CustomerRepository) repositoryContainer.getRepository("CustomerRepository");
-    }
 
 
     @PostMapping("/controller/method/order/get-orders")

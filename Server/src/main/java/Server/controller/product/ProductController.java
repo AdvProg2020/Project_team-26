@@ -18,15 +18,10 @@ public class ProductController {
     UserRepository userRepository;
 
     public ProductController() {
-
-    }
-
-
-    public ProductController(RepositoryContainer repositoryContainer) {
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
-        categoryRepository = (CategoryRepository) repositoryContainer.getRepository("CategoryRepository");
-        this.userRepository = (UserRepository) repositoryContainer.getRepository("UserRepository");
+        this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
+        this.productSellerRepository = (ProductSellerRepository) RepositoryContainer.getInstance().getRepository("ProductSellerRepository");
+        categoryRepository = (CategoryRepository) RepositoryContainer.getInstance().getRepository("CategoryRepository");
+        this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
     }
 
     @PostMapping("/controller/method/product/create-product")

@@ -20,17 +20,11 @@ public class RequestController {
     private RequestRepository requestRepository;
 
     public RequestController() {
-
+        this.offRepository = (OffRepository)RepositoryContainer.getInstance().getRepository("OffRepository");
+        this.productSellerRepository = (ProductSellerRepository) RepositoryContainer.getInstance().getRepository("ProductSellerRepository");
+        this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
+        this.requestRepository = (RequestRepository) RepositoryContainer.getInstance().getRepository("RequestRepository");
     }
-
-
-    public RequestController(RepositoryContainer repositoryContainer){
-        this.offRepository = (OffRepository)repositoryContainer.getRepository("OffRepository");
-        this.productSellerRepository = (ProductSellerRepository) repositoryContainer.getRepository("ProductSellerRepository");
-        this.productRepository = (ProductRepository) repositoryContainer.getRepository("ProductRepository");
-        this.requestRepository = (RequestRepository) repositoryContainer.getRepository("RequestRepository");
-    }
-
     @PostMapping("/controller/method/request/accept-off-request")
     public void acceptOffRequest(@RequestBody Map info) throws InvalidTokenException, NoAccessException, NotLoggedINException {
         int requestId = (Integer) info.get("requestId");
