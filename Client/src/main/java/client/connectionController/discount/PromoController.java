@@ -219,7 +219,7 @@ public class PromoController implements IPromoController {
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
-                case InvalidDiscountException:
+                case InvalidDiscountPercentException:
                     throw InvalidDiscountPercentException.getHttpException(e.getResponseBodyAsString());
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());

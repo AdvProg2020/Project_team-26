@@ -231,7 +231,6 @@ public class CreateSingleProductForSellerController implements InitializableCont
             ProductSeller newProductSeller = new ProductSeller();
             newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
             newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
-            newProductSeller.setProduct(this.newProductForAddingToSellers);
             try {
                 productController.addSeller(this.newProductForAddingToSellers.getId(), newProductSeller, Constants.manager.getToken());
                 this.personalInfoController.clearBox();

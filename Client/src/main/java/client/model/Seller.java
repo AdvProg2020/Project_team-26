@@ -1,8 +1,6 @@
 package client.model;
 
 import client.model.enums.Role;
-import repository.Pageable;
-
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;

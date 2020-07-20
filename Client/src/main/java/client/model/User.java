@@ -1,11 +1,9 @@
 package client.model;
 
+import client.exception.*;
 import client.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import exception.NoAccessException;
-import exception.NotEnoughCreditException;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.HashMap;

@@ -21,7 +21,7 @@ public class SingleCommentController {
     public void load(Comment comment) {
         titleText.setText(comment.getTitle());
         buyerNameText.setText(comment.getCustomer().getFullName());
-        hasBoughtCheckBox.setSelected(comment.hasBought());
+        hasBoughtCheckBox.setSelected(comment.getHasBought());
         descriptionText.setText(comment.getText());
     }
 }
