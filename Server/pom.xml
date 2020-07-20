@@ -31,9 +31,8 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-messaging</artifactId>
-            <version>5.2.2.RELEASE</version>
+            <version>5.2.7.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>sharif.ap</groupId>
             <artifactId>group26</artifactId>
