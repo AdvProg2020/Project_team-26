@@ -5,10 +5,7 @@ import exception.NoAccessException;
 import exception.NotLoggedINException;
 import model.*;
 import model.enums.Role;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import repository.*;
 
 import java.util.List;
@@ -134,6 +131,12 @@ public class RequestController {
         } else {
             return requestRepository.getAllPending(page);
         }
+    }
+
+    @GetMapping("/controller/method/request/get-request-to-string/{id}")
+    public String getRequestToString(@PathVariable("id")int id) {
+        String toString = requestRepository.getById(id).toString();
+        return toString;
     }
 
 
