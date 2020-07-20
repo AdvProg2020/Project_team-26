@@ -194,8 +194,8 @@ public class ProductController {
     }
 
     @RequestMapping("/controller/method/product/get-product-by-product-seller-id/{id}")
-    public Product getProductByProductSellerId(@PathVariable("id") int productSellerId) {
-        return productSellerRepository.getById(productSellerId).getProduct();
+    public String getProductByProductSellerId(@PathVariable("id") int productSellerId) {
+        return productSellerRepository.getById(productSellerId).getProduct().getName();
     }
 
     private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
