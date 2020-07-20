@@ -10,6 +10,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -47,10 +49,10 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerCreateProductAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotSellerException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 case ObjectAlreadyExistException:
                     throw ObjectAlreadyExistException.getHttpException(e.getResponseBodyAsString());
@@ -66,10 +68,10 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerAddSellerAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotSellerException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
@@ -104,12 +106,12 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerRemoveProductAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotLoggedInException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
-                case InvalidIdException :
+                case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
@@ -125,12 +127,12 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerRemoveSellerAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotLoggedInException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
-                case InvalidIdException :
+                case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
@@ -164,10 +166,10 @@ public class ProductController implements IProductController {
         try {
             return getProductListFromServer(jsonObject, Constants.getProductControllerGetAllProductWithFilterForSellerIdAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotLoggedInException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
@@ -187,14 +189,14 @@ public class ProductController implements IProductController {
             ResponseEntity<ProductSeller> responseEntity = restTemplate.postForEntity(Constants.getProductControllerGetProductSellerByIdAndSellerIdAddress(), httpEntity, ProductSeller.class);
             return responseEntity.getBody();
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotLoggedInException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
-                case InvalidIdException :
+                case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
-                case NoObjectIdException :
+                case NoObjectIdException:
                     throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
@@ -210,12 +212,12 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotSellerException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
-                case InvalidIdException :
+                case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
@@ -231,17 +233,30 @@ public class ProductController implements IProductController {
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductSellerAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotSellerException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
-                case InvalidIdException :
+                case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
-                case InvalidTokenException :
+                case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
             }
         }
     }
+
+    public Product getProductByProductSellerId(int productSellerId) {
+        RestTemplate restTemplate = new RestTemplate();
+        Product product = restTemplate.getForObject(Constants.getProductControllerGetProductByProductSellerIdAddress() + "/" + productSellerId, Product.class);
+        return product;
+    }
+
+    public String getProductNameByProductSellerId(int productSellerId) {
+        RestTemplate restTemplate = new RestTemplate();
+        String name = restTemplate.getForObject(Constants.getProductControllerGetProductNameByProductSellerIdAddress() + "/" + productSellerId, String.class);
+        return name;
+    }
+
 
 }

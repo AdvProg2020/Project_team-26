@@ -2,6 +2,7 @@ package client.gui.seller;
 
 import client.ControllerContainer;
 import client.connectionController.interfaces.discount.IOffController;
+import client.connectionController.interfaces.product.IProductController;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 public class OffItemPageController implements InitializableController {
     private IOffController offController;
+    private IProductController productController;
     private OffItem offItem;
     private Off off;
     private int offItemId;
@@ -32,6 +34,7 @@ public class OffItemPageController implements InitializableController {
     @Override
     public void initialize(int id) throws IOException {
         offController = (IOffController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OffController);
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         offItemId = id;
     }
 
@@ -40,7 +43,7 @@ public class OffItemPageController implements InitializableController {
         this.off = off;
         this.offItem = offItem;
         this.isForAdd = isForAdd;
-        name.setText(offItem.getProductSeller().getProduct().getName());
+        name.setText(productController.getProductNameByProductSellerId(offItem.getProductSeller().getId()));
         price.setText("" + offItem.getProductSeller().getPrice());
         priceInOff.setText("" + offItem.getPriceInOff());
         priceInOff.setEditable(false);

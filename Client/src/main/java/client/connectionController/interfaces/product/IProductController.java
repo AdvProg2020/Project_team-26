@@ -1,10 +1,10 @@
 package client.connectionController.interfaces.product;
 
 
-
 import client.exception.*;
 import client.model.Product;
 import client.model.ProductSeller;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,11 @@ public interface IProductController {
 
     void removeProduct(int id, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException;
 
+    Product getProductByProductSellerId(int productSellerId);
+
     List<Product> getAllProductWithFilter(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token);
+
+    String getProductNameByProductSellerId(int productSellerId);
 
     List<Product> getAllProductWithFilterForSellerId(Map<String, String> filter, String fieldName, boolean isAscending, int startIndex, int endIndex, String token) throws NotLoggedINException, InvalidTokenException, NoAccessException;
 
