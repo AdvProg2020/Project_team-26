@@ -119,10 +119,9 @@ public class CartController implements ICartController {
     }
 
 
-    public long getTotalPrice(Cart cart, String token) throws InvalidTokenException {
+    public long getTotalPrice(String token) throws InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
-        jsonObject.put("cart", cart);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
