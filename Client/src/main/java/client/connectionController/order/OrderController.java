@@ -28,13 +28,26 @@ public class OrderController implements IOrderController {
         try {
             return getListFromServer(jsonObject, Constants.getOrderControllerGetOrdersAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NoAccessException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
             }
         }
+    }
+
+    @Override
+    public List<OrderItem> getOrderItems(int orderId, String token) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("token", token);
+        jsonObject.put("id", orderId);
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<OrderItem[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetOrderItemsAddress(), httpEntity, OrderItem[].class);
+        return Arrays.asList(responseEntity.getBody());
     }
 
     @Override
@@ -48,10 +61,10 @@ public class OrderController implements IOrderController {
         try {
             return getListFromServer(jsonObject, Constants.getOrderControllerGetOrdersWithFilterAddress());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotLoggedInException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
-                case NoAccessException :
+                case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -72,12 +85,12 @@ public class OrderController implements IOrderController {
             ResponseEntity<Customer[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetProductBuyerByProductIdAddress(), httpEntity, Customer[].class);
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotLoggedInException :
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
-                case NoAccessException :
+                case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
-                case InvalidIdException :
+                case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -97,13 +110,13 @@ public class OrderController implements IOrderController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Order> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetASingleOrderAddress(), httpEntity, Order.class);
             return responseEntity.getBody();
-        }  catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NoObjectIdException :
+        } catch (HttpClientErrorException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoObjectIdException:
                     throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
-                case NoAccessException :
+                case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
-                case InvalidIdException :
+                case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -121,11 +134,11 @@ public class OrderController implements IOrderController {
         jsonObject.put("endIndex", endIndex);
         try {
             return getListFromServer(jsonObject, Constants.getOrderControllerGetOrderHistoryForSellerAddress());
-        }catch (HttpClientErrorException e) {
-            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())){
-                case NotLoggedInException :
+        } catch (HttpClientErrorException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
-                case NoAccessException :
+                case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());

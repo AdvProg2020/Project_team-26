@@ -351,6 +351,13 @@ public class Constants {
     public static String getProductControllerEditProductSellerAddress() {
         return manager.getHostPort() + "/controller/method/product/edit-product-seller";
     }
+    public static String getProductControllerGetProductByProductSellerIdAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-product-by-product-seller-id";
+    }
+
+    public static String getProductControllerGetProductNameByProductSellerIdAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-product-name-by-product-seller-id";
+    }
 
     /**
      * CommentController Methods.
@@ -441,11 +448,9 @@ public class Constants {
     }
 
 
-    public static String getProductControllerGetProductByProductSellerIdAddress() {
-        return manager.getHostPort() + "/controller/method/product/get-product-by-product-seller-id";
-    }
 
-    public static String getProductControllerGetProductNameByProductSellerIdAddress() {
-        return manager.getHostPort() + "/controller/method/product/get-product-name-by-product-seller-id";
+
+    public static Object getOrderControllerGetOrderItemsAddress() {
+        return manager.getHostPort()address
     }
 }
