@@ -1,5 +1,6 @@
 package client.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Rate {
@@ -8,19 +9,7 @@ public class Rate {
     private double score;
     private Product product;
 
-    public Rate() {
-    }
-
-    public Rate(int id) {
-        this.id = id;
-    }
-
-    public Rate(Customer customer, double score, Product product) {
-        this.customer = customer;
-        this.score = score;
-        this.product = product;
-    }
-
+    @JsonCreator
     public Rate(@JsonProperty("id") int id,
                 @JsonProperty("customer") Customer customer,
                 @JsonProperty("score") double score,

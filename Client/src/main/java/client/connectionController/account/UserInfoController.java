@@ -3,25 +3,10 @@ package client.connectionController.account;
 import client.connectionController.interfaces.account.IUserInfoController;
 import client.exception.*;
 import client.gui.Constants;
-
-import client.model.*;
-import client.model.enums.Role;
 import net.minidev.json.JSONObject;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
-import repository.RepositoryContainer;
-import repository.UserRepository;
-
-import javax.swing.text.html.HTML;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
 
 public class UserInfoController implements IUserInfoController {
 

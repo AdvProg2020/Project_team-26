@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,6 +13,7 @@ public class OffItem {
     @Column(name = "off_details_id")
     private int id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "off_id")
     private Off off;

@@ -1,5 +1,6 @@
 package client.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
@@ -28,6 +29,7 @@ public class Promo {
         customers.add(customer);
     }
 
+    @JsonCreator
     public Promo(@JsonProperty("id") int id,
                  @JsonProperty("promoCode") String promoCode,
                  @JsonProperty("startDate") Date startDate,
