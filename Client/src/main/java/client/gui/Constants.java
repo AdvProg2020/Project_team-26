@@ -441,5 +441,11 @@ public class Constants {
     }
 
 
+    public static String getProductControllerGetProductByProductSellerIdAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-product-by-product-seller-id";
+    }
 
+    public static String getProductControllerGetProductNameByProductSellerIdAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-product-name-by-product-seller-id";
+    }
 }

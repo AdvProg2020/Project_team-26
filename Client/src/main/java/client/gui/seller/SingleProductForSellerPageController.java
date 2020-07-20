@@ -244,7 +244,7 @@ public class SingleProductForSellerPageController implements InitializableContro
             setEditableForProduct(true);
             productInfoEditButton.setText("Update product");
         } else {
-            Product product = productSeller.getProduct().clone();
+            Product product = productController.getProductByProductSellerId(productSeller.getId()).clone();
             product.setName(nameTextField.getText());
             product.setDescription(descriptionTextArea.getText());
             product.setBrand(brandTextField.getText());

@@ -91,4 +91,15 @@ public class ProductSeller {
                 "Price: " + price + "\n" +
                 "Remaining Items: " + remainingItems;
     }
+    public ProductSeller (int id , int remainingItems , long price , long priceInOff){
+        this.id = id;
+        this.remainingItems = remainingItems;
+        this.price = price;
+        this.priceInOff = priceInOff;
+
+    }
+    @Override
+    public ProductSeller clone() {
+        return new ProductSeller(this.id, this.remainingItems, this.price, priceInOff == null ? price : priceInOff);
+    }
 }

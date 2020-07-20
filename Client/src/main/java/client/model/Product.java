@@ -71,7 +71,14 @@ public class Product {
         }
         return min;
     }
-
+    @Override
+    public Product clone() {
+        Product product = new Product(this.name, this.brand, this.description);
+        product.setCategory(category);
+        product.setId(id);
+        product.setSellerList(sellerList);
+        return product;
+    }
     public String getBrand() {
         return brand;
     }

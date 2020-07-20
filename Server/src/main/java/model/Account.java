@@ -12,6 +12,9 @@ public class Account {
     private Role role;
     private String companyName;
     private long credit;
+    public Account(){
+
+    }
 
     public Account(@JsonProperty("username") String username,
                    @JsonProperty("password") String password,
