@@ -17,4 +17,16 @@ public class CategoryFeature {
         this.featureName = featureName;
         this.featureType = featureType;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getFeatureName() {
+        return featureName;
+    }
+
+    public FeatureType getFeatureType() {
+        return featureType;
+    }
 }

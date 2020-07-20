@@ -6,6 +6,7 @@ import client.exception.*;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
 import client.gui.product.SingleProductOfCartController;
+import client.model.Cart;
 import client.model.ProductSeller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -46,7 +47,7 @@ public class CartControllerPage implements InitializableController, Reloadable {
 
     private void loadCart(Cart cart) throws IOException {
         try {
-            totalPriceText.setText("" + cartController.getTotalPrice(this.cart, Constants.manager.getToken()));
+            totalPriceText.setText("" + cartController.getTotalPrice(Constants.manager.getToken()));
         } catch (InvalidTokenException e) {
             e.printStackTrace();//TODO
         }

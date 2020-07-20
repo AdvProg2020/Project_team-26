@@ -1,7 +1,7 @@
 package client.exception;
 
 public enum HttpExceptionEquivalent {
-    AlreadyLoggedInException(470),InvalidAuthenticationException(471), InvalidDateException(472),
+    AlreadyLoggedInException(470),InvalidAuthenticationException(471), InvalidDateException(472)
     ,InvalidDiscountPercentException(473), InvalidFormatException(474),
     InvalidIdException(475),InvalidPromoCodeException(476), InvalidTokenException(477),
     NoAccessException(478),NoObjectIdException(479), NoSuchField(480),NoSuchObjectException(481),

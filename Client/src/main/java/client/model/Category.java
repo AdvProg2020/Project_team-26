@@ -23,6 +23,14 @@ public class Category {
         this.parent = parent;
         this.features = features;
     }
+    public Category() {
+        features = new ArrayList<>();
+
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public int getId() {
         return id;
@@ -39,6 +47,7 @@ public class Category {
     public List<CategoryFeature> getFeatures() {
         return features;
     }
+
 
     @Override
     public boolean equals(Object obj) {

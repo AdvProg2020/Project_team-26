@@ -28,4 +28,28 @@ public class Comment {
         this.customer = customer;
         this.state = state;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public Boolean getHasBought() {
+        return hasBought;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public CommentState getState() {
+        return state;
+    }
 }

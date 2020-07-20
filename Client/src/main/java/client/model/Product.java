@@ -47,6 +47,13 @@ public class Product {
         this.categoryFeatures = categoryFeatures;
         this.status = status;
     }
+    public Product(String name,String brand , String description ){
+        this.name = name;
+        this.brand = brand;
+        this.description = description;
+        this.categoryFeatures = new HashMap<>();
+        this.sellerList = new ArrayList<>();
+    }
 
     public int getId() {
         return id;
