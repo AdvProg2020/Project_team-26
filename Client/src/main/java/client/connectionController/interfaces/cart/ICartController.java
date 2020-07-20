@@ -2,6 +2,7 @@ package client.connectionController.interfaces.cart;
 
 
 import client.exception.*;
+import client.model.Cart;
 
 public interface ICartController {
 
