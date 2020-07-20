@@ -112,7 +112,7 @@ public class CartController implements ICartController {
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
                 case NotEnoughProductsException:
                     throw NotEnoughProductsException.getHttpException(e.getResponseBodyAsString());
-                case InvalidDiscountPercentException:
+                case NotEnoughCreditException:
                     throw NotEnoughCreditException.getHttpException(e.getResponseBodyAsString());
             }
         }
