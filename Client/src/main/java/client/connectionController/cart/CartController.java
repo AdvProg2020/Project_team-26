@@ -15,16 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
-import repository.*;
-
-import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.Map;
-import java.util.Random;
-
 public class CartController implements ICartController {
 
     public CartController() {
@@ -112,8 +102,19 @@ public class CartController implements ICartController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCartControllerCheckoutAddress());
-        } catch (HttpClientErrorException e) {
-            throw new InvalidTokenException("ksamd");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case NotEnoughProductsException:
+                    throw NotEnoughProductsException.getHttpException(e.getResponseBodyAsString());
+                case InvalidDiscountPercentException:
+                    throw NotEnoughCreditException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 

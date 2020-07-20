@@ -133,8 +133,7 @@ public class CartController {
         }
     }
 
-    @PostMapping("/controller/method/cart/change-seller-credit")
-    public void changeSellerCredit(@RequestBody Map info) {
+    private void changeSellerCredit(@RequestBody Map info) {
         Order order = (Order) info.get("order");
         for (OrderItem item : order.getItems()) {
             long money = item.getPaidPrice() * item.getAmount();
@@ -198,8 +197,8 @@ public class CartController {
 
     @PostMapping("/controller/method/cart/get-total-price")
     public long getTotalPrice(@RequestBody Map info) throws InvalidTokenException {
-        Cart cart = (Cart) info.get("cart");
         String token = (String) info.get("token");
+        Cart cart =  Session.getSession(token).getCart();
         long totalPrice = 0;
       /*  cart.getProducts().forEach((key, value) -> {
             totalPrice += key.getPriceInOff() * value;
