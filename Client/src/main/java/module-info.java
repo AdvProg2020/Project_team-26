@@ -1,4 +1,4 @@
-open module Project {
+open module Server {
     requires java.base;
     requires javafx.base;
     requires javafx.controls;
@@ -6,12 +6,10 @@ open module Project {
     requires javafx.graphics;
     requires java.xml.bind;
     requires net.bytebuddy;
-    requires org.hibernate.orm.core;
     requires org.controlsfx.controls;
     requires java.naming;
     requires jackson.annotations;
     requires spring.web;
     requires json.smart;
-    requires spring.boot;
-    requires jackson.databind;
+    requires com.fasterxml.jackson.databind;
 }
