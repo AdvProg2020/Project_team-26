@@ -1,5 +1,6 @@
 package Server.controller.order;
 
+import com.fasterxml.jackson.core.PrettyPrinter;
 import exception.*;
 import model.*;
 import model.enums.Role;
@@ -146,9 +147,18 @@ public class OrderController {
         }
     }
 
-    @RequestMapping("/controller/method/get-order-items-with-order-id/{id}")
-    public List<OrderItem> getOrderItemsWithOrderId(@PathVariable("id") int id) {
-        return orderRepository.getById(id).getItems();
+    @PostMapping("/controller/method/get-order-items-with-order-id")
+    public List<OrderItem> getOrderItemsWithOrderId(@RequestBody Map info) throws InvalidTokenException, NoAccessException {
+        User user = Session.getSession((String) info.get("token")).getLoggedInUser();
+        int orderId = (int) info.get("orderId");
+        switch (user.getRole()) {
+            case SELLER:
+                return orderRepository.getSellerOrderItems(user.getId(),orderId);
+            case CUSTOMER:
+                return orderRepository.getById(orderId).getItems();
+            default:
+                throw new NoAccessException("You are not allowed to do that.");
+        }
     }
 
     @RequestMapping("/controller/method/get-order-for-seller/(id}")
