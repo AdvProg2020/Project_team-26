@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.enums.Role;
 
 import javax.persistence.*;
@@ -9,9 +10,11 @@ import java.util.List;
 @Entity
 public class Customer extends User {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "customer")
     private List<Order> orders;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_promo",

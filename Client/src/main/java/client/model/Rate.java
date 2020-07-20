@@ -1,35 +1,20 @@
 package client.model;
 
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Entity
-@Table(name = "rate")
 public class Rate {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rate_id", unique = true)
     private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "user_id")
     private Customer customer;
-
-    @Column(name = "score", nullable = false)
     private double score;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
 
-    public Rate() {
-    }
-
-    public Rate(int id) {
+    @JsonCreator
+    public Rate(@JsonProperty("id") int id,
+                @JsonProperty("customer") Customer customer,
+                @JsonProperty("score") double score,
+                @JsonProperty("product") Product product) {
         this.id = id;
-    }
-
-    public Rate(Customer customer, double score, Product product) {
         this.customer = customer;
         this.score = score;
         this.product = product;

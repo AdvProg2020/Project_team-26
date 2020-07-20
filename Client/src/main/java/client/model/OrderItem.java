@@ -1,52 +1,31 @@
 package client.model;
 
 import client.model.enums.ShipmentState;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-
-@Entity
-@Table(name = "order_details")
 public class OrderItem {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_details_id", unique = true)
     private int id;
-
-    @ManyToOne
-    @JoinColumn(name = "product_id")
     private Product product;
-
-    @ManyToOne
-    @JoinColumn(name = "order_id")
     private Order order;
-
-    @Column(name = "amount", nullable = false)
     private int amount;
-
-    @ManyToOne
-    @JoinColumn(name = "seller_id", referencedColumnName = "user_id")
     private Seller seller;
-
-    @Column(name = "price", nullable = false)
     private long price;
-
-    @Column(name = "paid_price", nullable = false)
     private long paidPrice;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "shipment_state", nullable = false)
     private ShipmentState state;
 
-    public OrderItem() {
-    }
-
-    public OrderItem(int id) {
+    @JsonCreator
+    public OrderItem(@JsonProperty("id") int id,
+                     @JsonProperty("product") Product product,
+                     @JsonProperty("order") Order order,
+                     @JsonProperty("amount") int amount,
+                     @JsonProperty("seller") Seller seller,
+                     @JsonProperty("price") long price,
+                     @JsonProperty("paidPrice") long paidPrice,
+                     @JsonProperty("state") ShipmentState state) {
         this.id = id;
-    }
-
-    public OrderItem(Product product, int amount, Seller seller, long price, long paidPrice, ShipmentState state) {
         this.product = product;
+        this.order = order;
         this.amount = amount;
         this.seller = seller;
         this.price = price;

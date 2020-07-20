@@ -11,40 +11,14 @@ import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Entity
-@Table(name = "user")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id", unique = true)
     private int id;
-
-    @Column(name = "username", unique = true, nullable = false)
     private String username;
-
-    @Column(name = "password", nullable = false)
     private String password;
-
-    @Column(name = "email", nullable = false)
     private String email;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
     private Role role;
-
-    @Lob
-    @Column(name = "image", columnDefinition = "mediumblob")
     private byte[] image;
-
-    @Column(name = "credit", nullable = false)
     private long credit;
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Cascade(value = org.hibernate.annotations.CascadeType.ALL)
-    @MapKeyColumn(name = "`key`")
-    @Column(name = "value")
-    @CollectionTable(name = "user_details", joinColumns = @JoinColumn(name = "user_id"))
-    @JsonProperty("details")
     private Map<String, String> details;
 
     public User() {
@@ -60,7 +34,11 @@ public class User {
     }
 
     @JsonCreator
-    public User(@JsonProperty("username") String username, @JsonProperty("password") String password, @JsonProperty("email") String email, @JsonProperty("role") Role role, @JsonProperty("details") Map<String, String> details) {
+    public User(@JsonProperty("username") String username,
+                @JsonProperty("password") String password,
+                @JsonProperty("email") String email,
+                @JsonProperty("role") Role role,
+                @JsonProperty("details") Map<String, String> details) {
         this.username = username;
         this.password = password;
         this.email = email;

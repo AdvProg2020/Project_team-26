@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.enums.RequestType;
 import model.enums.Status;
 import org.hibernate.annotations.Cascade;
@@ -46,6 +47,7 @@ public class Product {
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<ProductSeller> sellerList;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL)
     private Set<Comment> comments;
 

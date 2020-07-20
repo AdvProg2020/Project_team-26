@@ -1,45 +1,22 @@
 package client.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-@Entity
-@Table(name = "promo")
 public class Promo {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "promo_id", unique = true)
     private int id;
-
-    @Column(name = "promo_code", unique = true)
     private String promoCode;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_date", nullable = false)
     private Date startDate;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "end_date", nullable = false)
     private Date endDate;
-
-    @Column(name = "discount_percent", nullable = false)
     private double percent;
-
-    @Column(name = "max_discount", nullable = false)
     private long maxDiscount;
-
-    @Column(name = "max_valid_use", nullable = false)
     private int maxValidUse;
-
-    @ManyToMany
-    @JoinTable(
-            name = "user_promo",
-            joinColumns = @JoinColumn(name = "promo_id"),
-            inverseJoinColumns = @JoinColumn(name = "customer_id"))
     private List<Customer> customers;
 
     public Promo() {
@@ -50,6 +27,23 @@ public class Promo {
         this.promoCode = code;
         customers = new ArrayList<Customer>();
         customers.add(customer);
+    }
+
+    @JsonCreator
+    public Promo(@JsonProperty("id") int id,
+                 @JsonProperty("promoCode") String promoCode,
+                 @JsonProperty("startDate") Date startDate,
+                 @JsonProperty("endDate") Date endDate,
+                 @JsonProperty("percent") double percent,
+                 @JsonProperty("maxDiscount") long maxDiscount,
+                 @JsonProperty("maxValidUse") int maxValidUse) {
+        this.id = id;
+        this.promoCode = promoCode;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.percent = percent;
+        this.maxDiscount = maxDiscount;
+        this.maxValidUse = maxValidUse;
     }
 
     public int getId() {

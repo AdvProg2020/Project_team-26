@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import exception.NotEnoughProductsException;
 import model.enums.RequestType;
 import model.enums.Status;
@@ -16,6 +17,7 @@ public class ProductSeller {
     @Column(name = "product_seller_id")
     private int id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

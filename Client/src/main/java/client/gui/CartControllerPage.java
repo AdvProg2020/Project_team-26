@@ -6,7 +6,6 @@ import client.exception.*;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
 import client.gui.product.SingleProductOfCartController;
-import client.model.Cart;
 import client.model.ProductSeller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

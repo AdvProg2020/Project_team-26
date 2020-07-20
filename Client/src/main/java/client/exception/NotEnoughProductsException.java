@@ -1,8 +1,7 @@
 package client.exception;
 
+import client.model.ProductSeller;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import model.ProductSeller;
-import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.io.IOException;
 

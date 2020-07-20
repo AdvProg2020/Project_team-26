@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,6 +37,7 @@ public class Promo {
     @Column(name = "max_valid_use", nullable = false)
     private int maxValidUse;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "user_promo",
