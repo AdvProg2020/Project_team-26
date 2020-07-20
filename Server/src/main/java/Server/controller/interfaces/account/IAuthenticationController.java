@@ -1,6 +1,6 @@
 package Server.controller.interfaces.account;
 
-import Server.controller.account.Account;
+import model.Account;
 import exception.*;
 
 public interface IAuthenticationController {
