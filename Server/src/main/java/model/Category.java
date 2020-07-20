@@ -1,14 +1,21 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import javax.persistence.*;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@JsonSerialize(using = Category.class)
 @Entity
 @Table(name = "category")
-public class Category {
+public class Category extends StdSerializer<Category> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,12 +45,14 @@ public class Category {
     private List<CategoryFeature> features;
 
     public Category() {
+        super(Category.class);
         features = new ArrayList<CategoryFeature>();
         subCategory = new ArrayList<Category>();
         products = new ArrayList<Product>();
     }
 
     public Category(String name) {
+        super(Category.class);
         this.name = name;
         features = new ArrayList<CategoryFeature>();
         subCategory = new ArrayList<Category>();
@@ -134,6 +143,19 @@ public class Category {
         this.products.forEach(i -> category.products.add(i));
         this.features.forEach(i -> category.features.add(i));
         return category;
+    }
+
+    @Override
+    public void serialize(Category category, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeNumberField("id", id);
+        jsonGenerator.writeStringField("name", name);
+        if(parent.equals(this)) {
+            jsonGenerator.writeObjectField("parent", parent);
+        } else {
+            jsonGenerator.writeObjectField("parent", null);
+        }
+        jsonGenerator.writeObjectField("features", features);
     }
 }
 
