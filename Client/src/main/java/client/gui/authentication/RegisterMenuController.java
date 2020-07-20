@@ -1,7 +1,6 @@
 package client.gui.authentication;
 
 import client.ControllerContainer;
-import client.connectionController.account.Account;
 import client.connectionController.interfaces.account.IAuthenticationController;
 import client.connectionController.interfaces.account.IShowUserController;
 import client.exception.*;

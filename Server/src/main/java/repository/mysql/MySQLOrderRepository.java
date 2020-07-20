@@ -92,4 +92,24 @@ public class MySQLOrderRepository
             return null;
         }
     }
+
+    @Override
+    public List<OrderItem> getSellerOrderItems(int id, int orderId) {
+        EntityManager em = EntityManagerProvider.getEntityManager();
+
+        try {
+            CriteriaBuilder cb = em.getCriteriaBuilder();
+            CriteriaQuery<OrderItem> cq = cb.createQuery(OrderItem.class);
+            Root<OrderItem> root = cq.from(OrderItem.class);
+
+            Predicate sellerPredicate = cb.equal(root.get("seller"), id);
+            Predicate orderPredicate = cb.equal(root.get("order"), orderId);
+            cq.select(root).where(cb.and(orderPredicate, sellerPredicate));
+            TypedQuery<OrderItem> typedQuery = em.createQuery(cq);
+
+            return typedQuery.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 }

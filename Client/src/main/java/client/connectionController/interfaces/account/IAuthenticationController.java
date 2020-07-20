@@ -1,7 +1,6 @@
 package client.connectionController.interfaces.account;
 
 
-import client.connectionController.account.Account;
 import client.exception.*;
 
 public interface IAuthenticationController {
