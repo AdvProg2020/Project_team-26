@@ -3,6 +3,7 @@ package repository.fake;
 import exception.NoObjectIdException;
 import model.Customer;
 import model.Order;
+import model.OrderItem;
 import repository.OrderRepository;
 import repository.Pageable;
 
@@ -30,6 +31,11 @@ public class FakeOrderRepository implements OrderRepository {
 
     @Override
     public List<Order> getAllSellerOrders(int sellerId, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public List<OrderItem> getSellerOrderItems(int id, int orderId) {
         return null;
     }
 

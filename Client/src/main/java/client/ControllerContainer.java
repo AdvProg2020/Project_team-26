@@ -12,7 +12,7 @@ import client.connectionController.order.OrderController;
 import client.connectionController.product.CategoryController;
 import client.connectionController.product.ProductController;
 import client.connectionController.review.RatingController;
-import client.gui.comment.CommentController;
+import client.connectionController.review.CommentController;
 
 import java.util.HashMap;
 import java.util.Map;

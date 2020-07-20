@@ -4,6 +4,7 @@ package client.connectionController.account;
 import client.connectionController.interfaces.account.IAuthenticationController;
 import client.exception.*;
 import client.gui.Constants;
+import client.model.Account;
 import net.minidev.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;

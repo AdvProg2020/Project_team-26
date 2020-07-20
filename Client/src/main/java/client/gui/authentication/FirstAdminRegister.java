@@ -6,6 +6,7 @@ import client.exception.*;
 import client.gui.Constants;
 import client.gui.Main;
 import client.gui.interfaces.InitializableController;
+import client.model.Account;
 import client.model.enums.Role;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

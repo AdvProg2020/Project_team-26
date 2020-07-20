@@ -2,6 +2,7 @@ package client.connectionController.interfaces.account;
 
 
 import client.exception.*;
+import client.model.Account;
 
 public interface IAuthenticationController {
 
