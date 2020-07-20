@@ -193,6 +193,11 @@ public class ProductController {
         productSellerRepository.editRequest(newProductSeller);
     }
 
+    @RequestMapping("/controller/method/product/get-product-by-product-seller-id/{id}")
+    public String getProductByProductSellerId(@PathVariable("id") int productSellerId) {
+        return productSellerRepository.getById(productSellerId).getProduct().getName();
+    }
+
     private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
         if (isAscending) {
             return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.ASCENDING);

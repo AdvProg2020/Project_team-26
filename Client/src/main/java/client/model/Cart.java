@@ -1,5 +1,8 @@
 package client.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,26 +12,13 @@ public class Cart {
     private Promo usedPromo;
     private String address;
 
-    public Cart() {
-        products = new HashMap<>();
-    }
-
-    public boolean addItems(ProductSeller productSeller, int amount) {
-        if (products.containsKey(productSeller)) {
-            if (amount <= productSeller.getRemainingItems() && amount >= 0) {
-                if (amount == 0) {
-                    products.remove(productSeller);
-                }
-                products.replace(productSeller, amount);
-                return true;
-            }
-        } else {
-            if (amount <= productSeller.getRemainingItems() && amount > 0) {
-                products.put(productSeller, amount);
-                return true;
-            }
-        }
-        return false;
+    @JsonCreator
+    public Cart(@JsonProperty("products") Map<ProductSeller, Integer> products,
+                @JsonProperty("usedPromo") Promo usedPromo,
+                @JsonProperty("address") String address) {
+        this.products = products;
+        this.usedPromo = usedPromo;
+        this.address = address;
     }
 
     public Promo getUsedPromo() {
@@ -44,13 +34,7 @@ public class Cart {
     }
 
     public Map<ProductSeller, Integer> getProduct() {
-        //todo
         return products;
-    }
-
-    public long getTotalPrice() {
-        //todo
-        return 0;
     }
 
     public void setUsedPromo(Promo usedPromo) {

@@ -9,7 +9,6 @@ import model.User;
 import org.springframework.web.bind.annotation.*;
 import repository.RepositoryContainer;
 
-import javax.servlet.http.HttpSession;
 import javax.swing.*;
 import java.util.Map;
 

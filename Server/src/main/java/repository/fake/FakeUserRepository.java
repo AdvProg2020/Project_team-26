@@ -1,6 +1,6 @@
 package repository.fake;
 
-import Server.controller.account.Account;
+import model.Account;
 import model.*;
 import model.enums.Role;
 import model.enums.ShipmentState;

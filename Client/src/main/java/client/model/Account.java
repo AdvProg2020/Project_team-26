@@ -1,7 +1,6 @@
-package Server.controller.account;
+package client.model;
 
-import model.*;
-import model.enums.Role;
+import client.model.enums.Role;
 
 public class Account {
     private String password;
@@ -10,7 +9,6 @@ public class Account {
     private String username;
     private String firstName;
     private String lastName;
-    private String id;
     private String companyName;
     private long credit;
 
@@ -68,14 +66,6 @@ public class Account {
         this.firstName = firstName;
     }
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -111,28 +101,4 @@ public class Account {
     public String getCompanyName() {
         return companyName;
     }
-
-    public User makeUser() {
-        if (role == Role.CUSTOMER) {
-            User customer = new Customer(username, password, email, role);
-            customer.changeFirstName(firstName);
-            customer.changeLastName(lastName);
-            customer.setCredit(credit);
-            return customer;
-        } else if (role == Role.SELLER) {
-            User seller = new Seller(username, password, email, role);
-            seller.changeFirstName(firstName);
-            seller.changeLastName(lastName);
-            seller.setCredit(credit);
-            seller.setCompanyName(companyName);
-            return seller;
-        } else {
-            User admin = new Admin(username, password, email, role);
-            admin.changeFirstName(firstName);
-            admin.changeLastName(lastName);
-            return admin;
-        }
-    }
-
-
 }
