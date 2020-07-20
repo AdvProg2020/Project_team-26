@@ -10,4 +10,8 @@ open module Project {
     requires org.controlsfx.controls;
     requires java.naming;
     requires jackson.annotations;
+    requires spring.web;
+    requires json.smart;
+    requires spring.boot;
+    requires jackson.databind;
 }
