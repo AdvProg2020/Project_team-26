@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.enums.Role;
 import repository.Pageable;
 
@@ -11,6 +12,7 @@ import java.util.List;
 @Entity
 public class Seller extends User {
 
+    @JsonIgnore
     @OneToMany(mappedBy = "seller")
     private List<Off> allOffs;
 

@@ -1,5 +1,6 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import model.enums.RequestStatus;
 import model.enums.RequestType;
 
@@ -31,18 +32,22 @@ public class Request {
     @Column(name = "request_status")
     private RequestStatus requestStatus;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "product_seller_id")
     private ProductSeller productSeller;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "off_id")
     private Off off;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "off_details_id")
     private OffItem offItem;
