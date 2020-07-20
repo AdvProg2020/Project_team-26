@@ -3,9 +3,7 @@ package Server.controller.order;
 import exception.*;
 import model.*;
 import model.enums.Role;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import repository.*;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -146,6 +144,16 @@ public class OrderController {
         } else {
             return orderRepository.getById(wantedOrder.getId());
         }
+    }
+
+    @RequestMapping("/controller/method/get-order-items-with-order-id/{id}")
+    public List<OrderItem> getOrderItemsWithOrderId(@PathVariable("id") int id) {
+        return orderRepository.getById(id).getItems();
+    }
+
+    @RequestMapping("/controller/method/get-order-for-seller/(id}")
+    public List<Order> getOrderItemsForSeller(@PathVariable("id") int id) {
+        return orderRepository.getAllSellerOrders(id,null);
     }
 
     private Pageable createAPage(String sortField, boolean isAscending, int startIndex, int endIndex) {
