@@ -1,7 +1,8 @@
-package client.gui;
+package client;
 
 import client.ControllerContainer;
 import client.connectionController.account.AuthenticationController;
+import client.gui.Constants;
 import client.gui.authentication.FirstAdminRegister;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

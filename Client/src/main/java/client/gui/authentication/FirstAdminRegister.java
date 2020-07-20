@@ -1,10 +1,10 @@
 package client.gui.authentication;
 
 import client.ControllerContainer;
+import client.Main;
 import client.connectionController.interfaces.account.IAuthenticationController;
 import client.exception.*;
 import client.gui.Constants;
-import client.gui.Main;
 import client.gui.interfaces.InitializableController;
 import client.model.Account;
 import client.model.enums.Role;

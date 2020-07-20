@@ -40,7 +40,7 @@ public class SessionController implements ISessionController {
 
     public String createToken() {
         RestTemplate restTemplate = new RestTemplate();
-        return restTemplate.getForObject(Constants.getSessionControllerCreateTokenAddress(), String.class);
+        return restTemplate.getForEntity(Constants.getSessionControllerCreateTokenAddress(), String.class).getBody();
     }
 
     public Role getUserRole(String token) throws NotLoggedINException, InvalidTokenException {
