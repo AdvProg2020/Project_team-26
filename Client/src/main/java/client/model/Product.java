@@ -2,6 +2,7 @@ package client.model;
 
 import client.model.enums.RequestType;
 import client.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.*;
@@ -20,6 +21,7 @@ public class Product {
     private Map<CategoryFeature, String> categoryFeatures;
     private Status status;
 
+    @JsonCreator
     public Product(@JsonProperty("id") int id,
                    @JsonProperty("name") String name,
                    @JsonProperty("brand") String brand,
@@ -145,24 +147,5 @@ public class Product {
 
     public Map<CategoryFeature, String> getCategoryFeatures() {
         return categoryFeatures;
-    }
-
-    @Override
-    public String toString() {
-        return "Id: " + id + "\n" +
-                "Name: " + name + "\n" +
-                "Brand: " + brand + "\n" +
-                "Description: '" + description + "\n" +
-                "Category: " + category.getName() + "\n" +
-                "Category Features:\n" + categoryFeaturesToString();
-    }
-
-    private String categoryFeaturesToString() {
-        String result = "";
-        for (CategoryFeature key : categoryFeatures.keySet()) {
-            String value = categoryFeatures.get(key);
-            result += "    " + key.getFeatureName() + ": " + value + "\n";
-        }
-        return result.trim();
     }
 }

@@ -34,8 +34,10 @@ public class User {
     }
 
     @JsonCreator
-    public User(@JsonProperty("username") String username, @JsonProperty("password") String password,
-                @JsonProperty("email") String email, @JsonProperty("role") Role role,
+    public User(@JsonProperty("username") String username,
+                @JsonProperty("password") String password,
+                @JsonProperty("email") String email,
+                @JsonProperty("role") Role role,
                 @JsonProperty("details") Map<String, String> details) {
         this.username = username;
         this.password = password;

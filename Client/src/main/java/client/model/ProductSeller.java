@@ -2,6 +2,7 @@ package client.model;
 
 import client.exception.NotEnoughProductsException;
 import client.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductSeller {
@@ -16,6 +17,7 @@ public class ProductSeller {
 
     }
 
+    @JsonCreator
     public ProductSeller(
             @JsonProperty("id") int id,
             @JsonProperty("seller") Seller seller,

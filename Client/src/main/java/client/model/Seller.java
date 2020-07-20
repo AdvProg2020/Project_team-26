@@ -10,24 +10,11 @@ import java.util.List;
 
 public class Seller extends User {
 
-    private List<Off> allOffs;
-
     public Seller() {
-        allOffs = new ArrayList<>();
     }
 
     public Seller(String username, String password, String email, Role role) {
         super(username, password, email, role);
-        allOffs = new ArrayList<>();
-    }
-
-    public void setAllOffs(List<Off> allOffs) {
-        this.allOffs = allOffs;
-    }
-
-    public List<Off> getAllOffs(Pageable pageable) {
-        //todo
-        return allOffs;
     }
 
     public void changeCompanyName(String companyName) {
