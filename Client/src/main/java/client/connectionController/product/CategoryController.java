@@ -139,7 +139,7 @@ public class CategoryController implements ICategoryController {
     public void addProduct(int id, int productId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", id);
-        jsonObject.put("parentId", productId);
+        jsonObject.put("productId", productId);
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerAddProductAddress());
@@ -158,7 +158,7 @@ public class CategoryController implements ICategoryController {
     public void removeProduct(int id, int productId, String token) throws InvalidIdException, NoAccessException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("id", id);
-        jsonObject.put("parentId", productId);
+        jsonObject.put("productId", productId);
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerRemoveProductAddress());
@@ -266,6 +266,11 @@ public class CategoryController implements ICategoryController {
 
     public List<Product> getAllProducts(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
         JSONObject jsonObject = new JSONObject();
+        jsonObject.put("filter",filter);
+        jsonObject.put("sortField",sortField);
+        jsonObject.put("isAscending",isAscending);
+        jsonObject.put("startIndex",startIndex);
+        jsonObject.put("endIndex",endIndex);
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
@@ -277,8 +282,13 @@ public class CategoryController implements ICategoryController {
 
     public List<Product> getAllProductsInOff(Map<String, String> filter, String sortField, boolean isAscending, int startIndex, int endIndex, int id, String token) throws InvalidIdException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("id", id);
-        jsonObject.put("token", token);
+        jsonObject.put("filter",filter);
+        jsonObject.put("sortField",sortField);
+        jsonObject.put("isAscending",isAscending);
+        jsonObject.put("startIndex",startIndex);
+        jsonObject.put("endIndex",endIndex);
+        jsonObject.put("id",id);
+        jsonObject.put("token",token);
         try {
             return getProductOfCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetAllProductsInOffAddress());
         } catch (HttpClientErrorException e) {
