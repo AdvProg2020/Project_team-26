@@ -152,7 +152,7 @@ public class AuthenticationController {
         }
     }
 
-    private User createNewUser(Server.controller.account.Account account) {
+    private User createNewUser(Account account) {
         return account.makeUser();
     }
 
@@ -166,11 +166,11 @@ public class AuthenticationController {
         }
     }
 
-    private void registerCustomer(Server.controller.account.Account account, String token) {
+    private void registerCustomer(Account account, String token) {
         userRepository.save(createNewUser(account));
     }
 
-    private void registerSeller(Server.controller.account.Account account, String token) {
+    private void registerSeller(Account account, String token) {
         userRepository.save(createNewUser(account));
     }
 
