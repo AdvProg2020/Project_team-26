@@ -8,8 +8,17 @@ import java.util.Map;
 
 public class RepositoryContainer {
 
+    private static RepositoryContainer instance = null;
+
     private Map<String, Repository> map;
     public static int idProducer = 5;
+
+    public static RepositoryContainer getInstance() {
+        if (instance == null) {
+            instance = new RepositoryContainer("sql");
+        }
+        return instance;
+    }
 
     public RepositoryContainer() {
         map = new HashMap<>();

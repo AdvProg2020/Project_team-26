@@ -4,8 +4,6 @@ import client.model.enums.CommentState;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import javax.persistence.*;
-
 public class Comment {
     private int id;
     private String title;
