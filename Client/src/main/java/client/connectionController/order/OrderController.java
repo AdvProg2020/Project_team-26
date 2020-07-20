@@ -10,6 +10,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,6 +19,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class OrderController implements IOrderController {
 
@@ -38,16 +41,25 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public List<OrderItem> getOrderItems(int orderId, String token) {
+    public List<OrderItem> getOrderItems(int orderId, String token) throws InvalidTokenException, NoAccessException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
-        jsonObject.put("id", orderId);
+        jsonObject.put("orderId", orderId);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<OrderItem[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetOrderItemsAddress(), httpEntity, OrderItem[].class);
-        return Arrays.asList(responseEntity.getBody());
+        try {
+            HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<OrderItem[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetOrderItemsAddress(), httpEntity, OrderItem[].class);
+            return Arrays.asList(responseEntity.getBody());
+        } catch (HttpClientErrorException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+            }
+        }
     }
 
     @Override

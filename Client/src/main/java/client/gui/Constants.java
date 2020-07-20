@@ -450,7 +450,7 @@ public class Constants {
 
 
 
-    public static Object getOrderControllerGetOrderItemsAddress() {
-        return manager.getHostPort()address
+    public static String getOrderControllerGetOrderItemsAddress() {
+        return manager.getHostPort()+"/controller/method/get-order-items-with-order-id";
     }
 }

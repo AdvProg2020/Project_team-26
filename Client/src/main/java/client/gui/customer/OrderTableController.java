@@ -2,6 +2,8 @@ package client.gui.customer;
 
 import client.ControllerContainer;
 import client.connectionController.interfaces.order.IOrderController;
+import client.exception.InvalidTokenException;
+import client.exception.NoAccessException;
 import client.gui.Constants;
 import client.gui.OrderItemController;
 import client.gui.PersonalInfoController;
@@ -52,13 +54,19 @@ public class OrderTableController implements InitializableController {
     private void loadDetailOfOrder(ObservableList<Order> observableList) {
         personalInfoController.clearBox();
         observableList.forEach(i -> {
-            i.getItems().forEach(j -> {
-                try {
-                    loadFxmlOfSingleOrder(j);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            try {
+                orderController.getOrderItems(i.getId(),Constants.manager.getToken()).forEach(j -> {
+                    try {
+                        loadFxmlOfSingleOrder(j);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                });
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.printStackTrace();
+            }
         });
     }
 
