@@ -38,11 +38,11 @@ public class SupporterButtonPageController implements InitializableController, M
     @FXML
     private HBox pageBox;
     @FXML
-    private TableView<String> tableUsers;
+    private TableView<UserForTable> tableUsers;
     @FXML
     private VBox box;
     private HashMap<UserForTable, Node> chatRooms;
-    private TableColumn<String, UserForTable> users;
+    private TableColumn<UserForTable, UserForTable> users;
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
@@ -69,7 +69,7 @@ public class SupporterButtonPageController implements InitializableController, M
     }
 
     private void changeToUserChat() {
-        String selectedUser = tableUsers.getSelectionModel().getSelectedItem();
+        UserForTable selectedUser = tableUsers.getSelectionModel().getSelectedItem();
         if (selectedUser == null) {
             return;
         }
@@ -81,17 +81,12 @@ public class SupporterButtonPageController implements InitializableController, M
     }
 
 
-    public void addUserToTable(String name) {
-
-        /*  tableUsers.getItems().addAll(FXCollections.observableList<String>(Arrays.asList(new Users(name))));
-         */
-
+    public void addUserToTable(UserForTable user) {
+        tableUsers.getItems().add(user);
     }
 
-    public void deleteUserFromTable(String name) {
-        users = new TableColumn<>("name");
-        users.setCellValueFactory(new PropertyValueFactory<>("name"));
-
+    public void deleteUserFromTable(UserForTable user) {
+        tableUsers.getItems().remove(user);
     }
 
     private void loadUserInfo() throws IOException {
@@ -119,18 +114,18 @@ public class SupporterButtonPageController implements InitializableController, M
         if (message.getReceiver().equals(supporterUser.getUsername())) {
             if (message.getType() == MessageType.JOIN) {
                 chatRooms.put(user, loadChatRoom(message.getSender(), supporterUser.getUsername(), Role.SUPPORT));
-                addUserToTable(message.getSender());
+                addUserToTable(user);
             } else if (message.getType() == MessageType.LEAVE) {
                 if (!chatRooms.containsKey(message.getSender()))
                     return;
                 chatRooms.remove(user);
-                deleteUserFromTable(message.getSender());
+                deleteUserFromTable(user);
             }
         } else if (message.getReceiver().equals("") || message.getReceiver().isBlank() || message.getReceiver().isEmpty()) {
-            if (!chatRooms.containsKey(message.getSender()))
+            if (!chatRooms.containsKey(user))
                 return;
             chatRooms.remove(user);
-            deleteUserFromTable(message.getSender());
+            deleteUserFromTable(user);
         }
     }
 
