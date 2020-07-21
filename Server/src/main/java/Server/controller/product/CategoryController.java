@@ -244,9 +244,7 @@ public class CategoryController {
             throw new InvalidIdException("No such category exists");
         } else {
             filter.put("category", "" + id);
-            List<Product> test = productRepository.getAllSortedAndFiltered(filter,page);
-            System.out.println(test.size());
-            return test;
+            return productRepository.getAllSortedAndFiltered(filter,page);
         }
     }
 

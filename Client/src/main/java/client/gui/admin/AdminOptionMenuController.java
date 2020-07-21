@@ -136,7 +136,7 @@ public class AdminOptionMenuController implements InitializableController {
     }
 
     private void handleSupportRegistry() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ManagerComment.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SupportRegistry.fxml"));
         Node node = loader.load();
         SupportRegistryController supportRegistryController = loader.getController();
         hbox.getChildren().removeAll(hbox.getChildren());

@@ -41,7 +41,6 @@ public class CategoryController implements ICategoryController {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println("jedi?");
         ResponseEntity<Product[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Product[].class);
         return Arrays.asList(responseEntity.getBody());
     }
@@ -277,11 +276,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            System.out.println("wwwww");
-            List<Product> test =  getProductOfCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetAllProductsAddress());
-            System.out.println("wtf");
-            System.out.println(test.size() + "wtf");
-            return test;
+            return getProductOfCategoryListFromServer(jsonObject,Constants.getCategoryControllerGetAllProductsAddress());
         } catch (HttpClientErrorException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
