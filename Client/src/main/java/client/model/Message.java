@@ -1,6 +1,6 @@
-package model;
+package client.model;
 
-import model.enums.MessageType;
+import client.model.enums.MessageType;
 
 import java.util.Date;
 
@@ -11,14 +11,10 @@ public class Message {
     private String receiver;
     private Date time;
 
-    public Message(){
-
-    }
 
     public Message(String sender, String content, String receiver, MessageType type) {
         this.sender = sender;
         this.content = content;
-        this.receiver = receiver;
         this.type = type;
         time = new Date();
     }
@@ -61,16 +57,5 @@ public class Message {
 
     public void setTime(Date time) {
         this.time = time;
-    }
-
-    @Override
-    public String toString() {
-        return "Message{" +
-                "sender='" + sender + '\'' +
-                ", content='" + content + '\'' +
-                ", type=" + type +
-                ", receiver='" + receiver + '\'' +
-                ", time=" + time +
-                '}';
     }
 }
