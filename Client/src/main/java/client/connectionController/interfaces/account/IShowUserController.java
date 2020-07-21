@@ -15,7 +15,7 @@ public interface IShowUserController {
     User getUserById(int id, String token) throws NoAccessException, InvalidTokenException;
     User getUserByToken(String token) throws InvalidTokenException;
 
-    public List<Admin> getManagers(int id);
+    public List<User> getManagers(int id);
 
     Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException;
 

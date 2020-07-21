@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Off {
     private int id;
-    private Seller seller;
+    private User seller;
     private Date startDate;
     private Date endDate;
     private List<OffItem> items;
@@ -23,7 +23,7 @@ public class Off {
 
     @JsonCreator
     public Off(@JsonProperty("id") int id,
-               @JsonProperty("seller") Seller seller,
+               @JsonProperty("seller") User seller,
                @JsonProperty("startDate") Date startDate,
                @JsonProperty("endDate") Date endDate,
                @JsonProperty("items") List<OffItem> items,
@@ -48,7 +48,7 @@ public class Off {
         return endDate;
     }
 
-    public Seller getSeller() {
+    public User getSeller() {
         return seller;
     }
 
@@ -74,7 +74,7 @@ public class Off {
         this.startDate = startDate;
     }
 
-    public void setSeller(Seller seller) {
+    public void setSeller(User seller) {
         this.seller = seller;
     }
 

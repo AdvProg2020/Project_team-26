@@ -35,7 +35,7 @@ public class AdminOptionMenuController implements InitializableController {
 
 
     private int userId;
-    private Admin admin;
+    private User admin;
     private IShowUserController showUserController;
     private ICategoryController categoryController;
 
@@ -45,7 +45,7 @@ public class AdminOptionMenuController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         categoryController = (ICategoryController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CategoryController);
         this.userId = id;
-        this.admin = (Admin) showUserController.getUserById(id, Constants.manager.getToken());
+        this.admin = (User) showUserController.getUserById(id, Constants.manager.getToken());
         categoryButton.setOnMouseClicked(e -> {
             try {
                 handleCategory();

@@ -9,7 +9,6 @@ import client.exception.*;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
-import client.model.Customer;
 import client.model.*;
 import client.model.enums.Role;
 import javafx.fxml.FXML;
@@ -28,7 +27,7 @@ public class CustomerButtonController implements InitializableController {
     private IOrderController orderController;
     private IPromoController promoController;
     private IShowUserController showUserController;
-    private Customer customer;
+    private User customer;
     @FXML
     private ImageView profileImageView;
     @FXML
@@ -47,7 +46,7 @@ public class CustomerButtonController implements InitializableController {
         if (user.getRole() != Role.CUSTOMER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be customer");
         this.userId = id;
-        this.customer = (Customer) user;
+        this.customer = (User) user;
         load();
     }
 

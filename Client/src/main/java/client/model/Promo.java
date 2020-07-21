@@ -16,15 +16,15 @@ public class Promo {
     private double percent;
     private long maxDiscount;
     private int maxValidUse;
-    private List<Customer> customers;
+    private List<User> customers;
 
     public Promo() {
         customers = new ArrayList<>();
     }
 
-    public Promo(String code, Customer customer) {
+    public Promo(String code, User customer) {
         this.promoCode = code;
-        customers = new ArrayList<Customer>();
+        customers = new ArrayList<User>();
         customers.add(customer);
     }
 
@@ -73,7 +73,7 @@ public class Promo {
         return maxValidUse;
     }
 
-    public List<Customer> getCustomers() {
+    public List<User> getCustomers() {
         return customers;
     }
 

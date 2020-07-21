@@ -82,7 +82,7 @@ public class OrderController implements IOrderController {
     }
 
     @Override
-    public List<Customer> getProductBuyerByProductId(int productId, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, InvalidIdException {
+    public List<User> getProductBuyerByProductId(int productId, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, InvalidIdException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         jsonObject.put("productId", productId);
@@ -91,7 +91,7 @@ public class OrderController implements IOrderController {
             httpHeaders.setContentType(MediaType.APPLICATION_JSON);
             HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
             RestTemplate restTemplate = new RestTemplate();
-            ResponseEntity<Customer[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetProductBuyerByProductIdAddress(), httpEntity, Customer[].class);
+            ResponseEntity<User[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetProductBuyerByProductIdAddress(), httpEntity, User[].class);
             return Arrays.asList(responseEntity.getBody());
         } catch (HttpClientErrorException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {

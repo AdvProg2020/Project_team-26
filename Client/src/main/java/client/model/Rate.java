@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Rate {
     private int id;
-    private Customer customer;
+    private User customer;
     private double score;
     private Product product;
 
     @JsonCreator
     public Rate(@JsonProperty("id") int id,
-                @JsonProperty("customer") Customer customer,
+                @JsonProperty("customer") User customer,
                 @JsonProperty("score") double score,
                 @JsonProperty("product") Product product) {
         this.id = id;

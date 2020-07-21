@@ -37,7 +37,7 @@ public class AdminMenuController implements InitializableController {
     @FXML
     private PasswordField passwordText;
     @FXML
-    private TableView<Admin> managerTable;
+    private TableView<User> managerTable;
     @FXML
     private Button editInfoButton;
     @FXML
@@ -59,7 +59,7 @@ public class AdminMenuController implements InitializableController {
         controller = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         userController = (IUserInfoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.UserInfoController);
         editInfoButton.setOnMouseClicked(e -> editInfo());
-        ObservableList<Admin> list = FXCollections.observableList(controller.getManagers(id));
+        ObservableList<User> list = FXCollections.observableList(controller.getManagers(id));
         try {
             User admin = controller.getUserById(id, Constants.manager.getToken());
             usernameText.setText(admin.getUsername());
@@ -68,7 +68,7 @@ public class AdminMenuController implements InitializableController {
             lastNameText.setText(admin.getLastName());
             roleText.setText("Admin");
             managerTable.setItems(list);
-            managerCol.setCellValueFactory(new PropertyValueFactory<Admin, String>("username"));
+            managerCol.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
         } catch (NoAccessException e) {
             e.printStackTrace();
         } catch (InvalidTokenException e) {
