@@ -124,7 +124,23 @@ public class AdminOptionMenuController implements InitializableController {
             }
         });
 
+        supportButton.setOnMouseClicked(e -> {
+            try {
+                handleSupportRegistry();
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
         handlePersonalPage();
+    }
+
+    private void handleSupportRegistry() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ManagerComment.fxml"));
+        Node node = loader.load();
+        SupportRegistryController supportRegistryController = loader.getController();
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 
     private void handleComments() throws IOException, NoAccessException, InvalidTokenException, InvalidIdException {
