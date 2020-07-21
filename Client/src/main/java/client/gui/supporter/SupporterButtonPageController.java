@@ -40,6 +40,10 @@ public class SupporterButtonPageController implements InitializableController {
         this.supporterUser = (User) user;
       /*  if (user.getRole() != Role.SELLER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be seller");*/
+      personalPage.setOnAction(e->{
+          loadUserInfo();
+      });
+
 
 
 
@@ -47,6 +51,11 @@ public class SupporterButtonPageController implements InitializableController {
 
 
     public void addUserToTable(int id){
+
+    }
+    private void loadUserInfo(){
+        box.getChildren().removeAll(box.getChildren());
+        //TODO
 
     }
 
