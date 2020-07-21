@@ -40,6 +40,7 @@ public class SupporterButtonPageController implements InitializableController {
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
         chatRooms = new HashMap<>();
+        this.userId = id;
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
         this.supporterUser = (User) user;
