@@ -70,7 +70,7 @@ public class AllProductsController implements InitializableController, Reloadabl
 
     @Override
     public void reload() {
-        Task<List<Product>> task = new Task<>() {
+      /*  Task<List<Product>> task = new Task<>() {
             @Override
             protected List<Product> call() throws Exception {
                 boolean isAscending = true;
@@ -99,7 +99,23 @@ public class AllProductsController implements InitializableController, Reloadabl
                 ioException.printStackTrace();
             }
         });
-        new Thread(task).start();
+        new Thread(task).start();*/
+        boolean isAscending = true;
+        if (sortDirectionComboBox.getValue().equals("Descending")) {
+            isAscending = false;
+        }
+        int categoryId = categoryListController.getCategory().getId();
+        try {
+            if (offCheckBox.isSelected()) {
+                updateGrid( categoryController.getAllProductsInOff(extractFilter(),
+                        extractSortField(), isAscending, 0, 0, categoryId, Constants.manager.getToken()));
+            } else {
+                 updateGrid(categoryController.getAllProducts(extractFilter(),
+                        extractSortField(), isAscending, 0, 0, categoryId, Constants.manager.getToken()));
+            }
+        } catch (InvalidIdException | IOException invalidIdException) {
+            invalidIdException.printStackTrace();
+        }
     }
 
     private void updateGrid(List<Product> products) throws IOException {
