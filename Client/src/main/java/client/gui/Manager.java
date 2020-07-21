@@ -13,6 +13,7 @@ import client.gui.admin.AdminRegistryController;
 import client.gui.authentication.AuthenticationStageManager;
 import client.gui.authentication.RegisterMenuController;
 import client.gui.interfaces.InitializableController;
+import client.gui.interfaces.MessageReceiver;
 import client.gui.interfaces.Reloadable;
 import client.model.Message;
 import client.model.User;
@@ -64,10 +65,12 @@ public class Manager implements Reloadable {
     private final String hostPort = "http://localhost:8080";
     public final String chatUrl = "ws://localhost:8080/chat";
     private StompSession session;
+    private List<MessageReceiver> messageReceivers;
 
     public Manager() {
         pages = new ArrayList<>();
         compareList = new HashSet<>();
+        messageReceivers = new ArrayList<>();
     }
 
     public String getChatUrl() {
@@ -249,6 +252,10 @@ public class Manager implements Reloadable {
 
     public void setTokenFromController() {
         this.token = ((SessionController) controllerContainer.getController(ControllerContainer.Controller.SessionController)).createToken();
+    }
+
+    public List<MessageReceiver> getMessageReceivers() {
+        return messageReceivers;
     }
 
     public void showComparePage() throws IOException {

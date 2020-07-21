@@ -64,20 +64,18 @@ public class Main extends Application {
         }
 
         private void sendJsonMessage(StompSession session, Message message) {
-            session.send("/app/chat/"+message.getReceiver(), message);
+            session.send("/app/chat/" + message.getReceiver(), message);
         }
 
         private void subscribeTopic(String topic, StompSession session) {
             session.subscribe(topic, new StompFrameHandler() {
-
                 @Override
                 public Type getPayloadType(StompHeaders headers) {
                     return Message.class;
                 }
-
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
-                    System.err.println(payload.toString());
+                    Constants.manager.getMessageReceivers().forEach(i -> i.received((Message) payload));
                 }
             });
         }
@@ -94,7 +92,7 @@ public class Main extends Application {
 
         ControllerContainer controllerContainer = new ControllerContainer();
         Constants.manager.setControllerContainer(controllerContainer);
-       // Constants.manager.startWebSocket();
+        // Constants.manager.startWebSocket();
         launch(args);
     }
 }
