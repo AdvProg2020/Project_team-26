@@ -1,16 +1,21 @@
 package client.gui;
 
 import client.ControllerContainer;
+import client.Main;
 import client.connectionController.SessionController;
 import client.connectionController.account.AuthenticationController;
 import client.connectionController.interfaces.account.IShowUserController;
-import client.exception.*;
+import client.exception.InvalidIdException;
+import client.exception.InvalidTokenException;
+import client.exception.NoAccessException;
+import client.exception.NotLoggedINException;
 import client.gui.admin.AdminRegistryController;
 import client.gui.authentication.AuthenticationStageManager;
 import client.gui.authentication.RegisterMenuController;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import client.model.*;
+import client.model.Message;
+import client.model.User;
 import client.model.enums.Role;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -23,13 +28,26 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import net.minidev.json.JSONObject;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.converter.MappingJackson2MessageConverter;
+import org.springframework.messaging.simp.stomp.StompSession;
+import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.socket.client.WebSocketClient;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.Transport;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
 import java.io.IOException;
 import java.time.*;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Manager implements Reloadable {
 
@@ -44,12 +62,21 @@ public class Manager implements Reloadable {
     private Set<Integer> compareList;
     private Stage popUp;
     private final String hostPort = "http://localhost:8080";
+    public final String chatUrl = "ws://localhost:8080/chat";
+    private StompSession session;
 
     public Manager() {
         pages = new ArrayList<>();
         compareList = new HashSet<>();
     }
 
+    public String getChatUrl() {
+        return chatUrl;
+    }
+
+    public StompSession getSession() {
+        return Constants.manager.session;
+    }
 
     public String getHostPort() {
         return hostPort;
@@ -404,6 +431,23 @@ public class Manager implements Reloadable {
         } catch (IOException ioException) {
             ioException.printStackTrace();
         }
+    }
+
+    public void startWebSocket() throws Exception {
+        WebSocketClient simpleWebSocketClient = new StandardWebSocketClient();
+        List<Transport> transports = new ArrayList<>(1);
+        transports.add(new WebSocketTransport(simpleWebSocketClient));
+        SockJsClient sockJsClient = new SockJsClient(transports);
+        WebSocketStompClient stompClient = new WebSocketStompClient(sockJsClient);
+        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
+        String userId = "spring-" + ThreadLocalRandom.current().nextInt(1, 99);
+        StompSessionHandler sessionHandler = new Main.MyStompSessionHandler(userId);
+        StompSession session = stompClient.connect(Constants.manager.chatUrl, sessionHandler).get();
+        Constants.manager.session = session;
+    }
+
+    public void sendMessageTOWebSocket(StompSession session, String receiver, Message message) {
+        session.send("/app/chat/" + receiver, message);
     }
 
     public void showRandomPromoIfUserGet() throws IOException {

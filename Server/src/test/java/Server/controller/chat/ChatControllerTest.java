@@ -2,6 +2,7 @@ package Server.controller.chat;
 
 import model.Message;
 import model.enums.MessageType;
+import model.enums.Role;
 import org.junit.jupiter.api.Test;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.*;
@@ -21,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ThreadLocalRandom;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ChatControllerTest {
 
@@ -47,7 +46,7 @@ class ChatControllerTest {
             String line = in.readLine();
             if (line == null) break;
             if (line.length() == 0) continue;
-            Message msg = new Message("pouya", line, "blah", MessageType.CHAT);
+            Message msg = new Message("pouya", line, "blah", MessageType.CHAT, Role.ADMIN);
             session.send("/app/chat", msg);
         }
     }
@@ -74,7 +73,7 @@ class ChatControllerTest {
         }
 
         private void sendJsonMessage(StompSession session) {
-            Message msg = new Message("pouya", "hello from spring", "blah", MessageType.JOIN);
+            Message msg = new Message("pouya", "hello from spring", "blah", MessageType.JOIN, Role.ADMIN);
             session.send("/app/chat", msg);
         }
 
