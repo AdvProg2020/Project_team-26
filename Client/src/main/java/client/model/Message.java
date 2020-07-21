@@ -7,14 +7,18 @@ import java.util.Date;
 public class Message {
     private String sender;
     private String content;
-    private MessageType type;
     private String receiver;
+    private MessageType type;
     private Date time;
 
+    public Message(){
+
+    }
 
     public Message(String sender, String content, String receiver, MessageType type) {
         this.sender = sender;
         this.content = content;
+        this.receiver = receiver;
         this.type = type;
         time = new Date();
     }
