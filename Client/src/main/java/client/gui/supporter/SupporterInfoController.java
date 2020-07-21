@@ -39,7 +39,7 @@ public class SupporterInfoController implements InitializableController {
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
         userInfoController = (IUserInfoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.UserInfoController);
-        userId = userId;
+        userId = id;
         edit.setText("Edit");
         userName.setEditable(false);
         role.setEditable(false);
@@ -118,8 +118,6 @@ public class SupporterInfoController implements InitializableController {
                 Constants.manager.showLoginMenu();
             }
         }
-
-
     }
 
     private boolean isEveryThingOk() throws IOException {

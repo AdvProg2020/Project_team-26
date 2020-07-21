@@ -5,23 +5,21 @@ import client.connectionController.interfaces.account.IShowUserController;
 import client.exception.InvalidIdException;
 import client.exception.InvalidTokenException;
 import client.exception.NoAccessException;
+import client.gui.ChatPageController;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
-import client.gui.seller.CreateSingleProductForSellerController;
 import client.model.User;
-import client.model.enums.Role;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 public class SupporterButtonPageController implements InitializableController {
     private int userId;
@@ -37,9 +35,11 @@ public class SupporterButtonPageController implements InitializableController {
     private TableView<UserForTable> tableUsers;
     @FXML
     private VBox box;
+    private HashMap<Integer, Node> chatRooms;
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
+        chatRooms = new HashMap<>();
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
         this.supporterUser = (User) user;
@@ -53,25 +53,22 @@ public class SupporterButtonPageController implements InitializableController {
             }
         });
         tableUsers.setOnMouseClicked(e -> {
-            try {
-                changeToUserChat(this.tableUsers);
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
+            changeToUserChat();
         });
 
 
     }
 
-    private void changeToUserChat(TableView<UserForTable> table) throws IOException {
-        UserForTable userForTable = table.getSelectionModel().getSelectedItem();
-        if (userForTable == null) {
-
+    private void changeToUserChat(){
+        UserForTable selectedUser = tableUsers.getSelectionModel().getSelectedItem();
+        if (selectedUser == null) {
             return;
         }
-        //TODO
-
-
+        if (!chatRooms.containsKey(selectedUser.getId())) {
+            return;
+        }
+        box.getChildren().removeAll(box.getChildren());
+        box.getChildren().addAll(chatRooms.get(selectedUser.getId()));
     }
 
 
