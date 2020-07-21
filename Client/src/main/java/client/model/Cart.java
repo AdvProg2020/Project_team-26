@@ -1,14 +1,17 @@
 package client.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
     @JsonDeserialize(using = CartProductDeserialization.class)
+    @JsonSerialize(using = CartProductSerializer.class)
     private Map<ProductSeller, Integer> products;
     private Promo usedPromo;
     private String address;
@@ -34,9 +37,6 @@ public class Cart {
         return products;
     }
 
-    public Map<ProductSeller, Integer> getProduct() {
-        return products;
-    }
 
     public void setUsedPromo(Promo usedPromo) {
         this.usedPromo = usedPromo;

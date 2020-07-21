@@ -48,8 +48,11 @@ public class CartController implements ICartController {
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         try {
+            ResponseEntity<String> responseEntity1 = restTemplate.postForEntity(Constants.getCartControllerGetCartAddress(), httpEntity, String.class);
+            System.out.println(responseEntity1.getBody());
             ResponseEntity<Cart> responseEntity = restTemplate.postForEntity(Constants.getCartControllerGetCartAddress(), httpEntity, Cart.class);
             return responseEntity.getBody();
+            //return responseEntity.getBody();
         } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:

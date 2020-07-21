@@ -45,6 +45,11 @@ public class Product {
     @Column(name = "image", columnDefinition = "mediumblob")
     private byte[] image;
 
+    @JsonIgnore
+    @OneToOne
+    @JoinColumn(name = "product_file_id")
+    private ProductFile file;
+
     @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<ProductSeller> sellerList;
 

@@ -36,7 +36,7 @@ public class CartController {
     @PostMapping("/controller/method/cart/add-or-change-product")
     public void addOrChangeProduct(@RequestBody Map info)
             throws InvalidIdException, NotEnoughProductsException, InvalidTokenException {
-        int productSellerId = (Integer) info.get("producetSellerId");
+        int productSellerId = (Integer) info.get("productSellerId");
         int amount = (Integer) info.get("amount");
         String token = (String) info.get("token");
         Session session = Session.getSession(token);

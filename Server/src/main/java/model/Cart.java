@@ -1,5 +1,8 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.HashMap;
@@ -13,6 +16,15 @@ public class Cart {
 
     public Cart() {
         products = new HashMap<>();
+    }
+
+    @JsonCreator
+    public Cart(@JsonProperty("products") Map<ProductSeller, Integer> products,
+                @JsonProperty("usedPromo") Promo usedPromo,
+                @JsonProperty("address") String address) {
+        this.products = products;
+        this.usedPromo = usedPromo;
+        this.address = address;
     }
 
     public boolean addItems(ProductSeller productSeller, int amount) {
@@ -45,11 +57,7 @@ public class Cart {
         return products;
     }
 
-    public Map<ProductSeller, Integer> getProduct() {
-        //todo
-        return products;
-    }
-
+    @JsonIgnore
     public long getTotalPrice() {
         //todo
         return 0;
