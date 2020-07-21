@@ -1,6 +1,5 @@
 package client;
 
-import client.ControllerContainer;
 import client.connectionController.account.AuthenticationController;
 import client.gui.Constants;
 import client.gui.authentication.FirstAdminRegister;
@@ -34,6 +33,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
+
         ControllerContainer controllerContainer = new ControllerContainer();
         Constants.manager.setControllerContainer(controllerContainer);
         launch(args);

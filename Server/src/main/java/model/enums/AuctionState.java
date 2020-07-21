@@ -1,5 +1,5 @@
 package model.enums;
 
 public enum  AuctionState {
-    ACTIVE,FINISHED;
+    ACTIVE;
 }

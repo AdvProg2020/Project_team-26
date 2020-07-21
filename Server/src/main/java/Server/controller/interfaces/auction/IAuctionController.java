@@ -9,9 +9,10 @@ import java.util.List;
 public interface IAuctionController {
     List<Auction> getAllAuction(String token);
 
+
     List<Auction> getAuctionForCustomer(String token) throws NotLoggedINException;
 
-    Auction getAuctionForSeller(String token) throws NotLoggedINException;
+    boolean doesThisSellerHaveProductInAuction(String token);
 
     void createNewAuction(int productSellerId, Date endDate, String token) throws ObjectAlreadyExistException, NotLoggedINException, NotSellerException, InvalidTokenException;
 

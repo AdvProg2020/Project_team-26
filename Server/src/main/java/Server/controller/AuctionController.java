@@ -1,10 +1,10 @@
 package Server.controller;
 
-import Server.controller.interfaces.auction.IAuctionController;
 import exception.*;
 import model.Auction;
 import org.springframework.web.bind.annotation.*;
-import repository.*;
+import repository.AuctionRepository;
+import repository.RepositoryContainer;
 
 import java.util.Date;
 import java.util.List;
@@ -25,15 +25,6 @@ public class AuctionController {
         return null;
     }
 
-    @GetMapping("/controller/method/request/getAll-Auction-Customer/{token}")
-    public List<Auction> getAuctionForCustomer(@PathVariable("token") String token) throws NotLoggedINException {
-        return null;
-    }
-
-    @GetMapping("/controller/method/request/getAll-Auction-Customer/{token}")
-    public Auction getAuctionForSeller(@PathVariable("token") String token) throws NotLoggedINException {
-        return null;
-    }
 
     @PostMapping("/controller/method/request/create-newAuction")
     public void createNewAuction(@RequestBody Map info) throws ObjectAlreadyExistException, NotLoggedINException, NotSellerException, InvalidTokenException {

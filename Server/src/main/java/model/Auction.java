@@ -15,36 +15,23 @@ public class Auction {
     @Column(name = "auction_id")
     private int id;
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "start_date", nullable = false)
-    private Date startDate;
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date", nullable = false)
     private Date endDate;
     private ProductSeller productSeller;
     @JsonIgnore
-    HashMap<Integer, Long> suggestedPricesByUsers;
+    private Customer maxSuggestedCustomer;
     @JsonIgnore
-    private AuctionState auctionState;
+    private long price;
+    @JsonIgnore
 
     public Auction() {
-        suggestedPricesByUsers = new HashMap<>();
-        auctionState = AuctionState.ACTIVE;
     }
 
-    @JsonCreator
-    public Auction(@JsonProperty("startDate") Date startDate, @JsonProperty("endDate") Date endDate, @JsonProperty("productSeller") ProductSeller productSeller) {
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.productSeller = productSeller;
-    }
 
     public int getId() {
         return id;
     }
 
-    public Date getStartDate() {
-        return startDate;
-    }
 
     public Date getEndDate() {
         return endDate;
@@ -54,7 +41,11 @@ public class Auction {
         return productSeller;
     }
 
-    public HashMap<Integer, Long> getSuggestedPricesByUsers() {
-        return suggestedPricesByUsers;
+    public User getMaxSuggestedCustomer() {
+        return maxSuggestedCustomer;
+    }
+
+    public long getPrice() {
+        return price;
     }
 }
