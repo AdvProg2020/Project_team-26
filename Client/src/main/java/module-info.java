@@ -12,4 +12,7 @@ open module Server {
     requires spring.web;
     requires json.smart;
     requires com.fasterxml.jackson.databind;
+    requires java.sql;
+    requires org.hibernate.orm.core;
+
 }

@@ -17,6 +17,7 @@ public class InvalidAuthenticationException extends Exception {
     }
 
     public static InvalidAuthenticationException getHttpException(String errorMessage) {
+        System.out.println(errorMessage);
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(errorMessage, InvalidAuthenticationException.class);
