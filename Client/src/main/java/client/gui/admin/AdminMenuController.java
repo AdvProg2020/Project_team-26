@@ -6,6 +6,8 @@ import client.exception.*;
 import client.gui.Constants;
 import client.gui.interfaces.*;
 import client.model.*;
+import client.model.enums.MessageType;
+import client.model.enums.Role;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -62,6 +64,8 @@ public class AdminMenuController implements InitializableController {
         ObservableList<User> list = FXCollections.observableList(controller.getManagers(id));
         try {
             User admin = controller.getUserById(id, Constants.manager.getToken());
+            Constants.manager.sendMessageTOWebSocket("", new Message(admin.getUsername(), "", "", MessageType.JOIN, Role.ADMIN));
+            Constants.manager.setLoggedInUser(admin);
             usernameText.setText(admin.getUsername());
             emailText.setText(admin.getEmail());
             firstNameText.setText(admin.getFirstName());

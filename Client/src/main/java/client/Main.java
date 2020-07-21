@@ -16,6 +16,7 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandlerAdapter;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
@@ -75,7 +76,13 @@ public class Main extends Application {
                 }
                 @Override
                 public void handleFrame(StompHeaders headers, Object payload) {
-                    Constants.manager.getMessageReceivers().forEach(i -> i.received((Message) payload));
+                    Constants.manager.getMessageReceivers().forEach(i -> {
+                        try {
+                            i.received((Message) payload);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    });
                 }
             });
         }

@@ -10,6 +10,7 @@ import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
 import client.model.*;
+import client.model.enums.MessageType;
 import client.model.enums.Role;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -43,6 +44,8 @@ public class CustomerButtonController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.PromoController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
+        Constants.manager.sendMessageTOWebSocket("", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.CUSTOMER));
+        Constants.manager.setLoggedInUser(user);
         if (user.getRole() != Role.CUSTOMER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be customer");
         this.userId = id;

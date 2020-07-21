@@ -17,6 +17,7 @@ import client.gui.interfaces.MessageReceiver;
 import client.gui.interfaces.Reloadable;
 import client.model.Message;
 import client.model.User;
+import client.model.enums.MessageType;
 import client.model.enums.Role;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -72,6 +73,11 @@ public class Manager implements Reloadable {
         compareList = new HashSet<>();
         messageReceivers = new ArrayList<>();
     }
+
+    public void setLoggedInUser(User loggedInUser) {
+        this.loggedInUser = loggedInUser;
+    }
+
 
     public String getChatUrl() {
         return chatUrl;
@@ -238,8 +244,10 @@ public class Manager implements Reloadable {
                 openPage("CustomersButton", user.getId());
             } else if (user.getRole() == Role.ADMIN) {
                 openPage("AdminOptionMenu", user.getId());
+            } else if (user.getRole() == Role.SUPPORT) {
+                openPage("SupporterButtons", user.getId());
             } else {
-                //TODO open main page here
+                //TODO
             }
         } catch (InvalidTokenException e) {
             e.printStackTrace();
@@ -424,6 +432,8 @@ public class Manager implements Reloadable {
     public void logout() throws IOException, InvalidTokenException, NotLoggedINException {
         AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
         controller.logout(getToken());
+        Constants.manager.sendMessageTOWebSocket("", new Message(loggedInUser.getUsername(), "", "", MessageType.LEAVE, loggedInUser.getRole()));
+        setLoggedInUser(null);
         setLoggedIn(false);
         reloadTop();
         openPage("AllProducts", 0);
@@ -449,11 +459,11 @@ public class Manager implements Reloadable {
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
         String userId = "spring-" + ThreadLocalRandom.current().nextInt(1, 99);
         StompSessionHandler sessionHandler = new Main.MyStompSessionHandler(userId);
-      //  StompSession session = (stompClient.connect(Constants.manager.chatUrl, sessionHandler)).get();
-       // Constants.manager.session = session;
+        //  StompSession session = (stompClient.connect(Constants.manager.chatUrl, sessionHandler)).get();
+        // Constants.manager.session = session;
     }
 
-    public void sendMessageTOWebSocket(StompSession session, String receiver, Message message) {
+    public void sendMessageTOWebSocket(String receiver, Message message) {
         session.send("/app/chat/" + receiver, message);
     }
 
