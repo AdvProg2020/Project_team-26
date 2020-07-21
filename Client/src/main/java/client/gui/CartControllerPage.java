@@ -57,7 +57,7 @@ public class CartControllerPage implements InitializableController, Reloadable {
 
     private void loadProducts(Cart cart) throws IOException {
         cartProductsVBox.getChildren().removeAll(cartProductsVBox.getChildren());
-        Map<ProductSeller, Integer> products = cart.getProduct();
+        Map<ProductSeller, Integer> products = cart.getProducts();
         products.forEach((key, value) -> {
             if (value > 0) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ProductOfCart.fxml"));

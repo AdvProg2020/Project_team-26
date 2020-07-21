@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import exception.NotEnoughProductsException;
 import model.enums.RequestType;
 import model.enums.Status;

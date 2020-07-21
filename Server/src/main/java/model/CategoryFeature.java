@@ -1,5 +1,7 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.enums.FeatureType;
 
@@ -29,10 +31,12 @@ public class CategoryFeature {
         this.featureType = type;
     }
 
+
     public String getFeatureName() {
         return featureName;
     }
 
+    @JsonValue
     public FeatureType getFeatureType() {
         return featureType;
     }
