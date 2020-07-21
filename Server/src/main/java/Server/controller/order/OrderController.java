@@ -140,6 +140,7 @@ public class OrderController {
     }
 
     private Order getSingleSellerOrder(Seller seller, Order wantedOrder) throws NoAccessException {
+
         if (!wantedOrder.getCustomer().getUsername().equals(seller.getUsername())) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
