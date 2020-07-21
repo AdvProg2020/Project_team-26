@@ -1,5 +1,7 @@
 package model.enums;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public enum FeatureType {
     INTEGER, STRING, DOUBLE;
 

@@ -1,7 +1,7 @@
 package client.model.enums;
 
 public enum Role {
-    ADMIN, SELLER, CUSTOMER;
+    ADMIN, SELLER, CUSTOMER, SUPPORT;
 
     public static Role getRole(String role) {
         switch (role) {
@@ -11,6 +11,8 @@ public enum Role {
                 return ADMIN;
             case "Customer":
                 return CUSTOMER;
+            case "Support":
+                return SUPPORT;
         }
         return null;
     }
@@ -21,8 +23,10 @@ public enum Role {
                 return "Customer";
             case SELLER:
                 return "Seller";
-            default:
+            case ADMIN:
                 return "Manager";
+            default:
+                return "Support";
         }
     }
 }
