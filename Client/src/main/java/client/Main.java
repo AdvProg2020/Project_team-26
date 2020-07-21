@@ -64,7 +64,7 @@ public class Main extends Application {
         }
 
         private void sendJsonMessage(StompSession session, Message message) {
-            session.send("/app/chat/java", message);
+            session.send("/app/chat/"+message.getReceiver(), message);
         }
 
         private void subscribeTopic(String topic, StompSession session) {
@@ -94,7 +94,7 @@ public class Main extends Application {
 
         ControllerContainer controllerContainer = new ControllerContainer();
         Constants.manager.setControllerContainer(controllerContainer);
-        Constants.manager.startWebSocket();
+       // Constants.manager.startWebSocket();
         launch(args);
     }
 }
