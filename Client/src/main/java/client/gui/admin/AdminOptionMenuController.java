@@ -3,6 +3,7 @@ import client.connectionController.interfaces.account.*;
 import client.connectionController.interfaces.category.ICategoryController;
 import client.exception.*;
 import client.gui.Constants;
+import client.gui.customer.OrderTableController;
 import client.gui.interfaces.*;
 import client.model.*;
 import client.ControllerContainer;
@@ -32,6 +33,8 @@ public class AdminOptionMenuController implements InitializableController {
     private Button supportButton;
     @FXML
     private Button personalPage;
+    @FXML
+    private Button orderButton;
     @FXML
     private HBox hbox;
 
@@ -138,7 +141,32 @@ public class AdminOptionMenuController implements InitializableController {
             }
         });
 
+        orderButton.setOnMouseClicked(e -> {
+            try {
+                try {
+                    handleOrderTable();
+                } catch (InvalidIdException invalidIdException) {
+                    invalidIdException.printStackTrace();
+                } catch (InvalidTokenException invalidTokenException) {
+                    invalidTokenException.printStackTrace();
+                } catch (NoAccessException noAccessException) {
+                    noAccessException.printStackTrace();
+                }
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
+            }
+        });
+
         handlePersonalPage();
+    }
+
+    private void handleOrderTable() throws IOException, InvalidIdException, InvalidTokenException, NoAccessException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OrderTableForManager.fxml"));
+        Node node = loader.load();
+        ManagerOrderController managerOrderController = loader.getController();
+        managerOrderController.initialize(0);
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 
     private void handleSupportRegistry() throws IOException, InvalidIdException, InvalidTokenException, NoAccessException {

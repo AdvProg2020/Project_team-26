@@ -52,7 +52,8 @@ public class Product {
         this.categoryFeatures = categoryFeatures;
         this.status = status;
     }
-    public Product(String name,String brand , String description ){
+
+    public Product(String name, String brand, String description) {
         this.name = name;
         this.brand = brand;
         this.description = description;
@@ -76,6 +77,7 @@ public class Product {
         }
         return min;
     }
+
     @Override
     public Product clone() {
         Product product = new Product(this.name, this.brand, this.description);
@@ -84,6 +86,7 @@ public class Product {
         product.setSellerList(sellerList);
         return product;
     }
+
     public String getBrand() {
         return brand;
     }
@@ -166,5 +169,10 @@ public class Product {
 
     public Map<CategoryFeature, String> getCategoryFeatures() {
         return categoryFeatures;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

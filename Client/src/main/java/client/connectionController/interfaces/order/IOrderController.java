@@ -17,4 +17,6 @@ public interface IOrderController {
 
     List<Order> getOrderHistoryForSeller(String sortField, boolean isAscending, int startIndex, int endIndex, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException;
 
+    void changeShipmentStatus(int orderItemId);
+
 }

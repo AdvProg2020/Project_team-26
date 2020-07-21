@@ -2,6 +2,7 @@ package client.model;
 
 import client.model.enums.ShipmentState;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OrderItem {
@@ -33,6 +34,7 @@ public class OrderItem {
         this.state = state;
     }
 
+    @JsonIgnore
     public User getSeller() {
         return this.seller;
     }
@@ -59,6 +61,10 @@ public class OrderItem {
 
     public int getAmount() {
         return amount;
+    }
+
+    public Order getOrder() {
+        return order;
     }
 
     public ShipmentState getState() {
