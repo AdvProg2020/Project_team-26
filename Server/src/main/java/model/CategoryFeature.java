@@ -1,9 +1,10 @@
 package model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.enums.FeatureType;
 
 import javax.persistence.*;
-
+@JsonSerialize(using = CategoryFeatureSerializer.class)
 @Entity
 @Table(name = "category_feature")
 public class CategoryFeature {
@@ -42,5 +43,9 @@ public class CategoryFeature {
 
     public void setFeatureName(String featureName) {
         this.featureName = featureName;
+    }
+
+    public int getId() {
+        return id;
     }
 }
