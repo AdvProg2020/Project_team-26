@@ -17,11 +17,13 @@ public class OrderController {
     OrderRepository orderRepository;
     ProductRepository productRepository;
     CustomerRepository customerRepository;
+    OrderItemRepository orderItemRepository;
 
     public OrderController() {
         this.orderRepository = (OrderRepository) RepositoryContainer.getInstance().getRepository("OrderRepository");
         this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
         this.customerRepository = (CustomerRepository) RepositoryContainer.getInstance().getRepository("CustomerRepository");
+        this.orderItemRepository = (OrderItemRepository) RepositoryContainer.getInstance().getRepository("OrderItemRepository");
     }
 
 
@@ -38,6 +40,8 @@ public class OrderController {
                     return (ArrayList<Order>) orderRepository.getAllSellerOrders(user.getId(), null);
                 case CUSTOMER:
                     return (ArrayList<Order>) orderRepository.getAllCustomerOrders(user.getId(), null);
+                case ADMIN:
+                    return orderRepository.getAll();
             }
             return null;
         }
@@ -143,6 +147,13 @@ public class OrderController {
         }
     }
 
+    @PostMapping("/controller/method/change-shipment-status")
+    public void changeShipmentStatus(@RequestBody Map info) {
+        OrderItem orderItem = orderItemRepository.getById((int)info.get("orderItemId"));
+        orderItem.setState();
+        orderItemRepository.save(orderItem);
+    }
+
     @PostMapping("/controller/method/get-order-items-with-order-id")
     public List<OrderItem> getOrderItemsWithOrderId(@RequestBody Map info) throws InvalidTokenException, NoAccessException {
         User user = Session.getSession((String) info.get("token")).getLoggedInUser();
@@ -150,6 +161,7 @@ public class OrderController {
         switch (user.getRole()) {
             case SELLER:
                 return orderRepository.getSellerOrderItems(user.getId(),orderId);
+            case ADMIN:
             case CUSTOMER:
                 return orderRepository.getById(orderId).getItems();
             default:

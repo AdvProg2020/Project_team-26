@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class OrderController implements IOrderController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<OrderItem[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetOrderItemsAddress(), httpEntity, OrderItem[].class);
             return Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -152,6 +153,17 @@ public class OrderController implements IOrderController {
                 default:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
             }
+        }
+    }
+
+    @Override
+    public void changeShipmentStatus(int orderItemId) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("orderItemId",orderItemId);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOrderControllerChangeShipmentStatusAddress());
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
         }
     }
 

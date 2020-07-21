@@ -241,6 +241,10 @@ public class Constants {
         return manager.getHostPort() + "/controller/method/order/get-order-history-for-seller";
     }
 
+    public static String getOrderControllerChangeShipmentStatusAddress() {
+        return manager.getHostPort() + "/controller/method/change-shipment-status";
+    }
+
     /**
      * CategoryController Methods.
      */
