@@ -11,6 +11,9 @@ public class ProductFile {
     @Column(name = "product_file_id", unique = true)
     private int id;
 
+    @Column(name = "name")
+    private String name;
+
     @Lob
     @Column(name = "file", columnDefinition = "longblob")
     private byte[] file;
@@ -21,6 +24,10 @@ public class ProductFile {
 
     public int getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public byte[] getFile() {
