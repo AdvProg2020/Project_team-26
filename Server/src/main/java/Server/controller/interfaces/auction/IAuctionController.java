@@ -7,9 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 public interface IAuctionController {
-    List<Auction> getAllAuction();
+    List<Auction> getAllAuction(String token);
 
-    List<Auction> getAuctionForCustomer() throws NotLoggedINException;
+    List<Auction> getAuctionForCustomer(String token) throws NotLoggedINException;
 
     Auction getAuctionForSeller(String token) throws NotLoggedINException;
 
