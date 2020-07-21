@@ -147,6 +147,7 @@ public class SupporterButtonPageController implements InitializableController, M
 
         public String getName() {
             return name;
+
         }
 
         @Override
