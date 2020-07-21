@@ -4,6 +4,7 @@ import client.ControllerContainer;
 import client.connectionController.interfaces.account.IAuthenticationController;
 import client.exception.*;
 import client.gui.Constants;
+import client.gui.interfaces.InitializableController;
 import client.model.Account;
 import client.model.enums.Role;
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import org.hibernate.boot.model.naming.ImplicitAnyDiscriminatorColumnNameSource;
 
 import java.io.IOException;
 
-public class SupportRegistryController {
+public class SupportRegistryController implements InitializableController {
 
     private IAuthenticationController authenticationController;
 
@@ -28,13 +29,6 @@ public class SupportRegistryController {
     @FXML
     private Button registerButton;
 
-
-    public SupportRegistryController() {
-        authenticationController = (IAuthenticationController) Constants.manager.getControllerContainer().getController(
-                ControllerContainer.Controller.AuthenticationController
-        );
-        registerButton.setOnMouseClicked(e -> registerSupport());
-    }
 
     private void registerSupport() {
         String username = usernameText.getText();
@@ -72,4 +66,11 @@ public class SupportRegistryController {
         errorLabel.setText("");
     }
 
+    @Override
+    public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
+        authenticationController = (IAuthenticationController) Constants.manager.getControllerContainer().getController(
+                ControllerContainer.Controller.AuthenticationController
+        );
+        registerButton.setOnMouseClicked(e -> registerSupport());
+    }
 }

@@ -129,16 +129,23 @@ public class AdminOptionMenuController implements InitializableController {
                 handleSupportRegistry();
             } catch (IOException ioException) {
                 ioException.printStackTrace();
+            } catch (InvalidIdException invalidIdException) {
+                invalidIdException.printStackTrace();
+            } catch (InvalidTokenException invalidTokenException) {
+                invalidTokenException.printStackTrace();
+            } catch (NoAccessException noAccessException) {
+                noAccessException.printStackTrace();
             }
         });
 
         handlePersonalPage();
     }
 
-    private void handleSupportRegistry() throws IOException {
+    private void handleSupportRegistry() throws IOException, InvalidIdException, InvalidTokenException, NoAccessException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SupportRegistry.fxml"));
         Node node = loader.load();
         SupportRegistryController supportRegistryController = loader.getController();
+        supportRegistryController.initialize(0);
         hbox.getChildren().removeAll(hbox.getChildren());
         hbox.getChildren().addAll(node);
     }
