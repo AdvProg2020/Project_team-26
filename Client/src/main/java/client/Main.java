@@ -1,5 +1,6 @@
 package client;
 
+
 import client.connectionController.account.AuthenticationController;
 import client.gui.Constants;
 import client.gui.authentication.FirstAdminRegister;
