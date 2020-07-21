@@ -7,9 +7,13 @@ import client.exception.InvalidTokenException;
 import client.exception.NoAccessException;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
+import client.gui.seller.CreateSingleProductForSellerController;
 import client.model.User;
 import client.model.enums.Role;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -33,6 +37,7 @@ public class SupporterButtonPageController implements InitializableController {
     private TableView<UserForTable> tableUsers;
     @FXML
     private VBox box;
+
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
@@ -40,26 +45,61 @@ public class SupporterButtonPageController implements InitializableController {
         this.supporterUser = (User) user;
       /*  if (user.getRole() != Role.SELLER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be seller");*/
-      personalPage.setOnAction(e->{
-          loadUserInfo();
-      });
-
-
+        personalPage.setOnAction(e -> {
+            try {
+                loadUserInfo();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        tableUsers.setOnMouseClicked(e -> {
+            try {
+                changeToUserChat(this.tableUsers);
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
 
 
     }
 
+    private void changeToUserChat(TableView<UserForTable> table) throws IOException {
+        UserForTable userForTable = table.getSelectionModel().getSelectedItem();
+        if (userForTable == null) {
 
-    public void addUserToTable(int id){
-
-    }
-    private void loadUserInfo(){
-        box.getChildren().removeAll(box.getChildren());
+            return;
+        }
         //TODO
 
+
     }
 
-    public class UserForTable{
+
+    public void addUserToTable(int id) {
+
+
+    }
+
+    private void loadUserInfo() throws IOException {
+        box.getChildren().removeAll(box.getChildren());
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/UserSupporterPage.fxml"));
+        Node node = loader.load();
+        SupporterInfoController supporterInfoController = (SupporterInfoController) loader.getController();
+        try {
+            supporterInfoController.initialize(userId);
+            supporterInfoController.load(this.supporterUser);
+            box.getChildren().removeAll(box.getChildren());
+            box.getChildren().addAll(node);
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public class UserForTable {
         public User user;
         public int id;
         public String name;

@@ -10,14 +10,14 @@
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ScrollPane fx:id="CHATBOX" prefHeight="570.0" prefWidth="600.0">
+      <ScrollPane fx:id="chatScroll" prefHeight="570.0" prefWidth="600.0">
          <content>
-            <VBox fx:id="CHATVBOX" minWidth="200.0" prefWidth="600.0" />
+            <VBox fx:id="chatVBox" minWidth="200.0" prefWidth="600.0" />
          </content></ScrollPane>
       <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="600.0" spacing="40.0">
          <children>
-            <TextArea fx:id="MESSAGEBOX" prefHeight="50.0" prefWidth="495.0" promptText="Enter Your Word" />
-            <ImageView fx:id="SENDICONECLICKED" fitHeight="43.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+            <TextArea fx:id="messageTextArea" prefHeight="50.0" prefWidth="495.0" promptText="Enter Your Word" />
+            <ImageView fx:id="sendImage" fitHeight="43.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../pic/icons8-email-send-96.png" />
                </image>
