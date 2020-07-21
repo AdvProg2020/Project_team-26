@@ -68,6 +68,7 @@ public class AdminMenuController implements InitializableController {
             lastNameText.setText(admin.getLastName());
             roleText.setText("Admin");
             managerTable.setItems(list);
+            profileImage.setImage(new Image(new ByteArrayInputStream(admin.getImage())));
             managerCol.setCellValueFactory(new PropertyValueFactory<User, String>("username"));
         } catch (NoAccessException e) {
             e.printStackTrace();

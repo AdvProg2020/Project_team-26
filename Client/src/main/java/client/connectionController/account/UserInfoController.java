@@ -48,7 +48,7 @@ public class UserInfoController implements IUserInfoController {
 
     public void changeImage(byte[] image, String token) throws InvalidTokenException, NotLoggedINException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("image", image);
+        jsonObject.put("image", org.apache.commons.codec.binary.Base64.encodeBase64String(image));
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getUserInfoControllerChangeImageAddress());
