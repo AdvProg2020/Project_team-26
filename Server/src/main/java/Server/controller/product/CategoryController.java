@@ -240,12 +240,13 @@ public class CategoryController {
         String token = (String) info.get("token");
         Pageable page = createPage(sortField, isAscending, startIndex, endIndex);
         Category category = categoryRepository.getById(id);
-        System.out.println("habibi");
         if (category == null) {
             throw new InvalidIdException("No such category exists");
         } else {
             filter.put("category", "" + id);
-            return productRepository.getAllSortedAndFiltered(filter, page);
+            List<Product> test = productRepository.getAllSortedAndFiltered(filter,page);
+            System.out.println(test.size());
+            return test;
         }
     }
 

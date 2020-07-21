@@ -18,6 +18,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,7 @@ public class CategoryController implements ICategoryController {
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
+        System.out.println("jedi?");
         ResponseEntity<Product[]> responseEntity = restTemplate.postForEntity(address, httpEntity, Product[].class);
         return Arrays.asList(responseEntity.getBody());
     }
@@ -274,7 +277,11 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("id", id);
         jsonObject.put("token", token);
         try {
-            return getProductOfCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetAllProductsAddress());
+            System.out.println("wwwww");
+            List<Product> test =  getProductOfCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetAllProductsAddress());
+            System.out.println("wtf");
+            System.out.println(test.size() + "wtf");
+            return test;
         } catch (HttpClientErrorException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }

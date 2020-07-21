@@ -99,7 +99,18 @@ public class AuthenticationController {
                     break;
                 case ADMIN:
                     registerAdmin(account, token);
+                case SUPPORT:
+                    registerSupport(account,token);
             }
+        }
+    }
+
+    private void registerSupport(Account account, String token) throws InvalidTokenException, NoAccessException {
+        User user = Session.getSession(token).getLoggedInUser();
+        if(user == null || user.getRole() != Role.ADMIN) {
+            throw new NoAccessException("You are not allowed to do that.");
+        }else {
+            userRepository.save(account.makeUser());
         }
     }
 

@@ -29,6 +29,8 @@ public class AdminOptionMenuController implements InitializableController {
     @FXML
     private Button commentButton;
     @FXML
+    private Button supportButton;
+    @FXML
     private Button personalPage;
     @FXML
     private HBox hbox;
