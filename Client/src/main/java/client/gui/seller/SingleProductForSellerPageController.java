@@ -195,7 +195,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     }
 
     private void setBuyersTableView() throws IOException {
-        List<Customer> users = null;
+        List<User> users = null;
         try {
             users = orderController.getProductBuyerByProductId(product.getId(), Constants.manager.getToken());
             List<Buyers> buyersList = new ArrayList<>();

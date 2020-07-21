@@ -1,10 +1,12 @@
 package model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
-
+    @JsonSerialize(using = CartMapSerialization.class)
     private Map<ProductSeller, Integer> products;
     private Promo usedPromo;
     private String address;

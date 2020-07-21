@@ -9,7 +9,7 @@ public class OrderItem {
     private Product product;
     private Order order;
     private int amount;
-    private Seller seller;
+    private User seller;
     private long price;
     private long paidPrice;
     private ShipmentState state;
@@ -19,7 +19,7 @@ public class OrderItem {
                      @JsonProperty("product") Product product,
                      @JsonProperty("order") Order order,
                      @JsonProperty("amount") int amount,
-                     @JsonProperty("seller") Seller seller,
+                     @JsonProperty("seller") User seller,
                      @JsonProperty("price") long price,
                      @JsonProperty("paidPrice") long paidPrice,
                      @JsonProperty("state") ShipmentState state) {
@@ -33,7 +33,7 @@ public class OrderItem {
         this.state = state;
     }
 
-    public Seller getSeller() {
+    public User getSeller() {
         return this.seller;
     }
 

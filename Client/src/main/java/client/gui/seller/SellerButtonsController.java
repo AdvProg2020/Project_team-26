@@ -29,7 +29,7 @@ public class SellerButtonsController implements InitializableController {
     private IShowUserController showUserController;
     private int userId;
     private PersonalInfoController personalInfoController;
-    private Seller seller;
+    private User seller;
     @FXML
     private ImageView profileImageView;
     @FXML
@@ -52,7 +52,7 @@ public class SellerButtonsController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        this.seller = (Seller) user;
+        this.seller = (User) user;
         if (user.getRole() != Role.SELLER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be seller");
         this.userId = id;

@@ -11,7 +11,7 @@ public class Order {
     private Date date;
     private Long totalPrice;
     private Long paidAmount;
-    private Customer customer;
+    private User customer;
     private String address;
     private Promo usedPromo;
     private long discount;
@@ -21,7 +21,7 @@ public class Order {
                  @JsonProperty("date") Date date,
                  @JsonProperty("totalPrice") Long totalPrice,
                  @JsonProperty("paidAmount") Long paidAmount,
-                 @JsonProperty("customer") Customer customer,
+                 @JsonProperty("customer") User customer,
                  @JsonProperty("address") String address,
                  @JsonProperty("usedPromo") Promo usedPromo,
                  @JsonProperty("discount") long discount) {
@@ -35,7 +35,7 @@ public class Order {
         this.discount = discount;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return this.customer;
     }
 
@@ -67,7 +67,7 @@ public class Order {
         return date;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(User customer) {
         this.customer = customer;
     }
 

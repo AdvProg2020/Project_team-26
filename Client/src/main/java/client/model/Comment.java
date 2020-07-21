@@ -9,7 +9,7 @@ public class Comment {
     private String title;
     private String text;
     private Boolean hasBought;
-    private Customer customer;
+    private User customer;
     private CommentState state;
 
     @JsonCreator
@@ -17,7 +17,7 @@ public class Comment {
                    @JsonProperty("title") String title,
                    @JsonProperty("text") String text,
                    @JsonProperty("hasBought") Boolean hasBought,
-                   @JsonProperty("customer") Customer customer,
+                   @JsonProperty("customer") User customer,
                    @JsonProperty("state") CommentState state) {
         this.id = id;
         this.title = title;
@@ -43,7 +43,7 @@ public class Comment {
         return hasBought;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 

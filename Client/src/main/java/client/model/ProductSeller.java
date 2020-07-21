@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ProductSeller {
     private int id;
-    private Seller seller;
+    private User seller;
     private long price;
     private Long priceInOff;
     private int remainingItems;
@@ -20,7 +20,7 @@ public class ProductSeller {
     @JsonCreator
     public ProductSeller(
             @JsonProperty("id") int id,
-            @JsonProperty("seller") Seller seller,
+            @JsonProperty("seller") User seller,
             @JsonProperty("price") long price,
             @JsonProperty("priceInOff") Long priceInOff,
             @JsonProperty("remainingItems") int remainingItems,
@@ -37,7 +37,7 @@ public class ProductSeller {
         return id;
     }
 
-    public Seller getSeller() {
+    public User getSeller() {
         return seller;
     }
 
@@ -67,7 +67,7 @@ public class ProductSeller {
         this.price = price;
     }
 
-    public void setSeller(Seller seller) {
+    public void setSeller(User seller) {
         this.seller = seller;
     }
 

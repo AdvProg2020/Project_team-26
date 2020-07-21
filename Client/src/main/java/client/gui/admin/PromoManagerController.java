@@ -72,10 +72,10 @@ public class PromoManagerController implements InitializableController {
         endDate.setValue(Constants.manager.getLocalDateFromDate(promo.getEndDate()));
         codeText.setText(promo.getPromoCode());
         offPercent.setText(Double.toString(promo.getPercent()));
-        ObservableList<Customer> customers = FXCollections.observableList(promo.getCustomers());
+        ObservableList<User> customers = FXCollections.observableList(promo.getCustomers());
         usernameTable.setItems(customers);
         ObservableList<TableColumn> cols = usernameTable.getColumns();
-        cols.get(0).setCellValueFactory(new PropertyValueFactory<Customer, String>("username"));
+        cols.get(0).setCellValueFactory(new PropertyValueFactory<User, String>("username"));
     }
 
 
@@ -112,10 +112,10 @@ public class PromoManagerController implements InitializableController {
     }
 
     private void updateUsernameTable(Promo promo) {
-        ObservableList<Customer> customers = FXCollections.observableList(promo.getCustomers());
+        ObservableList<User> customers = FXCollections.observableList(promo.getCustomers());
         usernameTable.setItems(customers);
         ObservableList<TableColumn> cols = usernameTable.getColumns();
-        cols.get(0).setCellValueFactory(new PropertyValueFactory<Customer, String>("username"));
+        cols.get(0).setCellValueFactory(new PropertyValueFactory<User, String>("username"));
     }
 
     private void refreshTable() throws NotLoggedINException, NoAccessException, InvalidTokenException {

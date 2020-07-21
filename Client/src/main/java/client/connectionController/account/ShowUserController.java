@@ -110,10 +110,10 @@ public class ShowUserController implements IShowUserController {
         }
     }
 
-    public List<Admin> getManagers(int id) {
+    public List<User> getManagers(int id) {
         try {
             RestTemplate restTemplate = new RestTemplate();
-            Admin[] admins = restTemplate.getForObject(Constants.getShowUserControllerGetManagersAddress() + "/" + id, Admin[].class);
+            User[] admins = restTemplate.getForObject(Constants.getShowUserControllerGetManagersAddress() + "/" + id, User[].class);
             return Arrays.asList(admins);
         } catch (HttpClientErrorException e) {
             System.out.println(e.getStackTrace());

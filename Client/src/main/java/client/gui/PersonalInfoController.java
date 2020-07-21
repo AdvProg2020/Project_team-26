@@ -124,7 +124,7 @@ public class PersonalInfoController implements InitializableController {
         balance.setEditable(false);
         shopTextField.setText("");
         if (user.getRole() == Role.SELLER) {
-            shopTextField.setText(((Seller) user).getCompanyName());
+            shopTextField.setText(((User) user).getCompanyName());
             shopTextField.setVisible(true);
             shopLabel.setVisible(true);
         }
