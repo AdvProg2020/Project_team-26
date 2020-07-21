@@ -16,5 +16,6 @@ open module Server {
     requires org.hibernate.orm.core;
     requires com.fasterxml.jackson.core;
     requires spring.boot;
+    requires commons.codec;
 
 }

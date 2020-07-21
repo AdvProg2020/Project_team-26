@@ -61,15 +61,18 @@ public class UserInfoController {
 
     @PostMapping("/controller/method/change-image")
     public void changeImage(@RequestBody Map info) throws InvalidTokenException, NotLoggedINException {
-        byte[] image = (byte[]) info.get("image");
+        String imageBase64 = (String) info.get("image");
+        byte[] image = org.apache.commons.codec.binary.Base64.decodeBase64(imageBase64);
         String token = (String) info.get("token");
-
+        System.out.println(image);
         User user = Session.getSession(token).getLoggedInUser();
         if (user == null) {
             throw new NotLoggedINException("You are not logged in.");
         }
         user.setImage(image);
+        System.out.println("nigggga");
         userRepository.save(user);
+        System.out.println("riddddaammm");
     }
 
     @PostMapping("/controller/method/change-info")
