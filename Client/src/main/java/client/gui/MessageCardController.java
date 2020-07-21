@@ -4,6 +4,8 @@ import client.exception.InvalidIdException;
 import client.exception.InvalidTokenException;
 import client.exception.NoAccessException;
 import client.gui.interfaces.InitializableController;
+import client.model.Message;
+import client.model.enums.MessageType;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.TextArea;

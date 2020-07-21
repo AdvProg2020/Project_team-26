@@ -17,5 +17,7 @@ open module Server {
     requires com.fasterxml.jackson.core;
     requires spring.boot;
     requires commons.codec;
+    requires spring.messaging;
+    requires spring.websocket;
 
 }
