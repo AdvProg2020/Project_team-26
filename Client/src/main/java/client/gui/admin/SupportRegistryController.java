@@ -13,6 +13,8 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import org.hibernate.boot.model.naming.ImplicitAnyDiscriminatorColumnNameSource;
 
+import java.io.IOException;
+
 public class SupportRegistryController {
 
     private IAuthenticationController authenticationController;
@@ -46,6 +48,7 @@ public class SupportRegistryController {
             support.setRole(Role.SUPPORT);
             try {
                 authenticationController.register(support, Constants.manager.getToken());
+                Constants.manager.showSuccessPopUp("Registry was Successful.");
                 reload();
             } catch (InvalidTokenException e) {
                 errorLabel.setText(e.getMessage());
@@ -57,6 +60,8 @@ public class SupportRegistryController {
                 errorLabel.setText(e.getMessage());
             } catch (NoAccessException e) {
                 errorLabel.setText(e.getMessage());
+            } catch (IOException ioException) {
+                ioException.printStackTrace();
             }
         }
     }
