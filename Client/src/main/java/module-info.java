@@ -14,5 +14,7 @@ open module Server {
     requires com.fasterxml.jackson.databind;
     requires java.sql;
     requires org.hibernate.orm.core;
+    requires com.fasterxml.jackson.core;
+    requires spring.boot;
 
 }
