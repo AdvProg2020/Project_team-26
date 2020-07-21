@@ -1,6 +1,7 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.enums.RequestType;
 import model.enums.Status;
 import org.hibernate.annotations.Cascade;
@@ -56,6 +57,7 @@ public class Product {
     @MapKeyColumn(name = "category_feature_id")
     @Column(name = "value")
     @CollectionTable(name = "product_category_feature", joinColumns = @JoinColumn(name = "product_id"))
+    @JsonSerialize(using = categoryFeatureMapSerialization.class)
     private Map<CategoryFeature, String> categoryFeatures;
 
     @Enumerated(EnumType.STRING)

@@ -160,6 +160,9 @@ public class SingleProductController implements InitializableController {
     }
 
     private String getCategoryAddress(Category category) {
+        if(category.getParent() == null){
+            return category.getName();
+        }
         if(category.getParent().equals(category)) {
             return category.getName();
         }

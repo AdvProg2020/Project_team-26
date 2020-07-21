@@ -4,6 +4,8 @@ import client.model.enums.RequestType;
 import client.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.*;
 
@@ -18,6 +20,9 @@ public class Product {
     private Category category;
     private byte[] image;
     private List<ProductSeller> sellerList;
+    /*@JsonDeserialize(keyUsing = CategoryFeatureDeserializer.class)*/
+    @JsonSerialize(using = CategoryFeatureSerializer.class)
+    @JsonDeserialize(using = CategoryFeatureDeserializer.class)
     private Map<CategoryFeature, String> categoryFeatures;
     private Status status;
 
