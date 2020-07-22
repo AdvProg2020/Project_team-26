@@ -2,6 +2,7 @@ package client.gui;
 
 import client.ControllerContainer;
 import client.Main;
+import client.MyStompSessionHandler;
 import client.connectionController.SessionController;
 import client.connectionController.account.AuthenticationController;
 import client.connectionController.interfaces.account.IShowUserController;
@@ -72,6 +73,10 @@ public class Manager implements Reloadable {
         pages = new ArrayList<>();
         compareList = new HashSet<>();
         messageReceivers = new ArrayList<>();
+    }
+
+    public void setSession(StompSession session) {
+        this.session = session;
     }
 
     public void setLoggedInUser(User loggedInUser) {
@@ -449,20 +454,6 @@ public class Manager implements Reloadable {
             ioException.printStackTrace();
         }
     }
-
-    public void startWebSocket() throws Exception {
-        WebSocketClient simpleWebSocketClient = new StandardWebSocketClient();
-        List<Transport> transports = new ArrayList<>(1);
-        transports.add(new WebSocketTransport(simpleWebSocketClient));
-        SockJsClient sockJsClient = new SockJsClient(transports);
-        WebSocketStompClient stompClient = new WebSocketStompClient(sockJsClient);
-        stompClient.setMessageConverter(new MappingJackson2MessageConverter());
-        String userId = "spring-" + ThreadLocalRandom.current().nextInt(1, 99);
-        StompSessionHandler sessionHandler = new Main.MyStompSessionHandler(userId);
-         StompSession session = (stompClient.connect(Constants.manager.chatUrl, sessionHandler)).get();
-         Constants.manager.session = session;
-    }
-
     public void sendMessageTOWebSocket(String receiver, Message message) {
         session.send("/app/chat/" + receiver, message);
     }

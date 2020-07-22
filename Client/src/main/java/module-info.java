@@ -19,5 +19,6 @@ open module Server {
     requires commons.codec;
     requires spring.messaging;
     requires spring.websocket;
+    requires spring.core;
 
 }
