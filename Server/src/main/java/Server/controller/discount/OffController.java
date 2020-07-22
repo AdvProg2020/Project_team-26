@@ -1,5 +1,6 @@
 package Server.controller.discount;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.*;
 import model.*;
 import model.enums.Role;
@@ -48,9 +49,10 @@ public class OffController {
 
     @PostMapping("/controller/method/off/add-product-to-off")
     public void addProductToOff(@RequestBody Map info) throws NoAccessException, ObjectAlreadyExistException, InvalidIdException, InvalidTokenException, NotLoggedINException {
-        Off off = (Off) info.get("off");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Off off = objectMapper.convertValue(info.get("off"), Off.class);
         int productId = (Integer) info.get("productId");
-        long priceInOff = (Long) info.get("priceInOff");
+        long priceInOff = objectMapper.convertValue(info.get("priceInOff"),Long.class);
         double percent = (Double) info.get("percent");
         boolean isFirstTime = (Boolean) info.get("isFirstTime");
         String token = (String) info.get("token");

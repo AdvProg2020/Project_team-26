@@ -27,7 +27,7 @@ public class ShowUserController {
     }
 
     @PostMapping("/controller/method/get-users")
-    public ArrayList<User> getUsers(@RequestBody Map info){
+    public ArrayList<User> getUsers(@RequestBody Map info) {
         String token = (String) info.get("token");
         return (ArrayList<User>) userRepository.getAll();
     }
@@ -74,15 +74,15 @@ public class ShowUserController {
 
     @PostMapping("/controller/method/user/delete")
     public void delete(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NoObjectIdException {
-        String username = (String)info.get("username");
+        String username = (String) info.get("username");
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
         } else {
-            Map<String,Object> userInfo = new HashMap<>();
-            info.put("username",username);
-            info.put("token",token);
+            Map<String, Object> userInfo = new HashMap<>();
+            info.put("username", username);
+            info.put("token", token);
             userRepository.delete(getUserByName(userInfo));
         }
     }
@@ -91,6 +91,18 @@ public class ShowUserController {
     public User getUserByToken(@RequestBody Map info) throws InvalidTokenException {
         String token = (String) info.get("token");
         return Session.getSession(token).getLoggedInUser();
+    }
+
+    @GetMapping("/controller/method/get-online-support/{token}")
+    public List<User> getOnlineSupporter(@PathVariable("token") String token) {
+        return new ArrayList<>();
+
+    }
+
+    @GetMapping("/controller/method/get-online-users/{token}")
+    public List<User> getAllOnlineUser(@PathVariable("token") String token) throws NoAccessException, InvalidTokenException {
+        return new ArrayList<>();
+
     }
 
 }
