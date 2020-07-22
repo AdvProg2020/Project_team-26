@@ -181,4 +181,5 @@ public class Product {
     public String littleDescription() {
         return "name: " + name + "\nbrand: " + brand + "\ndescription: " + description + "\nrate :" + averageRate;
     }
+
 }
