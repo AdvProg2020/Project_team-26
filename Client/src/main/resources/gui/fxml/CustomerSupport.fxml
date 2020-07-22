@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<HBox fx:id="chatBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<HBox fx:id="chatBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.customer.SupportPageController">
     <children>
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="20.0">
             <children>
@@ -16,12 +16,12 @@
                         <TableColumn fx:id="supporterColumns" prefWidth="191.19999980926514" text="Supporters" />
                     </columns>
                 </TableView>
-            <Button fx:id="refresh" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" text="Refresh Supporter" />
+                <Button fx:id="refresh" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" text="Refresh Supporter" />
             </children>
             <padding>
                 <Insets bottom="4.0" left="4.0" right="4.0" top="10.0" />
             </padding>
         </VBox>
-        <VBox alignment="CENTER" maxHeight="720.0" maxWidth="0.0" prefHeight="720.0" prefWidth="600.0" />
+        <VBox fx:id="chatBox" alignment="CENTER" maxHeight="720.0" maxWidth="600.0" prefHeight="720.0" prefWidth="600.0" />
     </children>
 </HBox>
