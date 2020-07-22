@@ -21,7 +21,7 @@ import java.util.Map;
 public class OffDeserializer extends StdDeserializer<Off> {
 
     public OffDeserializer() {
-        super(Map.class);
+        super(Off.class);
     }
     @Override
     public Off deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JsonProcessingException {
