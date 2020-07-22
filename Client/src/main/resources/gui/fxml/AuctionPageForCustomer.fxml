@@ -9,22 +9,24 @@
 <?import javafx.scene.layout.VBox?>
 
 
-<HBox fx:id="chatBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="20.0">
-         <children>
-            <TextField fx:id="cashTextField" promptText="CASH" />
-            <Button fx:id="SendButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="116.0" text="Send" />
-            <TableView fx:id="auctionTable" prefHeight="598.0" prefWidth="192.0">
-               <columns>
-                  <TableColumn fx:id="auctionColumns" prefWidth="191.19999980926514" text="Auctions" />
-               </columns>
-            </TableView>
-         </children>
-         <padding>
-            <Insets bottom="4.0" left="4.0" right="4.0" top="10.0" />
-         </padding>
-      </VBox>
-      <VBox alignment="CENTER" maxHeight="720.0" maxWidth="0.0" prefHeight="720.0" prefWidth="600.0" />
-   </children>
+<HBox fx:id="chatBox" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+      prefHeight="720.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="client.gui.customer.AuctionPageController">
+    <children>
+        <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="20.0">
+            <children>
+                <TextField fx:id="cashTextField" promptText="CASH"/>
+                <Button fx:id="SendButton" mnemonicParsing="false" prefHeight="41.0" prefWidth="116.0" text="Send"/>
+                <TableView fx:id="auctionTable" prefHeight="598.0" prefWidth="192.0">
+                    <columns>
+                        <TableColumn fx:id="auctionColumns" prefWidth="191.19999980926514" text="Auctions"/>
+                    </columns>
+                </TableView>
+            </children>
+            <padding>
+                <Insets bottom="4.0" left="4.0" right="4.0" top="10.0"/>
+            </padding>
+        </VBox>
+        <VBox alignment="CENTER" maxHeight="720.0" maxWidth="0.0" prefHeight="720.0" prefWidth="600.0"/>
+    </children>
 </HBox>

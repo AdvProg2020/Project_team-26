@@ -17,6 +17,11 @@ public interface IShowUserController {
 
     public List<User> getManagers(int id);
 
+    public List<User> getOnlineSupporter(String token );
+
+    public List<User> getAllOnlineUser(String token )throws NoAccessException, InvalidTokenException;
+
+
     Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException;
 
     void delete(String username, String token) throws NoAccessException, NoAccessException, InvalidTokenException, NoObjectIdException, client.exception.NoAccessException;
