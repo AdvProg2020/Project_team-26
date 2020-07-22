@@ -1,7 +1,8 @@
-package Server.controller.interfaces.auction;
+package client.connectionController.interfaces.auction;
 
-import exception.*;
-import model.Auction;
+
+import client.exception.*;
+import client.model.Auction;
 
 import java.util.Date;
 import java.util.List;

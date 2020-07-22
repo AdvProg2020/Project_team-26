@@ -32,7 +32,8 @@
                                 <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="335.0" spacing="20.0">
                                     <children>
                                         <Label prefHeight="18.0" prefWidth="61.0" text="Category" />
-                                        <Text fx:id="categoryText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="131.47007588545512" />
+                                        <Text fx:id="categoryText" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" wrappingWidth="126.67002705733012" />
+                              <Button mnemonicParsing="false" onAction="#setProductOnAuction" prefHeight="26.0" prefWidth="72.0" text="Auction" />
                                     </children>
                                     <opaqueInsets>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -58,7 +59,7 @@
                                     <children>
                                         <Label prefHeight="17.0" prefWidth="61.0" text="Rate" />
                                         <Slider fx:id="productRateSlider" max="5.0" prefHeight="37.0" prefWidth="99.0" showTickLabels="true" showTickMarks="true" />
-                              <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="25.0" prefWidth="71.0" text="Delete" />
+                              <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="79.0" text="Delete" />
                                     </children>
                                     <opaqueInsets>
                                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -191,12 +192,12 @@
         </HBox>
       <HBox prefHeight="192.0" prefWidth="600.0">
          <children>
-            <TableView fx:id="buyersTableView" prefHeight="188.0" prefWidth="129.0">
+            <TableView fx:id="buyersTableView" prefHeight="159.0" prefWidth="129.0">
               <columns>
                 <TableColumn fx:id="buyersTableViewColumns" prefWidth="127.99997198581696" text="Buyer" />
               </columns>
             </TableView>
-            <TableView fx:id="categoryFeatures" prefHeight="188.0" prefWidth="473.0">
+            <TableView fx:id="categoryFeatures" prefHeight="180.0" prefWidth="472.0">
               <columns>
                 <TableColumn fx:id="featureName" prefWidth="97.33331298828125" text="Name" />
                 <TableColumn fx:id="featureType" prefWidth="92.00001525878906" text="Type" />

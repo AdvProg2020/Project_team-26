@@ -1,17 +1,22 @@
 package client.gui.seller;
 
 import client.ControllerContainer;
+import client.connectionController.interfaces.auction.IAuctionController;
 import client.connectionController.interfaces.order.IOrderController;
 import client.connectionController.interfaces.product.IProductController;
 import client.exception.*;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
-import client.model.*;
-import client.model.enums.*;
+import client.model.Product;
+import client.model.ProductSeller;
+import client.model.User;
+import client.model.enums.FeatureType;
+import client.model.enums.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -34,6 +39,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     private ProductSeller productSeller;
     private IProductController productController;
     private IOrderController orderController;
+    private IAuctionController auctionController;
     @FXML
     private Text stateText;
     @FXML
@@ -213,6 +219,44 @@ public class SingleProductForSellerPageController implements InitializableContro
         }
     }
 
+    @FXML
+    public void setProductOnAuction() {
+        Stage stage = new Stage();
+        DatePicker datePicker = new DatePicker();
+        datePicker.setOnAction(e -> {
+            try {
+                try {
+                    auctionController.createNewAuction(this.productSeller.getId(),
+                            Constants.manager.getDateFromDatePicker(datePicker), Constants.manager.getToken());
+                    stage.close();
+                } catch (ObjectAlreadyExistException | NotSellerException ex) {
+                    Constants.manager.showErrorPopUp(ex.getMessage());
+                } catch (NotLoggedINException ex) {
+                    Constants.manager.showLoginMenu();
+                } catch (InvalidTokenException ex) {
+                    Constants.manager.showErrorPopUp(ex.getMessage());
+                    Constants.manager.setTokenFromController();
+                }
+            } catch (IOException ex) {
+                ex.getStackTrace();
+            }
+        });
+        TextField command = new TextField("pickDateForEnd");
+        command.setEditable(false);
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(command, datePicker);
+        vBox.setStyle("-fx-padding: 10;" +
+                "-fx-border-style: solid inside;" +
+                "-fx-border-width: 2;" +
+                "-fx-border-insets: 5;" +
+                "-fx-border-radius: 5;" +
+                "-fx-border-color: blue;");
+
+        Scene scene = new Scene(vBox, 300, 240);
+        stage.setScene(scene);
+        stage.show();
+    }
+
 
     @FXML
     public void productSellerInfoEditButtonClicked() throws IOException {
@@ -252,8 +296,8 @@ public class SingleProductForSellerPageController implements InitializableContro
                 product.setImage(Files.readAllBytes(imageFile.toPath()));
             try {
                 productController.editProduct(product.getId(), product, Constants.manager.getToken());
-                 setEditableForProduct(false);
-                 productInfoEditButton.setText("Edit product");
+                setEditableForProduct(false);
+                productInfoEditButton.setText("Edit product");
             } catch (InvalidIdException | NoAccessException | NotSellerException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
             } catch (InvalidTokenException e) {
