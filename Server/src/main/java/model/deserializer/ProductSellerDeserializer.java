@@ -16,7 +16,7 @@ import java.util.Map;
 public class ProductSellerDeserializer extends StdDeserializer<ProductSeller> {
 
     public ProductSellerDeserializer() {
-        super(Map.class);
+        super(ProductSeller.class);
     }
 
     @Override

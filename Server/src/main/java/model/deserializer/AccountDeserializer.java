@@ -14,7 +14,7 @@ import java.util.Map;
 public class AccountDeserializer extends StdDeserializer<Account> {
 
     public AccountDeserializer() {
-        super(Map.class);
+        super(Account.class);
     }
 
     @Override
