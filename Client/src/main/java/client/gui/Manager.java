@@ -459,8 +459,8 @@ public class Manager implements Reloadable {
         stompClient.setMessageConverter(new MappingJackson2MessageConverter());
         String userId = "spring-" + ThreadLocalRandom.current().nextInt(1, 99);
         StompSessionHandler sessionHandler = new Main.MyStompSessionHandler(userId);
-        //  StompSession session = (stompClient.connect(Constants.manager.chatUrl, sessionHandler)).get();
-        // Constants.manager.session = session;
+         StompSession session = (stompClient.connect(Constants.manager.chatUrl, sessionHandler)).get();
+         Constants.manager.session = session;
     }
 
     public void sendMessageTOWebSocket(String receiver, Message message) {
