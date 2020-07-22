@@ -1,15 +1,26 @@
 package client.model;
 
 import client.model.enums.Role;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Account {
+
+    @JsonProperty("password")
     private String password;
+    @JsonProperty("role")
     private Role role;
+    @JsonProperty("email")
     private String email;
+    @JsonProperty("username")
     private String username;
+    @JsonProperty("firstName")
     private String firstName;
+    @JsonProperty("lastName")
     private String lastName;
+    @JsonProperty("companyName")
     private String companyName;
+    @JsonProperty("credit")
     private long credit;
 
     public Account() {
@@ -20,6 +31,7 @@ public class Account {
         lastName = new String();
     }
 
+    @JsonCreator
     public Account(String username, String password, Role role) {
         this.username = username;
         this.password = password;
@@ -92,6 +104,10 @@ public class Account {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public long getCredit() {
+        return credit;
     }
 
     public void setCompanyName(String companyName) {
