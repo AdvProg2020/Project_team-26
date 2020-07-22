@@ -46,6 +46,7 @@ public class ProductController implements IProductController {
     public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("product", product);
+        jsonObject.put("image", org.apache.commons.codec.binary.Base64.encodeBase64String(product.getImage()));
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerCreateProductAddress());

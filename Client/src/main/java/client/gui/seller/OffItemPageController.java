@@ -17,8 +17,6 @@ import java.io.IOException;
 public class OffItemPageController implements InitializableController {
     private IOffController offController;
     private IProductController productController;
-    private OffItem offItem;
-    private Off off;
     private int offItemId;
     private boolean isForAdd;
     private Reloadable offControllerPage;
@@ -38,10 +36,19 @@ public class OffItemPageController implements InitializableController {
         offItemId = id;
     }
 
+    public void load(Product product, long actualPrice, long offPrice, boolean isForAdd, Reloadable offControllerPage) {
+        this.offControllerPage = offControllerPage;
+        this.isForAdd = isForAdd;
+        name.setText(product.getName());
+        price.setText("" + actualPrice);
+        priceInOff.setText("" + offPrice);
+        priceInOff.setEditable(false);
+        deleteButton.setText("Delete");
+        deleteButton.setVisible(false);
+    }
+
     public void load(OffItem offItem, Off off, boolean isForAdd, Reloadable offControllerPage) {
         this.offControllerPage = offControllerPage;
-        this.off = off;
-        this.offItem = offItem;
         this.isForAdd = isForAdd;
         name.setText(productController.getProductNameByProductSellerId(offItem.getProductSeller().getId()));
         price.setText("" + offItem.getProductSeller().getPrice());

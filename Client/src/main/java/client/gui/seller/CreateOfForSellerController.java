@@ -65,11 +65,11 @@ public class CreateOfForSellerController implements InitializableController, Rel
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), true, Constants.manager.getToken());
-                updateVBox(off.getItems().get(off.getItems().size() - 1));
+                updateVBox(product,product.getMinimumPrice(),Integer.parseInt(priceInOff.getText().split("%")[0]));
                 Constants.manager.showSuccessPopUp("product added");
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, true, Constants.manager.getToken());
-                updateVBox(off.getItems().get(off.getItems().size() - 1));
+                updateVBox(product,product.getMinimumPrice(), Long.parseLong(priceInOff.getText()));
                 Constants.manager.showSuccessPopUp("product added");
             } else {
                 Constants.manager.showErrorPopUp("please fill the price by Long or --%");
@@ -87,12 +87,12 @@ public class CreateOfForSellerController implements InitializableController, Rel
 
     }
 
-    private void updateVBox(OffItem item) throws IOException {
+    private void updateVBox(Product product, long price, long priceInOff) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OffItemPage.fxml"));
         Node node = loader.load();
         OffItemPageController offItemPageController = (OffItemPageController) loader.getController();
-        offItemPageController.load(item, off, true, this);
-        offItemPageController.initialize(item.getId());
+        offItemPageController.load(product, price, priceInOff, true, this);
+        offItemPageController.initialize(product.getId());
         itemsVBox.getChildren().add(node);
     }
 
@@ -114,13 +114,13 @@ public class CreateOfForSellerController implements InitializableController, Rel
 
     @Override
     public void reload() throws IOException {
-        itemsVBox.getChildren().removeAll(itemsVBox.getChildren());
+      /*  itemsVBox.getChildren().removeAll(itemsVBox.getChildren());
         off.getItems().forEach(i -> {
             try {
                 updateVBox(i);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        });
+        });*/
     }
 }
