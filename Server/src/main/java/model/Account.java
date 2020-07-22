@@ -151,7 +151,7 @@ class AccountDeserializer extends StdDeserializer<Account> {
         String lastName = node.get("lastName").asText();
         Role role = Role.getRoleFromString(node.get("role").asText());
         String companyName = node.get("companyName").asText();
-        long credit = (Long) ((LongNode) node.get("credit")).longValue();
+        long credit = (Long) (node.get("credit")).longValue();
         return new Account(username, password, email, firstName, lastName, role, companyName, credit);
     }
 }

@@ -1,5 +1,6 @@
 package Server.controller.account;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.*;
 import javafx.util.Pair;
 import model.*;
@@ -79,17 +80,16 @@ public class AuthenticationController {
 
     @PostMapping("/controller/method/register")
     public void register(@RequestBody Map info) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
-        System.out.println(info.get("account"));
-        System.out.println(info.get("token"));
-        /*String token = (String) info.get("token");
-        Object account1 = info.get("account");
-        System.out.println(account1.toString());
-        Account account = (Account) account1;
+        String token = (String) info.get("token");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Account account = objectMapper.convertValue(info.get("account"), Account.class);
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
-        checkEmailFormat(account.getEmail());
-        checkEmailAvailability(account.getEmail());
+        if (account.getRole() != Role.SUPPORT) {
+            checkEmailFormat(account.getEmail());
+            checkEmailAvailability(account.getEmail());
+        }
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new AlreadyLoggedInException("You are logged in");
@@ -104,16 +104,16 @@ public class AuthenticationController {
                 case ADMIN:
                     registerAdmin(account, token);
                 case SUPPORT:
-                    registerSupport(account,token);
+                    registerSupport(account, token);
             }
-        }*/
+        }
     }
 
     private void registerSupport(Account account, String token) throws InvalidTokenException, NoAccessException {
         User user = Session.getSession(token).getLoggedInUser();
-        if(user == null || user.getRole() != Role.ADMIN) {
+        if (user == null || user.getRole() != Role.ADMIN) {
             throw new NoAccessException("You are not allowed to do that.");
-        }else {
+        } else {
             userRepository.save(account.makeUser());
         }
     }

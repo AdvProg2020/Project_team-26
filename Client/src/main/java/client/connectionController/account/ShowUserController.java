@@ -121,6 +121,16 @@ public class ShowUserController implements IShowUserController {
         }
     }
 
+    @Override
+    public List<User> getOnlineSupporter(String token) {
+        return null;
+    }
+
+    @Override
+    public List<User> getAllOnlineUser(String token) throws NoAccessException, InvalidTokenException {
+        return null;
+    }
+
     public void delete(String username, String token) throws
             NoAccessException, InvalidTokenException, NoObjectIdException {
         JSONObject jsonObject = new JSONObject();

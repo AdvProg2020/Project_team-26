@@ -3,7 +3,15 @@ package client.model;
 import client.model.enums.Role;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
+import java.io.IOException;
+import java.util.Map;
+
+@JsonSerialize (using = AccountSerializer.class)
 public class Account {
 
     private String username;
@@ -126,5 +134,28 @@ public class Account {
 
     public String getCompanyName() {
         return companyName;
+    }
+}
+
+class AccountSerializer extends StdSerializer<Account> {
+
+    public AccountSerializer() {
+        super(Map.class, true);
+
+    }
+
+    @Override
+    public void serialize(Account account, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+
+        jsonGenerator.writeStartObject();
+        jsonGenerator.writeStringField("username", account.getUsername());
+        jsonGenerator.writeStringField("password", account.getPassword());
+        jsonGenerator.writeStringField("email", account.getEmail());
+        jsonGenerator.writeStringField("firstName", account.getFirstName());
+        jsonGenerator.writeStringField("lastName", account.getLastName());
+        jsonGenerator.writeObjectField("role", account.getRole());
+        jsonGenerator.writeStringField("companyName", account.getCompanyName());
+        jsonGenerator.writeNumberField("credit", account.getCredit());
+        jsonGenerator.writeEndObject();
     }
 }

@@ -5,9 +5,12 @@ import client.connectionController.interfaces.account.IAuthenticationController;
 import client.exception.*;
 import client.gui.Constants;
 import client.model.Account;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
+
+import java.util.Map;
 
 public class AuthenticationController implements IAuthenticationController {
 
@@ -38,8 +41,8 @@ public class AuthenticationController implements IAuthenticationController {
 
     public void register(Account account, String token) throws InvalidFormatException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         JSONObject jsonObject = new JSONObject();
-        System.out.println(account);
-        jsonObject.put("account", account);
+        ObjectMapper objectMapper = new ObjectMapper();
+        jsonObject.put("account", objectMapper.convertValue(account,Account.class));
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuthenticationControllerRegister());
