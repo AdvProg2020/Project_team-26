@@ -26,10 +26,6 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
         }
     }
 
-    private void sendJsonMessage(StompSession session, Message message) {
-        session.send("/app/chat/" + message.getReceiver(), message);
-    }
-
     private void subscribeTopic(String topic, StompSession session) {
         session.subscribe(topic, new StompFrameHandler() {
             @Override
@@ -39,9 +35,11 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
 
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
+                Message message = (Message) payload;
+                System.out.println(message.toString());
                 Constants.manager.getMessageReceivers().forEach(i -> {
                     try {
-                        i.received((Message) payload);
+                        i.received(message);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
