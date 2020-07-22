@@ -79,7 +79,9 @@ public class AuthenticationController {
 
     @PostMapping("/controller/method/register")
     public void register(@RequestBody Map info) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
-        String token = (String) info.get("token");
+        System.out.println(info.get("account"));
+        System.out.println(info.get("token"));
+        /*String token = (String) info.get("token");
         Object account1 = info.get("account");
         System.out.println(account1.toString());
         Account account = (Account) account1;
@@ -104,7 +106,7 @@ public class AuthenticationController {
                 case SUPPORT:
                     registerSupport(account,token);
             }
-        }
+        }*/
     }
 
     private void registerSupport(Account account, String token) throws InvalidTokenException, NoAccessException {

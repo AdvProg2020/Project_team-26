@@ -6,21 +6,13 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Account {
 
-    @JsonProperty("password")
-    private String password;
-    @JsonProperty("role")
-    private Role role;
-    @JsonProperty("email")
-    private String email;
-    @JsonProperty("username")
     private String username;
-    @JsonProperty("firstName")
+    private String password;
+    private String email;
     private String firstName;
-    @JsonProperty("lastName")
     private String lastName;
-    @JsonProperty("companyName")
+    private Role role;
     private String companyName;
-    @JsonProperty("credit")
     private long credit;
 
     public Account() {
@@ -31,11 +23,29 @@ public class Account {
         lastName = new String();
     }
 
-    @JsonCreator
     public Account(String username, String password, Role role) {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    @JsonCreator
+    public Account(@JsonProperty("username") String username,
+                   @JsonProperty("password") String password,
+                   @JsonProperty("email") String email,
+                   @JsonProperty("firstName") String firstName,
+                   @JsonProperty("lastName") String lastName,
+                   @JsonProperty("role") Role role,
+                   @JsonProperty("companyName") String companyName,
+                   @JsonProperty("credit") long credit) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.role = role;
+        this.companyName = companyName;
+        this.credit = credit;
     }
 
     public Account(String username, String password, Role role, String email) {

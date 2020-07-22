@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -94,7 +95,7 @@ public class ProductController implements IProductController {
             RestTemplate restTemplate = new RestTemplate();
             Product product = restTemplate.getForObject(Constants.getProductControllerGetProductByNameAddress() + "/" + name, Product.class);
             return product;
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
         }
     }

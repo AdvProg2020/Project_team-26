@@ -41,4 +41,9 @@ public class MySQLAuctionRepository extends MySQLRepository<Auction> implements 
     public List<Auction> getAllSorted(String sortField, boolean isAscending) {
         return null;
     }
+
+    @Override
+    public boolean doesProductSellerExist(int productSellerId) {
+        return false;
+    }
 }

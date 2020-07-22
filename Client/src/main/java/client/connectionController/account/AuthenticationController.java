@@ -38,6 +38,7 @@ public class AuthenticationController implements IAuthenticationController {
 
     public void register(Account account, String token) throws InvalidFormatException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         JSONObject jsonObject = new JSONObject();
+        System.out.println(account);
         jsonObject.put("account", account);
         jsonObject.put("token", token);
         try {
