@@ -4,11 +4,12 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.minidev.json.JSONObject;
+import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
+@JsonComponent
 public class ProductSerializer extends StdSerializer<Product> {
 
     public ProductSerializer() {
