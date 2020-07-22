@@ -79,8 +79,10 @@ public class AuthenticationController {
 
     @PostMapping("/controller/method/register")
     public void register(@RequestBody Map info) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
-        Account account = (Account) info.get("account");
         String token = (String) info.get("token");
+        Object account1 = info.get("account");
+        System.out.println(account1.toString());
+        Account account = (Account) account1;
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());

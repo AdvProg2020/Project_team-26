@@ -22,9 +22,17 @@ public class Auction {
     private Customer maxSuggestedCustomer;
     @JsonIgnore
     private long price;
+
     @JsonIgnore
 
     public Auction() {
+    }
+
+    public Auction(Date endDate, ProductSeller productSeller) {
+        this.endDate = endDate;
+        this.productSeller = productSeller;
+        this.price = productSeller.getPrice();
+        this.maxSuggestedCustomer = null;
     }
 
 
@@ -43,6 +51,14 @@ public class Auction {
 
     public User getMaxSuggestedCustomer() {
         return maxSuggestedCustomer;
+    }
+
+    public void setPrice(long price) {
+        this.price = price;
+    }
+
+    public void setMaxSuggestedCustomer(Customer maxSuggestedCustomer) {
+        this.maxSuggestedCustomer = maxSuggestedCustomer;
     }
 
     public long getPrice() {

@@ -1,7 +1,10 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import model.enums.Role;
+
 
 public class Account {
     private String username;
@@ -16,6 +19,7 @@ public class Account {
 
     }
 
+    @JsonCreator
     public Account(@JsonProperty("username") String username,
                    @JsonProperty("password") String password,
                    @JsonProperty("email") String email,
