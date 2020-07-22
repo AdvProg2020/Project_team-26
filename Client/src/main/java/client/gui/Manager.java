@@ -119,7 +119,7 @@ public class Manager implements Reloadable {
     public void postRequestWithVoidReturnType(JSONObject jsonObject, String address) throws HttpClientErrorException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForLocation(address, httpEntity);
     }
@@ -129,7 +129,7 @@ public class Manager implements Reloadable {
         jsonObject.put("token", token);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
         return responseEntity.getBody();
@@ -180,7 +180,7 @@ public class Manager implements Reloadable {
     public <T> T getItemFromServer(JSONObject jsonObject, String address, Class tClass) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<T> responseEntity = restTemplate.postForEntity(address, httpEntity, tClass);
         return responseEntity.getBody();
@@ -189,7 +189,7 @@ public class Manager implements Reloadable {
     public <T> List<T> getListItemsFromServer(JSONObject jsonObject, String address, Class tClass) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<T[]> responseEntity = restTemplate.postForEntity(address, httpEntity, tClass);
         return Arrays.asList(responseEntity.getBody());

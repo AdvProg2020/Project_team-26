@@ -4,15 +4,16 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.minidev.json.JSONObject;
+import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 
+@JsonComponent
 public class ProductSerializer extends StdSerializer<Product> {
 
     public ProductSerializer() {
-        super(Product.class, true);
+        super(Map.class, true);
     }
 
     @Override
@@ -23,9 +24,6 @@ public class ProductSerializer extends StdSerializer<Product> {
         jsonGenerator.writeStringField("name", product.getName());
         jsonGenerator.writeStringField("brand", product.getBrand());
         jsonGenerator.writeStringField("description", product.getDescription());
-        jsonGenerator.writeNumberField("averageRate", product.getAverageRate());
-        jsonGenerator.writeNumberField("amountBought", product.getAmountBought());
-        jsonGenerator.writeNumberField("price", product.getPrice());
         jsonGenerator.writeObjectField("category", product.getCategory());
         jsonGenerator.writeObjectField("image", product.getImage());
         jsonGenerator.writeObjectField("sellerList", product.getSellerList());

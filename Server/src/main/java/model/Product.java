@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import model.deserializer.ProductSellerDeserializer;
+import model.deserializer.ProductDeserializer;
 import model.enums.RequestType;
 import model.enums.Status;
 import model.serializer.categoryFeatureMapSerialization;
@@ -14,7 +14,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import java.util.*;
 
-@JsonDeserialize(using = ProductSellerDeserializer.class)
+@JsonDeserialize(using = ProductDeserializer.class)
 @Entity
 @Table(name = "product")
 @SecondaryTable(name = "product_additional", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_id"))

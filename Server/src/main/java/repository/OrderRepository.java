@@ -10,5 +10,5 @@ public interface OrderRepository extends Repository<Order> {
 
     List<Order> getAllSellerOrders(int sellerId, Pageable pageable);
 
-    List<OrderItem> getSellerOrderItems(int id, int orderId);//todo
+    List<OrderItem> getSellerOrderItems(int id, int orderId);
 }

@@ -1,8 +1,8 @@
 package client.model;
 
-import client.model.enums.RequestType;
 import client.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -16,8 +16,11 @@ public class Product {
     private String name;
     private String brand;
     private String description;
+    @JsonIgnore
     private Double averageRate;
+    @JsonIgnore
     private Integer amountBought;
+    @JsonIgnore
     private Long price;
     private Category category;
     private byte[] image;
@@ -181,4 +184,5 @@ public class Product {
     public String littleDescription() {
         return "name: " + name + "\nbrand: " + brand + "\ndescription: " + description + "\nrate :" + averageRate;
     }
+
 }

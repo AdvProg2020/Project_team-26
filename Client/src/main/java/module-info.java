@@ -1,4 +1,4 @@
-open module Server {
+open module client {
     requires java.base;
     requires javafx.base;
     requires javafx.controls;

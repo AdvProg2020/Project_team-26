@@ -9,18 +9,29 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.HashMap;
 
+@Entity
+@Table(name = "auction")
 public class Auction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "auction_id")
     private int id;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "end_date", nullable = false)
     private Date endDate;
+
+    @ManyToOne
+    @JoinColumn(name = "product_seller_id")
     private ProductSeller productSeller;
+
     @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
     private Customer maxSuggestedCustomer;
+
     @JsonIgnore
+    @Column(name = "price")
     private long price;
 
     @JsonIgnore
