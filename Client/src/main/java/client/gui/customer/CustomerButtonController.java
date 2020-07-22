@@ -56,6 +56,7 @@ public class CustomerButtonController implements InitializableController {
 
     @FXML
     public void orderHandle() throws IOException {
+        personalPageHandle();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/TableOfOrders.fxml"));
             Node node = loader.load();
@@ -80,23 +81,58 @@ public class CustomerButtonController implements InitializableController {
 
     @FXML
     public void personalPageHandle() {
-        box.getChildren().removeAll(box.getChildren());
+        if (box.getChildren().size() > 1) {
+            box.getChildren().remove(2);
+        }
         box.getChildren().addAll(personalPageNode);
     }
 
     @FXML
-    public void auctionHandler() {
-
-
+    public void auctionHandler() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/AuctionPageForCustomer.fxml"));
+        Node node = loader.load();
+        AuctionPageController auctionPageController = (AuctionPageController) loader.getController();
+        try {
+            auctionPageController.initialize(userId);
+            auctionPageController.load(customer);
+            if (box.getChildren().size() > 1) {
+                box.getChildren().remove(2);
+            }
+            box.getChildren().addAll(node);
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void support() {
+    public void support() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SupporterButtons.fxml"));
+        Node node = loader.load();
+        SupportPageController supportPageController = (SupportPageController) loader.getController();
+        try {
+            supportPageController.initialize(userId);
+            supportPageController.load(customer);
+            if (box.getChildren().size() > 1) {
+                box.getChildren().remove(2);
+            }
+            box.getChildren().addAll(node);
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
+        }
 
     }
 
 
     @FXML
     public void promoHandle() throws IOException {
+        personalPageHandle();
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/promoCodesForCustomer.fxml"));
             Node node = loader.load();
