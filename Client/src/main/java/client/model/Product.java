@@ -175,4 +175,8 @@ public class Product {
     public String toString() {
         return name;
     }
+
+    public String littleDescription() {
+        return "name: " + name + "\nbrand: " + brand + "\ndescription: " + description + "\nrate :" + averageRate;
+    }
 }
