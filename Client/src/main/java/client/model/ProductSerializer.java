@@ -13,7 +13,7 @@ import java.util.Map;
 public class ProductSerializer extends StdSerializer<Product> {
 
     public ProductSerializer() {
-        super(Map.class, true);
+        super(Product.class, true);
     }
 
     @Override
