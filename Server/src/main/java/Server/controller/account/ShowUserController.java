@@ -93,16 +93,4 @@ public class ShowUserController {
         return Session.getSession(token).getLoggedInUser();
     }
 
-    @GetMapping("/controller/method/get-online-support/{token}")
-    public List<User> getOnlineSupporter(@PathVariable("token") String token) {
-        return new ArrayList<>();
-
-    }
-
-    @GetMapping("/controller/method/get-online-users/{token}")
-    public List<User> getAllOnlineUser(@PathVariable("token") String token) throws NoAccessException, InvalidTokenException {
-        return new ArrayList<>();
-
-    }
-
 }
