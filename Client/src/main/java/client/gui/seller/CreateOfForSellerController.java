@@ -65,11 +65,11 @@ public class CreateOfForSellerController implements InitializableController, Rel
             Product product = productController.getProductByName(productName.getText(), Constants.manager.getToken());
             if (Constants.manager.checkIsPercent(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), -1, Integer.parseInt(priceInOff.getText().split("%")[0]), true, Constants.manager.getToken());
-                updateVBox(product,product.getMinimumPrice(),Integer.parseInt(priceInOff.getText().split("%")[0]));
+                updateVBox(product,product.getPrice(),Integer.parseInt(priceInOff.getText().split("%")[0]));
                 Constants.manager.showSuccessPopUp("product added");
             } else if (Constants.manager.checkIsLong(priceInOff.getText())) {
                 offController.addProductToOff(off, product.getId(), Long.parseLong(priceInOff.getText()), 0, true, Constants.manager.getToken());
-                updateVBox(product,product.getMinimumPrice(), Long.parseLong(priceInOff.getText()));
+                updateVBox(product,product.getPrice(), Long.parseLong(priceInOff.getText()));
                 Constants.manager.showSuccessPopUp("product added");
             } else {
                 Constants.manager.showErrorPopUp("please fill the price by Long or --%");
