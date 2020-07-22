@@ -9,6 +9,7 @@ import client.gui.ChatPageController;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.MessageReceiver;
+import client.model.Auction;
 import client.model.Message;
 import client.model.User;
 import client.model.enums.MessageType;
@@ -25,6 +26,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.HashMap;
 
 public class SupporterButtonPageController implements InitializableController, MessageReceiver {
@@ -41,16 +43,15 @@ public class SupporterButtonPageController implements InitializableController, M
     private TableView<UserForTable> tableUsers;
     @FXML
     private VBox box;
+    @FXML
+    private TableColumn<String, UserForTable> userColumns;
     private HashMap<UserForTable, Node> chatRooms;
-    private TableColumn<UserForTable, UserForTable> users;
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
         chatRooms = new HashMap<>();
         this.userId = id;
-        users = new TableColumn<>("name");
-        users.setCellValueFactory(new PropertyValueFactory<>("name"));
-        tableUsers.getColumns().addAll(users);
+        userColumns.setCellValueFactory(new PropertyValueFactory<>("name"));
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
         Constants.manager.setLoggedInUser(user);

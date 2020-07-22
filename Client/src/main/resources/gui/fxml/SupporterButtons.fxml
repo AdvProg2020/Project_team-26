@@ -21,7 +21,7 @@
             <Button fx:id="personalPage" mnemonicParsing="false" prefHeight="42.0" prefWidth="170.0" text="Personal Page" />
             <TableView fx:id="tableUsers" maxHeight="430.0" prefHeight="430.0" prefWidth="179.0">
               <columns>
-                <TableColumn fx:id="usersTable" prefWidth="177.59998452663422" text="Users" />
+                <TableColumn fx:id="userColumns" prefWidth="177.59998452663422" text="Users" />
               </columns>
             </TableView>
          </children>
