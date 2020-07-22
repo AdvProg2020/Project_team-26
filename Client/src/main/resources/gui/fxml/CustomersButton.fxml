@@ -8,16 +8,19 @@
 
 <HBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.customer.CustomerButtonController">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="100.0" spacing="100.0">
+      <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="100.0" spacing="35.0">
           <children>
               <ImageView fx:id="profileImageView" fitHeight="125.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                   <image>
                       <Image url="@../pic/AdminProfilePicture.png" />
                   </image>
               </ImageView>
-              <Button fx:id="orders" mnemonicParsing="false" onAction="#orderHandle" prefHeight="45.0" prefWidth="96.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Orders" />
-              <Button fx:id="promo" mnemonicParsing="false" onAction="#promoHandle" prefHeight="45.0" prefWidth="95.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Promo" />
-            <Button mnemonicParsing="false" onAction="#cart" prefHeight="51.0" prefWidth="103.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Cart" />
+              <Button fx:id="orders" mnemonicParsing="false" onAction="#orderHandle" prefHeight="46.0" prefWidth="117.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Orders" />
+              <Button fx:id="promo" mnemonicParsing="false" onAction="#promoHandle" prefHeight="46.0" prefWidth="129.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Promo" />
+            <Button mnemonicParsing="false" onAction="#cart" prefHeight="51.0" prefWidth="141.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Cart" />
+            <Button mnemonicParsing="false" onAction="#personalPageHandle" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="User Info" />
+            <Button mnemonicParsing="false" onAction="#support" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Support" />
+            <Button mnemonicParsing="false" onAction="#auctionHandler" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Action" />
           </children>
       </VBox>
    </children>

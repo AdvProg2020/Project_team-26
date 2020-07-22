@@ -29,6 +29,7 @@ public class CustomerButtonController implements InitializableController {
     private IPromoController promoController;
     private IShowUserController showUserController;
     private User customer;
+    private Node personalPageNode;
     @FXML
     private ImageView profileImageView;
     @FXML
@@ -77,6 +78,22 @@ public class CustomerButtonController implements InitializableController {
         Constants.manager.openCart();
     }
 
+    @FXML
+    public void personalPageHandle() {
+        box.getChildren().removeAll(box.getChildren());
+        box.getChildren().addAll(personalPageNode);
+    }
+
+    @FXML
+    public void auctionHandler() {
+
+
+    }
+
+    public void support() {
+
+    }
+
 
     @FXML
     public void promoHandle() throws IOException {
@@ -99,10 +116,10 @@ public class CustomerButtonController implements InitializableController {
 
     public void load() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/PersonalInfoPage.fxml"));
-        Node node = loader.load();
+        personalPageNode = loader.load();
         this.personalInfoController = (PersonalInfoController) loader.getController();
         personalInfoController.initialize(userId);
         personalInfoController.load(customer, profileImageView);
-        box.getChildren().addAll(node);
+        box.getChildren().addAll(personalPageNode);
     }
 }
