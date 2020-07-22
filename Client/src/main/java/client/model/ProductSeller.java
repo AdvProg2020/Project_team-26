@@ -4,7 +4,6 @@ import client.exception.NotEnoughProductsException;
 import client.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 public class ProductSeller {
     private int id;
