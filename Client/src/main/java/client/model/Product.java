@@ -1,6 +1,5 @@
 package client.model;
 
-import client.model.enums.RequestType;
 import client.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
