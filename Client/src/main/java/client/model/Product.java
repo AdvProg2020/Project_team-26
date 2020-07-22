@@ -9,6 +9,8 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.util.*;
 
+
+@JsonSerialize(using = ProductSerializer.class)
 public class Product {
     private int id;
     private String name;
