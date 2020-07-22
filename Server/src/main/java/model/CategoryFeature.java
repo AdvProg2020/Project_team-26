@@ -1,9 +1,9 @@
 package model;
 
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import model.enums.FeatureType;
+import model.serializer.CategoryFeatureSerializer;
 
 import javax.persistence.*;
 @JsonSerialize(using = CategoryFeatureSerializer.class)

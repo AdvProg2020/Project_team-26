@@ -1,14 +1,20 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import model.deserializer.ProductSellerDeserializer;
 import model.enums.RequestType;
 import model.enums.Status;
+import model.serializer.categoryFeatureMapSerialization;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.util.*;
 
+@JsonDeserialize(using = ProductSellerDeserializer.class)
 @Entity
 @Table(name = "product")
 @SecondaryTable(name = "product_additional", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_id"))
@@ -81,6 +87,33 @@ public class Product {
         sellerList = new ArrayList<>();
         categoryFeatures = new HashMap<>();
         comments = new HashSet<>();
+    }
+
+    @JsonCreator
+    public Product(@JsonProperty("id") int id,
+                   @JsonProperty("name") String name,
+                   @JsonProperty("brand") String brand,
+                   @JsonProperty("description") String description,
+                   @JsonProperty("averageRate") Double averageRate,
+                   @JsonProperty("amountBought") Integer amountBought,
+                   @JsonProperty("price") Long price,
+                   @JsonProperty("category") Category category,
+                   @JsonProperty("image") byte[] image,
+                   @JsonProperty("sellerList") List<ProductSeller> sellerList,
+                   @JsonProperty("categoryFeatures") Map<CategoryFeature, String> categoryFeatures,
+                   @JsonProperty("status") Status status) {
+        this.id = id;
+        this.name = name;
+        this.brand = brand;
+        this.description = description;
+        this.averageRate = averageRate;
+        this.amountBought = amountBought;
+        this.price = price;
+        this.category = category;
+        this.image = image;
+        this.sellerList = sellerList;
+        this.categoryFeatures = categoryFeatures;
+        this.status = status;
     }
 
     public int getId() {

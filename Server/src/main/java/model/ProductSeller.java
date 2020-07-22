@@ -1,13 +1,18 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import exception.NotEnoughProductsException;
+import model.deserializer.ProductSellerDeserializer;
 import model.enums.RequestType;
 import model.enums.Status;
 
 import javax.persistence.*;
 
+@JsonDeserialize(using = ProductSellerDeserializer.class)
 @Entity
 @Table(name = "product_seller")
 @SecondaryTable(name = "product_seller_off", pkJoinColumns = @PrimaryKeyJoinColumn(name = "product_seller_id"))
@@ -56,6 +61,22 @@ public class ProductSeller {
         this.remainingItems = remainingItems;
         this.price = price;
         this.priceInOff = priceInOff;
+    }
+
+    @JsonCreator
+    public ProductSeller(
+            @JsonProperty("id") int id,
+            @JsonProperty("seller") User seller,
+            @JsonProperty("price") long price,
+            @JsonProperty("priceInOff") Long priceInOff,
+            @JsonProperty("remainingItems") int remainingItems,
+            @JsonProperty("status") Status status) {
+        this.id = id;
+        this.seller = (Seller) seller;
+        this.price = price;
+        this.priceInOff = priceInOff;
+        this.remainingItems = remainingItems;
+        this.status = status;
     }
 
     public int getId() {

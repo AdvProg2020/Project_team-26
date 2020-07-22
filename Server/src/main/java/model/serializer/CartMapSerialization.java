@@ -1,21 +1,24 @@
-package model;
+package model.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import model.ProductSeller;
 
 import java.io.IOException;
 import java.util.Map;
 
-public class categoryFeatureMapSerialization extends StdSerializer<Map<CategoryFeature,String>> {
-    protected categoryFeatureMapSerialization() {
+public class CartMapSerialization extends StdSerializer<Map<ProductSeller, Integer>> {
+
+
+    protected CartMapSerialization() {
         super(Map.class, true);
     }
 
     @Override
-    public void serialize(Map<CategoryFeature, String> map, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
+    public void serialize(Map<ProductSeller, Integer> productSellerIntegerMap, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartArray();
-        for (Map.Entry<CategoryFeature, String> element : map.entrySet()) {
+        for (Map.Entry<ProductSeller, Integer> element : productSellerIntegerMap.entrySet()) {
             jsonGenerator.writeStartObject();
             jsonGenerator.writeObjectField("key", element.getKey());
             jsonGenerator.writeObjectField("value", element.getValue());
