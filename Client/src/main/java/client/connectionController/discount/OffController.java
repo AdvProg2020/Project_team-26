@@ -42,6 +42,9 @@ public class OffController implements IOffController {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("off", off);
         jsonObject.put("productId", productId);
+        jsonObject.put("priceInOff", priceInOff);
+        jsonObject.put("percent", percent);
+        jsonObject.put("isFirstTime", isFirstTime);
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerAddProductToOffAddress());
