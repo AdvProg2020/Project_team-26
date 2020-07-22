@@ -1,19 +1,19 @@
 package model;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.StdSerializer;
+import model.deserializer.CategoryDeserializer;
+import model.serializer.CategorySerializer;
 
 import javax.persistence.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonSerialize(using = CategorySerializer.class)
+@JsonDeserialize(using = CategoryDeserializer.class)
 @Entity
 @Table(name = "category")
 public class Category {
@@ -56,6 +56,18 @@ public class Category {
         features = new ArrayList<CategoryFeature>();
         subCategory = new ArrayList<Category>();
         products = new ArrayList<Product>();
+    }
+
+
+    @JsonCreator
+    public Category(@JsonProperty("id") int id,
+                    @JsonProperty("name") String name,
+                    @JsonProperty("parent") Category parent,
+                    @JsonProperty("features") List<CategoryFeature> features) {
+        this.id = id;
+        this.name = name;
+        this.parent = parent;
+        this.features = features;
     }
 
     public int getId() {

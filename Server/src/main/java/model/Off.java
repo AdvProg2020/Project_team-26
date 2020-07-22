@@ -1,5 +1,9 @@
 package model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import model.deserializer.OffDeserializer;
 import model.enums.RequestType;
 import model.enums.Status;
 
@@ -8,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@JsonDeserialize (using = OffDeserializer.class)
 @Entity
 @Table(name = "off")
 public class Off {
@@ -39,6 +44,17 @@ public class Off {
     public Off() {
         items = new ArrayList<OffItem>();
 
+    }
+
+    @JsonCreator
+    public Off(@JsonProperty("id") int id, @JsonProperty("seller") User seller, @JsonProperty("startDate") Date startDate,
+               @JsonProperty("endDate") Date endDate, @JsonProperty("items") List<OffItem> items, @JsonProperty("status") Status status) {
+        this.id = id;
+        this.seller = (Seller) seller;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.items = items;
+        this.status = status;
     }
 
     public int getId() {
