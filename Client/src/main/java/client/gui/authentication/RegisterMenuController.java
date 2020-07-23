@@ -65,6 +65,7 @@ public class RegisterMenuController implements InitializableController {
     public RegisterMenuController() {
         controller = (IAuthenticationController) Constants.manager.getControllerContainer().
                 getController(ControllerContainer.Controller.AuthenticationController);
+        showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
     }
 
     public void completeTheMenu() {

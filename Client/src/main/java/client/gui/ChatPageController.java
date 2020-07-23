@@ -35,6 +35,7 @@ public class ChatPageController implements InitializableController, MessageRecei
     private TextArea messageTextArea;
     @FXML
     private ImageView sendImage;
+    private boolean isItIsInSupportItCanBeJoinedJustOnce;
 
     @Override
     public void initialize(int id) throws IOException {
@@ -51,6 +52,7 @@ public class ChatPageController implements InitializableController, MessageRecei
 
 
     public void load(String sender, String receiver, Role role, boolean isItSupport) {
+        isItIsInSupportItCanBeJoinedJustOnce = isItSupport;
         this.isItSupport = isItSupport;
         this.role = role;
         this.receiver = receiver;
@@ -87,11 +89,15 @@ public class ChatPageController implements InitializableController, MessageRecei
 
     @Override
     public void received(Message message) throws IOException {
-        Platform.runLater(()->{
+        Platform.runLater(() -> {
             try {
                 if (isItSupport) {
                     if (message.getReceiver().equals(this.sender)) {
+                        if (message.getType() == MessageType.JOIN && !isItIsInSupportItCanBeJoinedJustOnce) {
+                            return;
+                        }
                         addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
+                        isItIsInSupportItCanBeJoinedJustOnce = false;
                     } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
                         addMessageToBox(message, "You", Pos.CENTER_RIGHT);
                     }

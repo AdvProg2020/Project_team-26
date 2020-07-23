@@ -94,7 +94,7 @@ public class SupporterButtonPageController implements InitializableController, M
     public void addUserToTable(UserForTable user) {
         System.out.println("will add");
         connectedUsers.add(user);
-       // tableUsers.getItems().removeAll(tableUsers.getItems());
+        // tableUsers.getItems().removeAll(tableUsers.getItems());
         tableUsers.setItems(FXCollections.observableList(connectedUsers));
         System.out.println(tableUsers.getItems().size());
         System.out.println("added");
@@ -103,7 +103,7 @@ public class SupporterButtonPageController implements InitializableController, M
     public void deleteUserFromTable(UserForTable user) {
         System.out.println("will remove");
         connectedUsers.remove(user);
-       // tableUsers.getItems().removeAll(tableUsers.getItems());
+        // tableUsers.getItems().removeAll(tableUsers.getItems());
         tableUsers.setItems(FXCollections.observableList(connectedUsers));
         System.out.println(tableUsers.getItems().size());
         System.out.println("will be removed");
@@ -135,8 +135,10 @@ public class SupporterButtonPageController implements InitializableController, M
                 UserForTable user = new UserForTable(message.getSender());
                 if (message.getReceiver().equals(supporterUser.getUsername())) {
                     if (message.getType() == MessageType.JOIN) {
-                        chatRooms.put(user, loadChatRoom(message.getSender(), supporterUser.getUsername(), Role.SUPPORT));
-                        addUserToTable(user);
+                        if (!chatRooms.containsKey(user)) {
+                            chatRooms.put(user, loadChatRoom(message.getSender(), supporterUser.getUsername(), Role.SUPPORT));
+                            addUserToTable(user);
+                        }
                     } else if (message.getType() == MessageType.LEAVE) {
                         if (!chatRooms.containsKey(message.getSender()))
                             return;
