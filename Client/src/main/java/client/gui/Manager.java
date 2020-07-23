@@ -1,8 +1,6 @@
 package client.gui;
 
 import client.ControllerContainer;
-import client.Main;
-import client.MyStompSessionHandler;
 import client.connectionController.SessionController;
 import client.connectionController.account.AuthenticationController;
 import client.connectionController.interfaces.account.IShowUserController;

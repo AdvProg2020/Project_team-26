@@ -25,7 +25,6 @@ public class ProductSerializer extends StdSerializer<Product> {
         jsonGenerator.writeStringField("brand", product.getBrand());
         jsonGenerator.writeStringField("description", product.getDescription());
         jsonGenerator.writeObjectField("category", product.getCategory());
-        jsonGenerator.writeObjectField("image", product.getImage());
         jsonGenerator.writeObjectField("sellerList", product.getSellerList());
         jsonGenerator.writeObjectField("categoryFeatures", product.getCategoryFeatures());
         jsonGenerator.writeObjectField("status", product.getStatus());
