@@ -92,7 +92,7 @@ public class ChatPageController implements InitializableController, MessageRecei
         Platform.runLater(() -> {
             try {
                 if (isItSupport) {
-                    if (message.getReceiver().equals(this.sender)) {
+                    if (message.getReceiver().equals(this.sender) && message.getSender().equals(receiver)) {
                         if (message.getType() == MessageType.JOIN && !isItIsInSupportItCanBeJoinedJustOnce) {
                             return;
                         }

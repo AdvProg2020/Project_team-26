@@ -75,7 +75,6 @@ public class SupporterButtonPageController implements InitializableController, M
         tableUsers.setOnMouseClicked(e -> {
             changeToUserChat();
         });
-        tableUsers.setItems(FXCollections.observableList(Arrays.asList(new UserForTable("init test"))));
     }
 
     private void changeToUserChat() {
