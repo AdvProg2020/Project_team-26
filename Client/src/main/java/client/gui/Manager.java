@@ -349,6 +349,10 @@ public class Manager implements Reloadable {
         return date;
     }
 
+    public User getLoggedInUser() {
+        return loggedInUser;
+    }
+
     public LocalDate getLocalDateFromDate(Date date) throws DateTimeException, IllegalArgumentException {
         Instant instant = Instant.ofEpochMilli(date.getTime());
         LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
@@ -435,7 +439,7 @@ public class Manager implements Reloadable {
     public void logout() throws IOException, InvalidTokenException, NotLoggedINException {
         AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
         controller.logout(getToken());
-        Constants.manager.sendMessageTOWebSocket("", new Message(loggedInUser.getUsername(), "", "", MessageType.LEAVE, loggedInUser.getRole()));
+        Constants.manager.sendMessageTOWebSocket("logout", new Message(loggedInUser.getUsername(), "", "", MessageType.LEAVE, loggedInUser.getRole()));
         setLoggedInUser(null);
         setLoggedIn(false);
         reloadTop();
@@ -452,6 +456,7 @@ public class Manager implements Reloadable {
             ioException.printStackTrace();
         }
     }
+
     public void sendMessageTOWebSocket(String receiver, Message message) {
         session.send("/app/chat/" + receiver, message);
     }

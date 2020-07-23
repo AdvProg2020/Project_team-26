@@ -20,7 +20,7 @@
                 <TextArea fx:id="messageTextArea" prefHeight="50.0" prefWidth="495.0" promptText="Enter Your Word" />
                 <ImageView fx:id="sendImage" fitHeight="43.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                     <image>
-                        <Image url="@../pic/icons8-email-send-96.png" />
+                        <Image url="@../pic/send.png" />
                     </image>
                 </ImageView>
             </children>

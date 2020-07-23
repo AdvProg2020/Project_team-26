@@ -45,8 +45,10 @@ public class CustomerButtonController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.PromoController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        Constants.manager.sendMessageTOWebSocket("", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.CUSTOMER));
-        Constants.manager.setLoggedInUser(user);
+        if(Constants.manager.getLoggedInUser() == null) {
+            Constants.manager.sendMessageTOWebSocket("login", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.CUSTOMER));
+            Constants.manager.setLoggedInUser(user);
+        }
         if (user.getRole() != Role.CUSTOMER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be customer");
         this.userId = id;
@@ -82,7 +84,7 @@ public class CustomerButtonController implements InitializableController {
     @FXML
     public void personalPageHandle() {
         if (box.getChildren().size() > 1) {
-            box.getChildren().remove(2);
+            box.getChildren().remove(1);
         }
         box.getChildren().addAll(personalPageNode);
     }
@@ -96,7 +98,7 @@ public class CustomerButtonController implements InitializableController {
             auctionPageController.initialize(userId);
             auctionPageController.load(customer);
             if (box.getChildren().size() > 1) {
-                box.getChildren().remove(2);
+                box.getChildren().remove(1);
             }
             box.getChildren().addAll(node);
         } catch (InvalidTokenException e) {
@@ -109,14 +111,14 @@ public class CustomerButtonController implements InitializableController {
     }
 
     public void support() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/SupporterButtons.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CustomerSupport.fxml"));
         Node node = loader.load();
         SupportPageController supportPageController = (SupportPageController) loader.getController();
         try {
             supportPageController.initialize(userId);
             supportPageController.load(customer);
             if (box.getChildren().size() > 1) {
-                box.getChildren().remove(2);
+                box.getChildren().remove(1);
             }
             box.getChildren().addAll(node);
         } catch (InvalidTokenException e) {

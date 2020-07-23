@@ -54,8 +54,10 @@ public class SupporterButtonPageController implements InitializableController, M
         userColumns.setCellValueFactory(new PropertyValueFactory<>("name"));
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        Constants.manager.setLoggedInUser(user);
-        Constants.manager.sendMessageTOWebSocket("", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.SUPPORT));
+        if(Constants.manager.getLoggedInUser() == null) {
+            Constants.manager.setLoggedInUser(user);
+            Constants.manager.sendMessageTOWebSocket("login", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.SUPPORT));
+        }
         this.supporterUser = (User) user;
         if (user.getRole() != Role.SUPPORT || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be Supporter");

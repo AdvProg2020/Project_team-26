@@ -9,6 +9,8 @@ import client.gui.customer.SupportPageController;
 import client.gui.interfaces.*;
 import client.model.*;
 import client.ControllerContainer;
+import client.model.enums.MessageType;
+import client.model.enums.Role;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -180,7 +182,10 @@ public class AdminOptionMenuController implements InitializableController {
                 ex.printStackTrace();
             }
         });
-
+        if (Constants.manager.getLoggedInUser() == null) {
+            Constants.manager.sendMessageTOWebSocket("login", new Message(admin.getUsername(), "", "", MessageType.JOIN, Role.ADMIN));
+            Constants.manager.setLoggedInUser(admin);
+        }
         handlePersonalPage();
     }
 
@@ -284,6 +289,7 @@ public class AdminOptionMenuController implements InitializableController {
         hbox.getChildren().removeAll(hbox.getChildren());
         hbox.getChildren().addAll(node);
     }
+
     public class TableUser {
         public String username;
 

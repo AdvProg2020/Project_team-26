@@ -71,6 +71,7 @@ public class SupportPageController implements InitializableController {
     }
 
     private void loadChatRoom(String user) throws IOException {
+        System.out.println("\nuser");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ChatPage.fxml"));
         Node node = loader.load();
         ChatPageController chatPageController = (ChatPageController) loader.getController();
@@ -87,6 +88,7 @@ public class SupportPageController implements InitializableController {
         List<String> userNames = showUserController.getOnlineSupporter(Constants.manager.getToken());
         List<TableUser> tableUsers = new ArrayList<>();
         userNames.forEach(i -> tableUsers.add(new TableUser(i)));
+        supporterUsers.getItems().removeAll(supporterUsers.getItems());
         supporterUsers.setItems(FXCollections.observableList(tableUsers));
     }
 
