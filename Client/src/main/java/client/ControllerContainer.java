@@ -1,7 +1,7 @@
 package client;
 
 
-
+import client.connectionController.AuctionController;
 import client.connectionController.RequestController;
 import client.connectionController.SessionController;
 import client.connectionController.account.*;
@@ -19,14 +19,16 @@ import java.util.Map;
 
 public class ControllerContainer {
     private Map<ControllerContainer.Controller, Object> map;
-    public ControllerContainer(){
+
+    public ControllerContainer() {
         map = new HashMap<>();
         initialize();
     }
+
     public enum Controller {
         AuthenticationController, SessionController, ShowUserController, UserInfoController,
         CartController, CategoryController, OffController, PromoController, OrderController, ProductController,
-        RequestController, CommentController, RatingController;
+        RequestController, CommentController, RatingController, AuctionController;
     }
 
 
@@ -48,5 +50,6 @@ public class ControllerContainer {
         map.put(Controller.RequestController, new RequestController());
         map.put(Controller.CommentController, new CommentController());
         map.put(Controller.RatingController, new RatingController());
+        map.put(Controller.AuctionController, new AuctionController());
     }
 }

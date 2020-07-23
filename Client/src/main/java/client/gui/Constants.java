@@ -355,6 +355,7 @@ public class Constants {
     public static String getProductControllerEditProductSellerAddress() {
         return manager.getHostPort() + "/controller/method/product/edit-product-seller";
     }
+
     public static String getProductControllerGetProductByProductSellerIdAddress() {
         return manager.getHostPort() + "/controller/method/product/get-product-by-product-seller-id";
     }
@@ -452,9 +453,30 @@ public class Constants {
     }
 
 
-
-
     public static String getOrderControllerGetOrderItemsAddress() {
-        return manager.getHostPort()+"/controller/method/get-order-items-with-order-id";
+        return manager.getHostPort() + "/controller/method/get-order-items-with-order-id";
+    }
+
+    /**
+     * ChatController Methods
+     */
+    public static String getShowUserControllerGetOnlineSupporterAddress() {
+        return manager.getHostPort() + "/controller/method/get-online-support";
+    }
+
+    public static String getShowUserControllerGetAllOnlineUserAddress() {
+        return manager.getHostPort() + "/controller/method/get-online-users";
+    }
+
+    public static String getAuctionControllerGetAllAuctionAddress() {
+        return manager.getHostPort()+"/controller/method/request/getAll-Auction";
+    }
+
+    public static String getAuctionControllerCreateNewAuctionAddress() {
+        return manager.getHostPort()+"/controller/method/request/create-newAuction";
+    }
+
+    public static String getAuctionControllerParticipateInAuctionAddress() {
+        return manager.getHostPort()+"/controller/method/request/participate-in-auction";
     }
 }

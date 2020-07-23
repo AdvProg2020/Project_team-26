@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -123,12 +124,25 @@ public class ShowUserController implements IShowUserController {
 
     @Override
     public List<User> getOnlineSupporter(String token) {
-        return null;
+        RestTemplate restTemplate = new RestTemplate();
+        User[] users = restTemplate.getForObject(Constants.getShowUserControllerGetOnlineSupporterAddress() + "/" + token, User[].class);
+        return Arrays.asList(users);
     }
 
     @Override
     public List<User> getAllOnlineUser(String token) throws NoAccessException, InvalidTokenException {
-        return null;
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            User[] users = restTemplate.getForObject(Constants.getShowUserControllerGetAllOnlineUserAddress() + "/" + token, User[].class);
+            return Arrays.asList(users);
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
+        }
     }
 
     public void delete(String username, String token) throws
