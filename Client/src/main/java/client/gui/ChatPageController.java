@@ -71,11 +71,9 @@ public class ChatPageController implements InitializableController, MessageRecei
         Node node = loader.load();
         MessageCardController messageCardController = (MessageCardController) loader.getController();
         try {
-            System.out.println("Will be add");
             messageCardController.initialize(userId);
             messageCardController.load(message, sender, pos);
             chatVBox.getChildren().addAll(node);
-            System.out.println("added");
         } catch (InvalidTokenException e) {
             e.printStackTrace();
         } catch (NoAccessException e) {
