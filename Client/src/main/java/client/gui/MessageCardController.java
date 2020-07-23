@@ -23,6 +23,8 @@ public class MessageCardController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
+        box.setVisible(true);
+        message.setVisible(true);
         message.setEditable(false);
         this.userId = id;
     }
@@ -38,6 +40,7 @@ public class MessageCardController implements InitializableController {
             message.setText(sender + "\nat : " + receivedMessage.getTime().toString() +
                     "\n" + receivedMessage.getContent());
         }
+        System.out.println(receivedMessage);
     }
 
     public int getUserId() {
