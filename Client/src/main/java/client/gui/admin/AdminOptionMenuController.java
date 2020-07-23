@@ -1,4 +1,5 @@
 package client.gui.admin;
+
 import client.connectionController.interfaces.account.*;
 import client.connectionController.interfaces.category.ICategoryController;
 import client.exception.*;
@@ -7,13 +8,23 @@ import client.gui.customer.OrderTableController;
 import client.gui.interfaces.*;
 import client.model.*;
 import client.ControllerContainer;
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class AdminOptionMenuController implements InitializableController {
 
@@ -35,6 +46,8 @@ public class AdminOptionMenuController implements InitializableController {
     private Button personalPage;
     @FXML
     private Button orderButton;
+    @FXML
+    private Button onlineUsersButton;
     @FXML
     private HBox hbox;
 
@@ -156,8 +169,36 @@ public class AdminOptionMenuController implements InitializableController {
                 ioException.printStackTrace();
             }
         });
+        onlineUsersButton.setOnMouseClicked(e -> {
+            try {
+                handleOnlineUsers();
+            } catch (NoAccessException ex) {
+                ex.printStackTrace();
+            } catch (InvalidTokenException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         handlePersonalPage();
+    }
+
+    private void handleOnlineUsers() throws NoAccessException, InvalidTokenException {
+        List<User> onlineUsers = showUserController.getAllOnlineUser(Constants.manager.getToken());
+        Stage tableStage = new Stage();
+        TableView<User> tableView = new TableView();
+        tableStage.setTitle("users");
+        TableColumn<User, String> column = new TableColumn("Online");
+        column.setCellValueFactory(new PropertyValueFactory<>("username"));
+        column.setMinWidth(200);
+        tableView.getColumns().addAll(column);
+        tableView.setItems(FXCollections.observableList(onlineUsers));
+        VBox box = new VBox();
+        box.setPadding(new Insets(10, 10, 10, 10));
+        box.setAlignment(Pos.CENTER);
+        box.getChildren().addAll(tableView);
+        Scene scene = new Scene(box);
+        tableStage.setScene(scene);
+        tableStage.show();
     }
 
     private void handleOrderTable() throws IOException, InvalidIdException, InvalidTokenException, NoAccessException {
