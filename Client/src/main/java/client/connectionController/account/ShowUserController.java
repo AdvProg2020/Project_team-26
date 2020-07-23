@@ -123,17 +123,17 @@ public class ShowUserController implements IShowUserController {
     }
 
     @Override
-    public List<User> getOnlineSupporter(String token) {
+    public List<String> getOnlineSupporter(String token) {
         RestTemplate restTemplate = new RestTemplate();
-        User[] users = restTemplate.getForObject(Constants.getShowUserControllerGetOnlineSupporterAddress() + "/" + token, User[].class);
+        String[] users = restTemplate.getForObject(Constants.getShowUserControllerGetOnlineSupporterAddress() + "/" + token, String[].class);
         return Arrays.asList(users);
     }
 
     @Override
-    public List<User> getAllOnlineUser(String token) throws NoAccessException, InvalidTokenException {
+    public List<String> getAllOnlineUser(String token) throws NoAccessException, InvalidTokenException {
         RestTemplate restTemplate = new RestTemplate();
         try {
-            User[] users = restTemplate.getForObject(Constants.getShowUserControllerGetAllOnlineUserAddress() + "/" + token, User[].class);
+            String[] users = restTemplate.getForObject(Constants.getShowUserControllerGetAllOnlineUserAddress() + "/" + token, String[].class);
             return Arrays.asList(users);
         } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {

@@ -19,9 +19,9 @@ public interface IShowUserController {
 
     List<User> getManagers(int id);
 
-    List<User> getOnlineSupporter(String token);
+    List<String> getOnlineSupporter(String token);
 
-    List<User> getAllOnlineUser(String token) throws NoAccessException, InvalidTokenException;
+    List<String> getAllOnlineUser(String token) throws NoAccessException, InvalidTokenException;
 
 
     Map<String, String> getUserInfo(String token) throws NoAccessException, InvalidTokenException;

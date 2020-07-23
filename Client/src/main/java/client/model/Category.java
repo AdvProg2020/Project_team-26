@@ -48,6 +48,17 @@ public class Category {
         return features;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
+    }
+
+    public void setFeatures(List<CategoryFeature> features) {
+        this.features = features;
+    }
 
     @Override
     public boolean equals(Object obj) {
