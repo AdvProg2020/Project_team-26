@@ -28,15 +28,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class SupporterButtonPageController implements InitializableController, MessageReceiver {
     private int userId;
     private User supporterUser;
     private IShowUserController showUserController;
+    private List<UserForTable> connectedUsers;
     @FXML
     private Button personalPage;
     @FXML
@@ -53,6 +51,7 @@ public class SupporterButtonPageController implements InitializableController, M
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
+        connectedUsers = new ArrayList<>();
         chatRooms = new HashMap<>();
         this.userId = id;
         Constants.manager.getMessageReceivers().add(this::received);
@@ -76,6 +75,7 @@ public class SupporterButtonPageController implements InitializableController, M
         tableUsers.setOnMouseClicked(e -> {
             changeToUserChat();
         });
+        tableUsers.setItems(FXCollections.observableList(Arrays.asList(new UserForTable("init test"))));
     }
 
     private void changeToUserChat() {
@@ -92,20 +92,20 @@ public class SupporterButtonPageController implements InitializableController, M
 
 
     public void addUserToTable(UserForTable user) {
-        System.out.println("will  add");
-        List<UserForTable> userForTableList = tableUsers.getItems();
-        userForTableList.add(user);
-        tableUsers.getItems().removeAll(tableUsers.getItems());
-        tableUsers.setItems(FXCollections.observableList(userForTableList));
+        System.out.println("will add");
+        connectedUsers.add(user);
+       // tableUsers.getItems().removeAll(tableUsers.getItems());
+        tableUsers.setItems(FXCollections.observableList(connectedUsers));
+        System.out.println(tableUsers.getItems().size());
         System.out.println("added");
     }
 
     public void deleteUserFromTable(UserForTable user) {
-        System.out.println("will  deleted");
-        List<UserForTable> userForTableList = tableUsers.getItems();
-        userForTableList.remove(user);
-        tableUsers.getItems().removeAll(tableUsers.getItems());
-        tableUsers.setItems(FXCollections.observableList(userForTableList));
+        System.out.println("will remove");
+        connectedUsers.remove(user);
+       // tableUsers.getItems().removeAll(tableUsers.getItems());
+        tableUsers.setItems(FXCollections.observableList(connectedUsers));
+        System.out.println(tableUsers.getItems().size());
         System.out.println("will be removed");
     }
 
@@ -148,7 +148,6 @@ public class SupporterButtonPageController implements InitializableController, M
                 e.getStackTrace();
             }
         });
-
     }
 
     private Node loadChatRoom(String receiver, String sender, Role role) throws IOException {

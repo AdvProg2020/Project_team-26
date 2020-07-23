@@ -8,6 +8,7 @@ import client.exception.NoAccessException;
 import client.gui.ChatPageController;
 import client.gui.Constants;
 import client.gui.interfaces.InitializableController;
+import client.gui.supporter.SupporterButtonPageController;
 import client.model.Message;
 import client.model.Off;
 import client.model.User;
@@ -71,7 +72,6 @@ public class SupportPageController implements InitializableController {
     }
 
     private void loadChatRoom(String user) throws IOException {
-        System.out.println("\nuser");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ChatPage.fxml"));
         Node node = loader.load();
         ChatPageController chatPageController = (ChatPageController) loader.getController();
@@ -105,6 +105,16 @@ public class SupportPageController implements InitializableController {
 
         public void setUsername(String username) {
             this.username = username;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (!this.getClass().equals(obj.getClass()))
+                return false;
+            TableUser userForTable = (TableUser) obj;
+            if (userForTable.getUsername().equals(this.username))
+                return true;
+            return false;
         }
     }
 }
