@@ -14,6 +14,7 @@ import client.model.Message;
 import client.model.User;
 import client.model.enums.MessageType;
 import client.model.enums.Role;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -54,7 +55,7 @@ public class SupporterButtonPageController implements InitializableController, M
         userColumns.setCellValueFactory(new PropertyValueFactory<>("name"));
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        if(Constants.manager.getLoggedInUser() == null) {
+        if (Constants.manager.getLoggedInUser() == null) {
             Constants.manager.setLoggedInUser(user);
             Constants.manager.sendMessageTOWebSocket("login", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.SUPPORT));
         }
@@ -115,23 +116,30 @@ public class SupporterButtonPageController implements InitializableController, M
 
     @Override
     public void received(Message message) throws IOException {
-        UserForTable user = new UserForTable(message.getSender());
-        if (message.getReceiver().equals(supporterUser.getUsername())) {
-            if (message.getType() == MessageType.JOIN) {
-                chatRooms.put(user, loadChatRoom(message.getSender(), supporterUser.getUsername(), Role.SUPPORT));
-                addUserToTable(user);
-            } else if (message.getType() == MessageType.LEAVE) {
-                if (!chatRooms.containsKey(message.getSender()))
-                    return;
-                chatRooms.remove(user);
-                deleteUserFromTable(user);
+        Platform.runLater(() -> {
+            try {
+                UserForTable user = new UserForTable(message.getSender());
+                if (message.getReceiver().equals(supporterUser.getUsername())) {
+                    if (message.getType() == MessageType.JOIN) {
+                        chatRooms.put(user, loadChatRoom(message.getSender(), supporterUser.getUsername(), Role.SUPPORT));
+                        addUserToTable(user);
+                    } else if (message.getType() == MessageType.LEAVE) {
+                        if (!chatRooms.containsKey(message.getSender()))
+                            return;
+                        chatRooms.remove(user);
+                        deleteUserFromTable(user);
+                    }
+                } else if (message.getReceiver().equals("") || message.getReceiver().isBlank() || message.getReceiver().isEmpty()) {
+                    if (!chatRooms.containsKey(user))
+                        return;
+                    chatRooms.remove(user);
+                    deleteUserFromTable(user);
+                }
+            } catch (IOException e) {
+                e.getStackTrace();
             }
-        } else if (message.getReceiver().equals("") || message.getReceiver().isBlank() || message.getReceiver().isEmpty()) {
-            if (!chatRooms.containsKey(user))
-                return;
-            chatRooms.remove(user);
-            deleteUserFromTable(user);
-        }
+        });
+
     }
 
     private Node loadChatRoom(String receiver, String sender, Role role) throws IOException {

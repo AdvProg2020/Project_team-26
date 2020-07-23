@@ -8,6 +8,7 @@ import client.gui.interfaces.MessageReceiver;
 import client.model.Message;
 import client.model.enums.MessageType;
 import client.model.enums.Role;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -37,6 +38,10 @@ public class ChatPageController implements InitializableController, MessageRecei
 
     @Override
     public void initialize(int id) throws IOException {
+        chatVBox.setVisible(true);
+        chatScroll.setVisible(true);
+        messageTextArea.setEditable(true);
+        sendImage.setVisible(true);
         userId = id;
         sendImage.setOnMouseClicked(e -> {
             sendMessage(MessageType.CHAT);
@@ -65,12 +70,11 @@ public class ChatPageController implements InitializableController, MessageRecei
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/MessageCard.fxml"));
         Node node = loader.load();
         MessageCardController messageCardController = (MessageCardController) loader.getController();
-        try { System.out.println("Will be add");
+        try {
+            System.out.println("Will be add");
             messageCardController.initialize(userId);
             messageCardController.load(message, sender, pos);
-            TextField textField = new TextField("kshdchaoushof");
-            chatVBox.getChildren().addAll(textField);
-            System.out.println(chatVBox.getChildren().size());
+            chatVBox.getChildren().addAll(node);
             System.out.println("added");
         } catch (InvalidTokenException e) {
             e.printStackTrace();
@@ -85,19 +89,24 @@ public class ChatPageController implements InitializableController, MessageRecei
 
     @Override
     public void received(Message message) throws IOException {
-        addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
-    /*    if (isItSupport) {
-            if (message.getReceiver().equals(this.sender)) {
-                addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
-            } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
-                addMessageToBox(message, "You", Pos.CENTER_RIGHT);
+        Platform.runLater(()->{
+            try {
+                if (isItSupport) {
+                    if (message.getReceiver().equals(this.sender)) {
+                        addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
+                    } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
+                        addMessageToBox(message, "You", Pos.CENTER_RIGHT);
+                    }
+                } else if (message.getReceiver().equals(receiver)) {
+                    if (message.getReceiver().equals(receiver)) {
+                        addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
+                    } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
+                        addMessageToBox(message, "You", Pos.CENTER_RIGHT);
+                    }
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } else if (message.getReceiver().equals(receiver)) {
-            if (message.getReceiver().equals(receiver)) {
-                addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
-            } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
-                addMessageToBox(message, "You", Pos.CENTER_RIGHT);
-            }
-        }*/
+        });
     }
 }
