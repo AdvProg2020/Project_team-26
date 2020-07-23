@@ -52,8 +52,10 @@ public class SellerButtonsController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        Constants.manager.sendMessageTOWebSocket("", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.SELLER));
-        Constants.manager.setLoggedInUser(user);
+        if(Constants.manager.getLoggedInUser() == null) {
+            Constants.manager.sendMessageTOWebSocket("", new Message(user.getUsername(), "", "", MessageType.JOIN, Role.SELLER));
+            Constants.manager.setLoggedInUser(user);
+        }
         this.seller = (User) user;
         if (user.getRole() != Role.SELLER || !Constants.manager.isLoggedIn())
             throw new NoAccessException("must be seller");

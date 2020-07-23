@@ -182,7 +182,10 @@ public class AdminOptionMenuController implements InitializableController {
                 ex.printStackTrace();
             }
         });
-        Constants.manager.sendMessageTOWebSocket("login", new Message(admin.getUsername(), "", "", MessageType.JOIN, Role.ADMIN));
+        if (Constants.manager.getLoggedInUser() == null) {
+            Constants.manager.sendMessageTOWebSocket("login", new Message(admin.getUsername(), "", "", MessageType.JOIN, Role.ADMIN));
+            Constants.manager.setLoggedInUser(admin);
+        }
         handlePersonalPage();
     }
 
@@ -286,6 +289,7 @@ public class AdminOptionMenuController implements InitializableController {
         hbox.getChildren().removeAll(hbox.getChildren());
         hbox.getChildren().addAll(node);
     }
+
     public class TableUser {
         public String username;
 

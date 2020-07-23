@@ -71,6 +71,7 @@ public class SupportPageController implements InitializableController {
     }
 
     private void loadChatRoom(String user) throws IOException {
+        System.out.println("\nuser");
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ChatPage.fxml"));
         Node node = loader.load();
         ChatPageController chatPageController = (ChatPageController) loader.getController();
