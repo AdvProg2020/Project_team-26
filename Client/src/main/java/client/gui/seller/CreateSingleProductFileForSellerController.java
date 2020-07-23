@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 
-public class CreateSingleProductForSellerController implements InitializableController, Reloadable {
+public class CreateSingleProductFileForSellerController implements InitializableController, Reloadable {
     private int userId;
     private Category category;
     private IProductController productController;
