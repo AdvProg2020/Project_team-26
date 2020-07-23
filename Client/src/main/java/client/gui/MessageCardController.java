@@ -27,6 +27,7 @@ public class MessageCardController implements InitializableController {
     }
 
     public void load(Message receivedMessage, String sender, Pos pos) {
+        System.out.println(message);
         if (receivedMessage.getType() == MessageType.JOIN || receivedMessage.getType() == MessageType.LEAVE) {
             box.setAlignment(Pos.CENTER);
             message.setText(receivedMessage.getSender() + (receivedMessage.getType() == MessageType.LEAVE ? "" +
@@ -37,6 +38,7 @@ public class MessageCardController implements InitializableController {
             message.setText(sender + "\nat : " + receivedMessage.getTime().toString() +
                     "\n" + receivedMessage.getContent());
         }
+        box.getChildren().addAll(message);
     }
 
     public int getUserId() {

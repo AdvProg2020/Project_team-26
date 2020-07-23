@@ -56,6 +56,8 @@ public class ChatPageController implements InitializableController, MessageRecei
             return;
         Message message = new Message(sender, messageTextArea.getText(), receiver, type, this.role);
         Constants.manager.sendMessageTOWebSocket(this.receiver, message);
+        messageTextArea.setText("");
+
     }
 
     private void addMessageToBox(Message message, String sender, Pos pos) throws IOException {
