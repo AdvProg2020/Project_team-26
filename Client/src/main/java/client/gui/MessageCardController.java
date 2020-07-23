@@ -23,6 +23,7 @@ public class MessageCardController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
+        message.setEditable(false);
         this.userId = id;
     }
 

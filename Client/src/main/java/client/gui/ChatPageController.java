@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 
@@ -55,17 +56,22 @@ public class ChatPageController implements InitializableController, MessageRecei
         if (messageTextArea.getText().isEmpty() || messageTextArea.getText().isBlank())
             return;
         Message message = new Message(sender, messageTextArea.getText(), receiver, type, this.role);
-        Constants.manager.sendMessageTOWebSocket( this.receiver, message);
+        Constants.manager.sendMessageTOWebSocket(this.receiver, message);
+        messageTextArea.setText("");
+
     }
 
     private void addMessageToBox(Message message, String sender, Pos pos) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/MessageCard.fxml"));
         Node node = loader.load();
         MessageCardController messageCardController = (MessageCardController) loader.getController();
-        try {
+        try { System.out.println("Will be add");
             messageCardController.initialize(userId);
             messageCardController.load(message, sender, pos);
-            chatVBox.getChildren().addAll(node);
+            TextField textField = new TextField("kshdchaoushof");
+            chatVBox.getChildren().addAll(textField);
+            System.out.println(chatVBox.getChildren().size());
+            System.out.println("added");
         } catch (InvalidTokenException e) {
             e.printStackTrace();
         } catch (NoAccessException e) {
@@ -79,7 +85,8 @@ public class ChatPageController implements InitializableController, MessageRecei
 
     @Override
     public void received(Message message) throws IOException {
-        if (isItSupport) {
+        addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
+    /*    if (isItSupport) {
             if (message.getReceiver().equals(this.sender)) {
                 addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
             } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
@@ -91,6 +98,6 @@ public class ChatPageController implements InitializableController, MessageRecei
             } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
                 addMessageToBox(message, "You", Pos.CENTER_RIGHT);
             }
-        }
+        }*/
     }
 }
