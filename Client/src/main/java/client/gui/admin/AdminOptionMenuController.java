@@ -9,6 +9,8 @@ import client.gui.customer.SupportPageController;
 import client.gui.interfaces.*;
 import client.model.*;
 import client.ControllerContainer;
+import client.model.enums.MessageType;
+import client.model.enums.Role;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -180,7 +182,7 @@ public class AdminOptionMenuController implements InitializableController {
                 ex.printStackTrace();
             }
         });
-
+        Constants.manager.sendMessageTOWebSocket("login", new Message(admin.getUsername(), "", "", MessageType.JOIN, Role.ADMIN));
         handlePersonalPage();
     }
 

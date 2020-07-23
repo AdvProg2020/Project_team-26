@@ -8,6 +8,7 @@ import model.enums.Role;
 import model.Session;
 import model.User;
 import org.springframework.web.bind.annotation.*;
+import repository.ChatRepository;
 import repository.RepositoryContainer;
 import repository.UserRepository;
 
@@ -91,6 +92,21 @@ public class ShowUserController {
     public User getUserByToken(@RequestBody Map info) throws InvalidTokenException {
         String token = (String) info.get("token");
         return Session.getSession(token).getLoggedInUser();
+    }
+
+    
+    @GetMapping("/controller/method/get-online-support/{token}")
+    public List<String> getOnlineSupporter(@PathVariable("token") String token) {
+        System.out.println("\n\n"+token+" this is server for online support");
+        return ChatRepository.getInstance().getOnlineSupports();
+
+    }
+
+    @GetMapping("/controller/method/get-online-users/{token}")
+    public List<String> getAllOnlineUser(@PathVariable("token") String token) throws NoAccessException, InvalidTokenException {
+        System.out.println("\n\n"+token+" this is server for online users");
+        return ChatRepository.getInstance().getOnlineUsers();
+
     }
 
 }

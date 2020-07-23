@@ -452,7 +452,9 @@ public class Manager implements Reloadable {
             ioException.printStackTrace();
         }
     }
+
     public void sendMessageTOWebSocket(String receiver, Message message) {
+        System.out.println("\n\n\n"+message.toString());
         session.send("/app/chat/" + receiver, message);
     }
 
