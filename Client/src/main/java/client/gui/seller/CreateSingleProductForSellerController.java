@@ -43,8 +43,6 @@ public class CreateSingleProductForSellerController implements InitializableCont
     @FXML
     private Button clearButton;
     @FXML
-    private Button uploadFileButton;
-    @FXML
     private TextArea descriptionField;
     @FXML
     private TextField brandTextField;
@@ -62,6 +60,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
     private VBox featuresBox;
     @FXML
     private Button imageChooserButton;
+    @FXML
+    private Button uploadFileButton;
     @FXML
     private Label errorLabel;
     private File imageFile;
@@ -216,7 +216,12 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
                 newProduct.addSeller(newProductSeller);
                 try {
-                    productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
+                    if (productFile == null)
+                        productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
+                    else {
+                        productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
+                        productController.setFileForProduct(newProduct.getName(), Constants.manager.getToken(), Files.readAllBytes(productFile.toPath()));
+                    }
                     this.personalInfoController.clearBox();
                     Constants.manager.showSuccessPopUp("Your Product Created");
                 } catch (ObjectAlreadyExistException e) {
@@ -254,7 +259,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 Constants.manager.showSuccessPopUp("you are added to product");
             } catch (NotSellerException | NoAccessException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
-            }  catch (InvalidTokenException e) {
+            } catch (InvalidTokenException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
                 Constants.manager.setTokenFromController();
             }
