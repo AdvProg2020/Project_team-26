@@ -22,6 +22,7 @@ public class Category {
         this.parent = parent;
         this.features = features;
     }
+
     public Category() {
         features = new ArrayList<>();
 
@@ -58,6 +59,11 @@ public class Category {
         if (category.getId() == this.getId())
             return true;
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
 

@@ -91,6 +91,7 @@ public class SingleProductForSellerPageController implements InitializableContro
     public void initialize(int id) throws IOException {
         productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
+        auctionController = (IAuctionController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuctionController);
         productId = id;
         productSellerInfoEditButton.setText("Edit seller");
         productInfoEditButton.setText("Edit product");

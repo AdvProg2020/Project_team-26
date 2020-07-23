@@ -1,5 +1,6 @@
 package client.gui.customer;
 
+import client.ControllerContainer;
 import client.connectionController.interfaces.auction.IAuctionController;
 import client.connectionController.interfaces.product.IProductController;
 import client.exception.*;
@@ -47,6 +48,8 @@ public class AuctionPageController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
+        auctionController = (IAuctionController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuctionController);
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         auctionId = null;
         userId = id;
         descriptionOfProduct.setEditable(false);

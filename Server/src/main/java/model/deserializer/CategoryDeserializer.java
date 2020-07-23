@@ -19,7 +19,7 @@ import java.util.Map;
 public class CategoryDeserializer extends StdDeserializer<Category> {
 
     public CategoryDeserializer() {
-        super(Map.class);
+        super(Category.class);
     }
 
     @Override
