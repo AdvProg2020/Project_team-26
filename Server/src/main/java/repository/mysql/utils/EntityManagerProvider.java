@@ -1,27 +1,30 @@
 package repository.mysql.utils;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.util.HashMap;
+import java.util.Map;
 
 public class EntityManagerProvider {
 
-    private static EntityManager entityManager = null;
+    private static Map<Long, EntityManager> entityManagers = new HashMap<>();
 
     public static EntityManager getEntityManager() {
-        if (entityManager == null) {
-            entityManager =
-                    EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
+        long threadId = Thread.currentThread().getId();
+        if (entityManagers.get(threadId) == null) {
+            entityManagers.put(threadId, EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager());
         }
-        if(!entityManager.isOpen()) {
-            entityManager =
-                    EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager();
+        if (!entityManagers.get(threadId).isOpen()) {
+            entityManagers.put(threadId, EntityManagerFactoryProvider.getEntityManagerFactory().createEntityManager());
         }
-        return entityManager;
+        return entityManagers.get(threadId);
     }
 
     public static void close() {
-        if(entityManager != null && entityManager.isOpen()) {
-            entityManager.close();
+        long threadId = Thread.currentThread().getId();
+        if (entityManagers.get(threadId) != null && entityManagers.get(threadId).isOpen()) {
+            entityManagers.get(threadId).close();
         }
-        entityManager = null;
+        entityManagers.remove(entityManagers.get(threadId));
     }
 }
