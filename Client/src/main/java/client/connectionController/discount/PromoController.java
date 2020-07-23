@@ -5,6 +5,7 @@ import client.exception.*;
 import client.gui.Constants;
 import client.model.*;
 import client.model.enums.*;
+import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -108,7 +109,8 @@ public class PromoController implements IPromoController {
 
     public int createPromoCode(Promo promo, String token) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("promo", promo);
+        Gson gson = new Gson();
+        jsonObject.put("promo", gson.toJson(promo));
         jsonObject.put("token", token);
         try {
             HttpHeaders httpHeaders = new HttpHeaders();

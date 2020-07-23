@@ -1,9 +1,11 @@
 package Server.controller.discount;
 
+import com.google.gson.Gson;
 import exception.*;
 import javafx.util.Pair;
 import model.*;
 import model.enums.Role;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -68,7 +70,8 @@ public class PromoController {
     }
     @PostMapping("/controller/method/promo/create-promo-code")
     public int createPromoCode(@RequestBody Map info) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException {
-        Promo promo = (Promo) info.get("promo");
+        Gson gson = new Gson();
+        Promo promo = gson.fromJson((String) info.get("promo"), Promo.class);
         String token = (String) info.get("token");
         checkAccessOfUser(token, "only the manager can create promo code");
         if (promoRepository.getByCode(promo.getPromoCode()) != null)
