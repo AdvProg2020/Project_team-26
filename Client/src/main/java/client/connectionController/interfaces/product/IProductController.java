@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface IProductController {
-    void createProduct(ProductTemplate product, String token, byte[] image) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException;
+    void createProduct(ProductTemplate product, String token, byte[] image, ProductSeller productSeller) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException;
 
     Product getProductByName(String name, String token) throws NoObjectIdException;
 

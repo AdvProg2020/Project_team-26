@@ -32,10 +32,12 @@ public class ProductController {
         String token = (String) info.get("token");
         String imageBase64 = (String) info.get("image");
         byte[] image = org.apache.commons.codec.binary.Base64.decodeBase64(imageBase64);
+        ProductSeller productSeller = (ProductSeller) info.get("productSeller");
         User user = Session.getSession(token).getLoggedInUser();
         if (product == null)
             throw new NullPointerException();
         product.setImage(image);
+        product.addSeller(productSeller);
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to add product");
         Product productWithSameName = productRepository.getByName(product.getName());

@@ -125,7 +125,6 @@ public class Product {
         this.amountBought = productTemplate.getAmountBought();
         this.price = productTemplate.getPrice();
         this.category = productTemplate.getCategory();
-        this.sellerList = productTemplate.getSellerList();
         this.categoryFeatures = productTemplate.getCategoryFeatures();
         this.status = productTemplate.getStatus();
     }

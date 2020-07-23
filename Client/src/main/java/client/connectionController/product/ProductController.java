@@ -42,11 +42,12 @@ public class ProductController implements IProductController {
         return Arrays.asList(responseEntity.getBody());
     }
 
-    public void createProduct(ProductTemplate product, String token, byte[] image) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+    public void createProduct(ProductTemplate product, String token, byte[] image, ProductSeller productSeller) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
         ObjectMapper objectMapper = new ObjectMapper();
         jsonObject.put("product", product);
         jsonObject.put("image", org.apache.commons.codec.binary.Base64.encodeBase64String(image));
+        jsonObject.put("productSeller", productSeller);
         jsonObject.put("token", token);
         System.out.println(jsonObject.toJSONString());
         try {

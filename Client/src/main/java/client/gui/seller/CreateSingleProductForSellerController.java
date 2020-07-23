@@ -197,9 +197,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 featureBoxList.forEach(i -> newProduct.getCategoryFeatures().put(i.getCategoryFeature(), i.getValue()));
                 newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
                 newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
-                newProduct.getSellerList().add(newProductSeller);
                 try {
-                    productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
+                    productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()), newProductSeller);
                     this.personalInfoController.clearBox();
                     Constants.manager.showSuccessPopUp("Your Product Created");
                 } catch (ObjectAlreadyExistException e) {

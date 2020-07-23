@@ -22,7 +22,6 @@ public class ProductTemplate {
     private Integer amountBought;
     private Long price;
     private Category category;
-    private List<ProductSeller> sellerList;
     /*@JsonDeserialize(keyUsing = CategoryFeatureDeserializer.class)*/
     private Map<CategoryFeature, String> categoryFeatures;
     private Status status;
@@ -36,7 +35,6 @@ public class ProductTemplate {
                            @JsonProperty("amountBought") Integer amountBought,
                            @JsonProperty("price") Long price,
                            @JsonProperty("category") Category category,
-                           @JsonProperty("sellerList") List<ProductSeller> sellerList,
                            @JsonProperty("categoryFeatures") Map<CategoryFeature, String> categoryFeatures,
                            @JsonProperty("status") Status status) {
         this.id = id;
@@ -47,7 +45,6 @@ public class ProductTemplate {
         this.amountBought = amountBought;
         this.price = price;
         this.category = category;
-        this.sellerList = sellerList;
         this.categoryFeatures = categoryFeatures;
         this.status = status;
     }
@@ -58,7 +55,6 @@ public class ProductTemplate {
         this.brand = brand;
         this.description = description;
         this.categoryFeatures = new HashMap<>();
-        this.sellerList = new ArrayList<>();
     }
 
     public int getId() {
@@ -69,21 +65,11 @@ public class ProductTemplate {
         return name;
     }
 
-    public long getMinimumPrice() {
-        long min = Integer.MAX_VALUE;
-        for (ProductSeller productSeller : sellerList) {
-            if (min > productSeller.getPriceInOff())
-                min = productSeller.getPriceInOff();
-        }
-        return min;
-    }
-
     @Override
     public Product clone() {
         Product product = new Product(this.name, this.brand, this.description);
         product.setCategory(category);
         product.setId(id);
-        product.setSellerList(sellerList);
         return product;
     }
 
@@ -91,9 +77,6 @@ public class ProductTemplate {
         return brand;
     }
 
-    public List<ProductSeller> getSellerList() {
-        return sellerList;
-    }
 
     public Category getCategory() {
         return category;
@@ -133,25 +116,15 @@ public class ProductTemplate {
     }
 
 
-    public void addSeller(ProductSeller productSeller) {
-        this.sellerList.add(productSeller);
-    }
-
     public void setStatus(Status status) {
         this.status = status;
     }
 
-    public boolean hasSeller(User seller) {
-        return sellerList.stream().anyMatch(s -> s.getSeller().equals(seller));
-    }
 
     public void setAverageRate(Double averageRate) {
         this.averageRate = averageRate;
     }
 
-    public void setSellerList(List<ProductSeller> sellerList) {
-        this.sellerList = sellerList;
-    }
 
     public Status getStatus() {
         return status;
