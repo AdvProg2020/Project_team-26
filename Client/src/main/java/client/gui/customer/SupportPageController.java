@@ -27,15 +27,17 @@ import javafx.scene.layout.VBox;
 
 import java.io.IOException;
 import java.lang.constant.Constable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class SupportPageController implements InitializableController {
     private IShowUserController showUserController;
     private User thisUser;
 
     @FXML
-    private TableColumn<String, User> supporterColumns;
+    private TableColumn<String, TableUser> supporterColumns;
     @FXML
-    private TableView<User> supporterUsers;
+    private TableView<TableUser> supporterUsers;
     @FXML
     private Button refresh;
     @FXML
@@ -47,11 +49,11 @@ public class SupportPageController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         supporterColumns.setCellValueFactory(new PropertyValueFactory<>("username"));
         supporterUsers.setOnMouseClicked(e -> {
-            ObservableList<User> objects = supporterUsers.getSelectionModel().getSelectedItems();
+            ObservableList<TableUser> objects = supporterUsers.getSelectionModel().getSelectedItems();
             if (objects == null || objects.size() == 0)
                 return;
             try {
-                loadChatRoom(objects.get(0));
+                loadChatRoom(objects.get(0).getUsername());
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -68,13 +70,13 @@ public class SupportPageController implements InitializableController {
 
     }
 
-    private void loadChatRoom(User user) throws IOException {
+    private void loadChatRoom(String user) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/ChatPage.fxml"));
         Node node = loader.load();
         ChatPageController chatPageController = (ChatPageController) loader.getController();
         chatPageController.initialize(thisUser.getId());
-        Constants.manager.sendMessageTOWebSocket(user.getUsername(), new Message(thisUser.getUsername(), "im here", user.getUsername(), MessageType.JOIN, Role.CUSTOMER));
-        chatPageController.load(thisUser.getUsername(), user.getUsername(), Role.CUSTOMER, true);
+        Constants.manager.sendMessageTOWebSocket(user, new Message(thisUser.getUsername(), "im here", user, MessageType.JOIN, Role.CUSTOMER));
+        chatPageController.load(thisUser.getUsername(), user, Role.CUSTOMER, true);
         chatBox.getChildren().removeAll(chatBox.getChildren());
         chatBox.getChildren().addAll(node);
     }
@@ -82,6 +84,25 @@ public class SupportPageController implements InitializableController {
 
     private void reloadTable() {
         supporterUsers.getItems().removeAll(supporterUsers.getItems());
-        supporterUsers.setItems(FXCollections.observableList(showUserController.getOnlineSupporter(Constants.manager.getToken())));
+        List<String> userNames = showUserController.getOnlineSupporter(Constants.manager.getToken());
+        List<TableUser> tableUsers = new ArrayList<>();
+        userNames.forEach(i -> tableUsers.add(new TableUser(i)));
+        supporterUsers.setItems(FXCollections.observableList(tableUsers));
+    }
+
+    public class TableUser {
+        public String username;
+
+        public TableUser(String username) {
+            this.username = username;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
     }
 }

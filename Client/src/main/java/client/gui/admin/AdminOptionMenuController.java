@@ -5,6 +5,7 @@ import client.connectionController.interfaces.category.ICategoryController;
 import client.exception.*;
 import client.gui.Constants;
 import client.gui.customer.OrderTableController;
+import client.gui.customer.SupportPageController;
 import client.gui.interfaces.*;
 import client.model.*;
 import client.ControllerContainer;
@@ -24,6 +25,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminOptionMenuController implements InitializableController {
@@ -183,15 +185,17 @@ public class AdminOptionMenuController implements InitializableController {
     }
 
     private void handleOnlineUsers() throws NoAccessException, InvalidTokenException {
-        List<User> onlineUsers = showUserController.getAllOnlineUser(Constants.manager.getToken());
+        List<String> onlineUsers = showUserController.getAllOnlineUser(Constants.manager.getToken());
         Stage tableStage = new Stage();
-        TableView<User> tableView = new TableView();
+        TableView<TableUser> tableView = new TableView();
         tableStage.setTitle("users");
-        TableColumn<User, String> column = new TableColumn("Online");
+        TableColumn<TableUser, String> column = new TableColumn("Online");
         column.setCellValueFactory(new PropertyValueFactory<>("username"));
         column.setMinWidth(200);
         tableView.getColumns().addAll(column);
-        tableView.setItems(FXCollections.observableList(onlineUsers));
+        List<TableUser> tableUsers = new ArrayList<>();
+        onlineUsers.forEach(i -> tableUsers.add(new TableUser(i)));
+        tableView.setItems(FXCollections.observableList(tableUsers));
         VBox box = new VBox();
         box.setPadding(new Insets(10, 10, 10, 10));
         box.setAlignment(Pos.CENTER);
@@ -279,5 +283,20 @@ public class AdminOptionMenuController implements InitializableController {
         manageUsersController.load();
         hbox.getChildren().removeAll(hbox.getChildren());
         hbox.getChildren().addAll(node);
+    }
+    public class TableUser {
+        public String username;
+
+        public TableUser(String username) {
+            this.username = username;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
     }
 }
