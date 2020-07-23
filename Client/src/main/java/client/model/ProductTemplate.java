@@ -12,17 +12,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//@JsonSerialize(using = ProductTemplateSerializer.class)
 public class ProductTemplate {
     private int id;
     private String name;
     private String brand;
     private String description;
     private Double averageRate;
-    @JsonIgnore
     private Integer amountBought;
     private Category category;
-    /*@JsonDeserialize(keyUsing = CategoryFeatureDeserializer.class)*/
     @JsonSerialize(using = CategoryFeatureSerializer.class)
     @JsonDeserialize(using = CategoryFeatureDeserializer.class)
     private Map<CategoryFeature, String> categoryFeatures;
@@ -133,6 +130,10 @@ public class ProductTemplate {
 
     public Map<CategoryFeature, String> getCategoryFeatures() {
         return categoryFeatures;
+    }
+
+    public void setCategoryFeatures(Map<CategoryFeature, String> categoryFeatures) {
+        this.categoryFeatures = categoryFeatures;
     }
 
     @Override

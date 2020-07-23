@@ -17,12 +17,14 @@ public class ProductController {
     ProductSellerRepository productSellerRepository;
     CategoryRepository categoryRepository;
     UserRepository userRepository;
+    ProductFileRepository productFileRepository;
 
     public ProductController() {
         this.productRepository = (ProductRepository) RepositoryContainer.getInstance().getRepository("ProductRepository");
         this.productSellerRepository = (ProductSellerRepository) RepositoryContainer.getInstance().getRepository("ProductSellerRepository");
-        categoryRepository = (CategoryRepository) RepositoryContainer.getInstance().getRepository("CategoryRepository");
+        this.categoryRepository = (CategoryRepository) RepositoryContainer.getInstance().getRepository("CategoryRepository");
         this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
+        this.productFileRepository = (ProductFileRepository) RepositoryContainer.getInstance().getRepository("ProductFileRepository");
     }
 
     @PostMapping("/controller/method/product/create-product")
@@ -211,5 +213,24 @@ public class ProductController {
         } else {
             return new Pageable(startIndex, endIndex - startIndex, sortField, Pageable.Direction.DESCENDING);
         }
+    }
+
+    @PostMapping("/controller/method/product/set-file-for-product/{productName}")
+    public void setFileForProduct(@RequestBody Map info, @PathVariable("productName") String productName) throws NotSellerException, InvalidIdException, InvalidTokenException, NoAccessException {
+        byte[] fileBytes = (byte[]) info.get("file");
+        String name = (String) info.get("name");
+        String token = (String) info.get("token");
+        Product product = productRepository.getByName(productName);
+        if (product == null)
+            throw new InvalidIdException("There is no Product with this name to add file");
+        User user = Session.getSession(token).getLoggedInUser();
+        if (user.getRole() != Role.SELLER)
+            throw new NotSellerException("You must be seller to edit Product");
+        if (!product.hasSeller(user))
+            throw new NoAccessException("You can only change your own products");
+        ProductFile productFile = new ProductFile(name, fileBytes);
+        product.setFile(productFile);
+        productFileRepository.save(productFile);
+        productRepository.save(product);
     }
 }

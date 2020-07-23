@@ -198,6 +198,10 @@ public class Product {
         this.category = category;
     }
 
+    public void setFile(ProductFile file) {
+        this.file = file;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }

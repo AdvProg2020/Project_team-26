@@ -18,6 +18,14 @@ public class ProductFile {
     @Column(name = "file", columnDefinition = "longblob")
     private byte[] file;
 
+    public ProductFile() {
+    }
+
+    public ProductFile(String name, byte[] file) {
+        this.name = name;
+        this.file = file;
+    }
+
     public void setFile(byte[] file) {
         this.file = file;
     }
