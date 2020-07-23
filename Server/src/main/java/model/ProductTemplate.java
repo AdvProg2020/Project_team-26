@@ -1,23 +1,18 @@
-package client.model;
+package model;
 
-import client.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import model.enums.Status;
 
-import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-
-@JsonSerialize(keyUsing = ProductSerializer.class)
-public class Product {
+public class ProductTemplate {
     private int id;
     private String name;
     private String brand;
@@ -27,27 +22,23 @@ public class Product {
     private Integer amountBought;
     private Long price;
     private Category category;
-    private byte[] image;
     private List<ProductSeller> sellerList;
     /*@JsonDeserialize(keyUsing = CategoryFeatureDeserializer.class)*/
-    @JsonSerialize(using = CategoryFeatureSerializer.class)
-    @JsonDeserialize(using = CategoryFeatureDeserializer.class)
     private Map<CategoryFeature, String> categoryFeatures;
     private Status status;
 
     @JsonCreator
-    public Product(@JsonProperty("id") int id,
-                   @JsonProperty("name") String name,
-                   @JsonProperty("brand") String brand,
-                   @JsonProperty("description") String description,
-                   @JsonProperty("averageRate") Double averageRate,
-                   @JsonProperty("amountBought") Integer amountBought,
-                   @JsonProperty("image") byte[] image,
-                   @JsonProperty("price") Long price,
-                   @JsonProperty("category") Category category,
-                   @JsonProperty("sellerList") List<ProductSeller> sellerList,
-                   @JsonProperty("categoryFeatures") Map<CategoryFeature, String> categoryFeatures,
-                   @JsonProperty("status") Status status) {
+    public ProductTemplate(@JsonProperty("id") int id,
+                           @JsonProperty("name") String name,
+                           @JsonProperty("brand") String brand,
+                           @JsonProperty("description") String description,
+                           @JsonProperty("averageRate") Double averageRate,
+                           @JsonProperty("amountBought") Integer amountBought,
+                           @JsonProperty("price") Long price,
+                           @JsonProperty("category") Category category,
+                           @JsonProperty("sellerList") List<ProductSeller> sellerList,
+                           @JsonProperty("categoryFeatures") Map<CategoryFeature, String> categoryFeatures,
+                           @JsonProperty("status") Status status) {
         this.id = id;
         this.name = name;
         this.brand = brand;
@@ -56,14 +47,13 @@ public class Product {
         this.amountBought = amountBought;
         this.price = price;
         this.category = category;
-        this.image = image;
         this.sellerList = sellerList;
         this.categoryFeatures = categoryFeatures;
         this.status = status;
     }
 
 
-    public Product(String name, String brand, String description) {
+    public ProductTemplate(String name, String brand, String description) {
         this.name = name;
         this.brand = brand;
         this.description = description;
@@ -113,9 +103,6 @@ public class Product {
         return description;
     }
 
-    public byte[] getImage() {
-        return image;
-    }
 
     public Double getAverageRate() {
         return averageRate;
@@ -145,9 +132,6 @@ public class Product {
         this.description = description;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
 
     public void addSeller(ProductSeller productSeller) {
         this.sellerList.add(productSeller);
@@ -177,6 +161,10 @@ public class Product {
         return categoryFeatures;
     }
 
+    public Integer getAmountBought() {
+        return amountBought;
+    }
+
     @Override
     public String toString() {
         return name;
@@ -185,5 +173,4 @@ public class Product {
     public String littleDescription() {
         return "name: " + name + "\nbrand: " + brand + "\ndescription: " + description + "\nrate :" + averageRate;
     }
-
 }

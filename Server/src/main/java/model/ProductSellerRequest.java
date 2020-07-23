@@ -114,4 +114,5 @@ public class ProductSellerRequest {
     public void setRequestStatus(RequestStatus requestStatus) {
         this.requestStatus = requestStatus;
     }
+
 }

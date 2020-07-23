@@ -5,6 +5,7 @@ import client.connectionController.interfaces.product.IProductController;
 import client.exception.*;
 import client.gui.Constants;
 import client.model.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -41,11 +42,13 @@ public class ProductController implements IProductController {
         return Arrays.asList(responseEntity.getBody());
     }
 
-    public void createProduct(Product product, String token) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+    public void createProduct(ProductTemplate product, String token, byte[] image) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
+        ObjectMapper objectMapper = new ObjectMapper();
         jsonObject.put("product", product);
-        jsonObject.put("image", org.apache.commons.codec.binary.Base64.encodeBase64String(product.getImage()));
+        jsonObject.put("image", org.apache.commons.codec.binary.Base64.encodeBase64String(image));
         jsonObject.put("token", token);
+        System.out.println(jsonObject.toJSONString());
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerCreateProductAddress());
         } catch (HttpClientErrorException e) {

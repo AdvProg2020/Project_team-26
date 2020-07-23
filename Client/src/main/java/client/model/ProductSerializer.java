@@ -1,6 +1,7 @@
 package client.model;
 
 import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import net.minidev.json.JSONObject;
@@ -10,10 +11,10 @@ import java.io.IOException;
 import java.util.Map;
 
 @JsonComponent
-public class ProductSerializer extends StdSerializer<Product> {
+public class ProductSerializer extends JsonSerializer<Product> {
 
     public ProductSerializer() {
-        super(Product.class, true);
+
     }
 
     @Override

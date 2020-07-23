@@ -1,5 +1,6 @@
 package Server.controller.product;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.*;
 import model.*;
 import model.enums.Role;
@@ -26,11 +27,15 @@ public class ProductController {
 
     @PostMapping("/controller/method/product/create-product")
     public void createProduct(@RequestBody Map info) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
-        Product product = (Product) info.get("product");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Product product = new Product(objectMapper.convertValue(info.get("product"), ProductTemplate.class));
         String token = (String) info.get("token");
+        String imageBase64 = (String) info.get("image");
+        byte[] image = org.apache.commons.codec.binary.Base64.decodeBase64(imageBase64);
         User user = Session.getSession(token).getLoggedInUser();
         if (product == null)
             throw new NullPointerException();
+        product.setImage(image);
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to add product");
         Product productWithSameName = productRepository.getByName(product.getName());

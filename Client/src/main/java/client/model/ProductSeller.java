@@ -49,6 +49,10 @@ public class ProductSeller {
         return remainingItems;
     }
 
+    public Status getStatus() {
+        return status;
+    }
+
     public void sell(int amount) throws NotEnoughProductsException {
         if (remainingItems < amount) {
             throw new NotEnoughProductsException("Not enough products", this);
@@ -82,6 +86,8 @@ public class ProductSeller {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+
 
     public void setId(int id) {
         this.id = id;

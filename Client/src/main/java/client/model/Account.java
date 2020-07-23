@@ -140,7 +140,7 @@ public class Account {
 class AccountSerializer extends StdSerializer<Account> {
 
     public AccountSerializer() {
-        super(Map.class, true);
+        super(Account.class, true);
 
     }
 
