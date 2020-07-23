@@ -62,6 +62,7 @@ public class Main extends Application {
 
         } else {
             Constants.manager.start(primaryStage);
+
             Constants.manager.openPage("AllProducts", 0);
         }
     }
