@@ -4,6 +4,7 @@ import client.connectionController.interfaces.discount.IOffController;
 import client.exception.*;
 import client.gui.Constants;
 import client.model.*;
+import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,7 +24,8 @@ public class OffController implements IOffController {
 
     public void createNewOff(Off newOff, String token) throws NoAccessException, InvalidTokenException, NotLoggedINException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("newOff", newOff);
+        Gson gson = new Gson();
+        jsonObject.put("newOff", gson.toJson(newOff));
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOffControllerCreateNewOffAddress());

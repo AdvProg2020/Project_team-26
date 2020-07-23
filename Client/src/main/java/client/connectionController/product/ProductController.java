@@ -14,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
+import com.google.gson.Gson;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -42,13 +44,14 @@ public class ProductController implements IProductController {
         return Arrays.asList(responseEntity.getBody());
     }
 
-    public void createProduct(ProductTemplate product, String token, byte[] image) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
+    public void createProduct(Product product, String token, byte[] image) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
         ObjectMapper objectMapper = new ObjectMapper();
-        jsonObject.put("product", product);
+        Gson gson = new Gson();
+        String productString = gson.toJson(product);
+        jsonObject.put("product", productString);
         jsonObject.put("image", org.apache.commons.codec.binary.Base64.encodeBase64String(image));
         jsonObject.put("token", token);
-        System.out.println(jsonObject.toJSONString());
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerCreateProductAddress());
         } catch (HttpClientErrorException e) {

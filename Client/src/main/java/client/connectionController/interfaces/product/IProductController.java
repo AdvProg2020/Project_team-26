@@ -4,14 +4,12 @@ package client.connectionController.interfaces.product;
 import client.exception.*;
 import client.model.Product;
 import client.model.ProductSeller;
-import client.model.ProductTemplate;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 import java.util.Map;
 
 public interface IProductController {
-    void createProduct(ProductTemplate product, String token, byte[] image) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException;
+    void createProduct(Product product, String token, byte[] image) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException;
 
     Product getProductByName(String name, String token) throws NoObjectIdException;
 

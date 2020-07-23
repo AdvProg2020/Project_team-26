@@ -1,9 +1,11 @@
 package Server.controller.discount;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import exception.*;
 import model.*;
 import model.enums.Role;
+import org.springframework.boot.autoconfigure.gson.GsonAutoConfiguration;
 import org.springframework.web.bind.annotation.*;
 import repository.*;
 
@@ -40,7 +42,8 @@ public class OffController {
 
     @PostMapping("/controller/method/off/create-new-off")
     public void createNewOff(@RequestBody Map info) throws NoAccessException, InvalidTokenException, NotLoggedINException {
-        Off newOff = (Off) info.get("newOff");
+        Gson gson = new Gson();
+        Off newOff = gson.fromJson((String) info.get("newOff"),Off.class);
         String token = (String) info.get("token");
         checkAccessOfUser(token, "seller can create a off");
         newOff.setSeller((Seller) Session.getSession(token).getLoggedInUser());

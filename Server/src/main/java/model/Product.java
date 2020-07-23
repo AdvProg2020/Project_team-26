@@ -125,7 +125,6 @@ public class Product {
         this.amountBought = productTemplate.getAmountBought();
         this.price = productTemplate.getPrice();
         this.category = productTemplate.getCategory();
-        this.sellerList = productTemplate.getSellerList();
         this.categoryFeatures = productTemplate.getCategoryFeatures();
         this.status = productTemplate.getStatus();
     }
@@ -197,6 +196,10 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public void setFile(ProductFile file) {
+        this.file = file;
     }
 
     public void setDescription(String description) {
