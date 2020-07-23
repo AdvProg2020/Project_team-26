@@ -119,7 +119,7 @@ public class Manager implements Reloadable {
     public void postRequestWithVoidReturnType(JSONObject jsonObject, String address) throws HttpClientErrorException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForLocation(address, httpEntity);
     }

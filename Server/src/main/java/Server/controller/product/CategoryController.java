@@ -1,5 +1,6 @@
 package Server.controller.product;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.*;
@@ -29,7 +30,8 @@ public class CategoryController {
     @PostMapping("/controller/method/category/add-category")
     public void addCategory(@RequestBody Map info) throws InvalidIdException, ObjectAlreadyExistException, NoAccessException, InvalidTokenException {
         int patternId = (Integer) info.get("patternId");
-        Category newCategory = (Category) info.get("newCategory");
+        ObjectMapper objectMapper = new ObjectMapper();
+        Category newCategory = objectMapper.convertValue(info.get("newCategory"), Category.class);
         String token = (String) info.get("token");
         checkAccessOfUser(token, "only manager can add category");
         if (checkCategoryExistByName(newCategory.getName()))

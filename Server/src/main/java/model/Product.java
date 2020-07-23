@@ -116,6 +116,20 @@ public class Product {
         this.status = status;
     }
 
+    public Product(ProductTemplate productTemplate) {
+        this.id = productTemplate.getId();
+        this.name = productTemplate.getName();
+        this.brand = productTemplate.getBrand();
+        this.description = productTemplate.getDescription();
+        this.averageRate = productTemplate.getAverageRate();
+        this.amountBought = productTemplate.getAmountBought();
+        this.price = productTemplate.getPrice();
+        this.category = productTemplate.getCategory();
+        this.sellerList = productTemplate.getSellerList();
+        this.categoryFeatures = productTemplate.getCategoryFeatures();
+        this.status = productTemplate.getStatus();
+    }
+
     public int getId() {
         return id;
     }
