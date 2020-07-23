@@ -19,12 +19,10 @@ public class InvalidFormatException extends Exception {
 
     public static InvalidFormatException getHttpException(String errorMessage){
         ObjectMapper objectMapper = new ObjectMapper();
-        System.out.println(errorMessage);
         try {
             return objectMapper.readValue(errorMessage,InvalidFormatException.class);
         } catch (IOException e) {
-            System.out.println(e.getStackTrace());
-            return null;
+            return new InvalidFormatException("Email format is wrong.", "Email");
         }
     }
 }
