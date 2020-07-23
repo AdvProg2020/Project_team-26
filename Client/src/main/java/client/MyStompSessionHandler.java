@@ -35,6 +35,7 @@ public class MyStompSessionHandler extends StompSessionHandlerAdapter {
             @Override
             public void handleFrame(StompHeaders headers, Object payload) {
                 Message message = (Message) payload;
+                System.out.println(message);
                 Constants.manager.getMessageReceivers().forEach(i -> {
                     try {
                         i.received(message);
