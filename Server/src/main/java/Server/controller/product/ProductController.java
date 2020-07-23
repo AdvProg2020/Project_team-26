@@ -216,7 +216,7 @@ public class ProductController {
 
     @PostMapping("/controller/method/product/set-file-for-product/{productName}")
     public void setFileForProduct(@RequestBody Map info, @PathVariable("productName") String productName) throws NotSellerException, InvalidIdException, InvalidTokenException, NoAccessException {
-        byte[] fileBytes = (byte[]) info.get("file");
+        byte[] fileBytes = org.apache.commons.codec.binary.Base64.decodeBase64((String) info.get("file"));
         String name = (String) info.get("name");
         String token = (String) info.get("token");
         Product product = productRepository.getByName(productName);
