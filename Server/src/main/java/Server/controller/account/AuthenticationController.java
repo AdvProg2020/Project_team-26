@@ -80,16 +80,18 @@ public class AuthenticationController {
 
     @PostMapping("/controller/method/register")
     public void register(@RequestBody Map info) throws InvalidFormatException, NoAccessException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
+        System.out.println("nsssdsdsndsndsdsndns");
         String token = (String) info.get("token");
         ObjectMapper objectMapper = new ObjectMapper();
         Account account = objectMapper.convertValue(info.get("account"), Account.class);
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
-        if (account.getRole() != Role.SUPPORT) {
-            checkEmailFormat(account.getEmail());
-            checkEmailAvailability(account.getEmail());
+        if (account.getRole() == Role.SUPPORT) {
+            account.setEmail(account.getUsername() + "@gmail.com");
         }
+        checkEmailFormat(account.getEmail());
+        checkEmailAvailability(account.getEmail());
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new AlreadyLoggedInException("You are logged in");
