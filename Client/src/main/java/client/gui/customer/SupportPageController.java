@@ -87,8 +87,12 @@ public class SupportPageController implements InitializableController {
         supporterUsers.getItems().removeAll(supporterUsers.getItems());
         List<String> userNames = showUserController.getOnlineSupporter(Constants.manager.getToken());
         List<TableUser> tableUsers = new ArrayList<>();
-        userNames.forEach(i -> tableUsers.add(new TableUser(i)));
-        supporterUsers.getItems().removeAll(supporterUsers.getItems());
+        userNames.forEach(i -> {
+            TableUser tableUser = new TableUser(i);
+            if (!tableUsers.contains(tableUser))
+                tableUsers.add(tableUser);
+
+        });
         supporterUsers.setItems(FXCollections.observableList(tableUsers));
     }
 
