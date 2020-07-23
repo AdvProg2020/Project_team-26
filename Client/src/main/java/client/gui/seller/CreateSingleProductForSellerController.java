@@ -190,15 +190,16 @@ public class CreateSingleProductForSellerController implements InitializableCont
         } else if (saveButton.getText().equals("Save")) {
             category = categoryListController.getCategory();
             if (isEveryThingOk()) {
-                ProductTemplate newProduct = new ProductTemplate(nameTextField.getText(), brandTextField.getText(), descriptionField.getText());
+                Product newProduct = new Product(nameTextField.getText(), brandTextField.getText(), descriptionField.getText());
                 newProduct.setCategory(this.category);
                 //newProduct.setImage(Files.readAllBytes(imageFile.toPath()));
                 ProductSeller newProductSeller = new ProductSeller();
                 featureBoxList.forEach(i -> newProduct.getCategoryFeatures().put(i.getCategoryFeature(), i.getValue()));
                 newProductSeller.setPrice(Long.parseLong(priceTextField.getText()));
                 newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
+                newProduct.addSeller(newProductSeller);
                 try {
-                    productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()), newProductSeller);
+                    productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
                     this.personalInfoController.clearBox();
                     Constants.manager.showSuccessPopUp("Your Product Created");
                 } catch (ObjectAlreadyExistException e) {

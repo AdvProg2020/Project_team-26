@@ -17,5 +17,6 @@ open module Server {
     requires spring.messaging;
     requires spring.websocket;
     requires spring.core;
+    requires com.google.gson;
 
 }

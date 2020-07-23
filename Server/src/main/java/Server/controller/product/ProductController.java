@@ -1,6 +1,7 @@
 package Server.controller.product;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import exception.*;
 import model.*;
 import model.enums.Role;
@@ -27,17 +28,15 @@ public class ProductController {
 
     @PostMapping("/controller/method/product/create-product")
     public void createProduct(@RequestBody Map info) throws ObjectAlreadyExistException, NotSellerException, InvalidTokenException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        Product product = new Product(objectMapper.convertValue(info.get("product"), ProductTemplate.class));
+        Gson gson = new Gson();
+        Product product = gson.fromJson((String) info.get("product"), Product.class);
         String token = (String) info.get("token");
         String imageBase64 = (String) info.get("image");
         byte[] image = org.apache.commons.codec.binary.Base64.decodeBase64(imageBase64);
-        ProductSeller productSeller = (ProductSeller) info.get("productSeller");
         User user = Session.getSession(token).getLoggedInUser();
         if (product == null)
             throw new NullPointerException();
         product.setImage(image);
-        product.addSeller(productSeller);
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to add product");
         Product productWithSameName = productRepository.getByName(product.getName());
