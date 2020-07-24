@@ -190,6 +190,10 @@ public class Product {
         this.name = name;
     }
 
+    public ProductFile getFile() {
+        return file;
+    }
+
     public void setBrand(String brand) {
         this.brand = brand;
     }

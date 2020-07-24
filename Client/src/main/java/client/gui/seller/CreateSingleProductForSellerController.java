@@ -47,6 +47,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
     @FXML
     private TextField brandTextField;
     @FXML
+    private Label fileLabel;
+    @FXML
     private TextField nameTextField;
     @FXML
     private TextField priceTextField;
@@ -143,8 +145,9 @@ public class CreateSingleProductForSellerController implements InitializableCont
     private void setFile() {
         FileChooser fileChooser = new FileChooser();
         Stage stage = new Stage();
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Files"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Files", "*.*"));
         this.productFile = fileChooser.showOpenDialog(stage);
+        fileLabel.setText(productFile.getName());
     }
 
     @FXML
@@ -219,8 +222,8 @@ public class CreateSingleProductForSellerController implements InitializableCont
                     if (productFile == null)
                         productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
                     else {
-                        productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
-                        productController.setFileForProduct(newProduct.getName(), Constants.manager.getToken(), Files.readAllBytes(productFile.toPath()));
+                        productController.setFileForProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(productFile.toPath()),
+                                Files.readAllBytes(imageFile.toPath()));
                     }
                     this.personalInfoController.clearBox();
                     Constants.manager.showSuccessPopUp("Your Product Created");
