@@ -15,6 +15,6 @@ open module Client {
     requires spring.messaging;
     requires spring.websocket;
     requires com.google.gson;
-    requires org.apache.httpcomponents.httpclient;
-    requires org.apache.httpcomponents.httpcore;
+    requires com.fasterxml.jackson.core;
+//    requires Project;
 }

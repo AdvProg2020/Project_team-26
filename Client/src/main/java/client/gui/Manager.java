@@ -29,28 +29,16 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import net.minidev.json.JSONObject;
-import org.apache.http.client.HttpClient;
-import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
-import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
-import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-import org.apache.http.ssl.SSLContextBuilder;
+//import utils.SecureRestTemplate;
 
 import java.io.*;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.time.*;
 import java.util.*;
 
@@ -66,8 +54,8 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
-    private final String hostPort = "https://localhost:8083";
-    public final String chatUrl = "ws://localhost:8080/chat";
+    private final String hostPort = "http://localhost:8083";
+    public final String chatUrl = "ws://localhost:8083/chat";
     private StompSession session;
     private List<MessageReceiver> messageReceivers;
 
@@ -135,23 +123,6 @@ public class Manager implements Reloadable {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
         return responseEntity.getBody();
-    }
-
-    private RestTemplate getRestTemplate() throws Exception {
-        FileInputStream fileInputStream = new FileInputStream(new File("/keystore/keystore.p12"));
-//        ResourceLoader resourceLoader = new DefaultResourceLoader();
-//        Resource resource = resourceLoader.getResource("classpath:keystore/keystore.p12");
-        String keyStorePassword = "H589QkHFIdafh6@*yuydfjh879yfdWWMjHUyoih&jnawi0asd23Yzq";
-        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-        keyStore.load(fileInputStream, keyStorePassword.toCharArray());
-        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
-                new SSLContextBuilder()
-                        .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-                        .loadKeyMaterial(keyStore, keyStorePassword.toCharArray()).build());
-        HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
-        ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
-                httpClient);
-        return new RestTemplate(requestFactory);
     }
 
 //    private RestTemplate getRestTemplate() throws Exception {

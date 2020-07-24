@@ -2,6 +2,8 @@ package repository;
 
 import repository.fake.*;
 import repository.mysql.*;
+import repository.mysql.utils.EntityManagerFactoryProvider;
+import repository.mysql.utils.EntityManagerProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +52,7 @@ public class RepositoryContainer {
         map.put("ProductFileRepository", new MySQLProductFileRepository());
 
         ((MySQLRequestRepository) map.get("RequestRepository")).initializeRepositories(this);
+        EntityManagerFactoryProvider.getEntityManagerFactory();
     }
 
     public void initializeFakeRep() {
