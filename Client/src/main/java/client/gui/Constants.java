@@ -12,6 +12,10 @@ public class Constants {
 
     public static final String bankErrorInvalidٍSource = "source account id is invalid";
 
+    public static final String bankErrorInvalidToken = "token is invalid";
+
+    public static final String bankErrorExpiredToken = "token expired";
+
     /**
      * AuthenticationController Methods.
      */
@@ -532,5 +536,9 @@ public class Constants {
 
     public static String getBankControllerWithdrawFromAccountAddress() {
         return manager.getHostPort() + "/controller/method/bank/withdraw-from-account";
+    }
+
+    public static String getBankControllerGetTokenAddress() {
+        return manager.getHostPort() + "/controller/method/bank/getToken";
     }
 }

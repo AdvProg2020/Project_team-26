@@ -2,9 +2,7 @@ package client.gui;
 
 import client.ControllerContainer;
 import client.connectionController.interfaces.IBankController;
-import client.exception.InvalidIdException;
-import client.exception.InvalidTokenException;
-import client.exception.NoAccessException;
+import client.exception.*;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
 import client.model.enums.Role;
@@ -74,8 +72,33 @@ public class BankAccountCreatingController implements InitializableController {
     }
 
     private void chargeAccount() {
-
-
+        if (Constants.manager.checkInputIsInt(chargeAccountId.getText()) && Constants.manager.checkIsLong(chargeAmount.getText())) {
+            int accountId = Integer.parseInt(chargeAccountId.getText());
+            long amount = Long.parseLong(chargeAmount.getText());
+            String description = "charge";
+            try {
+                String message = bankController.chargeAccount(accountId, description, amount, Constants.manager.getToken());
+                if (message.equals(Constants.bankErrorInvalidٍSource)) {
+                    errorLabel.setText("your bank account id is invalid");
+                    return;
+                }
+                if (message.equals(Constants.bankErrorInvalidToken) || message.equals(Constants.bankErrorExpiredToken)) {
+                    errorLabel.setText("sorry error happened from server enter your bank account info");
+                    Constants.manager.setTokenFromBankForBankTransaction();
+                    return;
+                }
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            errorLabel.setText("invalid input format");
+        }
     }
 
     public void load(Role role) {
@@ -91,7 +114,33 @@ public class BankAccountCreatingController implements InitializableController {
     }
 
     private void withDrawButtonClicked() {
-
+        if (Constants.manager.checkInputIsInt(withDrawAccountId.getText()) && Constants.manager.checkIsLong(withDrawAmount.getText())) {
+            int accountId = Integer.parseInt(withDrawAccountId.getText());
+            long amount = Long.parseLong(withDrawAmount.getText());
+            String description = "withDraw";
+            try {
+                String message = bankController.withdrawFromAccount(accountId, description, amount, Constants.manager.getToken());
+                if (message.equals(Constants.bankErrorInvalidٍSource)) {
+                    errorLabel.setText("your bank account id is invalid");
+                    return;
+                }
+                if (message.equals(Constants.bankErrorInvalidToken)) {
+                    errorLabel.setText("sorry error happened from server enter your bank account info");
+                    Constants.manager.setTokenFromBankForBankTransaction();
+                    return;
+                }
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (NoAccessException | NotLoggedINException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NotEnoughCreditException e) {
+                errorLabel.setText(e.getMessage());
+            }
+        } else {
+            errorLabel.setText("invalid input format");
+        }
     }
 
 

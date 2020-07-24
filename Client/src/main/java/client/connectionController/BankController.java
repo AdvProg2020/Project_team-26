@@ -8,8 +8,13 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
+
+import java.io.IOException;
+import java.util.Map;
 
 public class BankController implements IBankController {
     private String sendRequest(JSONObject jsonObject, String address) {
@@ -77,4 +82,16 @@ public class BankController implements IBankController {
         }
     }
 
+    @Override
+    public String getToken(String username, String password, String token) throws InvalidTokenException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", username);
+        jsonObject.put("password", password);
+        jsonObject.put("token", token);
+        try {
+            return sendRequest(jsonObject, Constants.getBankControllerGetTokenAddress());
+        } catch (UnknownHttpStatusCodeException e) {
+            throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+        }
+    }
 }

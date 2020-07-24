@@ -11,4 +11,6 @@ public interface IBankController {
     String chargeAccount(int bankSourceAccountId, String description, long money, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException;
 
     String withdrawFromAccount(int bankSourceAccountId, String description, long money, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughCreditException;
+
+    String getToken(String username, String password, String token) throws InvalidTokenException;
 }

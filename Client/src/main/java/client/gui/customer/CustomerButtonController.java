@@ -22,6 +22,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -121,6 +122,7 @@ public class CustomerButtonController implements InitializableController {
             bankAccountCreatingController.initialize(userId);
             Scene scene = new Scene(parent);
             stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (InvalidTokenException e) {
             e.printStackTrace();

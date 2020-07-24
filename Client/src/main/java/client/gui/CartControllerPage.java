@@ -150,6 +150,11 @@ public class CartControllerPage implements InitializableController, Reloadable {
                     errorLabel.setText("your bank account id is invalid");
                     return;
                 }
+                if (message.equals(Constants.bankErrorInvalidToken) || message.equals(Constants.bankErrorExpiredToken)) {
+                    errorLabel.setText("sorry error happened from server enter your bank account info");
+                    Constants.manager.setTokenFromBankForBankTransaction();
+                    return;
+                }
                 finalPurchase();
             } catch (InvalidTokenException e) {
                 e.printStackTrace();
