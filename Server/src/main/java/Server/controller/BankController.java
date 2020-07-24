@@ -90,7 +90,7 @@ public class BankController {
     }
 
     @PostMapping("/controller/method/bank/withdraw-from-account")
-    public String withdrawFromAccount(@RequestBody Map info) throws InvalidTokenException, IOException, NotLoggedINException, NoAccessException, NotEnoughCreditException {
+    public String withdrawFromAccount(@RequestBody Map info) throws InvalidTokenException, IOException, NotLoggedINException, NotEnoughCreditException {
         Session session = Session.getSession((String) info.get("token"));
         if (session.getLoggedInUser() == null) {
             throw new NotLoggedINException("You must login first.");
