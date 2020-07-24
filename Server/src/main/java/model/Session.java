@@ -68,7 +68,7 @@ public class Session {
     private User loggedInUser;
     private Cart cart;
     private String randomPromoCodeForUser;
-    private String bankToken = "";
+    private String bankToken = "wrong";
 
     private Session() {
         cart = new Cart();
