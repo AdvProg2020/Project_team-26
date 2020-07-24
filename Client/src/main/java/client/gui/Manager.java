@@ -31,26 +31,28 @@ import javafx.util.Pair;
 import net.minidev.json.JSONObject;
 import org.apache.http.client.HttpClient;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSession;
-import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import javax.net.ssl.SSLContext;
+
 import org.apache.http.ssl.SSLContextBuilder;
 
-import javax.net.ssl.SSLContext;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.time.*;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Manager implements Reloadable {
 
@@ -135,19 +137,63 @@ public class Manager implements Reloadable {
         return responseEntity.getBody();
     }
 
-    private RestTemplate restTemplate() throws Exception {
-        File file = new File("/resources/keystore/keystore.p12");
-        SSLContext sslContext = new SSLContextBuilder()
-                .loadTrustMaterial(file, "H589QkHFIdafh6@*yuydfjh879yfdWWMjHUyoih&jnawi0asd23Yzq".toCharArray())
-                .build();
-        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
-        HttpClient httpClient = HttpClients.custom()
-                .setSSLSocketFactory(socketFactory)
-                .build();
-        HttpComponentsClientHttpRequestFactory factory =
-                new HttpComponentsClientHttpRequestFactory(httpClient);
-        return new RestTemplate(factory);
+    private RestTemplate getRestTemplate() throws Exception {
+        FileInputStream fileInputStream = new FileInputStream(new File("/keystore/keystore.p12"));
+//        ResourceLoader resourceLoader = new DefaultResourceLoader();
+//        Resource resource = resourceLoader.getResource("classpath:keystore/keystore.p12");
+        String keyStorePassword = "H589QkHFIdafh6@*yuydfjh879yfdWWMjHUyoih&jnawi0asd23Yzq";
+        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+        keyStore.load(fileInputStream, keyStorePassword.toCharArray());
+        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
+                new SSLContextBuilder()
+                        .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+                        .loadKeyMaterial(keyStore, keyStorePassword.toCharArray()).build());
+        HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
+        ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(
+                httpClient);
+        return new RestTemplate(requestFactory);
     }
+
+//    private RestTemplate getRestTemplate() throws Exception {
+//        return new RestTemplate(clientHttpRequestFactory());
+//    }
+//
+//    private ClientHttpRequestFactory clientHttpRequestFactory() throws Exception {
+//        return new HttpComponentsClientHttpRequestFactory(httpClient());
+//    }
+//
+//    private HttpClient httpClient() throws Exception {
+//        ResourceLoader resourceLoader = new DefaultResourceLoader();
+//        Resource resource = resourceLoader.getResource("classpath:keystore/keystore.p12");
+//        String keyStoreType = "";
+//        String keyStorePassword = "H589QkHFIdafh6@*yuydfjh879yfdWWMjHUyoih&jnawi0asd23Yzq";
+//        KeyManagerFactory keyManagerFactory = KeyManagerFactory.getInstance("SunX509");
+//        KeyStore trustStore = KeyStore.getInstance(keyStoreType);
+//
+//        if (resource.exists()) {
+//            InputStream inputStream = resource.getInputStream();
+//
+//            try {
+//                if (inputStream != null) {
+//                    trustStore.load(inputStream, keyStorePassword.toCharArray());
+//                    keyManagerFactory.init(trustStore, keyStorePassword.toCharArray());
+//                }
+//            } finally {
+//                if (inputStream != null) {
+//                    inputStream.close();
+//                }
+//            }
+//        } else {
+//            throw new RuntimeException("Cannot find resource: " + resource.getFilename());
+//        }
+//
+//        SSLContext sslcontext = SSLContexts.custom().loadTrustMaterial(trustStore, new TrustSelfSignedStrategy()).build();
+//        sslcontext.init(keyManagerFactory.getKeyManagers(), null, new SecureRandom());
+//        SSLConnectionSocketFactory sslConnectionSocketFactory =
+//                new SSLConnectionSocketFactory(sslcontext, new String[]{"TLSv1.2"}, null, getDefaultHostnameVerifier());
+//
+//        return HttpClients.custom().setSSLSocketFactory(sslConnectionSocketFactory).build();
+//    }
 
     public void back() throws IOException {
         if (pages.size() > 1) {
