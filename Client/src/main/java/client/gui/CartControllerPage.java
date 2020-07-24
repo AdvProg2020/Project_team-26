@@ -111,19 +111,12 @@ public class CartControllerPage implements InitializableController, Reloadable {
             } else {
                 finalPurchase();
             }
+        } catch (InvalidPromoCodeException | NoAccessException | PromoNotAvailableException | NotLoggedINException e) {
+            Constants.manager.showErrorPopUp(e.getMessage());
         } catch (InvalidTokenException e) {
-            e.printStackTrace();
-        } catch (InvalidPromoCodeException e) {
-            e.printStackTrace();
-        } catch (NoAccessException e) {
-            e.printStackTrace();
-        } catch (PromoNotAvailableException e) {
-            e.printStackTrace();
-        } catch (NotLoggedINException e) {
-            e.printStackTrace();
+            Constants.manager.showSuccessPopUp(e.getMessage());
+            Constants.manager.setTokenFromBankForBankTransaction();
         }
-
-
     }
 
     private void finalPurchase() throws IOException, NoAccessException, NotLoggedINException {
@@ -140,7 +133,7 @@ public class CartControllerPage implements InitializableController, Reloadable {
         }
     }
 
-    private void chargeTheAccountForCheckOutFromBank() {
+    private void chargeTheAccountForCheckOutFromBank() throws IOException {
         if (Constants.manager.checkInputIsInt(bankIDTextField.getText())) {
             int accountId = Integer.parseInt(bankIDTextField.getText());
             String description = "cart charge";
@@ -157,13 +150,10 @@ public class CartControllerPage implements InitializableController, Reloadable {
                 }
                 finalPurchase();
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (NotLoggedINException e) {
-                e.printStackTrace();
-            } catch (NoAccessException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.showLoginMenu();
+            } catch (NotLoggedINException | NoAccessException e) {
+                errorLabel.setText(e.getMessage());
             }
         } else {
             errorLabel.setText("invalid bankAccount id format");

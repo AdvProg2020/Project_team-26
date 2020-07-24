@@ -41,7 +41,13 @@ public class BankTokenPageController implements InitializableController {
             try {
                 message = bankController.getToken(userName.getText(), password.getText(), Constants.manager.getToken());
             } catch (InvalidTokenException ex) {
-                ex.printStackTrace();
+                try {
+                    Constants.manager.showErrorPopUp(ex.getMessage());
+                    Constants.manager.setTokenFromController();
+                } catch (IOException exc) {
+                    exc.printStackTrace();
+                }
+                Constants.manager.setTokenFromController();
             }
             if (message.equals("invalid username or password")) {
                 errorLabel.setText("invalid username or password");

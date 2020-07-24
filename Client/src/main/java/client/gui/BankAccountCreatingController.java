@@ -15,7 +15,6 @@ import java.io.IOException;
 
 public class BankAccountCreatingController implements InitializableController {
     private int userId;
-    private Role role;
     @FXML
     private TextField userNameTextField;
     @FXML
@@ -57,7 +56,11 @@ public class BankAccountCreatingController implements InitializableController {
         withDrawButton.setVisible(false);
         getMoneyLabel.setVisible(false);
         chargeButton.setOnMouseClicked(e -> {
-            chargeAccount();
+            try {
+                chargeAccount();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
         registerButton.setOnMouseClicked(e -> {
             try {
@@ -68,7 +71,7 @@ public class BankAccountCreatingController implements InitializableController {
         });
     }
 
-    private void chargeAccount() {
+    private void chargeAccount() throws IOException {
         if (Constants.manager.checkInputIsInt(chargeAccountId.getText()) && Constants.manager.checkIsLong(chargeAmount.getText())) {
             int accountId = Integer.parseInt(chargeAccountId.getText());
             long amount = Long.parseLong(chargeAmount.getText());
@@ -85,13 +88,10 @@ public class BankAccountCreatingController implements InitializableController {
                     return;
                 }
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
-            } catch (NoAccessException e) {
-                e.printStackTrace();
-            } catch (NotLoggedINException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
+            } catch (NoAccessException | NotLoggedINException e) {
+                Constants.manager.showErrorPopUp(e.getMessage());
             }
         } else {
             errorLabel.setText("invalid input format");
@@ -105,12 +105,16 @@ public class BankAccountCreatingController implements InitializableController {
             withDrawButton.setVisible(true);
             getMoneyLabel.setVisible(true);
             withDrawButton.setOnMouseClicked(e -> {
-                withDrawButtonClicked();
+                try {
+                    withDrawButtonClicked();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             });
         }
     }
 
-    private void withDrawButtonClicked() {
+    private void withDrawButtonClicked() throws IOException {
         if (Constants.manager.checkInputIsInt(withDrawAccountId.getText()) && Constants.manager.checkIsLong(withDrawAmount.getText())) {
             int accountId = Integer.parseInt(withDrawAccountId.getText());
             long amount = Long.parseLong(withDrawAmount.getText());
@@ -127,11 +131,10 @@ public class BankAccountCreatingController implements InitializableController {
                     return;
                 }
             } catch (InvalidTokenException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
+                Constants.manager.setTokenFromController();
             } catch (NoAccessException | NotLoggedINException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                Constants.manager.showErrorPopUp(e.getMessage());
             } catch (NotEnoughCreditException e) {
                 errorLabel.setText(e.getMessage());
             }
