@@ -10,6 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+
 import java.io.IOException;
 
 public class BankAccountCreatingController implements InitializableController {
@@ -154,37 +155,37 @@ public class BankAccountCreatingController implements InitializableController {
     }
 
     private boolean isEveryThingOk() {
-        if (isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()) {
-            errorLabel.setText("user name should be without space");
+        if (!isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()) {
+            errorLabel.setText("user name should be without space or empty");
             return false;
         }
-        if (isItWithoutSpace(passwordTextField.getText()) || passwordTextField.getText().isEmpty()) {
-            errorLabel.setText("pass word should be without space");
+        if (!isItWithoutSpace(passwordTextField.getText()) || passwordTextField.getText().isEmpty()) {
+            errorLabel.setText("pass word should be without space or empty");
             return false;
         }
-        if (isItWithoutSpace(firstNameTextField.getText()) || firstNameTextField.getText().isEmpty()) {
-            errorLabel.setText("first name should be without space");
+        if (!isItWithoutSpace(firstNameTextField.getText()) || firstNameTextField.getText().isEmpty()) {
+            errorLabel.setText("first name should be without space  or empty");
             return false;
         }
-        if (isItWithoutSpace(lastNameTextField.getText()) || lastNameTextField.getText().isEmpty()) {
-            errorLabel.setText("last name should be without space");
+        if (!isItWithoutSpace(lastNameTextField.getText()) || lastNameTextField.getText().isEmpty()) {
+            errorLabel.setText("last name should be without space or empty");
             return false;
         }
-        if (isItWithoutSpace(repeatTextField.getText()) || repeatTextField.getText().isEmpty()) {
-            errorLabel.setText("user name should be without space");
+        if (!isItWithoutSpace(repeatTextField.getText()) || repeatTextField.getText().isEmpty()) {
+            errorLabel.setText("user name should be without space or empty");
             return false;
         }
-        if (isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()) {
-            errorLabel.setText("user name should be without space");
+        if (!isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()) {
+            errorLabel.setText("user name should be without space or empty");
             return false;
         }
         return true;
     }
 
     private boolean isItWithoutSpace(String input) {
-        if (input.split(" ").length == 1) {
-            return true;
+        if (input.contains(" ")) {
+            return false;
         }
-        return false;
+        return true;
     }
 }
