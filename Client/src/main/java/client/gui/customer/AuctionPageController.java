@@ -87,22 +87,25 @@ public class AuctionPageController implements InitializableController {
     }
 
     private void sendRequestToServer() {
-        String cash = cashTextField.getText();
-        if (Constants.manager.checkIsLong(cash)) {
-            try {
-                auctionController.participateInAuction(auctionId, Long.parseLong(cash), Constants.manager.getToken());
-                Constants.manager.showSuccessPopUp("your suggested cash accepted");
-            } catch (InvalidIdException | NotEnoughCreditException e) {
-                errorLabel.setText(e.getMessage());
-            } catch (NotLoggedINException e) {
-                //TODO
-            } catch (InvalidTokenException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+        if(auctionId != null) {
+            String cash = cashTextField.getText();
+            if (Constants.manager.checkIsLong(cash)) {
+                try {
+                    auctionController.participateInAuction(auctionId, Long.parseLong(cash), Constants.manager.getToken());
+                    Constants.manager.sendMessageTOWebSocket(""+auctionId,new Message(thisUser.getUsername(),"i will buy for "+cash,""+auctionId,MessageType.CHAT,Role.CUSTOMER));
+                    Constants.manager.showSuccessPopUp("your suggested cash accepted");
+                } catch (InvalidIdException | NotCustomerException | NoAccessException e) {
+                    errorLabel.setText(e.getMessage());
+                } catch (NotLoggedINException e) {
+                    //TODO
+                } catch (InvalidTokenException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                errorLabel.setText("enter number");
             }
-        } else {
-            errorLabel.setText("enter number");
         }
     }
 

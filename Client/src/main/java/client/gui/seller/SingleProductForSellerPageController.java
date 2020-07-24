@@ -246,8 +246,7 @@ public class SingleProductForSellerPageController implements InitializableContro
                 ex.getStackTrace();
             }
         });
-        TextField command = new TextField("pickDateForEnd");
-        command.setEditable(false);
+        Label command = new Label("pickDateForEnd");
         VBox vBox = new VBox();
         vBox.setPadding(new Insets(10, 10, 10, 10));
         vBox.setSpacing(20);

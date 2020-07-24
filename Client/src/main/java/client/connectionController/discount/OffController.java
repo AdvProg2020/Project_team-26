@@ -146,8 +146,15 @@ public class OffController implements IOffController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Off[]> responseEntity = restTemplate.postForEntity(Constants.getOffControllerGetAllOfForSellerWithFilterAddress(), httpEntity, Off[].class);
             return Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
-            throw new NoAccessException("Sfdf");
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
@@ -175,8 +182,8 @@ public class OffController implements IOffController {
             RestTemplate restTemplate = new RestTemplate();
             Off off = restTemplate.getForObject(Constants.getOffControllerGetOffAddress() + "/" + id, Off.class);
             return off;
-        } catch (HttpClientErrorException e) {
-          throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
+        } catch (UnknownHttpStatusCodeException e) {
+            throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
 

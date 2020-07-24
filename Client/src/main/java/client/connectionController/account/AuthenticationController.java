@@ -1,10 +1,16 @@
 package client.connectionController.account;
 
 
+import client.ControllerContainer;
 import client.connectionController.interfaces.account.IAuthenticationController;
+import client.connectionController.interfaces.account.IShowUserController;
 import client.exception.*;
 import client.gui.Constants;
 import client.model.Account;
+import client.model.Message;
+import client.model.User;
+import client.model.enums.MessageType;
+import client.model.enums.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonObject;
 import net.minidev.json.JSONObject;
@@ -31,7 +37,10 @@ public class AuthenticationController implements IAuthenticationController {
         jsonObject.put("captcha", captcha);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuthenticationControllerLoginAddress());
-
+            User user = ((IShowUserController)Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController)).getUserByToken(Constants.manager.getToken());
+            Constants.manager.setLoggedInUser(user);
+            Constants.manager.sendMessageTOWebSocket("login", new Message(user.getUsername(), "", "", MessageType.JOIN, user.getRole()));
+            System.out.println("called for login online");
         } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidFormatException:
@@ -49,7 +58,7 @@ public class AuthenticationController implements IAuthenticationController {
     public void register(Account account, String token) throws InvalidFormatException, InvalidAuthenticationException, NoAccessException, InvalidTokenException, AlreadyLoggedInException {
         JSONObject jsonObject = new JSONObject();
         ObjectMapper objectMapper = new ObjectMapper();
-        jsonObject.put("account", objectMapper.convertValue(account,Account.class));
+        jsonObject.put("account", objectMapper.convertValue(account, Account.class));
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuthenticationControllerRegister());

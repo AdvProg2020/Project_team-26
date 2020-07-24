@@ -76,21 +76,24 @@ public class AuctionController {
     }
 
     @PostMapping("/controller/method/request/participate-in-auction")
-    public void participateInAuction(@RequestBody Map info) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotEnoughCreditException, NotCustomerException, NoAccessException {
-        int AuctionId = (int) info.get("AuctionId");
-        long newPrice = (long) info.get("newPrice");
+    public void participateInAuction(@RequestBody Map info) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotCustomerException, NoAccessException {
+        int auctionId = (int) info.get("auctionId");
+        Gson gson = new Gson();
+        Long price = gson.fromJson((String)info.get("price"),Long.class);
+        long newPrice = price;
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
-        Auction auction = auctionRepository.getById(AuctionId);
+        Auction auction = auctionRepository.getById(auctionId);
         if (user == null) {
             throw new NotLoggedINException("You Must be logged in.");
         } else if (user.getRole() != Role.CUSTOMER) {
             throw new NotCustomerException("Only customers can participate in auctions.");
-        } else if (!auctionRepository.exist(AuctionId)) {
+        } else if (!auctionRepository.exist(auctionId)) {
             throw new InvalidIdException("The specified auction does not exist.");
-        } else if (auction.getPrice() <= newPrice) {
+        } else if (auction.getPrice() >= newPrice) {
             throw new NoAccessException("The specified price is lower than the current price.");
         } else {
+            System.out.println("\n\n"+auctionId+"   : "+newPrice);
             auction.setPrice(newPrice);
             auction.setMaxSuggestedCustomer((Customer) user);
             auctionRepository.save(auction);
