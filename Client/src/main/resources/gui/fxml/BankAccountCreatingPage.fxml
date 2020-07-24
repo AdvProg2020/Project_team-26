@@ -44,7 +44,7 @@
         <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="591.0" spacing="20.0">
             <children>
                 <Label prefHeight="54.0" prefWidth="123.0" text="Password" />
-            <CustomPasswordField fx:id="passwordTextField" prefHeight="26.0" prefWidth="366.0" />
+            <PasswordField fx:id="passwordTextField" prefHeight="26.0" prefWidth="366.0" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

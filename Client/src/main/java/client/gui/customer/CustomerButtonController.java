@@ -120,6 +120,7 @@ public class CustomerButtonController implements InitializableController {
         BankAccountCreatingController bankAccountCreatingController = (BankAccountCreatingController) loader.getController();
         try {
             bankAccountCreatingController.initialize(userId);
+            bankAccountCreatingController.load(Role.CUSTOMER);
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
