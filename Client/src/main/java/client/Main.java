@@ -45,7 +45,7 @@ public class Main extends Application {
             primaryStage.setOnCloseRequest(e -> {
                 Platform.runLater(() -> {
                     e.consume();
-                    System.out.println("quit request unexpected");
+                   /* System.out.println("quit request unexpected");
                     if (Constants.manager.getLoggedInUser() != null) {
                         try {
                             Constants.manager.logout();
@@ -56,7 +56,7 @@ public class Main extends Application {
                         } catch (NotLoggedINException ex) {
                             ex.printStackTrace();
                         }
-                    }
+                    }*/
                     primaryStage.close();
                 });
             });
