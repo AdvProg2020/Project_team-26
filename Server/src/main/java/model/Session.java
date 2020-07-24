@@ -11,8 +11,8 @@ public class Session {
 
     private static Map<String, Session> sessionList = new HashMap<>();
     private static int lastToken = 0;
-    private static long minCredit;
-    private static double commission;
+    private static long minCredit = 1000;
+    private static double commission = 5;
 
     public static long getMinCredit() {
         return minCredit;

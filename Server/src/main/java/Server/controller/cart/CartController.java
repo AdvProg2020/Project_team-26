@@ -129,7 +129,7 @@ public class CartController {
         Order order = (Order) info.get("order");
         for (OrderItem item : order.getItems()) {
             long money = item.getPaidPrice() * item.getAmount();
-            item.getSeller().setCredit(item.getSeller().getCredit() + money);
+            item.getSeller().setCredit(item.getSeller().getCredit() + (long)(money * 1 - Session.getCommission() / 100));
         }
     }
 
