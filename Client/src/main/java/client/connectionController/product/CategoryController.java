@@ -6,7 +6,6 @@ import client.exception.*;
 import client.gui.Constants;
 import client.model.Category;
 import client.model.CategoryFeature;
-import client.model.Off;
 import client.model.Product;
 import client.model.enums.FeatureType;
 import net.minidev.json.JSONObject;
@@ -14,13 +13,8 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
-
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;

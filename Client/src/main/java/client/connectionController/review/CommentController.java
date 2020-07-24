@@ -10,7 +10,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 
@@ -96,7 +95,7 @@ public class CommentController implements ICommentController {
         }
     }
 
-    private List<Comment> getCommentListFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    private List<Comment> getCommentListFromServer(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
