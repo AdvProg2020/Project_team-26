@@ -384,6 +384,10 @@ public class Constants {
         return manager.getHostPort() + "/controller/method/product/set-file-for-product";
     }
 
+    public static String getProductControllerGetFileForProductAddress() {
+        return manager.getHostPort() + "/controller/method/product/get-file-for-product";
+    }
+
     /**
      * CommentController Methods.
      */

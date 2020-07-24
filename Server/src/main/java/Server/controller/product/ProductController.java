@@ -214,22 +214,32 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/controller/method/product/set-file-for-product/{productName}")
-    public void setFileForProduct(@RequestBody Map info, @PathVariable("productName") String productName) throws NotSellerException, InvalidIdException, InvalidTokenException, NoAccessException {
+    @PostMapping("/controller/method/product/get-file-for-product")
+    public byte[] getFileForProduct(@RequestBody Map info) {
+        int productId = (int) info.get("productId");
+        Product product = productRepository.getById(productId);
+        if(product != null)
+            return product.getFile().getFile();
+        else
+            return null;
+    }
+
+    @PostMapping("/controller/method/product/set-file-for-product")
+    public void setFileForProduct(@RequestBody Map info) throws NotSellerException, InvalidIdException, InvalidTokenException, NoAccessException {
         byte[] fileBytes = org.apache.commons.codec.binary.Base64.decodeBase64((String) info.get("file"));
-        String name = (String) info.get("name");
+        byte[] image = org.apache.commons.codec.binary.Base64.decodeBase64((String) info.get("image"));
         String token = (String) info.get("token");
-        Product product = productRepository.getByName(productName);
+        Gson gson = new Gson();
+        Product product = gson.fromJson((String)info.get("product"), Product.class);
         if (product == null)
             throw new InvalidIdException("There is no Product with this name to add file");
         User user = Session.getSession(token).getLoggedInUser();
         if (user.getRole() != Role.SELLER)
             throw new NotSellerException("You must be seller to edit Product");
-        if (!product.hasSeller(user))
-            throw new NoAccessException("You can only change your own products");
-        ProductFile productFile = new ProductFile(name, fileBytes);
+        ProductFile productFile = new ProductFile(product.getName(), fileBytes);
         product.setFile(productFile);
+        product.setImage(image);
         productFileRepository.save(productFile);
-        productRepository.save(product);
+        productRepository.addRequest(product, user);
     }
 }

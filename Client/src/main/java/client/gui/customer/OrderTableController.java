@@ -2,10 +2,12 @@ package client.gui.customer;
 
 import client.ControllerContainer;
 import client.connectionController.interfaces.order.IOrderController;
+import client.connectionController.interfaces.product.IProductController;
 import client.exception.InvalidTokenException;
 import client.exception.NoAccessException;
 import client.gui.Constants;
 import client.gui.OrderItemController;
+import client.gui.OrderItemFileController;
 import client.gui.PersonalInfoController;
 import client.gui.interfaces.InitializableController;
 import client.model.Order;
@@ -25,6 +27,7 @@ import java.util.List;
 
 public class OrderTableController implements InitializableController {
     private IOrderController orderController;
+    private IProductController productController;
     private PersonalInfoController personalInfoController;
     private int id;
     @FXML
@@ -33,6 +36,7 @@ public class OrderTableController implements InitializableController {
     @Override
     public void initialize(int id) throws IOException {
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
+        productController = (IProductController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ProductController);
         this.id = id;
     }
 
@@ -56,10 +60,20 @@ public class OrderTableController implements InitializableController {
         observableList.forEach(i -> {
             try {
                 orderController.getOrderItems(i.getId(),Constants.manager.getToken()).forEach(j -> {
+                    byte[] file = productController.getFileForProduct(j.getProductId(), Constants.manager.getToken());
+                    if (file == null) {
+                        try {
+                            loadFxmlOfSingleOrder(j);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                 else {
                     try {
-                        loadFxmlOfSingleOrder(j);
-                    } catch (IOException e) {
+                        loadFxmlOfSingleFileOrder(j, file);
+                    } catch (Exception e) {
                         e.printStackTrace();
+                    }
                     }
                 });
             } catch (InvalidTokenException e) {
@@ -68,6 +82,15 @@ public class OrderTableController implements InitializableController {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void loadFxmlOfSingleFileOrder(OrderItem item, byte[] file) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/OrderItemFile.fxml"));
+        Node node = loader.load();
+        OrderItemFileController orderItemFileController = (OrderItemFileController) loader.getController();
+        orderItemFileController.initialize(item.getId());
+        orderItemFileController.load(item, file);
+        personalInfoController.addSingleItemToBox(node);
     }
 
     private void loadFxmlOfSingleOrder(OrderItem item) throws IOException {

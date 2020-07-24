@@ -35,5 +35,7 @@ public interface IProductController {
 
     void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException;
 
-    void setFileForProduct(String newProduct, String token, byte[] file);
+    void setFileForProduct(Product newProduct, String token, byte[] file, byte[] image);
+
+    public byte[] getFileForProduct(int productId, String token);
 }
