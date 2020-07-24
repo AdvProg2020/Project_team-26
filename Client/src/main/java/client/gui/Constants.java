@@ -37,6 +37,10 @@ public class Constants {
         return manager.getHostPort() + "/controller/method/do-we-have-a-manager";
     }
 
+    public static String getAuthenticationControllerGetCaptchaAddress() {
+        return manager.getHostPort() + "/controller/method/get-captcha";
+    }
+
     /**
      * ShowUserController Methods.
      */

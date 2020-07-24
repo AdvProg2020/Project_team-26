@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class RegisterMenuController implements InitializableController {
 
@@ -29,6 +30,10 @@ public class RegisterMenuController implements InitializableController {
     private TextField emailText;
     @FXML
     private TextField lastNameText;
+    @FXML
+    private TextField captchaBoxRegister;
+    @FXML
+    private TextField captchaBoxLogin;
     @FXML
     private PasswordField passwordText;
     @FXML
@@ -112,11 +117,11 @@ public class RegisterMenuController implements InitializableController {
     public void login() {
         String username = usernameTextLogin.getText();
         String password = passwordTextLogin.getText();
-        if (username.isBlank() || password.isBlank()) {
+        if (username.isBlank() || password.isBlank() || captchaBoxLogin.getText().isBlank()) {
             errorLabelLogin.setText("Please Fill all of the boxes.");
         } else {
             try {
-                controller.login(username, password, Constants.manager.getToken());
+                controller.login(username, password, Constants.manager.getToken(), captchaBoxLogin.getText());
                 Constants.manager.setLoggedIn(true);
                 Constants.manager.setRole(showUserController.getUserByName(username, Constants.manager.getToken()).getRole());
                 reloadable.reload();
@@ -132,6 +137,7 @@ public class RegisterMenuController implements InitializableController {
                 errorLabelLogin.setText(e.getMessage());
             } catch (InvalidAuthenticationException e) {
                 errorLabelLogin.setText(e.getMessage());
+                reload();
             } catch (PasswordIsWrongException e) {
                 errorLabelLogin.setText("Your password is Wrong.");
             } catch (IOException e) {
@@ -140,6 +146,12 @@ public class RegisterMenuController implements InitializableController {
                 e.printStackTrace();
             }
         }
+    }
+
+    private void reload() {
+        String captcha = controller.getCaptcha();
+        captchaBoxLogin.setPromptText(captcha);
+        captchaBoxRegister.setPromptText(captcha);
     }
 
     @FXML
@@ -217,6 +229,9 @@ public class RegisterMenuController implements InitializableController {
     public void initialize(int id) throws IOException {
         controller = (IAuthenticationController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.AuthenticationController);
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
+        String captcha = controller.getCaptcha();
+        captchaBoxRegister.setPromptText(captcha);
+        captchaBoxLogin.setPromptText(captcha);
         roleChoice.setItems(roles);
         registerButton = new Button("Register");
         registerButton.setLayoutX(255);
