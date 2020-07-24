@@ -48,6 +48,7 @@ public class CommissionPageController implements InitializableController {
             long creditAmount = Long.parseLong(credit.getText());
             if (creditAmount < 0) {
                 errorLabel.setText("enter positive");
+                return;
             }
             sessionController.setMinCredit(creditAmount, Constants.manager.getToken());
             errorLabel.setText("");
@@ -67,6 +68,7 @@ public class CommissionPageController implements InitializableController {
             double commissionAmount = Double.parseDouble(commission.getText());
             if (commissionAmount < 0 || commissionAmount > 100) {
                 errorLabel.setText("enter positive and under 100");
+                return;
             }
             sessionController.setCommission(commissionAmount, Constants.manager.getToken());
             errorLabel.setText("");
