@@ -87,6 +87,10 @@ public class BankAccountCreatingController implements InitializableController {
                     Constants.manager.setTokenFromBankForBankTransaction();
                     return;
                 }
+                if(message.equals(Constants.bankErrorNotEnoughInSource)){
+                    Constants.manager.showErrorPopUp(Constants.bankErrorNotEnoughInSource);
+                    return;
+                }
                 Constants.manager.showSuccessPopUp(message);
             } catch (InvalidTokenException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
@@ -129,6 +133,10 @@ public class BankAccountCreatingController implements InitializableController {
                 if (message.equals(Constants.bankErrorInvalidToken)) {
                     errorLabel.setText("sorry error happened from server enter your bank account info");
                     Constants.manager.setTokenFromBankForBankTransaction();
+                    return;
+                }
+                if(message.equals(Constants.bankErrorNotEnoughInSource)){
+                    Constants.manager.showErrorPopUp(Constants.bankErrorNotEnoughInSource);
                     return;
                 }
                 Constants.manager.showSuccessPopUp(message);

@@ -20,7 +20,7 @@
               <Button fx:id="history" mnemonicParsing="false" prefHeight="45.0" prefWidth="106.0" text="History" />
               <Button fx:id="manageOff" mnemonicParsing="false" prefHeight="45.0" prefWidth="107.0" text="Manage Offs" />
               <Button fx:id="manageProduct" mnemonicParsing="false" prefHeight="44.0" prefWidth="110.0" text="Manage Product" />
-            <Button mnemonicParsing="false" onAction="#createBankClicked" prefHeight="44.0" prefWidth="110.0" text="Create Bank" />
+            <Button mnemonicParsing="false" onAction="#createBankClicked" prefHeight="44.0" prefWidth="110.0" text="Bank" />
           </children>
       </VBox>
    </children>

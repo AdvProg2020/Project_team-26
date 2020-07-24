@@ -16,6 +16,8 @@ public class Constants {
 
     public static final String bankErrorExpiredToken = "token expired";
 
+    public static final String bankErrorNotEnoughInSource = "source account does not have enough money";
+
     /**
      * AuthenticationController Methods.
      */

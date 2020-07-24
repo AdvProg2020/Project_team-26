@@ -21,7 +21,7 @@
             <Button mnemonicParsing="false" onAction="#personalPageHandle" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="User Info" />
             <Button mnemonicParsing="false" onAction="#support" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Support" />
             <Button mnemonicParsing="false" onAction="#auctionHandler" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Auction" />
-            <Button mnemonicParsing="false" onAction="#bankAccountButtonClicked" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Create Bank" />
+            <Button mnemonicParsing="false" onAction="#bankAccountButtonClicked" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Bank" />
           </children>
       </VBox>
    </children>

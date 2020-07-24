@@ -148,6 +148,10 @@ public class CartControllerPage implements InitializableController, Reloadable {
                     Constants.manager.setTokenFromBankForBankTransaction();
                     return;
                 }
+                if(message.equals(Constants.bankErrorNotEnoughInSource)){
+                    Constants.manager.showErrorPopUp(Constants.bankErrorNotEnoughInSource);
+                    return;
+                }
                 finalPurchase();
             } catch (InvalidTokenException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
