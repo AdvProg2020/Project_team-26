@@ -1,6 +1,7 @@
 package Server.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import exception.*;
 import model.*;
 import model.enums.Role;
@@ -34,8 +35,8 @@ public class AuctionController {
     @PostMapping("/controller/method/request/create-newAuction")
     public void createNewAuction(@RequestBody Map info) throws ObjectAlreadyExistException, NotLoggedINException, NotSellerException, InvalidTokenException, NoObjectIdException {
         int productSellerId = (int) info.get("productSellerId");
-        ObjectMapper objectMapper = new ObjectMapper();
-        Date endDate = objectMapper.convertValue(info.get("endDate"), Date.class);
+        Gson gson = new Gson();
+        Date endDate = gson.fromJson((String)info.get("endDate"),Date.class);
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         ProductSeller productSeller = productSellerRepository.getById(productSellerId);
