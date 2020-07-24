@@ -64,7 +64,7 @@ public class BankController {
         Session session = Session.getSession((String) info.get("token"));
         if (session.getLoggedInUser() == null) {
             throw new NotLoggedINException("You must login first.");
-        } else if (session.getLoggedInUser().getRole() != Role.CUSTOMER) {
+        } else if (session.getLoggedInUser().getRole() == Role.ADMIN) {
             throw new NoAccessException("You must be a customer to charge account.");
         }
 
