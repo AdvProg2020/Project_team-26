@@ -17,11 +17,9 @@ public abstract class MySQLRepository<T> implements Repository<T> {
 
     protected static RepositoryContainer repositoryContainer;
 
-    protected EntityManagerFactory entityManagerFactory;
     protected Class<T> tClass;
 
     public MySQLRepository(Class<T> tClass) {
-        entityManagerFactory = EntityManagerFactoryProvider.getEntityManagerFactory();
         this.tClass = tClass;
     }
 
