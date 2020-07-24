@@ -50,7 +50,6 @@ public class BankController {
     @PostMapping("/controller/method/bank/getToken")
     public String getToken(@RequestBody Map info) throws IOException, InvalidTokenException {
         Session session = Session.getSession((String) info.get("token"));
-
         String command = "get_token" + " " +
                 info.get("username") + " " +
                 info.get("password");
@@ -67,9 +66,8 @@ public class BankController {
         } else if (session.getLoggedInUser().getRole() == Role.ADMIN) {
             throw new NoAccessException("You must be a customer to charge account.");
         }
-
         String command = "create_receipt" + " " +
-                session.getBankToken() + "move " +
+                session.getBankToken() + " move " +
                 info.get("amount") + " " +
                 info.get("userId") + " " +
                 storeId + " " +
@@ -102,7 +100,7 @@ public class BankController {
 
         storeToken = sendCommand("get_token " + storeUsername + " " + storePassword);
         String command = "create_receipt" + " " +
-                storeToken + "move " +
+                storeToken + " move " +
                 info.get("amount") + " " +
                 storeId + " " +
                 info.get("userId") + " " +
