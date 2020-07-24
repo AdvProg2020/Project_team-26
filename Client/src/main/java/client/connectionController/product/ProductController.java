@@ -231,15 +231,28 @@ public class ProductController implements IProductController {
     }
 
     @Override
-    public void setFileForProduct(String newProduct, String token, byte[] file) {
+    public void setFileForProduct(Product newProduct, String token, byte[] file, byte[] image) {
         JSONObject jsonObject = new JSONObject();
         Gson gson = new Gson();
         jsonObject.put("token", token);
         jsonObject.put("file", org.apache.commons.codec.binary.Base64.encodeBase64String(file));
+        jsonObject.put("product", gson.toJson(newProduct));
+        jsonObject.put("image", org.apache.commons.codec.binary.Base64.encodeBase64String(image));
         try {
-            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerSetFileForProductAddress() + "/" + newProduct);
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerSetFileForProductAddress());
         } catch (UnknownHttpStatusCodeException e) {
             e.printStackTrace();
+        }
+    }
+
+    @Override
+    public byte[] getFileForProduct(int productId, String token) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("productId", productId);
+        try {
+            return Constants.manager.getItemFromServer(jsonObject,Constants.getProductControllerGetFileForProductAddress(),byte[].class);
+        } catch (Exception e) {
+            return null;
         }
     }
 
