@@ -15,7 +15,7 @@
                   <Font name="Britannic Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="categoryButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Categories">
@@ -23,7 +23,7 @@
                   <Font name="Britannic Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="usersButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Users">
@@ -31,7 +31,7 @@
                   <Font name="Britannic Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="requestsButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Requests">
@@ -39,12 +39,12 @@
                   <Font name="Britannic Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="personalPage" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Personal Page">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
                <font>
                   <Font name="Britannic Bold" size="18.0" />
@@ -52,7 +52,7 @@
             </Button>
             <Button fx:id="newManagerButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Add a New Manager" wrapText="true">
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
                <font>
                   <Font name="Britannic Bold" size="12.0" />
@@ -62,14 +62,14 @@
                   <Font name="Britannic Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin></Button>
             <Button fx:id="supportButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Add Support">
                <font>
                   <Font name="Britannic Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="orderButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="orders">
@@ -77,10 +77,18 @@
                   <Font name="Britannic Bold" size="18.0" />
                </font>
                <VBox.margin>
-                  <Insets bottom="20.0" />
+                  <Insets bottom="15.0" />
                </VBox.margin>
             </Button>
             <Button fx:id="onlineUsersButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Online Users">
+               <font>
+                  <Font name="Britannic Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="15.0" />
+               </VBox.margin>
+            </Button>
+            <Button fx:id="creditButton" mnemonicParsing="false" prefHeight="38.0" prefWidth="140.0" text="Credit">
                <font>
                   <Font name="Britannic Bold" size="18.0" />
                </font>

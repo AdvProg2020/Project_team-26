@@ -11,9 +11,27 @@ public class Session {
 
     private static Map<String, Session> sessionList = new HashMap<>();
     private static int lastToken = 0;
+    private static long minCredit;
+    private static double commission;
+
+    public static long getMinCredit() {
+        return minCredit;
+    }
+
+    public static void setMinCredit(long minCredit) {
+        Session.minCredit = minCredit;
+    }
+
+    public static double getCommission() {
+        return commission;
+    }
+
+    public static void setCommission(double commission) {
+        Session.commission = commission;
+    }
 
     public static Session getSession(String token) throws InvalidTokenException {
-        if(!sessionList.containsKey(token)) {
+        if (!sessionList.containsKey(token)) {
             throw new InvalidTokenException("You're token is invalid. Get a new token.");
         }
         return sessionList.get(token);
