@@ -4,10 +4,7 @@ package client.connectionController.review;
 import client.connectionController.interfaces.review.IRatingController;
 import client.exception.*;
 import client.gui.Constants;
-import client.model.*;
-import client.model.enums.Role;
 import net.minidev.json.JSONObject;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 public class RatingController implements IRatingController {

@@ -6,13 +6,11 @@ import client.exception.*;
 import client.gui.Constants;
 import client.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonObject;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 import com.google.gson.Gson;
@@ -25,7 +23,7 @@ import java.util.Map;
 
 public class ProductController implements IProductController {
 
-    private Product getProductFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    private Product getProductFromServer(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         // Constants.manager.<Product>getItemFromServer(jsonObject,address,Product.class);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -35,7 +33,7 @@ public class ProductController implements IProductController {
         return responseEntity.getBody();
     }
 
-    private List<Product> getProductListFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    private List<Product> getProductListFromServer(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         //Constants.manager.<Product>getListItemsFromServer(jsonObject,address,Product[].class);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -55,7 +53,7 @@ public class ProductController implements IProductController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerCreateProductAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
@@ -74,7 +72,7 @@ public class ProductController implements IProductController {
         jsonObject.put("productSeller", productSeller);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerAddSellerAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
@@ -91,7 +89,7 @@ public class ProductController implements IProductController {
             RestTemplate restTemplate = new RestTemplate();
             Product product = restTemplate.getForObject(Constants.getProductControllerGetProductByIdAddress() + "/" + id, Product.class);
             return product;
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
@@ -112,7 +110,7 @@ public class ProductController implements IProductController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerRemoveProductAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
@@ -133,7 +131,7 @@ public class ProductController implements IProductController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerRemoveSellerAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
@@ -157,7 +155,7 @@ public class ProductController implements IProductController {
         jsonObject.put("endIndex", endIndex);
         try {
             return getProductListFromServer(jsonObject, Constants.getProductControllerGetAllProductWithFilterAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             return new ArrayList<>();
         }
     }
@@ -172,7 +170,7 @@ public class ProductController implements IProductController {
         jsonObject.put("endIndex", endIndex);
         try {
             return getProductListFromServer(jsonObject, Constants.getProductControllerGetAllProductWithFilterForSellerIdAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
@@ -195,7 +193,7 @@ public class ProductController implements IProductController {
         try {
             ResponseEntity<ProductSeller> responseEntity = restTemplate.postForEntity(Constants.getProductControllerGetProductSellerByIdAndSellerIdAddress(), httpEntity, ProductSeller.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
@@ -218,7 +216,7 @@ public class ProductController implements IProductController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
@@ -240,7 +238,7 @@ public class ProductController implements IProductController {
         jsonObject.put("file", org.apache.commons.codec.binary.Base64.encodeBase64String(file));
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerSetFileForProductAddress() + "/" + newProduct);
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             e.printStackTrace();
         }
     }
@@ -252,7 +250,7 @@ public class ProductController implements IProductController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerEditProductSellerAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());

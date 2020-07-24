@@ -12,7 +12,6 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 public class CartController implements ICartController {
@@ -83,7 +82,7 @@ public class CartController implements ICartController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCartControllerUsePromoCodeAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -132,7 +131,7 @@ public class CartController implements ICartController {
         try {
             ResponseEntity<Long> responseEntity = restTemplate.postForEntity(Constants.getCartControllerGetTotalPriceAddress(), httpEntity, Long.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -153,7 +152,7 @@ public class CartController implements ICartController {
         try {
             ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(Constants.getCartControllerGetAmountInCarBySellerIdAddress(), httpEntity, Integer.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());

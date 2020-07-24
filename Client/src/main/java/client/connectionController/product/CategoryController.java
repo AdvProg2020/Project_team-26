@@ -6,7 +6,6 @@ import client.exception.*;
 import client.gui.Constants;
 import client.model.Category;
 import client.model.CategoryFeature;
-import client.model.Off;
 import client.model.Product;
 import client.model.enums.FeatureType;
 import net.minidev.json.JSONObject;
@@ -14,18 +13,14 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-
-
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 public class CategoryController implements ICategoryController {
-    private Category getCategoryFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    private Category getCategoryFromServer(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         // Constants.manager.<Category>getItemFromServer(jsonObject,address,Category.class);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -35,7 +30,7 @@ public class CategoryController implements ICategoryController {
         return responseEntity.getBody();
     }
 
-    private List<Product> getProductOfCategoryListFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    private List<Product> getProductOfCategoryListFromServer(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         //Constants.manager.<Product>getListItemsFromServer(jsonObject,address,Product[].class);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -45,7 +40,7 @@ public class CategoryController implements ICategoryController {
         return Arrays.asList(responseEntity.getBody());
     }
 
-    private List<Category> getCategoryListFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    private List<Category> getCategoryListFromServer(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         //Constants.manager.<Category>getListItemsFromServer(jsonObject,address,Category[].class);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -63,7 +58,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerAddCategoryAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -85,7 +80,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerAddAttributeAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -104,7 +99,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerRemoveAttributeAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -124,7 +119,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerRemoveACategoryAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -145,7 +140,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerAddProductAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -164,7 +159,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCategoryControllerRemoveProductAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -182,7 +177,7 @@ public class CategoryController implements ICategoryController {
             RestTemplate restTemplate = new RestTemplate();
             Category categories[] = restTemplate.getForObject(Constants.getCategoryControllerGetAllCategoriesAddress() + "/" + id, Category[].class);
             return Arrays.asList(categories);
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
@@ -205,7 +200,7 @@ public class CategoryController implements ICategoryController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<CategoryFeature[]> responseEntity = restTemplate.postForEntity(Constants.getCategoryControllerGetAttributeAddress(), httpEntity, CategoryFeature[].class);
             return Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -223,7 +218,7 @@ public class CategoryController implements ICategoryController {
             RestTemplate restTemplate = new RestTemplate();
             Category category = restTemplate.getForObject(Constants.getCategoryControllerGetCategoryAddress() + "/" + id, Category.class);
             return category;
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
@@ -233,7 +228,7 @@ public class CategoryController implements ICategoryController {
             RestTemplate restTemplate = new RestTemplate();
             Category[] categories = restTemplate.getForObject(Constants.getCategoryControllerGetSubCategories() + "/" + id, Category[].class);
             return Arrays.asList(categories);
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
@@ -243,7 +238,7 @@ public class CategoryController implements ICategoryController {
             RestTemplate restTemplate = new RestTemplate();
             Category category = restTemplate.getForObject(Constants.getCategoryControllerGetCategoryByNameAddress() + "/" + name, Category.class);
             return category;
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
@@ -254,7 +249,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             return getProductOfCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetProductsAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
@@ -277,7 +272,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token", token);
         try {
             return getProductOfCategoryListFromServer(jsonObject,Constants.getCategoryControllerGetAllProductsAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
@@ -293,7 +288,7 @@ public class CategoryController implements ICategoryController {
         jsonObject.put("token",token);
         try {
             return getProductOfCategoryListFromServer(jsonObject, Constants.getCategoryControllerGetAllProductsInOffAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
