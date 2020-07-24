@@ -2,6 +2,7 @@ package client;
 
 
 import client.connectionController.AuctionController;
+import client.connectionController.BankController;
 import client.connectionController.RequestController;
 import client.connectionController.SessionController;
 import client.connectionController.account.*;
@@ -28,7 +29,7 @@ public class ControllerContainer {
     public enum Controller {
         AuthenticationController, SessionController, ShowUserController, UserInfoController,
         CartController, CategoryController, OffController, PromoController, OrderController, ProductController,
-        RequestController, CommentController, RatingController, AuctionController;
+        RequestController, CommentController, RatingController, AuctionController, BankController;
     }
 
 
@@ -51,5 +52,6 @@ public class ControllerContainer {
         map.put(Controller.CommentController, new CommentController());
         map.put(Controller.RatingController, new RatingController());
         map.put(Controller.AuctionController, new AuctionController());
+        map.put(Controller.BankController, new BankController());
     }
 }

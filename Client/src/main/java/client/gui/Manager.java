@@ -33,6 +33,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
 import javax.net.ssl.SSLContext;
 
 import java.io.File;
@@ -121,6 +122,21 @@ public class Manager implements Reloadable {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
         return responseEntity.getBody();
+    }
+
+    public void setTokenFromBankForBankTransaction() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/BankTokenPage.fxml"));
+        Parent parent = loader.load();
+        Stage windows = new Stage();
+        windows.setScene(new Scene(parent));
+        BankTokenPageController controller = (BankTokenPageController) loader.getController();
+        controller.initialize(0);
+        controller.setReloadable(() -> {
+            windows.close();
+        });
+        windows.initModality(Modality.APPLICATION_MODAL);
+        windows.setResizable(false);
+        windows.show();
     }
 
 //    private RestTemplate getRestTemplate() throws Exception {
@@ -509,6 +525,4 @@ public class Manager implements Reloadable {
             e.printStackTrace();
         }*/
     }
-
-
 }

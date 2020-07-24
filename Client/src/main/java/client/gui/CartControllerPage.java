@@ -1,6 +1,7 @@
 package client.gui;
 
 import client.ControllerContainer;
+import client.connectionController.interfaces.IBankController;
 import client.connectionController.interfaces.cart.ICartController;
 import client.exception.*;
 import client.gui.interfaces.InitializableController;
@@ -12,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
@@ -35,14 +37,34 @@ public class CartControllerPage implements InitializableController, Reloadable {
     TextField addressTextField;
     @FXML
     TextField promoTextField;
+    @FXML
+    private TextField bankIDTextField;
+    @FXML
+    private CheckBox bankCheckBox;
+    @FXML
+    private Label errorLabel;
+    private IBankController bankController;
 
 
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException {
         cartController = (ICartController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.CartController);
+        bankController = (IBankController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.BankController);
         cart = cartController.getCart(Constants.manager.getToken());
         totalPriceText.setText("total price");//todo
+        bankIDTextField.setVisible(false);
+        bankCheckBox.setOnAction(e -> {
+            bankCheckBoxAction();
+        });
         loadCart(cart);
+    }
+
+    private void bankCheckBoxAction() {
+        if (bankCheckBox.isSelected()) {
+            bankIDTextField.setVisible(true);
+            return;
+        }
+        bankIDTextField.setVisible(false);
     }
 
     private void loadCart(Cart cart) throws IOException {
@@ -76,18 +98,75 @@ public class CartControllerPage implements InitializableController, Reloadable {
 
     @FXML
     public void purchaseButtonClicked() throws IOException {
+        if (addressTextField.getText().isBlank()) {
+            errorLabel.setText("address is empty");
+            return;
+        }
         try {
             cartController.setAddress(addressTextField.getText(), Constants.manager.getToken());
             if (!promoTextField.getText().isBlank() && !promoTextField.getText().equals(""))
                 cartController.usePromoCode(promoTextField.getText(), Constants.manager.getToken());
+            if (bankCheckBox.isSelected()) {
+                chargeTheAccountForCheckOutFromBank();
+            } else {
+                finalPurchase();
+            }
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (InvalidPromoCodeException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (PromoNotAvailableException e) {
+            e.printStackTrace();
+        } catch (NotLoggedINException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    private void finalPurchase() throws IOException, NoAccessException, NotLoggedINException {
+        try {
             cartController.checkout(Constants.manager.getToken());
             Constants.manager.showRandomPromoIfUserGet();
+            Constants.manager.showSuccessPopUp("Purchased");
             Constants.manager.openPage("AllProducts", 0);
         } catch (InvalidTokenException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
             Constants.manager.showLoginMenu();
-        } catch (InvalidPromoCodeException | NoAccessException | PromoNotAvailableException | NotLoggedINException | NotEnoughCreditException | NotEnoughProductsException e) {
+        } catch (NotEnoughCreditException | NotEnoughProductsException e) {
             Constants.manager.showErrorPopUp(e.getMessage());
+        }
+    }
+
+    private void chargeTheAccountForCheckOutFromBank() {
+        if (Constants.manager.checkInputIsInt(bankIDTextField.getText())) {
+            int accountId = Integer.parseInt(bankIDTextField.getText());
+            String description = "cart charge";
+            try {
+                String message = bankController.chargeAccount(accountId, description, cartController.getTotalPrice(Constants.manager.getToken()), Constants.manager.getToken());
+                if (message.equals(Constants.bankErrorInvalidٍSource)) {
+                    errorLabel.setText("your bank account id is invalid");
+                    return;
+                }
+                if (message.equals(Constants.bankErrorInvalidToken) || message.equals(Constants.bankErrorExpiredToken)) {
+                    errorLabel.setText("sorry error happened from server enter your bank account info");
+                    Constants.manager.setTokenFromBankForBankTransaction();
+                    return;
+                }
+                finalPurchase();
+            } catch (InvalidTokenException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (NotLoggedINException e) {
+                e.printStackTrace();
+            } catch (NoAccessException e) {
+                e.printStackTrace();
+            }
+        } else {
+            errorLabel.setText("invalid bankAccount id format");
         }
     }
 
