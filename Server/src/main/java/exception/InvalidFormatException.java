@@ -12,4 +12,9 @@ public class InvalidFormatException extends Exception {
     public String getFieldName() {
         return this.fieldName;
     }
+
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
 }

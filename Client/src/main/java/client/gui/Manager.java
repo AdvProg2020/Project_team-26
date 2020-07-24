@@ -455,7 +455,9 @@ public class Manager implements Reloadable {
     public void logout() throws IOException, InvalidTokenException, NotLoggedINException {
         AuthenticationController controller = (AuthenticationController) controllerContainer.getController(ControllerContainer.Controller.AuthenticationController);
         controller.logout(getToken());
-        Constants.manager.sendMessageTOWebSocket("logout", new Message(loggedInUser.getUsername(), "", "", MessageType.LEAVE, loggedInUser.getRole()));
+        if (loggedInUser != null) {
+            Constants.manager.sendMessageTOWebSocket("logout", new Message(loggedInUser.getUsername(), "", "", MessageType.LEAVE, loggedInUser.getRole()));
+        }
         setLoggedInUser(null);
         setLoggedIn(false);
         reloadTop();

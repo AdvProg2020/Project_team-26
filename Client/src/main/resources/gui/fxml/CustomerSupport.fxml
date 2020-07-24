@@ -12,9 +12,9 @@
         <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="200.0" spacing="20.0">
             <children>
                 <TableView fx:id="supporterUsers" prefHeight="598.0" prefWidth="192.0">
-                    <columns>
-                        <TableColumn fx:id="supporterColumns" prefWidth="191.19999980926514" text="Supporters" />
-                    </columns>
+               <columns>
+                  <TableColumn fx:id="supporterColumns" prefWidth="191.19999980926514" text="Users" />
+               </columns>
                 </TableView>
                 <Button fx:id="refresh" mnemonicParsing="false" prefHeight="42.0" prefWidth="174.0" text="Refresh Supporter" />
             </children>

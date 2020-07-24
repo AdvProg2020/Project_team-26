@@ -6,6 +6,7 @@ import client.exception.*;
 import client.gui.Constants;
 import client.model.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -228,6 +229,19 @@ public class ProductController implements IProductController {
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
             }
+        }
+    }
+
+    @Override
+    public void setFileForProduct(String newProduct, String token, byte[] file) {
+        JSONObject jsonObject = new JSONObject();
+        Gson gson = new Gson();
+        jsonObject.put("token", token);
+        jsonObject.put("file", org.apache.commons.codec.binary.Base64.encodeBase64String(file));
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getProductControllerSetFileForProductAddress() + "/" + newProduct);
+        } catch (HttpClientErrorException e) {
+            e.printStackTrace();
         }
     }
 

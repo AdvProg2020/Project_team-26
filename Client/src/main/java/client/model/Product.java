@@ -28,6 +28,7 @@ public class Product {
     private Long price;
     private Category category;
     private byte[] image;
+    private ProductFile productFile;
     private List<ProductSeller> sellerList;
     /*@JsonDeserialize(keyUsing = CategoryFeatureDeserializer.class)*/
     @JsonSerialize(using = CategoryFeatureSerializer.class)
@@ -175,6 +176,14 @@ public class Product {
 
     public Map<CategoryFeature, String> getCategoryFeatures() {
         return categoryFeatures;
+    }
+
+    public void setProductFile(ProductFile productFile) {
+        this.productFile = productFile;
+    }
+
+    public ProductFile getProductFile() {
+        return productFile;
     }
 
     @Override

@@ -61,8 +61,11 @@ public class CreateSingleProductForSellerController implements InitializableCont
     @FXML
     private Button imageChooserButton;
     @FXML
+    private Button uploadFileButton;
+    @FXML
     private Label errorLabel;
     private File imageFile;
+    private File productFile;
     private PersonalInfoController personalInfoController;
     private Product newProductForAddingToSellers;
 
@@ -98,9 +101,17 @@ public class CreateSingleProductForSellerController implements InitializableCont
         errorLabel.setText("");
         imageChooserButton.setOnMouseClicked(e -> {
             try {
-                setFile();
+                setImage();
             } catch (IOException ex) {
                 ex.printStackTrace();
+            }
+        });
+
+        uploadFileButton.setOnMouseClicked(e -> {
+            try {
+                setFile();
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         });
 
@@ -113,20 +124,27 @@ public class CreateSingleProductForSellerController implements InitializableCont
         priceTextField.setEditable(type);
         amountTextField.setEditable(type);
         imageChooserButton.setVisible(type);
+        uploadFileButton.setVisible(type);
     }
 
     public void setPersonalInfoController(PersonalInfoController personalInfoController) {
         this.personalInfoController = personalInfoController;
     }
 
-    private void setFile() throws IOException {
+    private void setImage() throws IOException {
         FileChooser fileChooser = new FileChooser();
         Stage stage = new Stage();
         fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png"));
         this.imageFile = fileChooser.showOpenDialog(stage);
         if (imageFile != null)
             productImage.setImage(new Image(new ByteArrayInputStream(Files.readAllBytes(imageFile.toPath()))));
+    }
 
+    private void setFile() {
+        FileChooser fileChooser = new FileChooser();
+        Stage stage = new Stage();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Files"));
+        this.productFile = fileChooser.showOpenDialog(stage);
     }
 
     @FXML
@@ -167,7 +185,6 @@ public class CreateSingleProductForSellerController implements InitializableCont
         descriptionField.setText(descriptionField.getText());
     }
 
-
     @FXML
     public void saveButtonClicked() throws IOException {
         if (saveButton.getText().equals("Check")) {
@@ -199,7 +216,12 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 newProductSeller.setRemainingItems(Integer.parseInt(amountTextField.getText()));
                 newProduct.addSeller(newProductSeller);
                 try {
-                    productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
+                    if (productFile == null)
+                        productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
+                    else {
+                        productController.createProduct(newProduct, Constants.manager.getToken(), Files.readAllBytes(imageFile.toPath()));
+                        productController.setFileForProduct(newProduct.getName(), Constants.manager.getToken(), Files.readAllBytes(productFile.toPath()));
+                    }
                     this.personalInfoController.clearBox();
                     Constants.manager.showSuccessPopUp("Your Product Created");
                 } catch (ObjectAlreadyExistException e) {
@@ -237,7 +259,7 @@ public class CreateSingleProductForSellerController implements InitializableCont
                 Constants.manager.showSuccessPopUp("you are added to product");
             } catch (NotSellerException | NoAccessException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
-            }  catch (InvalidTokenException e) {
+            } catch (InvalidTokenException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
                 Constants.manager.setTokenFromController();
             }

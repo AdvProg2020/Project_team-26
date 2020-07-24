@@ -2,6 +2,8 @@ package client;
 
 
 import client.connectionController.account.AuthenticationController;
+import client.exception.InvalidTokenException;
+import client.exception.NotLoggedINException;
 import client.gui.Constants;
 import client.gui.authentication.FirstAdminRegister;
 import javafx.application.Application;
@@ -20,6 +22,7 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,9 +41,28 @@ public class Main extends Application {
             controller.load(primaryStage);
             primaryStage.setScene(new Scene((Parent) node));
             primaryStage.setResizable(false);
+            primaryStage.setOnCloseRequest(e -> {
+                e.consume();
+                System.out.println("quit request unexpected");
+                if (Constants.manager.getLoggedInUser() != null) {
+                    try {
+                        Constants.manager.logout();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    } catch (InvalidTokenException ex) {
+                        ex.printStackTrace();
+                    } catch (NotLoggedINException ex) {
+                        ex.printStackTrace();
+                    } finally {
+                        primaryStage.close();
+                    }
+                }
+            });
             primaryStage.show();
+
         } else {
             Constants.manager.start(primaryStage);
+
             Constants.manager.openPage("AllProducts", 0);
         }
     }

@@ -34,4 +34,6 @@ public interface IProductController {
     public void removeSeller(int productId, int productSellerId, String token) throws InvalidIdException, InvalidTokenException, NoAccessException, NotLoggedINException;
 
     void editProduct(int id, Product newProduct, String token) throws InvalidIdException, NotSellerException, NoAccessException, InvalidTokenException;
+
+    void setFileForProduct(String newProduct, String token, byte[] file);
 }

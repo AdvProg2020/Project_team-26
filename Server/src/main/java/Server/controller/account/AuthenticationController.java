@@ -86,10 +86,11 @@ public class AuthenticationController {
         Session userSession = Session.getSession(token);
         checkPasswordFormat(account.getPassword());
         checkUsernameFormat(account.getUsername());
-        if (account.getRole() != Role.SUPPORT) {
-            checkEmailFormat(account.getEmail());
-            checkEmailAvailability(account.getEmail());
+        if (account.getRole() == Role.SUPPORT) {
+            account.setEmail(account.getUsername() + "@gmail.com");
         }
+        checkEmailFormat(account.getEmail());
+        checkEmailAvailability(account.getEmail());
         checkUsernameAvailability(account.getUsername());
         if (userSession.getLoggedInUser() != null && userSession.getLoggedInUser().getRole() != Role.ADMIN) {
             throw new AlreadyLoggedInException("You are logged in");
