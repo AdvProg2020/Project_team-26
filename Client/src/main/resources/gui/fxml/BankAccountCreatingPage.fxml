@@ -7,7 +7,6 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import org.controlsfx.control.textfield.CustomPasswordField?>
 
 <VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" spacing="5.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.BankAccountCreatingController">
     <children>
@@ -44,7 +43,7 @@
         <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="591.0" spacing="20.0">
             <children>
                 <Label prefHeight="54.0" prefWidth="123.0" text="Password" />
-            <PasswordField fx:id="passwordTextField" prefHeight="26.0" prefWidth="366.0" />
+            <PasswordField fx:id="passwordTextField" prefHeight="26.0" prefWidth="359.0" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -53,7 +52,7 @@
         <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="591.0" spacing="20.0">
             <children>
                 <Label prefHeight="54.0" prefWidth="123.0" text="Repeated Password" />
-            <PasswordField fx:id="repeatTextField" prefHeight="26.0" prefWidth="370.0" />
+            <PasswordField fx:id="repeatTextField" prefHeight="26.0" prefWidth="361.0" />
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
