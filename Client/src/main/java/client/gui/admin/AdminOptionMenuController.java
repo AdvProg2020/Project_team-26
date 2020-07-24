@@ -182,10 +182,6 @@ public class AdminOptionMenuController implements InitializableController {
                 ex.printStackTrace();
             }
         });
-        if (Constants.manager.getLoggedInUser() == null) {
-            Constants.manager.sendMessageTOWebSocket("login", new Message(admin.getUsername(), "", "", MessageType.JOIN, Role.ADMIN));
-            Constants.manager.setLoggedInUser(admin);
-        }
         handlePersonalPage();
     }
 

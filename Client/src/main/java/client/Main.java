@@ -7,6 +7,7 @@ import client.exception.NotLoggedINException;
 import client.gui.Constants;
 import client.gui.authentication.FirstAdminRegister;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -42,21 +43,22 @@ public class Main extends Application {
             primaryStage.setScene(new Scene((Parent) node));
             primaryStage.setResizable(false);
             primaryStage.setOnCloseRequest(e -> {
-                e.consume();
-                System.out.println("quit request unexpected");
-                if (Constants.manager.getLoggedInUser() != null) {
-                    try {
-                        Constants.manager.logout();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    } catch (InvalidTokenException ex) {
-                        ex.printStackTrace();
-                    } catch (NotLoggedINException ex) {
-                        ex.printStackTrace();
-                    } finally {
-                        primaryStage.close();
+                Platform.runLater(() -> {
+                    e.consume();
+                    System.out.println("quit request unexpected");
+                    if (Constants.manager.getLoggedInUser() != null) {
+                        try {
+                            Constants.manager.logout();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        } catch (InvalidTokenException ex) {
+                            ex.printStackTrace();
+                        } catch (NotLoggedINException ex) {
+                            ex.printStackTrace();
+                        }
                     }
-                }
+                    primaryStage.close();
+                });
             });
             primaryStage.show();
 
