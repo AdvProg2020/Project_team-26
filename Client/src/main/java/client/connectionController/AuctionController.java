@@ -46,10 +46,12 @@ public class AuctionController implements IAuctionController {
         }
     }
 
-    public void participateInAuction(int AuctionId, long price, String token) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotEnoughCreditException {
+    public void participateInAuction(int AuctionId, Long price, String token) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotCustomerException, NoAccessException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("AuctionId", AuctionId);
-        jsonObject.put("price", price);
+        Gson gson = new Gson();
+        String priceString = gson.toJson(price);
+        jsonObject.put("price", priceString);
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuctionControllerParticipateInAuctionAddress());
@@ -59,8 +61,10 @@ public class AuctionController implements IAuctionController {
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
-                case NotEnoughCreditException:
-                    throw NotEnoughCreditException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case NotCustomerException:
+                    throw NotCustomerException.getHttpException(e.getResponseBodyAsString());
                 default:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
             }
