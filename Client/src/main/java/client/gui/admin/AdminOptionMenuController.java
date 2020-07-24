@@ -202,8 +202,8 @@ public class AdminOptionMenuController implements InitializableController {
     private void handleCreditSetting() throws IOException, InvalidIdException, InvalidTokenException, NoAccessException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CommissionPage.fxml"));
         Node node = loader.load();
-        ManagerOrderController managerOrderController = loader.getController();
-        managerOrderController.initialize(this.userId);
+        CommissionPageController commissionPageController = loader.getController();
+        commissionPageController.initialize(this.userId);
         hbox.getChildren().removeAll(hbox.getChildren());
         hbox.getChildren().addAll(node);
     }
