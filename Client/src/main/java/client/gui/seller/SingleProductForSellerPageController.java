@@ -16,6 +16,8 @@ import client.model.enums.Status;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -237,6 +239,8 @@ public class SingleProductForSellerPageController implements InitializableContro
                 } catch (InvalidTokenException ex) {
                     Constants.manager.showErrorPopUp(ex.getMessage());
                     Constants.manager.setTokenFromController();
+                }finally {
+                    stage.close();
                 }
             } catch (IOException ex) {
                 ex.getStackTrace();
@@ -245,14 +249,10 @@ public class SingleProductForSellerPageController implements InitializableContro
         TextField command = new TextField("pickDateForEnd");
         command.setEditable(false);
         VBox vBox = new VBox();
+        vBox.setPadding(new Insets(10, 10, 10, 10));
+        vBox.setSpacing(20);
+        vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(command, datePicker);
-        vBox.setStyle("-fx-padding: 10;" +
-                "-fx-border-style: solid inside;" +
-                "-fx-border-width: 2;" +
-                "-fx-border-insets: 5;" +
-                "-fx-border-radius: 5;" +
-                "-fx-border-color: blue;");
-
         Scene scene = new Scene(vBox, 300, 240);
         stage.setScene(scene);
         stage.show();

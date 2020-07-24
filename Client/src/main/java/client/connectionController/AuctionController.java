@@ -4,6 +4,7 @@ import client.connectionController.interfaces.auction.IAuctionController;
 import client.exception.*;
 import client.gui.Constants;
 import client.model.*;
+import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +25,9 @@ public class AuctionController implements IAuctionController {
     public void createNewAuction(int productSellerId, Date endDate, String token) throws ObjectAlreadyExistException, NotLoggedINException, NotSellerException, InvalidTokenException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("productSellerId", productSellerId);
-        jsonObject.put("endDate", endDate);
+        Gson gson = new Gson();
+        String dateString = gson.toJson(endDate);
+        jsonObject.put("endDate", dateString);
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuctionControllerCreateNewAuctionAddress());
