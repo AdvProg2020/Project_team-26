@@ -68,6 +68,7 @@ public class Session {
     private User loggedInUser;
     private Cart cart;
     private String randomPromoCodeForUser;
+    private String bankToken = "";
 
     private Session() {
         cart = new Cart();
@@ -131,5 +132,13 @@ public class Session {
         if (loggedInUser == null)
             return false;
         return true;
+    }
+
+    public String getBankToken() {
+        return bankToken;
+    }
+
+    public void setBankToken(String bankToken) {
+        this.bankToken = bankToken;
     }
 }
