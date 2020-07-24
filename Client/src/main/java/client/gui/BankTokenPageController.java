@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.ControllerContainer;
 import client.connectionController.interfaces.IBankController;
 import client.exception.InvalidIdException;
 import client.exception.InvalidTokenException;
@@ -29,7 +30,7 @@ public class BankTokenPageController implements InitializableController {
 
     @Override
     public void initialize(int id) throws IOException {
-
+        bankController = (IBankController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.BankController);
         button.setOnAction(e -> {
             if (userName.getText().isBlank() || password.getText().isBlank()) {
                 errorLabel.setText("fill all");
