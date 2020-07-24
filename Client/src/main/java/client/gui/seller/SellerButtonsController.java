@@ -4,6 +4,7 @@ import client.connectionController.interfaces.account.IShowUserController;
 import client.connectionController.interfaces.discount.*;
 import client.connectionController.interfaces.order.IOrderController;
 import client.connectionController.interfaces.product.IProductController;
+import client.gui.BankAccountCreatingController;
 import client.gui.Constants;
 import client.gui.PersonalInfoController;
 import client.gui.customer.OrderTableController;
@@ -15,9 +16,13 @@ import client.exception.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -138,6 +143,25 @@ public class SellerButtonsController implements InitializableController {
             Constants.manager.setTokenFromController();
         } catch (NotLoggedINException e) {
             Constants.manager.showLoginMenu();
+        }
+    }
+    @FXML
+    public void createBankClicked() throws IOException {
+        Stage stage = new Stage();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/BankAccountCreatingPage.fxml"));
+        Parent parent = loader.load();
+        BankAccountCreatingController bankAccountCreatingController = (BankAccountCreatingController) loader.getController();
+        try {
+            bankAccountCreatingController.initialize(userId);
+            Scene scene = new Scene(parent);
+            stage.setScene(scene);
+            stage.show();
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        } catch (NoAccessException e) {
+            e.printStackTrace();
+        } catch (InvalidIdException e) {
+            e.printStackTrace();
         }
     }
 

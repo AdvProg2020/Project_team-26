@@ -8,7 +8,7 @@
 
 <HBox fx:id="box" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.gui.customer.CustomerButtonController">
    <children>
-      <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="100.0" spacing="35.0">
+      <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="100.0" spacing="32.0">
           <children>
               <ImageView fx:id="profileImageView" fitHeight="125.0" fitWidth="120.0" pickOnBounds="true" preserveRatio="true">
                   <image>
@@ -20,7 +20,8 @@
             <Button mnemonicParsing="false" onAction="#cart" prefHeight="51.0" prefWidth="141.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Cart" />
             <Button mnemonicParsing="false" onAction="#personalPageHandle" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="User Info" />
             <Button mnemonicParsing="false" onAction="#support" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Support" />
-            <Button mnemonicParsing="false" onAction="#auctionHandler" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Action" />
+            <Button mnemonicParsing="false" onAction="#auctionHandler" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Auction" />
+            <Button mnemonicParsing="false" onAction="#bankAccountButtonClicked" prefHeight="51.0" prefWidth="130.0" styleClass="yellow" stylesheets="@../styleSheet/Buttons.css" text="Create Bank" />
           </children>
       </VBox>
    </children>

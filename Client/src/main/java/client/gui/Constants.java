@@ -1,21 +1,14 @@
 package client.gui;
 
-import client.exception.InvalidTokenException;
-import client.exception.NoAccessException;
-import client.model.User;
-import client.model.enums.Role;
-import com.google.gson.Gson;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
-import java.util.Map;
 
 public class Constants {
 
     public static final Manager manager = new Manager();
     public static final int productGridColumnCount = 5;
+    public static final String bankErrorInvalidPassword = "passwords do not match";
+    public static final String bankErrorRepeatedUserName = "username is not available";
+    public static final String bankErrorInvalidUserNameOrPassword= "invalid username or password";
+
 
     /**
      * AuthenticationController Methods.

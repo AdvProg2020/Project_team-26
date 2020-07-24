@@ -1,10 +1,12 @@
 package client.gui;
 
+import client.ControllerContainer;
 import client.connectionController.interfaces.IBankController;
 import client.exception.InvalidIdException;
 import client.exception.InvalidTokenException;
 import client.exception.NoAccessException;
 import client.gui.interfaces.InitializableController;
+import client.gui.interfaces.Reloadable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -33,50 +35,63 @@ public class BankAccountCreatingController implements InitializableController {
     private IBankController bankController;
 
 
-
     @Override
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
-
+        bankController = (IBankController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.BankController);
         this.userId = id;
-        registerButton.setOnMouseClicked(e->{
-            registerBankAccount();
+        registerButton.setOnMouseClicked(e -> {
+            try {
+                registerBankAccount();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
-    public void registerBankAccount(){
-        if(isEveryThingOk()){
-            bankController.registerAccount(userNameTextField.getText(),passwordTextField.getText(),firstNameTextField.getText(),lastNameTextField.getText(),repeatTextField.getText());
-        }
 
+
+    public void registerBankAccount() throws IOException {
+        if (isEveryThingOk()) {
+            String message = bankController.registerAccount(userNameTextField.getText(), passwordTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), repeatTextField.getText());
+            if (message.equals(Constants.bankErrorInvalidPassword)) {
+                Constants.manager.showErrorPopUp(Constants.bankErrorInvalidPassword);
+            } else if (message.equals(Constants.bankErrorRepeatedUserName)) {
+                Constants.manager.showErrorPopUp(Constants.bankErrorRepeatedUserName);
+            } else {
+                Constants.manager.showSuccessPopUp("your account id is : " + message);
+            }
+        }
     }
-    private boolean isEveryThingOk(){
-        if(isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()){
+
+    private boolean isEveryThingOk() {
+        if (isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()) {
             errorLabel.setText("user name should be without space");
             return false;
         }
-        if(isItWithoutSpace(passwordTextField.getText()) || passwordTextField.getText().isEmpty()){
+        if (isItWithoutSpace(passwordTextField.getText()) || passwordTextField.getText().isEmpty()) {
             errorLabel.setText("pass word should be without space");
             return false;
         }
-        if(isItWithoutSpace(firstNameTextField.getText()) || firstNameTextField.getText().isEmpty()){
+        if (isItWithoutSpace(firstNameTextField.getText()) || firstNameTextField.getText().isEmpty()) {
             errorLabel.setText("first name should be without space");
             return false;
         }
-        if(isItWithoutSpace(lastNameTextField.getText()) || lastNameTextField.getText().isEmpty()){
+        if (isItWithoutSpace(lastNameTextField.getText()) || lastNameTextField.getText().isEmpty()) {
             errorLabel.setText("last name should be without space");
             return false;
         }
-        if(isItWithoutSpace(repeatTextField.getText()) || repeatTextField.getText().isEmpty()){
+        if (isItWithoutSpace(repeatTextField.getText()) || repeatTextField.getText().isEmpty()) {
             errorLabel.setText("user name should be without space");
             return false;
         }
-        if(isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()){
+        if (isItWithoutSpace(userNameTextField.getText()) || userNameTextField.getText().isEmpty()) {
             errorLabel.setText("user name should be without space");
             return false;
         }
         return true;
     }
-    private boolean isItWithoutSpace(String input){
-        if(input.split(" ").length == 1){
+
+    private boolean isItWithoutSpace(String input) {
+        if (input.split(" ").length == 1) {
             return true;
         }
         return false;
