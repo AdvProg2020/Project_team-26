@@ -2,10 +2,8 @@ package Server.controller.discount;
 
 import com.google.gson.Gson;
 import exception.*;
-import javafx.util.Pair;
 import model.*;
 import model.enums.Role;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +21,7 @@ public class PromoController {
     PromoRepository promoRepository;
     UserRepository userRepository;
 
-    public PromoController () {
+    public PromoController() {
         promoRepository = (PromoRepository) RepositoryContainer.getInstance().getRepository("PromoRepository");
         userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
     }
@@ -68,6 +66,7 @@ public class PromoController {
             return promoRepository.getAll(page);
         }
     }
+
     @PostMapping("/controller/method/promo/create-promo-code")
     public int createPromoCode(@RequestBody Map info) throws NoAccessException, NotLoggedINException, ObjectAlreadyExistException, InvalidTokenException {
         Gson gson = new Gson();
@@ -215,12 +214,11 @@ public class PromoController {
             return null;
         if (session.getLoggedInUser().getRole() != Role.CUSTOMER)
             return null;
-        Pair<Boolean, String> promo = session.getPromoCodeForUser();
-        if (promo.getKey() == false)
+        String promo = session.getRandomPromoCodeForUser();
+        session.setRandomPromoCodeForUser(null);
+        if (promo.isEmpty() || promo.isBlank()) {
             return null;
-        if (promo.getValue() == "")
-            return null;
-        session.setPromoCodeForUser(new Pair<>(false, ""));
-        return promo.getValue();
+        }
+        return promo;
     }
 }

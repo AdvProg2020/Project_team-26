@@ -2,7 +2,6 @@ package Server.controller.account;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import exception.*;
-import javafx.util.Pair;
 import model.*;
 import model.enums.Role;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,7 +46,7 @@ public class AuthenticationController {
                 if (randomNumberForPromo.nextInt(200) < 50)
                     creatRandomPromo((Customer) userSession.getLoggedInUser(), userSession);
             } else {
-                userSession.setPromoCodeForUser(new Pair<>(false, ""));
+                userSession.setRandomPromoCodeForUser(null);
             }
         }
     }
@@ -71,7 +70,7 @@ public class AuthenticationController {
             promo.setPromoCode(customer.getUsername().substring(0, (customer.getUsername().length() + 1) / 2) + new Date().getTime());
             if (promoRepository.getByCode(promo.getPromoCode()) == null) {
                 promoRepository.save(promo);
-                userSession.setPromoCodeForUser(new Pair<>(true, promo.getPromoCode()));
+                userSession.setRandomPromoCodeForUser(promo.getPromoCode());
             }
         } catch (ParseException e) {
             e.getStackTrace();

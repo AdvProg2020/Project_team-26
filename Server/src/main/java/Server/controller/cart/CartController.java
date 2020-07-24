@@ -1,7 +1,6 @@
 package Server.controller.cart;
 
 import exception.*;
-import javafx.util.Pair;
 import model.*;
 import model.enums.ShipmentState;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -9,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import repository.*;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import java.awt.image.ImageProducer;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -115,11 +112,11 @@ public class CartController {
             throw new NoAccessException("You must be a customer to be able to buy.");
         }
         Customer customer = (Customer) loggedInUser;
-        Map<String,Object> orderInfo = new HashMap<>();
+        Map<String, Object> orderInfo = new HashMap<>();
         Order order = createOrder(session.getCart(), customer);
         customer.pay(order.calculatePaidAmount() - order.calculateDiscount());
         order.setDiscount();
-        orderInfo.put("order",order);
+        orderInfo.put("order", order);
         changeSellerCredit(orderInfo);
         order.calculatePaidAmount();
         orderRepository.save(order);
@@ -155,7 +152,7 @@ public class CartController {
             promo.setPromoCode(customer.getUsername().substring(0, (customer.getUsername().length() + 1) / 2) + new Date().getTime());
             if (promoRepository.getByCode(promo.getPromoCode()) == null) {
                 promoRepository.save(promo);
-                userSession.setPromoCodeForUser(new Pair<>(true, promo.getPromoCode()));
+                userSession.setRandomPromoCodeForUser(promo.getPromoCode());
             }
         } catch (ParseException e) {
             e.getStackTrace();
@@ -193,7 +190,7 @@ public class CartController {
     @PostMapping("/controller/method/cart/get-total-price")
     public long getTotalPrice(@RequestBody Map info) throws InvalidTokenException {
         String token = (String) info.get("token");
-        Cart cart =  Session.getSession(token).getCart();
+        Cart cart = Session.getSession(token).getCart();
         long totalPrice = 0;
       /*  cart.getProducts().forEach((key, value) -> {
             totalPrice += key.getPriceInOff() * value;

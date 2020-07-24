@@ -1,7 +1,6 @@
 package model;
 
 import exception.InvalidTokenException;
-import javafx.util.Pair;
 import model.enums.Role;
 import repository.UserRepository;
 
@@ -50,7 +49,7 @@ public class Session {
     private String token;
     private User loggedInUser;
     private Cart cart;
-    private Pair<Boolean,String> promoCodeForUser;
+    private String randomPromoCodeForUser;
 
     private Session() {
         cart = new Cart();
@@ -80,12 +79,12 @@ public class Session {
         return loggedInUser;
     }
 
-    public Pair<Boolean, String> getPromoCodeForUser() {
-        return promoCodeForUser;
+    public String getRandomPromoCodeForUser() {
+        return randomPromoCodeForUser;
     }
 
-    public void setPromoCodeForUser(Pair<Boolean, String> promoCodeForUser) {
-        this.promoCodeForUser = promoCodeForUser;
+    public void setRandomPromoCodeForUser(String randomPromoCodeForUser) {
+        this.randomPromoCodeForUser = randomPromoCodeForUser;
     }
 
     public Cart getCart() {
