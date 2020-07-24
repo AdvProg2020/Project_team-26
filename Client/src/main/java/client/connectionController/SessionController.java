@@ -8,6 +8,7 @@ import client.exception.NotLoggedINException;
 import client.gui.Constants;
 import client.model.*;
 import client.model.enums.Role;
+import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -77,5 +78,74 @@ public class SessionController implements ISessionController {
             throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
         }
 
+    }
+
+    @Override
+    public double getCommission(String token) throws NoAccessException, InvalidTokenException {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.getForObject(Constants.getSessionControllerGetCommissionAddress() + "/" + token, Double.class);
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
+        }
+    }
+
+    @Override
+    public long getMinCredit(String token) throws NoAccessException, InvalidTokenException {
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            return restTemplate.getForObject(Constants.getSessionControllerGetMinCreditAddress() + "/" + token, Long.class);
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
+        }
+    }
+
+    @Override
+    public void setCommission(double amount, String token) throws NoAccessException, InvalidTokenException {
+        JSONObject jsonObject = new JSONObject();
+        Gson gson = new Gson();
+        String amountString = gson.toJson(amount);
+        jsonObject.put("amount", amountString);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getSessionControllerSetCommissionAddress());
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
+        }
+
+    }
+
+    @Override
+    public void setMinCredit(long amount, String token) throws NoAccessException, InvalidTokenException {
+        JSONObject jsonObject = new JSONObject();
+        Gson gson = new Gson();
+        String amountString = gson.toJson(amount);
+        jsonObject.put("amount", amountString);
+        jsonObject.put("token", token);
+        try {
+            Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getSessionControllerSetMinCreditAddress());
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
+        }
     }
 }

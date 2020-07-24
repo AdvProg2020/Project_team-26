@@ -53,6 +53,8 @@ public class AdminOptionMenuController implements InitializableController {
     @FXML
     private Button onlineUsersButton;
     @FXML
+    private Button creditButton;
+    @FXML
     private HBox hbox;
 
 
@@ -182,7 +184,28 @@ public class AdminOptionMenuController implements InitializableController {
                 ex.printStackTrace();
             }
         });
+        creditButton.setOnMouseClicked(e->{
+            try {
+                handleCreditSetting();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            } catch (InvalidIdException ex) {
+                ex.printStackTrace();
+            } catch (InvalidTokenException ex) {
+                ex.printStackTrace();
+            } catch (NoAccessException ex) {
+                ex.printStackTrace();
+            }
+        });
         handlePersonalPage();
+    }
+    private void handleCreditSetting() throws IOException, InvalidIdException, InvalidTokenException, NoAccessException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/fxml/CommissionPage.fxml"));
+        Node node = loader.load();
+        ManagerOrderController managerOrderController = loader.getController();
+        managerOrderController.initialize(this.userId);
+        hbox.getChildren().removeAll(hbox.getChildren());
+        hbox.getChildren().addAll(node);
     }
 
     private void handleOnlineUsers() throws NoAccessException, InvalidTokenException {

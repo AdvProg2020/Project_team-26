@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="384.0" prefWidth="426.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="client.gui.admin.CommissionPageController">
+   <children>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+         <children>
+            <Label prefHeight="55.0" prefWidth="138.0" text="Min  Credit" />
+            <TextField fx:id="credit" prefHeight="26.0" prefWidth="212.0" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+         <children>
+            <Label prefHeight="55.0" prefWidth="138.0" text="Commission Percent" />
+            <TextField fx:id="commission" prefHeight="26.0" prefWidth="218.0" />
+         </children>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </HBox>
+      <Label fx:id="errorLabel" prefHeight="64.0" prefWidth="426.0" textFill="RED" />
+      <HBox alignment="CENTER" prefHeight="128.0" prefWidth="426.0" spacing="50.0">
+         <children>
+            <Button fx:id="creditButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="148.0" text="Set min Credit" />
+            <Button fx:id="commissionButton" mnemonicParsing="false" prefHeight="48.0" prefWidth="148.0" text="Set Commission" />
+         </children>
+      </HBox>
+   </children>
+</VBox>

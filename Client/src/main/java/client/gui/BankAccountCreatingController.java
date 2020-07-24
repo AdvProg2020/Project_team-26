@@ -42,7 +42,7 @@ public class BankAccountCreatingController implements InitializableController {
             registerBankAccount();
         });
     }
-    private void registerBankAccount(){
+    public void registerBankAccount(){
         if(isEveryThingOk()){
             bankController.registerAccount(userNameTextField.getText(),passwordTextField.getText(),firstNameTextField.getText(),lastNameTextField.getText(),repeatTextField.getText());
         }

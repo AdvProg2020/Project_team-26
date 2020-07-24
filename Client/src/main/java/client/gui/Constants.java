@@ -1,5 +1,17 @@
 package client.gui;
 
+import client.exception.InvalidTokenException;
+import client.exception.NoAccessException;
+import client.model.User;
+import client.model.enums.Role;
+import com.google.gson.Gson;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+import java.util.Map;
+
 public class Constants {
 
     public static final Manager manager = new Manager();
@@ -440,6 +452,23 @@ public class Constants {
      * SessionController Methods.
      */
 
+    public static String getSessionControllerSetMinCreditAddress() {
+        return manager.getHostPort() + "/controller/method/session/setMinCredit";
+    }
+
+    public static String getSessionControllerGetCommissionAddress() {
+        return manager.getHostPort() + "/controller/method/session/getCommission";
+    }
+
+    public static String getSessionControllerSetCommissionAddress() {
+        return manager.getHostPort() + "/controller/method/session/setCommission";
+    }
+
+    public static String getSessionControllerGetMinCreditAddress() {
+        return manager.getHostPort() + "/controller/method/session/getMinCredit";
+    }
+
+
     public static String getSessionControllerIsUserLoggedInAddress() {
         return manager.getHostPort() + "/controller/method/session/hasUserLoggedIn";
     }
@@ -473,14 +502,14 @@ public class Constants {
     }
 
     public static String getAuctionControllerGetAllAuctionAddress() {
-        return manager.getHostPort()+"/controller/method/request/getAll-Auction";
+        return manager.getHostPort() + "/controller/method/request/getAll-Auction";
     }
 
     public static String getAuctionControllerCreateNewAuctionAddress() {
-        return manager.getHostPort()+"/controller/method/request/create-newAuction";
+        return manager.getHostPort() + "/controller/method/request/create-newAuction";
     }
 
     public static String getAuctionControllerParticipateInAuctionAddress() {
-        return manager.getHostPort()+"/controller/method/request/participate-in-auction";
+        return manager.getHostPort() + "/controller/method/request/participate-in-auction";
     }
 }
