@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.util.Arrays;
 import java.util.Date;
@@ -31,7 +32,7 @@ public class AuctionController implements IAuctionController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuctionControllerCreateNewAuctionAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotSellerException:
                     throw NotSellerException.getHttpException(e.getResponseBodyAsString());
@@ -52,7 +53,7 @@ public class AuctionController implements IAuctionController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuctionControllerParticipateInAuctionAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidIdException:
                     throw InvalidIdException.getHttpException(e.getResponseBodyAsString());

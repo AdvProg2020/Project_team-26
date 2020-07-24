@@ -83,7 +83,7 @@ public class CartController implements ICartController {
         jsonObject.put("token", token);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getCartControllerUsePromoCodeAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -132,7 +132,7 @@ public class CartController implements ICartController {
         try {
             ResponseEntity<Long> responseEntity = restTemplate.postForEntity(Constants.getCartControllerGetTotalPriceAddress(), httpEntity, Long.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
@@ -153,7 +153,7 @@ public class CartController implements ICartController {
         try {
             ResponseEntity<Integer> responseEntity = restTemplate.postForEntity(Constants.getCartControllerGetAmountInCarBySellerIdAddress(), httpEntity, Integer.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case InvalidTokenException:
                     throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());

@@ -20,10 +20,9 @@ public class ObjectAlreadyExistException extends Exception {
     public static ObjectAlreadyExistException getHttpException(String errorMessage) {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            return objectMapper.readValue(errorMessage,ObjectAlreadyExistException.class);
+            return objectMapper.readValue(errorMessage, ObjectAlreadyExistException.class);
         } catch (IOException e) {
-            System.out.println(e.getStackTrace());
-            return null;
+            return new ObjectAlreadyExistException("ObjectAlreadyExist", new Object());
         }
     }
 }
