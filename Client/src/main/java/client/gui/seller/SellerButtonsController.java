@@ -154,6 +154,7 @@ public class SellerButtonsController implements InitializableController {
         BankAccountCreatingController bankAccountCreatingController = (BankAccountCreatingController) loader.getController();
         try {
             bankAccountCreatingController.initialize(userId);
+            bankAccountCreatingController.load(Role.SELLER);
             Scene scene = new Scene(parent);
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);

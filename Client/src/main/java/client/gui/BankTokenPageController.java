@@ -10,6 +10,7 @@ import client.gui.interfaces.Reloadable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ public class BankTokenPageController implements InitializableController {
     @FXML
     private TextField userName;
     @FXML
-    private TextField password;
+    private PasswordField password;
     @FXML
     private Label errorLabel;
     @FXML
@@ -54,6 +55,7 @@ public class BankTokenPageController implements InitializableController {
         });
 
     }
+
     public void setReloadable(Reloadable reloadable) {
         this.reloadable = reloadable;
     }
