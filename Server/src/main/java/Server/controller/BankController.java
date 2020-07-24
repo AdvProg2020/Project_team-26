@@ -27,10 +27,10 @@ public class BankController {
 
     private String bankHost = "localhost";
     private int bankPort = 8090;
-    private int storeId;
+    private int storeId = 10001;
     private String storeToken;
-    private String storeUsername;
-    private String storePassword;
+    private String storeUsername = "Store";
+    private String storePassword = "12345678";
 
     public BankController() {
         this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
