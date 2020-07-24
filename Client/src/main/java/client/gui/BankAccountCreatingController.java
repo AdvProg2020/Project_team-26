@@ -7,6 +7,7 @@ import client.exception.InvalidTokenException;
 import client.exception.NoAccessException;
 import client.gui.interfaces.InitializableController;
 import client.gui.interfaces.Reloadable;
+import client.model.enums.Role;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -15,9 +16,11 @@ import javafx.scene.control.TextField;
 import org.springframework.util.Base64Utils;
 
 import java.io.IOException;
+import java.time.format.TextStyle;
 
 public class BankAccountCreatingController implements InitializableController {
     private int userId;
+    private Role role;
     @FXML
     private TextField userNameTextField;
     @FXML
@@ -32,6 +35,21 @@ public class BankAccountCreatingController implements InitializableController {
     private Label errorLabel;
     @FXML
     private Button registerButton;
+    @FXML
+    private Button chargeButton;
+    @FXML
+    private Button withDrawButton;
+    @FXML
+    private TextField chargeAccountId;
+    @FXML
+    private TextField chargeAmount;
+    @FXML
+    private TextField withDrawAccountId;
+    @FXML
+    private TextField withDrawAmount;
+    @FXML
+    private Label getMoneyLabel;
+
     private IBankController bankController;
 
 
@@ -39,6 +57,13 @@ public class BankAccountCreatingController implements InitializableController {
     public void initialize(int id) throws IOException, InvalidTokenException, NoAccessException, InvalidIdException {
         bankController = (IBankController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.BankController);
         this.userId = id;
+        withDrawAccountId.setVisible(false);
+        withDrawAmount.setVisible(false);
+        withDrawButton.setVisible(false);
+        getMoneyLabel.setVisible(false);
+        chargeButton.setOnMouseClicked(e -> {
+            chargeAccount();
+        });
         registerButton.setOnMouseClicked(e -> {
             try {
                 registerBankAccount();
@@ -46,6 +71,27 @@ public class BankAccountCreatingController implements InitializableController {
                 ex.printStackTrace();
             }
         });
+    }
+
+    private void chargeAccount() {
+
+
+    }
+
+    public void load(Role role) {
+        if (role == Role.CUSTOMER) {
+            withDrawAccountId.setVisible(true);
+            withDrawAmount.setVisible(true);
+            withDrawButton.setVisible(true);
+            getMoneyLabel.setVisible(true);
+            withDrawButton.setOnMouseClicked(e -> {
+                withDrawButtonClicked();
+            });
+        }
+    }
+
+    private void withDrawButtonClicked() {
+
     }
 
 

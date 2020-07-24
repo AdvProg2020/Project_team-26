@@ -10,7 +10,8 @@ public class Constants {
     public static final String bankErrorInvalidPassword = "passwords do not match";
     public static final String bankErrorRepeatedUserName = "username is not available";
 
-    public static final String bankErrorInvalidٍSource= "source account id is invalid";
+    public static final String bankErrorInvalidٍSource = "source account id is invalid";
+
     /**
      * AuthenticationController Methods.
      */
@@ -513,5 +514,23 @@ public class Constants {
 
     public static String getAuctionControllerParticipateInAuctionAddress() {
         return manager.getHostPort() + "/controller/method/request/participate-in-auction";
+    }
+
+    /**
+     *
+     *BankController
+     * @return
+     */
+
+    public static String getBankControllerCreateAccountAddress() {
+        return manager.getHostPort() + "/controller/method/bank/create-account";
+    }
+
+    public static String getBankControllerChargeAccountAddress() {
+        return manager.getHostPort() + "/controller/method/bank/chargeAccount";
+    }
+
+    public static String getBankControllerWithdrawFromAccountAddress() {
+        return manager.getHostPort() + "/controller/method/bank/withdraw-from-account";
     }
 }

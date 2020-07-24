@@ -2,66 +2,79 @@ package client.connectionController;
 
 import client.connectionController.interfaces.IBankController;
 import client.exception.*;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.net.Socket;
-import java.util.Map;
+import client.gui.Constants;
+import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 public class BankController implements IBankController {
-
-    @PostMapping("/controller/method/bank/create-account")
-    public String createAccount(@RequestBody Map info) throws IOException {
-        String command = "create_account" + " " +
-                info.get("firstname") + " " +
-                info.get("lastname") + " " +
-                info.get("username") + " " +
-                info.get("password") + " " +
-                info.get("repeat_password");
-        return sendCommand(command);
+    private String sendRequest(JSONObject jsonObject, String address) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
+        return responseEntity.getBody();
     }
 
-    @PostMapping("/controller/method/bank/getToken")
-    public String getToken(@RequestBody Map info) throws IOException, InvalidTokenException {
-        Session session = Session.getSession((String) info.get("token"));
-
-        String command = "get_token" + " " +
-                info.get("username") + " " +
-                info.get("password");
-        String result = sendCommand(command);
-        session.setBankToken(result);
-        return result;
+    @Override
+    public String createAccount(String userName, String password, String firstName, String lastName, String repeatedPass) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("firstname", firstName);
+        jsonObject.put("lastname", lastName);
+        jsonObject.put("username", userName);
+        jsonObject.put("password", password);
+        jsonObject.put("repeat_password", repeatedPass);
+        return sendRequest(jsonObject, Constants.getBankControllerCreateAccountAddress());
     }
 
 
-    @PostMapping("/controller/method/bank/chargeAccount")
-    public String chargeAccount(@RequestBody Map info) throws InvalidTokenException, IOException {
-        Session session = Session.getSession((String) info.get("token"));
-
-        String command = "create_receipt" + " " +
-                session.getBankToken() + " move " +
-                info.get("userId") + " " +
-                storeId + " " +
-                info.get("description");
-        String result = sendCommand(command);
+    @Override
+    public String chargeAccount(int bankSourceAccountId, String description, long money, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("amount", "" + money);
+        jsonObject.put("userId", "" + bankSourceAccountId);
+        jsonObject.put("description", description);
+        jsonObject.put("token", token);
         try {
-            int receiptId = Integer.parseInt(result);
-            return sendCommand("pay " + receiptId);
-        } catch (Exception e) {
-            return result;
+            return sendRequest(jsonObject, Constants.getBankControllerChargeAccountAddress());
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+            }
         }
     }
 
-    private String sendCommand(String command) throws IOException {
-        Socket socket = new Socket(bankHost, bankPort);
-        DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
-        DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
-        dataOutputStream.writeUTF(command);
-        dataOutputStream.flush();
-        return dataInputStream.readUTF();
+    @Override
+    public String withdrawFromAccount(int bankSourceAccountId, String description, long money, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughCreditException {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("amount", "" + money);
+        jsonObject.put("userId", "" + bankSourceAccountId);
+        jsonObject.put("description", description);
+        jsonObject.put("token", token);
+        try {
+            return sendRequest(jsonObject, Constants.getBankControllerWithdrawFromAccountAddress());
+        } catch (UnknownHttpStatusCodeException e) {
+            switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
+                case NotLoggedInException:
+                    throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
+                case NoAccessException:
+                    throw NoAccessException.getHttpException(e.getResponseBodyAsString());
+                case InvalidTokenException:
+                    throw InvalidTokenException.getHttpException(e.getResponseBodyAsString());
+                default:
+                    throw NotEnoughCreditException.getHttpException(e.getResponseBodyAsString());
+            }
+        }
     }
+
 }
