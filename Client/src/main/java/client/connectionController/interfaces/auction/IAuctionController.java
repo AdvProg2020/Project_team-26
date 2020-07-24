@@ -12,6 +12,6 @@ public interface IAuctionController {
 
     void createNewAuction(int productSellerId, Date endDate, String token) throws ObjectAlreadyExistException, NotLoggedINException, NotSellerException, InvalidTokenException;
 
-    void participateInAuction(int AuctionId, Long price, String token) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotCustomerException, NoAccessException;
+    void participateInAuction(int auctionId, Long price, String token) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotCustomerException, NoAccessException;
 
 }

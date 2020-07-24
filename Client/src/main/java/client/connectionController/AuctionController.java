@@ -46,9 +46,9 @@ public class AuctionController implements IAuctionController {
         }
     }
 
-    public void participateInAuction(int AuctionId, Long price, String token) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotCustomerException, NoAccessException {
+    public void participateInAuction(int auctionId, Long price, String token) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotCustomerException, NoAccessException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("AuctionId", AuctionId);
+        jsonObject.put("auctionId", auctionId);
         Gson gson = new Gson();
         String priceString = gson.toJson(price);
         jsonObject.put("price", priceString);
