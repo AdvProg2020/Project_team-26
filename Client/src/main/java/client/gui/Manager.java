@@ -29,22 +29,24 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import net.minidev.json.JSONObject;
+import org.apache.http.client.HttpClient;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.socket.client.WebSocketClient;
-import org.springframework.web.socket.client.standard.StandardWebSocketClient;
-import org.springframework.web.socket.messaging.WebSocketStompClient;
-import org.springframework.web.socket.sockjs.client.SockJsClient;
-import org.springframework.web.socket.sockjs.client.Transport;
-import org.springframework.web.socket.sockjs.client.WebSocketTransport;
+import javax.net.ssl.SSLContext;
+import org.apache.http.ssl.SSLContextBuilder;
 
+import javax.net.ssl.SSLContext;
+import java.io.File;
 import java.io.IOException;
 import java.time.*;
 import java.util.*;
@@ -62,7 +64,7 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
-    private final String hostPort = "http://localhost:8080";
+    private final String hostPort = "https://localhost:8083";
     public final String chatUrl = "ws://localhost:8080/chat";
     private StompSession session;
     private List<MessageReceiver> messageReceivers;
@@ -131,6 +133,20 @@ public class Manager implements Reloadable {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
         return responseEntity.getBody();
+    }
+
+    private RestTemplate restTemplate() throws Exception {
+        File file = new File("/resources/keystore/keystore.p12");
+        SSLContext sslContext = new SSLContextBuilder()
+                .loadTrustMaterial(file, "H589QkHFIdafh6@*yuydfjh879yfdWWMjHUyoih&jnawi0asd23Yzq".toCharArray())
+                .build();
+        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
+        HttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(socketFactory)
+                .build();
+        HttpComponentsClientHttpRequestFactory factory =
+                new HttpComponentsClientHttpRequestFactory(httpClient);
+        return new RestTemplate(factory);
     }
 
     public void back() throws IOException {

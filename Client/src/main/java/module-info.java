@@ -1,4 +1,4 @@
-open module Server {
+open module Client {
     requires java.base;
     requires javafx.base;
     requires javafx.controls;
@@ -18,5 +18,7 @@ open module Server {
     requires spring.websocket;
     requires spring.core;
     requires com.google.gson;
-
+    requires org.apache.httpcomponents.httpclient;
+    requires org.apache.httpcomponents.httpcore;
+    requires spring.boot.starter;
 }
