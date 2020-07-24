@@ -12,7 +12,12 @@ import client.model.User;
 import client.model.enums.MessageType;
 import client.model.enums.Role;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonObject;
 import net.minidev.json.JSONObject;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.UnknownHttpStatusCodeException;
 
@@ -24,11 +29,12 @@ public class AuthenticationController implements IAuthenticationController {
     public AuthenticationController() {
     }
 
-    public void login(String username, String password, String token) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
+    public void login(String username, String password, String token, String captcha) throws InvalidFormatException, PasswordIsWrongException, InvalidTokenException, InvalidAuthenticationException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", username);
         jsonObject.put("password", password);
         jsonObject.put("token", token);
+        jsonObject.put("captcha", captcha);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuthenticationControllerLoginAddress());
             User user = ((IShowUserController)Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController)).getUserByToken(Constants.manager.getToken());
@@ -70,6 +76,15 @@ public class AuthenticationController implements IAuthenticationController {
                     throw AlreadyLoggedInException.getHttpException(e.getResponseBodyAsString());
             }
         }
+    }
+
+    public String getCaptcha() {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(Constants.getAuthenticationControllerGetCaptchaAddress(),String.class);
+        System.out.println(responseEntity.getBody());
+        return responseEntity.getBody();
     }
 
     public void logout(String token) throws NotLoggedINException, InvalidTokenException {

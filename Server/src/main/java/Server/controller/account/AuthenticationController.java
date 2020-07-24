@@ -15,6 +15,7 @@ import repository.UserRepository;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
@@ -24,6 +25,7 @@ public class AuthenticationController {
     UserRepository userRepository;
     PromoRepository promoRepository;
     Random randomNumberForPromo;
+    private String captchaAnswer;
 
     public AuthenticationController() {
         this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
@@ -36,6 +38,9 @@ public class AuthenticationController {
         String username = (String) info.get("username");
         String password = (String) info.get("password");
         String token = (String) info.get("token");
+        if(!captchaAnswer.equals((String)info.get("captcha"))) {
+            throw new InvalidAuthenticationException("Captcha is wrong.", "username");
+        }
         Session userSession = Session.getSession(token);
         checkPasswordFormat(password);
         checkUsernameFormat(username);
@@ -134,6 +139,14 @@ public class AuthenticationController {
         } else {
             userSession.logout();
         }
+    }
+
+    @GetMapping("/controller/method/get-captcha")
+    public String getCaptcha() {
+        int firstNumber = randomNumberForPromo.nextInt(100) + 1;
+        int secondNumber = randomNumberForPromo.nextInt(100) + 1;
+        captchaAnswer = Integer.toString(firstNumber + secondNumber);
+        return "" + firstNumber + " + " + secondNumber;
     }
 
     private void checkPasswordFormat(String password) throws InvalidFormatException {
