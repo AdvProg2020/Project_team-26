@@ -28,7 +28,7 @@ public class OrderController implements IOrderController {
         jsonObject.put("token", token);
         try {
             return getListFromServer(jsonObject, Constants.getOrderControllerGetOrdersAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NoAccessException:
                     throw NoAccessException.getHttpException(e.getResponseBodyAsString());
@@ -70,7 +70,7 @@ public class OrderController implements IOrderController {
         jsonObject.put("endIndex", endIndex);
         try {
             return getListFromServer(jsonObject, Constants.getOrderControllerGetOrdersWithFilterAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
@@ -94,7 +94,7 @@ public class OrderController implements IOrderController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<User[]> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetProductBuyerByProductIdAddress(), httpEntity, User[].class);
             return Arrays.asList(responseEntity.getBody());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
@@ -120,7 +120,7 @@ public class OrderController implements IOrderController {
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<Order> responseEntity = restTemplate.postForEntity(Constants.getOrderControllerGetASingleOrderAddress(), httpEntity, Order.class);
             return responseEntity.getBody();
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NoObjectIdException:
                     throw NoObjectIdException.getHttpException(e.getResponseBodyAsString());
@@ -144,7 +144,7 @@ public class OrderController implements IOrderController {
         jsonObject.put("endIndex", endIndex);
         try {
             return getListFromServer(jsonObject, Constants.getOrderControllerGetOrderHistoryForSellerAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             switch (HttpExceptionEquivalent.getEquivalentException(e.getRawStatusCode())) {
                 case NotLoggedInException:
                     throw NotLoggedINException.getHttpException(e.getResponseBodyAsString());
@@ -162,12 +162,12 @@ public class OrderController implements IOrderController {
         jsonObject.put("orderItemId",orderItemId);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getOrderControllerChangeShipmentStatusAddress());
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             e.printStackTrace();
         }
     }
 
-    private List<Order> getListFromServer(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    private List<Order> getListFromServer(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);

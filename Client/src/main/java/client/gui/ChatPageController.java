@@ -103,9 +103,11 @@ public class ChatPageController implements InitializableController, MessageRecei
                     }
                 } else if (message.getReceiver().equals(receiver)) {
                     if (message.getReceiver().equals(receiver)) {
-                        addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
-                    } else if (message.getSender().equals(sender) && message.getReceiver().equals(receiver)) {
-                        addMessageToBox(message, "You", Pos.CENTER_RIGHT);
+                        if (message.getSender().equals(sender)) {
+                            addMessageToBox(message, "You", Pos.CENTER_RIGHT);
+                        } else {
+                            addMessageToBox(message, message.getSender(), Pos.CENTER_LEFT);
+                        }
                     }
                 }
             } catch (IOException e) {

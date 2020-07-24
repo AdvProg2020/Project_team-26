@@ -4,10 +4,7 @@ import client.ControllerContainer;
 import client.connectionController.SessionController;
 import client.connectionController.account.AuthenticationController;
 import client.connectionController.interfaces.account.IShowUserController;
-import client.exception.InvalidIdException;
-import client.exception.InvalidTokenException;
-import client.exception.NoAccessException;
-import client.exception.NotLoggedINException;
+import client.exception.*;
 import client.gui.admin.AdminRegistryController;
 import client.gui.authentication.AuthenticationStageManager;
 import client.gui.authentication.RegisterMenuController;
@@ -42,6 +39,13 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.UnknownHttpStatusCodeException;
+import org.springframework.web.socket.client.WebSocketClient;
+import org.springframework.web.socket.client.standard.StandardWebSocketClient;
+import org.springframework.web.socket.messaging.WebSocketStompClient;
+import org.springframework.web.socket.sockjs.client.SockJsClient;
+import org.springframework.web.socket.sockjs.client.Transport;
+import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 import javax.net.ssl.SSLContext;
 import org.apache.http.ssl.SSLContextBuilder;
 
@@ -116,7 +120,7 @@ public class Manager implements Reloadable {
         }
     }
 
-    public void postRequestWithVoidReturnType(JSONObject jsonObject, String address) throws HttpClientErrorException {
+    public void postRequestWithVoidReturnType(JSONObject jsonObject, String address) throws UnknownHttpStatusCodeException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
@@ -124,7 +128,7 @@ public class Manager implements Reloadable {
         restTemplate.postForLocation(address, httpEntity);
     }
 
-    public String getStringValueFromServerByAddress(String address, String token) throws HttpClientErrorException {
+    public String getStringValueFromServerByAddress(String address, String token) throws  UnknownHttpStatusCodeException {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("token", token);
         HttpHeaders httpHeaders = new HttpHeaders();

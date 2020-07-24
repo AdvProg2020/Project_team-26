@@ -91,7 +91,7 @@ public class CommentController implements ICommentController {
             RestTemplate restTemplate = new RestTemplate();
             Comment comments[] = restTemplate.getForObject(Constants.getCommentControllerGetConfirmedCommentsAddress() + "/" + productId, Comment[].class);
             return Arrays.asList(comments);
-        } catch (HttpClientErrorException e) {
+        } catch (UnknownHttpStatusCodeException e) {
             throw InvalidIdException.getHttpException(e.getResponseBodyAsString());
         }
     }
