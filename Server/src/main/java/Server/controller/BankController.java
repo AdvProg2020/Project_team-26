@@ -2,6 +2,7 @@ package Server.controller;
 
 import exception.InvalidTokenException;
 import exception.NoAccessException;
+import exception.NotEnoughCreditException;
 import exception.NotLoggedINException;
 import model.Customer;
 import model.Session;
@@ -27,6 +28,9 @@ public class BankController {
     private String bankHost = "localhost";
     private int bankPort = 8090;
     private int storeId;
+    private String storeToken;
+    private String storeUsername;
+    private String storePassword;
 
     public BankController() {
         this.userRepository = (UserRepository) RepositoryContainer.getInstance().getRepository("UserRepository");
@@ -85,12 +89,46 @@ public class BankController {
         }
     }
 
+    @PostMapping("/controller/method/bank/withdraw-from-account")
+    public String withdrawFromAccount(@RequestBody Map info) throws InvalidTokenException, IOException, NotLoggedINException, NoAccessException, NotEnoughCreditException {
+        Session session = Session.getSession((String) info.get("token"));
+        if (session.getLoggedInUser() == null) {
+            throw new NotLoggedINException("You must login first.");
+        }
+        User user = session.getLoggedInUser();
+        if(user.getCredit() - (int) info.get("amount") < Session.getMinCredit()) {
+            throw new NotEnoughCreditException("There must be " + Session.getMinCredit() + " left in your account.", user.getCredit());
+        }
+
+        storeToken = sendCommand("get_token " + storeUsername + " " + storePassword);
+        String command = "create_receipt" + " " +
+                storeToken + " move " +
+                info.get("amount") + " " +
+                storeId + " " +
+                info.get("userId") + " " +
+                info.get("description");
+        String result = sendCommand(command);
+        try {
+            int receiptId = Integer.parseInt(result);
+            result = sendCommand("pay " + receiptId);
+            if (result.equals("done successfully")) {
+                user.changeCredit(user.getCredit() - (int) info.get("amount"));
+                userRepository.save(user);
+            }
+            return result;
+        } catch (Exception e) {
+            return result;
+        }
+    }
+
     private String sendCommand(String command) throws IOException {
         Socket socket = new Socket(bankHost, bankPort);
         DataInputStream dataInputStream = new DataInputStream(socket.getInputStream());
         DataOutputStream dataOutputStream = new DataOutputStream(socket.getOutputStream());
         dataOutputStream.writeUTF(command);
         dataOutputStream.flush();
-        return dataInputStream.readUTF();
+        String result = dataInputStream.readUTF();
+        socket.close();
+        return result;
     }
 }
