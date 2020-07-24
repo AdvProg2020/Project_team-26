@@ -50,6 +50,7 @@ public class CommissionPageController implements InitializableController {
                 errorLabel.setText("enter positive");
             }
             sessionController.setMinCredit(creditAmount, Constants.manager.getToken());
+            errorLabel.setText("");
         } catch (NumberFormatException e) {
             errorLabel.setText("invalid Format");
 
@@ -64,10 +65,11 @@ public class CommissionPageController implements InitializableController {
     public void commissionButtonClicked() {
         try {
             double commissionAmount = Double.parseDouble(commission.getText());
-            if (commissionAmount < 0) {
-                errorLabel.setText("enter positive");
+            if (commissionAmount < 0 || commissionAmount > 100) {
+                errorLabel.setText("enter positive and under 100");
             }
             sessionController.setCommission(commissionAmount, Constants.manager.getToken());
+            errorLabel.setText("");
         } catch (NumberFormatException e) {
             errorLabel.setText("invalid Format");
 
