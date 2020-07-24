@@ -50,7 +50,6 @@ public class BankController {
     @PostMapping("/controller/method/bank/getToken")
     public String getToken(@RequestBody Map info) throws IOException, InvalidTokenException {
         Session session = Session.getSession((String) info.get("token"));
-
         String command = "get_token" + " " +
                 info.get("username") + " " +
                 info.get("password");
@@ -67,7 +66,6 @@ public class BankController {
         } else if (session.getLoggedInUser().getRole() == Role.ADMIN) {
             throw new NoAccessException("You must be a customer to charge account.");
         }
-
         String command = "create_receipt" + " " +
                 session.getBankToken() + " move " +
                 info.get("amount") + " " +
@@ -96,7 +94,7 @@ public class BankController {
             throw new NotLoggedINException("You must login first.");
         }
         User user = session.getLoggedInUser();
-        if(user.getCredit() - (int) info.get("amount") < Session.getMinCredit()) {
+        if (user.getCredit() - (int) info.get("amount") < Session.getMinCredit()) {
             throw new NotEnoughCreditException("There must be " + Session.getMinCredit() + " left in your account.", user.getCredit());
         }
 
@@ -129,6 +127,8 @@ public class BankController {
         dataOutputStream.flush();
         String result = dataInputStream.readUTF();
         socket.close();
+        System.out.println("\n\n" + command);
+        System.out.println("\n\n" + result);
         return result;
     }
 }
