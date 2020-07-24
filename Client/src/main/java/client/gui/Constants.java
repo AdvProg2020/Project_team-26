@@ -5,11 +5,12 @@ public class Constants {
 
     public static final Manager manager = new Manager();
     public static final int productGridColumnCount = 5;
+
+
     public static final String bankErrorInvalidPassword = "passwords do not match";
     public static final String bankErrorRepeatedUserName = "username is not available";
-    public static final String bankErrorInvalidUserNameOrPassword= "invalid username or password";
 
-
+    public static final String bankErrorInvalidٍSource= "source account id is invalid";
     /**
      * AuthenticationController Methods.
      */

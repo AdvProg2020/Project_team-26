@@ -1,5 +1,6 @@
 package client.connectionController;
 
+import client.connectionController.interfaces.IBankController;
 import client.exception.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +12,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.Map;
 
-public class BankController {
+public class BankController implements IBankController {
 
     @PostMapping("/controller/method/bank/create-account")
     public String createAccount(@RequestBody Map info) throws IOException {
@@ -35,6 +36,7 @@ public class BankController {
         session.setBankToken(result);
         return result;
     }
+
 
     @PostMapping("/controller/method/bank/chargeAccount")
     public String chargeAccount(@RequestBody Map info) throws InvalidTokenException, IOException {

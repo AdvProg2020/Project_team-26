@@ -51,7 +51,7 @@ public class BankAccountCreatingController implements InitializableController {
 
     public void registerBankAccount() throws IOException {
         if (isEveryThingOk()) {
-            String message = bankController.registerAccount(userNameTextField.getText(), passwordTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), repeatTextField.getText());
+            String message = bankController.createAccount(userNameTextField.getText(), passwordTextField.getText(), firstNameTextField.getText(), lastNameTextField.getText(), repeatTextField.getText());
             if (message.equals(Constants.bankErrorInvalidPassword)) {
                 Constants.manager.showErrorPopUp(Constants.bankErrorInvalidPassword);
             } else if (message.equals(Constants.bankErrorRepeatedUserName)) {
