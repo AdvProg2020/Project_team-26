@@ -78,7 +78,7 @@ public class AuctionController {
     @PostMapping("/controller/method/request/participate-in-auction")
     public void participateInAuction(@RequestBody Map info) throws InvalidIdException, NotLoggedINException, InvalidTokenException, NotEnoughCreditException, NotCustomerException, NoAccessException {
         int AuctionId = (int) info.get("AuctionId");
-        long newPrice = (long) info.get("newPrice");
+        long newPrice = (long) info.get("price");
         String token = (String) info.get("token");
         User user = Session.getSession(token).getLoggedInUser();
         Auction auction = auctionRepository.getById(AuctionId);
