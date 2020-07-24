@@ -69,7 +69,7 @@ public class BankController {
         }
 
         String command = "create_receipt" + " " +
-                session.getBankToken() + " move " +
+                session.getBankToken() + "move " +
                 info.get("amount") + " " +
                 info.get("userId") + " " +
                 storeId + " " +
@@ -96,13 +96,13 @@ public class BankController {
             throw new NotLoggedINException("You must login first.");
         }
         User user = session.getLoggedInUser();
-        if(user.getCredit() - (int) info.get("amount") < Session.getMinCredit()) {
+        if (user.getCredit() - (int) info.get("amount") < Session.getMinCredit()) {
             throw new NotEnoughCreditException("There must be " + Session.getMinCredit() + " left in your account.", user.getCredit());
         }
 
         storeToken = sendCommand("get_token " + storeUsername + " " + storePassword);
         String command = "create_receipt" + " " +
-                storeToken + " move " +
+                storeToken + "move " +
                 info.get("amount") + " " +
                 storeId + " " +
                 info.get("userId") + " " +
@@ -129,6 +129,8 @@ public class BankController {
         dataOutputStream.flush();
         String result = dataInputStream.readUTF();
         socket.close();
+        System.out.println("\n\n" + command);
+        System.out.println("\n\n" + result);
         return result;
     }
 }

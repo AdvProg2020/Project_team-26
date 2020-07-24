@@ -87,6 +87,7 @@ public class BankAccountCreatingController implements InitializableController {
                     Constants.manager.setTokenFromBankForBankTransaction();
                     return;
                 }
+                Constants.manager.showSuccessPopUp(message);
             } catch (InvalidTokenException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
                 Constants.manager.setTokenFromController();
@@ -130,6 +131,7 @@ public class BankAccountCreatingController implements InitializableController {
                     Constants.manager.setTokenFromBankForBankTransaction();
                     return;
                 }
+                Constants.manager.showSuccessPopUp(message);
             } catch (InvalidTokenException e) {
                 Constants.manager.showErrorPopUp(e.getMessage());
                 Constants.manager.setTokenFromController();
