@@ -41,7 +41,7 @@ public class BankController implements IBankController {
     @Override
     public String chargeAccount(int bankSourceAccountId, String description, long money, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("amount", "" + money);
+        jsonObject.put("amount", money);
         jsonObject.put("userId", "" + bankSourceAccountId);
         jsonObject.put("description", description);
         jsonObject.put("token", token);
@@ -62,7 +62,7 @@ public class BankController implements IBankController {
     @Override
     public String withdrawFromAccount(int bankSourceAccountId, String description, long money, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughCreditException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("amount", "" + money);
+        jsonObject.put("amount", money);
         jsonObject.put("userId", "" + bankSourceAccountId);
         jsonObject.put("description", description);
         jsonObject.put("token", token);

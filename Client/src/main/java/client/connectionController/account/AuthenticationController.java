@@ -37,7 +37,7 @@ public class AuthenticationController implements IAuthenticationController {
         jsonObject.put("captcha", captcha);
         try {
             Constants.manager.postRequestWithVoidReturnType(jsonObject, Constants.getAuthenticationControllerLoginAddress());
-            User user = ((IShowUserController)Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController)).getUserByToken(Constants.manager.getToken());
+            User user = ((IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController)).getUserByToken(Constants.manager.getToken());
             Constants.manager.setLoggedInUser(user);
             Constants.manager.sendMessageTOWebSocket("login", new Message(user.getUsername(), "", "", MessageType.JOIN, user.getRole()));
             System.out.println("called for login online");
@@ -82,7 +82,7 @@ public class AuthenticationController implements IAuthenticationController {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.getForEntity(Constants.getAuthenticationControllerGetCaptchaAddress(),String.class);
+        ResponseEntity<String> responseEntity = restTemplate.getForEntity(Constants.getAuthenticationControllerGetCaptchaAddress(), String.class);
         System.out.println(responseEntity.getBody());
         return responseEntity.getBody();
     }
