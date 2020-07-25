@@ -1,16 +1,20 @@
 //package utils;
 //
 //import org.apache.http.client.HttpClient;
+//import org.apache.http.conn.ssl.NoopHostnameVerifier;
 //import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 //import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
+//import org.apache.http.impl.client.CloseableHttpClient;
 //import org.apache.http.impl.client.HttpClients;
 //import org.apache.http.ssl.SSLContextBuilder;
 //import org.springframework.http.client.ClientHttpRequestFactory;
 //import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 //import org.springframework.web.client.RestTemplate;
 //
+//import javax.net.ssl.SSLContext;
 //import java.io.File;
 //import java.io.FileInputStream;
+//import java.net.URL;
 //import java.security.KeyStore;
 //
 //public class SecureRestTemplate extends RestTemplate {
@@ -30,17 +34,26 @@
 //    }
 //
 //    private static ClientHttpRequestFactory getClientHttpRequestFactory() throws Exception {
-//        FileInputStream fileInputStream = new FileInputStream(new File("/keystore/keystore.p12"));
-////        ResourceLoader resourceLoader = new DefaultResourceLoader();
-////        Resource resource = resourceLoader.getResource("classpath:keystore/keystore.p12");
+////        FileInputStream fileInputStream = new FileInputStream(new File("/keystore/keystore.p12"));
+//////        ResourceLoader resourceLoader = new DefaultResourceLoader();
+//////        Resource resource = resourceLoader.getResource("classpath:keystore/keystore.p12");
+////        String keyStorePassword = "H589QkHFIdafh6@*yuydfjh879yfdWWMjHUyoih&jnawi0asd23Yzq";
+////        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+////        keyStore.load(fileInputStream, keyStorePassword.toCharArray());
+////        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
+////                new SSLContextBuilder()
+////                        .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+////                        .loadKeyMaterial(keyStore, keyStorePassword.toCharArray()).build());
+////        HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
+////        return new HttpComponentsClientHttpRequestFactory(httpClient);
+//
 //        String keyStorePassword = "H589QkHFIdafh6@*yuydfjh879yfdWWMjHUyoih&jnawi0asd23Yzq";
-//        KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-//        keyStore.load(fileInputStream, keyStorePassword.toCharArray());
-//        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
-//                new SSLContextBuilder()
-//                        .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-//                        .loadKeyMaterial(keyStore, keyStorePassword.toCharArray()).build());
-//        HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
-//        return new HttpComponentsClientHttpRequestFactory(httpClient);
+//        SSLContext sslContext = new SSLContextBuilder()
+//                .loadTrustMaterial(new URL("classpath:keystore/keystore.p12"), keyStorePassword)
+////        .loadKeyMaterial(new URL("file:pathToClientKeyStore"), storePassword, storePassword)
+//                .build();
+//        SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
+//        CloseableHttpClient client = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
+//        return new HttpComponentsClientHttpRequestFactory(client);
 //    }
 //}
