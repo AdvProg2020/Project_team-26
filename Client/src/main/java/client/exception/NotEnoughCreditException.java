@@ -23,7 +23,7 @@ public class NotEnoughCreditException extends Exception {
             return objectMapper.readValue(errorMessage, NotEnoughCreditException.class);
         } catch (IOException e) {
             System.out.println(e.getStackTrace());
-            return null;
+          return new NotEnoughCreditException("not enough credit",0);
         }
     }
 }
