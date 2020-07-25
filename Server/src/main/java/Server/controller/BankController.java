@@ -88,6 +88,8 @@ public class BankController {
         }
     }
 
+
+
     @PostMapping("/controller/method/bank/withdraw-from-account")
     public String withdrawFromAccount(@RequestBody Map info) throws InvalidTokenException, IOException, NotLoggedINException, NotEnoughCreditException {
         Session session = Session.getSession((String) info.get("token"));
@@ -120,6 +122,7 @@ public class BankController {
             return result;
         }
     }
+
 
     private String sendCommand(String command) throws IOException {
         Socket socket = new Socket(bankHost, bankPort);
