@@ -53,8 +53,8 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
-    private final String hostPort = "https://POUYA-PC:8383";
-    public final String chatUrl = "ws://POUYA-PC:8080/chat/";
+    private final String hostPort = "https://localhost:8383";
+    public final String chatUrl = "ws://localhost:8080/chat/";
     private StompSession session;
     private List<MessageReceiver> messageReceivers;
 
