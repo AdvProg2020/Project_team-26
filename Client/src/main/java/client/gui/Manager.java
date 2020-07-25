@@ -507,7 +507,8 @@ public class Manager implements Reloadable {
     }
 
     public void sendMessageTOWebSocket(String receiver, Message message) {
-        session.send("/app/chat/" + receiver, message);
+        if (session != null)
+            session.send("/app/chat/" + receiver, message);
     }
 
     public void showRandomPromoIfUserGet() throws IOException {

@@ -78,7 +78,7 @@ public class BankController {
             result = sendCommand("pay " + receiptId);
             if (result.equals("done successfully")) {
                 User user = session.getLoggedInUser();
-                user.changeCredit(user.getCredit() + (int) info.get("amount"));
+                user.changeCredit(user.getCredit() + (long) info.get("amount"));
                 userRepository.save(user);
             }
             return result;
@@ -94,7 +94,8 @@ public class BankController {
             throw new NotLoggedINException("You must login first.");
         }
         User user = session.getLoggedInUser();
-        if (user.getCredit() - (int) info.get("amount") < Session.getMinCredit()) {
+        //TODO change
+        if (user.getCredit() - (long) info.get("amount") < Session.getMinCredit()) {
             throw new NotEnoughCreditException("There must be " + Session.getMinCredit() + " left in your account.", user.getCredit());
         }
 
@@ -110,7 +111,7 @@ public class BankController {
             int receiptId = Integer.parseInt(result);
             result = sendCommand("pay " + receiptId);
             if (result.equals("done successfully")) {
-                user.changeCredit(user.getCredit() - (int) info.get("amount"));
+                user.changeCredit(user.getCredit() - (long) info.get("amount"));
                 userRepository.save(user);
             }
             return result;
