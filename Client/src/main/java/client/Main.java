@@ -23,7 +23,9 @@ import org.springframework.web.socket.sockjs.client.SockJsClient;
 import org.springframework.web.socket.sockjs.client.Transport;
 import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,6 +75,7 @@ public class Main extends Application {
 
         ControllerContainer controllerContainer = new ControllerContainer();
         Constants.manager.setControllerContainer(controllerContainer);
+        HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
         startWebSocket();
         launch(args);
     }
