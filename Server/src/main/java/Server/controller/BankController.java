@@ -44,7 +44,18 @@ public class BankController {
                 info.get("username") + " " +
                 info.get("password") + " " +
                 info.get("repeat_password");
-        return sendCommand(command);
+        String result = sendCommand(command);
+
+        try {
+            int id = Integer.parseInt(result);
+            command = "get_token " + info.get("username") + " " + info.get("password");
+            String token = sendCommand(command);
+            command = "create_receipt " + token + " deposit 10000 -1 " + id + " Initial";
+            int transactionId = Integer.parseInt(sendCommand(command));
+            sendCommand("pay " + transactionId);
+        } catch (Exception e) {
+        }
+        return result;
     }
 
     @PostMapping("/controller/method/bank/getToken")
