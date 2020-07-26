@@ -76,7 +76,7 @@ public class Main extends Application {
         ControllerContainer controllerContainer = new ControllerContainer();
         Constants.manager.setControllerContainer(controllerContainer);
         HttpsURLConnection.setDefaultHostnameVerifier((hostname, session) -> true);
-        startWebSocket();
+       // startWebSocket();
         launch(args);
     }
 
