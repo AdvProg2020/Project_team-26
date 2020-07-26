@@ -12,9 +12,7 @@
     <children>
         <ScrollPane fx:id="chatScroll" prefHeight="570.0" prefWidth="600.0">
             <content>
-                <VBox fx:id="chatVBox" minWidth="200.0" prefWidth="600.0">
-                    <fx:include source="MessageCard.fxml"/>
-                </VBox>
+                <VBox fx:id="chatVBox" minWidth="200.0" prefWidth="600.0" />
             </content>
         </ScrollPane>
         <HBox alignment="CENTER_LEFT" prefHeight="80.0" prefWidth="600.0" spacing="40.0">
