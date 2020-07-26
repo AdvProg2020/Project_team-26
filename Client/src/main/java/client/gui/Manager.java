@@ -53,6 +53,8 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
+  /*  private final String hostPort = "https://localhost:8083";
+    public final String chatUrl = "ws://localhost:8080/chat/";*/
     private final String hostPort = "https://pouyae.ddns.net:8083";
     public final String chatUrl = "ws://pouyae.ddns.net:8080/chat/";
     private StompSession session;
