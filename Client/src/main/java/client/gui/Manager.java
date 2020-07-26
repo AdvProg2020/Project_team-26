@@ -54,8 +54,10 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
-    private final String hostPort = "https://213.233.189.92";
-    public final String chatUrl = "ws://213.233.189.92/chat/";
+   /* private final String hostPort = "https://213.233.189.92";
+    public final String chatUrl = "ws://213.233.189.92/chat/";*/
+    private final String hostPort = "https://localhost";
+    public final String chatUrl = "ws://localhost/chat/";
     private StompSession session;
     private List<MessageReceiver> messageReceivers;
 
