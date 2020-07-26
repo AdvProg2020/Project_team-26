@@ -26,6 +26,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 import net.minidev.json.JSONObject;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -53,8 +54,8 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
-    private final String hostPort = "https://pouyae.asuscomm.com";
-    public final String chatUrl = "ws://pouyae.asuscomm.com/chat/";
+    private final String hostPort = "https://213.233.189.92";
+    public final String chatUrl = "ws://213.233.189.92/chat/";
     private StompSession session;
     private List<MessageReceiver> messageReceivers;
 
@@ -109,7 +110,8 @@ public class Manager implements Reloadable {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplateBuilder().
+                setConnectTimeout(Duration.ofMillis(5000)).setReadTimeout(Duration.ofMillis(5000)).build();
         restTemplate.postForLocation(address, httpEntity);
     }
 
@@ -119,7 +121,8 @@ public class Manager implements Reloadable {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplate = new RestTemplateBuilder().
+                setConnectTimeout(Duration.ofMillis(5000)).setReadTimeout(Duration.ofMillis(5000)).build();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
         return responseEntity.getBody();
     }
