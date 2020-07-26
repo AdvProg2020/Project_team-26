@@ -166,6 +166,10 @@ public class CartControllerPage implements InitializableController, Reloadable {
     @Override
     public void reload() throws IOException {
         cartProductsVBox.getChildren().removeAll(cartProductsVBox.getChildren());
-        loadCart(this.cart);
+        try {
+            initialize(0);
+        } catch (InvalidTokenException e) {
+            e.printStackTrace();
+        }
     }
 }

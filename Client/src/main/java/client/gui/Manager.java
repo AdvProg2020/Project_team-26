@@ -54,9 +54,7 @@ public class Manager implements Reloadable {
     private AuthenticationStageManager authenticationStageManager;
     private Set<Integer> compareList;
     private Stage popUp;
-   /* private final String hostPort = "https://213.233.189.92";
-    public final String chatUrl = "ws://213.233.189.92/chat/";*/
-    private final String hostPort = "https://localhost";
+    private final String hostPort = "https://localhost:443";
     public final String chatUrl = "ws://localhost/chat/";
     private StompSession session;
     private List<MessageReceiver> messageReceivers;
@@ -112,8 +110,7 @@ public class Manager implements Reloadable {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toJSONString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplateBuilder().
-                setConnectTimeout(Duration.ofMillis(5000)).setReadTimeout(Duration.ofMillis(5000)).build();
+        RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForLocation(address, httpEntity);
     }
 
@@ -123,8 +120,7 @@ public class Manager implements Reloadable {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(jsonObject.toString(), httpHeaders);
-        RestTemplate restTemplate = new RestTemplateBuilder().
-                setConnectTimeout(Duration.ofMillis(5000)).setReadTimeout(Duration.ofMillis(5000)).build();
+        RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.postForEntity(address, httpEntity, String.class);
         return responseEntity.getBody();
     }

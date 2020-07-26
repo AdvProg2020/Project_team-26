@@ -50,6 +50,7 @@ public class CartController {
     public Cart getCart(@RequestBody Map info) throws InvalidTokenException {
         String token = (String) info.get("token");
         Session session = Session.getSession(token);
+        Map<ProductSeller, Integer> test = session.getCart().getProducts();
         return session.getCart();
     }
 
