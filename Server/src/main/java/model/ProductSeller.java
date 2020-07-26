@@ -11,6 +11,7 @@ import model.enums.RequestType;
 import model.enums.Status;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @JsonDeserialize(using = ProductSellerDeserializer.class)
 @Entity
@@ -153,5 +154,18 @@ public class ProductSeller {
                 "With Username: " + seller.getUsername() + "\n" +
                 "Price: " + price + "\n" +
                 "Remaining Items: " + remainingItems;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ProductSeller that = (ProductSeller) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
