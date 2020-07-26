@@ -12,25 +12,25 @@ import org.springframework.context.annotation.Bean;
 public class ServerApplication {
 
     //HTTP port
-    @Value("${server.http.port}")
-    private int httpPort;
+//    @Value("${server.http.port}")
+//    private int httpPort;
 
     public static void main(String[] args) {
         SpringApplication.run(ServerApplication.class, args);
     }
 
     // Let's configure additional connector to enable support for both HTTP and HTTPS
-    @Bean
-    public ServletWebServerFactory servletContainer() {
-        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
-        tomcat.addAdditionalTomcatConnectors(createStandardConnector());
-        return tomcat;
-    }
-
-    private Connector createStandardConnector() {
-        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
-        connector.setPort(httpPort);
-        return connector;
-    }
+//    @Bean
+//    public ServletWebServerFactory servletContainer() {
+//        TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory();
+//        tomcat.addAdditionalTomcatConnectors(createStandardConnector());
+//        return tomcat;
+//    }
+//
+//    private Connector createStandardConnector() {
+//        Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+//        connector.setPort(httpPort);
+//        return connector;
+//    }
 
 }
