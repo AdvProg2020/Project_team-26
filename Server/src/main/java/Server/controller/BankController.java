@@ -1,5 +1,6 @@
 package Server.controller;
 
+import com.google.gson.Gson;
 import exception.InvalidTokenException;
 import exception.NoAccessException;
 import exception.NotEnoughCreditException;
@@ -98,6 +99,8 @@ public class BankController {
         }
     }
 
+
+
     @PostMapping("/controller/method/bank/withdraw-from-account")
     public String withdrawFromAccount(@RequestBody Map info) throws InvalidTokenException, IOException, NotLoggedINException, NotEnoughCreditException {
         Session session = Session.getSession((String) info.get("token"));
@@ -105,15 +108,15 @@ public class BankController {
             throw new NotLoggedINException("You must login first.");
         }
         User user = session.getLoggedInUser();
-        //TODO change
-        if (user.getCredit() - (long) info.get("amount") < Session.getMinCredit()) {
+        Gson gson = new Gson();
+        long amountPrice = gson.fromJson((String) info.get("amount"), Long.class);
+        if (user.getCredit() - amountPrice < Session.getMinCredit()) {
             throw new NotEnoughCreditException("There must be " + Session.getMinCredit() + " left in your account.", user.getCredit());
         }
-
         storeToken = sendCommand("get_token " + storeUsername + " " + storePassword);
         String command = "create_receipt" + " " +
                 storeToken + " move " +
-                info.get("amount") + " " +
+                amountPrice + " " +
                 storeId + " " +
                 info.get("userId") + " " +
                 info.get("description");
@@ -122,7 +125,7 @@ public class BankController {
             int receiptId = Integer.parseInt(result);
             result = sendCommand("pay " + receiptId);
             if (result.equals("done successfully")) {
-                user.changeCredit(user.getCredit() - (long) info.get("amount"));
+                user.changeCredit(user.getCredit() - amountPrice);
                 userRepository.save(user);
             }
             return result;
@@ -130,6 +133,7 @@ public class BankController {
             return result;
         }
     }
+
 
     private String sendCommand(String command) throws IOException {
         Socket socket = new Socket(bankHost, bankPort);

@@ -67,7 +67,11 @@ public class AuctionPageController implements InitializableController {
             }
         });
         sendButton.setOnAction(e -> {
-            sendRequestToServer();
+            try {
+                sendRequestToServer();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
         });
     }
 
@@ -86,22 +90,22 @@ public class AuctionPageController implements InitializableController {
         loadChatRoom("" + auction.getId());
     }
 
-    private void sendRequestToServer() {
-        if(auctionId != null) {
+    private void sendRequestToServer() throws IOException {
+        if (auctionId != null) {
             String cash = cashTextField.getText();
             if (Constants.manager.checkIsLong(cash)) {
                 try {
                     auctionController.participateInAuction(auctionId, Long.parseLong(cash), Constants.manager.getToken());
-                    Constants.manager.sendMessageTOWebSocket(""+auctionId,new Message(thisUser.getUsername(),"i will buy for "+cash,""+auctionId,MessageType.CHAT,Role.CUSTOMER));
+                    Constants.manager.sendMessageTOWebSocket("" + auctionId, new Message(thisUser.getUsername(), "i will buy for " + cash, "" + auctionId, MessageType.CHAT, Role.CUSTOMER));
                     Constants.manager.showSuccessPopUp("your suggested cash accepted");
+                    errorLabel.setText("");
                 } catch (InvalidIdException | NotCustomerException | NoAccessException e) {
                     errorLabel.setText(e.getMessage());
                 } catch (NotLoggedINException e) {
-                    //TODO
+                    Constants.manager.showErrorPopUp(e.getMessage());
+                    Constants.manager.showLoginMenu();
                 } catch (InvalidTokenException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                    Constants.manager.setTokenFromController();
                 }
             } else {
                 errorLabel.setText("enter number");

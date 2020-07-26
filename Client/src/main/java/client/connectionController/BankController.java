@@ -3,6 +3,7 @@ package client.connectionController;
 import client.connectionController.interfaces.IBankController;
 import client.exception.*;
 import client.gui.Constants;
+import com.google.gson.Gson;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -62,7 +63,8 @@ public class BankController implements IBankController {
     @Override
     public String withdrawFromAccount(int bankSourceAccountId, String description, long money, String token) throws InvalidTokenException, NotLoggedINException, NoAccessException, NotEnoughCreditException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("amount", money);
+        Gson gson = new Gson();
+        jsonObject.put("amount", gson.toJson(money));
         jsonObject.put("userId", "" + bankSourceAccountId);
         jsonObject.put("description", description);
         jsonObject.put("token", token);

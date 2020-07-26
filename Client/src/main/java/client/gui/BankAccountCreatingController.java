@@ -130,7 +130,7 @@ public class BankAccountCreatingController implements InitializableController {
                     errorLabel.setText("your bank account id is invalid");
                     return;
                 }
-                if (message.equals(Constants.bankErrorInvalidToken)) {
+                if (message.equals(Constants.bankErrorInvalidToken) || message.equals(Constants.bankErrorExpiredToken)) {
                     errorLabel.setText("sorry error happened from server enter your bank account info");
                     Constants.manager.setTokenFromBankForBankTransaction();
                     return;
