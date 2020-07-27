@@ -51,8 +51,6 @@ public class CustomerButtonController implements InitializableController {
         showUserController = (IShowUserController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.ShowUserController);
         promoController = (IPromoController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.PromoController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
-        if (user.getRole() != Role.CUSTOMER || !Constants.manager.isLoggedIn())
-            throw new NoAccessException("must be customer");
         this.userId = id;
         this.customer = (User) user;
         load();

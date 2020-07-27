@@ -24,7 +24,7 @@ public class NotEnoughProductsException extends Exception {
             return objectMapper.readValue(errorMessage, NotEnoughProductsException.class);
         } catch (IOException e) {
             System.out.println(e.getStackTrace());
-            return null;
+            return new NotEnoughProductsException("not enough product",null);
         }
     }
 }

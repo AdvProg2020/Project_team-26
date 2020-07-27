@@ -73,7 +73,6 @@ public class CartControllerPage implements InitializableController, Reloadable {
         } catch (InvalidTokenException e) {
             e.printStackTrace();//TODO
         }
-
         loadProducts(cart);
     }
 
