@@ -174,7 +174,7 @@ public class User {
         credit -= amount;
     }
 
-    public void changeCredit(Long newCredit) {
+    public void changeCredit(long newCredit) {
         this.credit = newCredit;
     }
 
