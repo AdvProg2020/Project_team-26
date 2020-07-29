@@ -7,6 +7,10 @@ import model.enums.Role;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -139,19 +143,48 @@ public class User {
     }
 
     public boolean checkPassword(String password) {
-        return this.password.equals(password);
+        return toHexString(getSHA(password)).equals(this.password);
     }
 
     public void changePassword(String oldPassword, String newPassword) throws NoAccessException {
-        if (oldPassword.equals(this.password)) {
-            this.password = newPassword;
+        if (checkPassword(oldPassword)) {
+            changePassword(newPassword);
         } else {
             throw new NoAccessException("You are not allowed to do that.");
         }
     }
 
     public void changePassword(String newPassword) {
-        this.password = newPassword;
+        this.password = toHexString(getSHA(newPassword));
+    }
+
+    private byte[] getSHA(String input)
+    {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+            return md.digest(input.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private String toHexString(byte[] hash)
+    {
+        // Convert byte array into signum representation
+        BigInteger number = new BigInteger(1, hash);
+
+        // Convert message digest into hex value
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        // Pad with leading zeros
+        while (hexString.length() < 32)
+        {
+            hexString.insert(0, '0');
+        }
+
+        return hexString.toString();
     }
 
     public long getCredit() {
