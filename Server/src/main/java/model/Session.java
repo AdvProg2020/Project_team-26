@@ -4,6 +4,11 @@ import exception.InvalidTokenException;
 import model.enums.Role;
 import repository.UserRepository;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,11 +43,39 @@ public class Session {
     }
 
     public static String addSession() {
-        lastToken++;
-        String token = "a" + lastToken;
+        String token = toHexString(getSHA("some random string to change as a salt " + new Date().getTime()));
 
         sessionList.put(token, new Session());
         return token;
+    }
+
+    private static byte[] getSHA(String input)
+    {
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+            return md.digest(input.getBytes(StandardCharsets.UTF_8));
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private static String toHexString(byte[] hash)
+    {
+        // Convert byte array into signum representation
+        BigInteger number = new BigInteger(1, hash);
+
+        // Convert message digest into hex value
+        StringBuilder hexString = new StringBuilder(number.toString(16));
+
+        // Pad with leading zeros
+        while (hexString.length() < 32)
+        {
+            hexString.insert(0, '0');
+        }
+
+        return hexString.toString();
     }
 
     public static void initializeFake(UserRepository userRepository) {
