@@ -29,12 +29,14 @@ public class Cart {
     }
 
     public boolean addItems(ProductSeller productSeller, int amount) {
-        if (products.containsKey(productSeller)) {
+        if (productSellerContain(productSeller)) {
             if (amount <= productSeller.getRemainingItems() && amount >= 0) {
                 if (amount == 0) {
                     products.remove(productSeller);
+                    return true;
                 }
-                products.replace(productSeller, amount);
+                products.remove(productSeller);
+                products.put(productSeller, amount);
                 return true;
             }
         } else {
@@ -42,6 +44,14 @@ public class Cart {
                 products.put(productSeller, amount);
                 return true;
             }
+        }
+        return false;
+    }
+
+    private boolean productSellerContain(ProductSeller productSeller) {
+        for (ProductSeller seller : products.keySet()) {
+            if(seller.getId() == productSeller.getId())
+                return true;
         }
         return false;
     }

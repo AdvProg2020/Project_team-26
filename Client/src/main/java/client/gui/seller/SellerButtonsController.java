@@ -59,8 +59,6 @@ public class SellerButtonsController implements InitializableController {
         orderController = (IOrderController) Constants.manager.getControllerContainer().getController(ControllerContainer.Controller.OrderController);
         User user = showUserController.getUserById(id, Constants.manager.getToken());
         this.seller = (User) user;
-        if (user.getRole() != Role.SELLER || !Constants.manager.isLoggedIn())
-            throw new NoAccessException("must be seller");
         this.userId = id;
         load();
         createOff.setOnMouseClicked(e -> {

@@ -4,6 +4,7 @@ import exception.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 
 @ControllerAdvice
 public class ExceptionHandlerClass {
@@ -118,5 +119,8 @@ public class ExceptionHandlerClass {
         return ResponseEntity.status(491).body(e);
     }
 
-
+    @ExceptionHandler(HttpClientErrorException.TooManyRequests.class)
+    public ResponseEntity<Exception> handleWrongFieldException(HttpClientErrorException.TooManyRequests e) {
+        return ResponseEntity.status(429).body(e);
+    }
 }

@@ -50,6 +50,7 @@ public class CartController {
     public Cart getCart(@RequestBody Map info) throws InvalidTokenException {
         String token = (String) info.get("token");
         Session session = Session.getSession(token);
+        Map<ProductSeller, Integer> test = session.getCart().getProducts();
         return session.getCart();
     }
 
@@ -163,7 +164,7 @@ public class CartController {
         Order order = new Order(customer, cart.getUsedPromo(), cart.getAddress());
 
         for (ProductSeller productSeller : cart.getProducts().keySet()) {
-            if (productSeller.getRemainingItems() <= cart.getProducts().get(productSeller)) {
+            if (productSeller.getRemainingItems() < cart.getProducts().get(productSeller)) {
                 throw new NotEnoughProductsException("There is not enough products anymore.", productSeller);
             }
             OrderItem orderItem = new OrderItem(productSeller.getProduct(),
