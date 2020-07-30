@@ -7,14 +7,23 @@ create table category_feature
         unique (category_feature_id)
 );
 
+create table product_file
+(
+    product_file_id int auto_increment primary key,
+    name            varchar(50) charset utf8 not null,
+    file            longblob                 not null,
+    constraint product_file_id_uindex
+        unique (product_file_id)
+);
+
 create table promo
 (
     promo_id         int auto_increment primary key,
     promo_code       varchar(50) charset utf8 not null,
-    start_date       datetime                 not null,
-    end_date         datetime                 not null,
+    start_date       timestamp                not null,
+    end_date         timestamp                not null,
     discount_percent decimal                  not null,
-    max_discount     decimal                  not null,
+    max_discount     int(20)                  not null,
     max_valid_use    int                      not null,
     constraint promo_promo_code_uindex
         unique (promo_code),
@@ -25,12 +34,13 @@ create table promo
 create table user
 (
     user_id  int auto_increment primary key,
-    username varchar(50) charset utf8             not null,
-    password varchar(50) charset utf8             not null,
-    email    varchar(50) charset utf8             not null,
-    role     enum ('ADMIN', 'SELLER', 'CUSTOMER') not null,
-    credit   decimal                              not null,
-    DTYPE    varchar(31)                          not null,
+    username varchar(50) charset utf8                        not null,
+    password varchar(50) charset utf8                        not null,
+    email    varchar(50) charset utf8                        not null,
+    role     enum ('ADMIN', 'SELLER', 'CUSTOMER', 'SUPPORT') not null,
+    image    mediumblob                                      null,
+    credit   int(20)                                         not null,
+    DTYPE    varchar(31)                                     not null,
     constraint user_email_uindex
         unique (email),
     constraint user_user_id_uindex
@@ -39,28 +49,34 @@ create table user
         unique (username)
 );
 
-create table customer_promo
-(
-    customer_promo_id int auto_increment primary key,
-    customer_id       int not null,
-    promo_id          int not null,
-    constraint customer_promo_customer_promo_id_uindex
-        unique (customer_promo_id),
-    constraint customer_promo_promo_promo_id_fk
-        foreign key (promo_id) references promo (promo_id),
-    constraint customer_promo_user_user_id_fk
-        foreign key (customer_id) references user (user_id)
-);
-
 create table off
 (
     off_id     int auto_increment primary key,
-    seller_id  int      not null,
-    start_date datetime not null,
-    end_date   datetime not null,
+    seller_id  int                         not null,
+    start_date timestamp                   not null,
+    end_date   timestamp                   not null,
+    status     enum ('ACTIVE', 'DEACTIVE') null,
     constraint off_off_id_uindex
         unique (off_id),
     constraint off_user_user_id_fk
+        foreign key (seller_id) references user (user_id)
+);
+
+create table off_request
+(
+    off_request_id int auto_increment primary key,
+    off_id         int                                      null,
+    request_time   timestamp                                not null,
+    seller_id      int                                      null,
+    start_date     timestamp                                not null,
+    end_date       timestamp                                not null,
+    request_type   enum ('ADD', 'EDIT', 'DELETE')           not null,
+    request_status enum ('PENDING', 'ACCEPTED', 'REJECTED') null,
+    constraint off_request_off_request_id_uindex
+        unique (off_request_id),
+    constraint off_request_off_off_id_fk
+        foreign key (off_id) references off (off_id),
+    constraint off_request_user_user_id_fk
         foreign key (seller_id) references user (user_id)
 );
 
@@ -68,9 +84,10 @@ create table `order`
 (
     order_id    int auto_increment primary key,
     customer_id int                       not null,
-    promo_id    int                       not null,
-    date        datetime                  not null,
-    address     varchar(100) charset utf8 not null,
+    promo_id    int                       null,
+    discount    int(20) default 0         not null,
+    date        timestamp                 not null,
+    address     varchar(200) charset utf8 not null,
     constraint order_order_id_uindex
         unique (order_id),
     constraint order_promo_promo_id_fk
@@ -89,6 +106,7 @@ create table user_details
         unique (user_details_id),
     constraint user_details_user_user_id_fk
         foreign key (user_id) references user (user_id)
+            on delete cascade
 );
 
 create table user_promo
@@ -96,9 +114,11 @@ create table user_promo
     customer_id int not null,
     promo_id    int not null,
     constraint FK8gtg1f0xnt3vkk8byx1rcjknx
-        foreign key (customer_id) references user (user_id),
+        foreign key (customer_id) references user (user_id)
+            on delete cascade,
     constraint FKqawygia5l13e8hoph4dv60gj4
         foreign key (promo_id) references promo (promo_id)
+            on delete cascade
 );
 
 -- Cyclic dependencies found
@@ -106,7 +126,7 @@ create table user_promo
 create table category
 (
     category_id int auto_increment primary key,
-    name        varchar(20) charset utf8 not null,
+    name        varchar(50) charset utf8 not null,
     parent_id   int                      not null,
     constraint category_category_id_uindex
         unique (category_id),
@@ -128,17 +148,22 @@ create table category_category_feature
 
 create table product
 (
-    product_id  int auto_increment primary key,
-    category_id int                        not null,
-    name        varchar(50) charset utf8   not null,
-    brand       varchar(50) charset utf8   not null,
-    description varchar(1000) charset utf8 not null,
+    product_id      int auto_increment primary key,
+    category_id     int                         not null,
+    name            varchar(50) charset utf8    not null,
+    brand           varchar(50) charset utf8    not null,
+    description     varchar(1000) charset utf8  null,
+    image           mediumblob                  null,
+    product_file_id int                         null,
+    status          enum ('ACTIVE', 'DEACTIVE') null,
     constraint product_name_uindex
         unique (name),
     constraint product_product_id_uindex
         unique (product_id),
     constraint product_category_category_id_fk
-        foreign key (category_id) references category (category_id)
+        foreign key (category_id) references category (category_id),
+    constraint product_product_file_product_file_id_fk
+        foreign key (product_file_id) references product_file (product_file_id)
 );
 
 create table comment
@@ -157,20 +182,6 @@ create table comment
         foreign key (customer_id) references user (user_id)
 );
 
-create table off_details
-(
-    off_details_id int auto_increment primary key,
-    off_id         int     not null,
-    product_id     int     not null,
-    price_in_off   decimal not null,
-    constraint off_item_off_details_id_uindex
-        unique (off_details_id),
-    constraint off_details_off_off_id_fk
-        foreign key (off_id) references off (off_id),
-    constraint off_item_product_product_id_fk
-        foreign key (product_id) references product (product_id)
-);
-
 create table order_details
 (
     order_details_id int auto_increment primary key,
@@ -178,8 +189,8 @@ create table order_details
     product_id       int                                          not null,
     seller_id        int                                          not null,
     amount           int                                          not null,
-    price            decimal                                      not null,
-    paid_price       decimal                                      not null,
+    price            int(20)                                      not null,
+    paid_price       int(20)                                      not null,
     shipment_state   enum ('WAITING_TO_SEND', 'SENT', 'RECEIVED') not null,
     constraint order_details_order_details_id_uindex
         unique (order_details_id),
@@ -193,27 +204,124 @@ create table order_details
 
 create table product_category_feature
 (
-    product_id          int                       not null,
-    category_feature_id int                       not null,
-    value               varchar(100) charset utf8 not null,
+    product_id           int                       not null,
+    categoryFeatures_KEY int                       not null,
+    value                varchar(200) charset utf8 not null,
     constraint product_category_feature_category_feature_category_feature_id_fk
-        foreign key (category_feature_id) references category_feature (category_feature_id),
+        foreign key (categoryFeatures_KEY) references category_feature (category_feature_id),
     constraint product_category_feature_product_product_id_fk
         foreign key (product_id) references product (product_id)
+);
+
+create table product_request
+(
+    product_request_id int auto_increment primary key,
+    main_product_id    int                                      null,
+    requested_by_id    int                                      not null,
+    request_time       timestamp                                not null,
+    name               varchar(50) charset utf8                 not null,
+    brand              varchar(50) charset utf8                 not null,
+    description        varchar(1000) charset utf8               not null,
+    category_id        int                                      null,
+    request_type       enum ('ADD', 'EDIT', 'DELETE')           not null,
+    request_status     enum ('PENDING', 'ACCEPTED', 'REJECTED') null,
+    constraint product_request_product_request_id_uindex
+        unique (product_request_id),
+    constraint product_request_category_category_id_fk
+        foreign key (category_id) references category (category_id),
+    constraint product_request_product_product_id_fk
+        foreign key (main_product_id) references product (product_id),
+    constraint product_request_user_user_id_fk
+        foreign key (requested_by_id) references user (user_id)
 );
 
 create table product_seller
 (
     product_seller_id int auto_increment primary key,
-    product_id        int     not null,
-    seller_id         int     not null,
-    price             decimal not null,
-    remaining_items   int     not null,
+    product_id        int                         not null,
+    seller_id         int                         not null,
+    price             int(20)                     not null,
+    remaining_items   int                         not null,
+    status            enum ('ACTIVE', 'DEACTIVE') null,
+    constraint product_seller_product_id_seller_id_uindex
+        unique (product_id, seller_id),
+    constraint product_seller_product_seller_id_seller_id_uindex
+        unique (product_seller_id, seller_id),
     constraint product_seller_product_seller_id_uindex
         unique (product_seller_id),
     constraint product_seller_product_product_id_fk
         foreign key (product_id) references product (product_id),
     constraint product_seller_user_user_id_fk
+        foreign key (seller_id) references user (user_id)
+);
+
+create table auction
+(
+    auction_id        int auto_increment primary key,
+    end_date          timestamp not null,
+    product_seller_id int       not null,
+    customer_id       int       null,
+    price             int(20)   not null,
+    constraint auction_auction_id_uindex
+        unique (auction_id),
+    constraint auction_product_seller_product_seller_id_fk
+        foreign key (product_seller_id) references product_seller (product_seller_id),
+    constraint auction_user_user_id_fk
+        foreign key (customer_id) references user (user_id)
+);
+
+create table off_details
+(
+    off_details_id    int auto_increment primary key,
+    off_id            int     not null,
+    product_seller_id int     not null,
+    price_in_off      decimal not null,
+    constraint off_item_off_details_id_uindex
+        unique (off_details_id),
+    constraint off_details_off_off_id_fk
+        foreign key (off_id) references off (off_id),
+    constraint off_item_product_product_seller_id_fk
+        foreign key (product_seller_id) references product_seller (product_seller_id)
+);
+
+create table off_details_request
+(
+    off_details_request_id int auto_increment primary key,
+    off_request_id         int     not null,
+    product_seller_id      int     not null,
+    price_in_off           int(20) not null,
+    product_id             int     null,
+    constraint off_details_request_off_details_request_id_uindex
+        unique (off_details_request_id),
+    constraint FKo8qi9ijmsgwtylde437rqg1um
+        foreign key (product_id) references product_seller (product_seller_id),
+    constraint off_details_request_off_request_off_request_id_fk
+        foreign key (off_request_id) references off_request (off_request_id),
+    constraint off_details_request_product_product_id_fk
+        foreign key (product_seller_id) references product (product_id)
+);
+
+create table product_seller_request
+(
+    product_seller_request_id int auto_increment primary key,
+    product_request_id        int                                      null,
+    product_id                int                                      null,
+    product_seller_id         int                                      null,
+    request_time              timestamp                                not null,
+    seller_id                 int                                      not null,
+    price                     int(20)                                  not null,
+    remaining_items           int                                      not null,
+    request_type              enum ('ADD', 'EDIT', 'DELETE')           not null,
+    request_status            enum ('PENDING', 'ACCEPTED', 'REJECTED') null,
+    constraint product_seller_request_product_seller_request_id_uindex
+        unique (product_seller_request_id),
+    constraint product_seller_request_product_product_id_fk
+        foreign key (product_id) references product (product_id),
+    constraint product_seller_request_product_request_product_request_id_fk
+        foreign key (product_request_id) references product_request (product_request_id),
+    constraint product_seller_request_product_seller_product_seller_id_fk
+        foreign key (product_seller_id) references product_seller (product_seller_id),
+    constraint product_seller_request_user_user_id_fk
         foreign key (seller_id) references user (user_id)
 );
 
@@ -223,6 +331,8 @@ create table rate
     customer_id int not null,
     product_id  int not null,
     score       int not null,
+    constraint rate_product_id_customer_id_uindex
+        unique (product_id, customer_id),
     constraint rate_rate_id_uindex
         unique (rate_id),
     constraint rate_product_product_id_fk
@@ -231,14 +341,59 @@ create table rate
         foreign key (customer_id) references user (user_id)
 );
 
-create view product_rate as
-select product.product_id AS product_id, avg(rate.score) AS average_rate
-from (product
-         left join rate on ((rate.product_id = product.product_id)))
-group by product.product_id;
+create table request
+(
+    request_id        int auto_increment primary key,
+    user_id           int                                      not null,
+    request_time      timestamp                                not null,
+    request_type      enum ('ADD', 'EDIT', 'DELETE')           null,
+    request_status    enum ('PENDING', 'ACCEPTED', 'REJECTED') null,
+    product_id        int                                      null,
+    product_seller_id int                                      null,
+    off_id            int                                      null,
+    off_details_id    int                                      null,
+    type              varchar(25)                              not null,
+    new_value         varchar(500) charset utf8                null,
+    field_name        varchar(25) charset utf8                 null,
+    constraint Request_request_id_uindex
+        unique (request_id),
+    constraint Reqeust_off_details_off_details_id_fk
+        foreign key (off_details_id) references off_details (off_details_id),
+    constraint Reqeust_off_off_id_fk
+        foreign key (off_id) references off (off_id),
+    constraint Reqeust_product_product_id_fk
+        foreign key (product_id) references product (product_id),
+    constraint Reqeust_product_seller_product_seller_id_fk
+        foreign key (product_seller_id) references product_seller (product_seller_id),
+    constraint Reqeust_user_user_id_fk
+        foreign key (user_id) references user (user_id)
+);
+
+create view comment_product_bought as
+select `c`.`comment_id` AS `comment_id`, 1 AS `has_bought`
+from (((`store`.`comment` `c` left join `store`.`product` `p` on ((`c`.`product_id` = `p`.`product_id`))) join `store`.`order_details` `od` on ((`p`.`product_id` = `od`.`product_id`)))
+         join `store`.`user` `u` on ((`c`.`customer_id` = `u`.`user_id`)));
+
+create view order_price as
+select `o`.`order_id`                            AS `order_id`,
+       sum(`od`.`price`)                         AS `total_price`,
+       (sum(`od`.`paid_price`) - `o`.`discount`) AS `paid_amount`
+from (`store`.`order` `o`
+         left join `store`.`order_details` `od` on ((`o`.`order_id` = `od`.`order_id`)))
+group by `o`.`order_id`;
+
+create view product_additional as
+select `p`.`product_id`            AS `product_id`,
+       avg(`store`.`rate`.`score`) AS `average_rate`,
+       count(`od`.`product_id`)    AS `amount`,
+       min(`ps`.`price`)           AS `price`
+from (((`store`.`product` `p` left join `store`.`rate` on ((`store`.`rate`.`product_id` = `p`.`product_id`))) left join `store`.`order_details` `od` on ((`p`.`product_id` = `od`.`product_id`)))
+         left join `store`.`product_seller` `ps`
+                   on (((`p`.`product_id` = `ps`.`product_id`) and (`ps`.`remaining_items` > 0))))
+group by `p`.`product_id`;
 
 create view product_seller_off as
-select ps.product_seller_id AS product_seller_id, oi.price_in_off AS price_in_off
-from ((product_seller ps join store.off o on ((ps.seller_id = o.seller_id)))
-         join off_details oi on ((oi.off_id = o.off_id)))
-where (now() between o.start_date and o.end_date);
+select `ps`.`product_seller_id` AS `product_seller_id`, `oi`.`price_in_off` AS `price_in_off`
+from ((`store`.`product_seller` `ps` join `store`.`off_details` `oi` on ((`ps`.`product_seller_id` = `oi`.`product_seller_id`)))
+         join `store`.`off` `o` on ((`oi`.`off_id` = `o`.`off_id`)))
+where ((now() between `o`.`start_date` and `o`.`end_date`) and (`o`.`status` = 'ACTIVE'));
